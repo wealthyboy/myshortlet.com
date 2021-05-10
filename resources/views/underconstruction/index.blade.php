@@ -297,7 +297,7 @@ Our backgrounds of extensive global hospitality and real estate experience and r
                      alt="Image description"/>
               </a>
 
-              <span class="img-title">Minimalism</span>
+              <span class="img-title"></span>
               <span class="img-description"></span>
               <span class="img-overlay"></span>
             </figure>
@@ -311,7 +311,7 @@ Our backgrounds of extensive global hospitality and real estate experience and r
                      alt="Image description"/>
               </a>
 
-              <span class="img-title">Timeout</span>
+              <span class="img-title"></span>
               <span class="img-description"></span>
               <span class="img-overlay"></span>
             </figure>
@@ -325,7 +325,7 @@ Our backgrounds of extensive global hospitality and real estate experience and r
                      alt="Image description"/>
               </a>
 
-              <span class="img-title">Perspective</span>
+              <span class="img-title"></span>
               <span class="img-description"></span>
               <span class="img-overlay"></span>
             </figure>
@@ -338,7 +338,7 @@ Our backgrounds of extensive global hospitality and real estate experience and r
                 <img class="img-responsive" src="/maintainance/images/page-image-4.jpg"
                      alt="Image description"/>
               </a>
-              <span class="img-title">Inspiration</span>
+              <span class="img-title"></span>
               <span class="img-description"></span>
               <span class="img-overlay"></span>
             </figure>
