@@ -148,7 +148,7 @@ hr {
   </div>
   
   <div class="middle">
-    <h1>Avenue Montaigne is Coming Soon</h1>
+    <h1>Coming Soon</h1>
     <h5>Our website is almost here !!!</p>
     <p>Sign up below for first dibs on new arrivals ,vip surprises and more</p>
 
