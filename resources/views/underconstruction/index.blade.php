@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="utf-8" />
-        <title>{{ Config('app.name') }}  Coming soon</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>{{ Config('app.name') }}  Coming soon</title>
         <meta name="author" content="AchuWorld">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -10,210 +12,475 @@
         <meta name="keywords" content="{{ isset($settings->meta_tag_keywords) ? $settings->meta_tag_keywords : '' }}" />
         <meta name="generator" content="Social Likes: http://social-likes.js.org/">
 
-          <!-- Favicone Icon -->
-        <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
-        <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
-        <link rel="icon" type="image/png" href="/img/favicon-96x96.png">
-        <link rel="apple-touch-icon" href="/img/favicon-96x96.png">
+  
 
-        <!-- CSS -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet"> 
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Roboto:wght@900&display=swap" rel="stylesheet"> 
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/maintainance/css/plugins/bootstrap.min.css">
+
+  <!-- Font Icons -->
+  <link rel="stylesheet"
+        href="/maintainance/css/icons/font-awesome.css">
+  <link rel="stylesheet"
+        href="/maintainance/css/icons/linea.css">
+
+  <!-- Google Fonts -->
+  <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700">
+
+  <!-- Plugins CSS -->
+  <link rel="stylesheet" href="/maintainance/css/plugins/loaders.min.css">
+  <link rel="stylesheet" href="/maintainance/css/plugins/photoswipe.css">
+  <link rel="stylesheet" href="/maintainance/css/icons/photoswipe/icons.css">
+
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/maintainance/css/style.css">
+
+  <!-- Responsive CSS -->
+  <link href="/maintainance/css/responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
 
 </head>
-<style>
+<body data-spy="scroll" data-target=".scrollspy" class="bg-dark show-content full-info">
 
-  /* Set height to 100% for body and html to enable the background image to cover the whole page: */
-body, html {
-  height: 100%
-}
-
-body {
-  font-size: 14px;
-  line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #e13b3f;
-  font-weight: 600;
-  font-family: 'Roboto', sans-serif
-}
-
-
-
-::selection {
-  background-color: #222;
-  color: #fff;
-}
-
-
-a:visited {
-  background-color:none;
-}
-
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
-    font-variant-ligatures: common-ligatures;
-    margin-top: 0;
-    font-weight: 700;
-    font-family: 'Roboto', sans-serif;
-    color: #ffffff;
-}
-
-.bgimg {
-  /* Background image */
-  background-image: url('https://myshortlet.com/uploads/6XKpHK9lGURmBqv64tYsdFpcBpQk4eTVtE0JitDi.png');
-  /* Full-screen */
-  height: 100%;
-  /* Center the background image */
-  background-position: center;
-  /* Scale and zoom in the image */
-  background-size: cover;
-  /* Add position: relative to enable absolutely positioned elements inside the image (place text) */
-  position: relative;
-  /* Add a white text color to all elements inside the .bgimg container */
-  color: white;
-  /* Add a font */
-  font-family: "Courier New", Courier, monospace;
-  /* Set the font-size to 25 pixels */
-  font-size: 25px;
-
-  position: relative;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 1;
-  transition: .5s ease;
-  background: rgba(0, 0, 0, 0.5); /* Black see-through */
-}
-
-
-/* Position text in the top-left corner */
-.topleft {
-  position: absolute;
-  top: 0;
-  left: 16px;
-}
-
-/* Position text in the bottom-left corner */
-.bottomleft {
-  position: absolute;
-  bottom: 0;
-  left: 16px;
-}
-
-/* Position text in the middle */
-.middle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: #ffffff;
-}
-
-/* Style the <hr> element */
-hr {
-  margin: auto;
-  width: 40%;
-} 
-
-</style>
-
-
-<body>
-
-
-<div class="bgimg">
-  <div class="overlay">
+<!-- Preloader  -->
+<div class="loader bg-dark">
+  <div class="loader-inner ball-scale-ripple-multiple ball-scale-ripple-multiple-color">
+    <div></div>
+    <div></div>
+    <div></div>
   </div>
-  
-  <div class="middle">
-    <h1>Coming Soon</h1>
-    <h5>Our website is almost here !!!</p>
-    <p>Sign up below for first dibs on new arrivals ,vip surprises and more</p>
+</div>
+<!-- /End Preloader  -->
 
-    <hr>
-    <h1 class="target"></h1>
-    <p>
-     
-      <form id="signup-form"  class="form-group" action="#" >
 
-       <div class="form-row align-items-center">
-          <div class="col-sm-3 my-1">
-            <label class="sr-only" for="inlineFormInputName">First Name</label>
-            <input type="text" class="form-control" id="inlineFormInputName" name="fname" placeholder="First Name">
+<div id="page">
+
+  <!-- ============================
+       BG & Overlays
+  ================================= -->
+
+  <!-- Image BG -->
+  <div class="section-overlay media page-image-full reveal scale-in"></div>
+  <!-- /End Image BG -->
+
+  <!-- Overlay BG -->
+  <div class="section-overlay bg-black overlay-opacity"></div>
+  <!-- /End Overlay BG -->
+
+  <!-- Modal -->
+  <div id="modal-notify" class="modal fade modal-scale" tabindex="-1" role="dialog"
+       aria-labelledby="meinModalLabel">
+
+    <!-- .modal-dialog -->
+    <div class="modal-dialog" role="document">
+      <div>
+
+        <!-- .modal-content -->
+        <div class="modal-content text-center bg-dark text-light">
+          <button class="button-close" data-dismiss="modal" aria-label="Close"><i
+              class="icon icon-lg icon-arrows-remove"></i></button>
+
+
+          <!-- Headline -->
+          <div class="wrap-line border-dark">
+            <h3><span class="font-weight-200">Stay</span> Tuned</h3>
           </div>
-          <div class="col-sm-3 my-1">
-            <label class="sr-only" for="inlineFormInputName">Last Name</label>
-            <input type="text" class="form-control" id="inlineFormInputName"  name="lname" placeholder="Last Name">
+          <!-- /End Headline -->
+
+          <!-- Description -->
+          <div class="p-t-b-15">
+            <p>We launch our new website soon.<br>
+              Please stay updated and follow.</p>
           </div>
-          <div class="col-sm-3 my-1">
-            <label class="sr-only" for="inlineFormInputName">Email</label>
-            <input type="email" class="form-control" id="inlineFormInputName"  name="email" placeholder="Email">
-          </div>
-        
-          <div class="col-auto my-1">
-            <button type="submit" style="background-color: #000000; color: #ffffff; outline: none; border: none;" class="btn btn-primary">Sign Up</button>
+          <!-- /End Description -->
+
+          <div class="p-t-b-30">
+
+            <!-- Newsletter Form:
+             alternative newsletter form via email;
+             write your email in newsletter-process.php and use:
+             <form action="php/newsletter-process.php" id="newsletter-form" method="post"> insted of
+             <form id="mc-form"> -->
+            <form id="mc-form">
+
+              <!-- Input Group -->
+              <div class="input-group">
+                <input type="email" id="email" class="form-control form-control-light"
+                       name="email"
+                       placeholder="Enter your Email here...">
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-color"><i
+                        class="icon icon-sm icon-arrows-slim-right-dashed"></i>
+                    </button>
+                  </span>
+              </div>
+              <!-- /End Input Group -->
+
+              <!-- Message Alert -->
+              <div id="message-newsletter" class="message-wrapper text-white message">
+
+                <span><i class="icon icon-sm icon-arrows-slim-right-dashed"></i><label
+                    class="message-text" for="email"></label></span>
+              </div>
+              <!-- /End Message Alert -->
+
+            </form>
+            <!-- /End Newsletter Form -->
+
           </div>
         </div>
-      </form>
-    </p>
-  </div>
-  <div class="bottomleft">
-    <p></p>
-  </div>
-</div> 
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
 
+      </div>
+      <!-- /End .modal-content -->
+    </div>
+    <!-- /End .modal-dialog -->
+  </div>
+  <!-- /End Modal -->
+
+  <!-- ============================
+       Header Navigation
+  ================================= -->
+
+  <header>
+    <nav class="navbar navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6 text-white col-transform">
+            <div class="navbar-wrapper">
+
+              <!-- Navbar Links -->
+              <div class="navbar-links scrollspy">
+                <ul class="nav">
+                  <li><a class="smooth-scroll link-white" href="#about">About</a></li>
+                  <li><a class="smooth-scroll link-white" href="#contact">Contact</a></li>
+                </ul>
+              </div>
+              <!-- /End Navbar Links -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container-fluid">
+    <div class="row">
+
+
+      <!-- ============================
+           Info
+      ================================= -->
+
+      <div id="info" class="col-md-6 text-white text-center page-info col-transform">
+        <div class="vert-middle">
+          <div class="reveal scale-out">
+
+            <!-- Count Down -->
+            <div class="count-down p-t-b-15" data-end-date="May 20, 2021 00:00:00">
+            </div>
+            <!-- /End Count Down -->
+
+            <!-- Logo -->
+            <!-- <div class="p-t-b-15">
+              <img src="images/logo.png" height="60" width="49" alt="">
+            </div> -->
+            <!-- /End Logo -->
+
+            <div class="p-t-b-15">
+              <!-- Headline & Description -->
+              <h2><span class="font-weight-200">Our Website</span><br>is coming soon</h2>
+
+              
+              <!-- /End Headline & Description -->
+            </div>
+            <!-- Arrow -->
+            <div class="p-t-b-20">
+              <i class="icon icon-sm icon-arrows-slim-down-dashed"></i>
+            </div>
+            <!-- /End Arrow -->
+
+            <!-- Buttons -->
+            <div class="p-t-b-15 btn-row">
+              <button class="btn btn-color" data-toggle="modal"
+                      data-target="#modal-notify"
+                      role="button">Notify me
+              </button>
+            </div>
+            <!-- /End Buttons -->
+
+            <!-- Social Media Links -->
+            <!-- <div class="p-t-b-30">
+              <p>
+                <a href="https://www.facebook.com/#" class="link-white"><i
+                    class="fa fa-facebook"></i></a>
+                <a href="https://twitter.com/#" class="link-white"><i
+                    class="fa fa-twitter"></i></a>
+                
+              </p>
+            </div> -->
+            <!-- Social Media Links -->
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ============================
+           Content
+      ================================= -->
+
+      <div id="content" class="page-content col-md-6 text-center bg-white-09">
+
+        <!-- ----------------------------
+             About Section
+        --------------------------------- -->
+
+        <section id="about" class="p-t-b-30">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+
+              <!-- Headline -->
+              <div class="wrap-line border-dark">
+                <h3><span class="font-weight-200">About</span> Us</h3>
+              </div>
+              <!-- /End Headline -->
+
+              <!-- Description -->
+              <div class="p-t-b-15  text-grey">
+                <p>We are a privately owned hospitality real estate firm developing real  estate products for the hospitality and short-let market.  <br/>
+
+We also broker and work with real estate developers and hospitality brands in the budget, mid-market and full service hotel sector. Seeking to establish their presence in the local market. <br/>
+Our properties are developed wholly-owned or via our rent-to-use solutions.<br/>
+Our backgrounds of extensive global hospitality and real estate experience and reliable access to local and international finance, helps us to engage in transactions of varying sizes and complexity and is totally committed to delivering the highest standards of service to its partners, stakeholders and clients 
+<br>
+                  </p>
+              </div>
+              <!-- /End Description -->
+
+              <!-- Social Media Links -->
+              <!-- <div class="p-t-b-15">
+                <p>
+                  <a href="https://www.facebook.com/#" target="_blank">
+                    <i class="fa fa-facebook"></i></a>
+                  <a href="https://twitter.com/#" target="_blank">
+                    <i class="fa fa-twitter"></i></a>
+                  <a href="https://www.instagram.com/#" target="_blank">
+                    <i class="fa fa-instagram"></i></a>
+                </p>
+              </div> -->
+              <!-- /End Social Media Links -->
+
+            </div>
+          </div>
+
+          <!-- Gallery -->
+          <div class="gallery row no-gutters p-t-b-30">
+
+            <!-- Image 1 -->
+            <figure class="col-xs-6 img-hover-effect">
+              <a href="/maintainance/images/page-image-5.jpg"
+                 data-size="900x600">
+                <img class="img-responsive" src="/maintainance/images/page-image-5.jpg"
+                     alt="Image description"/>
+              </a>
+
+              <span class="img-title">Minimalism</span>
+              <span class="img-description"></span>
+              <span class="img-overlay"></span>
+            </figure>
+            <!-- /End Image 1 -->
+
+            <!-- Image 2 -->
+            <figure class="col-xs-6 img-hover-effect">
+              <a href="/maintainance/images/page-image-6.jpg"
+                 data-size="900x600">
+                <img class="img-responsive" src="/maintainance/images/page-image-6.jpg"
+                     alt="Image description"/>
+              </a>
+
+              <span class="img-title">Timeout</span>
+              <span class="img-description"></span>
+              <span class="img-overlay"></span>
+            </figure>
+            <!-- /End Image 2 -->
+
+            <!-- Image 3 -->
+            <figure class="col-xs-6 img-hover-effect">
+              <a href="/maintainance/images/page-image-7.jpg"
+                 data-size="900x600">
+                <img class="img-responsive" src="/maintainance/images/page-image-7.jpg"
+                     alt="Image description"/>
+              </a>
+
+              <span class="img-title">Perspective</span>
+              <span class="img-description"></span>
+              <span class="img-overlay"></span>
+            </figure>
+            <!-- /End Image 3 -->
+
+            <!-- Image 4 -->
+            <figure class="col-xs-6 img-hover-effect">
+              <a href="/maintainance/images/page-image-4.jpg"
+                 data-size="900x600">
+                <img class="img-responsive" src="/maintainance/images/page-image-4.jpg"
+                     alt="Image description"/>
+              </a>
+              <span class="img-title">Inspiration</span>
+              <span class="img-description"></span>
+              <span class="img-overlay"></span>
+            </figure>
+            <!-- /End Image 4 -->
+
+          </div>
+          <!-- /End Gallery -->
+
+        </section>
+
+
+        <!-- ----------------------------
+             Contact Section
+        --------------------------------- -->
+
+        <section id="contact" class="p-t-30">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+
+              <!-- Headline -->
+              <div class="wrap-line border-dark">
+                <h3>Contact</h3>
+              </div>
+              <!-- /End Headline -->
+
+              <!-- Description -->
+              <div class="p-t-b-15  text-grey">
+                <p>We launch our new website soon.<br>
+                  Please stay updated and follow.</p>
+              </div>
+              <!-- /End Description -->
+
+              <!-- Arrow -->
+              <div class="p-t-b-40">
+                <i class="icon icon-sm icon-arrows-slim-down-dashed"></i>
+              </div>
+              <!-- /End Arrow -->
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 col-sm-12">
+              <div class="row">
+                <div class="col-sm-4 col-xs-6 p-t-b-5">
+
+                  <!-- Icon -->
+                  <div class="p-t-b-15">
+                    <i class="icon icon-lg icon-basic-geolocalize-01"></i>
+                  </div>
+                  <!-- /End Icon -->
+
+                  <!-- Address -->
+                  <div class="p-t-b-15">
+                    <h4>Address</h4>
+                    <p>16b, Adewunmi Adebimpe Street Lekki Phase 1, Lagos Nigeria</p>
+                  </div>
+                  <!-- /End Address -->
+
+                </div>
+
+                <div class="col-sm-4 col-xs-6 p-t-b-5">
+
+                  <!-- Icon -->
+                  <div class="p-t-b-15">
+                    <i class="icon icon-lg icon-basic-smartphone"></i>
+                  </div>
+                  <!-- /End Icon -->
+
+                  <!-- Address -->
+                  <div class="p-t-b-15">
+                    <h4>Direct</h4>
+
+                    <p>T. <a href="tel:+234(1)4535942">+234(1)4535942</a><br>
+                  </div>
+                  <!-- /End Address -->
+
+                </div>
+
+                <div class="col-sm-4  col-sm-offset-0 col-xs-6 col-xs-offset-3 p-t-b-5">
+
+                  <!-- Icon -->
+                  <div class="p-t-b-15">
+                    <i class="icon icon-lg icon-basic-globe"></i>
+                  </div>
+                  <!-- /End Icon -->
+
+                  <!-- Address -->
+                  <div class="p-t-b-15">
+                    <h4>Email</h4>
+
+                    <p><a href="mailto:">info@myshortlet.com</a><br>
+                  </div>
+                  <!-- /End Address -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row no-gutters p-t-30 map">
+            <div id="map" class="col-sm-12"></div>
+          </div>
+
+          <!-- Contact Alert -->
+          <div id="message-contact" class="message-wrapper text-white message">
+            <i class="icon icon-sm icon-arrows-slim-right-dashed"></i>
+            <span class="message-text"></span>
+          </div>
+          <!-- /End Contact Alert -->
+
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /#page -->
+<div id="photoswipe"></div>
+
+<!-- Scripts -->
+<script src="/maintainance/js/plugins/jquery1.11.2.min.js"></script>
+<script src="/maintainance/js/plugins/bootstrap.min.js"></script>
+<script src="/maintainance/js/plugins/scrollreveal.min.js"></script>
+<script src="/maintainance/js/plugins/contact-form.js"></script>
+<script src="/maintainance/js/plugins/newsletter-form.js"></script>
+<script src="/maintainance/js/plugins/jquery.ajaxchimp.min.js"></script>
+<script src="/maintainance/js/plugins/photoswipe/photoswipe.min.js"></script>
+<script src="/maintainance/js/plugins/photoswipe/photoswipe-ui-default.min.js"></script>
+<script src="/maintainance/js/plugins/jquery.countdown.min.js"></script>
+<script src="/maintainance/js/plugins/prefixfree.min.js"></script>
+
+<!-- Custom Script -->
+<script src="/maintainance/js/custom.js"></script>
+
+
+<!-- Google Analytics -->
 <script>
-
-$().ready(function(){
-    $.ajaxSetup({
-        headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-});
-
-
-$("#signup-form").submit(function(e){
-  e.preventDefault()
   
-  $.ajax({
-      url: "/newsletter/signup",
-      type: 'POST',
-      data:$(this).serialize(),
-  }).done(function(res) {
-      $('#signup-form').remove()
-      $(".btn-primary").text("Loading......")
-      $("h1.target").html(res.message)
-  }).fail(function(){
-    $("h1.target").html("We could not sign you up at the moment .Please try again")
-  });
-})
-
 
 </script>
+
 </body>
 </html>
