@@ -74,7 +74,7 @@ h6,
 
 .bgimg {
   /* Background image */
-  background-image: url('https://avenuemontaigne.ng/uploads/Jf4whgGakRpqamCMG9wRbdczuMI4IzbJyCUFOch4.jpg');
+  background-image: url('https://myshortlet.com/uploads/6XKpHK9lGURmBqv64tYsdFpcBpQk4eTVtE0JitDi.png');
   /* Full-screen */
   height: 100%;
   /* Center the background image */

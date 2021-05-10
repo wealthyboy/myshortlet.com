@@ -126,76 +126,9 @@ Route::post('delete/image','Admin\Image\ImagesController@undo');
 
 
 Route::get('/', 'HomeController@index');
-
-Route::group(['middleware' => 'currencyByIp','prefix' => '/fashion'], function(){
-    Route::get('/', 'HomeController@home');
-    Route::get('/home', 'HomeController@index');
-    Route::post('password/reset/link',           'Auth\ForgotPasswordController@sendResetLinkEmail');
-    Route::post('reset/password',                'Auth\ForgotPasswordController@reset');
-    Route::get('validate/token/{token}',         'Auth\ForgotPasswordController@validateToken');
-
-    Auth::routes();
-    Route::get('login/{service}',                 'Auth\SocialLoginController@redirect');
-    Route::get('login/{service}/callback',        'Auth\SocialLoginController@callback');
-    Route::get('account',                         'Account\AccountController@index')->name('account');
-    Route::post('account',                        'Account\AccountController@update');
-    Route::get('products/{category}',             'Products\ProductsController@index');
-    Route::get('product/{category}/{product}',    'Products\ProductsController@show');
-   
-    Route::get('address',                         'Account\AddressController@index')->name('address');
-    Route::get('profile',                         'Profile\ProfileController@index')->name('profile');
-    Route::get('payment',                         'Payment\PaymentController@index')->name('Payment');
-    Route::resource('sales',                      'Sales\SalesController',['names' => 'sales']);
-    Route::get('partial/address',                 'Account\AddressController@getAddress');
-    Route::get('change/password',                 'ChangePassword\ChangePasswordController@index');
-    Route::put('change/password',                 'Api\ChangePassword\ChangePasswordController@update');
-    Route::resource('blog',                       'Blog\BlogController',['name' => 'blog']);
-    Route::get('blog/tag/{tag_id}',               'Blog\BlogController@tag');
-
-    Route::get('reviews',                         'Reviews\ReviewsController@index');
-
-    Route::resource('/address',                   'Account\AddressController',['names' => 'addresses']);
-    Route::get('returns',                         'Returns\ReturnsController@index')->name('returns');
-    Route::get('checkout',                        'Checkout\CheckoutController@index')->name('checkout');
-    Route::post('checkout/coupon',                'Checkout\CheckoutController@coupon');
-    Route::post('checkout/confirm',               'Checkout\CheckoutController@confirm')->name('confirm_order');
-    Route::get('orders',                          'Orders\OrdersController@index')->name('orders');
-    Route::get('order/{id}',                      'Orders\OrdersController@show');
-    Route::get('currency/{id}',                   'CurrencySwitcher\\CurrencySwitcherController@index');
+Auth::routes();
 
 
-    Route::post('vouchers-coupon',                'Checkout\CheckoutController@coupon');
-    Route::get('errors',                          'Errors\errorsCtrl@index');
-    Route::get('thankyou',                        'Thankyou\ThankYouCtrl@index');
-    Route::get('register/confirm/{token}',        'Auth\RegisterController@verifyEmail');
-    Route::get('shopping/cart/all',               'Cart\CartController@show')->name('shopping-cart');
-    Route::get('cart',                            'Cart\CartController@index');
-    Route::get('load-cart',                       'Cart\CartController@loadCart');
-
-    Route::post('cart',                           'Cart\CartController@store');
-    Route::post('update_cart',                    'Cart\CartController@update')->name('update_cart');
-    Route::get('cart/all/in/cart',                'Cart\CartController@all_in_cart');
-    Route::get('reviews/{product}',               'Api\Reviews\ReviewsController@index');
-    Route::post('reviews/store',                  'Api\Reviews\ReviewsController@store');
-    // Route::post('/load-login-modal', function ( ) { 
-    //     return view('modal.login.modal_body');
-    // });
-
-    // Route::post('/admin/permission-denied', function ( ) { 
-    //     return view('errors.503');
-    // });
-    
-    Route::get('/search',                        'Products\ProductsController@search');
-    Route::get('cart/delete/{cart_id}',           'Cart\CartController@delete');
-    Route::post('cart-delete',                    'Cart\CartController@delete');
-    Route::get('wishlist',                        'Favorites\FavoritesController@index')->name('wishlist');
-    Route::post('newsletter/signup',              'Api\NewsLetter\NewsLetterController@store');
-    Route::get('items/{category}',                'Products\ProductsController@index');
-    Route::get('item/{category}/{product}',    'Products\ProductsController@show');
-    Route::get('pages/{information}',             'Information\InformationController@show');
-    Route::get('newsletter/unsubscribe',          'NewsLetter\NewsLetterController@index');
-    Route::post('newsletter/unsubscribe',         'NewsLetter\NewsLetterController@unsubscribe');
-});
 
 
 
