@@ -96,16 +96,11 @@
                 </a>
 
             </li>
-            <li class="{{ $helper->active_link(['account']) }} ">
-                <a href="{{ route('admin_account') }}">
-                <i class="material-icons">grid_on</i>
-                    <p> Account </p>
-                </a>
-            </li>
+            
             <li class="{{ $helper->active_link(['products','category','discounts','attributes','vouchers']) }} ">
                 <a data-toggle="collapse" href="#products">
-                   <i class="fa fa-product-hunt" aria-hidden="true"></i>   
-                    <p> Products 
+                <i class="fa fa-home" aria-hidden="true"></i>
+                    <p> Reservation 
                        <b class="caret"></b>
                     </p>
                 </a>
@@ -119,12 +114,7 @@
                                 <span class="sidebar-normal"> Attributes </span>
                             </a>
                         </li>
-                        <li class="{{ $helper->active_link(['brands']) }} ">
-                            <a href="{{ route('brands.index') }}">
-                                <span class="sidebar-mini"> B </span>
-                                <span class="sidebar-normal"> Brands </span>
-                            </a>
-                        </li>
+                        
                         <li class="{{ $helper->active_link(['category']) }}">
                              <a  href="{{ route('category.index') }}">
                                 <span class="sidebar-mini"> C </span>
@@ -145,12 +135,7 @@
                             </a>
                         </li>
                         
-                        <li class="{{ $helper->active_link(['products']) }} ">
-                           <a href="{{ route('admin.products.index') }}">
-                                <span class="sidebar-mini"> P </span>
-                                <span class="sidebar-normal"> Products </span>
-                            </a>
-                        </li>
+                        
                     
                         <li class="{{ $helper->active_link(['requirements']) }} ">
                            <a href="{{ route('requirements.index') }}">
@@ -160,12 +145,6 @@
                         </li>
 
                     
-                        <li class="{{ $helper->active_link(['vouchers']) }} ">
-                            <a href="{{ route('vouchers.index') }}">        
-                            <span class="sidebar-mini"> RV</span>
-                                <p> Vouchers </p>
-                            </a>
-                        </li>
  
                     </ul>
                 </div>
@@ -185,20 +164,12 @@
 
                 <div class="collapse {{ $helper->active_link(['orders']) ? 'in' : ''}}" id="shop">
                     <ul class="nav">
-                        <li  class="{{ $helper->active_link(['orders']) }} ">
-                            <a href="{{ route('admin.orders.index',['type'=> 'fashion']) }}">
-                                <span class="sidebar-mini"> C </span>
-                                <span class="sidebar-normal"> Orders  Fashion</span>
-                            </a>
-                        </li>
-
                         <li>
                             <a href="{{ route('admin.orders.index',['type'=> 'reservation']) }}">
                                 <span class="sidebar-mini"> C </span>
-                                <span class="sidebar-normal"> Orders  Reservation</span>
+                                <span class="sidebar-normal"> Orders </span>
                             </a>
                         </li>
-                        
                         <li>
                             <a href="/admin/reviews">
                                 <span class="sidebar-mini"> D</span>
@@ -277,12 +248,7 @@
                 <div class="collapse {{ $helper->active_link(['permissions','shipping','location','settings','rates']) ? 'in' : ''}}"  id="Local">
                     <ul class="nav">
                         
-                        <li class="{{ $helper->active_link(['shipping']) }} ">
-                            <a href="{{ route('shipping.index') }}">
-                                <span class="sidebar-mini"> SP </span>
-                                <span class="sidebar-normal"> Shipping </span>
-                            </a>
-                        </li>
+                       
                        
                         <li class="{{ $helper->active_link(['location']) }} ">
                             <a href="{{ route('location.index') }}">

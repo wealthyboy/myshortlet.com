@@ -13,7 +13,7 @@ class ImagesController extends Controller
 {
     protected $settings;
 
-    protected $folders = ['products','frames','attributes','category','reviews','banners','blog','uploads'];
+    protected $folders = ['attributes','category','reviews','banners','blog','uploads','reservations','locations'];
     
     public function __construct()
     {	  
@@ -100,8 +100,8 @@ class ImagesController extends Controller
 
             if (!in_array($request->folder,$this->folders)){
                 return response()->json([
-                    'error' => 'Folder manipulation'
-                ],400);
+                    'error' => $request->folder .' Not allowed'
+                ],500);
             }
 
         
@@ -125,24 +125,7 @@ class ImagesController extends Controller
             $path = $request->file('file')->store('images/'.$request->folder);
             $file = basename($path);
             $path =  public_path('images/'. $request->folder .'/'.$file);
-            
-            if ($request->folder == 'products'){
-
-                $img  = \Image::make($path)->fit($this->settings->products_items_size_w, $this->settings->products_items_size_h)->save(
-                    public_path('images/products/m/'.$file)
-                );
-                $canvas = \Image::canvas(106, 145);
-                $image  = \Image::make($path)->resize(77, 105, function($constraint)
-                {
-                    $constraint->aspectRatio();
-                });
-                $canvas->insert($image, 'center');
-                $canvas->save(
-                    public_path('images/products/tn/'.$file)
-                );
-
-                return $path = asset('images/'. $request->folder .'/'.$file);
-            }
+        
 
             $img  = \Image::make($path)->fit(300, 200)->save(
                 public_path('images/'. $request->folder .'/m/'.$file)

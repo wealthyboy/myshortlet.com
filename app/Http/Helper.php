@@ -5,6 +5,9 @@ namespace App\Http;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\SystemSetting;
+use App\Models\Category;
+use App\Models\Location;
+
 
 
 
@@ -95,10 +98,21 @@ class Helper{
     }
 
 
-    public static function makeSlug ( $string ) { 
-        $slug=strtolower( $string );
-        $slug = preg_replace('/[^A-Za-z0-9-]+/', '-', $slug);
-        return ltrim(rtrim($slug,'-'));      
+    public function makeSlug($parent_id,$name,$model){
+        //Tempral solution
+        $cat = $parent_id ? $model::find($parent_id) : null;
+        if ( null !== $cat ){
+            if ($cat->parent_id){
+                $parent = $model::find($cat->parent_id);
+                if ($parent->parent_id){
+                    $parent = $model::find($parent->parent_id);
+                    return  str_slug($parent->name.' '.$cat->name.' '.$name);
+                }
+                return  str_slug($parent->name.' '.$cat->name.' '.$name);
+            }
+            return $slug = null !== $cat ? str_slug($cat->name.' '.$name) : str_slug($name);
+        }
+        return str_slug($name);
     }
 
 
@@ -126,7 +140,7 @@ class Helper{
     public static function check($collections,$id)
     {
         foreach($collections as $collection){
-            if(null !== $collection->id && $collection->id == $id ){
+            if(null !== $collection->id && $collection->id === $id ){
                 return $collection->id;
             }
         }

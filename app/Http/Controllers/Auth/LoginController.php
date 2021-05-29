@@ -52,7 +52,7 @@ class LoginController extends Controller
         if (  $request->is('admin/*') ) { 
 	       return view('admin.auth.login');
 	    }
-        return view('fashion.auth.login');
+        return view('auth.login');
     }
 
 	
@@ -80,7 +80,7 @@ class LoginController extends Controller
                 
                 return response()->json([
                     'loggenIn' => true,
-                    'url' => \Session::get('url.intended', url('/fashion'))
+                    'url' => \Session::get('url.intended', url('/'))
                 ]);
             }
             return $this->sendLoginResponse($request);
@@ -98,7 +98,7 @@ class LoginController extends Controller
 
     public function redirectTo() {
         if ( !empty(request()->segments()[0]) ){
-            return '/fashion';
+            return '/';
         }
     }
 	
@@ -132,7 +132,7 @@ class LoginController extends Controller
 	    }
 
 
-       return redirect('/fashion');
+       return redirect('/');
     }
 
 	

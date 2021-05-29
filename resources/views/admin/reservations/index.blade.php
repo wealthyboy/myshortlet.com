@@ -94,7 +94,7 @@
                                     <!-- cart-sidebar-btn active -->
                                     <td>
                                         <div class="img-container">
-                                            <img class="" src="{{  $reservation->image_to_show_m   }}" alt="...">
+                                            <img class="" src="{{  $reservation->image  }}" alt="...">
                                         </div>
                                     </td>
                                     <td><a target="_blank">{{ $reservation->name }} {{ optional($reservation->city)->name }} {{ optional($reservation->state)->name }}</a></td>

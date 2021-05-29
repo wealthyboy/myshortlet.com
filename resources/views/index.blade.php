@@ -1,125 +1,120 @@
-@include('fashion._partials.header_styles')
 
 
-
-<body class="">
-   <div id="app" class="page-wrapper">
-      <header class="header  fixed-top">
-         <div class="header-middle ">
-            <div class="container">
-               <div class="header-left w-lg-max ml-auto ml-lg-0">
-                  <div class="header-icon header-search header-search-inline header-search-category">
-                     <a href="#" class="search-toggle mr-1" role="button"><i class="icon-search-3 "></i></a>
-                     <form action="/search" method="get">
-                        <div class="header-search-wrapper">
-                        </div>
-                        <!-- End .header-search-wrapper -->
-                     </form>
-                  </div>
-                  <!-- End .header-search -->
-               </div>
-               <!-- End .header-left -->
-               <div class="header-center order-first order-lg-0 ml-0 ml-lg-auto">
-                  <button class="mobile-menu-toggler" type="button">
-                  <i class="icon-menu"></i>
-                  </button>
-                  <a href="/" class="logo">
-                  <img src="{{ $system_settings->logo_path() }}" alt="{{ Config('app.name') }} Logo">
-                  </a>
-               </div>
-               <!-- End .header-center -->
-               <div class="header-right w-lg-max ml-0 ml-lg-auto"></div>
+@extends('layouts.app')
+@section('content')
+<div class="position-relative overflow-hidden  text-center bg-light">
+   <div class="col-md-8 p-lg-5 mx-auto my-5">
+      <h1 class="display-4 font-weight-normal">Find deals on Apartments.</h1>
+      <p class="lead font-weight-normal"></p>
+      <form>
+         <div class="form-row">
+            <div class="col">
+               <input type="text" class="form-control" placeholder="location">
             </div>
-            <!-- End .container -->
-         </div>
-         <!-- End .header-middle -->
-         <div class="header-bottom sticky-header d-none d-lg-block">
-            <div class="container">
-               <nav class="main-nav d-flex w-lg-max mt-2 justify-content-center">
-                  <ul class="menu">
-                     <li>
-                        <a href="">Fashion</a>
-                     </li>
-                     <li>
-                        <a href="">Apartments</a>
-                     </li>
-                  </ul>
-               </nav>
+            <div class="col">
+               <input type="text" id="flatpickr-input" class="form-control " placeholder="Check in-Check out">
             </div>
-            <!-- End .container -->
-         </div>
-         <!-- End .header-bottom -->
-      </header>
-      <!-- End .header -->
-      <main class="main main-page">
-        <div class="container-fliud mt-3">
-          <div  class="row align-items-start ">
-              <div class="col-md-6 col-12    p-0 pr-1 pl-1  mb-1  p-0 text-center">
-                  <div class="banner-box">
-                      <a class="portfolio-thumb" href="/fashion">
-                          <img src="https://avenuemontaigne.ng/uploads/LbTofMzhmOJE9MkpDGTba2uCmB7Y2yYtGew0uZPJ.jpg" alt="" />
-                      </a>
-                  </div>
-              </div> 
-              <div class="col-md-6 col-12   p-0 pr-1 pl-1  mb-1  p-0 text-center">
-                  <div class="banner-box">
-                      <a class="portfolio-thumb" href="/services">
-                          <img src="https://avenuemontaigne.ng/uploads/3ljHDEzjFhTKex6vIwz7B404M0Xxu1SvW024cDEt.jpg" alt="" />
-                      </a>
-                  </div>
-              </div>
-          </div>
-        </div>
-      </main>
-      <footer class="footer">
-         <div class="footer-bottom text-center">
-            <div class="container d-flex justify-content-center align-items-center flex-wrap">
-               <p class="footer-copyright py-3 pr-4 mb-0">©.AvenueMontaigne {{ date('Y') }}. All Rights Reserved</p>
+            <div class="">
+               <button type="submit" class="btn btn-primary">Search</button>
             </div>
-            <!-- End .container -->
          </div>
-         <!-- End .footer-bottom -->
-      </footer>
+      </form>
    </div>
-   <!-- End .page-wrapper -->
-   <div class="mobile-menu-overlay"></div>
-   <!-- End .mobil-menu-overlay -->
-   <div class="mobile-menu-container">
-      <div class="mobile-menu-wrapper">
-         <span class="mobile-menu-close"><i class="icon-cancel"></i></span>
-         <nav class="mobile-nav">
-            <ul class="mobile-menu">
-               <li>
-                  <a href="">Fashion</a>
-               </li>
-               <li>
-                  <a href="">Apartments</a>
-               </li>
-            </ul>
-         </nav>
-         <!-- End .mobile-nav -->
+   <div class="product-device shadow-sm d-none d-md-block"></div>
+   <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+</div>
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-md-12">
+         <h2> Top Apartments</h2>
+         <p>See the top destinations people are traveling to</p>
       </div>
-      <!-- End .mobile-menu-wrapper -->
+      @if ($featureds->count())
+      @foreach($featureds as $featured)
+      <div class="col-md-4">
+         <a href="/apartment/{{ $featured->slug }}">
+            <div class="col mb-4">
+               <div class="card">
+                  <img src="{{ $featured->image }}" class="card-img" alt="...">
+                  <div class="card-body">
+                     <h5 class="card-title">{{ $featured->name }}</h5>
+                     <p class="card-text">{{ $featured->state }} {{  $featured->country }}</p>
+                     <p class="card-text">Starting from  NGN{{ $featured->rooms->first()->price }}</p>
+                     <p class="card-text"></p>
+                  </div>
+               </div>
+            </div>
+         </a>
+      </div>
+      @endforeach
+      @endif
    </div>
-   <!-- End .mobile-menu-container -->
-
-
-
-	
-
-
-
-	<!-- Plugins JS File -->
-	<script src="/f/js/app.js?version={{ str_random(6) }}" type="text/javascript"></script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
+   <div class="row">
+      <div class="col-md-12">
+         <h2> Top destinations</h2>
+         <p>See the top destinations people are traveling to</p>
+      </div>
+      @if ($states->count())
+      @foreach($states as $state)
+      <div class="col-md-4">
+         <a href="/apartments/{{ $state->slug }}">
+            <div class="card bg-dark text-white">
+               <img src="{{ $state->image }}" class="card-img" alt="...">
+               <div class="card-img-overlay">
+                  <h5 class="card-title">Card title</h5>
+               </div>
+               <h5 class="">Card title</h5>
+            </div>
+         </a>
+      </div>
+      @endforeach
+      @endif
+   </div>
+   <div class="clearfix"></div>
+   @if ($posts->count()) 
+   <div class="row">
+      <div class="col-md-12">
+         <h2>  Get inspiration for your next trip </h2>
+      </div>
+      @foreach($posts as $post)
+      <div class="col-md-4">
+         <div class="card mb-4 shadow-sm">
+            <img src="{{ $post->image }}" class="card-img" alt="...">
+            <div class="card-body">
+               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+               <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                     <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  </div>
+                  <small class="text-muted">9 mins</small>
+               </div>
+            </div>
+         </div>
+      </div>
+      @endforeach
+   </div>
+   @endif
+</div>
+<div class="position-relative overflow-hidden  text-center bg-light">
+   <div class="col-md-7 p-lg-5 mx-auto my-5">
+      <h1 class="display-4 font-weight-normal">Sign Up for .</h1>
+      <p class="lead font-weight-normal"></p>
+      <form>
+         <div class="form-row">
+            <div class="col">
+               <input type="text" class="form-control" placeholder="email">
+            </div>
+            <div class="">
+               <button type="submit" class="btn btn-primary">Signe Up</button>
+            </div>
+         </div>
+      </form>
+   </div>
+   <div class="product-device shadow-sm d-none d-md-block"></div>
+   <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+</div>
+@endsection
+@section('page-scripts')
+@stop
 

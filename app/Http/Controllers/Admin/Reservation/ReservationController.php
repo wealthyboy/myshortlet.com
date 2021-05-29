@@ -80,21 +80,23 @@ class ReservationController extends Controller
         $this->validate($request,[
             "apartment_name"  => "required",
             'address'=> "required",
-            "city_id" => "required",
             "description" => "required"
         ]);
-        //Month Day Year
 
+        //Month Day Year
         $reservation =  new Reservation();
         $reservation->name      = $request->apartment_name;
         $reservation->address   = $request->address;
-        $reservation->city_id   = $request->city_id;
-        $reservation->state_id  = Location::find($request->city_id)->parent_id;
         $reservation->image     = $request->image;
         $reservation->description     = $request->description;
+        $reservation->featured        = $request->featured ? 1 : 0;
+        $reservation->allow        = $request->allow ? 1 : 0;
+
         $reservation->slug      = str_slug($request->apartment_name);
         $reservation->save();
         $reservation->facilities()->sync($request->facility_id);
+        $reservation->locations()->sync($request->location_id);
+
 
         /**
          * Reservation Images
@@ -205,20 +207,23 @@ class ReservationController extends Controller
         $this->validate($request,[
             "apartment_name"  => "required",
             'address'=> "required",
-            "city_id" => "required",
             "description" => "required"
         ]);
 
         $reservation =  Reservation::find($id);
         $reservation->name      = $request->apartment_name;
         $reservation->address   = $request->address;
-        $reservation->city_id   = $request->city_id;
-        $reservation->state_id  = Location::find($request->city_id)->parent_id;
         $reservation->image     = $request->image;
         $reservation->description     = $request->description;
         $reservation->slug      = str_slug($request->apartment_name);
+        $reservation->featured        = $request->featured ? 1 : 0;
+        $reservation->allow        = $request->allow ? 1 : 0;
+
+
         $reservation->save();
         $reservation->facilities()->sync($request->facility_id);
+        $reservation->locations()->sync($request->location_id);
+
 
         /**
          * Reservation Images
@@ -275,7 +280,7 @@ class ReservationController extends Controller
 
         /**
          * New apartments
-         */
+        */
 
         
         $data = [];

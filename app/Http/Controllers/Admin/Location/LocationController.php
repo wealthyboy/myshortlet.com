@@ -4,13 +4,10 @@ namespace App\Http\Controllers\Admin\Location;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use App\Http\Helper;
 use App\Models\User;
 use App\Models\Location;
 use App\Models\Activity;
-
-
 use Illuminate\Validation\Rule;
 
 
@@ -21,6 +18,7 @@ class LocationController extends Controller
     
     public function __construct()
     {
+
     }
     
     
@@ -33,7 +31,6 @@ class LocationController extends Controller
     {
         //
         $locations = Location::parents()->get();
-
         return view('admin.location.index',compact('locations'));
     }
 
@@ -75,7 +72,6 @@ class LocationController extends Controller
             ]);
 
         } else {
-            $slug= str_slug($request->name);
             //define validation 
             $this->validate($request,[
                 'name'=>[
@@ -90,7 +86,11 @@ class LocationController extends Controller
        
         $location = new Location;
         $location->name = $request->name;
-        $location->parent_id     = $request->parent_id;
+        $location->image = $request->image;
+        $location->description = $request->description;
+        $location->location_type = $request->location_type;
+        $location->slug= $this->makeSlug($request->parent_id,$request->name);
+        $location->parent_id  = $request->parent_id;
         $location->save();
         (new Activity)->Log("Created a new Location called {$request->name}");
         return redirect()->back();
@@ -156,9 +156,14 @@ class LocationController extends Controller
                     
                 ],
         ]);
-        $location->name=$request->name;
-        $location->parent_id     = $request->parent_id;
+        $location->name = $request->name;
+        $location->image = $request->image;
+        $location->description = $request->description;
+        $location->location_type = $request->location_type;
+        $location->slug= $this->makeSlug($request->parent_id,$request->name);
+        $location->parent_id  = $request->parent_id;
         $location->save();
+
         //Log Activity
         (new Activity)->Log("Updated  Location {$request->name} ");
         return redirect()->action('Admin\Location\LocationController@index');
@@ -188,5 +193,24 @@ class LocationController extends Controller
         Location::destroy( $request->selected );
         return redirect()->back();
 
+    }
+
+
+
+    public function makeSlug($parent_id,$name){
+        //Tempral solution
+        $cat = $parent_id ? Location::find($parent_id) : null;
+        if ( null !== $cat ){
+            if ($cat->parent_id){
+                $parent = Location::find($cat->parent_id);
+                if ($parent->parent_id){
+                    $parent = Location::find($parent->parent_id);
+                    return  str_slug($parent->name.' '.$cat->name.' '.$name);
+                }
+                return  str_slug($parent->name.' '.$cat->name.' '.$name);
+            }
+            return $slug = null !== $cat ? str_slug($cat->name.' '.$name) : str_slug($name);
+        }
+        return str_slug($name);
     }
 }

@@ -24,6 +24,18 @@ class Location extends Model
     public function shippings()
     {
         return $this->belongsToMany(Location::class,'location_shipping');
-
 	}
+
+
+    public function  reservations()
+    {
+        return $this->belongsToMany(Reservation::class);
+    }
+
+
+    public function getRouteKeyName(){
+		return 'slug';
+	}
+
+
 }

@@ -3,8 +3,8 @@
        <div class="checkbox">
             <label>
                 <input 
-                {{ $category->check($product->categories , $obj->id) ? 'checked' : '' }} 
-                type="checkbox" value="{{ trim($obj->id) }}" name="category_id[]" >
+                {{ $helper->check($reservation->locations , $obj->id) ? 'checked' : '' }} 
+                type="checkbox" value="{{ trim($obj->id) }}" name="location_id[]" >
                 {{ $obj->name }}  
             </label>
         </div>  

@@ -13,7 +13,7 @@
                <!--  You can switch " data-color="purple"   with one of the next bright colors: "green", "orange", "red", "blue"       -->
                <div class="wizard-header">
                   <h3 class="wizard-title">
-                     Upload Product
+                     Upload Apartment
                   </h3>
                </div>
                <div class="wizard-navigation">
@@ -24,7 +24,7 @@
                </div>
                <div class="tab-content">
                   <div class="tab-pane" id="ProductData">
-                     @include('admin.reservations.product_data')
+                     @include('admin.reservations.reservation_data')
                   </div>
 
                   <div class="tab-pane" id="ProductVariations">

@@ -23,6 +23,10 @@ class Reservation extends Model
         'image_tn',
 		'image_to_show_m',
 		'image_to_show_tn',
+        'country',
+        'state',
+        'city',
+        'street'
 	];
 
     public function city(){
@@ -45,5 +49,34 @@ class Reservation extends Model
     public function facilities(){
         return $this->belongsToMany(Facility::class,'facility_reservation');
     }
+
+
+    public function  locations()
+    {
+        return $this->belongsToMany(Location::class);
+    }
+
+
+    public function location($location_type, $country){
+		return optional($this->locations)->where($location_type, $country)->first();
+	}
+
+
+    public function getCountryAttribute(){
+		return optional($this->location('location_type','country'))->name;
+	}
+
+    public function getStateAttribute(){
+		return optional($this->location('location_type','state'))->name;
+	}
+
+    public function getCityAttribute(){
+		return optional($this->location('location_type','city'))->name;
+	}
+
+
+    public function getStreetAttribute(){
+		return optional($this->location('location_type','street'))->name;
+	}
 
 }

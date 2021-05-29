@@ -6,17 +6,16 @@ use Illuminate\Http\Request;
 
 
 use App\Models\Live;
-use App\Models\Banner;
-use App\Models\Product;
-use App\Models\Review;
+use App\Models\Location;
 use App\Models\Information;
+use App\Models\Reservation;
+
 use App\Models\Currency;
 use App\Models\SystemSetting;
 use App\Models\Http\Helper;
-use Stevebauman\Location\Location;
 
 
-class HomeController extends Controller
+class HomeController
 {
     /**
      * Show the application dashboard.
@@ -25,20 +24,14 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {    
-        $site_status =Live::first();
+        $site_status = Live::first();
 
-        $products = Product::where('featured',1)->orderBy('created_at','DESC')->take(8)->get();
-        $banners = Banner::where('type','banner')->orderBy('sort_order','asc')->get();
-
-        $sliders = Banner::where('type','slider')->orderBy('sort_order','asc')->get();
-        $posts  =   Information::orderBy('created_at','DESC')->where('blog',true)->take(3)->get();
-    
         if (!$site_status->make_live ) {
-            return view('index',compact('products','posts','banners','sliders')); 
+            return view('index'); 
         } else {
             //Show site if admin is logged in
             if ( auth()->check()  && auth()->user()->isAdmin()){
-                return view('index',compact('products','posts','banners','sliders')); 
+                return view('index'); 
             }
             return view('underconstruction.index');
         }
@@ -49,16 +42,12 @@ class HomeController extends Controller
 
     public function home()
     {
-
-        $site_status =Live::first();
-
-        $products = Product::where('featured',1)->orderBy('created_at','DESC')->take(8)->get();
-        $banners = Banner::where('type','banner')->orderBy('sort_order','asc')->get();
-
-        $sliders = Banner::where('type','slider')->orderBy('sort_order','asc')->get();
-        $posts  =   Information::orderBy('created_at','DESC')->where('blog',true)->take(3)->get();
-    
-        return view('fashion.index',compact('products','posts','banners','sliders')); 
+        
+        $site_status = Live::first();
+        $states   = Location::where('location_type', 'state')->has('reservations')->latest()->get();
+        $featureds = Reservation::where('featured',true)->get();
+        $posts       = Information::orderBy('created_at','DESC')->where('blog',true)->take(3)->get();
+        return view('index',compact('states','posts','featureds')); 
     }
 
 
