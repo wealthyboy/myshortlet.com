@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterReservationsTableAddUserId extends Migration
+class AlterApartmentsTableAddUserId extends Migration
 {
     /**
      * Run the migrations.
@@ -30,3 +30,9 @@ class AlterReservationsTableAddUserId extends Migration
         });
     }
 }
+
+
+SET FOREIGN_KEY_CHECKS=0;
+
+
+DROP TABLE `ambassadors`, `apartment_attribute`,`attribute_reservation`, `facilities`, `facility_reservation`, `location_reservation`, `requirements`, `reservations`;
