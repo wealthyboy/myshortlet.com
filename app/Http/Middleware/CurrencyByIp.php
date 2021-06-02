@@ -27,6 +27,8 @@ class CurrencyByIp
         $rate = [];
         $position = '';
 
+        dd($settings);
+
         $settings = SystemSetting::first();
         if ($settings->allow_multi_currency){
             if ($request->session()->has('switch')) { 
