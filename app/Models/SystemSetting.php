@@ -15,7 +15,8 @@ class SystemSetting extends Model
 	
 	public $timestamps = false;
 	
-	protected $fillable = ['store_name',
+	protected $fillable = [
+		                   'store_name',
 	                       'address',
 						   'store_email',
 						   'store_phone',
@@ -32,8 +33,9 @@ class SystemSetting extends Model
 						   'store_logo',
 						   'store_icon',
 						   'products_items_size_w',
-						   'products_items_size_h'
-	];
+						   'products_items_size_h',
+						   'pkey'
+	                    ];
 				
 	public function alert_email( ) { 
 	   return $this->alert_email;
