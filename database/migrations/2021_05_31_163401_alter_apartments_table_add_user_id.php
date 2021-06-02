@@ -32,7 +32,3 @@ class AlterApartmentsTableAddUserId extends Migration
 }
 
 
-SET FOREIGN_KEY_CHECKS=0;
-
-
-DROP TABLE `ambassadors`, `apartment_attribute`,`attribute_reservation`, `facilities`, `facility_reservation`, `location_reservation`, `requirements`, `reservations`;
