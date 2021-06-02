@@ -22,10 +22,8 @@ class CreateVouchersTable extends Migration
                 $table->boolean('status')->default(false);
                 $table->boolean('valid')->default(true);
                 $table->integer('category_id')->unsigned()->nullable();
-                $table->integer('product_id')->unsigned()->nullable();
-                $table->integer('product_variation_id')->unsigned()->nullable();
+                $table->integer('apartment_id')->unsigned()->nullable();
                 $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-                $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
                 $table->string('type')->nullable();
                 $table->timestamp('expires')->nullable(); 
                 $table->timestamps();

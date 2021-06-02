@@ -26,7 +26,7 @@ class AlterTablePromos extends Migration
     public function down()
     {
         Schema::table('promos', function (Blueprint $table) {
-            //
+            $table->dropColumn('make_live');
         });
     }
 }

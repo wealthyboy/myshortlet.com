@@ -17,7 +17,6 @@ class AlerImagesTableImagable extends Migration
           
             $table->string('imageable_type');
             $table->integer('imageable_id');
-            $table->dropColumn(['image_type','image_id']);
         });
     }
 
@@ -29,7 +28,6 @@ class AlerImagesTableImagable extends Migration
     public function down()
     {
         Schema::table('images', function (Blueprint $table) {
-            //
         });
     }
 }

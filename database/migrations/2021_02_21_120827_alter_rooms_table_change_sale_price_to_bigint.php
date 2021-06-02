@@ -26,7 +26,8 @@ class AlterRoomsTableChangeSalePriceToBigint extends Migration
     public function down()
     {
         Schema::table('rooms', function (Blueprint $table) {
-            //
+            $table->dropColumn('sale_price');
+
         });
     }
 }

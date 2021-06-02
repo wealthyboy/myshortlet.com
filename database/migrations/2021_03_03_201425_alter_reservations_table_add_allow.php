@@ -13,7 +13,7 @@ class AlterReservationsTableAddAllow extends Migration
      */
     public function up()
     {
-        Schema::table('reservations', function (Blueprint $table) {
+        Schema::table('apartments', function (Blueprint $table) {
             $table->boolean("allow")->default(true);
         });
     }
@@ -25,7 +25,7 @@ class AlterReservationsTableAddAllow extends Migration
      */
     public function down()
     {
-        Schema::table('reservations', function (Blueprint $table) {
+        Schema::table('apartments', function (Blueprint $table) {
             $table->dropColumn('allow');
         });
     }

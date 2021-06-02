@@ -26,7 +26,7 @@ class AlerImagesTableAddImage extends Migration
     public function down()
     {
         Schema::table('images', function (Blueprint $table) {
-            //
+            $table->dropColumn('image');
         });
     }
 }

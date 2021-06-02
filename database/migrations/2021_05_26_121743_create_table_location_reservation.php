@@ -13,13 +13,13 @@ class CreateTableLocationReservation extends Migration
      */
     public function up()
     {
-        Schema::create('location_reservation', function (Blueprint $table) {
+        Schema::create('apartment_location', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('location_id');
-            $table->unsignedBigInteger('reservation_id');
+            $table->unsignedBigInteger('apartment_id');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
-            $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
+            $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateTableLocationReservation extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('location_reservation');
+        Schema::dropIfExists('apartment_location');
     }
 }

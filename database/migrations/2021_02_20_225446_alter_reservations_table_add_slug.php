@@ -13,7 +13,7 @@ class AlterReservationsTableAddSlug extends Migration
      */
     public function up()
     {
-        Schema::table('reservations', function (Blueprint $table) {
+        Schema::table('apartments', function (Blueprint $table) {
             $table->string('slug')->nullable();
             $table->string('image')->nullable();
         });
@@ -26,7 +26,7 @@ class AlterReservationsTableAddSlug extends Migration
      */
     public function down()
     {
-        Schema::table('reservations', function (Blueprint $table) {
+        Schema::table('apartments', function (Blueprint $table) {
             $table->dropColumn('slug','image');
         });
     }

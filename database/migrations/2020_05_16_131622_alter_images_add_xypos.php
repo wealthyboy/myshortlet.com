@@ -27,7 +27,7 @@ class AlterImagesAddXypos extends Migration
     public function down()
     {
         Schema::table('images', function (Blueprint $table) {
-            //
+            $table->dropColumn('x_pos','y_pos');
         });
     }
 }

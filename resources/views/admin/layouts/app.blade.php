@@ -97,16 +97,16 @@
 
             </li>
             
-            <li class="{{ $helper->active_link(['products','category','discounts','attributes','vouchers']) }} ">
+            <li class="{{ $helper->active_link(['category','attributes','vouchers']) }} ">
                 <a data-toggle="collapse" href="#products">
                 <i class="fa fa-home" aria-hidden="true"></i>
-                    <p> Reservation 
+                    <p> Apartments 
                        <b class="caret"></b>
                     </p>
                 </a>
 
                 <div class="collapse 
-                   {{ $helper->active_link(['products','reservations','category','fine_art','discounts','attributes','vouchers','sizes']) ? 'in' : ''}}" id="products">
+                   {{ $helper->active_link(['apartments','category','fine_art','discounts','attributes','vouchers','sizes']) ? 'in' : ''}}" id="products">
                     <ul class="nav">
                         <li class="{{ $helper->active_link(['attributes']) }} ">
                             <a  href="{{ route('attributes.index') }}">
@@ -128,10 +128,10 @@
                             </a>
                         </li>
 
-                        <li class="{{ $helper->active_link(['reservations']) }} ">
-                           <a href="{{ route('admin.reservations.index') }}">
+                        <li class="{{ $helper->active_link(['apartments']) }} ">
+                           <a href="{{ route('admin.apartments.index') }}">
                                 <span class="sidebar-mini"> R </span>
-                                <span class="sidebar-normal"> Reservation </span>
+                                <span class="sidebar-normal"> Apartments </span>
                             </a>
                         </li>
                         

@@ -44,27 +44,9 @@ class Attribute extends Model
     }
 
 
-    public function product_attribute_children()
-    {
-        return $this->hasMany(AttributeProduct::class,'parent_id')->where('product_id',optional($this->pivot)->product_id);
-    }
-
-    
-    public function product_variation_value_attribute_children($product_id)
-    {
-        return $this->hasMany(ProductVariationValue::class,'parent_attribute_id')->where('product_id',$product_id);
-    }
-
-
     public function categories()
     {
         return $this->belongsToMany(Category::class)->withPivot('category_id');
-    }
-
-
-    public function attribute_children()
-    {
-        return $this->hasMany(MetaField::class,'parent_id');
     }
 
 
@@ -78,29 +60,10 @@ class Attribute extends Model
         return $this->hasOne(ProductVariationValue::class,'attribute_parent_id');
     }
 
-    public function p_attribute_children()
-    {  
-       $data = []; 
-       foreach ($this->product_attribute_children as $product_attribute_children) {
-           $key = $product_attribute_children->attribute->color_code !== null ? $product_attribute_children->attribute->color_code : $product_attribute_children->attribute->name;
-           $data[$key] = $product_attribute_children->attribute->name;
-       }
-
-       return $data;
-    }
+    
 
   
     
-    public function attribute_category_children()
-    {  
-       $data = []; 
-       $attribute_categories = AttributeCategory::where('parent_id',$this->pivot->id)->get();
-       foreach ($attribute_categories as $attribute_category) {
-           $data[] = $attribute_category->attribute->name;
-       }
-
-       return $data;
-    }
     
    
 

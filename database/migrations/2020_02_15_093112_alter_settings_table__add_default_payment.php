@@ -29,10 +29,7 @@ class AlterSettingsTableAddDefaultPayment extends Migration
     public function down()
     {
         Schema::table('system_settings', function (Blueprint $table) {
-            $table->dropColumn("payment_id");
-            $table->dropColumn("customer_currency_id");
-            $table->dropColumn("currency_id");
-            $table->dropColumn("location_aware");
+            $table->dropColumn("payment_id"."customer_currency_id","currency_id","location_aware");
         });
     }
 }

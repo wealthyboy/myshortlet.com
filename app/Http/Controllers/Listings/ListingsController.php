@@ -17,7 +17,7 @@ class ListingsController extends Controller
      */
     public function index(Location $location)
     {
-        return view('apartments.index');
+        return view('listings.index');
     }
 
     /**

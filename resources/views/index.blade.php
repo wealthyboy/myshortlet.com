@@ -23,7 +23,7 @@
    <div class="product-device shadow-sm d-none d-md-block"></div>
    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid mt-5">
    <div class="row">
       <div class="col-md-12">
          <h2> Top Apartments</h2>
@@ -96,7 +96,7 @@
    </div>
    @endif
 </div>
-<div class="position-relative overflow-hidden  text-center bg-light">
+<div class="position-relative overflow-hidden  mb-5 mt-5 text-center bg-light">
    <div class="col-md-7 p-lg-5 mx-auto my-5">
       <h1 class="display-4 font-weight-normal">Sign Up for .</h1>
       <p class="lead font-weight-normal"></p>

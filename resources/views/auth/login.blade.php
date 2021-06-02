@@ -3,7 +3,7 @@
 @section('content')
    
  <!--Content-->
-    <section class="sec-padding bg--gray">
+    <section class="sec-padding bg--gray mt-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="ml-1 col-md-6  bg--light mr-1">

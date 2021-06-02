@@ -26,7 +26,7 @@ class AlterTableAttributesTableAddSortOrder extends Migration
     public function down()
     {
         Schema::table('attributes', function (Blueprint $table) {
-            //
+            $table->dropColumn('sort_order');
         });
     }
 }

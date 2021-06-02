@@ -28,7 +28,8 @@ class AlterInformationTableAddImage extends Migration
     public function down()
     {
         Schema::table('information', function (Blueprint $table) {
-            //
+            $table->dropColumn('user_id','name','blog');
+
         });
     }
 }

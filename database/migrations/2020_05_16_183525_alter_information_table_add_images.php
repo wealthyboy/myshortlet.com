@@ -27,8 +27,8 @@ class AlterInformationTableAddImages extends Migration
     public function down()
     {
         Schema::table('information', function (Blueprint $table) {
-            $table->dropColumn('x_pos')->nullable();
-            $table->dropColumn('y_pos')->nullable();
+            $table->dropColumn('x_pos','y_pos');
+
         });
     }
 }

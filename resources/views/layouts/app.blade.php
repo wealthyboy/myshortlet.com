@@ -39,25 +39,53 @@
       </script>
    </head>
    <body>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-         <a class="navbar-brand" href="/">Navbar</a>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark mb-3">
+         <a class="navbar-brand" href="/">MyShortLet</a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
          </button>
          <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav ml-auto">
                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                  <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NGN</a>
                   <div class="dropdown-menu" aria-labelledby="dropdown01">
-                     <a class="dropdown-item" href="#">Action</a>
-                     <a class="dropdown-item" href="#">Another action</a>
-                     <a class="dropdown-item" href="#">Something else here</a>
+                     <a class="dropdown-item" href="#">USD</a>
+                     <a class="dropdown-item" href="#">GBP</a>
+                     <a class="dropdown-item" href="#">EUR</a>
                   </div>
                </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Register</button>
+               <a href="/listings" target="_blank" class="btn btn-outline-success my-2 my-sm-0" type="submit">List your property</a>
+               @if ( !auth()->check() )
+                  <a href="/login" class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</a>
+                  <a href="/register" class="btn btn-outline-success my-2 my-sm-0" type="submit">Register</a>
+               @else
+                 <ul class="nav navbar-nav ml-auto">
+                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                           <a class="dropdown-item" href="/account">
+                           <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-10">
+                              <i class="bi bi-box-arrow-in-right"></i>
+                           </span>
+                           
+                           Profile</a>
+                           <a class="dropdown-item"
+                           onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
+                                              <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-20">
+                                                <i class="bi bi-box-arrow-in-right"></i>
+                                             </span>                                            
+                                            Logout
+                                        </a>
+                                        <form id="logout-form" action="/logout" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                        </div>
+                     </li>
+                  </ul>
+               @endif
             </form>
          </div>
       </nav>
@@ -73,7 +101,7 @@
                         @foreach($footer_info as $info)
                         <div class="col-sm-3 col-6 col-lg-3">
                            <div class="widget">
-                              <h2 class="widget-title">{{ title_case($info->title) }}</h2>
+                              <h4 class="widget-title">{{ title_case($info->title) }}</h2>
                               @if($info->children->count())
                               <ul class="">
                                  @foreach($info->children as $info)
@@ -100,34 +128,7 @@
             <!-- End .container -->
          </div>
          <!-- End .footer-middle -->
-         <section class="footer-widget-area">
-            <div class="container">
-               <div class="row">
-                  <div class="footer-widget col-5 col-lg-6  mb-lg-0 mb-3">
-                     <h5 class=" widget-title  text-uppercase ">Follow Us</h5>
-                     <div class="social-icons">
-                        <a  href="{{ $system_settings->facebook_link }}"><i class="fab fa-facebook-f fa-2x mr-5"></i></a>
-                        <a  href="{{  $system_settings->instagram_link }}"><i class="fab fa-instagram fa-2x mr-5"></i></a>
-                        <a  href="{{  $system_settings->twitter_link}} "><i class="fab fa-twitter fa-2x"></i></a>
-                     </div>
-                  </div>
-                  <div class="footer-widget  col-7  col-lg-6 mb-lg-0 mb-3">
-                     <h5 class="widget-title text-uppercase">Payments</h5>
-                     <ul class="payment-icons  icons">
-                        <li class="mastercard">
-                           <img   src="{{ asset('img/business.png') }}" alt="Master card" /> 
-                        </li>
-                        <li class="visa">
-                           <img  src="{{ asset('img/visa.png') }}" alt="visa card" />
-                        </li>
-                        <li class="verve">
-                           <img  src="{{ asset('img/verve1.png') }}" alt="verve card" /> 
-                        </li>
-                     </ul>
-                  </div>
-               </div>
-            </div>
-         </section>
+        
          <!--Footer Copyright Bar-->
          <section class="footer-bottom-area bg--primary">
             <div class="container">

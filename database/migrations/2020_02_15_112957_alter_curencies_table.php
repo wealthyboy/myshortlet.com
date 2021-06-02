@@ -29,7 +29,8 @@ class AlterCurenciesTable extends Migration
     public function down()
     {
         Schema::table('currencies', function (Blueprint $table) {
-            //
+            $table->dropColumn('country','symbol','iso_code2','iso_code3');
+
         });
     }
 }

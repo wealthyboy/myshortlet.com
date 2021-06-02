@@ -28,8 +28,7 @@ class AlterAttributesTableAddHexCodeAndImage extends Migration
     public function down()
     {
         Schema::table('attributes', function (Blueprint $table) {
-            $table->dropColumn('hex_code');
-            $table->dropColumn('image');
+            $table->dropColumn('hex_code','image');
         });
     }
 }

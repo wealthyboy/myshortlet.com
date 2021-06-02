@@ -27,7 +27,7 @@ class AlterInformationTableAddCustomLink extends Migration
     public function down()
     {
         Schema::table('information', function (Blueprint $table) {
-            //
+            $table->dropColumn('custom_link','same_page');
         });
     }
 }

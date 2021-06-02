@@ -15,6 +15,9 @@ class AlterAttributesTableAddSlug extends Migration
     {
         Schema::table('attributes', function (Blueprint $table) {
             $table->string('slug')->nullbale();
+            $table->decimal('price',8,2)->nullbale();
+
+
         });
     }
 
@@ -26,7 +29,7 @@ class AlterAttributesTableAddSlug extends Migration
     public function down()
     {
         Schema::table('attributes', function (Blueprint $table) {
-            $table->dropColumn('slug');
+            $table->dropColumn('slug','image','price');
         });
     }
 }

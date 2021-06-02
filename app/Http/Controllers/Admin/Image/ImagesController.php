@@ -13,24 +13,25 @@ class ImagesController extends Controller
 {
     protected $settings;
 
-    protected $folders = ['attributes','category','reviews','banners','blog','uploads','reservations','locations'];
+    protected $folders = ['attributes','category','reviews','banners','blog','uploads','apartments','locations'];
     
     public function __construct()
     {	  
 	  $this->settings =  SystemSetting::first();
     }
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */
+    */
     public function index()
     {
         
     }
 
    
-
     /**
      * Store a newly created resource in storage.
      *

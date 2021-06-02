@@ -36,17 +36,7 @@
                             />
                         </div>
 
-                        <div class="form-group label-floating">
-                            <label class="control-label">
-                                Hex Code
-                                <small>*</small>
-                            </label>
-                            <input class="form-control  colorpicker"
-                                name="color_code"
-                                type="text"
-                             
-                            />
-                        </div>
+                        
                         <div class="form-group label-floating">
                             <label class="control-label">
                                 Price
@@ -55,7 +45,6 @@
                             <input class="form-control"
                                 name="price"
                                 type="text"
-                             
                             />
                         </div>
                         <div class="form-group">
@@ -71,10 +60,7 @@
                         <div class="form-group">
                             <label class="control-label"></label>
                             <select name="type" required="true" class="form-control">
-                                <option  value="" selected="">--Choose Type--</option>
-                                <option  value="reservation">Reservation</option>
-                                <option  value="fashion" >fashion</option>
-                                <option  value="both" >Both</option>
+                                <option  value="reservation" selected>Reservation</option>
                             </select>
                         </div>
 

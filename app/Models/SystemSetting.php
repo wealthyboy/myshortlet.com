@@ -3,10 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class SystemSetting extends Model
 {
     //alllow these to be mass assigned
+
+	use HasFactory;
+
 	
 	public $timestamps = false;
 	

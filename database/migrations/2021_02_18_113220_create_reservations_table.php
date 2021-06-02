@@ -13,14 +13,12 @@ class CreateReservationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reservations', function (Blueprint $table) {
+        Schema::create('apartments', function (Blueprint $table) {
             $table->id();
             $table->string("name")->nullable();
             $table->string("type")->nullable();
             $table->string("address")->nullable();
             $table->text("description")->nullable();
-            $table->integer("state_id")->nullable();
-            $table->integer("city_id")->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -33,6 +31,6 @@ class CreateReservationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reservations');
+        Schema::dropIfExists('apartments');
     }
 }
