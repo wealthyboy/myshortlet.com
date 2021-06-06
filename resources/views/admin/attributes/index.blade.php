@@ -53,7 +53,7 @@
                             <option  value="" selected="">--Choose Parent--</option>
                                 @foreach($attributes as $attribute)
                                     <option class="" value="{{ $attribute->id }}" >{{ $attribute->name }} </option>
-                                    @include('includes.product_attr',['disabled'=>true ,'attributes'=>$attribute])
+                                    @include('includes.product_attr',['disabled'=>true ,'attribute'=>$attribute])
                                 @endforeach
                             </select>
                         </div>
