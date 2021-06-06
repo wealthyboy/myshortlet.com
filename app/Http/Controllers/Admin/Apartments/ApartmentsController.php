@@ -168,7 +168,7 @@ class ApartmentsController extends Controller
 
     public function newRoom(Request $request){
         $counter = rand(1,500);
-        $product_attributes =  Attribute::parents()->where('type','reservation')->orderBy('sort_order','asc')->get();
+        $product_attributes =  Attribute::parents()->orderBy('sort_order','asc')->get();
         return view('admin.apartments.variation',compact('counter','product_attributes'));
     }
     
