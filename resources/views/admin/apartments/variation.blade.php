@@ -86,7 +86,7 @@
                 @foreach($rules as $rule)
                 <h4>{{ $rule->name }}</h4>
                     <div  class="" value="{{ $rule->id }}">
-                        @include('includes.attributes',['obj'=>$rule,'radio'=>1, space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
+                        @include('includes.attributes',['obj'=>$rule,'radio'=>1, 'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
                     <hr/>
                 @endforeach  
