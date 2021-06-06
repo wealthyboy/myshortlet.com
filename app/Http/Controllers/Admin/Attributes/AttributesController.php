@@ -23,10 +23,17 @@ class AttributesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $product_attributes = Attribute::parents()->get(); 
-        return view('admin.product_attributes.index',compact('product_attributes'));
+        $attributes = Attribute::parents()->get(); 
+        $type = null;
+
+        if ($request->type){
+            $attributes = Attribute::parents()->where('type',$request->type)->get();
+            $type = $request->type; 
+        }
+
+        return view('admin.attributes.index',compact('attributes','type'));
     }
 
 
@@ -94,12 +101,18 @@ class AttributesController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         User::canTakeAction(4);
         $attr = Attribute::find($id);
-        $product_attributes = Attribute::parents()->get();       
-        return view('admin.product_attributes.edit',compact('product_attributes','attr'));
+        $product_attributes = Attribute::parents()->get(); 
+        $type = null;
+
+        if ($request->type){
+            $attributes = Attribute::parents()->where('type',$request->type)->get();
+            $type = $request->type; 
+        }      
+        return view('admin.attributes.edit',compact('attributes','attr','type'));
     }
 
     /**

@@ -12,7 +12,7 @@
                     <!--Here you can write extra buttons/actions for the toolbar  -->
                 </div>
                 <div class="material-datatables">
-                    <form action="{{ route('attributes.store') }}" method="post" enctype="multipart/form-data" id="form--attribute">
+                    <form action="{{ route('attributes.store',['type'=> $type ?? '']) }}" method="post" enctype="multipart/form-data" id="form--attribute">
                         @csrf
                         <div class="form-group label-floating">
                             <label class="control-label">
@@ -50,20 +50,20 @@
                         <div class="form-group">
                             <label class="control-label"></label>
                             <select name="parent_id" class="form-control">
-                            <option  value="" selected="">--Choose One--</option>
-                                @foreach($product_attributes as $product_attribute)
-                                    <option class="" value="{{ $product_attribute->id }}" >{{ $product_attribute->name }} </option>
-                                    @include('includes.product_attr',['disabled'=>true ,'product_attributes'=>$product_attribute])
+                            <option  value="" selected="">--Choose Parent--</option>
+                                @foreach($attributes as $attribute)
+                                    <option class="" value="{{ $attribute->id }}" >{{ $attribute->name }} </option>
+                                    @include('includes.product_attr',['disabled'=>true ,'attributes'=>$attribute])
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="control-label"></label>
-                            <select name="type" required="true" class="form-control">
-                                <option  value="reservation" selected>Reservation</option>
+                            <select name="type"  class="form-control">
+                                <option  value="" selected></option>
+                                <option  value="facilities" selected>Facilities</option>
                             </select>
-                        </div>
-
+                        </div> -->
                         <h4 class="info-text">Upload Image Here</h4>
                         <div class="">
                             <div id="m_image"  class="uploadloaded_image text-center mb-3">
@@ -110,17 +110,17 @@
                     @csrf
                     @method('DELETE')
                     <div class="material-datatables">
-                        @foreach($product_attributes as $product_attribute)
+                        @foreach($attributes as $attribute)
                         <div class="well well-sm" style="height: 250px; background-color: #fff; color: black; overflow: auto;">
 
-                            <div class="parent" value="{{ $product_attribute->id }}">
+                            <div class="parent" value="{{ $attribute->id }}">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" value="{{ $product_attribute->id }}" name="selected[]" >
-                                        {{ $product_attribute->name }}  <a href="{{ route('attributes.edit',['attribute'=>$product_attribute->id]) }}"><i class="fa fa-pencil"></i> Edit</a> 
+                                        <input type="checkbox" value="{{ $attribute->id }}" name="selected[]" >
+                                        {{ $attribute->name }}  <a href="{{ route('attributes.edit',['attribute'=>$attribute->id]) }}"><i class="fa fa-pencil"></i> Edit</a> 
                                     </label>
                                 </div>   
-                                @include('includes.children',['obj'=>$product_attribute,'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
+                                @include('includes.children',['obj'=>$attribute,'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
                             </div>
                         </div>
 
@@ -133,7 +133,6 @@
 </div> <!-- end row -->
 @endsection
 @section('page-scripts')
-   <script src="{{ asset('backend/js/bootstrap-colorpicker.min.js') }}"></script>
 @stop
 
 @section('inline-scripts')

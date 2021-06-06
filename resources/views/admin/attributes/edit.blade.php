@@ -8,7 +8,7 @@
     <div class="col-md-10">
         @include('errors.errors')
         <div class="card">
-            <form id="" action="{{ route('attributes.update',['attribute'=>$attr->id]) }}" method="post">
+            <form id="" action="{{ route('attributes.update',['attribute'=>$attr->id ,'type'=> $type ?? '']) }}" method="post">
                 @csrf
                 @method('PATCH')
                 <div class="card-content">
@@ -44,15 +44,13 @@
                             <input class="form-control  colorpicker"
                                 name="color_code"
                                 type="text"
-                                value="{{ $attr->color_code }}"
-
-                                
+                                value="{{ $attr->color_code }}"  
                             />
                         </div>
                     <div class="form-group ">
                         <label class="control-label"></label>
                         <select name="parent_id" class="form-control">
-                        <option  value="">--Choose One--</option>
+                        <option  value="">--Choose Parent--</option>
                             @foreach($product_attributes as $product_attribute)
                                 @if($attr->parent_id == $product_attribute->id)
                                     <option class="" value="{{  $product_attribute->id }}" selected="selected">{{ $product_attribute->name }} </option>
@@ -65,15 +63,14 @@
                     </div>
 
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="control-label"></label>
                         <select name="type"  class="form-control">
                             <option  value="" selected="">--Choose Type--</option>
-                            <option  value="reservation">Reservation</option>
-                                <option  value="fashion" >fashion</option>
-                                <option  value="both" >Both</option>
+                            <option  value="facilities">Facilities</option>
+                            <option  value="facilities">Rules</option>
                         </select>
-                    </div>
+                    </div> -->
                     <h4 class="info-text">Upload Image Here</h4>
                     <div class="">
                         <div id="m_image"  class="uploadloaded_image text-center mb-3">

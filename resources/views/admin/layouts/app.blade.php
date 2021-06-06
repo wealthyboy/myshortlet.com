@@ -106,8 +106,26 @@
                 </a>
 
                 <div class="collapse 
-                   {{ $helper->active_link(['apartments','category','fine_art','discounts','attributes','vouchers','sizes']) ? 'in' : ''}}" id="products">
+                   {{ $helper->active_link([
+                        'attributes?type=facilities',
+                        'attributes?type=rules',
+                        'attributes?type=bedroom',
+                        'attributes?type=extra_services',
+                        'apartments',
+                        'category',
+                        'fine_art',
+                        'discounts',
+                        'attributes',
+                        'vouchers',
+                        'sizes']) ? 'in' : ''}}" id="products">
                     <ul class="nav">
+                        <li class="{{ $helper->active_link(['apartments']) }} ">
+                           <a href="{{ route('admin.apartments.index') }}">
+                                <span class="sidebar-mini"> R </span>
+                                <span class="sidebar-normal"> Apartments </span>
+                            </a>
+                        </li>
+
                         <li class="{{ $helper->active_link(['attributes']) }} ">
                             <a  href="{{ route('attributes.index') }}">
                                 <span class="sidebar-mini"> A</span>
@@ -116,36 +134,37 @@
                         </li>
                         
                         <li class="{{ $helper->active_link(['category']) }}">
-                             <a  href="{{ route('category.index') }}">
+                            <a  href="{{ route('attributes.index') }}">
                                 <span class="sidebar-mini"> C </span>
                                 <span class="sidebar-normal"> Categories </span>
                             </a>
                         </li>
-                        <li class="{{ $helper->active_link(['facilities']) }} ">
-                           <a href="{{ route('facilities.index') }}">
+                        <li class="{{ $helper->active_link(['attributes?type=extra_services']) }} ">
+                            <a  href="{{ route('attributes.index',['type'=>'extra_services']) }}">
+                                <span class="sidebar-mini"> P </span>
+                                <span class="sidebar-normal"> Extra Services </span>
+                            </a>
+                        </li>
+
+                        <li class="{{ $helper->active_link(['attributes?type=bedroom']) }} ">
+                            <a  href="{{ route('attributes.index',['type'=>'bedroom']) }}">
+                                <span class="sidebar-mini"> P </span>
+                                <span class="sidebar-normal"> Bedrooms </span>
+                            </a>
+                        </li>
+
+                        <li class="{{ $helper->active_link(['attributes?type=facilities']) }} ">
+                            <a  href="{{ route('attributes.index',['type'=>'facilities']) }}">
                                 <span class="sidebar-mini"> P </span>
                                 <span class="sidebar-normal"> Facilities </span>
                             </a>
                         </li>
-
-                        <li class="{{ $helper->active_link(['apartments']) }} ">
-                           <a href="{{ route('admin.apartments.index') }}">
-                                <span class="sidebar-mini"> R </span>
-                                <span class="sidebar-normal"> Apartments </span>
-                            </a>
-                        </li>
-                        
-                        
-                    
-                        <li class="{{ $helper->active_link(['requirements']) }} ">
-                           <a href="{{ route('requirements.index') }}">
+                        <li class="{{ $helper->active_link(['attributes?type=rules']) }} ">
+                            <a  href="{{ route('attributes.index',['type'=>'rules']) }}">
                                 <span class="sidebar-mini"> R</span>
                                 <span class="sidebar-normal"> Rules </span>
                             </a>
                         </li>
-
-                    
- 
                     </ul>
                 </div>
             </li>
