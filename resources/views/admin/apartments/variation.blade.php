@@ -80,11 +80,41 @@
             </div>
         </div>
         <div class="col-md-12 mt-3 pr-5 pl-5">
+           <label>Rules </label>
+
             <div class="">
-                @foreach($product_attributes as $product_attribute)
-                <h4>{{ $product_attribute->name }}</h4>
-                    <div  class="" value="{{ $product_attribute->id }}">
-                        @include('includes.attributes',['obj'=>$product_attribute,'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
+                @foreach($rules as $rule)
+                <h4>{{ $rule->name }}</h4>
+                    <div  class="" value="{{ $rule->id }}">
+                        @include('includes.attributes',['obj'=>$rule,'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
+                    </div>
+                    <hr/>
+                @endforeach  
+            </div>
+        </div>
+
+        <div class="col-md-12 mt-3 pr-5 pl-5">
+            <label>Facilities </label>
+            <div class="">
+                @foreach($facilities as $facilitie)
+                <h4>{{ $facilitie->name }}</h4>
+                    <div  class="" value="{{ $facilitie->id }}">
+                        @include('includes.attributes',['obj'=>$facilitie,'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
+                    </div>
+                    <hr/>
+                @endforeach  
+            </div>
+        </div>
+
+
+        <div class="col-md-12 mt-3 pr-5 pl-5">
+            <label>Bedrooms </label>
+
+            <div class="">
+                @foreach($bedrooms as $bedroom)
+                <h4>{{ $bedroom->name }}</h4>
+                    <div  class="" value="{{ $bedroom->id }}">
+                        @include('includes.attributes',['obj'=>$bedroom,'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
                     <hr/>
                 @endforeach  
