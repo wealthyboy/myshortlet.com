@@ -1,10 +1,10 @@
-@foreach($obj->children->sortBy('name') as $obj)
-    <div class="" value="{{ $obj->id }}">
+@foreach($obj->children->sortBy('name') as $ob)
+    <div class="" value="{{ $ob->id }}">
         @if (isset($radio))
         <div class="">
             <label>
-                <input type="radio" value="{{ $obj->id }}"   name="attribute_ids{{$room->id}}[]" >
-                {{ $obj->name }}
+                <input type="radio" value="{{ $ob->id }}"   name="{{$obj->rules}}[]" >
+                {{ $ob->name }}
             </label>
         </div>
 
@@ -13,11 +13,11 @@
             <label>
                 <input 
                     type="checkbox" 
-                    value="{{ $obj->id }}"   
+                    value="{{ $ob->id }}"   
                     name="attribute_ids[]" 
-                    {{ isset($room) && isset($helper)  && $helper->check($room->attributes , $obj->id) ? 'checked' : '' }} 
+                    {{ isset($room) && isset($helper)  && $helper->check($room->attributes , $ob->id) ? 'checked' : '' }} 
                 >
-                {{ $obj->name }}
+                {{ $ob->name }}
             </label>
         </div> 
         @endif 
