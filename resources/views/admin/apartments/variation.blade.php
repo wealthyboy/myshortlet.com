@@ -94,7 +94,8 @@
         </div>
 
         <div class="col-md-12 mt-3 pr-5 pl-5">
-            <label>Facilities </label>
+            <h2>Facilities </h2>
+
             <div class="">
                 @foreach($facilities as $facilitie)
                 <h4>{{ $facilitie->name }}</h4>
@@ -108,7 +109,8 @@
 
 
         <div class="col-md-12 mt-3 pr-5 pl-5">
-            <label>Bedrooms </label>
+            <h2>Bedrooms </h2>
+
 
             <div class="">
                 @foreach($bedrooms as $bedroom)
