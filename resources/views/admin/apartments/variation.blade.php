@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class="col-md-12 mt-3 pr-5 pl-5">
-           <label>Rules </label>
+           <h2>Rules </h2>
 
             <div class="">
                 @foreach($rules as $rule)
