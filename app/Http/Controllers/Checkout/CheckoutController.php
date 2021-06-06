@@ -50,12 +50,8 @@ class CheckoutController extends Controller
 
 		
 	public function  index()  { 
-		$carts =  Cart::all_items_in_cart();
-		if (!$carts->count()){
-            return redirect()->to('/cart');
-		}
-		$csrf = json_encode(['csrf' => csrf_token()]);
-		return view('fashion.checkout.index',['csrf' => $csrf]);
+		
+		return view('checkout.index',['csrf' => $csrf]);
 	}
 
 	

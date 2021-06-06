@@ -9,7 +9,7 @@ use App\Traits\HasChildren;
 use App\Traits\FormatPrice;
 use App\Traits\ImageFiles;
 
-use App\Filters\ApartmentFilter\ApartmentFilters;
+use App\Filters\ApartmentFilter\ApartmentsFilter;
 use Illuminate\Database\Eloquent\Builder;
 
 class Apartment extends Model
@@ -34,7 +34,7 @@ class Apartment extends Model
 
 
     public function scopeFilter(Builder $builder,$request,array $filters = []){
-        return (new ApartmentFilters($request))->add($filters)->filter($builder);
+        return (new ApartmentsFilter($request))->add($filters)->filter($builder);
     }
 
     public function city(){
@@ -55,7 +55,7 @@ class Apartment extends Model
     }
 
     public function facilities(){
-        return $this->belongsToMany(Facility::class,'facility_reservation');
+        return $this->belongsToMany(Facility::class,'apartment_facility');
     }
 
     public function  locations()
@@ -82,5 +82,11 @@ class Apartment extends Model
     public function getStreetAttribute(){
 		return optional($this->location('location_type','street'))->name;
 	}
+
+
+    public function getRouteKeyName()
+    {
+		return 'slug';
+    }
 
 }

@@ -1888,11 +1888,13 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 (0,flatpickr__WEBPACK_IMPORTED_MODULE_0__.default)("#flatpickr-input", {
   mode: "range",
   minDate: "today",
-  dateFormat: "Y-m-d",
-  disable: [function (date) {
-    // disable every multiple of 8
-    return !(date.getDate() % 8);
-  }]
+  dateFormat: "Y-m-d" // disable: [
+  //   function(date) {
+  //     // disable every multiple of 8
+  //     return !(date.getDate() % 8);
+  //   },
+  // ],
+
 });
 /**
  * Next, we will create a fresh Vue application instance and attach it to

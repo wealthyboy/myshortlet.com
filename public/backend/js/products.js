@@ -27,7 +27,7 @@ $(document).on("click", ".remove-image", function(e) {
   };
 
   $.ajax({
-    url: "/admin/delete/image?folder=reservations",
+    url: "/admin/delete/image?folder=apartments",
     type: "POST",
     data: payload,
     success: function(data) {
@@ -77,7 +77,7 @@ $(document).ready(function() {
   $("#add-room").on("click", function(e) {
     $.ajax({
       type: "GET",
-      url: "/admin/reservations/room",
+      url: "/admin/apartments/room",
     }).done(function(response) {
       $(".new-room")
         .last()

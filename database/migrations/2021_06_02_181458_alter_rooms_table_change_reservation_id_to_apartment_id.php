@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRequirementsTable extends Migration
+class AlterRoomsTableChangeReservationIdToApartmentId extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateRequirementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('requirements', function (Blueprint $table) {
-            $table->id();
-            $table->text('name');
-            $table->timestamps();
+        Schema::table('rooms', function (Blueprint $table) {
+            $table->renameColumn('reservation_id', 'apartment_id');        
         });
     }
 
@@ -27,6 +25,8 @@ class CreateRequirementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requirements');
+        Schema::table('rooms', function (Blueprint $table) {
+            //
+        });
     }
 }

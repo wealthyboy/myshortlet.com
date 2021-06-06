@@ -7,12 +7,12 @@ flatpickr("#flatpickr-input", {
   mode: "range",
   minDate: "today",
   dateFormat: "Y-m-d",
-  disable: [
-    function(date) {
-      // disable every multiple of 8
-      return !(date.getDate() % 8);
-    },
-  ],
+  // disable: [
+  //   function(date) {
+  //     // disable every multiple of 8
+  //     return !(date.getDate() % 8);
+  //   },
+  // ],
 });
 
 /**

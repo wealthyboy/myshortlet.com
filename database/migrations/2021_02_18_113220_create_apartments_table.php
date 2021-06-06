@@ -12,7 +12,8 @@ class CreateApartmentsTable extends Migration
      * @return void
      */
     public function up()
-    {
+    {   
+        if (!Schema::hasTable('apartments')) {
         Schema::create('apartments', function (Blueprint $table) {
             $table->id();
             $table->string("name")->nullable();
@@ -22,6 +23,7 @@ class CreateApartmentsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+       }
     }
 
     /**

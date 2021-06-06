@@ -2,8 +2,8 @@
 
 
 
-@if ($reservation->rooms->count())
-    @foreach($reservation->rooms as $room)
+@if ($apartment->rooms->count())
+    @foreach($apartment->rooms as $room)
 <div  class="row p-attr mb-2 variation-panel">
     
     <div class="col-md-9 col-xs-9 col-sm-9">

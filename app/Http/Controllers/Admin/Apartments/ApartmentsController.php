@@ -62,10 +62,9 @@ class ApartmentsController extends Controller
         User::canTakeAction(2);
         $services = Service::orderBy('name','asc')->get();
         $facilities = Facility::orderBy('name','asc')->get();
-        $requirements = Requirement::orderBy('name','asc')->get();
         $locations = Location::parents()->get();
         
-        return view('admin.apartments.create',compact('services','locations','facilities','requirements'));
+        return view('admin.apartments.create',compact('services','locations','facilities'));
     }
     /**
      * Store a newly created resource in storage.
@@ -107,7 +106,7 @@ class ApartmentsController extends Controller
             $images = array_filter($images);
             foreach ( $images as $variation_image) {
                 $images = new Image(['image' => $variation_image]);
-                $reservation->images()->save($images);
+                $apartment->images()->save($images);
             }
         } 
 
@@ -126,7 +125,7 @@ class ApartmentsController extends Controller
             $room->image = $request->room_image[$key];
             $room->available_from = Helper::getFormatedDate($request->room_avaiable_from[$key],true);
             $room->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires[$key],true);
-            $room->reservation_id = $reservation->id;
+            $room->apartment_id = $apartment->id;
             $room->save();
             if ( count( $room_images )  > 0) {
                 $images = array_filter($room_images);
@@ -151,7 +150,7 @@ class ApartmentsController extends Controller
 
 
         (new Activity)->Log("Created a new reservation {$request->apartment_name}");
-        return \Redirect::to('/admin/reservations');
+        return \Redirect::to('/admin/apartments');
 
     }
 
@@ -170,7 +169,7 @@ class ApartmentsController extends Controller
     public function newRoom(Request $request){
         $counter = rand(1,500);
         $product_attributes =  Attribute::parents()->where('type','reservation')->orderBy('sort_order','asc')->get();
-        return view('admin.reservations.variation',compact('counter','product_attributes'));
+        return view('admin.apartments.variation',compact('counter','product_attributes'));
     }
     
 
@@ -185,14 +184,13 @@ class ApartmentsController extends Controller
         $apartment = Apartment::find($id);
         $services = Service::orderBy('name','asc')->get();
         $facilities = Facility::orderBy('name','asc')->get();
-        $requirements = Requirement::orderBy('name','asc')->get();
         $locations = Location::parents()->get();
         $helper = new Helper();
         $counter = rand(1,500);
         $product_attributes =  Attribute::parents()->where('type','reservation')->orderBy('sort_order','asc')->get();
         
        
-        return view('admin.apartments.edit',compact('locations','product_attributes','requirements','facilities','apartment','helper'));
+        return view('admin.apartments.edit',compact('locations','product_attributes','facilities','apartment','helper'));
     }
 
     /**
@@ -245,7 +243,7 @@ class ApartmentsController extends Controller
                         'sale_price_expires' =>  Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]),
                         'slug' => str_slug($request->edit_room_name[$room_id]),
                         'available_from'  => Helper::getFormatedDate($request->edit_room_avaiable_from[$room_id],true),
-                        'reservation_id' => $reservation->id,
+                        'apartment_id' => $apartment->id,
                     ]
                 );
                 /**
@@ -295,7 +293,7 @@ class ApartmentsController extends Controller
                 $room->image = $request->room_image[$key];
                 $room->available_from = Helper::getFormatedDate($request->room_avaiable_from[$key],true);
                 $room->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires[$key],true);
-                $room->reservation_id = $reservation->id;
+                $room->apartment_id = $apartment->id;
                 $room->save();
                 if ( count( $room_images )  > 0) {
                     $images = array_filter($room_images);
@@ -320,7 +318,7 @@ class ApartmentsController extends Controller
          
         
         (new Activity)->Log("Edit a  reservation ");
-        return \Redirect::to('/admin/reservations');
+        return \Redirect::to('/admin/apartments');
     }
 
     /**

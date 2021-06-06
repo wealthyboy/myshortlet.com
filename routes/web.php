@@ -103,20 +103,26 @@ Auth::routes();
 Route::group(['middleware' => 'currencyByIp'], function(){
     Route::get('/', 'HomeController@home');
     Route::get('home', 'HomeController@index');
-    Route::get('account', 'Account\AccountController@index');
-    Route::get('profile', 'Profile\ProfileController@index');
-    Route::post('password/reset/link',            'Auth\ForgotPasswordController@sendResetLinkEmail');
-    Route::post('reset/password',  'Auth\ForgotPasswordController@reset');
-    Auth::routes();
-    Route::get('login/{service}',                 'Auth\SocialLoginController@redirect');
-    Route::get('login/{service}/callback',        'Auth\SocialLoginController@callback');
-    Route::post('login',                         'Auth\LoginController@login');
-
-    Route::get('apartments/{location}', 'Apartments\ApartmentsController@index');
-    Route::get('apartment/{apartment}', 'Apartments\ApartmentsController@show');
-
-    Route::get('listings', 'Listings\ListingsController@index');
 });
+
+
+Route::get('account', 'Account\AccountController@index');
+Route::get('profile', 'Profile\ProfileController@index');
+Route::post('password/reset/link',            'Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('reset/password',  'Auth\ForgotPasswordController@reset');
+Auth::routes();
+Route::get('login/{service}',                 'Auth\SocialLoginController@redirect');
+Route::get('login/{service}/callback',        'Auth\SocialLoginController@callback');
+Route::post('login',                         'Auth\LoginController@login');
+
+Route::get('apartments/{location}', 'Apartments\ApartmentsController@index');
+Route::get('apartment/{apartment}', 'Apartments\ApartmentsController@show');
+Route::get('checkout/{room}', 'Checkout\CheckoutController@index');
+Route::resource('properties', 'Properties\PropertiesController',['name' => 'properties']);
+
+
+
+Route::get('listings', 'Listings\ListingsController@index');
 
 Route::post('webhook/payment',     'WebHook\WebHookController@payment');
 Route::post('webhook/github',      'WebHook\WebHookController@gitHub');

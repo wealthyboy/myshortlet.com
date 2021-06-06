@@ -8,7 +8,7 @@
       <!--      Wizard container        -->
       <div class="wizard-container">
          <div class="card wizard-card" data-color="rose" id="wizardProfile">
-            <form enctype="multipart/form-data" id="product-form" action="{{ route('admin.reservations.update',['reservation'=>$reservation->id])  }}" method="post">
+            <form enctype="multipart/form-data" id="product-form" action="{{ route('admin.apartments.update',['apartment'=>$apartment->id])  }}" method="post">
                @method('PATCH')
                @csrf
                @csrf
@@ -32,18 +32,18 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group {{ isset($reservation) ? ''  : 'label-floating is-empty' }}">
+                    <div class="form-group {{ isset($apartment) ? ''  : 'label-floating is-empty' }}">
                     <label class="control-label">Apartment Name</label>
-                    <input  required="true" name="apartment_name" data-msg="" value="{{ isset($reservation) ? $reservation->name :  old('apartment_name') }}" class="form-control" type="text">
+                    <input  required="true" name="apartment_name" data-msg="" value="{{ isset($apartment) ? $apartment->name :  old('apartment_name') }}" class="form-control" type="text">
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group {{ isset($reservation) ? ''  : 'label-floating is-empty' }}">
+                    <div class="form-group {{ isset($apartment) ? ''  : 'label-floating is-empty' }}">
                     <label class="control-label">Address</label>
-                    <input  required="true" name="address" data-msg="" value="{{ isset($reservation) ? $reservation->address :  old('address') }}" class="form-control" type="text">
+                    <input  required="true" name="address" data-msg="" value="{{ isset($apartment) ? $apartment->address :  old('address') }}" class="form-control" type="text">
                     </div>
                 </div>
                 
@@ -60,7 +60,7 @@
                             id="description" 
                             class="form-control" 
                             rows="50">
-                            {{ isset($reservation) ? $reservation->description : old('description') }}
+                            {{ isset($apartment) ? $apartment->description : old('description') }}
                         </textarea>
                     </div>
                     </div>
@@ -73,7 +73,7 @@
                     </legend>
                     <div class="togglebutton">
                     <label>
-                    <input {{ isset($reservation) && $reservation->allow == 1 ? 'checked' : ''}}  name="allow"  value="1" type="checkbox" checked>
+                    <input {{ isset($apartment) && $apartment->allow == 1 ? 'checked' : ''}}  name="allow"  value="1" type="checkbox" checked>
                     Enable/Disable
                     </label>
                     </div>
@@ -84,7 +84,7 @@
                     </legend>
                     <div class="togglebutton">
                     <label>
-                        <input {{ isset($reservation) && $reservation->featured == 1 ? 'checked' : '' }} name="featured"  value="1" type="checkbox" >
+                        <input {{ isset($apartment) && $apartment->featured == 1 ? 'checked' : '' }} name="featured"  value="1" type="checkbox" >
                         Yes/No
                     </label>
                     </div>
@@ -96,7 +96,7 @@
             <div class="">
                 <div class="row mb-3">
                     <div  class="col-md-12">
-                        @if (!isset($reservation))
+                        @if (!isset($apartment))
                         <div id="j-drop" class=" j-drop">
                         <input accept="image/*"  required="true" onchange="getFile(this,'image','Product',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
                         <div   class="upload-text"> 
@@ -111,20 +111,20 @@
 
                         <div id="j-drop" class=" j-drop">
                             <input accept="image/*"   onchange="getFile(this,'image','Product',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
-                            <div   class="{{ optional($reservation)->images ? 'hide' : '' }} upload-text"> 
+                            <div   class="{{ optional($apartment)->images ? 'hide' : '' }} upload-text"> 
                                 <a   class="" href="#">
                                 <img class="" src="/backend/img/upload_icon.png">
                                 <b>Click to upload image</b> 
                                 </a>
                             </div>
                             <div id="j-details"  class="j-details">
-                                <div id="{{ $reservation->id }}" class="j-complete">
+                                <div id="{{ $apartment->id }}" class="j-complete">
                                     <div class="j-preview">
-                                        <img class="img-thumnail" src="{{ $reservation->image }}">
+                                        <img class="img-thumnail" src="{{ $apartment->image }}">
                                         <div id="remove_image" class="remove_image remove-image">
-                                            <a class="remove-image" data-mode="edit" data-randid="{{ $reservation->id }}"  data-id="{{ $reservation->id }}" data-url="{{ $reservation->image }}" href="#">Remove</a> 
+                                            <a class="remove-image" data-mode="edit" data-randid="{{ $apartment->id }}"  data-id="{{ $apartment->id }}" data-url="{{ $apartment->image }}" href="#">Remove</a> 
                                         </div>
-                                        <input type="hidden" class="file_upload_input stored_image_url" value="{{ $reservation->image }}" name="image">
+                                        <input type="hidden" class="file_upload_input stored_image_url" value="{{ $apartment->image }}" name="image">
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +143,7 @@
                         <div class="checkbox">
                            <label>
                               <input type="checkbox" 
-                              {{ $helper->check($reservation->locations , $location->id) ? 'checked' : '' }} 
+                              {{ $helper->check($apartment->locations , $location->id) ? 'checked' : '' }} 
                               value="{{ $location->id }}" name="location_id[]" >
                               {{ $location->name }}  
                            </label>
@@ -158,12 +158,12 @@
                     <div class="parent" value="{{ $facility->id }}">
                         <div class="checkbox">
                             <label>
-                                @if (isset($reservation))
+                                @if (isset($apartment))
                                     <input 
                                         type="checkbox" 
                                         value="{{ $facility->id }}" 
                                         name="facility_id[]"
-                                        {{ $helper->check($reservation->facilities , $facility->id) ? 'checked' : '' }} 
+                                        {{ $helper->check($apartment->facilities , $facility->id) ? 'checked' : '' }} 
                                     >
                                 @else
                                     <input 
@@ -201,7 +201,7 @@
                            </div>
                         </label>
                      </div>
-                     @include('admin.reservations.edit_variation')
+                     @include('admin.apartments.edit_variation')
                   </div>
                <div class="wizard-footer">
                   <div class="pull-right">

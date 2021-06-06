@@ -17,7 +17,11 @@
                <p class="lead"> 24/7 support by phone or email </p>
                <p class="lead"> Set your own house rules for guests </p>
                <div class="call-to-action">
+               @if ( !auth()->check() )
                   <a href="/register" class="btn btn-primary btn-lg btn-block" type="submit">Get Started</a>
+               @else
+                  <a href="/properties/create" class="btn btn-primary btn-lg btn-block" type="submit">Get Started</a>
+               @endif
                </div>
             </div>
             <p> By continuing, you agree to let Booking.com email you regarding your property registration. </p>
