@@ -1,5 +1,14 @@
 @foreach($obj->children->sortBy('name') as $obj)
     <div class="" value="{{ $obj->id }}">
+        @if (isset($radio))
+        <div class="radio">
+            <label>
+                <input type="radio" value="{{ $obj->id }}"   name="attribute_ids[]" checked="true">
+                First Radio
+            </label>
+        </div>
+
+       @else
        <div class="">
             <label>
                 <input 
@@ -10,6 +19,7 @@
                 >
                 {{ $obj->name }}
             </label>
-        </div>  
+        </div> 
+        @endif 
     </div>
 @endforeach
