@@ -3,8 +3,8 @@
         @if (isset($radio))
         <div class="radio">
             <label>
-                <input type="radio" value="{{ $obj->id }}"   name="attribute_ids[]" checked="true">
-                First Radio
+                <input type="radio" value="{{ $obj->id }}"   name="attribute_ids[]" >
+                {{ $obj->name }}
             </label>
         </div>
 
