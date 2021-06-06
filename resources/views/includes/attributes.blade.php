@@ -3,7 +3,7 @@
         @if (isset($radio))
         <div class="">
             <label>
-                <input type="radio" value="{{ $ob->id }}"   name="{{$obj->rules}}[]" >
+                <input type="radio" value="{{ $ob->id }}"   name="{{ $obj->name }}[]" >
                 {{ $ob->name }}
             </label>
         </div>
