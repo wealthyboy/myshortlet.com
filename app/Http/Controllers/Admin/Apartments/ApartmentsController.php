@@ -248,8 +248,8 @@ class ApartmentsController extends Controller
                         'image' => $request->edit_room_image[$room_id], 
                         'sale_price_expires' =>  Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]),
                         'slug' => str_slug($request->edit_room_name[$room_id]),
-                        'max_adults' => $request->room_max_adults[$key];
-                        'max_children' => $request->room_max_children[$key];
+                        'max_adults' => $request->room_max_adults[$key],
+                        'max_children' => $request->room_max_children[$key],
             
                         'available_from'  => Helper::getFormatedDate($request->edit_room_avaiable_from[$room_id],true),
                         'apartment_id' => $apartment->id,
