@@ -105,7 +105,7 @@ class AttributesController extends Controller
     {
         User::canTakeAction(4);
         $attr = Attribute::find($id);
-        $product_attributes = Attribute::parents()->get(); 
+        $attributes = Attribute::parents()->get(); 
         $type = null;
 
         if ($request->type){
