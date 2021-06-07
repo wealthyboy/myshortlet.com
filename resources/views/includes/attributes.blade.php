@@ -17,7 +17,7 @@
                     name="attribute_ids[]" 
                     {{ isset($room) && isset($helper)  && $helper->check($room->attributes , $ob->id) ? 'checked' : '' }} 
                 >
-                {{ $space }} {{ $ob->name }}
+                {{ $ob->name }}
             </label>
         </div> 
         @endif 
