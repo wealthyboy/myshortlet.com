@@ -43,8 +43,6 @@
             </div>
 
             <div class="clearfix"></div>
-
-            
             <div class="col-md-4">
                 <div class="form-group label-floating is-empty">
                     <label class="control-label">Price</label>
@@ -68,7 +66,7 @@
             <div class="col-sm-3">
                 <div class="row">
                     <div  class="text-center"></div>
-                    <div   class="col-md-12 col-sm-6 col-xs-6">
+                    <div   class="col-md-12 col-sm-12 col-xs-12">
                         <div id="j-drop" class=" j-drop">
                         <input accept="image/*"  required="true" onchange="getFile(this,'room_image[{{ $counter }}]')" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
                         <div   class=" upload-text  {{ $counter }}"> 
@@ -97,7 +95,6 @@
         </div>
         <div class="col-md-12 mt-3 pr-5 pl-5">
            <h2>Rules </h2>
-
             <div class="">
                 @foreach($rules as $rule)
                 <h4>{{ $rule->name }}</h4>
