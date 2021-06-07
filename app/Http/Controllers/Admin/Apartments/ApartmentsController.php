@@ -191,12 +191,18 @@ class ApartmentsController extends Controller
         $services = Service::orderBy('name','asc')->get();
         $facilities = Facility::orderBy('name','asc')->get();
         $locations = Location::parents()->get();
+
+        $rules =  Attribute::parents()->where('type','rules')->orderBy('sort_order','asc')->get();
+        $bedrooms =  Attribute::parents()->where('type','bedroom')->orderBy('sort_order','asc')->get();
+        $extra_services =  Attribute::parents()->where('type','extra_services')->orderBy('sort_order','asc')->get();
+        $facilities =  Attribute::parents()->where('type','facilities')->orderBy('sort_order','asc')->get();
+
         $helper = new Helper();
         $counter = rand(1,500);
         $product_attributes =  Attribute::parents()->where('type','reservation')->orderBy('sort_order','asc')->get();
         
        
-        return view('admin.apartments.edit',compact('locations','product_attributes','facilities','apartment','helper'));
+        return view('admin.apartments.edit',compact('rules','bedrooms','extra_services','facilities','locations','product_attributes','facilities','apartment','helper'));
     }
 
     /**
@@ -250,7 +256,6 @@ class ApartmentsController extends Controller
                         'slug' => str_slug($request->edit_room_name[$room_id]),
                         'max_adults' => $request->room_max_adults[$key],
                         'max_children' => $request->room_max_children[$key],
-            
                         'available_from'  => Helper::getFormatedDate($request->edit_room_avaiable_from[$room_id],true),
                         'apartment_id' => $apartment->id,
                     ]

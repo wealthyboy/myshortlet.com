@@ -34,8 +34,6 @@
                 </div>
             </div>
 
-
-
             <div class="col-md-2">
                 <div class="form-group label-floating is-empty">
                     <label class="control-label">Max Adults</label>
@@ -71,8 +69,6 @@
             </div>
             <div class="clearfix"></div>
 
-            
-            <div class="clearfix"></div>
             <div class="col-sm-3">
                 <div class="row">
                     <div   class="col-md-12 col-sm-6 col-xs-6">
@@ -135,6 +131,62 @@
                         @include('includes.attributes',['obj'=>$product_attribute,'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
                 </div>
+                @endforeach  
+            </div>
+        </div>
+
+        <div class="col-md-12 mt-3 pr-5 pl-5">
+           <h2>Rules </h2>
+            <div class="">
+                @foreach($rules as $rule)
+                <h4>{{ $rule->name }}</h4>
+                    <div  class="" value="{{ $rule->id }}">
+                        @include('includes.attributes',['obj'=>$rule,'radio'=>1, 'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
+                    </div>
+                    <hr/>
+                @endforeach  
+            </div>
+        </div>
+
+        <div class="col-md-12 mt-3 pr-5 pl-5">
+            <h2>Facilities </h2>
+
+            <div class="">
+                @foreach($facilities as $facilitie)
+                <h4>{{ $facilitie->name }}</h4>
+                    <div  class="" value="{{ $facilitie->id }}">
+                        
+                        @include('includes.attributes',['obj'=>$facilitie,'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
+                    </div>
+                    <hr/>
+                @endforeach  
+            </div>
+        </div>
+
+
+        <div class="col-md-12 mt-3 pr-5 pl-5">
+            <h2>Bedrooms </h2>
+            <div class="">
+                @foreach($bedrooms as $bedroom)
+                <h4>{{ $bedroom->name }}</h4>
+                    <div  class="" value="{{ $bedroom->id }}">
+                        @include('includes.attributes',['obj'=>$bedroom, 'radio'=>1, 'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
+                    </div>
+                    <hr/>
+                @endforeach  
+            </div>
+        </div>
+
+
+        <div class="col-md-12 mt-3 pr-5 pl-5">
+            <h2>Extra Services </h2>
+            <div class="">
+                @foreach($extra_services as $extra_service)
+                <h4>{{ $extra_service->name }}</h4>
+                    <div  class="" value="{{ $extra_service->id }}">
+                        @include('includes.attributes',['obj'=>$extra_service,  'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
+                    </div>
+                    <hr/>
                 @endforeach  
             </div>
         </div>
