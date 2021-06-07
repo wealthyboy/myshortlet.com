@@ -110,8 +110,6 @@
 
         <div class="col-md-12 mt-3 pr-5 pl-5">
             <h2>Bedrooms </h2>
-
-
             <div class="">
                 @foreach($bedrooms as $bedroom)
                 <h4>{{ $bedroom->name }}</h4>

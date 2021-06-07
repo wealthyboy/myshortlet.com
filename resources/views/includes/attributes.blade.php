@@ -4,7 +4,7 @@
         <div class="">
             <label>
                 <input type="radio" value="{{ $ob->id }}"   name="{{ $obj->name }}[]" >
-                {{ $space }}{{ $ob->name }}
+                <?php echo html_entity_decode($space)  ?>{{ $ob->name }}
             </label>
             @include('includes.attributes',['obj'=>$ob,'radio'=>1, 'space'=>'&nbsp;&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
 
