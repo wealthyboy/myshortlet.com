@@ -90,7 +90,6 @@ class ApartmentsController extends Controller
         $apartment->description     = $request->description;
         $apartment->featured        = $request->featured ? 1 : 0;
         $apartment->allow        = $request->allow ? 1 : 0;
-
         $apartment->slug      = str_slug($request->apartment_name);
         $apartment->save();
         $apartment->facilities()->sync($request->facility_id);
@@ -122,6 +121,8 @@ class ApartmentsController extends Controller
             $room->price = $request->room_price[$key];
             $room->sale_price = $request->room_sale_price[$key];
             $room->slug = str_slug($request->room_name[$key]);
+            $room->max_adults = $request->room_max_adults[$key];
+            $room->max_children = $request->room_max_children[$key];
             $room->image = $request->room_image[$key];
             $room->available_from = Helper::getFormatedDate($request->room_avaiable_from[$key],true);
             $room->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires[$key],true);
@@ -147,8 +148,6 @@ class ApartmentsController extends Controller
         /**
          * Rooms with have includes
         */
-
-
         (new Activity)->Log("Created a new reservation {$request->apartment_name}");
         return \Redirect::to('/admin/apartments');
 
@@ -169,7 +168,6 @@ class ApartmentsController extends Controller
     public function newRoom(Request $request){
         $counter = rand(1,500);
         $product_attributes =  Attribute::parents()->where('type',null)->orderBy('sort_order','asc')->get();
-
         $rules =  Attribute::parents()->where('type','rules')->orderBy('sort_order','asc')->get();
         $bedrooms =  Attribute::parents()->where('type','bedroom')->orderBy('sort_order','asc')->get();
         $extra_services =  Attribute::parents()->where('type','extra_services')->orderBy('sort_order','asc')->get();
@@ -250,6 +248,9 @@ class ApartmentsController extends Controller
                         'image' => $request->edit_room_image[$room_id], 
                         'sale_price_expires' =>  Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]),
                         'slug' => str_slug($request->edit_room_name[$room_id]),
+                        'max_adults' => $request->room_max_adults[$key];
+                        'max_children' => $request->room_max_children[$key];
+            
                         'available_from'  => Helper::getFormatedDate($request->edit_room_avaiable_from[$room_id],true),
                         'apartment_id' => $apartment->id,
                     ]

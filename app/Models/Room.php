@@ -22,6 +22,8 @@ class Room extends Model
         'slug',
         'available_from',
         'reservation_id',
+        'max_adults',
+        'max_children'
     ];
 
 
