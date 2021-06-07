@@ -104,7 +104,7 @@
                             <label>
                                 <input 
                                     type="checkbox" 
-                                    value="{{ $ob->id }}"   
+                                    value="{{ $facilitie->id }}"   
                                     name="attribute_ids[]" 
                                     {{ isset($room) && isset($helper)  && $helper->check($room->attributes , $facilitie->id) ? 'checked' : '' }} 
                                 >
@@ -113,7 +113,7 @@
                         </div>
                         @include('includes.attributes',['obj'=>$facilitie,'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
-                    <hr/>
+                <hr/>
                 @endforeach  
             </div>
         </div>
