@@ -20,7 +20,7 @@
                     <span class="material-input"></span>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group label-floating">
                     <label class="control-label">From Date Available</label>
                     <input name="room_avaiable_from[{{ $counter }}]"  required="true" value="" class="form-control  datepicker" type="text">
@@ -35,7 +35,7 @@
                 </div>
             </div>
 
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <div class="form-group label-floating is-empty">
                     <label class="control-label">Max Children</label>
                     <input name="room_max_children[{{ $counter }}]"  required="true" value="" class="form-control   variation" type="number">
