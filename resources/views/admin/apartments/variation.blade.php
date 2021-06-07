@@ -86,7 +86,7 @@
                 @foreach($rules as $rule)
                 <h4>{{ $rule->name }}</h4>
                     <div  class="" value="{{ $rule->id }}">
-                        @include('includes.attributes',['obj'=>$rule,'radio'=>1, 'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
+                        @include('includes.attributes',['obj'=>$rule,'radio'=>1, 'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
                     <hr/>
                 @endforeach  
@@ -100,7 +100,7 @@
                 @foreach($facilities as $facilitie)
                 <h4>{{ $facilitie->name }}</h4>
                     <div  class="" value="{{ $facilitie->id }}">
-                        @include('includes.attributes',['obj'=>$facilitie,'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
+                        @include('includes.attributes',['obj'=>$facilitie,'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
                     <hr/>
                 @endforeach  
@@ -116,7 +116,7 @@
                 @foreach($bedrooms as $bedroom)
                 <h4>{{ $bedroom->name }}</h4>
                     <div  class="" value="{{ $bedroom->id }}">
-                        @include('includes.attributes',['obj'=>$bedroom, 'radio'=>1, 'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
+                        @include('includes.attributes',['obj'=>$bedroom, 'radio'=>1, 'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
                     <hr/>
                 @endforeach  

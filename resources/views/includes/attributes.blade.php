@@ -4,9 +4,9 @@
         <div class="">
             <label>
                 <input type="radio" value="{{ $ob->id }}"   name="{{ $obj->name }}[]" >
-                {{ $ob->name }}
+                {{ $space }}{{ $ob->name }}
             </label>
-            @include('includes.attributes',['obj'=>$ob,'radio'=>1, 'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
+            @include('includes.attributes',['obj'=>$ob,'radio'=>1, 'space'=>'&nbsp;&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
 
         </div>
 
@@ -19,7 +19,7 @@
                     name="attribute_ids[]" 
                     {{ isset($room) && isset($helper)  && $helper->check($room->attributes , $ob->id) ? 'checked' : '' }} 
                 >
-                {{ $ob->name }}
+                {{ $space }} {{ $ob->name }}
             </label>
         </div> 
         @endif 
