@@ -13,7 +13,6 @@
             </div>
        @else
        @foreach($obj->children->sortBy('name') as $ob)
-
        <div class="{{ $space ? 'ml-3' : ''}}">
             <label>
                 <input 
