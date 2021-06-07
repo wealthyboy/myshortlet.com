@@ -1,4 +1,14 @@
-
+<div class="ml-2">
+<label>
+    <input 
+        type="checkbox" 
+        value="{{ $obj->id }}"   
+        name="attribute_ids[]" 
+        {{ isset($room) && isset($helper)  && $helper->check($room->attributes , $obj->id) ? 'checked' : '' }} 
+    >
+    {{ $obj->name }}
+</label>
+</div>
 
 @foreach($obj->children->sortBy('name') as $ob)
     <div class="">
