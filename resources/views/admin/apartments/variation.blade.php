@@ -84,6 +84,7 @@
 
             <div class="">
                 @foreach($rules as $rule)
+                <h4>{{ $rule->name }}</h4>
                     <div  class="" value="{{ $rule->id }}">
                         @include('includes.attributes',['obj'=>$rule,'radio'=>1, 'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
@@ -97,10 +98,12 @@
 
             <div class="">
                 @foreach($facilities as $facilitie)
+                <h4>{{ $facilitie->name }}</h4>
                     <div  class="" value="{{ $facilitie->id }}">
+                        
                         @include('includes.attributes',['obj'=>$facilitie,'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
-                <hr/>
+                    <hr/>
                 @endforeach  
             </div>
         </div>
@@ -110,6 +113,7 @@
             <h2>Bedrooms </h2>
             <div class="">
                 @foreach($bedrooms as $bedroom)
+                <h4>{{ $bedroom->name }}</h4>
                     <div  class="" value="{{ $bedroom->id }}">
                         @include('includes.attributes',['obj'=>$bedroom, 'radio'=>1, 'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
@@ -123,6 +127,7 @@
             <h2>Extra Services </h2>
             <div class="">
                 @foreach($extra_services as $extra_service)
+                <h4>{{ $extra_service->name }}</h4>
                     <div  class="" value="{{ $extra_service->id }}">
                         @include('includes.attributes',['obj'=>$extra_service, 'radio'=>1, 'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
