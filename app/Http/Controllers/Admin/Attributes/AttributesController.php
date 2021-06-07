@@ -111,7 +111,9 @@ class AttributesController extends Controller
         if ($request->type){
             $attributes = Attribute::parents()->where('type',$request->type)->get();
             $type = $request->type; 
-        }      
+        }  else {
+            $attributes = Attribute::parents()->get(); 
+        }     
         return view('admin.attributes.edit',compact('attributes','attr','type'));
     }
 
@@ -153,7 +155,7 @@ class AttributesController extends Controller
         $product_attribute->save();
         //Log Activity
         (new Activity)->Log("Updated  Attribute {$request->name} ");
-        return redirect()->route('attributes', ['type' => $request->type]);
+        return redirect()->route('attributes.index', ['type' => $request->type]);
     
     }
 
