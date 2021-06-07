@@ -1,16 +1,19 @@
 
-@foreach($obj->children->sortBy('name') as $ob)
+
     <div class="">
         @if (isset($radio))
-        <div class="form-group">
-            <label class="control-label"></label>
-            <select name="attribute_ids[]"  class="form-control">
-                <option  value="" selected>Choose one</option>
-                <option  value="{{ $ob->name }}" selected>{{ $ob->name }}</option>
-            </select>
-        </div>
-        
+            <div class="form-group">
+                <label class="control-label"></label>
+                <select name="attribute_ids[]"  class="form-control">
+                    <option  value="" selected>Choose one</option>
+                    @foreach($obj->children->sortBy('name') as $ob)
+                       <option  value="{{ $ob->name }}">{{ $ob->name }}</option>
+                    @endforeach
+                </select>
+            </div>
        @else
+       @foreach($obj->children->sortBy('name') as $ob)
+
        <div class="{{ $space ? 'ml-3' : ''}}">
             <label>
                 <input 
@@ -22,6 +25,8 @@
                 {{ $ob->name }}
             </label>
         </div> 
+        @endforeach
+
         @endif 
     </div>
-@endforeach
+
