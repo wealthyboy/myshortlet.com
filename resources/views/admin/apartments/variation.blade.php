@@ -13,19 +13,37 @@
         <input name="new_room"     value="1"   class="" type="hidden">
         
                 
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <div class="form-group label-floating is-ty">
                     <label class="control-label">Accommodation Type Name</label>
                     <input name="room_name[{{ $counter }}]"  required="true" value="{{ old('price') }}" class="form-control  variation" type="text">
                     <span class="material-input"></span>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3">
                 <div class="form-group label-floating">
                     <label class="control-label">From Date Available</label>
                     <input name="room_avaiable_from[{{ $counter }}]"  required="true" value="" class="form-control  datepicker" type="text">
                 </div>
             </div>
+
+
+            <div class="col-md-2">
+                <div class="form-group label-floating is-empty">
+                    <label class="control-label">Max Adults</label>
+                    <input name="room_max_adults[{{ $counter }}]"  required="true" value="" class="form-control   variation" type="number">
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="form-group label-floating is-empty">
+                    <label class="control-label">Max Children</label>
+                    <input name="room_max_children[{{ $counter }}]"  required="true" value="" class="form-control   variation" type="number">
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
             
             <div class="col-md-4">
                 <div class="form-group label-floating is-empty">
@@ -45,19 +63,7 @@
                     <input class="form-control  datepicker pull-right" name="room_sale_price_expires[{{ $counter }}]" id="datepicker" type="text">
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-group label-floating is-empty">
-                    <label class="control-label">Max Adults</label>
-                    <input name="room_max_adults[{{ $counter }}]"  required="true" value="" class="form-control   variation" type="number">
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="form-group label-floating is-empty">
-                    <label class="control-label">Max Children</label>
-                    <input name="room_max_children[{{ $counter }}]"  required="true" value="" class="form-control   variation" type="number">
-                </div>
-            </div>
+           
             <div class="clearfix"></div>
             <div class="col-sm-3">
                 <div class="row">
