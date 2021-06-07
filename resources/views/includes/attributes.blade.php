@@ -6,6 +6,8 @@
                 <input type="radio" value="{{ $ob->id }}"   name="{{ $obj->name }}[]" >
                 {{ $ob->name }}
             </label>
+            @include('includes.attributes',['obj'=>$ob,'radio'=>1, 'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
+
         </div>
 
        @else
