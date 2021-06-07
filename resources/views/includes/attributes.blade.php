@@ -1,5 +1,5 @@
 @foreach($obj->children->sortBy('name') as $ob)
-    <div class="" value="{{ $ob->id }}">
+    <div class="">
         @if (isset($radio))
         <div class="{{ $space ? 'ml-3' : ''}}">
             <label>
