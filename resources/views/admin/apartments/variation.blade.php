@@ -129,7 +129,7 @@
                 @foreach($extra_services as $extra_service)
                 <h4>{{ $extra_service->name }}</h4>
                     <div  class="" value="{{ $extra_service->id }}">
-                        @include('includes.attributes',['obj'=>$extra_service, 'radio'=>1, 'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
+                        @include('includes.attributes',['obj'=>$extra_service, 'radio'=>0, 'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
                     <hr/>
                 @endforeach  
