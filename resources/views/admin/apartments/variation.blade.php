@@ -121,6 +121,20 @@
             </div>
         </div>
 
+
+        <div class="col-md-12 mt-3 pr-5 pl-5">
+            <h2>Extra Services </h2>
+            <div class="">
+                @foreach($extra_services as $extra_service)
+                <h4>{{ $extra_service->name }}</h4>
+                    <div  class="" value="{{ $extra_service->id }}">
+                        @include('includes.attributes',['obj'=>$extra_service, 'radio'=>1, 'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
+                    </div>
+                    <hr/>
+                @endforeach  
+            </div>
+        </div>
+
     </div> 
     
 </div>
