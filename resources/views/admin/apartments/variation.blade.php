@@ -100,6 +100,17 @@
                 @foreach($facilities as $facilitie)
                 <h4>{{ $facilitie->name }}</h4>
                     <div  class="" value="{{ $facilitie->id }}">
+                        <div class="ml-2">
+                            <label>
+                                <input 
+                                    type="checkbox" 
+                                    value="{{ $ob->id }}"   
+                                    name="attribute_ids[]" 
+                                    {{ isset($room) && isset($helper)  && $helper->check($room->attributes , $facilitie->id) ? 'checked' : '' }} 
+                                >
+                                {{ $facilitie->name }}
+                            </label>
+                        </div>
                         @include('includes.attributes',['obj'=>$facilitie,'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
                     <hr/>
