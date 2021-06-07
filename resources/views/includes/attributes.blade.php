@@ -1,17 +1,15 @@
 @foreach($obj->children->sortBy('name') as $ob)
     <div class="" value="{{ $ob->id }}">
         @if (isset($radio))
-        <div class="{{ $space ? 'mr-3' : ''}}">
+        <div class="{{ $space ? 'ml-3' : ''}}">
             <label>
                 <input type="radio" value="{{ $ob->id }}"   name="{{ $obj->name }}[]" >
                 {{ $ob->name }}
             </label>
             @include('includes.attributes',['obj'=>$ob,'radio'=>1, 'space'=>1,'model' => 'attributes','url' => 'attribute'])
-
         </div>
-
        @else
-       <div class="">
+       <div class="{{ $space ? 'ml-3' : ''}}">
             <label>
                 <input 
                     type="checkbox" 
