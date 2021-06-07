@@ -152,32 +152,7 @@
                   </div>
                @endforeach
             </div>
-            <label>Facilities</label>
-            <div class="well well-sm" style="height: 250px; background-color: #fff; color: black; overflow: auto;">
-                @foreach($facilities as $facility)
-                    <div class="parent" value="{{ $facility->id }}">
-                        <div class="checkbox">
-                            <label>
-                                @if (isset($apartment))
-                                    <input 
-                                        type="checkbox" 
-                                        value="{{ $facility->id }}" 
-                                        name="facility_id[]"
-                                        {{ $helper->check($apartment->facilities , $facility->id) ? 'checked' : '' }} 
-                                    >
-                                @else
-                                    <input 
-                                        type="checkbox" 
-                                        value="{{ $facility->id }}" 
-                                        name="facility_id[]"
-                                    >
-                                @endif
-                                {{ $facility->name }}  
-                            </label>
-                        </div>   
-                    </div>
-                @endforeach
-            </div>
+            
             
         </div>
     </div>
