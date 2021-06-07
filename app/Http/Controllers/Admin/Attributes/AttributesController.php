@@ -153,7 +153,7 @@ class AttributesController extends Controller
         $product_attribute->save();
         //Log Activity
         (new Activity)->Log("Updated  Attribute {$request->name} ");
-        return redirect()->action('Admin\Attributes\AttributesController@index');
+        return redirect()->route('attributes', ['type' => $request->type]);
     
     }
 
