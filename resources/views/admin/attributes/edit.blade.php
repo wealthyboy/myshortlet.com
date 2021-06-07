@@ -51,12 +51,12 @@
                         <label class="control-label"></label>
                         <select name="parent_id" class="form-control">
                         <option  value="">--Choose Parent--</option>
-                            @foreach($product_attributes as $product_attribute)
-                                @if($attr->parent_id == $product_attribute->id)
-                                    <option class="" value="{{  $product_attribute->id }}" selected="selected">{{ $product_attribute->name }} </option>
+                            @foreach($attributes as $attribute)
+                                @if($attr->parent_id == $attribute->id)
+                                    <option class="" value="{{  $attribute->id }}" selected="selected">{{ $attribute->name }} </option>
                                 @else
-                                    <option class="" value="{{  $product_attribute->id }}">{{ $product_attribute->name }}  </option>
-                                    @include('includes.product_attr',['product_attribute'=>$product_attribute])
+                                    <option class="" value="{{  $attribute->id }}">{{ $attribute->name }}  </option>
+                                    @include('includes.product_attr',['attribute'=>$attribute])
                                 @endif
                             @endforeach
                         </select>
