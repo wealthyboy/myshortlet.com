@@ -1,12 +1,12 @@
 @foreach($obj->children->sortBy('name') as $ob)
     <div class="" value="{{ $ob->id }}">
         @if (isset($radio))
-        <div class="">
+        <div class="{{ $space ? 'mr-3' : ''}}">
             <label>
                 <input type="radio" value="{{ $ob->id }}"   name="{{ $obj->name }}[]" >
-                <?php echo html_entity_decode($space)  ?>{{ $ob->name }}
+                {{ $ob->name }}
             </label>
-            @include('includes.attributes',['obj'=>$ob,'radio'=>1, 'space'=>'&nbsp;&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
+            @include('includes.attributes',['obj'=>$ob,'radio'=>1, 'space'=>1,'model' => 'attributes','url' => 'attribute'])
 
         </div>
 
