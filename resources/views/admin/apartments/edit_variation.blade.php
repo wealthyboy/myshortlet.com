@@ -19,7 +19,7 @@
         <input name="edit_room"  value="1"   class="" type="hidden">
 
                 
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <div class="form-group label-floating is-ty">
                     <label class="control-label">Accommodation Type Name</label>
                     <input name="edit_room_name[{{ $room->id }}]"  required="true" value="{{ $room->name }}" class="form-control  variation" type="text">
@@ -27,12 +27,30 @@
                 </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-2">
                 <div class="form-group label-floating">
                     <label class="control-label">From Date Available</label>
                     <input name="edit_room_avaiable_from[{{ $room->id }}]"  required="true" value="{{ $helper::getReversedFormatedDate($room->available_from) }}" class="form-control  datepicker" type="text">
                 </div>
             </div>
+
+
+
+            <div class="col-md-2">
+                <div class="form-group label-floating is-empty">
+                    <label class="control-label">Max Adults</label>
+                    <input name="room_max_adults[{{ $room->id }}]"  required="true" value="{{ $room->max_adults }}" class="form-control   variation" type="number">
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group label-floating is-empty">
+                    <label class="control-label">Max Children</label>
+                    <input name="room_max_children[{{ $room->id }}]"  required="true" value="{{ $room->max_children }}" class="form-control   variation" type="number">
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
             <div class="col-md-4">
                 <div class="form-group label-floating ">
                     <label class="control-label">Price  </label>
