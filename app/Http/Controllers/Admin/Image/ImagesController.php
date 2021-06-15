@@ -128,7 +128,7 @@ class ImagesController extends Controller
             $path =  public_path('images/'. $request->folder .'/'.$file);
         
 
-            $img  = \Image::make($path)->fit(300, 200)->save(
+            $img  = \Image::make($path)->fit(400, 400)->save(
                 public_path('images/'. $request->folder .'/m/'.$file)
             );
             $canvas = \Image::canvas(106, 145);

@@ -1,86 +1,101 @@
-
-
-@extends('layouts.app')
+@extends('layouts.user')
 @section('content')
-<div class="container-fluid">
-   <div class="row mt-5">
-      <div class="col-lg-3">
-         @include('includes.account_nav')
+
+
+
+<div class="px-3 px-lg-6 px-xxl-13 py-5 py-lg-10">
+   <div class="d-flex flex-wrap flex-md-nowrap mb-6">
+      <div class="mr-0 mr-md-auto">
+         <h2 class="mb-0 text-heading fs-22 lh-15">My Properties<span class="badge badge-white badge-pill text-primary fs-18 font-weight-bold ml-2">29</span></h2>
+         <p>Lorem ipsum dolor sit amet, consec tetur cing elit. Suspe ndisse suscipit</p>
       </div>
-      @if ($properties->count())
-      @foreach($properties as $propertie)
-      <div class="col-lg-9">
-         <div class="card mb-3" style="">
-            <div class="row no-gutters">
-               <div class="col-md-4">
-                  <img src="{{ $propertie->image }}" class="img-fluid" alt="...">
+      <div class="form-inline justify-content-md-end mx-n2">
+         <div class="p-2">
+            <div class="input-group input-group-lg bg-white border">
+               <div class="input-group-prepend">
+                  <button class="btn pr-0 shadow-none" type="button"><i class="far fa-search"></i></button>
                </div>
-               <div class="col-md-5">
-                  <div class="card-body">
-                     <h5 class="card-title">{{ $propertie->name }}</h5>
-                     <div class="card-text"><a href="">{{ $propertie->city }}</a>,  <a href="">{{ $propertie->state }}</a></div>
-                     <p class="card-text"><small class="text-muted"><?php echo  str_limit(html_entity_decode($propertie->description), $limit = 200, $end = '...') ?> </small></p>
-                  </div>
+               <input type="text" class="form-control bg-transparent border-0 shadow-none text-body" placeholder="Search listing" name="search">
+            </div>
+         </div>
+         <div class="p-2">
+            <div class="input-group input-group-lg bg-white border">
+               <div class="input-group-prepend">
+                  <span class="input-group-text bg-transparent letter-spacing-093 border-0 pr-0"><i class="far fa-align-left mr-2"></i>Sort by:</span>
                </div>
-               <div class="col-md-3">
-                  <div class="text-right">
-                     <div class="d-flex justify-content-end">
-                        <div class="review-score__content">
-                           <div class="review-score__title"> Very Good</div>
-                           <div class="review-score__text"> 2,977 reviews </div>
-                        </div>
-                        <div class="review-score__badge" aria-label="Scored 8.3 "> 8.3 </div>
-                     </div>
-                     <div class="">
-                        <div class="">
-                           <div class="">
-                              <div class="">1 night, 2 adults</div>
-                           </div>
-                           <div class="">
-                              <div class="">
-                                 
-                                 <span class="">
-                                 Price
-                                 NGN&nbsp;26,337
-                                 </span>
-                              </div>
-                           </div>
-                           <div class="">
-                              <div class="">
-                                 Includes taxes and fees
-                              </div>
-                           </div>
-                        </div>
-                        <div>
-                           <div>
-                              <div colspan="4" class="roomFooter">
-                                 <div class="">
-                                    <a class="" href="">
-                                       <span class="button__text js-sr-cta-text">
-                                       See availability
-                                       </span>
-                                       <span class="">
-                                          <svg class="bk-icon -streamline-arrow_nav_right" height="16" width="16" viewBox="0 0 24 24" role="presentation" aria-hidden="true" focusable="false">
-                                             <path d="M9.45 6c.2 0 .39.078.53.22l5 5c.208.206.323.487.32.78a1.1 1.1 0 0 1-.32.78l-5 5a.75.75 0 0 1-1.06 0 .74.74 0 0 1 0-1.06L13.64 12 8.92 7.28a.74.74 0 0 1 0-1.06.73.73 0 0 1 .53-.22zm4.47 5.72zm0 .57z"></path>
-                                          </svg>
-                                       </span>
-                                    </a>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+               <select class="form-control bg-transparent pl-0 selectpicker d-flex align-items-center sortby" name="sort-by" data-style="bg-transparent px-1 py-0 lh-1 font-weight-600 text-body" id="status">
+                  <option>Alphabet</option>
+                  <option>Price - Low to High</option>
+                  <option>Price - High to Low</option>
+                  <option>Date - Old to New</option>
+                  <option>Date - New to Old</option>
+               </select>
             </div>
          </div>
       </div>
-      @endforeach
-      @else
-      <div class="col-lg-9 main-content">No Apartments</div>
-      @endif
    </div>
+   <div class="table-responsive">
+      <table class="table table-hover bg-white border rounded-lg">
+         <thead class="thead-sm thead-black">
+            <tr>
+               <th scope="col" class="border-top-0 px-6 pt-5 pb-4">Listing title</th>
+               <th scope="col" class="border-top-0 pt-5 pb-4">Date Published</th>
+               <th scope="col" class="border-top-0 pt-5 pb-4">Status</th>
+               <th scope="col" class="border-top-0 pt-5 pb-4">View</th>
+               <th scope="col" class="border-top-0 pt-5 pb-4">Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="shadow-hover-xs-2 bg-hover-white">
+               <td class="align-middle pt-6 pb-4 px-6">
+                  <div class="media">
+                     <div class="w-120px mr-4 position-relative">
+                        <a href="single-property-1.html">
+                        <img src="images/my-properties-01.jpg" alt="Home in Metric Way">
+                        </a>
+                        <span class="badge badge-indigo position-absolute pos-fixed-top">for rent</span>
+                     </div>
+                     <div class="media-body">
+                        <a href="single-property-1.html" class="text-dark hover-primary">
+                           <h5 class="fs-16 mb-0 lh-18">Home in Metric Way</h5>
+                        </a>
+                        <p class="mb-1 font-weight-500">1421 San Pedro St, Los Angeles</p>
+                        <span class="text-heading lh-15 font-weight-bold fs-17">$2500</span>
+                        <span class="text-gray-light">/month</span>
+                     </div>
+                  </div>
+               </td>
+               <td class="align-middle">30 December, 2019</td>
+               <td class="align-middle">
+                  <span class="badge text-capitalize font-weight-normal fs-12 badge-yellow">pending</span>
+               </td>
+               <td class="align-middle">2049</td>
+               <td class="align-middle">
+                  <a href="dashboard-my-properties.html#" data-toggle="tooltip" title="Edit" class="d-inline-block fs-18 text-muted hover-primary mr-5"><i class="fal fa-pencil-alt"></i></a>
+                  <a href="dashboard-my-properties.html#" data-toggle="tooltip" title="Delete" class="d-inline-block fs-18 text-muted hover-primary"><i class="fal fa-trash-alt"></i></a>
+               </td>
+            </tr>
+            
+            
+         </tbody>
+      </table>
+   </div>
+   <nav class="mt-6">
+      <ul class="pagination rounded-active justify-content-center">
+         <li class="page-item"><a class="page-link" href="dashboard-my-properties.html#"><i class="far fa-angle-double-left"></i></a></li>
+         <li class="page-item"><a class="page-link" href="dashboard-my-properties.html#">1</a></li>
+         <li class="page-item active"><a class="page-link" href="dashboard-my-properties.html#">2</a></li>
+         <li class="page-item d-none d-sm-block"><a class="page-link" href="dashboard-my-properties.html#">3</a></li>
+         <li class="page-item">...</li>
+         <li class="page-item"><a class="page-link" href="dashboard-my-properties.html#">6</a></li>
+         <li class="page-item"><a class="page-link" href="dashboard-my-properties.html#"><i class="far fa-angle-double-right"></i></a></li>
+      </ul>
+   </nav>
+   <div class="text-center mt-2">6-10 of 29 Results</div>
 </div>
+
+
+
 @endsection
 @section('page-scripts')
 @stop

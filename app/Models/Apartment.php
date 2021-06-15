@@ -16,7 +16,7 @@ class Apartment extends Model
 {
     use HasFactory,FormatPrice,ImageFiles;//,SoftDeletes,CascadeSoftDeletes;
 
-    public $folder = 'products';
+    public $folder = 'apartments';
 
     protected $dates = ['deleted_at','sale_price_expires'];
 

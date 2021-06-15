@@ -39,112 +39,135 @@
       </script>
    </head>
    <body>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark mb-3">
-         <a class="navbar-brand" href="/">MyShortLet</a>
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-         </button>
-         <div class="collapse navbar-collapse" id="navbar">
-            <ul class="nav navbar-nav ml-auto">
-               <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NGN</a>
-                  <div class="dropdown-menu" aria-labelledby="dropdown01">
-                     <a class="dropdown-item" href="#">USD</a>
-                     <a class="dropdown-item" href="#">GBP</a>
-                     <a class="dropdown-item" href="#">EUR</a>
+      <div id="app" class="app">
+      <header class="main-header navbar-light header-sticky header-sticky-smart header-mobile-xl">
+         <div class="sticky-area">
+            <div class="container container-xxl">
+               <nav class="navbar navbar-expand-xl px-0 w-100">
+                  <a class="navbar-brand mr-7" href="/">
+                  <img src="{{ $system_settings->logo_path() }}" alt="myshortlet logo" class="d-none d-xl-inline-block">
+                  <img src="{{ $system_settings->logo_path() }}" alt="myshortlet logo" class="d-inline-block d-xl-none">
+                  </a>
+                  <div class="d-flex d-xl-none ml-auto">
+                     <a class="d-block mr-4 position-relative text-white p-2" href="/">
+                     <i class="fal fa-heart fs-large-4"></i>
+                     <span class="badge badge-primary badge-circle badge-absolute">1</span>
+                     </a>
+                     <button class="navbar-toggler border-0 px-0 ml-0" type="button" data-toggle="collapse" data-target="#primaryMenu05" aria-controls="primaryMenu05" aria-expanded="false" aria-label="Toggle navigation">
+                     <span class="text-white fs-24"><i class="fal fa-bars"></i></span>
+                     </button>
                   </div>
-               </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-               <a href="/listings" target="_blank" class="btn btn-outline-success my-2 my-sm-0" type="submit">List your property</a>
-               @if ( !auth()->check() )
-                  <a href="/login" class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</a>
-                  <a href="/register" class="btn btn-outline-success my-2 my-sm-0" type="submit">Register</a>
-               @else
-                 <ul class="nav navbar-nav ml-auto">
-                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
-                           <a class="dropdown-item" href="/account">
-                           <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-10">
-                              <i class="bi bi-box-arrow-in-right"></i>
-                           </span>
+                  <div class="collapse navbar-collapse mt-3 mt-xl-0 flex-grow-0" id="primaryMenu05">
+                     <ul class="navbar-nav hover-menu main-menu px-0 mx-xl-n4"> 
+                     </ul>
+                     <div class="d-block d-xl-none">
+                        <ul class="navbar-nav flex-row ml-auto align-items-center justify-content-lg-end flex-wrap py-2">
+                           <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle mr-md-2 pr-2 pl-0 pl-lg-2" href="home-07.html#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              ENG
+                              </a>
+                              
+                           </li>
+                           <li class="nav-item mr-2">
+                              <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/listing">
+                              Add listing
+                              </a>
+                           </li>
+                           <li class="nav-item ">
+                              <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/login">
+                              Login
+                              </a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block" href="/register">
+                              Register
+                              </a>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="ml-auto d-none d-xl-block">
+                     <ul class="navbar-nav flex-row ml-auto align-items-center justify-content-lg-end flex-wrap py-2">
+                        <li class="nav-item dropdown">
+                           <a class="nav-link dropdown-toggle mr-md-2 pr-2 pl-0 pl-lg-2" href="home-07.html#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           NGN
+                           </a>
+                           <div class="dropdown-menu dropdown-sm dropdown-menu-right" aria-labelledby="bd-versions">
+                              <a class="dropdown-item" href="home-07.html#">VN</a>
+                              <a class="dropdown-item active" href="home-07.html#">ENG</a>
+                              <a class="dropdown-item" href="home-07.html#">ARB</a>
+                              <a class="dropdown-item" href="home-07.html#">KR</a>
+                              <a class="dropdown-item" href="home-07.html#">JN</a>
+                           </div>
                            
-                           Profile</a>
-                           <a class="dropdown-item"
-                           onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
-                                              <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-20">
-                                                <i class="bi bi-box-arrow-in-right"></i>
-                                             </span>                                            
-                                            Logout
-                                        </a>
-                                        <form id="logout-form" action="/logout" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
-                        </div>
-                     </li>
-                  </ul>
-               @endif
-            </form>
+                        </li>
+                        <li class="nav-item">
+                           <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/listings">
+                           <i class="fal fa-building"></i> Add listing
+                           </a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/login">
+                           <i class="fal fa-sign-in"></i> Login
+                           </a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block" href="/register">
+                           <i class="fal fa-user-plus"></i> Register
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </nav>
+            </div>
          </div>
-      </nav>
-      <main role="main">
+      </header>
+      <main id="content">
          @yield('content')
       </main>
-      <footer class="footer">
-         <div class="footer-middle">
-            <div class="container-fluid">
-               <div class="row">
-                  <div class="col-lg-12 col-md-8">
-                     <div class="row pt-3">
-                        @foreach($footer_info as $info)
-                        <div class="col-sm-3 col-6 col-lg-3">
-                           <div class="widget">
-                              <h4 class="widget-title">{{ title_case($info->title) }}</h2>
-                              @if($info->children->count())
-                              <ul class="">
-                                 @foreach($info->children as $info)
-                                 <li>
-                                    <a href="{{ $info->link }}">
-                                    {{ $info->title }}
-                                    </a>
-                                 </li>
-                                 @endforeach
-                              </ul>
-                              @endif
-                           </div>
-                           <!-- End .widget -->
-                        </div>
-                        <!-- End .col-sm-6 -->
-                        @endforeach
-                     </div>
-                     <!-- End .row -->
-                  </div>
-                  <!-- End .col-lg-9 -->
+      <footer class="bg-dark pt-8 pb-6 footer text-muted">
+         <div class="container container-xxl">
+            <div class="row">
+               @foreach($footer_info as $info)
+
+               <div class="col-md-6 col-lg-2 mb-6 mb-md-0">
+                  <h4 class="text-white fs-16 my-4 font-weight-500">{{ title_case($info->title) }}</h4>
+                  @if($info->children->count())
+
+                  <ul class="list-group list-group-flush list-group-no-border">
+                     @foreach($info->children as $info)
+                     <li class="list-group-item bg-transparent p-0">
+                        <a href="home-01.html#" class="text-muted lh-26 font-weight-500 hover-white">{{ $info->title }}</a>
+                     </li>
+                     @endforeach
+                  </ul>
+                  @endif
+
                </div>
-               <!-- End .row -->
+               @endforeach
+
+               
             </div>
-            <!-- End .container -->
+            <div class="mt-0 mt-md-10 row">
+               <div class="col-md-12 text-center">
+                  <p class="">© Copyright <a href="{{ Config('app.url') }}"> {{ Config('app.name') }}</a>   {{ date('Y') }}. All rights reserved.  
+                     @if ( auth()->check() && auth()->user()->isAdmin() )
+                     <a target="_blank" href="/admin" >Go to Admin</a>
+                     @endif 
+                  </p>
+               </div>
+            </div>
          </div>
-         <!-- End .footer-middle -->
-        
-         <!--Footer Copyright Bar-->
-         <section class="footer-bottom-area bg--primary">
-            <div class="container">
-               <div class="row">
-                  <div class="col-md-12 text-center">
-                     <p class="">© Copyright <a href="{{ Config('app.url') }}"> {{ Config('app.name') }}</a>   {{ date('Y') }}. All rights reserved.  
-                        @if ( auth()->check() && auth()->user()->isAdmin() )
-                        <a target="_blank" href="/admin" >Go to Admin</a>
-                        @endif 
-                     </p>
-                  </div>
-               </div>
-            </div>
-         </section>
       </footer>
+
+      </div>
+            
       <script src="/js/services_js.js"></script>
+      <script src="/js/app.js"></script>
+      @include('_partials.svg')
+      <div class="position-fixed pos-fixed-bottom-right p-6 z-index-10">
+         <a href="home-01.html#" class="gtf-back-to-top bg-white text-primary hover-white bg-hover-primary shadow p-0 w-52px h-52 rounded-circle fs-20 d-flex align-items-center justify-content-center" title="Back To Top"><i class="fal fa-arrow-up"></i></a>
+      </div>
    </body>
 </html>
 

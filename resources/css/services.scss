@@ -1,3 +1,28 @@
-@import "~bootstrap/scss/bootstrap";
 @import "~flatpickr/dist/flatpickr.css";
+@import "../../public/css/all.css";
 @import "~bootstrap-icons/font/bootstrap-icons.css";
+@import "~bootstrap-select/sass/bootstrap-select.scss";
+@import "~slick-carousel/slick/slick.css";
+@import "~magnific-popup/dist/magnific-popup.css";
+@import "~animate.css/animate.css";
+@import "~mapbox-gl/dist/mapbox-gl.css";
+@import "../../public/css/styles.css";
+
+/*
+  Dropdown
+*/
+
+.menu-dropdown {
+  width: 330px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px !important;
+  background: rgb(255, 255, 255) none repeat scroll 0% 0% !important;
+  border-radius: 9px !important;
+}
+
+.counter.d-flex button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgb(255, 255, 255) none repeat scroll 0% 0% !important;
+  border-color: rgb(176, 176, 176) !important;
+}

@@ -1,223 +1,242 @@
+
+
 @extends('layouts.app')
 @section('content')
-<nav class="mt-5" aria-label="breadcrumb">
-   <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">Library</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Data</li>
-   </ol>
-</nav>
-<div class="container-fluid ">
-   <div class="row justify-content-end mb-5">
-      <div class="col-lg-3 ">
-         <form id="collections" action="">
-            <div class="widget">
-               <h3 class="widget-title ">
-                  <a data-toggle="collapse" href="#widget-prices" role="button" class="bold" aria-expanded="true" aria-controls="widget-body-2">Prices</a>
-               </h3>
-               <div class="collapsed bold" id="widget-prices">
-                  <div class="widget-body">
-                     <ul class="cat-list">
-                        <li>
-                           <div class="checkbox">
-                              <label  id="box50" class="checkbox-label">
-                              <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
-                              <span class="checkbox-custom rectangular"></span>
-                              <span class="checkbox-label-text">Less Than  200,000</span> 
-                              </label>
+<section class="pb-8 page-title shadow">
+   <div class="container-fluid ">
+      <nav class="mt-5" aria-label="breadcrumb">
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Data</li>
+         </ol>
+      </nav>
+      <div class="row justify-content-end mb-5">
+         <div class="col-lg-3 ">
+            <div class="primary-sidebar-inner">
+               <div class="card mb-4">
+                  <div class="card-body px-6 py-4">
+                     <h4 class="card-title fs-16 lh-2 text-dark mb-3">Find your home</h4>
+                     <form>
+                        <div class="form-group">
+                           <label for="key-word" class="sr-only">Key Word</label>
+                           <input type="text" class="form-control form-control-lg border-0 shadow-none" id="key-word" name="search" placeholder="Enter keyword...">
+                        </div>
+                        <div class="form-group">
+                           <label for="location" class="sr-only">Location</label>
+                           <select class="form-control border-0 shadow-none form-control-lg selectpicker" name="location" title="Location" data-style="btn-lg py-2 h-52" id="location">
+                              <option>Austin</option>
+                           </select>
+                        </div>
+                        <div class="form-group">
+                           <label for="type" class="sr-only">Type</label>
+                           <select class="form-control border-0 shadow-none form-control-lg selectpicker" name="type" title="All Types" data-style="btn-lg py-2 h-52" id="type">
+                              <option>Apartment</option>
+                           </select>
+                        </div>
+                        <div class="form-group">
+                           <label for="status" class="sr-only">Status</label>
+                           <select class="form-control border-0 shadow-none form-control-lg selectpicker" title="All Status" data-style="btn-lg py-2 h-52" id="status" name="status">
+                              <option>For Rent</option>
+                              <option>For Sale</option>
+                           </select>
+                        </div>
+                        <div class="form-row mb-4">
+                           <div class="col">
+                              <label for="bed" class="sr-only">Beds</label>
+                              <select class="form-control border-0 shadow-none form-control-lg selectpicker" title="Beds" data-style="btn-lg py-2 h-52" id="bed" name="beds">
+                                 <option>3</option>
+                                 <option>4</option>
+                              </select>
                            </div>
-                        </li>
-                        <li>
-                           <div class="checkbox">
-                              <label  id="box50" class="checkbox-label">
-                              <input for="box50" name="prices[]" value="400000" class="filter-product" type="checkbox">
-                              <span class="checkbox-custom rectangular"></span>
-                              <span class="checkbox-label-text">Less Than  400,000</span> 
-                              </label>
+                           <div class="col">
+                              <label for="baths" class="sr-only">Baths</label>
+                              <select class="form-control border-0 shadow-none form-control-lg selectpicker" title="Baths" data-style="btn-lg py-2 h-52" id="baths" name="baths">
+                                 <option>3</option>
+                                 <option>4</option>
+                              </select>
                            </div>
-                        </li>
-                        <li>
-                           <div class="checkbox">
-                              <label  id="box50" class="checkbox-label">
-                              <input for="box50" name="prices[]" value="600000" class="filter-product" type="checkbox">
-                              <span class="checkbox-custom rectangular"></span>
-                              <span class="checkbox-label-text">Less Than  600,000</span> 
-                              </label>
+                        </div>
+                        <a class="lh-17 d-inline-block" data-toggle="collapse" href="#other-feature" role="button" aria-expanded="false" aria-controls="other-feature">
+                        <span class="text-primary d-inline-block mr-1"><i class="far fa-plus-square"></i></span>
+                        <span class="fs-15 text-heading font-weight-500 hover-primary">Other Features</span>
+                        </a>
+                        <div class="collapse" id="other-feature">
+                           <div class="card card-body border-0 px-0 pb-0 pt-3">
+                              <ul class="list-group list-group-no-border">
+                                 <li class="list-group-item px-0 pt-0 pb-2">
+                                    <div class="custom-control custom-checkbox">
+                                       <input type="checkbox" class="custom-control-input" name="features[]" id="check1">
+                                       <label class="custom-control-label" for="check1">Air
+                                       Conditioning</label>
+                                    </div>
+                                 </li>
+                              </ul>
                            </div>
-                        </li>
-                        <li>
-                           <div class="checkbox">
-                              <label  id="box50" class="checkbox-label">
-                              <input for="box50" name="prices[]" value="800000" class="filter-product" type="checkbox">
-                              <span class="checkbox-custom rectangular"></span>
-                              <span class="checkbox-label-text">Less Than  800,000</span> 
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div class="checkbox">
-                              <label  id="box50" class="checkbox-label">
-                              <input for="box50" name="prices[]" value="1000000" class="filter-product" type="checkbox">
-                              <span class="checkbox-custom rectangular"></span>
-                              <span class="checkbox-label-text">Less Than  1,000,000</span> 
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div class="checkbox">
-                              <label  id="box50" class="checkbox-label">
-                              <input for="box50" name="prices[]" value="10000000" class="filter-product" type="checkbox">
-                              <span class="checkbox-custom rectangular"></span>
-                              <span class="checkbox-label-text">Less Than  10,000,000</span> 
-                              </label>
-                           </div>
-                        </li>
-                     </ul>
+                        </div>
+                     </form>
                   </div>
-                  <!-- End .widget-body -->
                </div>
-               <!-- End .collapse -->
-            </div>
-            <!-- End .widget -->
-            @foreach($attributes as $attribute)
-            <div  class="widget">
-               <h3 class="widget-title">
-                  <a class="collapsed bold"   data-toggle="collapse" href="#widget-body-4{{ $attribute->id }}" role="button" aria-expanded="true" aria-controls="widget-body-4{{ $attribute->id}}">{{ $attribute->name }}</a>
-               </h3>
-               <div class="collapse"  id="widget-body-4{{ $attribute->id }}">
-                  <div class="widget-body">
-                     <ul class="cat-list  {{ $attribute->children->count() > 6  ?  'widget-scroll' : '' }}">
-                        @foreach($attribute->children as $attribute)
-                        <li class="">
-                           <div class="checkbox">
-                              <label  id="box{{ $attribute->slug }}" class="checkbox-label">
-                              <input for="box{{ $attribute->slug }}" name="{{ $attribute->slug }}[]" value="{{ $attribute->slug }}" class="filter-product" type="checkbox">
-                              <span class="checkbox-custom rectangular"></span>
-                              <span class="checkbox-label-text color--primary">{{ optional($attribute)->name }}   </span> 
-                              </label>
+               <section class="">
+                  <h4 class="fs-22 text-heading mb-6">Floor Plans</h4>
+                  <div class="accordion accordion-03 mb-3" id="accordion-01">
+                     <div class="card border-0 shadow-xxs-2">
+                        <div class="card-header bg-gray-01 border-gray border-0 p-0" id="floor-plans-01">
+                           <div class="heading d-flex justify-content-between align-items-center px-6" data-toggle="collapse" data-target="#collapse-01" aria-expanded="true" aria-controls="collapse-01" role="button">
+                              <h2 class="mb-0 fs-16 text-heading font-weight-500 py-4 lh-13">First Floor</h2>
+                              <ul class="list-inline mb-0 d-none d-sm-block pr-2">
+                                 <li class=" list-inline-item text-muted mr-4">Beds : <span class="font-weight-500 text-heading">2</span></li>
+                              </ul>
                            </div>
-                        </li>
-                        @endforeach
-                     </ul>
+                        </div>
+                        <div id="collapse-01" class="collapse show" aria-labelledby="floor-plans-01" data-parent="#accordion-01">
+                           <div class="card-body card-body col-sm-6 offset-sm-3 mb-3">
+                              <img src="images/single-detail-property-01.jpg" class="card-img" alt="Floor Plans">
+                           </div>
+                        </div>
+                     </div>
                   </div>
-                  <!-- End .widget-body -->
-               </div>
-               <!-- End .collapse -->
+                  <div class="accordion accordion-03 mb-3" id="accordion-02">
+                     <div class="card border-0 shadow-xxs-2">
+                        <div class="card-header bg-gray-01 border-gray border-0 p-0" id="floor-plans-02">
+                           <div class="heading d-flex justify-content-between align-items-center px-6 collapsed " data-toggle="collapse" data-target="#collapse-02" aria-expanded="true" aria-controls="collapse-02" role="button">
+                              <h2 class="mb-0 fs-16 text-heading font-weight-500 py-4 lh-13">Second Floor</h2>
+                              
+                           </div>
+                        </div>
+                        <div id="collapse-02" class="collapse " aria-labelledby="floor-plans-02" data-parent="#accordion-02">
+                           <div class="card-body card-body col-sm-6 offset-sm-3 mb-3">
+                              <img src="images/single-detail-property-01.jpg" class="card-img" alt="Floor Plans">
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="accordion accordion-03 mb-3" id="accordion-03">
+                     <div class="card border-0 shadow-xxs-2">
+                        <div class="card-header bg-gray-01 border-gray border-0 p-0" id="floor-plans-03">
+                           <div class="heading d-flex justify-content-between align-items-center px-6 collapsed " data-toggle="collapse" data-target="#collapse-03" aria-expanded="true" aria-controls="collapse-03" role="button">
+                              <h2 class="mb-0 fs-16 text-heading font-weight-500 py-4 lh-13">Third Floor</h2>
+                           </div>
+                        </div>
+                        <div id="collapse-03" class="collapse " aria-labelledby="floor-plans-03" data-parent="#accordion-03">
+                           <div class="card-body card-body col-sm-6 offset-sm-3 mb-3">
+                              <img src="images/single-detail-property-01.jpg" class="card-img" alt="Floor Plans">
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </section>
             </div>
-            <!-- End .widget -->
-            @endforeach
-            <!-- Content -->
-         </form>
-      </div>
-      <div class="col-lg-9">
-         <div class="filters">
-            
+         </div>
+         <div class="col-lg-9 mb-8 mb-lg-0 order-1 order-lg-2">
             <div class="row align-items-sm-center mb-4">
                <div class="col-md-6">
-                  <h2 class="fs-15 text-dark mb-0">We found <span class="text-primary">{{ $apartments->count() }}</span> properties
+                  <h2 class="fs-15 text-dark mb-0">We found <span class="text-primary">45</span> properties
                      available for
-                     you in  {{ $location->name }}
+                     you
                   </h2>
                </div>
                <div class="col-md-6 mt-4 mt-md-0">
                   <div class="d-flex justify-content-md-end align-items-center">
                      <div class="input-group border rounded input-group-lg w-auto bg-white mr-3">
                         <label class="input-group-text bg-transparent border-0 text-uppercase letter-spacing-093 pr-1 pl-3" for="inputGroupSelect01"><i class="fas fa-align-left fs-16 pr-2"></i>Sortby:</label>
-                        <div class="dropdown bootstrap-select form-control border-0 bg-transparent shadow-none p-0 sortby">
-                           <select class="form-control border-0 bg-transparent shadow-none p-0  sortby"  id="inputGroupSelect01" name="sortby" tabindex="null">
-                              <option selected="">Top Selling</option>
-                              <option value="1">Most Viewed</option>
-                              <option value="2">Price(low to high)</option>
-                              <option value="3">Price(high to low)</option>
-                           </select>
-                        </div>
+                        <select class="form-control border-0 bg-transparent shadow-none p-0 selectpicker sortby" data-style="bg-transparent border-0 font-weight-600 btn-lg pl-0 pr-3" id="inputGroupSelect01" name="sortby">
+                           <option selected>Top Selling</option>
+                           <option value="1">Most Viewed</option>
+                           <option value="2">Price(low to high)</option>
+                           <option value="3">Price(high to low)</option>
+                        </select>
                      </div>
-                     
                   </div>
                </div>
             </div>
-         </div>
-         @if ($apartments->count())
-         @foreach($apartments as $apartment)
-         <div class="col-lg-12">
-            <div class="card mb-3" style="">
-               <div class="row no-gutters">
-                  <div class="col-md-4">
-                     <a href="/apartment/{{ $apartment->slug }}">
-                     <img src="{{ $apartment->image }}" class="img-fluid" alt="...">
+            @if ($apartments->count())
+            @foreach($apartments as $apartment)
+            <div class="py-5 px-4 border rounded-lg shadow-hover-1 bg-white mb-4">
+               <div class="media flex-column flex-sm-row no-gutters">
+                  <div class="col-sm-3 mr-sm-5 card border-0 hover-change-image bg-hover-overlay mb-sm-5">
+                     <a href="/apartment/{{ $apartment->slug }}" class="">
+                     <img src="{{ $apartment->image_to_show_m }}" class="card-img" alt="{{ $apartment->name }}">
                      </a>
-                  </div>
-                  <div class="col-md-5">
-                     <a href="/apartment/{{ $apartment->slug }}">
-                        <div class="card-body">
-                           <h5 class="card-title">{{ $apartment->name }}</h5>
-                           <div class="card-text">
-                     <a href="">{{ $apartment->city }}</a>,  <a href="">{{ $apartment->state }}</a></div>
-                     <p class="card-text"><small class="text-muted"><?php echo  str_limit(html_entity_decode($apartment->description), $limit = 200, $end = '...') ?> </small></p>
-                     </div>
-                     </a>
-                  </div>
-                  <div class="col-md-3">
-                     <div class="text-right">
-                        <div class="d-flex justify-content-end">
-                           <div class="review-score__content">
-                              <a href="/apartment/{{ $apartment->slug }}">
-                                 <div class="review-score__title"> Very Good</div>
-                                 <div class="review-score__text"> 2,977 reviews </div>
+                     <div class="card-img-overlay p-2">
+                        <ul class="list-inline mb-0 d-flex justify-content-center align-items-center h-100 hover-image">
+                           <li class="list-inline-item">
+                              <a href="/apartment/{{ $apartment->slug }}" class="w-40px h-40 border rounded-circle d-inline-flex align-items-center justify-content-center text-heading bg-white border-white bg-hover-primary border-hover-primary hover-white">
+                              <i class="far fa-heart"></i>
                               </a>
-                           </div>
-                           <div class="review-score__badge" aria-label="Scored 8.3 "> 8.3 </div>
-                        </div>
-                        <div class="">
-                           <div class="">
-                              <div class="">
-                                 <div class="">1 night, 2 adults</div>
-                              </div>
-                              <div class="">
-                                 <div class="">
-                                    <span class="">
-                                    Price
-                                    NGN&nbsp;26,337
-                                    </span>
-                                 </div>
-                              </div>
-                              <div class="">
-                                 <div class="">
-                                    Includes taxes and fees
-                                 </div>
-                              </div>
-                           </div>
-                           <div>
-                              <div>
-                                 <div colspan="4" class="roomFooter">
-                                    <div class="">
-                                       <a href="/apartment/{{ $apartment->slug }}">
-                                          <span class="button__text js-sr-cta-text">
-                                          See availability
-                                          </span>
-                                          <span class="">
-                                             <svg class="bk-icon -streamline-arrow_nav_right" height="16" width="16" viewBox="0 0 24 24" role="presentation" aria-hidden="true" focusable="false">
-                                                <path d="M9.45 6c.2 0 .39.078.53.22l5 5c.208.206.323.487.32.78a1.1 1.1 0 0 1-.32.78l-5 5a.75.75 0 0 1-1.06 0 .74.74 0 0 1 0-1.06L13.64 12 8.92 7.28a.74.74 0 0 1 0-1.06.73.73 0 0 1 .53-.22zm4.47 5.72zm0 .57z"></path>
-                                             </svg>
-                                          </span>
-                                       </a>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
+                           </li>
+                           <li class="list-inline-item">
+                              <a href="/apartment/{{ $apartment->slug }}" class="w-40px h-40 border rounded-circle d-inline-flex align-items-center justify-content-center text-heading bg-white border-white bg-hover-primary border-hover-primary hover-white">
+                              <i class="fas fa-exchange-alt"></i>
+                              </a>
+                           </li>
+                        </ul>
                      </div>
                   </div>
+                  <div class="media-body mt-3 mt-sm-0">
+                     <h2 class="my-0"><a href="/apartment/{{ $apartment->slug }}" class="fs-16 lh-2 text-dark hover-primary d-block">{{ $apartment->name }}</a></h2>
+                     <p class="mb-1 font-weight-500 text-gray-light"><a href="/apartment/{{ $apartment->slug }}">{{ $apartment->city }}</a>,  <a href="">{{ $apartment->state }}</a></p>
+                     <p class="fs-17 font-weight-bold text-heading mb-1">
+                        $1.250.000
+                     </p>
+                     <p class="mb-2 ml-0"><small class="text-muted"><?php echo  str_limit(html_entity_decode($apartment->description), $limit = 200, $end = '...') ?> </small></p>
+                  </div>
+               </div>
+               <div class="d-sm-flex justify-content-sm-between">
+                  <ul class="list-inline d-flex mb-0 flex-wrap">
+                     <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5" data-toggle="tooltip" title="3 Bedroom">
+                        <svg class="icon icon-bedroom fs-18 text-primary mr-1">
+                           <use xlink:href="#icon-bedroom"></use>
+                        </svg>
+                        3 Br
+                     </li>
+                     <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5" data-toggle="tooltip" title="3 Bathrooms">
+                        <svg class="icon icon-shower fs-18 text-primary mr-1">
+                           <use xlink:href="#icon-shower"></use>
+                        </svg>
+                        3 Ba
+                     </li>
+                     <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5" data-toggle="tooltip" title="Size">
+                        <svg class="icon icon-square fs-18 text-primary mr-1">
+                           <use xlink:href="#icon-square"></use>
+                        </svg>
+                        2300 Sq.Ft
+                     </li>
+                     <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5" data-toggle="tooltip" title="1 Garage">
+                        <svg class="icon icon-Garage fs-18 text-primary mr-1">
+                           <use xlink:href="#icon-Garage"></use>
+                        </svg>
+                        1 Gr
+                     </li>
+                     <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5" data-toggle="tooltip" title="Year">
+                        <svg class="icon icon-year fs-18 text-primary mr-1">
+                           <use xlink:href="#icon-year"></use>
+                        </svg>
+                        2020
+                     </li>
+                  </ul>
+                  <span class="badge badge-primary mr-xl-2 mt-3 mt-sm-0">4.7 (3 reviews)</span>
                </div>
             </div>
+            @endforeach
+            @else
+            <div class="col-lg-9 main-content">No Apartments</div>
+            @endif
+            <nav class="pt-6">
+               <ul class="pagination rounded-active justify-content-center mb-0">
+                  <li class="page-item"><a class="page-link" href="listing-with-left-filter./#"><i class="far fa-angle-double-left"></i></a></li>
+                  <li class="page-item"><a class="page-link" href="listing-with-left-filter./#">1</a></li>
+                  <li class="page-item active"><a class="page-link" href="listing-with-left-filter./#">2</a></li>
+                  <li class="page-item d-none d-sm-block"><a class="page-link" href="listing-with-left-filter./#">3</a></li>
+                  <li class="page-item">...</li>
+                  <li class="page-item"><a class="page-link" href="listing-with-left-filter./#">6</a></li>
+                  <li class="page-item"><a class="page-link" href="listing-with-left-filter./#"><i class="far fa-angle-double-right"></i></a></li>
+               </ul>
+            </nav>
          </div>
-         @endforeach
-         @else
-         <div class="col-lg-9 main-content">No Apartments</div>
-         @endif
       </div>
    </div>
-</div>
+</section>
 @endsection
 @section('page-scripts')
 @stop

@@ -119,6 +119,8 @@ Route::get('apartments/{location}', 'Apartments\ApartmentsController@index');
 Route::get('apartment/{apartment}', 'Apartments\ApartmentsController@show');
 Route::get('checkout/{room}', 'Checkout\CheckoutController@index');
 Route::resource('properties', 'Properties\PropertiesController',['name' => 'properties']);
+Route::get('/search',         'Apartments\ApartmentsController@search');
+
 
 
 

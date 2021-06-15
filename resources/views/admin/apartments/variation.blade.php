@@ -13,7 +13,7 @@
         <input name="new_room"     value="1"   class="" type="hidden">
         
                 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group label-floating is-ty">
                     <label class="control-label">Accommodation Type Name</label>
                     <input name="room_name[{{ $counter }}]"  required="true" value="{{ old('price') }}" class="form-control  variation" type="text">
@@ -24,6 +24,13 @@
                 <div class="form-group label-floating">
                     <label class="control-label">From Date Available</label>
                     <input name="room_avaiable_from[{{ $counter }}]"  required="true" value="" class="form-control  datepicker" type="text">
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group label-floating is-empty">
+                    <label class="control-label">Number of rooms</label>
+                    <input name="room_number[{{ $counter }}]"  required="true" value="" class="form-control   variation" type="number">
                 </div>
             </div>
 
@@ -108,12 +115,10 @@
 
         <div class="col-md-12 mt-3 pr-5 pl-5">
             <h2>Facilities </h2>
-
             <div class="">
                 @foreach($facilities as $facilitie)
                 <h4>{{ $facilitie->name }}</h4>
                     <div  class="" value="{{ $facilitie->id }}">
-                        
                         @include('includes.attributes',['obj'=>$facilitie,'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
                     </div>
                     <hr/>

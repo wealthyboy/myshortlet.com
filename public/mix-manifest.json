@@ -2,5 +2,6 @@
     "/js/services_js.js": "/js/services_js.js",
     "/css/services_style.css": "/css/services_style.css",
     "/backend/css/admin.css": "/backend/css/admin.css",
-    "/backend/js/dashboard.js": "/backend/js/dashboard.js"
+    "/backend/js/dashboard.js": "/backend/js/dashboard.js",
+    "/js/app.js": "/js/app.js"
 }

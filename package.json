@@ -1,34 +1,53 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
-    },
-    "devDependencies": {
-        "axios": "^0.21",
-        "laravel-mix": "^6.0.19",
-        "lodash": "^4.17.21",
-        "postcss": "^8.3.0",
-        "resolve-url-loader": "^3.1.2",
-        "sass": "^1.32.5",
-        "sass-loader": "^8.0.2",
-        "vue-loader": "^15.9.6",
-        "vue-template-compiler": "^2.6.12"
-    },
-    "dependencies": {
-        "bootstrap": "^4.6.0",
-        "bootstrap-icons": "^1.5.0",
-        "flatpickr": "^4.6.9",
-        "intl-tel-input": "^17.0.13",
-        "jquery": "^3.5.1",
-        "popper.js": "^1.16.1",
-        "vue": "^2.6.12",
-        "vue-image-zoomer": "^1.2.1",
-        "vuex": "^3.6.2"
-    }
+  "private": true,
+  "scripts": {
+    "dev": "npm run development",
+    "development": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production"
+  },
+  "devDependencies": {
+    "axios": "^0.21.1",
+    "browser-sync": "^2.26.12",
+    "browser-sync-webpack-plugin": "^2.2.2",
+    "cross-env": "^5.1",
+    "laravel-mix": "^6.0.19",
+    "lodash": "^4.17.20",
+    "resolve-url-loader": "^2.3.2",
+    "sass": "^1.26.9",
+    "sass-loader": "^7.1.0",
+    "vue-loader": "^15.9.7",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^5.38.1",
+    "webpack-bundle-analyzer": "^3.8.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "animate.css": "^3.7.2",
+    "bootstrap": "^4.6.0",
+    "bootstrap-icons": "^1.5.0",
+    "bootstrap-select": "^1.13.18",
+    "bootstrap-timepicker": "^0.5.2",
+    "dropzone": "^5.9.2",
+    "flatpickr": "^4.6.9",
+    "greensock": "^1.20.2",
+    "hc-sticky": "^2.2.7",
+    "intl-tel-input": "^17.0.13",
+    "jquery": "^3.5.1",
+    "jquery-waypoints": "^2.0.5",
+    "magnific-popup": "^1.1.0",
+    "mapbox-gl": "^2.3.0",
+    "popper.js": "^1.16.1",
+    "postcss-loader": "^6.1.0",
+    "slick-carousel": "^1.8.1",
+    "vue": "^2.6.11",
+    "vue-router": "^3.3.4",
+    "vue-slick-carousel": "^1.0.6",
+    "vue-spinner": "^1.0.3",
+    "vuelidate": "^0.7.5",
+    "vuex": "^3.4.0"
+  }
 }

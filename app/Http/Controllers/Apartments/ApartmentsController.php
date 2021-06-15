@@ -52,6 +52,36 @@ class ApartmentsController extends Controller
         return $filters;
     }
 
+
+    public function search(Request $request){
+        // $date = explode("to",$request->check_in_check_out);
+        // $date1 = $date[0];
+        // $date2 = $date[1];
+        $data = [];
+        $attributes = Attribute::parents()->get();
+        $data['location'] =  $request->location;
+        $data['max_children'] = $request->no_of_children;
+        $data['max_adults'] = $request->no_of_adults;
+        $data['rooms'] = $request->rooms;
+        $apartments = Apartment::whereHas('locations',function(Builder  $builder) use ($data){
+            $query->where('locations.name','like','%' .$data['location']. '%');
+        })->whereHas('rooms', function( $query ) use ( $data ){
+            $query->where('rooms.max_adults', 'like', '%' .$data['no_of_children'] . '%');
+            $query->where('rooms.no_of_children', 'like', '%' .$data['max_adults']. '%');
+            $query->where('rooms.no_of_rooms', 'like', '%' .$data['no_of_rooms']. '%');
+        })->latest()->paginate(20);
+        $apartments->appends(request()->all());
+        $breadcrumb = $location->name; 
+        return  view('apartments.index',compact(
+            'location',
+            'page_title',
+            'breadcrumb',
+            'apartments',
+            'attributes'
+        ));
+         
+    }
+
     
 
     /**

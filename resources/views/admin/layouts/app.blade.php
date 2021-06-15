@@ -133,8 +133,8 @@
                             </a>
                         </li>
                         
-                        <li class="{{ $helper->active_link(['category']) }}">
-                            <a  href="{{ route('attributes.index') }}">
+                        <li class="{{ $helper->active_link(['attributes?type=category']) }}">
+                            <a  href="{{ route('attributes.index',['type'=>'category']) }}">
                                 <span class="sidebar-mini"> C </span>
                                 <span class="sidebar-normal"> Categories </span>
                             </a>

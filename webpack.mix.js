@@ -26,3 +26,19 @@ mix.scripts(
   ],
   "public/backend/js/dashboard.js"
 );
+
+mix.scripts(
+  [
+    "public/js/bootstrap-select.js",
+    "public/js/countUp.js",
+    "public/js/slick.js",
+    "public/js/timepicker.js",
+    "public/js/waypoints.js",
+    "public/js/popup.js",
+    "public/js/sticky.js",
+    "public/js/tweenMax.js",
+    "public/js/mapbox.js",
+    "public/js/scripts.js",
+  ],
+  "public/js/app.js"
+);

@@ -42,12 +42,12 @@ class HomeController
 
     public function home()
     {
-        
         $site_status = Live::first();
-        $states   = Location::where('location_type', 'state')->has('apartments')->latest()->get();
-        $featureds = Apartment::where('featured',true)->get();
+        $states      = Location::where('location_type', 'state')->has('apartments')->latest()->get();
+        $featureds   = Apartment::where('featured',true)->skip(1)->take(10)->get();
+        $featured    = Apartment::where('featured',true)->first();
         $posts       = Information::orderBy('created_at','DESC')->where('blog',true)->take(3)->get();
-        return view('index',compact('states','posts','featureds')); 
+        return view('index',compact('states','posts','featureds','featured')); 
     }
 
 
