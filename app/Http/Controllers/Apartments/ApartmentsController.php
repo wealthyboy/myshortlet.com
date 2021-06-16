@@ -58,6 +58,7 @@ class ApartmentsController extends Controller
         // $date = explode("to",$request->check_in_check_out);
         // $date1 = $date[0];
         // $date2 = $date[1];
+        \DB::enableQueryLog();
         $data = [];
         $attributes = Attribute::parents()->get();
         $data['location'] =  $request->location;
@@ -66,17 +67,19 @@ class ApartmentsController extends Controller
         $data['rooms'] = $request->rooms;
         $apartments = Apartment::whereHas('locations',function($query) use ($data){
             $query->where('locations.name','like','%' .$data['location']. '%');
-        })->whereHas('rooms', function( $query ) use ( $data ){
+        })->orWhereHas('rooms', function( $query ) use ( $data ){
             $query->where('rooms.max_adults', '<=',  $data['max_children']);
             $query->where('rooms.max_children', '<=', $data['max_adults'] );
             $query->where('rooms.no_of_rooms', '<=', $data['rooms'] );
-        })->latest()->toSql();
+        })->latest()->paginate(20);
         $apartments->appends(request()->all());
         $breadcrumb = $request->name; 
         $page_title = $request->name; 
         $location = 'test'; 
 
-        
+       // dd(\DB::getQueryLog());
+
+
         dd($apartments);
 
 
