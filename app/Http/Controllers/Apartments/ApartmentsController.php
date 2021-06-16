@@ -64,7 +64,7 @@ class ApartmentsController extends Controller
         $data['max_children'] = $request->no_of_children;
         $data['max_adults'] = $request->no_of_adults;
         $data['rooms'] = $request->rooms;
-        $apartments = Apartment::whereHas('locations',function(Builder  $builder) use ($data){
+        $apartments = Apartment::whereHas('locations',function($query) use ($data){
             $query->where('locations.name','like','%' .$data['location']. '%');
         })->whereHas('rooms', function( $query ) use ( $data ){
             $query->where('rooms.max_adults', 'like', '%' .$data['no_of_children'] . '%');
