@@ -76,7 +76,7 @@
                            @auth
                               <li class="nav-item">
                                  <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/account">
-                                 <i class="fal fa-sign-in"></i> Account
+                                 <i class="fal fa-user-alt"></i> Account
                                  </a>
                               </li>
                            @endauth
@@ -119,7 +119,7 @@
                         @auth
                            <li class="nav-item">
                               <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/account">
-                              <i class="fal fa-sign-in"></i> Account
+                              <i class="fal fa-user-alt"></i> Account
                               </a>
                            </li>
                         @endauth
