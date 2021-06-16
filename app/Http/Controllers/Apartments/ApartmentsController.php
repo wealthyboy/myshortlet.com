@@ -66,15 +66,13 @@ class ApartmentsController extends Controller
         $data['rooms'] = $request->rooms;
         $apartments = Apartment::whereHas('locations',function($query) use ($data){
             $query->where('locations.name','like','%' .$data['location']. '%');
-        })->whereHas('rooms', function( $query ) use ( $data ){
-            $query->where('rooms.max_adults', 'like', '%' .$data['max_children'] . '%');
-            $query->where('rooms.max_children', 'like', '%' .$data['max_adults']. '%');
-            $query->where('rooms.no_of_rooms', 'like', '%' .$data['rooms']. '%');
         })->latest()->paginate(20);
         $apartments->appends(request()->all());
         $breadcrumb = $request->name; 
         $page_title = $request->name; 
         $location = 'test'; 
+
+        dd($apartment);
 
 
         return  view('apartments.index',compact(
