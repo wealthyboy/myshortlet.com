@@ -48,28 +48,7 @@ class HomeController
         $featured    = Apartment::where('featured',true)->first();
         $posts       = Information::orderBy('created_at','DESC')->where('blog',true)->take(3)->get();
 
-        $currencies = [
-            array('id' => '19','created_at' => '2020-02-15 11:02:16','updated_at' => '2020-02-15 11:02:16','country' => 'Australian','symbol' => '$','iso_code2' => NULL,'iso_code3' => 'AUD'),
-            array('id' => '20','created_at' => '2020-02-15 11:02:16','updated_at' => '2020-02-15 11:02:16','country' => 'Nigeria','symbol' => '₦','iso_code2' => NULL,'iso_code3' => 'NGR'),
-            array('id' => '21','created_at' => '2020-02-15 11:02:16','updated_at' => '2020-02-15 11:02:16','country' => 'United States','symbol' => '$','iso_code2' => NULL,'iso_code3' => 'USD'),
-            array('id' => '22','created_at' => '2020-02-15 11:02:16','updated_at' => '2020-02-15 11:02:16','country' => 'Europe','symbol' => '€','iso_code2' => NULL,'iso_code3' => 'EUR'),
-            array('id' => '23','created_at' => '2020-02-15 11:02:16','updated_at' => '2020-02-15 11:02:16','country' => 'United Kingdom','symbol' => '£','iso_code2' => NULL,'iso_code3' => 'GBP')
-        ];
-
-        //dd(array_shift($currencies));
-
-        foreach (Currency::all() as $currency ) {
-            $currency->delete();
-        }
-
-        foreach ($currencies as $currency ) {
-            $currenci            = new Currency;
-            $currenci->country   = $currency['country'];
-            $currenci->symbol    = $currency['symbol'];
-            $currenci->iso_code2 = $currency['iso_code2'];
-            $currenci->iso_code3 = $currency['iso_code3'];
-            $currenci->save();
-        }
+        
           
         return view('index',compact('states','posts','featureds','featured')); 
     }
