@@ -70,16 +70,13 @@ class ApartmentsController extends Controller
             $query->where('rooms.max_adults', '<=',  $data['max_children']);
             $query->where('rooms.max_children', '<=', $data['max_adults'] );
             $query->where('rooms.no_of_rooms', '<=', $data['rooms'] );
-        })->latest()->paginate(20);
+        })->latest()->toSql();
         $apartments->appends(request()->all());
         $breadcrumb = $request->name; 
         $page_title = $request->name; 
         $location = 'test'; 
 
-        \DB::enableQueryLog();
-        dd(\DB::getQueryLog());
-
-
+        
         dd($apartments);
 
 
