@@ -84,14 +84,11 @@
                         <div class="card-header bg-gray-01 border-gray border-0 p-0" id="floor-plans-01">
                            <div class="heading d-flex justify-content-between align-items-center px-6" data-toggle="collapse" data-target="#collapse-01" aria-expanded="true" aria-controls="collapse-01" role="button">
                               <h2 class="mb-0 fs-16 text-heading font-weight-500 py-4 lh-13">First Floor</h2>
-                              <ul class="list-inline mb-0 d-none d-sm-block pr-2">
-                                 <li class=" list-inline-item text-muted mr-4">Beds : <span class="font-weight-500 text-heading">2</span></li>
-                              </ul>
+                              
                            </div>
                         </div>
                         <div id="collapse-01" class="collapse show" aria-labelledby="floor-plans-01" data-parent="#accordion-01">
                            <div class="card-body card-body col-sm-6 offset-sm-3 mb-3">
-                              <img src="images/single-detail-property-01.jpg" class="card-img" alt="Floor Plans">
                            </div>
                         </div>
                      </div>
@@ -106,7 +103,6 @@
                         </div>
                         <div id="collapse-02" class="collapse " aria-labelledby="floor-plans-02" data-parent="#accordion-02">
                            <div class="card-body card-body col-sm-6 offset-sm-3 mb-3">
-                              <img src="images/single-detail-property-01.jpg" class="card-img" alt="Floor Plans">
                            </div>
                         </div>
                      </div>
@@ -120,7 +116,6 @@
                         </div>
                         <div id="collapse-03" class="collapse " aria-labelledby="floor-plans-03" data-parent="#accordion-03">
                            <div class="card-body card-body col-sm-6 offset-sm-3 mb-3">
-                              <img src="images/single-detail-property-01.jpg" class="card-img" alt="Floor Plans">
                            </div>
                         </div>
                      </div>
