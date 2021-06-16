@@ -74,6 +74,8 @@ class ApartmentsController extends Controller
         $apartments->appends(request()->all());
         $breadcrumb = $request->name; 
         $page_title = $request->name; 
+        $location = 'test'; 
+
 
         return  view('apartments.index',compact(
             'location',
