@@ -76,6 +76,10 @@ class ApartmentsController extends Controller
         $page_title = $request->name; 
         $location = 'test'; 
 
+        \DB::enableQueryLog();
+        dd(\DB::getQueryLog());
+
+
         dd($apartments);
 
 
