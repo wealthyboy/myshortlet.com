@@ -76,10 +76,10 @@ class SettingsController extends Controller
 		$settings->s_h_w_l                      = $request->s_h_w_l;
 		$settings->s_h_o_l                      = $request->s_h_o_l;
 		$settings->allow_multi_currency         = $request->allow_multi_currency ? true : false;
-		$settings->opening_times                =$request->opening_times;
-		$settings->currency_id                  =$request->currency_id;
-		$settings->meta_description             =$request->meta_description;
-		$settings->meta_tag_keywords            =$request->meta_tag_keywords;
+		$settings->opening_times                = $request->opening_times;
+		$settings->currency_id                  = $request->currency_id;
+		$settings->meta_description             = $request->meta_description;
+		$settings->meta_tag_keywords            = $request->meta_tag_keywords;
 		$settings->products_items_per_page      =$request->products_items_per_page;
 		$settings->products_items_size_h        =$request->products_items_size_h;
 		$settings->products_items_size_w        =$request->products_items_size_w;

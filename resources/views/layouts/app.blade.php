@@ -73,16 +73,25 @@
                               Add listing
                               </a>
                            </li>
-                           <li class="nav-item ">
-                              <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/login">
-                              Login
-                              </a>
-                           </li>
-                           <li class="nav-item">
-                              <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block" href="/register">
-                              Register
-                              </a>
-                           </li>
+                           @auth
+                              <li class="nav-item">
+                                 <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/account">
+                                 <i class="fal fa-sign-in"></i> Account
+                                 </a>
+                              </li>
+                           @endauth
+                           @guest
+                              <li class="nav-item">
+                                 <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/login">
+                                 <i class="fal fa-sign-in"></i> Login
+                                 </a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block" href="/register">
+                                 <i class="fal fa-user-plus"></i> Register
+                                 </a>
+                              </li>
+                           @endguest
                         </ul>
                      </div>
                   </div>
@@ -106,29 +115,25 @@
                            <i class="fal fa-building"></i> Add listing
                            </a>
                         </li>
+
                         @auth
-                        <li class="nav-item">
-                           <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/login">
-                           <i class="fal fa-sign-in"></i> Account
-                           </a>
-                        </li>
-
+                           <li class="nav-item">
+                              <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/account">
+                              <i class="fal fa-sign-in"></i> Account
+                              </a>
+                           </li>
                         @endauth
-
                         @guest
-
-
-                        <li class="nav-item">
-                           <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/login">
-                           <i class="fal fa-sign-in"></i> Login
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block" href="/register">
-                           <i class="fal fa-user-plus"></i> Register
-                           </a>
-                        </li>
-
+                           <li class="nav-item">
+                              <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/login">
+                              <i class="fal fa-sign-in"></i> Login
+                              </a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block" href="/register">
+                              <i class="fal fa-user-plus"></i> Register
+                              </a>
+                           </li>
                         @endguest
 
 

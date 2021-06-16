@@ -52,7 +52,7 @@
             <div class="clearfix"></div>
             <div class="col-md-4">
                 <div class="form-group label-floating is-empty">
-                    <label class="control-label">Price</label>
+                    <label class="control-label">Price per/night</label>
                     <input name="room_price[{{ $counter }}]"  required="true" value="{{ old('price') }}" class="form-control   variation" type="number">
                 </div>
             </div>
