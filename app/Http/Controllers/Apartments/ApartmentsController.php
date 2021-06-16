@@ -76,6 +76,8 @@ class ApartmentsController extends Controller
         $page_title = $request->name; 
         $location = 'test'; 
 
+        dd($apartments);
+
 
         return  view('apartments.index',compact(
             'location',
