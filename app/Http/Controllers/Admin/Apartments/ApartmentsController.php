@@ -257,7 +257,7 @@ class ApartmentsController extends Controller
                         'max_children' => $request->room_max_children[$room_id],
                         'available_from'  => Helper::getFormatedDate($request->edit_room_avaiable_from[$room_id],true),
                         'apartment_id' => $apartment->id,
-                        'no_of_rooms'  => $request->edit_room_number[$room_id]
+                        'no_of_rooms'  => $request->room_number[$room_id]
                     ]
                 );
                 /**
