@@ -149,7 +149,7 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="form-group label-floating ">
+                                <div class="form-group label-floating">
                                     <label class="control-label">Facebook link </label>
                                     <input type="text" name="facebook_link" value="{{ old('facebook_link') }}" id="input-catalog-limit" class="form-control" />
                                 </div>

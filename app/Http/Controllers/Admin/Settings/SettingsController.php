@@ -42,7 +42,7 @@ class SettingsController extends Controller
 		User::canTakeAction(4);
 		$setting = SystemSetting::find($id); 
 		$currencies = Currency::all();
-		$payments = Payment::all();
+		//$payments = Payment::all();
 	
 		return view('admin.settings.edit', compact('setting','payments','currencies'));	
     }

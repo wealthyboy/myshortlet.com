@@ -23,7 +23,8 @@ class Room extends Model
         'available_from',
         'reservation_id',
         'max_adults',
-        'max_children'
+        'max_children',
+        'no_of_rooms'
     ];
 
 

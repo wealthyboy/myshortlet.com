@@ -53,7 +53,8 @@ class ApartmentsController extends Controller
     }
 
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         // $date = explode("to",$request->check_in_check_out);
         // $date1 = $date[0];
         // $date2 = $date[1];
@@ -71,7 +72,9 @@ class ApartmentsController extends Controller
             $query->where('rooms.no_of_rooms', 'like', '%' .$data['no_of_rooms']. '%');
         })->latest()->paginate(20);
         $apartments->appends(request()->all());
-        $breadcrumb = $location->name; 
+        $breadcrumb = $request->name; 
+        $page_title = $request->name; 
+
         return  view('apartments.index',compact(
             'location',
             'page_title',

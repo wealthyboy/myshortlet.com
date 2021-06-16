@@ -123,6 +123,7 @@ class ApartmentsController extends Controller
             $room->slug = str_slug($request->room_name[$key]);
             $room->max_adults = $request->room_max_adults[$key];
             $room->max_children = $request->room_max_children[$key];
+            $room->no_of_rooms = $request->room_number[$key];
             $room->image = $request->room_image[$key];
             $room->available_from = Helper::getFormatedDate($request->room_avaiable_from[$key],true);
             $room->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires[$key],true);
@@ -228,8 +229,6 @@ class ApartmentsController extends Controller
         $apartment->slug      = str_slug($request->apartment_name);
         $apartment->featured        = $request->featured ? 1 : 0;
         $apartment->allow        = $request->allow ? 1 : 0;
-
-
         $apartment->save();
         $apartment->facilities()->sync($request->facility_id);
         $apartment->locations()->sync($request->location_id);
@@ -258,6 +257,7 @@ class ApartmentsController extends Controller
                         'max_children' => $request->room_max_children[$room_id],
                         'available_from'  => Helper::getFormatedDate($request->edit_room_avaiable_from[$room_id],true),
                         'apartment_id' => $apartment->id,
+                        'no_of_rooms'  => $request->edit_room_image[$room_id]
                     ]
                 );
                 /**
