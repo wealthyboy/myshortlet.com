@@ -5,7 +5,7 @@
       <h1 class="display-4 font-weight-normal">Find deals on Apartments.</h1>
       <form  action="/search" method="GET">
          <div class="form-row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                <div class="form-group mb-4">
                   <div class="input-group input-group-lg">
                      <div class="input-group-prepend ">
@@ -28,7 +28,7 @@
                   </div>
                </div>
             </div>
-            <!-- <div class="col-md-3">
+            <div class="col-md-3">
                <div class="form-group mb-4">
                   <div class="input-group input-group-lg">
                      <div class="input-group-prepend">
@@ -48,8 +48,8 @@
                         />
                   </div>
                </div>
-            </div> -->
-            <div class="col-md-4">
+            </div>
+            <div class="col-md-3">
                <persons />
             </div>
             <div class="col-md-2">
