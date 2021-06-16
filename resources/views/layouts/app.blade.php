@@ -106,6 +106,18 @@
                            <i class="fal fa-building"></i> Add listing
                            </a>
                         </li>
+                        @auth
+                        <li class="nav-item">
+                           <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/login">
+                           <i class="fal fa-sign-in"></i> Account
+                           </a>
+                        </li>
+
+                        @endauth
+
+                        @guest
+
+
                         <li class="nav-item">
                            <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/login">
                            <i class="fal fa-sign-in"></i> Login
@@ -116,6 +128,13 @@
                            <i class="fal fa-user-plus"></i> Register
                            </a>
                         </li>
+
+                        @endguest
+
+
+
+
+
                      </ul>
                   </div>
                </nav>
@@ -129,7 +148,6 @@
          <div class="container container-xxl">
             <div class="row">
                @foreach($footer_info as $info)
-
                <div class="col-md-6 col-lg-2 mb-6 mb-md-0">
                   <h4 class="text-white fs-16 my-4 font-weight-500">{{ title_case($info->title) }}</h4>
                   @if($info->children->count())
