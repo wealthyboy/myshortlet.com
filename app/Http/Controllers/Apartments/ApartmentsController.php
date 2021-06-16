@@ -79,10 +79,6 @@ class ApartmentsController extends Controller
 
        // dd(\DB::getQueryLog());
 
-
-        dd($apartments);
-
-
         return  view('apartments.index',compact(
             'location',
             'page_title',
