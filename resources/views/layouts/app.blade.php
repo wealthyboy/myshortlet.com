@@ -103,7 +103,6 @@
                            </a>
                            <div class="dropdown-menu dropdown-sm dropdown-menu-right" aria-labelledby="bd-versions">
                               <a class="dropdown-item" href="home-07.html#">VN</a>
-                              <a class="dropdown-item active" href="home-07.html#">ENG</a>
                               <a class="dropdown-item" href="home-07.html#">ARB</a>
                               <a class="dropdown-item" href="home-07.html#">KR</a>
                               <a class="dropdown-item" href="home-07.html#">JN</a>
@@ -135,11 +134,6 @@
                               </a>
                            </li>
                         @endguest
-
-
-
-
-
                      </ul>
                   </div>
                </nav>
