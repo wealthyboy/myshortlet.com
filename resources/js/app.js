@@ -20,7 +20,6 @@ const ForgotPassword = require("./components/auth/ForgotPassword.vue").default;
 const ResetPassword = require("./components/auth/ResetPassword.vue").default;
 const ChangePassword = require("./components/auth/ChangePassword.vue").default;
 const Comments = require("./components/blog/Comments.vue").default;
-console.log(true);
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
 Window.token = token.content;

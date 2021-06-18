@@ -6,6 +6,7 @@ import store from "./store";
 // require ('../../public/f/js/loadProducts.jquery.js')
 
 const Persons = require("./components/persons/Persons.vue").default;
+const RoomAvailable = require("./components/search/RoomAvailable.vue").default;
 
 const app = new Vue({
   el: "#app",
@@ -13,6 +14,7 @@ const app = new Vue({
   data: Window.user,
   components: {
     Persons,
+    RoomAvailable,
   },
 });
 

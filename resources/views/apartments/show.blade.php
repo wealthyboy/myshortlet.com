@@ -648,12 +648,18 @@
                      <div class="col-lg-12">
                         <div class="card mb-3" style="">
                            <div class="row no-gutters">
-                              <div class="col-md-4">
+                              <div class="col-md-3">
                                  <img src="{{ $room->image }}" class="img-fluid" alt="...">
                               </div>
                               <div class="col-md-5">
                                  <div class="card-body">
                                     <h5 class="card-title">{{ $room->name }}</h5>
+                                    <div class="">
+                                             <span class="">
+                                             Price
+                                             NGN&nbsp;26,337
+                                             </span>
+                                    </div>
                                     <div class="card-text">
                                           <small href="">3 adults max , 2 Children Max, 3 bedroom</small>
                                     </div>
@@ -672,37 +678,11 @@
                                  </select>
                               </div>
 
-                              <div class="col-md-2">
-                                 <div class="text-right">
-                                    <div class="">
-                                       <div class="">
-                                          
-                                          <div class="">
-                                             <div class="">
-                                                <span class="">
-                                                Price
-                                                NGN&nbsp;26,337
-                                                </span>
-                                             </div>
-                                          </div>
-                                          <div class="">
-                                             <div class="">
-                                                Includes taxes and fees
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <div>
-                                          <div>
-                                             <div colspan="4" class="roomFooter">
-                                                <div class="">
-                                                   
-                                                </div>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
+                              <div class="col-md-3">
+                                 <button type="submit" class="btn btn-primary btn-lg btn-block shadow-none mt-4">Reserve</button>
                               </div>
+
+                              
                            </div>
                         </div>
                      </div>
