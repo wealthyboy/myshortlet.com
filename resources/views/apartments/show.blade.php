@@ -117,9 +117,9 @@
    </div>
 </section>
 <div class="primary-content pt-8">
-   <div class="container">
+   <div class="container-fluid">
       <div class="row">
-         <article class="col-lg-7 pr-xl-7">
+         <article class="col-lg-6 pr-xl-7">
             <section class="pb-7 border-bottom">
                <ul class="list-inline d-sm-flex align-items-sm-center mb-2">
                   <li class="list-inline-item badge badge-orange mr-2">Featured</li>
@@ -623,7 +623,7 @@
                <iframe height="430" src="https://my.matterport.com/show/?m=wWcGxjuUuSb&utm_source=hit-content-embed" allowfullscreen="" class="w-100"></iframe>
             </section>
          </article>
-         <aside class="col-lg-5 pl-xl-4 primary-sidebar sidebar-sticky" id="sidebar">
+         <aside class="col-lg-6 pl-xl-4 primary-sidebar sidebar-sticky" id="sidebar">
          <div class="availability">
                <form action="/checkout/" method="POST" class="form-group">
                  @csrf
