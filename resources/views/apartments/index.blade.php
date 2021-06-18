@@ -23,33 +23,27 @@
                            <input type="text" class="form-control form-control-lg border-0 shadow-none" id="key-word" name="search" placeholder="Enter keyword...">
                         </div>
                         <div class="form-group">
-                           <label for="key-word" class="sr-only">Location</label>
+                           <label for="key-word" class="sr-only">Check in - Check out</label>
                            <input type="text" class="form-control form-control-lg border-0 shadow-none"  id="flatpickr-input-f" name="search" placeholder="Enter keyword...">
                         </div>
                         
                         <div class="form-group">
-                           <label for="type" class="sr-only">Type</label>
+                           <label for="type" class="sr-only">Adults</label>
                            <select class="form-control border-0 shadow-none form-control-lg selectpicker" name="type" title="All Types" data-style="btn-lg py-2 h-52" id="type">
                               <option>Apartment</option>
                            </select>
                         </div>
-                        <div class="form-group">
-                           <label for="status" class="sr-only">Status</label>
-                           <select class="form-control border-0 shadow-none form-control-lg selectpicker" title="All Status" data-style="btn-lg py-2 h-52" id="status" name="status">
-                              <option>For Rent</option>
-                              <option>For Sale</option>
-                           </select>
-                        </div>
+                        
                         <div class="form-row mb-4">
                            <div class="col">
-                              <label for="bed" class="sr-only">Beds</label>
+                              <label for="bed" class="sr-only">Children</label>
                               <select class="form-control border-0 shadow-none form-control-lg selectpicker" title="Beds" data-style="btn-lg py-2 h-52" id="bed" name="beds">
                                  <option>3</option>
                                  <option>4</option>
                               </select>
                            </div>
                            <div class="col">
-                              <label for="baths" class="sr-only">Baths</label>
+                              <label for="baths" class="sr-only">Rooms</label>
                               <select class="form-control border-0 shadow-none form-control-lg selectpicker" title="Baths" data-style="btn-lg py-2 h-52" id="baths" name="baths">
                                  <option>3</option>
                                  <option>4</option>
