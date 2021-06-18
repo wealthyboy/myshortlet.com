@@ -20,11 +20,11 @@
                      <form>
                         <div class="form-group">
                            <label for="key-word" class="sr-only">Location</label>
-                           <input type="text" class="form-control form-control-lg border-0 shadow-none" id="key-word" name="search" placeholder="Enter keyword...">
+                           <input type="text" class="form-control form-control-lg border-0 shadow-none" id="key-word" name="search" placeholder="Location">
                         </div>
                         <div class="form-group">
                            <label for="key-word" class="sr-only">Check in - Check out</label>
-                           <input type="text" class="form-control form-control-lg border-0 shadow-none"  id="flatpickr-input-f" name="search" placeholder="Enter keyword...">
+                           <input type="text" class="form-control form-control-lg border-0 shadow-none"  id="flatpickr-input-f" name="search" placeholder="Check in - Check out">
                         </div>
                         
                         <div class="form-group">
@@ -86,33 +86,8 @@
                         </div>
                      </div>
                   </div>
-                  <div class="accordion accordion-03 mb-3" id="accordion-02">
-                     <div class="card border-0 shadow-xxs-2">
-                        <div class="card-header bg-gray-01 border-gray border-0 p-0" id="floor-plans-02">
-                           <div class="heading d-flex justify-content-between align-items-center px-6 collapsed " data-toggle="collapse" data-target="#collapse-02" aria-expanded="true" aria-controls="collapse-02" role="button">
-                              <h2 class="mb-0 fs-16 text-heading font-weight-500 py-4 lh-13">Second Floor</h2>
-                              
-                           </div>
-                        </div>
-                        <div id="collapse-02" class="collapse " aria-labelledby="floor-plans-02" data-parent="#accordion-02">
-                           <div class="card-body card-body col-sm-6 offset-sm-3 mb-3">
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="accordion accordion-03 mb-3" id="accordion-03">
-                     <div class="card border-0 shadow-xxs-2">
-                        <div class="card-header bg-gray-01 border-gray border-0 p-0" id="floor-plans-03">
-                           <div class="heading d-flex justify-content-between align-items-center px-6 collapsed " data-toggle="collapse" data-target="#collapse-03" aria-expanded="true" aria-controls="collapse-03" role="button">
-                              <h2 class="mb-0 fs-16 text-heading font-weight-500 py-4 lh-13">Third Floor</h2>
-                           </div>
-                        </div>
-                        <div id="collapse-03" class="collapse " aria-labelledby="floor-plans-03" data-parent="#accordion-03">
-                           <div class="card-body card-body col-sm-6 offset-sm-3 mb-3">
-                           </div>
-                        </div>
-                     </div>
-                  </div>
+                  
+                  
                </section>
             </div>
          </div>
