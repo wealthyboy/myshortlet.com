@@ -29,7 +29,7 @@
                         
                         <div class="form-group">
                            <label for="type" class="sr-only">Adults</label>
-                           <select class="form-control border-0 shadow-none form-control-lg selectpicker" name="type" title="All Types" data-style="btn-lg py-2 h-52" id="type">
+                           <select class="form-control border-0 shadow-none form-control-lg selectpicker" name="type" title="Adults" data-style="btn-lg py-2 h-52" id="type">
                               <option>Apartment</option>
                            </select>
                         </div>
@@ -37,14 +37,14 @@
                         <div class="form-row mb-4">
                            <div class="col">
                               <label for="bed" class="sr-only">Children</label>
-                              <select class="form-control border-0 shadow-none form-control-lg selectpicker" title="Beds" data-style="btn-lg py-2 h-52" id="bed" name="beds">
+                              <select class="form-control border-0 shadow-none form-control-lg selectpicker" title="Children" data-style="btn-lg py-2 h-52" id="bed" name="beds">
                                  <option>3</option>
                                  <option>4</option>
                               </select>
                            </div>
                            <div class="col">
                               <label for="baths" class="sr-only">Rooms</label>
-                              <select class="form-control border-0 shadow-none form-control-lg selectpicker" title="Baths" data-style="btn-lg py-2 h-52" id="baths" name="baths">
+                              <select class="form-control border-0 shadow-none form-control-lg selectpicker" title="Rooms" data-style="btn-lg py-2 h-52" id="baths" name="baths">
                                  <option>3</option>
                                  <option>4</option>
                               </select>
