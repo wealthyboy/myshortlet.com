@@ -130,10 +130,13 @@
                      </div>
                   </div>
                   <div class="media-body border-md-0 border p-4 p-md-0 w-100">
-                     <h2 class="mt-0 mb-1"><a href="single-property-1.html" class="fs-16 lh-2 text-dark hover-primary d-block">{{ $featured->name }}</a></h2>
-                     <p class="mb-2 font-weight-500 text-gray-light"> <i class="far fa-map-marker-alt"></i> <a href="/apartment/{{ $featured->slug }}">{{ $featured->city }}</a>,  <a href="">{{ $featured->state }}</a> </p>
-                     <!-- <p class="mb-2 ml-0 pr-xl-7">Lorem ipsum dolor sit amet, sectetur cing elit uspe ndisse suscorem ipsum dolor sitorem</p> -->
-                     <p class="mb-2 ml-0"><small class="text-muted"><?php echo  str_limit(html_entity_decode($featured->description), $limit = 200, $end = '...') ?> </small></p>
+                     <h2 class="mt-0 mb-1"><a href="" class="fs-16 lh-2 text-dark hover-primary d-block">{{ $featured->name }} (multiple apartments)</a></h2>
+                     <p class="mb-1 font-weight-500 text-gray-light"> <i class="far fa-map-marker-alt"></i> <a href="/apartment/{{ $featured->slug }}">{{ $featured->city }}</a>,  <a href="">{{ $featured->state }}</a> </p>
+                     <div>ggg</div>
+                     <div>ggg</div>
+                     <div>ggg</div>
+
+
                      <div class="d-sm-flex justify-content-sm-between">
                         <ul class="list-inline d-flex mb-0 mt-3 mt-sm-0 flex-wrap">
                            <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center  mr-3 mr-sm-0" data-toggle="tooltip" title="3 Bedroom">

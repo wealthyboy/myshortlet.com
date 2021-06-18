@@ -58,7 +58,6 @@ class ApartmentsController extends Controller
         $date = explode("to",$request->check_in_check_out);
         $date1 = trim($date[0]);
         $date2 = trim($date[1]);
-        dd($date1);
         $data = [];
         $attributes = Attribute::parents()->get();
         $data['location'] =  $request->location;

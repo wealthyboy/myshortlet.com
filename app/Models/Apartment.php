@@ -30,6 +30,7 @@ class Apartment extends Model
         'state',
         'city',
         'street'
+        
 	];
 
 

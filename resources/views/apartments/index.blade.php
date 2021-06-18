@@ -19,15 +19,14 @@
                      <h4 class="card-title fs-16 lh-2 text-dark mb-3">Find your home</h4>
                      <form>
                         <div class="form-group">
-                           <label for="key-word" class="sr-only">Key Word</label>
+                           <label for="key-word" class="sr-only">Location</label>
                            <input type="text" class="form-control form-control-lg border-0 shadow-none" id="key-word" name="search" placeholder="Enter keyword...">
                         </div>
                         <div class="form-group">
-                           <label for="location" class="sr-only">Location</label>
-                           <select class="form-control border-0 shadow-none form-control-lg selectpicker" name="location" title="Location" data-style="btn-lg py-2 h-52" id="location">
-                              <option>Austin</option>
-                           </select>
+                           <label for="key-word" class="sr-only">Location</label>
+                           <input type="text" class="form-control form-control-lg border-0 shadow-none"  id="flatpickr-input-f" name="search" placeholder="Enter keyword...">
                         </div>
+                        
                         <div class="form-group">
                            <label for="type" class="sr-only">Type</label>
                            <select class="form-control border-0 shadow-none form-control-lg selectpicker" name="type" title="All Types" data-style="btn-lg py-2 h-52" id="type">
@@ -178,38 +177,7 @@
                   </div>
                </div>
                <div class="d-sm-flex justify-content-sm-between">
-                  <ul class="list-inline d-flex mb-0 flex-wrap">
-                     <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5" data-toggle="tooltip" title="3 Bedroom">
-                        <svg class="icon icon-bedroom fs-18 text-primary mr-1">
-                           <use xlink:href="#icon-bedroom"></use>
-                        </svg>
-                        3 Br
-                     </li>
-                     <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5" data-toggle="tooltip" title="3 Bathrooms">
-                        <svg class="icon icon-shower fs-18 text-primary mr-1">
-                           <use xlink:href="#icon-shower"></use>
-                        </svg>
-                        3 Ba
-                     </li>
-                     <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5" data-toggle="tooltip" title="Size">
-                        <svg class="icon icon-square fs-18 text-primary mr-1">
-                           <use xlink:href="#icon-square"></use>
-                        </svg>
-                        2300 Sq.Ft
-                     </li>
-                     <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5" data-toggle="tooltip" title="1 Garage">
-                        <svg class="icon icon-Garage fs-18 text-primary mr-1">
-                           <use xlink:href="#icon-Garage"></use>
-                        </svg>
-                        1 Gr
-                     </li>
-                     <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5" data-toggle="tooltip" title="Year">
-                        <svg class="icon icon-year fs-18 text-primary mr-1">
-                           <use xlink:href="#icon-year"></use>
-                        </svg>
-                        2020
-                     </li>
-                  </ul>
+                  
                   <span class="badge badge-primary mr-xl-2 mt-3 mt-sm-0">4.7 (3 reviews)</span>
                </div>
             </div>
@@ -218,15 +186,7 @@
             <div class="col-lg-9 main-content">No Apartments</div>
             @endif
             <nav class="pt-6">
-               <ul class="pagination rounded-active justify-content-center mb-0">
-                  <li class="page-item"><a class="page-link" href="listing-with-left-filter./#"><i class="far fa-angle-double-left"></i></a></li>
-                  <li class="page-item"><a class="page-link" href="listing-with-left-filter./#">1</a></li>
-                  <li class="page-item active"><a class="page-link" href="listing-with-left-filter./#">2</a></li>
-                  <li class="page-item d-none d-sm-block"><a class="page-link" href="listing-with-left-filter./#">3</a></li>
-                  <li class="page-item">...</li>
-                  <li class="page-item"><a class="page-link" href="listing-with-left-filter./#">6</a></li>
-                  <li class="page-item"><a class="page-link" href="listing-with-left-filter./#"><i class="far fa-angle-double-right"></i></a></li>
-               </ul>
+               
             </nav>
          </div>
       </div>
