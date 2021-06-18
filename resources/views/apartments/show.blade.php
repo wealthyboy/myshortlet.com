@@ -18,13 +18,13 @@
    </div>
    <div class="container-fluid">
       <div class="row">
-         <div class="col-lg-7">
+         <div class="col-lg-9">
             <div>
                <h1>{{ $apartment->name }}</h1>
                <p><i class="bi bi-geo-alt-fill"></i> {{ $apartment->address }}</p>
             </div>
          </div>
-         <div class="col-lg-5">
+         <div class="col-lg-3">
             <div class="text-right">
                <span class="mr-3">
                <i class="bi bi-heart"></i>
