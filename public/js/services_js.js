@@ -1996,6 +1996,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _persons_Persons_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../persons/Persons.vue */ "./resources/js/components/persons/Persons.vue");
 //
 //
 //
@@ -2035,13 +2036,134 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    rooms: Array,
+    apartment: Object
+  },
   data: function data() {
     return {
-      rooms: 1
+      roomsAvailable: [],
+      total: 0,
+      apartments: 0,
+      totalRooms: 0,
+      form: {
+        room_quantity: [],
+        selectedRooms: []
+      }
     };
   },
-  methods: {}
+  created: function created() {
+    this.roomsAvailable = this.rooms;
+  },
+  components: {
+    Persons: _persons_Persons_vue__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  methods: {
+    sum: function sum(arr) {
+      return arr.reduce(function (a, b) {
+        return parseInt(a) + parseInt(b);
+      }, 0);
+    },
+    getApartment: function getApartment(e, room) {
+      var _this = this;
+
+      this.totalRooms = 0;
+      var selectRoomsQty = document.querySelectorAll('[name="apartment_quantity[]"]');
+      var allSelectedRooms = [];
+      var total = [];
+      var apartment = document.querySelector(".apartment_id" + room.id).value = room.id;
+      selectRoomsQty.forEach(function (e, i) {
+        if (e.value != "") {
+          allSelectedRooms.push(e.value);
+          total.push(e.selectedOptions[0].dataset.price || 0);
+        }
+      });
+      this.apartments = this.sum(allSelectedRooms);
+      this.total = this.sum(total);
+
+      if (this.form.selectedRooms.findIndex(function (x) {
+        return x.id == room.id;
+      }) == -1) {
+        this.form.selectedRooms.push(room);
+      } else {
+        this.form.selectedRooms.forEach(function (o, i) {
+          if (o.id == room.id) {
+            _this.form.selectedRooms.splice(i, 1);
+          }
+        });
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -2103,13 +2225,16 @@ var Persons = __webpack_require__(/*! ./components/persons/Persons.vue */ "./res
 
 var RoomAvailable = __webpack_require__(/*! ./components/search/RoomAvailable.vue */ "./resources/js/components/search/RoomAvailable.vue").default;
 
+var BookIndex = __webpack_require__(/*! ./components/book/BookIndex.vue */ "./resources/js/components/book/BookIndex.vue").default;
+
 var app = new vue__WEBPACK_IMPORTED_MODULE_2__.default({
   el: "#app",
   store: _store__WEBPACK_IMPORTED_MODULE_1__.default,
   data: Window.user,
   components: {
     Persons: Persons,
-    RoomAvailable: RoomAvailable
+    RoomAvailable: RoomAvailable,
+    BookIndex: BookIndex
   }
 });
 var f = (0,flatpickr__WEBPACK_IMPORTED_MODULE_0__.default)("#flatpickr-input-f", {
@@ -23710,6 +23835,43 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./resources/js/components/book/BookIndex.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/book/BookIndex.vue ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _BookIndex_vue_vue_type_template_id_e7f845a4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BookIndex.vue?vue&type=template&id=e7f845a4& */ "./resources/js/components/book/BookIndex.vue?vue&type=template&id=e7f845a4&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__.default)(
+  script,
+  _BookIndex_vue_vue_type_template_id_e7f845a4___WEBPACK_IMPORTED_MODULE_0__.render,
+  _BookIndex_vue_vue_type_template_id_e7f845a4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/book/BookIndex.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/persons/Persons.vue":
 /*!*****************************************************!*\
   !*** ./resources/js/components/persons/Persons.vue ***!
@@ -23760,7 +23922,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _RoomAvailable_vue_vue_type_template_id_b602f59c_lang_pug___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RoomAvailable.vue?vue&type=template&id=b602f59c&lang=pug& */ "./resources/js/components/search/RoomAvailable.vue?vue&type=template&id=b602f59c&lang=pug&");
+/* harmony import */ var _RoomAvailable_vue_vue_type_template_id_b602f59c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RoomAvailable.vue?vue&type=template&id=b602f59c& */ "./resources/js/components/search/RoomAvailable.vue?vue&type=template&id=b602f59c&");
 /* harmony import */ var _RoomAvailable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RoomAvailable.vue?vue&type=script&lang=js& */ "./resources/js/components/search/RoomAvailable.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -23772,8 +23934,8 @@ __webpack_require__.r(__webpack_exports__);
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
   _RoomAvailable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _RoomAvailable_vue_vue_type_template_id_b602f59c_lang_pug___WEBPACK_IMPORTED_MODULE_0__.render,
-  _RoomAvailable_vue_vue_type_template_id_b602f59c_lang_pug___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _RoomAvailable_vue_vue_type_template_id_b602f59c___WEBPACK_IMPORTED_MODULE_0__.render,
+  _RoomAvailable_vue_vue_type_template_id_b602f59c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -23820,6 +23982,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/book/BookIndex.vue?vue&type=template&id=e7f845a4&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/book/BookIndex.vue?vue&type=template&id=e7f845a4& ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BookIndex_vue_vue_type_template_id_e7f845a4___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BookIndex_vue_vue_type_template_id_e7f845a4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BookIndex_vue_vue_type_template_id_e7f845a4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./BookIndex.vue?vue&type=template&id=e7f845a4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/book/BookIndex.vue?vue&type=template&id=e7f845a4&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/persons/Persons.vue?vue&type=template&id=0a052c52&":
 /*!************************************************************************************!*\
   !*** ./resources/js/components/persons/Persons.vue?vue&type=template&id=0a052c52& ***!
@@ -23837,19 +24016,44 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/search/RoomAvailable.vue?vue&type=template&id=b602f59c&lang=pug&":
-/*!**************************************************************************************************!*\
-  !*** ./resources/js/components/search/RoomAvailable.vue?vue&type=template&id=b602f59c&lang=pug& ***!
-  \**************************************************************************************************/
+/***/ "./resources/js/components/search/RoomAvailable.vue?vue&type=template&id=b602f59c&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/search/RoomAvailable.vue?vue&type=template&id=b602f59c& ***!
+  \*****************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RoomAvailable_vue_vue_type_template_id_b602f59c_lang_pug___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RoomAvailable_vue_vue_type_template_id_b602f59c_lang_pug___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RoomAvailable_vue_vue_type_template_id_b602f59c___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RoomAvailable_vue_vue_type_template_id_b602f59c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RoomAvailable_vue_vue_type_template_id_b602f59c_lang_pug___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RoomAvailable.vue?vue&type=template&id=b602f59c&lang=pug& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/search/RoomAvailable.vue?vue&type=template&id=b602f59c&lang=pug&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RoomAvailable_vue_vue_type_template_id_b602f59c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RoomAvailable.vue?vue&type=template&id=b602f59c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/search/RoomAvailable.vue?vue&type=template&id=b602f59c&");
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/book/BookIndex.vue?vue&type=template&id=e7f845a4&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/book/BookIndex.vue?vue&type=template&id=e7f845a4& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
+}
+var staticRenderFns = []
+render._withStripped = true
+
 
 
 /***/ }),
@@ -24165,10 +24369,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/search/RoomAvailable.vue?vue&type=template&id=b602f59c&lang=pug&":
-/*!*****************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/search/RoomAvailable.vue?vue&type=template&id=b602f59c&lang=pug& ***!
-  \*****************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/search/RoomAvailable.vue?vue&type=template&id=b602f59c&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/search/RoomAvailable.vue?vue&type=template&id=b602f59c& ***!
+  \********************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -24181,20 +24385,189 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "text-center bg-light" }, [
-    _c("div", { staticClass: "col-md-11 p-lg-5 mx-auto my-5" }, [
-      _c("h1", { staticClass: "display-4 font-weight-normal" }, [_vm._v(".")]),
-      _vm._v(" "),
-      _c("form", { attrs: { action: "/search", method: "GET" } }, [
+  return _c("div", {}, [
+    _c(
+      "form",
+      {
+        staticClass: "form-group",
+        attrs: { action: "/book/" + _vm.apartment.slug, method: "GET" }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.$root.token }
+        }),
+        _vm._v(" "),
         _c("div", { staticClass: "form-row" }, [
           _vm._m(0),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-3" }, [_c("persons")], 1),
+          _c("div", { staticClass: "col-md-4" }, [_c("persons")], 1),
           _vm._v(" "),
           _vm._m(1)
-        ])
-      ])
-    ])
+        ]),
+        _vm._v(" "),
+        _vm.roomsAvailable
+          ? _c(
+              "div",
+              { staticClass: "availability" },
+              [
+                _vm._l(_vm.roomsAvailable, function(room) {
+                  return _c("div", { key: room.id, staticClass: "rooms" }, [
+                    _c("div", { staticClass: "card mb-3" }, [
+                      _c("div", { staticClass: "row no-gutters" }, [
+                        _c("div", { staticClass: "col-md-4" }, [
+                          _c("img", {
+                            staticClass: "img-fluid",
+                            attrs: { src: room.image_m, alt: "..." }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-6" }, [
+                          _c("div", { staticClass: "card-body" }, [
+                            _c("h5", { staticClass: "card-title" }, [
+                              _vm._v(_vm._s(room.name))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              {
+                                staticClass:
+                                  "fs-17 font-weight-bold text-heading mb-0 lh-16"
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(room.currency) +
+                                    _vm._s(room.converted_price) +
+                                    "\n                  "
+                                ),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "fs-14 font-weight-500 text-gray-light"
+                                  },
+                                  [_vm._v("\n                    /night")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._m(2, true),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "facility" })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          class: "apartment_id" + room.id,
+                          attrs: { type: "hidden", name: "apartment_id[]" }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "col-md-2 d-flex flex-grow-1 align-items-center justify-content-end"
+                          },
+                          [
+                            _c(
+                              "select",
+                              {
+                                staticClass:
+                                  "form-control border-0 shadow-none form-control-lg selectpicker",
+                                attrs: {
+                                  name: "apartment_quantity[]",
+                                  title: "0",
+                                  "data-style": "btn-lg py-2 h-52"
+                                },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.getApartment($event, room)
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "0" } }, [
+                                  _vm._v("0")
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(parseInt(room.no_of_rooms), function(a) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: a,
+                                      attrs: {
+                                        "data-price": a * room.converted_price,
+                                        "data-id": room.id
+                                      },
+                                      domProps: { value: a }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(a) +
+                                          " X " +
+                                          _vm._s(a * room.converted_price)
+                                      )
+                                    ]
+                                  )
+                                })
+                              ],
+                              2
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ])
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "d-grid gap-2" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "card-footer bg-transparent d-flex justify-content-between p-0 align-items-center"
+                    },
+                    [
+                      _c("p", { staticClass: "text-heading mb-0" }, [
+                        _vm._v(_vm._s(_vm.apartments) + " Apartments")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        { staticClass: "fs-32 font-weight-bold text-heading" },
+                        [
+                          _vm._v(
+                            _vm._s(_vm.apartment.currency) + _vm._s(_vm.total)
+                          )
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn  btn-primary btn-block",
+                      attrs: { type: "submit" }
+                    },
+                    [
+                      _vm._v(
+                        "\n          Book Now " +
+                          _vm._s(_vm.total) +
+                          " " +
+                          _vm._s(_vm.form.room_quantity) +
+                          "\n        "
+                      )
+                    ]
+                  )
+                ])
+              ],
+              2
+            )
+          : _vm._e()
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -24202,7 +24575,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
+    return _c("div", { staticClass: "col-md-6" }, [
       _c("div", { staticClass: "form-group mb-4" }, [
         _c("div", { staticClass: "input-group input-group-lg" }, [
           _c("div", { staticClass: "input-group-prepend" }, [
@@ -24236,9 +24609,19 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-md-2" }, [
       _c(
         "button",
-        { staticClass: "btn btn-block btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Search")]
+        { staticClass: "btn btn-block btn-primary", attrs: { type: "button" } },
+        [_vm._v("\n          Search\n        ")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-text" }, [
+      _c("small", { attrs: { href: "" } }, [
+        _vm._v("3 adults max , 2 Children Max, 3 bedroom")
+      ])
     ])
   }
 ]

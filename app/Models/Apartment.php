@@ -21,16 +21,13 @@ class Apartment extends Model
     protected $dates = ['deleted_at','sale_price_expires'];
 
 	public $appends = [
-		'image_to_show',
 		'image_m',
         'image_tn',
-		'image_to_show_m',
-		'image_to_show_tn',
         'country',
         'state',
         'city',
-        'street'
-        
+        'street',
+        'currency'
 	];
 
 

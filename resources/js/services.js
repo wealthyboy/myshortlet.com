@@ -7,6 +7,7 @@ import store from "./store";
 
 const Persons = require("./components/persons/Persons.vue").default;
 const RoomAvailable = require("./components/search/RoomAvailable.vue").default;
+const BookIndex = require("./components/book/BookIndex.vue").default;
 
 const app = new Vue({
   el: "#app",
@@ -15,6 +16,7 @@ const app = new Vue({
   components: {
     Persons,
     RoomAvailable,
+    BookIndex,
   },
 });
 

@@ -62,12 +62,18 @@
                      </ul>
                      <div class="d-block d-xl-none">
                         <ul class="navbar-nav flex-row ml-auto align-items-center justify-content-lg-end flex-wrap py-2">
+                           @if( $system_settings->allow_multi_currency )
                            <li class="nav-item dropdown">
                               <a class="nav-link dropdown-toggle mr-md-2 pr-2 pl-0 pl-lg-2" href="home-07.html#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              ENG
+                              {{ optional($system_settings->currency)->iso_code3 }}
                               </a>
-                              
+                              <div class="dropdown-menu dropdown-sm dropdown-menu-right" aria-labelledby="bd-versions">
+                                 @foreach($currencies as $currency)
+											<a class="dropdown-item" href="/currency/{{ $currency->id }}"> {{ $currency->symbol }} {{ $currency->iso_code3 }} </a>
+									    	@endforeach
+                              </div>
                            </li>
+                           @endif
                            <li class="nav-item mr-2">
                               <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/listing">
                               Add listing
@@ -97,18 +103,19 @@
                   </div>
                   <div class="ml-auto d-none d-xl-block">
                      <ul class="navbar-nav flex-row ml-auto align-items-center justify-content-lg-end flex-wrap py-2">
-                        <li class="nav-item dropdown">
-                           <a class="nav-link dropdown-toggle mr-md-2 pr-2 pl-0 pl-lg-2" href="home-07.html#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                           NGN
-                           </a>
-                           <div class="dropdown-menu dropdown-sm dropdown-menu-right" aria-labelledby="bd-versions">
-                              <a class="dropdown-item" href="home-07.html#">VN</a>
-                              <a class="dropdown-item" href="home-07.html#">ARB</a>
-                              <a class="dropdown-item" href="home-07.html#">KR</a>
-                              <a class="dropdown-item" href="home-07.html#">JN</a>
-                           </div>
-                           
-                        </li>
+                        
+                        @if( $system_settings->allow_multi_currency )
+                           <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle mr-md-2 pr-2 pl-0 pl-lg-2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              {{ $currency->symbol }}  {{ optional($system_settings->currency)->iso_code3 }}
+                              </a>
+                              <div class="dropdown-menu dropdown-sm dropdown-menu-right" aria-labelledby="bd-versions">
+                                 @foreach($currencies as $currency)
+											<a class="dropdown-item" href="/currency/{{ $currency->id }}"> {{ $currency->symbol }} {{ $currency->iso_code3 }} </a>
+									    	@endforeach
+                              </div>
+                           </li>
+                           @endif
                         <li class="nav-item">
                            <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/listings">
                            <i class="fal fa-building"></i> Add listing
@@ -150,20 +157,17 @@
                <div class="col-md-6 col-lg-2 mb-6 mb-md-0">
                   <h4 class="text-white fs-16 my-4 font-weight-500">{{ title_case($info->title) }}</h4>
                   @if($info->children->count())
-
-                  <ul class="list-group list-group-flush list-group-no-border">
-                     @foreach($info->children as $info)
-                     <li class="list-group-item bg-transparent p-0">
-                        <a href="home-01.html#" class="text-muted lh-26 font-weight-500 hover-white">{{ $info->title }}</a>
-                     </li>
-                     @endforeach
-                  </ul>
+                     <ul class="list-group list-group-flush list-group-no-border">
+                        @foreach($info->children as $info)
+                        <li class="list-group-item bg-transparent p-0">
+                           <a href="home-01.html#" class="text-muted lh-26 font-weight-500 hover-white">{{ $info->title }}</a>
+                        </li>
+                        @endforeach
+                     </ul>
                   @endif
 
                </div>
                @endforeach
-
-               
             </div>
             <div class="mt-0 mt-md-10 row">
                <div class="col-md-12 text-center">

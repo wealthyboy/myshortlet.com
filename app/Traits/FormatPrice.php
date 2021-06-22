@@ -25,41 +25,19 @@ trait FormatPrice
      */
     public function formatted_discount_price()
     {
-      if ( $this->product_type == 'variable' && optional(optional($this->variant)->sale_price_expires)->isFuture() ) {
-            return  null !== $this->variant  &&  null !== $this->variant->sale_price 
-          ? $this->ConvertCurrencyRate($this->variant->sale_price)
-          : null;
-      } else {
-          return null !== $this->sale_price  &&  optional($this->sale_price_expires)->isFuture()  
-          ? $this->ConvertCurrencyRate($this->sale_price)
-          : null;
-      }
-      return null;
+      return null !== $this->sale_price  &&  optional($this->sale_price_expires)->isFuture()  
+      ? $this->ConvertCurrencyRate($this->sale_price)
+      : null;
+      
     }
 
     public function display_price(){
-      
-      if ($this->formatted_discount_price() !== null) {
-        if (  $this->product_type == 'variable') {
-          echo "<i style='text-decoration: line-through;'>" . $this->variant->price. "</i>" .'  '. $this->variant->sale_price; 
-        } else {
-          echo  "<i style='text-decoration: line-through;'>" . $this->price. "</i>" .'  '. $this->sale_price; 
-        }
-      } else {
-        if (  $this->product_type == 'variable') {
-          echo  optional($this->variant)->price;
-        }
         echo  $this->price; 
-      }
     }
 
     public function getDefaultPercentageOffAttribute(){      
       if ($this->formatted_discount_price() !== null) {
-          if (null !== $this->variants  && !empty($this->variant)  &&  null !== $this->variant->sale_price ){
-            return $this->calPercentageOff($this->variant->price,$this->variant->sale_price);
-          } else {
-            return $this->calPercentageOff($this->price,$this->sale_price);
-          }
+        return $this->calPercentageOff($this->price,$this->sale_price);
       }
 	    return null;
     }
@@ -105,13 +83,12 @@ trait FormatPrice
       }
 		  return $this->setting->currency->symbol;
     }
+    
 
     public function getConvertedPriceAttribute(){
-  
-      return  $this->product_type == 'variable'  
-      ? $this->ConvertCurrencyRate(optional($this->variant)->price)
-      : $this->ConvertCurrencyRate($this->price);   
+      return $this->ConvertCurrencyRate($this->price);   
     }
+
     
     public function ConvertCurrencyRate($price){
       

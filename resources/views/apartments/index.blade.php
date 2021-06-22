@@ -119,7 +119,7 @@
                <div class="media flex-column flex-sm-row no-gutters">
                   <div class="col-sm-3 mr-sm-5 card border-0 hover-change-image bg-hover-overlay mb-sm-5">
                      <a href="/apartment/{{ $apartment->slug }}" class="">
-                     <img src="{{ $apartment->image_to_show_m }}" class="card-img" alt="{{ $apartment->name }}">
+                     <img src="{{ $apartment->image_m }}" class="card-img" alt="{{ $apartment->name }}">
                      </a>
                      <div class="card-img-overlay p-2">
                         <ul class="list-inline mb-0 d-flex justify-content-center align-items-center h-100 hover-image">

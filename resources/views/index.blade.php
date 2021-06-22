@@ -69,7 +69,7 @@
                <p class="mb-6"></p>
             </div>
             <div class="col-md-6 text-md-right">
-               <a href="listing-full-width-list.html" class="btn btn-lg text-secondary btn-accent rounded-lg mb-6">See all properties
+               <a href="" class="btn btn-lg text-secondary btn-accent rounded-lg mb-6">See all properties
                <i class="far fa-long-arrow-right ml-1"></i>
                </a>
             </div>
@@ -117,13 +117,13 @@
                @foreach( $featureds as $featured)
                <div class="media flex-column flex-md-row mb-6">
                   <div class="w-md-200 mr-md-4 card border-0 hover-change-image bg-hover-overlay">
-                     <img src="{{ $featured->image_to_show_m }}" class="card-img" alt="Home in Metric Way dddddd">
+                     <img src="{{ $featured->image_m }}" class="card-img" alt="Home in Metric Way dddddd">
                      <div class="card-img-overlay p-2">
                         <span class="badge badge-orange position-absolute">Featured</span>
                         <ul class="list-inline mb-0 d-flex justify-content-center align-items-center h-100 hover-image">
                            <li class="list-inline-item">
                               <a href="#" class="w-40px h-40 rounded-circle d-inline-flex align-items-center justify-content-center text-heading bg-white bg-hover-primary hover-white" data-toggle="tooltip" title="Wishlist">
-                              <i class="far fa-heart"></i>
+                                 <i class="far fa-heart"></i>
                               </a>
                            </li>
                         </ul>

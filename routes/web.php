@@ -118,12 +118,10 @@ Route::post('login',                         'Auth\LoginController@login');
 Route::get('apartments/{location}', 'Apartments\ApartmentsController@index');
 Route::get('apartment/{apartment}', 'Apartments\ApartmentsController@show');
 Route::get('checkout/{room}', 'Checkout\CheckoutController@index');
+Route::get('book/{apartment}', 'Booking\BookingController@book');
+
 Route::resource('properties', 'Properties\PropertiesController',['name' => 'properties']);
 Route::get('/search',         'Apartments\ApartmentsController@search');
-
-
-
-
 Route::get('listings', 'Listings\ListingsController@index');
 
 Route::post('webhook/payment',     'WebHook\WebHookController@payment');
