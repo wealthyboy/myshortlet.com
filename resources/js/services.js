@@ -3,11 +3,18 @@ import Vue from "vue";
 import flatpickr from "flatpickr";
 import store from "./store";
 
-// require ('../../public/f/js/loadProducts.jquery.js')
-
 const Persons = require("./components/persons/Persons.vue").default;
 const RoomAvailable = require("./components/search/RoomAvailable.vue").default;
 const BookIndex = require("./components/book/BookIndex.vue").default;
+const AddProperty = require("./components/properties/AddProperty.vue").default;
+
+$().ready(function() {
+  $.ajaxSetup({
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    },
+  });
+});
 
 const app = new Vue({
   el: "#app",
@@ -17,6 +24,7 @@ const app = new Vue({
     Persons,
     RoomAvailable,
     BookIndex,
+    AddProperty,
   },
 });
 

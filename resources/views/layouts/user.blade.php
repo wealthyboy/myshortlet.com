@@ -121,8 +121,18 @@
                                        <span class="sidebar-item-number ml-auto text-primary fs-15 font-weight-bold">5</span>
                                     </a>
                                  </li>
-                                
-                                
+
+                                 <li class="list-group-item px-3 px-xl-4 py-2 sidebar-item">
+                                    <a href="/favorites" class="text-heading lh-1 sidebar-link d-flex align-items-center">
+                                       <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-20">
+                                          <svg class="icon icon-heart">
+                                             <use xlink:href="#icon-heart"></use>
+                                          </svg>
+                                       </span>
+                                       <span class="sidebar-item-text">My Reservations</span>
+                                       <span class="sidebar-item-number ml-auto text-primary fs-15 font-weight-bold">5</span>
+                                    </a>
+                                 </li>
                               </ul>
                            </li>
                            <li class="list-group-item pt-6 pb-4">
@@ -137,6 +147,16 @@
                                           </svg>
                                        </span>
                                        <span class="sidebar-item-text">My Profile</span>
+                                    </a>
+                                 </li>
+                                 <li class="list-group-item px-3 px-xl-4 py-2 sidebar-item">
+                                    <a href="/change/password" class="text-heading lh-1 sidebar-link">
+                                       <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-20">
+                                          <svg class="icon icon-log-out">
+                                             <use xlink:href="#icon-log-out"></use>
+                                          </svg>
+                                       </span>
+                                       <span class="sidebar-item-text">Change Password</span>
                                     </a>
                                  </li>
                                  <li class="list-group-item px-3 px-xl-4 py-2 sidebar-item">

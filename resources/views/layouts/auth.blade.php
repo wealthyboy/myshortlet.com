@@ -39,7 +39,7 @@
       </script>
    </head>
    <body>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <nav class="navbar navbar-expand-md navbar-dark  bg-dark">
          <a class="navbar-brand" href="/">MyShortLet</a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
@@ -50,7 +50,7 @@
             </form>
          </div>
       </nav>
-      <main role="main">
+      <main id="app" role="main">
          @yield('content')
       </main>
       <footer class="footer">
@@ -71,6 +71,12 @@
          </section>
       </footer>
       <script src="/js/services_js.js"></script>
+      @yield('page-scripts')  
+      
+      <script type="text/javascript">
+        @yield('inline-scripts')
+      </script>  
+
    </body>
 </html>
 

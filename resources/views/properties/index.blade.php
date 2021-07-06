@@ -7,7 +7,7 @@
    <div class="d-flex flex-wrap flex-md-nowrap mb-6">
       <div class="mr-0 mr-md-auto">
          <h2 class="mb-0 text-heading fs-22 lh-15">My Properties<span class="badge badge-white badge-pill text-primary fs-18 font-weight-bold ml-2">29</span></h2>
-         <p>Lorem ipsum dolor sit amet, consec tetur cing elit. Suspe ndisse suscipit</p>
+         <p></p>
       </div>
       <div class="form-inline justify-content-md-end mx-n2">
          <div class="p-2">
@@ -71,8 +71,8 @@
                </td>
                <td class="align-middle">2049</td>
                <td class="align-middle">
-                  <a href="dashboard-my-properties.html#" data-toggle="tooltip" title="Edit" class="d-inline-block fs-18 text-muted hover-primary mr-5"><i class="fal fa-pencil-alt"></i></a>
-                  <a href="dashboard-my-properties.html#" data-toggle="tooltip" title="Delete" class="d-inline-block fs-18 text-muted hover-primary"><i class="fal fa-trash-alt"></i></a>
+                  <a href="#" data-toggle="tooltip" title="Edit" class="d-inline-block fs-18 text-muted hover-primary mr-5"><i class="fal fa-pencil-alt"></i></a>
+                  <a href="#" data-toggle="tooltip" title="Delete" class="d-inline-block fs-18 text-muted hover-primary"><i class="fal fa-trash-alt"></i></a>
                </td>
             </tr>
             
@@ -82,16 +82,11 @@
    </div>
    <nav class="mt-6">
       <ul class="pagination rounded-active justify-content-center">
-         <li class="page-item"><a class="page-link" href="dashboard-my-properties.html#"><i class="far fa-angle-double-left"></i></a></li>
-         <li class="page-item"><a class="page-link" href="dashboard-my-properties.html#">1</a></li>
-         <li class="page-item active"><a class="page-link" href="dashboard-my-properties.html#">2</a></li>
-         <li class="page-item d-none d-sm-block"><a class="page-link" href="dashboard-my-properties.html#">3</a></li>
-         <li class="page-item">...</li>
-         <li class="page-item"><a class="page-link" href="dashboard-my-properties.html#">6</a></li>
-         <li class="page-item"><a class="page-link" href="dashboard-my-properties.html#"><i class="far fa-angle-double-right"></i></a></li>
+         <li class="page-item"><a class="page-link" href="#"><i class="far fa-angle-double-left"></i></a></li>
+         <li class="page-item"><a class="page-link" href="#">1</a></li>
+         <li class="page-item"><a class="page-link" href="#"><i class="far fa-angle-double-right"></i></a></li>
       </ul>
    </nav>
-   <div class="text-center mt-2">6-10 of 29 Results</div>
 </div>
 
 

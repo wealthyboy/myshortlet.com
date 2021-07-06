@@ -91,8 +91,8 @@ Route::group(['middleware' => 'admin','prefix' => 'admin'], function(){
 });
 
 
-Route::post('upload/image','Admin\Image\ImagesController@store');
-Route::post('delete/image','Admin\Image\ImagesController@undo');
+//Route::post('upload/image','Admin\Image\ImagesController@store');
+//Route::post('delete/image','Admin\Image\ImagesController@undo');
 Route::get('/', 'HomeController@index');
 Auth::routes();
 
@@ -110,6 +110,8 @@ Route::get('account', 'Account\AccountController@index');
 Route::get('profile', 'Profile\ProfileController@index');
 Route::post('password/reset/link',            'Auth\ForgotPasswordController@sendResetLinkEmail');
 Route::post('reset/password',  'Auth\ForgotPasswordController@reset');
+Route::get('change/password',  'ChangePassword\ChangePasswordController@index');
+
 Auth::routes();
 Route::get('login/{service}',                 'Auth\SocialLoginController@redirect');
 Route::get('login/{service}/callback',        'Auth\SocialLoginController@callback');
@@ -117,10 +119,16 @@ Route::post('login',                         'Auth\LoginController@login');
 
 Route::get('apartments/{location}', 'Apartments\ApartmentsController@index');
 Route::get('apartment/{apartment}', 'Apartments\ApartmentsController@show');
+Route::get('add/apartment','Properties\PropertiesController@addApartment');
+
 Route::get('checkout/{room}', 'Checkout\CheckoutController@index');
 Route::get('book/{apartment}', 'Booking\BookingController@book');
 
-Route::resource('properties', 'Properties\PropertiesController',['name' => 'properties']);
+
+
+Route::resource('properties',   'Properties\PropertiesController',['name' => 'properties']);
+Route::get('get/location/{id}', 'Properties\PropertiesController@getLocation');
+
 Route::get('/search',         'Apartments\ApartmentsController@search');
 Route::get('listings', 'Listings\ListingsController@index');
 

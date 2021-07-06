@@ -36,8 +36,6 @@ $(document).on("click", ".remove-image", function(e) {
         upload_text.removeClass("hide");
         resetFile(file);
         file.attr("disabled", false);
-        //check if we are in editting mode
-        console.log(mode);
         if (typeof mode !== "undefined") {
           file.attr("required", true);
         }
@@ -49,6 +47,21 @@ $(document).on("click", ".remove-image", function(e) {
 
 $(document).ready(function() {
   localStorage.setItem("allow_variation", true);
+
+  $(".bedrooms").on("change", function() {
+    let self = $(this);
+    let value = self.val();
+    let bed = self.parentsUntil(".v-panel").find(".bed");
+    if (value == "") return;
+
+    for (var i = 1; i <= 4; i++) {
+      bed.find(".bedroom-" + i).addClass("d-none");
+    }
+
+    for (var i = 1; i <= value; i++) {
+      bed.find(".bedroom-" + i).removeClass("d-none");
+    }
+  });
 
   /***
    * Add more variations
@@ -83,6 +96,17 @@ $(document).ready(function() {
         .last()
         .after(response);
       s.initFormExtendedDatetimepickers();
+    });
+  });
+
+  $("#add-apartment").on("click", function(e) {
+    $.ajax({
+      type: "GET",
+      url: "/add/apartment",
+    }).done(function(response) {
+      $(".new-apartment")
+        .last()
+        .after(response);
     });
   });
 

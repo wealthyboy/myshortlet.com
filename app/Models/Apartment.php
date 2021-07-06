@@ -56,6 +56,11 @@ class Apartment extends Model
         return $this->belongsToMany(Facility::class,'apartment_facility');
     }
 
+
+    public function attributes(){
+        return $this->belongsToMany(Attribute::class);
+    }
+
     public function  locations()
     {
         return $this->belongsToMany(Location::class);

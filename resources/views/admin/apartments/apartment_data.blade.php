@@ -69,7 +69,7 @@
                     <div  class="col-md-12">
                         @if (!isset($apartment))
                         <div id="j-drop" class=" j-drop">
-                        <input accept="image/*"  required="true" onchange="getFile(this,'image','Product',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
+                        <input accept="image/*"  required="true" onchange="getFile(this,'image','Apartment',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
                         <div   class="upload-text"> 
                             <a   class="" href="#">
                                 <img class="" src="/backend/img/upload_icon.png">
@@ -81,7 +81,7 @@
                         @else
 
                         <div id="j-drop" class=" j-drop">
-                            <input accept="image/*"   onchange="getFile(this,'image','Product',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
+                            <input accept="image/*"   onchange="getFile(this,'image','Apartment',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
                             <div   class="{{ optional($apartment)->images ? 'hide' : '' }} upload-text"> 
                                 <a   class="" href="#">
                                 <img class="" src="/backend/img/upload_icon.png">
