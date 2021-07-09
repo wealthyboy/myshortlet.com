@@ -93,7 +93,7 @@
                     </div>
                 </div>
             </div>
-            <h4 class="mt-5">Rules</h4>
+            <h5 class="mt-5">Rules</h5>
             <div class="row">
                 <div class="col-sm-6 col-lg-3">
                     <ul class="list-group list-group-no-border"> 
@@ -108,7 +108,7 @@
                     </ul>
                 </div>
             </div>
-            <h4>Extra Services</h4>
+            <h5>Extra Services</h5>
             <div class="row">
                 <div class="col-sm-6 col-lg-6">
                     <ul class="list-group list-group-no-border"> 
@@ -129,6 +129,27 @@
                             
                         </li>
                          @endforeach 
+                    </ul>
+                </div>
+            </div>
+
+            <h5>Facilities</h5>
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <ul class="list-group list-group-no-border"> 
+                     
+
+                         @foreach($facilities as $facility)
+                            <h4>{{ $facility->name }}</h4>
+                            <li class="list-group-item px-0 pt-0 pb-2">
+                                @foreach($facility->children->sortBy('name') as $ob)
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="attribute_id[]" id="{{ $ob->name }}" />
+                                        <label class="custom-control-label" for="{{ $ob->name }}">{{ $ob->name }}</label>
+                                    </div>
+                                @endforeach
+                            </li>
+                        @endforeach 
                     </ul>
                 </div>
             </div>

@@ -44,6 +44,11 @@ class User extends Authenticatable
 	}
 
 
+	public function apartments(){
+		return $this->hasMany(Apartment::class);	
+	}
+
+
 	public function products(){
 		return $this->hasMany(Product::class);	
 	}

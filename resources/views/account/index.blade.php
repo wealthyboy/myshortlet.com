@@ -30,7 +30,7 @@
                </div>
                <div class="col-7 text-center">
                   <p class="fs-42 lh-12 mb-0 counterup" data-start="0" data-end="29" data-decimals="0" data-duration="0" data-separator="">29</p>
-                  <p>Properties kk</p>
+                  <p>Properties </p>
                </div>
             </div>
          </div>

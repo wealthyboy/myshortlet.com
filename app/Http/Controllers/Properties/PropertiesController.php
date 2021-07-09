@@ -29,8 +29,10 @@ class PropertiesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('properties.index');
+    {   
+        $user = \Auth::user();
+        $apartments = Apartment::where('user_id', $user->id)->latest()->simplePaginate(5);
+        return view('properties.index',compact('apartments'));
     }
 
     /**
@@ -74,7 +76,7 @@ class PropertiesController extends Controller
     public function store(Request $request)
     {   
         
-        
+         $user = $request->user();
 
         if ($request->step == 'two' &&  $request->apartment_id) {
             $apartment = Apartment::find($request->apartment_id);  
@@ -97,6 +99,8 @@ class PropertiesController extends Controller
         if ($request->step == 'finish' &&  $request->apartment_id) {
             $data = [];
             $apartment =  Apartment::find(session('apartment_id'));
+
+            //dd($request->apartment_name);
             foreach ($request->apartment_name  as $key => $room) {
                 $room = new Room;  
                 $images = !empty($request->apartment_images[$key]) ? $request->apartment_images[$key] : [];
@@ -133,7 +137,7 @@ class PropertiesController extends Controller
             //Send Notification
 
             try {
-                Notification::route('mail', 'jacob.atam@gmail.com')
+                Notification::route('mail', $user->email)
                 ->notify(new ApartmentUpload($request));
                 return back()->with("success", "Done");
             } catch (\Throwable $th) {
@@ -141,16 +145,22 @@ class PropertiesController extends Controller
             }
 
             
-        }
+        } 
+
+        //dd($request->all());
 
         $user = $request->user();
         $apartment =  new Apartment();
-        $apartment->name      = $request->apartment_title;
+        $uid = uniqid(true);
+        $title =  $request->apartment_title.$uid;
+        $apartment->name      = $title;
         $apartment->address   = $request->address;
         $apartment->image     = $request->image;
-        $apartment->description     = $request->description;
-        $apartment->allow           = 0;
-        $apartment->slug         = str_slug($request->apartment_title);
+        $apartment->description  = $request->description;
+        $apartment->allow        = 0;
+        $apartment->status       = 'Pending';
+        $apartment->step         = 'one';
+        $apartment->slug         = str_slug($title);
         $apartment->user_id      = $user->id;
         $apartment->save();
         $request->session()->put('apartment_id', $apartment->id);
@@ -192,7 +202,6 @@ class PropertiesController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -203,7 +212,7 @@ class PropertiesController extends Controller
      */
     public function edit($id)
     {
-        //
+        dd($id);
     }
 
     /**
@@ -215,7 +224,7 @@ class PropertiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($id);
     }
 
     /**
@@ -224,8 +233,9 @@ class PropertiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Request $request,$id)
+    {   
+        $apartment = Apartment::find($id)->delete();
+        return redirect()->back()->with('success', 'Apartment deleted successfully');
     }
 }
