@@ -189,8 +189,8 @@
           <div class="reveal scale-out">
 
             <!-- Count Down -->
-            <div class="count-down p-t-b-15" data-end-date="May 30, 2021 00:00:00">
-            </div>
+            <!-- <div class="count-down p-t-b-15" data-end-date="May 30, 2021 00:00:00">
+            </div> -->
             <!-- /End Count Down -->
 
             <!-- Logo -->

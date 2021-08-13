@@ -26,6 +26,7 @@ class HomeController
     {    
         $site_status = Live::first();
 
+
         if (!$site_status->make_live ) {
             return view('index'); 
         } else {
@@ -43,11 +44,20 @@ class HomeController
     public function home()
     {
         $site_status = Live::first();
+
         $states      = Location::where('location_type', 'state')->has('apartments')->latest()->get();
         $featureds   = Apartment::where('featured',true)->skip(1)->take(10)->get();
         $featured    = Apartment::where('featured',true)->first();
         $posts       = Information::orderBy('created_at','DESC')->where('blog',true)->take(3)->get();
-        return view('index',compact('states','posts','featureds','featured')); 
+        if (!$site_status->make_live ) {
+            return view('index',compact('states','posts','featureds','featured'));
+        } else {
+            //Show site if admin is logged in
+            if ( auth()->check()  && auth()->user()->isAdmin()){
+                return view('index',compact('states','posts','featureds','featured'));
+            }
+            return view('underconstruction.index');
+        } 
     }
 
 

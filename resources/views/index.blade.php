@@ -76,15 +76,15 @@
          </div>
          <div class="row">
             <div class="col-lg-4 col-xl-6 custom-col-5-xl-to-xxl mb-6" >
-               <div style="background-image: url({{ $featured->image }})" class="card border-sm-0 mb-6 mb-xl-0 bg-properties-creative h-100">
+               <div style="background-image: url({{ optional($featured)->image }})" class="card border-sm-0 mb-6 mb-xl-0 bg-properties-creative h-100">
                   <div class="card-body p-2 d-flex flex-column">
                      <div class="mb-auto">
                         <span class="badge badge-orange mr-2">Featured</span>
                      </div>
                      <div class="bg-white mx-sm-2 mb-sm-2 mt-lg-0 mt-11 d-md-flex p-4 rounded-md pt-4 flex-column flex-md-row flex-lg-column flex-xl-row ">
                         <div class="mr-auto">
-                           <p class="mb-0 font-weight-500 text-gray-light"><i class="far fa-map-marker-alt"></i> <a href="/apartment/{{ $featured->slug }}">{{ $featured->city }}</a>,  <a href="">{{ $featured->state }}</a> </p>
-                           <h2 class="my-0"><a href="single-property-1.html" class="fs-20 lh-16 text-dark hover-primary d-block">{{ $featured->name }}</a></h2>
+                           <p class="mb-0 font-weight-500 text-gray-light"><i class="far fa-map-marker-alt"></i> <a href="/apartment/{{ optional($featured)->slug }}">{{ optional($featured)->city }}</a>,  <a href="">{{ optional($featured)->state }}</a> </p>
+                           <h2 class="my-0"><a href="single-property-1.html" class="fs-20 lh-16 text-dark hover-primary d-block">{{ optional($featured)->name }}</a></h2>
                         </div>
                         <div class="mt-2 mt-lg-0">
                            <p class="fs-20 font-weight-bold text-heading mb-0"></p>
@@ -117,7 +117,7 @@
                @foreach( $featureds as $featured)
                <div class="media flex-column flex-md-row mb-6">
                   <div class="w-md-200 mr-md-4 card border-0 hover-change-image bg-hover-overlay">
-                     <img src="{{ $featured->image_m }}" class="card-img" alt="Home in Metric Way dddddd">
+                     <img src="{{ optional($featured)->image_m }}" class="card-img" alt="Home in Metric Way dddddd">
                      <div class="card-img-overlay p-2">
                         <span class="badge badge-orange position-absolute">Featured</span>
                         <ul class="list-inline mb-0 d-flex justify-content-center align-items-center h-100 hover-image">
@@ -130,8 +130,8 @@
                      </div>
                   </div>
                   <div class="media-body border-md-0 border p-4 p-md-0 w-100">
-                     <h2 class="mt-0 mb-1"><a href="" class="fs-16 lh-2 text-dark hover-primary d-block">{{ $featured->name }} (multiple apartments)</a></h2>
-                     <p class="mb-1 font-weight-500 text-gray-light"> <i class="far fa-map-marker-alt"></i> <a href="/apartment/{{ $featured->slug }}">{{ $featured->city }}</a>,  <a href="">{{ $featured->state }}</a> </p>
+                     <h2 class="mt-0 mb-1"><a href="" class="fs-16 lh-2 text-dark hover-primary d-block">{{ optional($featured)->name }} (multiple apartments)</a></h2>
+                     <p class="mb-1 font-weight-500 text-gray-light"> <i class="far fa-map-marker-alt"></i> <a href="/apartment/{{ $featured->slug }}">{{ optional($featured)->city }}</a>,  <a href="">{{ optional($featured)->state }}</a> </p>
                      <div>ggg</div>
                      <div>ggg</div>
                      <div>ggg</div>

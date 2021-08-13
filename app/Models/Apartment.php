@@ -35,17 +35,17 @@ class Apartment extends Model
         return (new ApartmentsFilter($request))->add($filters)->filter($builder);
     }
 
-    public function city(){
-        return $this->belongsTo(Location::class,'city_id');
-    }
+    // public function city(){
+    //     return $this->belongsTo(Location::class,'city_id');
+    // }
 
-    public function state(){
-        return $this->belongsTo(Location::class,'state_id');
-    }
+    // public function state(){
+    //     return $this->belongsTo(Location::class,'state_id');
+    // }
 
     public function images()
     {
-        return $this->morphMany(Image::class, 'imageable')->orderBy('id','asc')->where('image','!=','No Image');
+        return $this->morphMany(Image::class, 'imageable')->orderBy('id','asc');
 	}
 
     public function rooms(){
@@ -59,6 +59,22 @@ class Apartment extends Model
 
     public function attributes(){
         return $this->belongsToMany(Attribute::class);
+    }
+
+
+    
+
+
+    public function states(){
+        return $this->belongsToMany(Location::class)->where('location_type', 'state');
+    }
+
+    public function cities(){
+        return $this->belongsToMany(Location::class)->where('location_type', 'city');
+    }
+
+    public function streets(){
+        return $this->belongsToMany(Location::class)->where('location_type', 'street');
     }
 
     public function  locations()

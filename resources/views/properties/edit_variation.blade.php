@@ -1,3 +1,6 @@
+
+@if ($apartment->rooms->count())
+    @foreach($variants as $variant)
 <div class="row p-attr border p-3  mb-1  variation-panel w-100">
 <div class="col-md-12 col-xs-12 text-right  col-sm-12 "> <a href="#" title="remove panel" class="remove-panel"><i class="fa fa-trash-o"></i> Remove</a> | <a href="#" title="open/close panel" class="open-close-panel"><i class="fa fa-plus"></i> Expand</a> </div>
 <section id="variation-panel" data-id="{{ $counter }}" class=" v-panel hide">
@@ -7,8 +10,6 @@
          <div class="form-group">
             <label for="">Apartment Title </label>
             <input type="text" name="apartment_name[{{ $counter }}]" class="form-control" id="" placeholder="" /> 
-            <input name="new_room"     value="1"   class="" type="hidden">
-
          </div>
       </div>
       <div class="col-lg-3">

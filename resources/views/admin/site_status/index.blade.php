@@ -36,7 +36,7 @@
                                     <td>{{ empty($st->make_live)  ? 'Site is Live' : 'Site  is Offline'}}</td>
                                     <td class="text-right">
                                     <a type="button" href='/admin/live?enable=true' class="btn btn-primary btn-simple btn-xs"><i class="fa fa-plus"></i> 
-                                       {{ $st->make_live == 0  ? 'Disable ' : 'Enable' }}
+                                       {{ optional($st)->make_live == 0  ? 'Disable ' : 'Enable' }}
                                     
                                     </a>
                                                         

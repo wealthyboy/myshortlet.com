@@ -28,9 +28,13 @@
             </div>
 
             <div class="col-md-2">
-                <div class="form-group label-floating is-empty">
-                    <label class="control-label">Number of rooms</label>
-                    <input name="room_number[{{ $counter }}]"  required="true" value="" class="form-control   variation" type="number">
+                <div class="form-group">
+                    <select  name="room_number[{{ $counter }}]" name="bedrooms" id="bedrooms" class="form-control  bedrooms">
+                        <option value="" selected>Choose Bedrooms</option>
+                        @for ($i = 1; $i< 5; $i++) 
+                            <option value="{{ $i }}"> {{ $i }}</option>
+                        @endfor 
+                    </select>
                 </div>
             </div>
 
@@ -68,26 +72,29 @@
                     <input class="form-control  datepicker pull-right" name="room_sale_price_expires[{{ $counter }}]" id="datepicker" type="text">
                 </div>
             </div>
+
+            
+            <div class="col-md-12 bed mb-5">
+                @if ($bedrooms->count())
+                    @foreach($bedrooms as $key =>  $parent)
+                          <div class="bedroom-{{ $key + 1 }} d-none mb-2">
+                          <div class="mb-2">{{ $parent->name }} </div>
+
+                            @foreach($parent->children as $bedroom)
+                            <label for="bedroom-{{ $bedroom->id }}" class="radio-inline">
+                                <input  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}" name="{{ $parent->slug }}_{{ $counter }}" type="radio" name="optradio">{{ $bedroom->name }}
+                            </label>
+                            @endforeach
+                          
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+            
            
             <div class="clearfix"></div>
-            <div class="col-sm-3">
-                <div class="row">
-                    <div  class="text-center"></div>
-                    <div   class="col-md-12 col-sm-12 col-xs-12">
-                        <div id="j-drop" class=" j-drop">
-                        <input accept="image/*"  required="true" onchange="getFile(this,'room_image[{{ $counter }}]')" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
-                        <div   class=" upload-text  {{ $counter }}"> 
-                            <a   class="" href="#">
-                                <img class="" src="/backend/img/upload_icon.png">
-                                <b>Click to upload image</b> 
-                            </a>
-                        </div>
-                        <div id="j-details"  class="j-details"></div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-9">
+            
+            <div class="col-sm-12">
                 <div id="j-drop"  class="j-drop">
                 <input accept="image/*"   onchange="getFile(this,'room_images[{{ $counter }}][]')" class="upload_input"  multiple="true"   type="file" id="upload_file_input" name="product_image"  />
                     <div   class=" upload-text  {{ $counter }}"> 
@@ -101,55 +108,61 @@
             </div>
         </div>
         <div class="col-md-12 mt-3 pr-5 pl-5">
-           <h2>Rules </h2>
-            <div class="">
-                @foreach($rules as $rule)
-                <h4>{{ $rule->name }}</h4>
-                    <div  class="" value="{{ $rule->id }}">
-                        @include('includes.attributes',['obj'=>$rule,'radio'=>1, 'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
+           <h5>Rules </h5>
+           @foreach($rules as $rule)
+                <div class="col-md-6">
+                    <div class="togglebutton">
+                        <label>
+                        <input   name="attribute_id[]"  value="{{ $rule->id }}" type="checkbox" >
+                        <span class='toggle'></span>  
+                        {{ $rule->name }}  
+                        </label>
                     </div>
-                    <hr/>
-                @endforeach  
-            </div>
+                </div>
+            @endforeach  
         </div>
 
-        <div class="col-md-12 mt-3 pr-5 pl-5">
-            <h2>Facilities </h2>
-            <div class="">
-                @foreach($facilities as $facilitie)
-                <h4>{{ $facilitie->name }}</h4>
-                    <div  class="" value="{{ $facilitie->id }}">
-                        @include('includes.attributes',['obj'=>$facilitie,'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
+        <div class="col-md-12 mt-1 pr-5 pl-5">
+            <h5>Facilities </h5>
+            @foreach($facilities as $facility)
+               <div>{{ $facility->name }}</div>                       
+
+               @foreach($facility->children->sortBy('name') as $child)
+
+                <div class="mt-2 mb-2">
+                    <div class="togglebutton">
+                        <label>
+                        <input   name="facility_id[]"  value="{{ $child->id }}" type="checkbox" >
+                        <span class='toggle'></span>  
+                        {{ $child->name }}                        
+                    </label>
                     </div>
-                    <hr/>
-                @endforeach  
-            </div>
+                </div>
+                @endforeach
+
+            @endforeach
+            
         </div>
 
-
-        <div class="col-md-12 mt-3 pr-5 pl-5">
-            <h2>Bedrooms </h2>
-            <div class="">
-                @foreach($bedrooms as $bedroom)
-                <h4>{{ $bedroom->name }}</h4>
-                    <div  class="" value="{{ $bedroom->id }}">
-                        @include('includes.attributes',['obj'=>$bedroom, 'radio'=>1, 'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
-                    </div>
-                    <hr/>
-                @endforeach  
-            </div>
-        </div>
-
-
-        <div class="col-md-12 mt-3 pr-5 pl-5">
-            <h2>Extra Services </h2>
+        <div class="col-md-12 mt-1 mb-3 pr-5 pl-5">
+            <h5>Extra Services </h5>
             <div class="">
                 @foreach($extra_services as $extra_service)
-                <h4>{{ $extra_service->name }}</h4>
-                    <div  class="" value="{{ $extra_service->id }}">
-                        @include('includes.attributes',['obj'=>$extra_service,  'space'=>'&nbsp;','model' => 'attributes','url' => 'attribute'])
+                <div class="col-md-3">
+                    <div class="togglebutton">
+                        <label>
+                        <input   name="attribute_id[]"  value="{{ $extra_service->id }}" type="checkbox" >
+                        <span class='toggle'></span>  
+                        {{ $extra_service->name }}                    
+                    </label>
                     </div>
-                    <hr/>
+                </div>
+                <div class="ml-3 col-md-6">
+                        <div class="form-group">
+                            <input name="extra_services_price[{{ $extra_service->id }}]" type="number" class="form-control" id="" placeholder="Price   " /> 
+                            optional
+                        </div>
+                    </div>
                 @endforeach  
             </div>
         </div>
@@ -158,9 +171,6 @@
     
 </div>
 
-@section('inline-scripts')
-
-@stop
 
 
 

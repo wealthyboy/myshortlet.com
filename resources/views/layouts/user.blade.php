@@ -39,7 +39,7 @@
       </script>
    </head>
    <body>
-      <div class="wrapper dashboard-wrapper">
+      <div id="app" class="wrapper dashboard-wrapper">
          <div class="d-flex flex-wrap flex-xl-nowrap">
             <div class="db-sidebar bg-white">
                <nav class="navbar navbar-expand-xl navbar-light d-block px-0 header-sticky dashboard-nav py-0">
@@ -111,7 +111,7 @@
                                     </a>
                                  </li>
                                  <li class="list-group-item px-3 px-xl-4 py-2 sidebar-item">
-                                    <a href="/favorites" class="text-heading lh-1 sidebar-link d-flex align-items-center">
+                                    <a href="/saved" class="text-heading lh-1 sidebar-link d-flex align-items-center">
                                        <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-20">
                                           <svg class="icon icon-heart">
                                              <use xlink:href="#icon-heart"></use>
@@ -123,7 +123,7 @@
                                  </li>
 
                                  <li class="list-group-item px-3 px-xl-4 py-2 sidebar-item">
-                                    <a href="/favorites" class="text-heading lh-1 sidebar-link d-flex align-items-center">
+                                    <a href="/reservations" class="text-heading lh-1 sidebar-link d-flex align-items-center">
                                        <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-20">
                                           <svg class="icon icon-heart">
                                              <use xlink:href="#icon-heart"></use>

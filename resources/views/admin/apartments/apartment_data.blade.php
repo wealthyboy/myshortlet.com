@@ -8,7 +8,16 @@
                     <input  required="true" name="apartment_name" data-msg="" value="{{ isset($apartment) ? $apartment->name :  old('apartment_name') }}" class="form-control" type="text">
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="form-group label-floating is-ty">
+                        <label class="control-label">Virtual Tour</label>
+                        <input name="virtual_tour"  required="true" value="{{ old('virtual_tour') }}" class="form-control  variation" type="text">
+                        <span class="material-input"></span>
+                    </div>
+                </div>
             </div>
+
+            
 
             <div class="row">
                 <div class="col-md-12">

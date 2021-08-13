@@ -32,8 +32,11 @@ function getFile(e, name, model = null, multiple = true) {
         let html = "";
         html += '<div   id="' + rand + '" class="j-complete">';
 
+        localStorage.setItem("image_path", data.path);
+        let img_src = localStorage.getItem("image_path");
+
         html += '<div  class="j-preview j-no-multiple">';
-        html += '<img class="img-thumnail" src="' + data.path + '" />';
+        html += '<img class="img-thumnail" src="' + img_src + '" />';
         html += '<div id="remove_image" class="remove_image remove-image">';
         //this will allow for multiple images
         html +=

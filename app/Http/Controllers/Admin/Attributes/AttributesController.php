@@ -126,7 +126,7 @@ class AttributesController extends Controller
      */
     public function update(Request $request,$id)
     {
-        $product_attribute = Attribute::find($id);
+        $attribute = Attribute::find($id);
         if( $request->filled('parent_id') ) {
             $this->validate($request,[
                 'name'=>[
@@ -144,18 +144,17 @@ class AttributesController extends Controller
                 ],
         ]);
 
-        $product_attribute->name=$request->name;
-        $product_attribute->sort_order = $request->sort_order;
-        $product_attribute->parent_id  = $request->parent_id ? $request->parent_id : null;
-        $product_attribute->color_code = $request->color_code;
-        $product_attribute->image = $request->image;
-        $product_attribute->slug = str_slug($request->name, '_');
+        $attribute->name=$request->name;
+        $attribute->sort_order = $request->sort_order;
+        $attribute->parent_id  = $request->parent_id ? $request->parent_id : null;
+        $attribute->color_code = $request->color_code;
+        $attribute->image = $request->image;
+        $attribute->slug = str_slug($request->name, '_');
 
-        $product_attribute->type  = $request->type ? $request->type : null;
-        $product_attribute->save();
+        $attribute->save();
         //Log Activity
         (new Activity)->Log("Updated  Attribute {$request->name} ");
-        return redirect()->route('attributes.index', ['type' => $request->type]);
+        return redirect()->route('attributes.index', ['type' => $attribute->type]);
     
     }
 

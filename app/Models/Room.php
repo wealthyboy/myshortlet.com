@@ -44,12 +44,13 @@ class Room extends Model
         'max_adults',
         'max_children',
         'no_of_rooms',
+        'toilets'
     ];
 
 
     public function images()
     {
-        return $this->morphMany(Image::class, 'imageable')->orderBy('id','asc')->where('image','!=','No Image');
+        return $this->morphMany(Image::class, 'imageable')->orderBy('id','asc');
 	}
 
     public function reservation(){
@@ -65,6 +66,10 @@ class Room extends Model
     public function getRouteKeyName()
     {
 		return 'slug';
+    }
+
+    public function bedrooms(){
+        return $this->belongsToMany(Attribute::class)->where('type', 'bedroom');
     }
 
      

@@ -34,7 +34,7 @@
                         <label class="col-md-12  col-xs-12 col-xs-12">
                            <div class="pull-right">
                               <button type="button"  id="add-room" class="btn btn-round  btn-primary">
-                                 Add Room
+                                 Add Apartment
                                  <span class="btn-label btn-label-right">
                                     <i class="fa fa-plus"></i>
                                  </span>

@@ -17,7 +17,10 @@ use App\Models\Requirement;
 use App\Models\Location;
 use App\Models\Room;
 use App\Models\Attribute;
+use App\Models\AttributePrice;
+
 use Carbon\Carbon;
+
 
 
 
@@ -84,15 +87,20 @@ class ApartmentsController extends Controller
 
         //Month Day Year
         $apartment =  new Apartment();
+        $token =   mt_rand(); 
+        $title     =  $request->apartment_name.'-'.$token;
+        $token =  mt_rand(); 
         $apartment->name      = $request->apartment_name;
         $apartment->address   = $request->address;
         $apartment->image     = $request->image;
         $apartment->description     = $request->description;
-        $apartment->featured        = $request->featured ? 1 : 0;
-        $apartment->allow        = $request->allow ? 1 : 0;
-        $apartment->slug      = str_slug($request->apartment_name);
+        $apartment->virtual_tour    = $request->virtual_tour;
+        $apartment->featured  = $request->featured ? 1 : 0;
+        $apartment->allow     = $request->allow ? 1 : 0;
+        $apartment->slug      = str_slug($title);
+        $apartment->token     = $token;
+
         $apartment->save();
-        $apartment->facilities()->sync($request->facility_id);
         $apartment->locations()->sync($request->location_id);
 
 
@@ -124,10 +132,11 @@ class ApartmentsController extends Controller
             $room->max_adults = $request->room_max_adults[$key];
             $room->max_children = $request->room_max_children[$key];
             $room->no_of_rooms = $request->room_number[$key];
-            $room->image = $request->room_image[$key];
             $room->available_from = Helper::getFormatedDate($request->room_avaiable_from[$key],true);
             $room->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires[$key],true);
             $room->apartment_id = $apartment->id;
+            $room->toilets      = $request->toilets[$key];
+
             $room->save();
             if ( count( $room_images )  > 0) {
                 $images = array_filter($room_images);
@@ -136,16 +145,38 @@ class ApartmentsController extends Controller
                     $room->images()->save($imgs);
                 }
             }
+            
 
-            if (!empty($request->attribute_ids)){
-                foreach ($request->attribute_ids as $attributeId) {
-                    $data[1] = ['parent_id'=>null]; 
-                    $data[$attributeId] = ['parent_id'=>1];  
-                }
-                $room->attributes()->sync($data);
+            $beds = []; 
+            for ($i=1; $i < 6; $i++) { 
+                $input = 'bedroom_'.$i.'_'.$key;
+                $input = $request->$input;
+                $beds[] = $input;
             }
-             
+
+            $room->attributes()->sync(array_filter($beds));
+            if (!empty($request->facility_id)){
+                $room->attributes()->syncWithPivotValues($request->parent_id,  ['parent_id' => true]);
+                $room->attributes()->syncWithoutDetaching($request->facility_id);
+            } 
+
+            $room->attributes()->syncWithoutDetaching($request->attribute_id);
+            /**
+              * For filters
+            */
         }
+        
+
+        foreach ($request->extra_services_price  as $key => $price) { 
+            $attribute_price = new AttributePrice;
+            $attribute_price->attribute_id = $key;
+            $attribute_price->price = $price;
+            $attribute_price->save();
+        }
+
+        $apartment->attributes()->sync($request->facility_id);
+        $apartment->attributes()->syncWithoutDetaching($request->attribute_id);
+            
         /**
          * Rooms with have includes
         */
@@ -201,9 +232,8 @@ class ApartmentsController extends Controller
         $helper = new Helper();
         $counter = rand(1,500);
         $product_attributes =  Attribute::parents()->where('type','reservation')->orderBy('sort_order','asc')->get();
-        
-       
-        return view('admin.apartments.edit',compact('rules','bedrooms','extra_services','facilities','locations','product_attributes','facilities','apartment','helper'));
+        $counter = rand(1,500);
+        return view('admin.apartments.edit',compact('counter','rules','bedrooms','extra_services','facilities','locations','product_attributes','facilities','apartment','helper'));
     }
 
     /**
@@ -230,7 +260,6 @@ class ApartmentsController extends Controller
         $apartment->featured        = $request->featured ? 1 : 0;
         $apartment->allow        = $request->allow ? 1 : 0;
         $apartment->save();
-        $apartment->facilities()->sync($request->facility_id);
         $apartment->locations()->sync($request->location_id);
 
 
@@ -244,20 +273,21 @@ class ApartmentsController extends Controller
         if(!empty($request->edit_room_name)){
             foreach($request->edit_room_name as $room_id => $room ){ 
                 $room_images = !empty($request->edit_room_images[$room_id]) ? $request->edit_room_images[$room_id] : [];
-                $apartment       =  Room::updateOrCreate(
+                $room       =  Room::updateOrCreate(
                     ['id' => $room_id],
                     [
                         'name' => $request->edit_room_name[$room_id],
                         'price' => $request->edit_room_price[$room_id],
                         'sale_price' => $request->edit_room_sale_price[$room_id],
-                        'image' => $request->edit_room_image[$room_id], 
                         'sale_price_expires' =>  Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]),
                         'slug' => str_slug($request->edit_room_name[$room_id]),
                         'max_adults' => $request->room_max_adults[$room_id],
                         'max_children' => $request->room_max_children[$room_id],
                         'available_from'  => Helper::getFormatedDate($request->edit_room_avaiable_from[$room_id],true),
                         'apartment_id' => $apartment->id,
-                        'no_of_rooms'  => $request->room_number[$room_id]
+                        'no_of_rooms'  => $request->room_number[$room_id],
+                        'toilets'      => $request->apartment_toilets[$room_id],
+
                     ]
                 );
                 /**
@@ -278,13 +308,22 @@ class ApartmentsController extends Controller
                     }
                 }
 
-                if (!empty($request->attribute_ids)){
-                    foreach ($request->attribute_ids as $attributeId) {
-                        $data[1] = ['parent_id'=>null]; 
-                        $data[$attributeId] = ['parent_id'=>1];  
-                    }
-                    $apartment->attributes()->sync($data);
+                    
+                $beds = []; 
+                for ($i=1; $i < 6; $i++) { 
+                    $input = 'bedroom_'.$i.'_'.$room_id;
+                    $input = $request->$input;
+                    $beds[] = $input;
                 }
+
+
+                if (!empty($request->facility_id)){
+                    $room->attributes()->syncWithPivotValues($request->parent_id,  ['parent_id' => true]);
+                    $room->attributes()->syncWithoutDetaching($request->facility_id);
+                } 
+
+                $room->attributes()->syncWithoutDetaching(array_filter($beds));
+                $room->attributes()->syncWithoutDetaching($request->attribute_id);
         
             }
  
@@ -300,14 +339,15 @@ class ApartmentsController extends Controller
             foreach ($request->room_name  as $key => $room) {
                 $room = new Room;  
                 $room_images = !empty($request->room_images[$key]) ? $request->room_images[$key] : [];
-                $room->name = $request->room_name[$key];
+                $room->name  = $request->room_name[$key];
                 $room->price = $request->room_price[$key];
-                $room->sale_price = $request->room_sale_price[$key];
-                $room->slug = str_slug($request->room_name[$key]);
-                $room->image = $request->room_image[$key];
-                $room->available_from = Helper::getFormatedDate($request->room_avaiable_from[$key],true);
+                $room->sale_price         = $request->room_sale_price[$key];
+                $room->slug               = str_slug($request->room_name[$key]);
+                $room->image              = $request->room_image[$key];
+                $room->available_from     = Helper::getFormatedDate($request->room_avaiable_from[$key],true);
                 $room->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires[$key],true);
-                $room->apartment_id = $apartment->id;
+                $room->apartment_id       = $apartment->id;
+                $room->toilets            = $request->toilets[$key];
                 $room->save();
                 if ( count( $room_images )  > 0) {
                     $images = array_filter($room_images);

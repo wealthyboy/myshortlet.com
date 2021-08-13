@@ -6,9 +6,9 @@
    <div class="container">
       <div class="row justify-content-center">
          <div class="ml-1 col-md-10  bg--light mr-1">
-            <div class=" mt-4 mb-4">
-               @if (!$step)
-   
+            <div class="form-section mt-4 mb-4">
+               <div class="target"></div>
+               @if (!$step && !session('status'))
                <section class="bg-single-image-03 pt-9 step-one" data-animated-id="5">
                   <div class="container">
                      <h2 class="text-dark text-center mxw-751 px-md-8 lh-163">
@@ -29,8 +29,8 @@
                                  />
                               <div class="media-body">
                                  <a
-                                     href="/properties/create?type=single&step=one"
-                                    class="text-decoration-none d-flex align-items-center"
+                                    href="{{ route('properties.create',['type' => 'single', 'step' => 'one', 'token' => request()->token ]) }}"
+                                       class="text-decoration-none d-flex align-items-center"
                                     >
                                     <h4 class="fs-20 lh-1625 text-secondary mb-1">
                                        Single Apartment
@@ -67,7 +67,7 @@
                                  />
                               <div class="media-body">
                                  <a
-                                    href="/properties/create?type=multiple&step=one"
+                                    href="{{ route('properties.create',['type' => 'multiple', 'step' => 'one', 'token' => request()->token ]) }}"
                                     class="text-decoration-none d-flex align-items-center"
                                     >
                                     <h4 class="fs-20 lh-1625 text-secondary mb-1">
@@ -100,6 +100,20 @@
                      </div>
                   </div>
                </section>
+               @else
+               @if (session('status'))
+                  <div class="text-dark text-center text-info mxw-751 px-md-8 lh-163">
+                     We have received your upload allow us 2-3 working days to review your apartment.
+                  </div>
+               @endif
+
+               @if (session('error'))
+                  <div class="text-dark text-center text-info mxw-751 px-md-8 lh-163">
+                      We could not complete your upload ..
+                  </div>
+               @endif
+
+
                @endif
 
                @if ($step)
@@ -121,7 +135,6 @@
    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
    <script src="{{ asset('backend/js/uploader.js') }}"></script>
    <script src="{{ asset('backend/js/products.js') }}"></script>
-
 @stop
 
 @section('inline-scripts')
@@ -155,13 +168,15 @@ $(document).ready(function() {
       if( self.val() == 0) return;
       getLocation(self.val(),target)
    })
+   
+
+ 
 
    
    
-
-
-      
 });
+
+
 
 function getLocation(val,target) {
    $.ajax({

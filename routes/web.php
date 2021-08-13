@@ -56,9 +56,9 @@ Route::group(['middleware' => 'admin','prefix' => 'admin'], function(){
     Route::resource('apartments','Admin\Apartments\ApartmentsController',['names' => 'admin.apartments']);
     Route::delete('room/{id}/delete','Admin\Rooms\RoomsController@destroy');
 
-    Route::delete('variation/delete/{id}',  'Admin\Product\ProductController@destroyVariation');
-    Route::get('related/products',     'Admin\Product\ProductController@getRelatedProducts');
-    Route::delete('delete/{id}/related_products',     'Admin\Product\ProductController@destroyRelatedProduct');
+    // Route::delete('variation/delete/{id}',  'Admin\Product\ProductController@destroyVariation');
+    // Route::get('related/products',     'Admin\Product\ProductController@getRelatedProducts');
+    // Route::delete('delete/{id}/related_products',     'Admin\Product\ProductController@destroyRelatedProduct');
 
   
     /* INFORMATION */
@@ -76,7 +76,7 @@ Route::group(['middleware' => 'admin','prefix' => 'admin'], function(){
     Route::resource('customers', 'Admin\Customers\CustomersController',['name'=>'customers']);
 
 
-    Route::resource('templates',              'Admin\Templates\TemplatesController',['name'=>'templates']);
+    //Route::resource('templates',              'Admin\Templates\TemplatesController',['name'=>'templates']);
 
     Route::resource('promos',             'Admin\Promo\PromoController',['names'=> 'promos']);
     Route::get('promo-text/create/{id}',      'Admin\PromoText\PromoTextController@create')->name('create_promo_text');
@@ -84,7 +84,7 @@ Route::group(['middleware' => 'admin','prefix' => 'admin'], function(){
     Route::post('promo-text/edit/{id}',  'Admin\PromoText\PromoTextController@update');
     Route::post('promo-text/create/{id}',     'Admin\PromoText\PromoTextController@store');
     Route::get('promo-text/delete/{id}',     'Admin\PromoText\PromoTextController@destroy')->name('delete_promo_text');
-    Route::resource('services', 'Admin\Services\ServicesController',['names' =>'services']);
+    //Route::resource('services', 'Admin\Services\ServicesController',['names' =>'services']);
     Route::resource('requirements', 'Admin\Requirements\RequirementsController',['names' =>'requirements']);
     Route::resource('facilities', 'Admin\Facilities\FacilitiesController',['names' =>'facilities']);
 
@@ -107,19 +107,19 @@ Route::group(['middleware' => 'currencyByIp'], function(){
 
 
 Route::get('account', 'Account\AccountController@index');
-Route::get('profile', 'Profile\ProfileController@index');
+Route::resource('profile', 'Profile\ProfileController',['names' => 'profiles']);
 Route::post('password/reset/link',            'Auth\ForgotPasswordController@sendResetLinkEmail');
 Route::post('reset/password',  'Auth\ForgotPasswordController@reset');
 Route::get('change/password',  'ChangePassword\ChangePasswordController@index');
 
 Auth::routes();
-Route::get('login/{service}',                 'Auth\SocialLoginController@redirect');
-Route::get('login/{service}/callback',        'Auth\SocialLoginController@callback');
-Route::post('login',                         'Auth\LoginController@login');
+Route::get('login/{service}',           'Auth\SocialLoginController@redirect');
+Route::get('login/{service}/callback',  'Auth\SocialLoginController@callback');
+Route::post('login',                    'Auth\LoginController@login');
 
-Route::get('apartments/{location}', 'Apartments\ApartmentsController@index');
-Route::get('apartment/{apartment}', 'Apartments\ApartmentsController@show');
-Route::get('add/apartment','Properties\PropertiesController@addApartment');
+Route::get('apartments/{location}',     'Apartments\ApartmentsController@index');
+Route::get('apartment/{apartment}',     'Apartments\ApartmentsController@show');
+Route::get('add/apartment',             'Properties\PropertiesController@addApartment');
 
 Route::get('checkout/{room}', 'Checkout\CheckoutController@index');
 Route::get('book/{apartment}', 'Booking\BookingController@book');
@@ -127,6 +127,13 @@ Route::get('book/{apartment}', 'Booking\BookingController@book');
 
 
 Route::resource('properties',   'Properties\PropertiesController',['name' => 'properties']);
+
+Route::get('saved',   'SavedItems\SavedItemsController@index');
+Route::get('reservations',   'Reservation\ReservationController@index');
+
+
+
+
 Route::get('get/location/{id}', 'Properties\PropertiesController@getLocation');
 
 Route::get('/search',         'Apartments\ApartmentsController@search');

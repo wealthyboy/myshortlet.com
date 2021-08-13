@@ -1,5 +1,3 @@
-
-
 @extends('layouts.user')
 @section('content')
 
@@ -9,80 +7,132 @@
    <h2 class="mb-0 text-heading fs-22 lh-15">My Profile</h2>
    <p class="mb-1"></p>
 </div>
-<form>
+
+@include('errors.errors')
+@include('includes.success')
+
+<form action="{{ route('profiles.update',['profile'=>$user->id])  }}" method="POST">
+
    <div class="row mb-6">
-      <div class="col-lg-6">
-         <div class="card mb-6">
-            <div class="card-body px-6 pt-6 pb-5">
-               <div class="row">
-                  <div class="col-sm-4 col-xl-12 col-xxl-7 mb-6">
-                     <h3 class="card-title mb-0 text-heading fs-22 lh-15">Photo</h3>
-                     <p class="card-text">Upload your profile photo.</p>
-                  </div>
-                  <div class="col-sm-8 col-xl-12 col-xxl-5">
-                     <img src="images/my-profile.png" alt="My Profile" class="w-100">
-                     <div class="custom-file mt-4 h-auto">
-                        <input type="file" class="custom-file-input" hidden id="customFile" name="file">
-                        <label class="btn btn-secondary btn-lg btn-block" for="customFile">
-                        <span class="d-inline-block mr-1"><i class="fal fa-cloud-upload"></i></span>Upload
-                        profile image</label>
+         @csrf
+         @method('PATCH')
+
+         <div class="col-lg-9">
+            <div class="card mb-6">
+               <div class="card-body px-6 pt-6 pb-5">
+                  <h3 class="card-title mb-0 text-heading fs-22 lh-15">Contact information</h3>
+                  <p class="card-text"></p>
+                  <div class="form-row mx-n4">
+                     <div class="form-group col-md-6 px-4">
+                        <label for="firstName" class="text-heading">First name</label>
+                        <input type="text" class="form-control form-control-lg border-0" id="firstName"  value="{{ $user->name }}" name="first_name">
                      </div>
-                     <p class="mb-0 mt-2">
-                        *minimum 500px x 500px
-                     </p>
+                     <div class="form-group col-md-6 px-4">
+                        <label for="lastName" class="text-heading">Last name</label>
+                        <input type="text" class="form-control form-control-lg border-0" id="lastName" value="{{ $user->last_name }}"  name="last_name">
+                     </div>
                   </div>
+                  <div class="form-row mx-n4">
+                     <div class="form-group col-md-6 px-4">
+                        <label for="phone" class="text-heading">Phone</label>
+                        <input type="text" class="form-control form-control-lg border-0" id="phone" value="{{ $user->phone_number }}"  name="phone_number">
+                     </div>
+                     <div class="form-group col-md-6 px-4 mb-md-0">
+                        <label for="email" class="text-heading">Email</label>
+                        <input type="email" class="form-control form-control-lg border-0" id="email"  value="{{ $user->email }}" name="email">
+                     </div>
+                  </div>
+                  <h3 class="card-title mb-0 text-heading fs-22 lh-15">Contact information</h3>
+
+                  <div class="form-row mx-n4">
+                     <div class="form-group col-md-12 px-4">
+                        <label for="title" class="text-heading">Title</label>
+                        <input type="text" class="form-control form-control-lg border-0" id="title" value="{{ $user->company_title }}" name="company_title">
+                     </div>
+                     
+                  </div>
+
+                  <div class="form-row mx-n4">
+                     <div class="form-group col-md-12 px-4 mb-md-0">
+                        <label for="bio">Company Bio</label>
+                        <textarea class="form-control  border-0" name="bio" id="bio" rows="5">{{ $user->bio }}</textarea>
+                     </div>
+                  </div>
+
+                  <div class="d-flex justify-content-end flex-wrap mt-5">
+                     <button type="submit" class="btn btn-lg bg-hover-white border rounded-lg mb-3">Submit Profile</button>
+                  </div>
+
+                  
+               </div>
+            </div>
+            
+         </div>
+
+         <div class="col-lg-3">
+            <div id="j-drop" class=" j-drop">
+               <input
+                  accept="image/*"
+                  class="upload_input"
+                  data-msg="Upload  your image"
+                  type="file"
+                  name="img"
+                  onchange="getFile(this,'image','Apartment',false)"
+                  />
+               <div class=" upload-text   {{ isset($apartment) &&  $apartment->image ? 'hide' : ''}}">
+                  <a class="" href="#">
+                  <img class="" src="/backend/img/upload_icon.png" />
+                  <b>Add a profile image</b>
+                  <p></p>
+                  </a>
+               </div>
+               <div id="j-details" class="j-details">
+                  @if(isset($apartment))
+                        <div id="{{ $apartment->id }}" class="j-complete">
+                           <div class="j-preview">
+                              <img class="img-thumnail" src="{{ $apartment->image }}">
+                              <div id="remove_image" class="remove_image remove-image">
+                                    <a class="remove-image"  data-id="{{ $apartment->id }}" data-randid="{{ $apartment->id }}" data-model="Image" data-type="complete"  data-url="{{ $apartment->image }}" href="#">Remove</a>
+                                    <input type="hidden" class="file_upload_input stored_image_url" value="{{ $apartment->image }}" name="edit_variation_images[{{ $apartment->id }}][]">
+                              </div>
+                           </div>
+                        </div>
+                  @endif
                </div>
             </div>
          </div>
-         <div class="card mb-6">
-            <div class="card-body px-6 pt-6 pb-5">
-               <h3 class="card-title mb-0 text-heading fs-22 lh-15">Contact information</h3>
-               <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-               <div class="form-row mx-n4">
-                  <div class="form-group col-md-6 px-4">
-                     <label for="firstName" class="text-heading">First name</label>
-                     <input type="text" class="form-control form-control-lg border-0" id="firstName" name="firsName">
-                  </div>
-                  <div class="form-group col-md-6 px-4">
-                     <label for="lastName" class="text-heading">Last name</label>
-                     <input type="text" class="form-control form-control-lg border-0" id="lastName" name="lastname">
-                  </div>
-               </div>
-               <div class="form-row mx-n4">
-                  <div class="form-group col-md-6 px-4">
-                     <label for="phone" class="text-heading">Phone</label>
-                     <input type="text" class="form-control form-control-lg border-0" id="phone" name="phone">
-                  </div>
-                  <div class="form-group col-md-6 px-4">
-                     <label for="mobile" class="text-heading">Mobile</label>
-                     <input type="text" class="form-control form-control-lg border-0" id="mobile" name="mobile">
-                  </div>
-               </div>
-               <div class="form-row mx-n4">
-                  <div class="form-group col-md-6 px-4 mb-md-0">
-                     <label for="email" class="text-heading">Email</label>
-                     <input type="email" class="form-control form-control-lg border-0" id="email" name="email">
-                  </div>
-                  <div class="form-group col-md-6 px-4 mb-md-0">
-                     <label for="skype" class="text-heading">Skype</label>
-                     <input type="text" class="form-control form-control-lg border-0" id="skype" name="skype">
-                  </div>
-               </div>
-            </div>
-         </div>
-         
-      </div>
-      
+   
    </div>
-   <div class="d-flex justify-content-end flex-wrap">
-      <button class="btn btn-lg bg-hover-white border rounded-lg mb-3">Delete Profile</button>
-   </div>
-</form>
+
+   </form>
+
+   
 </div>
 
 
 
 @endsection
 @section('page-scripts')
+   <script src="{{ asset('backend/js/scrips.js') }}"></script>
+@stop
+@section('inline-scripts')
+   $(document).ready(function() {
+      let activateFileExplorer = 'a.activate-file';
+      let delete_image = 'a.delete_image';
+      var main_file = $("input#file_upload_input");
+
+      Img.initUploadImage({
+         url:'/admin/upload/image?folder=category',
+         activator: activateFileExplorer,
+         inputFile: main_file,
+      });
+
+      Img.deleteImage({
+         url:'/admin/category/delete/image',
+         activator: delete_image,
+         inputFile: main_file,
+      });
+   });
+
 @stop
 

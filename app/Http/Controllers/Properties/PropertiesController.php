@@ -8,11 +8,16 @@ use App\Models\Apartment;
 use App\Models\Location;
 use App\Models\Attribute;
 use App\Models\Room;
+use App\Models\AttributePrice;
+use App\Models\Image;
+use App\Http\Helper;
+
 
 
 
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ApartmentUpload;
+
 
 class PropertiesController extends Controller
 {   
@@ -42,15 +47,28 @@ class PropertiesController extends Controller
      */
     public function create(Request $request)
     {   
+        
+        
         $step = $request->step;
         $type = $request->type;
+        $token = $request->token;
+
+        $apartment = null;
+        if($token){
+            $apartment =  Apartment::where('token', $token)->firstOrFail();
+        }
         $locations = Location::where('location_type','state')->get();
+        $city = Location::where('location_type','city')->get();
+        $street = Location::where('location_type','street')->get();
+
         $counter = rand(1,500);
         $attributes =  Attribute::parents()->where('type',null)->orderBy('sort_order','asc')->get();
         $rules =  Attribute::parents()->where('type','rules')->orderBy('sort_order','asc')->get();
         $bedrooms =  Attribute::parents()->where('type','bedroom')->orderBy('sort_order','asc')->get();
         $extra_services =  Attribute::parents()->where('type','extra_services')->orderBy('sort_order','asc')->get();
         $facilities =  Attribute::parents()->where('type','facilities')->orderBy('sort_order','asc')->get();
+        $helper = new Helper();
+
 
         return view('properties.create',
                     compact(
@@ -62,7 +80,11 @@ class PropertiesController extends Controller
                             'bedrooms',
                             'extra_services',
                             'facilities',
-                            'counter'
+                            'counter',
+                            'apartment',
+                            'city',
+                            'street',
+                            'helper'
                         )
                         );
     }
@@ -76,46 +98,65 @@ class PropertiesController extends Controller
     public function store(Request $request)
     {   
         
-         $user = $request->user();
+        $user  = $request->user();
+        
 
-        if ($request->step == 'two' &&  $request->apartment_id) {
-            $apartment = Apartment::find($request->apartment_id);  
-            $apartment->attributes()->sync($request->facility_id);
-            $step = $request->step;
-            $type = $request->type;
-            return redirect()->route('properties.create', ['step' => $step, 'type' => $type,'apartment_id' => $apartment->id]);
+       // dd($request->all());
+
+        $ap = Apartment::latest()->first();
+        $token =  null !== $ap ? mt_rand() + $ap->id : mt_rand(); 
+        $token = $request->token ? $request->token : $token;
+        $apartment =  new Apartment();
+        $title     =  $request->apartment_title.'-'.$token;
+        if($request->has('token')){
+            $apartment =  Apartment::where('token', $request->token)->firstOrFail();
+            $title     =  $request->apartment_title.'-'.$request->token;
         }
 
 
-        if ($request->step == 'three' &&  $request->apartment_id) {
-            $apartment = Apartment::find($request->apartment_id);  
-            $apartment->attributes()->sync($request->facility_id);
+
+        // if ($request->step == 'two' &&  $request->token && !$request->back_one ) {
+        //     dd($request->token);
+        //     $apartment = Apartment::find($request->apartment_id);  
+        //     $step = $request->step;
+        //     $type = $request->type;
+        //     return redirect()->route('properties.create', ['step' => $step, 'type' => $type,'token' => $apartment->token]);
+        // }
+
+
+
+
+        if ($request->step == 'three' &&  $request->token ) {
+            $apartment->allow_cancellation = $request->allow_cancellation;
+            $apartment->cancellation_message = $request->cancellation_message;
+            $apartment->step = 'two';
+            $apartment->save();
             $step = $request->step;
             $type = $request->type;
-            return redirect()->route('properties.create', ['step' => $step, 'type' => $type,'apartment_id' => $apartment->id]);
+            return redirect()->route('properties.create', ['step' => $step, 'type' => $type,'token' => $apartment->token]);
         }
 
 
-        if ($request->step == 'finish' &&  $request->apartment_id) {
+
+        //dd($request->apartment_images);
+        if ($request->step == 'finish' &&  $request->token) {
+            //dd(true);
             $data = [];
-            $apartment =  Apartment::find(session('apartment_id'));
-
-            //dd($request->apartment_name);
-            foreach ($request->apartment_name  as $key => $room) {
+            foreach ($request->price  as $key => $room) {
                 $room = new Room;  
                 $images = !empty($request->apartment_images[$key]) ? $request->apartment_images[$key] : [];
-                $image = array_shift($images);
-                $room->name         = $request->apartment_name[$key];
+                //$image = array_shift($images);
+                $room->name         = !empty($request->apartment_name[$key]) ? $request->apartment_name[$key] : null;
                 $room->price        = $request->price[$key];
-                $room->slug         = str_slug($request->apartment_name[$key]);
+                $room->slug         = !empty($request->apartment_name[$key]) ? str_slug($request->apartment_name[$key]) : str_slug($request->apartment_title);
                 $room->max_adults   = $request->adults[$key];
                 $room->max_children = $request->children[$key];
                 $room->no_of_rooms  = $request->bedrooms[$key];
                 $room->toilets      = $request->toilets[$key];
-                $room->image        = $image;
                 $room->available_from = now();
                 $room->apartment_id   = $apartment->id;
                 $room->save();
+
                 if ( count( $images )  > 0 ) {
                     $images = array_filter($images);
                     foreach ( $images  as $image) {
@@ -124,51 +165,83 @@ class PropertiesController extends Controller
                     }
                 }
 
-                if (!empty($request->attribute_ids)){
-                    foreach ($request->attribute_ids as $attributeId) {
-                        $data[1] = ['parent_id'=>null]; 
-                        $data[$attributeId] = ['parent_id'=>1];  
-                    }
-                    $room->attributes()->sync($data);
+                $beds = []; 
+                for ($i=1; $i < 6; $i++) { 
+                    $input = 'bedroom_'.$i.'_'.$room_id;
+                    $input = $request->$input;
+                    $beds[] = $input;
                 }
+
                 
+                $room->attributes()->sync(array_filter($beds));
+
+
+                if (!empty($request->facility_id)){
+                    $room->attributes()->syncWithPivotValues($request->parent_id,  ['parent_id' => true]);
+                    $room->attributes()->syncWithoutDetaching($request->facility_id);
+                } 
+
+                $room->attributes()->syncWithoutDetaching($request->attribute_id);
+
+                /**
+                  * For filters
+                */
+                $apartment->attributes()->sync($request->facility_id);
+                $apartment->attributes()->syncWithoutDetaching($request->attribute_id);
             }
+
+            foreach ($request->extra_services_price  as $key => $price) { 
+                $attribute_price = new AttributePrice;
+                $attribute_price->attribute_id = $key;
+                $attribute_price->price = $price;
+                $attribute_price->save();
+            }
+
+            $apartment->status = 'Pending';
+            $apartment->is_completed = 1;
+            $apartment->step = 'three';
+            $apartment->save();
 
             //Send Notification
-
             try {
                 Notification::route('mail', $user->email)
-                ->notify(new ApartmentUpload($request));
-                return back()->with("success", "Done");
+                ->notify(new ApartmentUpload($apartment));
+                return redirect('/properties/create')->with('status', 'We have ');
             } catch (\Throwable $th) {
-                return back()->with("error", "We could not create the apartment");
-            }
-
-            
+                //dd($th);
+                return redirect('/properties/create')->with('error', 'We have ');
+            }   
         } 
 
-        //dd($request->all());
+
 
         $user = $request->user();
         $apartment =  new Apartment();
-        $uid = uniqid(true);
-        $title =  $request->apartment_title.$uid;
-        $apartment->name      = $title;
-        $apartment->address   = $request->address;
-        $apartment->image     = $request->image;
+        $title     =  $request->apartment_title.'-'.$token;
+        if($request->has('token')){
+            $apartment =  Apartment::where('token', $request->token)->firstOrFail();
+            $title     =  $request->apartment_title.'-'.$request->token;
+        }
+        $apartment->name         = $request->apartment_title;
+        $apartment->address      = $request->address;
+        $apartment->image        = $request->image;
         $apartment->description  = $request->description;
         $apartment->allow        = 0;
-        $apartment->status       = 'Pending';
+        $apartment->type         = $request->type;
+        $apartment->status       = 'In complete';
         $apartment->step         = 'one';
         $apartment->slug         = str_slug($title);
         $apartment->user_id      = $user->id;
+        $apartment->token        = $request->token ? $request->token : $token;
+        $apartment->is_not_admin = 1;
         $apartment->save();
         $request->session()->put('apartment_id', $apartment->id);
-        $apartment->locations()->sync($request->location_id);
+        $apartment->locations()->sync(array_filter($request->location_id));
+        //dd($apartment);
+
         $step = $request->step;
         $type = $request->type;
-
-        return redirect()->route('properties.create', ['step' => $step, 'type' => $type,'apartment_id' => $apartment->id]);
+        return redirect()->route('properties.create', ['step' => $step, 'type' => $type,'token' => $apartment->token]);
     }
 
 
@@ -181,7 +254,7 @@ class PropertiesController extends Controller
     }
 
 
-
+ 
     public function addApartment(Request $request){
         $counter = rand(1,500);
         $attributes =  Attribute::parents()->where('type',null)->orderBy('sort_order','asc')->get();
@@ -202,6 +275,7 @@ class PropertiesController extends Controller
      */
     public function show($id)
     {
+
     }
 
     /**
@@ -210,9 +284,46 @@ class PropertiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(REquest $request, $id)
     {
-        dd($id);
+        
+        $step = $request->step;
+        $type = $request->type;
+        $update = 1;
+        $apartment      =  Apartment::find($id);
+        $locations      =  Location::where('location_type','state')->get();
+        $cities      =  $apartment->states->first()->children;
+        $streets      =  $cities->first()->children;
+
+       //dd($apartment->rooms[1]->bedrooms->pluck('id')->toArray());
+
+
+        $counter        =  rand(1,500);
+        $attributes     =  Attribute::parents()->where('type',null)->orderBy('sort_order','asc')->get();
+        $rules          =  Attribute::parents()->where('type','rules')->orderBy('sort_order','asc')->get();
+        $bedrooms       =  Attribute::parents()->where('type','bedroom')->orderBy('sort_order','asc')->get();
+        $extra_services =  Attribute::parents()->where('type','extra_services')->orderBy('sort_order','asc')->get();
+        $facilities     =  Attribute::parents()->where('type','facilities')->orderBy('sort_order','asc')->get();
+        $helper  =  new Helper();
+
+        return view('properties.edit',
+                    compact(
+                            'type',
+                            'step',
+                            'locations',
+                            'facilities',
+                            'rules',
+                            'bedrooms',
+                            'extra_services',
+                            'facilities',
+                            'counter',
+                            'apartment',
+                            'update',
+                            'helper',
+                            'cities',
+                            'streets'
+                           )
+                        );
     }
 
     /**
@@ -224,7 +335,196 @@ class PropertiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($id);
+        
+        if( $request->has('token') ){
+            $apartment =  Apartment::where('token', $request->token)->firstOrFail();
+            $title     =  $request->apartment_title.'-'.$request->token;
+        }
+
+
+        //dd($request->all());
+
+
+        /**
+         * Reservation Images
+        */
+
+        
+        if ($request->step == 'three' &&  $request->token ) {
+            $apartment->allow_cancellation   = $request->allow_cancellation;
+            $apartment->cancellation_message = $request->cancellation_message;
+            $apartment->step = 'two';
+            $apartment->save();
+            $step = $request->step;
+            $type = $request->type;
+            return redirect()->route('properties.edit', ['property'=>$apartment->id, 'step' => $step, 'type' => $type, 'update' => 1, 'token' => $apartment->token]);
+        }
+
+
+
+        //dd($request->apartment_images);
+        if ($request->step == 'finish' &&  $request->token) {
+            $data = [];
+            if(!empty($request->edit_apartment_name)){
+                foreach($request->edit_apartment_name as $room_id => $room ){ 
+                    $room       =  Room::updateOrCreate(
+                        ['id' => $room_id],
+                        [
+                            'name' => $request->edit_apartment_name[$room_id],
+                            'price' => $request->edit_apartment_price[$room_id],
+                            'slug'               => str_slug($request->edit_apartment_name[$room_id]),
+                            'max_adults'         => $request->edit_apartment_adults[$room_id],
+                            'max_children'       => $request->edit_apartment_children[$room_id],
+                            'apartment_id'       => $apartment->id,
+                            'no_of_rooms'        => $request->edit_apartment_bedrooms[$room_id],
+                            'toilets'            => $request->edit_apartment_toilets[$room_id],
+                        ]
+                    );
+                    /**
+                     * Sync Images
+                    */
+                    
+                    if( !empty($request->new_apartment_images) ){
+                        foreach ( $request->new_apartment_images as $room_id => $images) {
+                            $variation = Room::find($room_id);
+                            $images = array_filter( $images);
+                            foreach ( $images as $image) {
+                                if ($image == ''){
+                                continue;
+                                }
+                                $images = new Image(['image' => $image]);
+                                $variation->images()->save($images);
+                            }
+                        }
+                    }
+
+
+                    if (!empty($request->facility_id)){
+                        $room->attributes()->syncWithPivotValues($request->parent_id,  ['parent_id' => true]);
+                        $room->attributes()->syncWithoutDetaching($request->facility_id);
+                    } 
+
+                    $beds = []; 
+                    for ($i=1; $i < 6; $i++) { 
+                        $input = 'bedroom_'.$i.'_'.$room_id;
+                        $input = $request->$input;
+                        $beds[] = $input;
+                    }
+                    $room->attributes()->syncWithoutDetaching(array_filter($beds));
+                    
+    
+                    $room->attributes()->syncWithoutDetaching($request->attribute_id);
+                }
+
+                /**
+                  * For filters
+                */
+                $apartment->attributes()->sync($request->facility_id);
+                $apartment->attributes()->syncWithoutDetaching($request->attribute_id);
+    
+            }
+
+            //dd($request->all());
+            /**
+             * New apartments
+            */
+
+            
+            $data = [];
+            if ($request->has('new_room')){
+                foreach ($request->price  as $key => $room) {
+                    $room = new Room;  
+                    $images = !empty($request->apartment_images[$key]) ? $request->apartment_images[$key] : [];
+                    $room->name         = !empty($request->apartment_name[$key]) ? $request->apartment_name[$key] : null;
+                    $room->price        = $request->price[$key];
+                    $room->slug         = !empty($request->apartment_name[$key]) ? str_slug($request->apartment_name[$key]) : str_slug($request->apartment_title);
+                    $room->max_adults   = $request->adults[$key];
+                    $room->max_children = $request->children[$key];
+                    $room->no_of_rooms  = $request->bedrooms[$key];
+                    $room->toilets      = $request->toilets[$key];
+                    $room->available_from = now();
+                    $room->apartment_id   = $apartment->id;
+                    $room->save();
+    
+                    if ( count( $images )  > 0 ) {
+                        $images = array_filter($images);
+                        foreach ( $images  as $image) {
+                            $imgs= new Image(['image' => $image]);
+                            $room->images()->save($imgs);
+                        }
+                    }
+                }
+
+
+
+                if (!empty($request->facility_id)){
+                    $room->attributes()->syncWithPivotValues($request->parent_id,  ['parent_id' => true]);
+                    $room->attributes()->syncWithoutDetaching($request->facility_id);
+                } 
+
+
+                $beds = []; 
+                for ($i=1; $i < 6; $i++) { 
+                    $input = 'bedroom_'.$i.'_'.$room_id;
+                    $input = $request->$input;
+                    $beds[] = $input;
+                }
+                $room->attributes()->syncWithoutDetaching(array_filter($beds));
+
+                $room->attributes()->syncWithoutDetaching($request->attribute_id);
+                
+
+                
+                /**
+                  * For filters
+                */
+                $apartment->attributes()->syncWithoutDetaching($request->facility_id);
+                $apartment->attributes()->syncWithoutDetaching($request->attribute_id);
+
+
+                foreach ($request->extra_services_price  as $key => $price) { 
+                    $attribute_price = new AttributePrice;
+                    $attribute_price->attribute_id = $key;
+                    $attribute_price->price = $price;
+                    $attribute_price->save();
+                }
+
+            }
+
+            try {
+
+            //     Notification::route('mail', $user->email)
+            //     ->notify(new ApartmentUpload($apartment));
+                return redirect('/properties/create')->with('status', 'Listing updated successfully');
+            } catch (\Throwable $th) {
+                return redirect('/properties/create')->with('error', 'We have ');
+            } 
+            
+        }
+
+
+
+        $user = $request->user();
+        $apartment->name         = $request->apartment_title;
+        $apartment->address      = $request->address;
+        $apartment->image        = $request->image;
+        $apartment->description  = $request->description;
+        $apartment->allow        = 0;
+        $apartment->type         = $request->type;
+        $apartment->status       = 'Updated';
+        $apartment->step         = 'one';
+        $apartment->slug         = str_slug($title);
+        $apartment->user_id      = $user->id;
+        $apartment->is_not_admin = 1;
+        $apartment->save();
+        $request->session()->put('apartment_id', $apartment->id);
+        $apartment->locations()->sync(array_filter($request->location_id));
+        $step = $request->step;
+        $type = $request->type;
+
+         
+        return redirect()->route('properties.edit', ['property'=>$apartment->id,'step' => $step, 'type' => $type,'token' => $apartment->token, 'update' => 1]);
+
     }
 
     /**

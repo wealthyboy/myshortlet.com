@@ -71,6 +71,7 @@
          </section>
       </footer>
       <script src="/js/services_js.js"></script>
+
       @yield('page-scripts')  
       
       <script type="text/javascript">

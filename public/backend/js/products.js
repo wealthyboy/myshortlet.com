@@ -45,22 +45,26 @@ $(document).on("click", ".remove-image", function(e) {
   });
 });
 
-$(document).ready(function() {
+jQuery(function() {
   localStorage.setItem("allow_variation", true);
-
-  $(".bedrooms").on("change", function() {
+  $(document).on("change", ".bedrooms", function(e) {
+    console.log(true);
     let self = $(this);
     let value = self.val();
     let bed = self.parentsUntil(".v-panel").find(".bed");
     if (value == "") return;
 
-    for (var i = 1; i <= 4; i++) {
+    for (var i = 1; i <= 5; i++) {
       bed.find(".bedroom-" + i).addClass("d-none");
     }
 
     for (var i = 1; i <= value; i++) {
       bed.find(".bedroom-" + i).removeClass("d-none");
     }
+  });
+
+  $(".cancel :checkbox").on("change", function(e) {
+    $(".cancellation-message").toggleClass("d-none");
   });
 
   /***
