@@ -52,9 +52,6 @@ class WebHookController extends Controller
                $user = User::find($input['user_id']);
                $reservation->user_id = $user->id;
             }
-
-
-
             $reservation->address_id     =  optional($user->active_address)->id;
             $reservation->coupon         =  $input['coupon'];
             $reservation->status         = 'Processing';
