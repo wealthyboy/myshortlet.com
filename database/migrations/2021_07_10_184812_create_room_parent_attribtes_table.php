@@ -12,15 +12,16 @@ class CreateRoomParentAttribtesTable extends Migration
      * @return void
      */
     public function up()
-    {
-        Schema::create('room_parent_attribtes', function (Blueprint $table) {
-            $table->id();
-            $table->integer('attribute_id')->unsigned();
-            $table->integer('room_id')->unsigned();
-            $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
-            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
-            $table->timestamps();
-        });
+    {   if (Schema::hasTable('users')){
+            Schema::create('room_parent_attribtes', function (Blueprint $table) {
+                $table->id();
+                $table->integer('attribute_id')->unsigned();
+                $table->integer('room_id')->unsigned();
+                $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
+                $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
