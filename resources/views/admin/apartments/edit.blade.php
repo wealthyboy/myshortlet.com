@@ -8,10 +8,10 @@
       <!--      Wizard container        -->
       <div class="wizard-container">
          <div class="card wizard-card" data-color="rose" id="wizardProfile">
-            <form enctype="multipart/form-data" id="product-form" action="{{ route('admin.apartments.update',['apartment'=>$apartment->id])  }}" method="post">
+            <form enctype="multipart/form-data" id="product-form" action="{{ route('admin.properties.update',['property'=>$property->id])  }}" method="post">
                @method('PATCH')
                @csrf
-               @csrf
+               
                <!--  You can switch " data-color="purple"   with one of the next bright colors: "green", "orange", "red", "blue"       -->
                <div class="wizard-header">
                   <h3 class="wizard-title">
@@ -21,157 +21,378 @@
                <div class="wizard-navigation">
                   <ul>
                      <li><a href="wizard.html#ProductData" data-toggle="tab">Reservation Data</a></li>
+                     <li><a href="wizard.html#Cancelation" data-toggle="tab">Cancelation </a></li>
                      <li><a href="wizard.html#ProductVariations" data-toggle="tab">Rooms</a></li>
                   </ul>
                </div>
                <div class="tab-content">
                   <div class="tab-pane" id="ProductData">
 
-                  <h4 class="info-text ">Enter Apartment Details</h4>        
-    <div class="row">
-        <div class="col-md-8">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group {{ isset($apartment) ? ''  : 'label-floating is-empty' }}">
-                    <label class="control-label">Apartment Name</label>
-                    <input  required="true" name="apartment_name" data-msg="" value="{{ isset($apartment) ? $apartment->name :  old('apartment_name') }}" class="form-control" type="text">
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group label-floating is-ty">
-                        <label class="control-label">Virtual Tour</label>
-                        <input name="virtual_tour"  required="true" value="{{ isset($apartment) ? $apartment->virtual_tour :  old('virtual_tour') }}" class="form-control  variation" type="text">
-                        <span class="material-input"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group {{ isset($apartment) ? ''  : 'label-floating is-empty' }}">
-                    <label class="control-label">Address</label>
-                    <input  required="true" name="address" data-msg="" value="{{ isset($apartment) ? $apartment->address :  old('address') }}" class="form-control" type="text">
-                    </div>
-                </div>
-                
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                    <label>Description</label>
-                    <div class="form-group ">
-                        <label class="control-label"> Enter description here</label>
-                        <textarea 
-                            name="description" 
-                            id="description" 
-                            class="form-control" 
-                            rows="50">
-                            {{ isset($apartment) ? $apartment->description : old('description') }}
-                        </textarea>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <legend>  
-                    Enable/Disable
-                    </legend>
-                    <div class="togglebutton">
-                    <label>
-                    <input {{ isset($apartment) && $apartment->allow == 1 ? 'checked' : ''}}  name="allow"  value="1" type="checkbox" checked>
-                    Enable/Disable
-                    </label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <legend>  
-                    Featured Product
-                    </legend>
-                    <div class="togglebutton">
-                    <label>
-                        <input {{ isset($apartment) && $apartment->featured == 1 ? 'checked' : '' }} name="featured"  value="1" type="checkbox" >
-                        Yes/No
-                    </label>
-                    </div>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="col-md-4">
-            <div class="">
-                <div class="row mb-3">
-                    <div  class="col-md-12">
-                        @if (!isset($apartment))
-                        <div id="j-drop" class=" j-drop">
-                        <input accept="image/*"  required="true" onchange="getFile(this,'image','Product',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
-                        <div   class="upload-text"> 
-                            <a   class="" href="#">
-                                <img class="" src="/backend/img/upload_icon.png">
-                                <b>Click to upload image</b> 
-                            </a>
-                        </div>
-                        <div id="j-details"  class="j-details"></div>
-
-                        @else
-
-                        <div id="j-drop" class=" j-drop">
-                            <input accept="image/*"   onchange="getFile(this,'image','Product',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
-                            <div   class="{{ optional($apartment)->images ? 'hide' : '' }} upload-text"> 
-                                <a   class="" href="#">
-                                <img class="" src="/backend/img/upload_icon.png">
-                                <b>Click to upload image</b> 
-                                </a>
-                            </div>
-                            <div id="j-details"  class="j-details">
-                                <div id="{{ $apartment->id }}" class="j-complete">
-                                    <div class="j-preview">
-                                        <img class="img-thumnail" src="{{ $apartment->image }}">
-                                        <div id="remove_image" class="remove_image remove-image">
-                                            <a class="remove-image" data-mode="edit" data-randid="{{ $apartment->id }}"  data-id="{{ $apartment->id }}" data-url="{{ $apartment->image }}" href="#">Remove</a> 
-                                        </div>
-                                        <input type="hidden" class="file_upload_input stored_image_url" value="{{ $apartment->image }}" name="image">
+                  <h4 class="info-text ">Enter Property Details</h4>        
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group {{ isset($property) ? ''  : 'label-floating is-empty' }}">
+                                    <label class="control-label">Apartment Name</label>
+                                    <input  required="true" name="apartment_name" data-msg="" value="{{ isset($property) ? $property->name :  old('apartment_name') }}" class="form-control" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group label-floating is-ty">
+                                        <label class="control-label">Virtual Tour</label>
+                                        <input name="virtual_tour"  required="true" value="{{ isset($property) ? $property->virtual_tour :  old('virtual_tour') }}" class="form-control  variation" type="text">
+                                        <span class="material-input"></span>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group {{ isset($property) ? ''  : 'label-floating is-empty' }}">
+                                    <label class="control-label">Address</label>
+                                    <input  required="true" name="address" data-msg="" value="{{ isset($property) ? $property->address :  old('address') }}" class="form-control" type="text">
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                    <label>Description</label>
+                                    <div class="form-group ">
+                                        <label class="control-label"> Enter description here</label>
+                                        <textarea 
+                                            name="description" 
+                                            id="description" 
+                                            class="form-control" 
+                                            rows="50">
+                                            {{ isset($property) ? $property->description : old('description') }}
+                                        </textarea>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <legend>  
+                                    Enable/Disable
+                                    </legend>
+                                    <div class="togglebutton">
+                                    <label>
+                                    <input {{ isset($property) && $property->allow == 1 ? 'checked' : ''}}  name="allow"  value="1" type="checkbox" checked>
+                                    Enable/Disable
+                                    </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <legend>  
+                                    Featured Product
+                                    </legend>
+                                    <div class="togglebutton">
+                                    <label>
+                                        <input {{ isset($property) && $property->featured == 1 ? 'checked' : '' }} name="featured"  value="1" type="checkbox" >
+                                        Yes/No
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="">
+                                <div class="row mb-3">
+                                    <div  class="col-md-12">
+                                        
 
-                        @endif
-
-
+                                          <div id="j-drop" class=" j-drop">
+                                             <input accept="image/*" disabled  onchange="getFile(this,'image','Apartment', false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
+                                             <div   class="{{ optional($property)->images ? 'hide' : '' }} upload-text"> 
+                                                   <a   class="" href="#">
+                                                   <img class="" src="/backend/img/upload_icon.png">
+                                                   <b>Click to upload image</b> 
+                                                   </a>
+                                             </div>
+                                             <div id="j-details"  class="j-details">
+                                                   <div id="{{ $property->id }}" class="j-complete">
+                                                      <div class="j-preview">
+                                                         <img class="img-thumnail" src="{{ $property->image }}">
+                                                         <div id="remove_image" class="remove_image remove-image">
+                                                               <a class="remove-image" data-mode="edit" data-randid="{{ $property->id }}"  data-id="{{ $property->id }}" data-url="{{ $property->image }}" href="#">Remove</a> 
+                                                         </div>
+                                                         <input type="hidden" class="file_upload_input stored_image_url" value="{{ $property->image }}" name="image">
+                                                      </div>
+                                                   </div>
+                                             </div>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <label>Country/State/City </label>
+                            <div class="well well-sm" style="height: 250px; background-color: #fff; color: black; overflow: auto;">
+                            @foreach($locations as $location)
+                                <div class="parent" value="{{ $location->id }}">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" 
+                                            {{ $helper->check($property->locations , $location->id) ? 'checked' : '' }} 
+                                            value="{{ $location->id }}" name="location_id[]" >
+                                            {{ $location->name }}  
+                                        </label>
+                                    </div>   
+                                        @include('includes.product_categories_children',['obj'=>$location,'space'=>'&nbsp;&nbsp;','model' => 'location','url' => 'location'])
+                                </div>
+                            @endforeach
+                            </div>
+                            
+                            
+                        </div>
                     </div>
                 </div>
-            </div>
-            <label>Country/State/City </label>
-            <div class="well well-sm" style="height: 250px; background-color: #fff; color: black; overflow: auto;">
-               @foreach($locations as $location)
-                  <div class="parent" value="{{ $location->id }}">
-                        <div class="checkbox">
+
+                <div class="tab-pane" id="Cancelation">
+                  <div class="row">
+                     <div class="col-md-12 mt-3 pr-5 ">
+                        <h5>Cancellation  </h5>
+                        <div class="togglebutton cancel form-inline">
                            <label>
-                              <input type="checkbox" 
-                              {{ $helper->check($apartment->locations , $location->id) ? 'checked' : '' }} 
-                              value="{{ $location->id }}" name="location_id[]" >
-                              {{ $location->name }}  
+                              <input  
+                                 name="allow_cancellation" 
+                                 id="allow_cancellation" 
+                                 value="1" 
+                                 type="checkbox" 
+                                 {{ isset($property) &&  $property->allow_cancellation ? 'checked' : ''}}
+                              >
+                              Allow Cancellation 
                            </label>
-                        </div>   
-                        @include('includes.product_categories_children',['obj'=>$location,'space'=>'&nbsp;&nbsp;','model' => 'location','url' => 'location'])
+                           <div class="form-group ml-5">
+                                 <input name="cancellation_fee"  type="number"  value="{{ $property->cancellation_fee }}" class="form-control "  placeholder="Percentage discount   (Optional)" /> 
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-sm-7  cancellation-message   {{ isset($property) &&  $property->allow_cancellation ? '' : 'd-none'}} ">
+                        <div class="form-group">
+                           <label for="cancellation_message">Cancellation Policy</label>
+                           <textarea class="form-control" name="cancellation_message" id="cancellation_message" rows="5">{{ isset($property) ?   $property->cancellation_message : '' }}</textarea>
+                        </div>
+                     </div>
+
+                     <div class="col-md-12 mt-3 pr-5 ">
+                        <h5>Rules </h5>
+                        @foreach($rules as $rule)
+                           <div class="togglebutton">
+                              <label>
+                              <input  
+                                {{ $helper->check($property->attributes , $rule->id) ? 'checked' : '' }} 
+ 
+                                 name="attribute_id[]"  value="{{ $rule->id }}" type="checkbox" >
+                                 {{ $rule->name }} 
+                              </label>
+                           </div>
+                        @endforeach  
+                     </div>
+
+                     <div class="col-md-12 mt-1 pr-5 ">
+                        <h5>Facilities </h5>
+                        @foreach( $facilities as $facility )
+                           <div>{{ $facility->name }}</div>                       
+                           @foreach($facility->children->sortBy('name') as $child)
+                           <div class="mt-2 mb-2">
+                              <div class="togglebutton">
+                                    <label>
+                                       <input 
+                                          {{ $helper->check($property->attributes , $child->id) ? 'checked' : '' }} 
+  
+                                          name="facility_id[]"  value="{{ $child->id }}" type="checkbox" 
+                                       >
+                                    {{ $child->name }}
+                              </label>
+                              </div>
+                           </div>
+                           @endforeach
+                        @endforeach
+                     </div>
+
+
+                     <div class="col-md-12 mt-1 pr-3">
+                           <h5>Extra Services </h5>
+                           @foreach($extra_services as $extra_service)
+                           <div class="mt-2 mb-2">
+                              <div class="togglebutton form-inline">
+                                 <label>
+                                 <input  
+                                    class="extra_services" 
+                                    {{ $helper->check($property->attributes , $extra_service->id) ? 'checked' : '' }} 
+                                    name="attribute_id[]"  value="{{ $extra_service->id }}" type="checkbox" >
+                                 {{ $extra_service->name }}                        
+                                 </label>
+                                 
+                              </div>
+                           </div>
+                           @endforeach  
+                     </div>
                   </div>
-               @endforeach
-            </div>
-            
-            
-        </div>
-    </div>
-</div>
+               </div>
     
 
                   
 
-                  <div class="tab-pane" id="ProductVariations">
-                     <h4 class="info-text">Apartment Type</h4>
+               <div class="tab-pane" id="ProductVariations">
+                     <h4 class="info-text">Apartment </h4>
                      <div class="clearfix"></div>
-                     <div class="row new-room">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Apartment Type</label>
+                            <select name="type" id="apartment-type" class="form-control"  required="true" title="Please select product type"  title="" data-size="7">
+                                <option value="">Choose One</option>
+                                <option {{ $property->type == 'single' ? 'selected' : '' }}    value="single">Single</option>
+                                <option  {{ $property->type != 'single' ? 'selected' : '' }} value="multiple">Multiple</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="simple-apartment {{ $property->type == 'single' ? '' : 'hide' }}">
+                        
+                        <div id="" data-id="{{ $counter }}"   class="">
+                           <div class="clearfix"></div>
+                           <div class="col-md-12">
+                                
+                                 <div class="col-md-4">
+                                    <div class="form-group label-floating">
+                                       <label class="control-label">From Date Available</label>
+                                       <input name="single_room_avaiable_from"  required="true" value="{{ $helper::getReversedFormatedDate(optional($property->single_room)->available_from) }}" class="form-control  datepicker" type="text">
+                                    </div>
+                                 </div>
+
+                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                       <select  name="single_room_number" name="bedrooms" id="bedrooms" class="form-control  bedrooms">
+                                             <option value="" selected>Choose Bedrooms</option>
+                                             @for ($i = 1; $i< 6; $i++) 
+                                                @if(optional($property->single_room)->no_of_rooms == $i)
+                                                <option value="{{ $i }}" selected>{{ $i }}</option>
+                                                @else
+                                                <option value="{{ $i }}">{{ $i }}</option>
+                                                @endif
+                                            @endfor 
+                                       </select>
+                                    </div>
+                                 </div>
+                                 
+                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                       <select name="single_room_toilets" id="children" class="form-control">
+                                          <option  value="" selected>Choose Toilets</option>
+                                           @for ($i = 1; $i< 4; $i++) 
+                                                @if(optional($property->single_room)->toilets == $i)
+                                                <option value="{{ $i }}" selected> {{ $i }}</option>
+                                                @else
+                                                <option value="{{ $i }}"> {{ $i }}</option>
+                                                @endif
+                                            @endfor
+                                       </select>
+                                    </div>
+                                 </div>
+                                 
+
+
+                                 <div class="col-md-6">
+                                    <div class="form-group label-floating ">
+                                       <label class="control-label">Max Adults</label>
+                                       <input name="single_room_max_adults"  required="true"  value="{{ optional($property->single_room)->max_adults }}" class="form-control   variation" type="number">
+                                    </div>
+                                 </div>
+
+                                 <div class="col-md-6">
+                                    <div class="form-group label-floating ">
+                                       <label class="control-label">Max Children</label>
+                                       <input name="single_room_max_children"  required="true" value="{{ optional($property->single_room)->max_children }}" class="form-control   variation" type="number">
+                                    </div>
+                                 </div>
+
+                                 <div class="clearfix"></div>
+                                 <div class="col-md-4">
+                                    <div class="form-group label-floating ">
+                                       <label class="control-label">Price per/night</label>
+                                       <input name="single_room_price"  required="true" value="{{ optional($property->single_room)->price }}" class="form-control   variation" type="number">
+                                    </div>
+                                 </div>
+                                 <div class="col-md-4">
+                                    <div class="form-group label-floating ">
+                                       <label class="control-label">Sale Price</label>
+                                       <input name="single_room_sale_price"   value="{{ optional($property->single_room)->sale_price }}"  class="form-control variation_sale_price variation" type="number">
+                                    </div>
+                                 </div>
+                                 <div class="col-md-4">
+                                    <div class="form-group label-floating">
+                                       <label class="control-label">End Date  {{ optional($property->single_room)->no_of_rooms }}</label>
+                                       <input class="form-control  datepicker pull-right"  value="{{ $helper::getReversedFormatedDate(optional($property->single_room)->sale_price_expires) }}" name="single_room_sale_price_expires" id="datepicker" type="text">
+                                    </div>
+                                 </div>
+
+                                 
+                                 <div class="col-md-12 bed mb-5">
+                                    @if ($bedrooms->count())
+
+                                        @foreach($bedrooms as $key =>  $parent)
+                                            @if ($property->apartments[0]->no_of_rooms > $key )
+                                                <div class="bedroom-{{ $key + 1 }} mt-3 000">
+                                                    <h6> {{ $parent->name }} </h6>
+                                                    @foreach($parent->children as $bedroom)
+                                                    <label for="bedroom-{{ $bedroom->id }}-{{ optional($property->single_room)->id }}"  class="radio-inline">
+                                                        <input    value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $property->apartments[0]->id }}" name="{{ $parent->slug }}" type="radio"  {{  optional(optional($property->single_room)->bedrooms)->contains($bedroom) ? 'checked' : ''}}>{{ $bedroom->name }}
+                                                    </label>
+                                                    @endforeach
+                                                </div>
+                                            @else
+                                                <div class="bedroom-{{ $key + 1 }} d-none  {{ $key }}">
+                                                    <div>{{ $parent->name }} </div>
+                                                    @foreach($parent->children as $bedroom)
+                                                    <label for="bedroom-{{ $bedroom->id }}" class="radio-inline">
+                                                        <input  value="{{ $bedroom->id }}" value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}" name="{{ $parent->slug }}" type="radio" >{{ $bedroom->name }}
+                                                    </label>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+
+                                        @endforeach
+
+                                    @endif
+                                 </div>
+                                 
+                              
+                                 <div class="clearfix"></div>
+                                 <div class="col-sm-12">
+                                    <div id="j-drop"  class="j-drop">
+                                    <input accept="image/*"  onchange="getFile(this,'room_images[]','Image')" class="upload_input"  multiple="true"   type="file" id="upload_file_input" name="product_image"  />
+                                       <div   class=" upload-text {{ optional(optional($property->single_room)->images)->count() ?   'hide' :  ''}}"> 
+                                            <a  class="" href="#">
+                                                <img class="" src="/backend/img/upload_icon.png">
+                                                <b>Click on anywhere to upload image</b> 
+                                            </a>
+                                       </div>
+                                       <div id="j-details"  class="j-details">
+                                       @if( optional(optional($property->single_room)->images)->count() )
+                                            @foreach($property->single_room->images as $image)
+                                                <div id="{{ $image->id }}" class="j-complete">
+                                                      <div class="j-preview">
+                                                         <img class="img-thumnail" src="{{ $image->image }}">
+                                                         <div id="remove_image" class="remove_image remove-image">
+                                                            <a class="remove-image"  data-id="{{ $image->id }}" data-randid="{{ $image->id }}" data-model="Image" data-type="complete"  data-url="{{ $image->image }}" href="#">Remove</a>
+                                                         </div>
+                                                      </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                        
+                        </div> 
+                     </div>
+                     <div class="row p-attr  new-room variable-product {{ $property->type == 'single' ? 'hide' : '' }}">                             
                         <label class="col-md-12  col-xs-12 col-xs-12">
                            <div class="pull-right">
                               <button type="button"  id="add-room" class="btn btn-round  btn-primary">

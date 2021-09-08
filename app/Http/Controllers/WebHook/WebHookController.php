@@ -6,12 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
-use App\Models\Order;
-use App\Models\OrderedProduct;
-use App\Models\Cart;
 use App\Models\Currency;
-use App\Models\Shipping;
-use App\Models\ProductVariation;
+use App\Models\Reservation;
+use App\Models\UserGuest;
+
 use App\Models\Voucher;
 use App\Mail\OrderReceipt;
 use App\Models\SystemSetting;
@@ -29,34 +27,45 @@ class WebHookController extends Controller
     }
     
 
-    public function payment(Request $request,OrderedProduct $ordered_product,Order $order)
+    public function payment(Request $request)
     {   
         // if ( !array_key_exists('x-paystack-signature', $_SERVER) ) {
         //     return;
         // } 
 
+        $reservation = new Reservation;
+
         Log::info($request->all());
 
+        return $request->all();
 
         try {
             $input    =  $request->data['metadata']['custom_fields'][0];
-            $user     =  User::findOrFail($input['customer_id']);
-            $carts    =  Cart::find($input['cart']);
-            $currency =  Currency::where('iso_code3',$request->data['currency'])->first();
-            $order->user_id = $user->id;
-            $order->address_id     =  optional($user->active_address)->id;
-            $order->coupon         =  $input['coupon'];
-            $order->status         = 'Processing';
-            $order->shipping_id    =  $input['shipping_id'];
-            $order->shipping_price =  optional(Shipping::find($input['shipping_id']))->converted_price;
-            $order->currency       =  optional($currency)->symbol ?? '₦';
-            $order->invoice        =  "INV-".date('Y')."-".rand(10000,39999);
-            $order->payment_type   =  $request->data['authorization']['channel'];
-            $order->type   =  $input['type'];
-            $order->delivery_note   =  $input['delivery_note'];
-            $order->total          =  $input['total'];
-            $order->ip             =  $request->data['ip_address'];
-            $order->save();
+
+           // foreach ( $input['apartment_quantity']   as $cart){
+
+            if (isset($input['user_type']) && $input['user_type'] == 'guest' ){
+               $user = UserGuest::find($input['user_id']);
+               $reservation->user_id = $user->id;
+
+            } else {
+               $user = User::find($input['user_id']);
+               $reservation->user_id = $user->id;
+            }
+
+
+
+            $reservation->address_id     =  optional($user->active_address)->id;
+            $reservation->coupon         =  $input['coupon'];
+            $reservation->status         = 'Processing';
+            $reservation->currency       =  optional($currency)->symbol ?? '₦';
+            $reservation->invoice        =  "INV-".date('Y')."-".rand(10000,39999);
+            $reservation->payment_type   =  $request->data['authorization']['channel'];
+            $reservation->type   =  $input['type'];
+            $reservation->delivery_note   =  $input['delivery_note'];
+            $reservation->total          =  $input['total'];
+            $reservation->ip             =  $request->data['ip_address'];
+            $reservation->save();
 
             foreach ( $carts   as $cart){
                 $insert = [

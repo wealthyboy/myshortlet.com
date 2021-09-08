@@ -174,13 +174,13 @@
       @if ($states->count())
       @foreach($states as $state)
       <div class="col-md-4">
-         <a href="/apartments/{{ $state->slug }}">
+         <a href="/properties/{{ $state->slug }}">
             <div class="card bg-dark text-white">
                <img src="{{ $state->image }}" class="card-img" alt="...">
                <div class="card-img-overlay">
                   <h5 class="card-title">{{ $state->name }}</h5>
                   <div class="c">
-                     {{ $state->apartments->count() }} properties
+                     {{ $state->properties->count() }} properties
                   </div>
                </div>
                <div class="card-footer position-absolute">

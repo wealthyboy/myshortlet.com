@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Apartments;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Location;
-use App\Models\Apartment;
+use App\Models\Property;
+use App\Models\Reservation;
 use App\Models\SystemSetting;
 use App\Models\Attribute;
 use Illuminate\Database\Eloquent\Builder;
@@ -25,18 +26,18 @@ class ApartmentsController extends Controller
      */
     public function index(Request $request, Location $location)
     {   
-        $attributes = Attribute::parents()->get();
+        $attributes = Attribute::parents()->has('children')->get();
         $page_title = implode(" ",explode('-',$location->slug));
-        $apartments = Apartment::whereHas('locations',function(Builder  $builder) use ($location){
+        $properties = Property::whereHas('locations',function(Builder  $builder) use ($location){
                 $builder->where('locations.slug',$location->slug);
             })->filter($request,$this->getFilters($attributes))->latest()->paginate(20);
-        $apartments->appends(request()->all());
+        $properties->appends(request()->all());
         $breadcrumb = $location->name; 
         return  view('apartments.index',compact(
             'location',
             'page_title',
             'breadcrumb',
-            'apartments',
+            'properties',
             'attributes'
         )); 
     }
@@ -51,7 +52,14 @@ class ApartmentsController extends Controller
         }
         return $filters;
     }
+    
+    public function checkAvailability(Request $request)
+    {   
+        $property = Property::find($request->property_id);
+        
+        $avalability = Reservation::whereIn('id', [1, 2, 3]);
 
+    }
 
     public function search(Request $request)
     {
@@ -64,12 +72,12 @@ class ApartmentsController extends Controller
         $data['max_children'] = $request->no_of_children ?? 1;
         $data['max_adults'] = $request->no_of_adults ?? 1;
         $data['rooms'] = $request->rooms;
-        $apartments = Apartment::whereHas('locations',function($query) use ($data){
+        $apartments = Property::whereHas('locations',function($query) use ($data){
             $query->where('locations.name','like','%' .$data['location']. '%');
-        })->orWhereHas('rooms', function( $query ) use ( $data ){
-            $query->where('rooms.max_adults', '<=',  $data['max_children']);
-            $query->where('rooms.max_children', '<=', $data['max_adults'] );
-            $query->where('rooms.no_of_rooms', '<=', $data['rooms'] );
+        })->orWhereHas('apartments', function( $query ) use ( $data ){
+            $query->where('apartments.max_adults', '<=',  $data['max_children']);
+            $query->where('apartments.max_children', '<=', $data['max_adults'] );
+            $query->where('apartments.no_of_rooms', '<=', $data['rooms'] );
             $query->whereDate('available_from', '>=', $date);
         })->latest()->paginate(20);
         $apartments->appends(request()->all());
@@ -94,9 +102,9 @@ class ApartmentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Apartment $apartment)
-    {   
-        return view('apartments.show',compact('apartment'));
+    public function show(Request $request, Property $property)
+    {    
+        return view('apartments.show',compact('property'));
     }
 
     

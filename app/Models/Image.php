@@ -15,7 +15,7 @@ class Image extends Model
 
    // use Img;//,SoftDeletes,CascadeSoftDeletes;
 
-    public $folder = 'products';
+    public $folder = 'apartments';
 
 
     public $appends = [

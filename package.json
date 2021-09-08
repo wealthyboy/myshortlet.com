@@ -44,6 +44,7 @@
     "postcss-loader": "^6.1.0",
     "slick-carousel": "^1.8.1",
     "vue": "^2.6.11",
+    "vue-flatpickr-component": "^8.1.7",
     "vue-router": "^3.3.4",
     "vue-slick-carousel": "^1.0.6",
     "vue-spinner": "^1.0.3",

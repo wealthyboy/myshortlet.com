@@ -1,93 +1,83 @@
-export  const carts = (state) => {
-   return state.carts
-}
+export const message = (state) => {
+  return state.message;
+};
 
-export  const meta = (state) => {
-   return state.cart_meta
-}
+export const reviewsMeta = (state) => {
+  return state.reviewsMeta;
+};
 
+export const reviews = (state) => {
+  return state.reviews;
+};
 
-export  const cartItemCount = (state) => {
-   return state.carts.length
-}
+export const comments = (state) => {
+  return state.comments;
+};
 
-export  const message = (state) => {
-   return state.message
-}
+export const images = (state) => {
+  return state.images;
+};
 
-export  const reviewsMeta = (state) => {
-   return state.reviewsMeta
-}
+export const notification = (state) => {
+  return state.notification;
+};
 
-export  const reviews = (state) => {
-   return state.reviews
-}
+export const wishlistCount = (state) => {
+  return state.wishlist.length;
+};
 
-export  const comments = (state) => {
-   return state.comments
-}
+export const wishlist = (state) => {
+  return state.wishlist;
+};
 
-export  const images = (state) => {
-   return state.images
-}
+export const loggedIn = (state) => {
+  return state.loggedIn;
+};
 
+export const addresses = (state) => {
+  return state.addresses;
+};
 
-export  const notification = (state) => {
-   return state.notification
-}
+export const locations = (state) => {
+  return state.locations;
+};
 
-export  const wishlistCount = (state) => {
-   return state.wishlist.length
-}
+export const voucher = (state) => {
+  return state.voucher;
+};
 
-export  const wishlist = (state) => {
-   return state.wishlist
-}
+export const total = (state) => {
+  return state.total;
+};
 
-export  const loggedIn = (state) => {
-   return state.loggedIn
-}
+export const shipping = (state) => {
+  return state.shipping;
+};
 
-export  const addresses = (state) => {
-   return state.addresses
-}
+export const default_shipping = (state) => {
+  return state.default_shipping;
+};
 
-export  const locations = (state) => {
-   return state.locations
-}
+export const errors = (state) => {
+  return state.errors;
+};
 
-export  const voucher = (state) => {
-   return state.voucher
-}
+export const loading = (state) => {
+  return state.loadn;
+};
 
-export  const total = (state) => {
-   return state.total
-}
+export const user = (state) => {
+  return state.user;
+};
 
-export  const shipping = (state) => {
-   return state.shipping
-}
+export const showForm = (state) => {
+  return state.showForm;
+};
 
-export  const default_shipping = (state) => {
-   return state.default_shipping
-}
+export const edit = (state) => {
+  return state.editMode;
+};
 
-export  const errors = (state) => {
-   return state.errors
-}
-
-export  const loading = (state) => {
-   return state.loadn
-}
-
-export  const showForm = (state) => {
-   return state.showForm
-}
-
-
-
-
-
-
-
-
+export const userType = (state) => {
+  return state.userType;
+};

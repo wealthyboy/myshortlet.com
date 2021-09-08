@@ -68,7 +68,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'first_name' => $data['first_name'],
+            'name' => $data['name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'phone_number' => $data['phone_number'],
@@ -92,7 +92,8 @@ class RegisterController extends Controller
         if ($request->ajax()){
             return response()->json([
                 'loggenIn' => true,
-                'url' => \Session::get('url.intended', url('/fashion'))
+                'user_type' => 'registered',
+                'user' => $user
             ],200);
         }
 		return redirect()->intended($this->redirectPath());

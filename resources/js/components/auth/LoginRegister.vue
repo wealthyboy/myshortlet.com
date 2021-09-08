@@ -1,124 +1,75 @@
 <template>
-    
-    <section class="sec-padding bg--gray">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="ml-1 col-md-6  bg--light mr-1">
-                    <div class=" mt-4 mb-4">
-                                
-                        <div class="product-single-tabs">
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="login-user" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Login</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link"        id="register-user" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">I'm new here</a>
-                                </li>
-                                
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-user">
-                                    <div class="product-desc-content">
-                                        <span  v-if="errors.general">
-                                            <small  class="text-danger">{{ formatError(errors.general) }}</small>
-                                        </span>
-
-                                        <form method="POST" @submit.prevent="authenticate" class="login_form pl-4 pr-4 mt-3" action="/fashion/login">
-                                            <!--<p class="large">Great to have you back!</p>-->
-                                            <p class="form-group">
-                                                <label for="username">Email address</label>
-                                                <input  v-model="email" id="email" type="email" class="form-control" name="email" value="" required autofocus>
-                                                <small class="text-danger bold" v-if="errors.length"> Email/Password not found</small>
-                                            </p>
-                                            <p class="form-group">
-                                                <label for="password">Password</label>
-                                                <input  v-model="password" id="password" type="password" class="form-control" name="password" required>
-                                            </p>
-                                            <div class="d-flex justify-content-between">
-                                                <p class="form-group">
-                                                    <div class="form-group-custom-control flex-grow-1">
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="change-bill-address" value="1">
-                                                            <label class="custom-control-label" for="change-bill-address">Remember Me</label>
-                                                        </div><!-- End .custom-checkbox -->
-                                                    </div><!-- End .form-group -->
-                                                </p>
-                                                <p class="form-group text-right mt-2">
-                                                    <a  class="color--primary bold"  href="/password/reset">Forget your password?</a>
-                                                </p>
-                                            </div>
-                                            <div class="clearfix"></div>
-
-                                            <p class="form-group ">
-                                                <button type="submit" id="login_form_button"  :class="{ 'disabled': loading }" class="ml-1 btn btn--primary btn-round btn-lg btn-block" name="login" >
-                                                    <span  v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                    Log In
-                                                </button>
-                                            </p>
-                                            
-
-                                        </form>
-                                    </div><!-- End .product-desc-content -->
-                                </div><!-- End .tab-pane -->
-
-                                <div class="tab-pane fade fade" id="register" role="tabpanel" aria-labelledby="register-user">
-                                    <div class="product-desc-content">
-                                       <register />
-                                    </div><!-- End .product-desc-content -->
-                                </div><!-- End .tab-pane -->
-
-                                
-                            </div><!-- End .tab-content -->
-                        </div><!-- End .product-single-tabs -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+  <section class="">
+    <login />
+    <register />
+    <profile />
+  </section>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import  Register from './Register.vue'
+import { mapGetters, mapActions } from "vuex";
+import Login from "./Login.vue";
+import Register from "./Register.vue";
+import Profile from "./Profile.vue";
 
 export default {
-    data(){
-        return {
-            email: '',
-            password: '',
-            loading:false
-        }
-    },
-    components:{
-       Register,
-    },
-    computed:{
-       ...mapGetters({
-            errors: 'errors'
-        }),
-    },
-    formatError(error){
-        return Array.isArray(error) ? error[0] : error
-    },
-    methods:{
-        ...mapActions({
-            login:'login',
-        }),
-        
-        authenticate: function(){
-            this.loading = true
-            this.login({
-                email:this.email,
-                password:this.password,
-                context: this
-            }).catch((error)=>{
-                this.loading = false
-                this.errors = error.response.data.error ||  error.response.data.errors
-            })
-        }
-    }
-    
-}
-</script>
+  data() {
+    return {
+      email: "",
+      password: "",
+      loading: false,
+      redirect: false,
+    };
+  },
+  components: {
+    Login,
+    Register,
+    Profile,
+  },
 
+  computed: {
+    ...mapGetters({
+      errors: "errors",
+      loggedIn: "loggedIn",
+    }),
+  },
+  formatError(error) {
+    return Array.isArray(error) ? error[0] : error;
+  },
+  methods: {
+    ...mapActions({
+      login: "login",
+    }),
+    editProfile: function(index) {
+      let address = this.addresses[index];
+      this.form.first_name = address.first_name;
+      this.form.last_name = address.last_name;
+      this.form.email = address.email;
+      this.form.phone_number = address.phone_number;
+      this.form.address = address.address;
+      this.form.city = address.city;
+      this.form.postal_code = address.postal_code;
+      this.form.country_id = address.country_id;
+      let state = [];
+      let ship_prices = [];
+      this.getState(address.country_id);
+      this.form.state_id = address.state_id;
+      this.edit = true;
+      this.address_id = address.id;
+      this.$store.commit("setShowForm", true);
+    },
+    authenticate: function() {
+      this.loading = true;
+      this.login({
+        email: this.email,
+        password: this.password,
+        redirect: false,
+        context: this,
+      }).catch((error) => {
+        this.loading = false;
+        this.errors = error.response.data.error || error.response.data.errors;
+      });
+    },
+  },
+};
+</script>

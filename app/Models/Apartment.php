@@ -5,55 +5,69 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Traits\HasChildren;
+
 use App\Traits\FormatPrice;
 use App\Traits\ImageFiles;
-
-use App\Filters\ApartmentFilter\ApartmentsFilter;
-use Illuminate\Database\Eloquent\Builder;
 
 class Apartment extends Model
 {
     use HasFactory,FormatPrice,ImageFiles;//,SoftDeletes,CascadeSoftDeletes;
 
+
+    protected $dates = ['available_from','sale_price_expires'];
+
+
     public $folder = 'apartments';
 
-    protected $dates = ['deleted_at','sale_price_expires'];
 
-	public $appends = [
+    public $appends = [
+        'discounted_price',
+		'default_discounted_price',
+		'currency',
+		'converted_price',
+		'customer_price',
+		'default_percentage_off',
 		'image_m',
         'image_tn',
-        'country',
-        'state',
-        'city',
-        'street',
-        'currency'
 	];
 
 
-    public function scopeFilter(Builder $builder,$request,array $filters = []){
-        return (new ApartmentsFilter($request))->add($filters)->filter($builder);
+    protected $fillable = [
+        'name',
+        'price',
+        'sale_price',
+        'image', 
+        'sale_price_expires',
+        'slug',
+        'available_from',
+        'reservation_id',
+        'max_adults',
+        'max_children',
+        'no_of_rooms',
+        'toilets',
+        'type'
+    ];
+
+
+    public function attribute_prices()
+    {
+        return $this->hasMany(AttributePrice::class,'room_id');
     }
 
-    // public function city(){
-    //     return $this->belongsTo(Location::class,'city_id');
-    // }
 
-    // public function state(){
-    //     return $this->belongsTo(Location::class,'state_id');
-    // }
+    public function property()
+    {
+        return $this->belongsTo(Property::class);
+    }
+
 
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable')->orderBy('id','asc');
 	}
 
-    public function rooms(){
-        return $this->hasMany(Room::class);
-    }
-
-    public function facilities(){
-        return $this->belongsToMany(Facility::class,'apartment_facility');
+    public function reservation(){
+        return $this->belongsToMany(Reservation::class);
     }
 
 
@@ -62,50 +76,19 @@ class Apartment extends Model
     }
 
 
-    
-
-
-    public function states(){
-        return $this->belongsToMany(Location::class)->where('location_type', 'state');
+    public function extra_services(){
+        return $this->belongsToMany(Attribute::class)->where('type', 'extra_services');
     }
-
-    public function cities(){
-        return $this->belongsToMany(Location::class)->where('location_type', 'city');
-    }
-
-    public function streets(){
-        return $this->belongsToMany(Location::class)->where('location_type', 'street');
-    }
-
-    public function  locations()
-    {
-        return $this->belongsToMany(Location::class);
-    }
-
-    public function location($location_type, $country){
-		return optional($this->locations)->where($location_type, $country)->first();
-	}
-
-    public function getCountryAttribute(){
-		return optional($this->location('location_type','country'))->name;
-	}
-
-    public function getStateAttribute(){
-		return optional($this->location('location_type','state'))->name;
-	}
-
-    public function getCityAttribute(){
-		return optional($this->location('location_type','city'))->name;
-	}
-
-    public function getStreetAttribute(){
-		return optional($this->location('location_type','street'))->name;
-	}
 
 
     public function getRouteKeyName()
     {
 		return 'slug';
+    }
+
+
+    public function bedrooms(){
+        return $this->belongsToMany(Attribute::class)->where('type', 'bedroom');
     }
 
 }

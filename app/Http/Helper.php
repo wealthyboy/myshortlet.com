@@ -44,6 +44,18 @@ class Helper{
     }
 
 
+    public  static function getFDate($date)
+    {
+        if($date) {
+            $exp_date = explode('-', $date);
+            $expiry_date = Carbon::createFromDate($exp_date[0], $exp_date[1], $exp_date[2]);//
+        }else{
+            $expiry_date = null;
+        }
+        return $expiry_date;
+    }
+
+
     public  static function getFormatedDate($date,$changeFormat = true)
     {   
         //createFromDate  $year ,$month , $day
@@ -138,12 +150,15 @@ class Helper{
 
 
     public static function check($collections,$id)
-    {
-        foreach($collections as $collection){
-            if(null !== $collection->id && $collection->id === $id ){
-                return $collection->id;
+    {   
+        if ($collections) {
+            foreach($collections as $collection){
+                if(null !== $collection->id && $collection->id === $id ){
+                    return $collection->id;
+                }
             }
         }
+        
         return false;
     }
 

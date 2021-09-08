@@ -73,6 +73,15 @@ class ProfileController extends Controller
         $user->image                         = $request->image;
         $user->bio                           = $request->bio;
         $user->save();
+
+        if ($request->ajax()){
+            return response()->json([
+                'msg' => 'success',
+                'user' => $user
+            ]);
+        }
+
+
         return redirect()->back()->with('success','Your profile has been updated.');
     }
 

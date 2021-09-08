@@ -71,16 +71,16 @@ class LoginController extends Controller
         // the IP address of the client making these requests into this application.
         if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
-
             return $this->sendLockoutResponse($request);
         }
         
         if ($this->attemptLogin($request)) {
             if ($request->ajax()){
-                
                 return response()->json([
                     'loggenIn' => true,
-                    'url' => \Session::get('url.intended', url('/'))
+                    'user' => auth()->user(),
+                    'url' => \Session::get('url.intended', url('/')),
+                    'user_type' => 'registered'
                 ]);
             }
             return $this->sendLoginResponse($request);

@@ -98,9 +98,9 @@
             </li>
             
             <li class="{{ $helper->active_link(['category','attributes','vouchers']) }} ">
-                <a data-toggle="collapse" href="#products">
+                <a data-toggle="collapse" href="#Properties">
                 <i class="fa fa-home" aria-hidden="true"></i>
-                    <p> Apartments 
+                    <p> Properties 
                        <b class="caret"></b>
                     </p>
                 </a>
@@ -111,18 +111,18 @@
                         'attributes?type=rules',
                         'attributes?type=bedroom',
                         'attributes?type=extra_services',
-                        'apartments',
+                        'properties',
                         'category',
                         'fine_art',
                         'discounts',
                         'attributes',
                         'vouchers',
-                        'sizes']) ? 'in' : ''}}" id="products">
+                        'sizes']) ? 'in' : ''}}" id="Properties">
                     <ul class="nav">
                         <li class="{{ $helper->active_link(['apartments']) }} ">
-                           <a href="{{ route('admin.apartments.index') }}">
+                           <a href="{{ route('admin.properties.index') }}">
                                 <span class="sidebar-mini"> R </span>
-                                <span class="sidebar-normal"> Apartments </span>
+                                <span class="sidebar-normal"> Properties </span>
                             </a>
                         </li>
 
@@ -165,6 +165,13 @@
                                 <span class="sidebar-normal"> Rules </span>
                             </a>
                         </li>
+
+                        <li class="{{ $helper->active_link(['vouchers']) }} ">
+                            <a href="{{ route('vouchers.index') }}">        
+                                <span class="sidebar-mini"> V </span>
+                                <span class="sidebar-normal"> Vouchers </span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>
@@ -176,17 +183,17 @@
             <li class="{{ $helper->active_link(['orders']) }}">
                 <a data-toggle="collapse" href="dashboard.html#shop">
                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>   
-                    <p> Shop 
+                    <p> Reservations 
                        <b class="caret"></b>
                     </p>
                 </a>
 
-                <div class="collapse {{ $helper->active_link(['orders']) ? 'in' : ''}}" id="shop">
+                <div class="collapse {{ $helper->active_link(['Reservations']) ? 'in' : ''}}" id="shop">
                     <ul class="nav">
                         <li>
                             <a href="{{ route('admin.orders.index',['type'=> 'reservation']) }}">
                                 <span class="sidebar-mini"> C </span>
-                                <span class="sidebar-normal"> Orders </span>
+                                <span class="sidebar-normal"> Reservations </span>
                             </a>
                         </li>
                         <li>
@@ -225,7 +232,6 @@
                             <a href="{{ route('banners.index') }}">
                             <span class="sidebar-mini"><i class="fa fa-circle"></i></span>
                             <span class="sidebar-normal">  Banners</span>
-                           
                             </a>
                         </li>
                        

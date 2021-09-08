@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Live;
 use App\Models\Location;
 use App\Models\Information;
-use App\Models\Apartment;
+use App\Models\Property;
 
 use App\Models\Currency;
 use App\Models\SystemSetting;
@@ -25,8 +25,6 @@ class HomeController
     public function index(Request $request)
     {    
         $site_status = Live::first();
-
-
         if (!$site_status->make_live ) {
             return view('index'); 
         } else {
@@ -45,9 +43,9 @@ class HomeController
     {
         $site_status = Live::first();
 
-        $states      = Location::where('location_type', 'state')->has('apartments')->latest()->get();
-        $featureds   = Apartment::where('featured',true)->skip(1)->take(10)->get();
-        $featured    = Apartment::where('featured',true)->first();
+        $states      = Location::where('location_type', 'state')->has('properties')->latest()->get();
+        $featureds   = Property::where('featured',true)->skip(1)->take(2)->get();
+        $featured    = Property::where('featured',true)->first();
         $posts       = Information::orderBy('created_at','DESC')->where('blog',true)->take(3)->get();
         if (!$site_status->make_live ) {
             return view('index',compact('states','posts','featureds','featured'));

@@ -42,8 +42,6 @@
                         <input type="email" class="form-control form-control-lg border-0" id="email"  value="{{ $user->email }}" name="email">
                      </div>
                   </div>
-                  <h3 class="card-title mb-0 text-heading fs-22 lh-15">Contact information</h3>
-
                   <div class="form-row mx-n4">
                      <div class="form-group col-md-12 px-4">
                         <label for="title" class="text-heading">Title</label>

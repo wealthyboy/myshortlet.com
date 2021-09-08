@@ -20,8 +20,8 @@
       <div class="row">
          <div class="col-lg-9">
             <div>
-               <h1>{{ $apartment->name }}</h1>
-               <p><i class="bi bi-geo-alt-fill"></i> {{ $apartment->address }}</p>
+               <h1>{{ $property->name }}</h1>
+               <p><i class="bi bi-geo-alt-fill"></i> {{ $property->address }}</p>
             </div>
          </div>
          <div class="col-lg-3">
@@ -66,7 +66,7 @@
                   </button>
                </li>
                <li class="list-inline-item">
-                  <a href="single-property-1.html#" data-toggle="tooltip" title="Print" class="d-flex align-items-center justify-content-center w-40px h-40 bg-white text-heading bg-hover-primary hover-white rounded-circle">
+                  <a href="#" data-toggle="tooltip" title="Print" class="d-flex align-items-center justify-content-center w-40px h-40 bg-white text-heading bg-hover-primary hover-white rounded-circle">
                   <i class="far fa-print"></i>
                   </a>
                </li>
@@ -76,30 +76,29 @@
             <div class="col-lg-6 p-1">
                <div class="item item-size-4-3">
                   <div class="card p-0 hover-zoom-in">
-                     <a href="{{ $apartment->image }}" class="card-img" data-gtf-mfp="true" data-gallery-id="01" style="background-image:url({{  $apartment->image }})">
+                     <a href="{{ $property->image }}" class="card-img" data-gtf-mfp="true" data-gallery-id="01" style="background-image:url({{  $property->image }})">
                      </a>
                   </div>
                </div>
             </div>
             <div class="col-lg-6 p-1">
                <div class="row m-n1">
-                  @foreach($apartment->rooms as $room)
-
-                  <div class="col-md-6 p-1">
-                     <div class="item item-size-4-3">
-                        <div class="card p-0 hover-zoom-in">
-                           <a href="{{ $room->image }}" class="card-img" data-gtf-mfp="true" data-gallery-id="01" style="background-image:url({{  $room->image }})">
-                           </a>
+                  @foreach($property->apartments as $apartment)
+                     <div class="col-md-6 p-1">
+                        <div class="item item-size-4-3">
+                           <div class="card p-0 hover-zoom-in">
+                              <a href="{{ $apartment->image }}" class="card-img" data-gtf-mfp="true" data-gallery-id="01" style="background-image:url({{  $apartment->image }})">
+                              </a>
+                           </div>
                         </div>
                      </div>
-                  </div>
                   @endforeach
                   
                   
                   <div class="col-md-6 p-1">
                      <div class="item item-size-4-3">
                         <div class="card p-0 hover-zoom-in">
-                           <a href="{{ $apartment->image }}" class="card-img" data-gtf-mfp="true" data-gallery-id="01" style="background-image:url({{ $apartment->image }})">
+                           <a href="{{ $property->image }}" class="card-img" data-gtf-mfp="true" data-gallery-id="01" style="background-image:url({{ $property->image }})">
                            </a>
                            <a href="single-property-1.html#" class="card-img-overlay d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
                               <p class="fs-48 font-weight-600 text-white lh-1 mb-4">+12</p>
@@ -119,11 +118,9 @@
 <div class="primary-content pt-8">
    <div class="container-fluid">
       <div class="row">
-         <article class="col-lg-6 pr-xl-7">
-            
-         </article>
+         <article class="col-lg-6 pr-xl-7"></article>
          <aside class="col-lg-6 pl-xl-4 primary-sidebar sidebar-sticky" id="sidebar">
-            <room-available  :apartment="{{ $apartment }}" :rooms="{{ $apartment->rooms }}" />
+            <room-available  :property="{{ $property->load('extra_services') }}" :apartments="{{ $property->apartments->load('images') }}" />
          </aside>
       </div>
    </div>

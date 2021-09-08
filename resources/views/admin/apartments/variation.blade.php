@@ -9,11 +9,9 @@
     <div id="variation-panel" data-id="{{ $counter }}"   class="hide v-panel">
         <div class="clearfix"></div>
         <div class="col-md-12">
-        <input name="has_more_room"     value="1"   class="" type="hidden">
-        <input name="new_room"     value="1"   class="" type="hidden">
-        
-                
-            <div class="col-md-4">
+            <input name="has_more_room"  value="1"   class="" type="hidden">
+            <input name="new_room"       value="1"   class="" type="hidden">
+            <div class="col-md-6">
                 <div class="form-group label-floating is-ty">
                     <label class="control-label">Accommodation Type Name</label>
                     <input name="room_name[{{ $counter }}]"  required="true" value="{{ old('price') }}" class="form-control  variation" type="text">
@@ -24,6 +22,16 @@
                 <div class="form-group label-floating">
                     <label class="control-label">From Date Available</label>
                     <input name="room_avaiable_from[{{ $counter }}]"  required="true" value="" class="form-control  datepicker" type="text">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <select  name="room_quantity[{{ $counter }}]" name="quantity" id="" required="true" class="form-control">
+                        <option value="" selected>Select Quantity</option>
+                        @for ($i = 1; $i< 10; $i++) 
+                        <option value="{{ $i }}"> {{ $i }}</option>
+                        @endfor 
+                    </select>
                 </div>
             </div>
 
@@ -38,15 +46,26 @@
                 </div>
             </div>
 
+            <div class="col-md-4">
+                <div class="form-group">
+                    <select name="room_toilets[{{ $counter }}]" id="children" class="form-control">
+                        <option  value="" selected>Choose Toilets</option>
+                        @for ($i = 1; $i< 6; $i++) 
+                        <option value="{{ $i }}"> {{ $i }}</option>
+                        @endfor 
+                    </select>
+                </div>
+            </div>
 
-            <div class="col-md-2">
+
+            <div class="col-md-4">
                 <div class="form-group label-floating is-empty">
                     <label class="control-label">Max Adults</label>
                     <input name="room_max_adults[{{ $counter }}]"  required="true" value="" class="form-control   variation" type="number">
                 </div>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <div class="form-group label-floating is-empty">
                     <label class="control-label">Max Children</label>
                     <input name="room_max_children[{{ $counter }}]"  required="true" value="" class="form-control   variation" type="number">
@@ -79,13 +98,11 @@
                     @foreach($bedrooms as $key =>  $parent)
                           <div class="bedroom-{{ $key + 1 }} d-none mb-2">
                           <div class="mb-2">{{ $parent->name }} </div>
-
                             @foreach($parent->children as $bedroom)
-                            <label for="bedroom-{{ $bedroom->id }}" class="radio-inline">
-                                <input  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}" name="{{ $parent->slug }}_{{ $counter }}" type="radio" name="optradio">{{ $bedroom->name }}
+                            <label for="bedroom-{{ $bedroom->id }}-{{ $counter }}" class="radio-inline">
+                                <input  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $counter }}" name="{{ $parent->slug }}_{{ $counter }}" type="radio" name="optradio">{{ $bedroom->name }}
                             </label>
                             @endforeach
-                          
                         </div>
                     @endforeach
                 @endif
@@ -107,66 +124,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 mt-3 pr-5 pl-5">
-           <h5>Rules </h5>
-           @foreach($rules as $rule)
-                <div class="col-md-6">
-                    <div class="togglebutton">
-                        <label>
-                        <input   name="attribute_id[]"  value="{{ $rule->id }}" type="checkbox" >
-                        <span class='toggle'></span>  
-                        {{ $rule->name }}  
-                        </label>
-                    </div>
-                </div>
-            @endforeach  
-        </div>
-
-        <div class="col-md-12 mt-1 pr-5 pl-5">
-            <h5>Facilities </h5>
-            @foreach($facilities as $facility)
-               <div>{{ $facility->name }}</div>                       
-
-               @foreach($facility->children->sortBy('name') as $child)
-
-                <div class="mt-2 mb-2">
-                    <div class="togglebutton">
-                        <label>
-                        <input   name="facility_id[]"  value="{{ $child->id }}" type="checkbox" >
-                        <span class='toggle'></span>  
-                        {{ $child->name }}                        
-                    </label>
-                    </div>
-                </div>
-                @endforeach
-
-            @endforeach
-            
-        </div>
-
-        <div class="col-md-12 mt-1 mb-3 pr-5 pl-5">
-            <h5>Extra Services </h5>
-            <div class="">
-                @foreach($extra_services as $extra_service)
-                <div class="col-md-3">
-                    <div class="togglebutton">
-                        <label>
-                        <input   name="attribute_id[]"  value="{{ $extra_service->id }}" type="checkbox" >
-                        <span class='toggle'></span>  
-                        {{ $extra_service->name }}                    
-                    </label>
-                    </div>
-                </div>
-                <div class="ml-3 col-md-6">
-                        <div class="form-group">
-                            <input name="extra_services_price[{{ $extra_service->id }}]" type="number" class="form-control" id="" placeholder="Price   " /> 
-                            optional
-                        </div>
-                    </div>
-                @endforeach  
-            </div>
-        </div>
-
+        
     </div> 
     
 </div>

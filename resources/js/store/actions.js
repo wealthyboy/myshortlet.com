@@ -1,74 +1,13 @@
 import axios from "axios";
-import store from "./index";
 
-export const addProductToCart = (
-  {commit},
-  {product_variation_id, quantity}
-) => {
-  return axios
-    .post("/api/cart", {
-      product_variation_id: product_variation_id,
-      quantity,
-    })
-    .then((response) => {
-      commit("appendToCart", response.data.data);
-      commit("setCartMeta", response.data.meta);
-      document.getElementById("icon-trigger").click();
-      return Promise.resolve();
-    });
-};
-
-export const updateCart = ({commit}, {product_variation_id, quantity}) => {
-  return axios
-    .post("/api/cart", {
-      product_variation_id: product_variation_id,
-      quantity,
-    })
-    .then((response) => {
-      commit("appendToCart", response.data.data);
-      commit("setCartMeta", response.data.meta);
-      document.getElementById("icon-trigger").click();
-      return Promise.resolve();
-    });
-};
-
-export const getCart = ({commit}) => {
-  commit("Loading", true);
-
-  return axios
-    .get("/api/cart")
-    .then((response) => {
-      commit("setCart", response.data);
-      commit("setCartMeta", response.data.meta);
-      document.getElementById("js-loading").style.display = "none";
-      commit("Loading", false);
-
-      return Promise.resolve();
-    })
-    .catch(() => {});
-};
-
-export const deleteCart = ({commit}, {cart_id}) => {
-  return axios.delete("/api/cart/delete/" + cart_id + "").then((response) => {
-    console.log(response.data);
-
-    commit("setCart", response.data);
-    commit("setCartMeta", response.data.meta);
-    if (response.data.data.length == 0) {
-      $(".cart-page").remove();
-    }
-    return Promise.resolve();
-  });
-};
-
-export const flashMessage = ({commit}, message) => {
+export const flashMessage = ({ commit }, message) => {
   commit("setMessage", message);
   setTimeout(() => {
     commit("clearMessage");
   }, 3000);
 };
 
-export const applyVoucher = ({commit}, coupon) => {
+export const applyVoucher = ({ commit }, coupon) => {
   axios
     .post("/checkout/coupon", {
       coupon: coupon,
@@ -80,13 +19,13 @@ export const applyVoucher = ({commit}, coupon) => {
     .catch((error) => {});
 };
 
-export const updateCartMeta = ({commit}, payload) => {
+export const updateCartMeta = ({ commit }, payload) => {
   commit("setCartMeta", payload);
 };
 
 export const addProductToWishList = (
-  {commit, dispatch},
-  {product_variation_id, context}
+  { commit, dispatch },
+  { product_variation_id, context }
 ) => {
   return axios
     .post("/api/wishlist", {
@@ -110,7 +49,7 @@ export const addProductToWishList = (
     });
 };
 
-export const getWislist = ({commit}) => {
+export const getWislist = ({ commit }) => {
   commit("Loading", true);
   return axios
     .get("/api/wishlist")
@@ -125,21 +64,29 @@ export const getWislist = ({commit}) => {
     });
 };
 
-export const deleteWishlist = ({commit}, {id}) => {
+export const deleteWishlist = ({ commit }, { id }) => {
   return axios.delete("/api/wishlist/delete/" + id + "").then((response) => {
     commit("appendToWishlist", response.data.data);
     return Promise.resolve();
   });
 };
 
-export const login = ({commit}, {email, password, context}) => {
+export const login = ({ commit }, { email, password, redirect, context }) => {
   return axios
     .post("/login", {
       email: email,
       password: password,
     })
     .then((response) => {
-      window.location.href = response.data.url;
+      if (redirect) {
+        window.location.href = response.data.url;
+      }
+      commit("setLoggedIn", 1);
+      commit("setUser", response.data.user);
+      commit("setShowForm", false);
+      commit("setUserType", response.data.user_type);
+      commit("setEditMode", true);
+
       return Promise.resolve();
     })
     .catch((error) => {
@@ -154,18 +101,24 @@ export const login = ({commit}, {email, password, context}) => {
     });
 };
 
-export const register = ({commit}, {context}) => {
+export const register = ({ commit }, { context, redirect = false }) => {
   return axios
-    .post("/fashion/register", context.form)
+    .post("/register", context.form)
     .then((response) => {
-      window.location.href = response.data.url;
+      if (redirect) {
+        window.location.href = response.data.url;
+      }
+      commit("setLoggedIn", 1);
+      commit("setUser", response.data.user);
+      commit("setShowForm", false);
+      commit("setUserType", response.data.user_type);
+      commit("setEditMode", true);
     })
     .catch((error) => {
       context.loading = false;
-      console.log(error.response.data.errors);
       if (typeof error.response.data.errors === "undefined") {
         commit("setFormErrors", {
-          general: "We could register you.Please try again later",
+          general: "We could not register you.Please try again later",
         });
         return;
       }
@@ -174,71 +127,47 @@ export const register = ({commit}, {context}) => {
     });
 };
 
-export const createAddress = ({dispatch, commit}, {form, context}) => {
+export const updateProfile = ({ dispatch, commit }, { form, id }) => {
   return axios
-    .post("/api/addresses", {
+    .put("/profile/" + id, {
       first_name: form.first_name,
       last_name: form.last_name,
-      address: form.address,
-      address_2: form.address_2,
-      city: form.city,
-      country_id: form.country_id,
-      state_id: form.state_id,
-      postal_code: form.postal_code,
+      email: form.email,
+      phone_number: form.phone_number,
     })
     .then((response) => {
-      dispatch("setADl", response);
-      if (response.data.data.length) {
-        commit("setShowForm", false);
-      }
-      context.submiting = false;
-      return Promise.resolve();
-    })
-    .catch((error) => {
-      if (!response.data.data.length) {
-        commit("setShowForm", false);
-      }
-      context.errors = error.response.data.errors;
-    });
-};
-
-export const deleteAddress = ({dispatch, commit}, {id, context}) => {
-  axios.delete("/api/addresses/" + id + "").then((response) => {
-    if (!response.data.data.length) {
-      commit("setShowForm", true);
-    }
-    dispatch("setADl", response);
-    context.submiting = false;
-  });
-};
-
-export const updateAddresses = ({dispatch, commit}, {form, id}) => {
-  return axios
-    .put("/api/addresses/" + id, {
-      first_name: form.first_name,
-      last_name: form.last_name,
-      address: form.address,
-      address_2: form.address_2,
-      city: form.city,
-      country_id: form.country_id,
-      state_id: form.state_id,
-      postal_code: form.postal_code,
-    })
-    .then((response) => {
-      dispatch("setADl", response);
-      if (response.data.data.length) {
-        commit("setShowForm", false);
-      }
+      console.log(response);
+      commit("setShowForm", false);
+      commit("setUser", response.data.user);
+      commit("setEditMode", false);
       return Promise.resolve();
     })
     .catch(() => {
-      if (response.data.data.length) {
-        commit("setShowForm", true);
-      }
+      commit("setShowForm", true);
     });
 };
 
-export const getAddresses = ({dispatch, commit}, {context}) => {
+export const registerGuest = ({ dispatch, commit }, { form }) => {
+  return axios
+    .post("/guests", {
+      first_name: form.first_name,
+      last_name: form.last_name,
+      email: form.email,
+      phone_number: form.phone_number,
+    })
+    .then((response) => {
+      commit("setLoggedIn", 1);
+      commit("setShowForm", false);
+      commit("setUser", response.data.guest_user);
+      commit("setUserType", response.data.user_type);
+      return Promise.resolve();
+    })
+    .catch(() => {
+      commit("setShowForm", true);
+    });
+};
+
+export const getAddresses = ({ dispatch, commit }, { context }) => {
   return axios
     .get("/api/addresses")
     .then((response) => {
@@ -261,7 +190,7 @@ export const getAddresses = ({dispatch, commit}, {context}) => {
     });
 };
 
-export const updatePassword = ({commit, dispatch}, {payload, context}) => {
+export const updatePassword = ({ commit, dispatch }, { payload, context }) => {
   return axios
     .put("/change/password", payload)
     .then((response) => {
@@ -282,7 +211,7 @@ export const updatePassword = ({commit, dispatch}, {payload, context}) => {
     });
 };
 
-export const resetPassword = ({commit}, {payload, context}) => {
+export const resetPassword = ({ commit }, { payload, context }) => {
   return axios
     .post("/reset/password", payload)
     .then((response) => {
@@ -303,22 +232,22 @@ export const resetPassword = ({commit}, {payload, context}) => {
     });
 };
 
-export const updateAddress = ({commit}, payload) => {
+export const updateAddress = ({ commit }, payload) => {
   commit("addToAddress", payload);
 };
 
-export const updateLocations = ({commit}, payload) => {
+export const updateLocations = ({ commit }, payload) => {
   commit("addToLocations", payload);
 };
 
-export const setADl = ({commit}, response) => {
+export const setADl = ({ commit }, response) => {
   commit("addToAddress", response.data.data);
   commit("addToLocations", response.data.meta.countries);
   commit("setShipping", response.data.meta.shipping);
   commit("setDefaultShipping", response.data.meta.default_shipping);
 };
 
-export const validateForm = ({dispatch, commit}, {context, input}) => {
+export const validateForm = ({ dispatch, commit }, { context, input }) => {
   let p = {},
     k,
     errors = [];
@@ -352,7 +281,7 @@ export const validateForm = ({dispatch, commit}, {context, input}) => {
   commit("setFormErrors", errors);
 };
 
-export const forgotPassword = ({commit}, {payload, context}) => {
+export const forgotPassword = ({ commit }, { payload, context }) => {
   return axios
     .post("/password/reset/link", payload)
     .then((response) => {
@@ -362,7 +291,7 @@ export const forgotPassword = ({commit}, {payload, context}) => {
     .catch((error) => {
       context.loading = false;
       if (error.response.status == 500) {
-        let errors = {general: "We could not send your password reset link"};
+        let errors = { general: "We could not send your password reset link" };
         commit("setFormErrors", errors);
         return;
       }
@@ -372,7 +301,7 @@ export const forgotPassword = ({commit}, {payload, context}) => {
     });
 };
 
-export const createReviews = ({commit}, {payload, context, form}) => {
+export const createReviews = ({ commit }, { payload, context, form }) => {
   return axios
     .post("/reviews/store", form)
     .then((response) => {
@@ -382,7 +311,7 @@ export const createReviews = ({commit}, {payload, context, form}) => {
     .catch((error) => {
       context.submiting = false;
       if (error.response.status == 500) {
-        let errors = {general: "We could not send your password reset link"};
+        let errors = { general: "We could not send your password reset link" };
         commit("setFormErrors", errors);
         return;
       }
@@ -392,7 +321,7 @@ export const createReviews = ({commit}, {payload, context, form}) => {
     });
 };
 
-export const createComment = ({commit}, {payload, context}) => {
+export const createComment = ({ commit }, { payload, context }) => {
   return axios
     .post("/blog", context.form)
     .then((response) => {
@@ -402,7 +331,7 @@ export const createComment = ({commit}, {payload, context}) => {
     .catch((error) => {
       context.submiting = false;
       if (error.response.status == 500) {
-        let errors = {general: "We could not send your password reset link"};
+        let errors = { general: "We could not send your password reset link" };
         commit("setFormErrors", errors);
         return;
       }
@@ -412,7 +341,7 @@ export const createComment = ({commit}, {payload, context}) => {
     });
 };
 
-export const getReviews = ({commit}, {context}) => {
+export const getReviews = ({ commit }, { context }) => {
   return axios
     .get("/reviews/" + context.product_slug)
     .then((response) => {
@@ -422,7 +351,7 @@ export const getReviews = ({commit}, {context}) => {
     .catch((error) => {
       context.loading = false;
       if (error.response.status == 500) {
-        let errors = {general: "We could not send your password reset link"};
+        let errors = { general: "We could not send your password reset link" };
         commit("setFormErrors", errors);
         return;
       }
@@ -432,12 +361,12 @@ export const getReviews = ({commit}, {context}) => {
     });
 };
 
-export const clearError = ({commit}) => {
+export const clearError = ({ commit }) => {
   let errors = {};
   commit("setFormErrors", errors);
 };
 
-export const clearErrors = ({commit}, {context, input}) => {
+export const clearErrors = ({ commit }, { context, input }) => {
   let k;
   let p = {},
     errors = [];
@@ -462,7 +391,7 @@ export const clearErrors = ({commit}, {context, input}) => {
   commit("setFormErrors", errors);
 };
 
-export const checkInput = ({commit}, {context, input}) => {
+export const checkInput = ({ commit }, { context, input }) => {
   let p = {},
     errors = [],
     errMsg = [],

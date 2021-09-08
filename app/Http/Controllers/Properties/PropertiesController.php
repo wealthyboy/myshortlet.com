@@ -13,8 +13,6 @@ use App\Models\Image;
 use App\Http\Helper;
 
 
-
-
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ApartmentUpload;
 
@@ -390,7 +388,7 @@ class PropertiesController extends Controller
                             $images = array_filter( $images);
                             foreach ( $images as $image) {
                                 if ($image == ''){
-                                continue;
+                                    continue;
                                 }
                                 $images = new Image(['image' => $image]);
                                 $variation->images()->save($images);
@@ -411,8 +409,6 @@ class PropertiesController extends Controller
                         $beds[] = $input;
                     }
                     $room->attributes()->syncWithoutDetaching(array_filter($beds));
-                    
-    
                     $room->attributes()->syncWithoutDetaching($request->attribute_id);
                 }
 

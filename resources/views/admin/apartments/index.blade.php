@@ -5,13 +5,13 @@
 <div class="row">
         <div class="col-md-12">
         <div class="text-right">
-            <a href="{{ route('admin.apartments.index') }}" rel="tooltip" title="Refresh" class="btn btn-primary btn-simple btn-xs">
+            <a href="{{ route('admin.properties.index') }}" rel="tooltip" title="Refresh" class="btn btn-primary btn-simple btn-xs">
                 <i class="material-icons">refresh</i>
                 Refresh
             </a>
-            <a href="{{ route('admin.apartments.create') }}" rel="tooltip" title="Add New" class="btn btn-primary btn-simple btn-xs">
+            <a href="{{ route('admin.properties.create') }}" rel="tooltip" title="Add New" class="btn btn-primary btn-simple btn-xs">
                     <i class="material-icons">add</i>
-                    Add apartments
+                    Add Property
             </a>
             <a href="javascript:void(0)" onclick="confirm('Are you sure?') ? $('#form-apartments').submit() : false;" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
                 <i class="material-icons">close</i>
@@ -34,8 +34,8 @@
                            
                             <div class="col-md-10">
                                 <div class="form-group label-floating ">
-                                    <label class="control-label">Search apartments</label>
-                                    <input required   type="text" value="{{  old('product_name') }}" name="q" class="form-control" >
+                                    <label class="control-label">Search Properties</label>
+                                    <input required   type="text" value="" name="q" class="form-control" >
                                 </div>
                             </div>
                             
@@ -52,12 +52,12 @@
         
                 <div class="card-content">
                 
-                    <h4 class="card-title">apartments</h4>
+                    <h4 class="card-title">Properties</h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar              -->
                     </div>
                     <div class="material-datatables">
-                    <form action="{{ route('admin.apartments.destroy',['apartment'=>1]) }}" method="post" enctype="multipart/form-data" id="form-apartments">
+                    <form action="{{ route('admin.properties.destroy',['property'=>1]) }}" method="post" enctype="multipart/form-data" id="form-apartments">
                         @method('DELETE')
                         @csrf
                 
@@ -81,12 +81,12 @@
                             </thead>
                             
                             <tbody>
-                            @foreach($apartments as $apartment) 
+                            @foreach($properties as $property) 
                                 <tr>
                                     <td>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" value="{{ $apartment->id }}" name="selected[]" >
+                                                <input type="checkbox" value="{{ $property->id }}" name="selected[]" >
                                             </label>
                                         </div>
                                     </td>
@@ -94,17 +94,17 @@
                                     <!-- cart-sidebar-btn active -->
                                     <td>
                                         <div class="img-container">
-                                            <img class="" src="{{  $apartment->image  }}" alt="...">
+                                            <img class="" src="{{  $property->image  }}" alt="...">
                                         </div>
                                     </td>
-                                    <td><a target="_blank">{{ $apartment->name }} {{ optional($apartment->city)->name }} {{ optional($apartment->state)->name }}</a></td>
-                                    <td>{{ $apartment->allow == 1 ? 'Live' : 'Offline' }}</td>
+                                    <td><a target="_blank">{{ $property->name }} {{ optional($property->city)->name }} {{ optional($property->state)->name }}</a></td>
+                                    <td>{{ $property->allow == 1 ? 'Live' : 'Offline' }}</td>
                                     <td>
                                         <span class="amount">
                                         </span> 
                                     </td>
                                     <td class="td-actions ">                     
-                                        <a href="{{ route('admin.apartments.edit',['apartment'=>$apartment->id] ) }}" rel="tooltip" title="Edit" class="btn btn-primary btn-simple btn-xs">
+                                        <a href="{{ route('admin.properties.edit',['property'=>$property->id] ) }}" rel="tooltip" title="Edit" class="btn btn-primary btn-simple btn-xs">
                                             <i class="material-icons">edit</i>
                                             Edit
                                         </a>
@@ -115,7 +115,7 @@
                          </table>
                         </form>
                     </div>
-                    <div class="pull-right">{{ $apartments->links() }}</div>
+                    <div class="pull-right">{{ $properties->links() }}</div>
                 </div><!-- end content-->
             </div><!--  end card  -->
         </div> <!-- end col-md-12 -->

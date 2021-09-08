@@ -27,9 +27,9 @@ class Location extends Model
 	}
 
 
-    public function  apartments()
+    public function  properties()
     {
-        return $this->belongsToMany(Apartment::class);
+        return $this->belongsToMany(Property::class);
     }
 
 

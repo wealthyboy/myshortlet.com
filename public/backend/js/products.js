@@ -75,7 +75,7 @@ jQuery(function() {
     $(".product-attributes").each(function() {
       values.push($(this).val());
     });
-    var payLoad = {attribute_ids: values};
+    var payLoad = { attribute_ids: values };
     $.ajax({
       type: "POST",
       url: "/admin/load-attributes",
@@ -94,7 +94,7 @@ jQuery(function() {
   $("#add-room").on("click", function(e) {
     $.ajax({
       type: "GET",
-      url: "/admin/apartments/room",
+      url: "/admin/properties/apartment",
     }).done(function(response) {
       $(".new-room")
         .last()
@@ -143,6 +143,11 @@ jQuery(function() {
       .remove();
   });
 
+  $(document).on("click", ".extra_services", function(e) {
+    let gParent = $(this).parentsUntil("div.mt-2");
+    gParent.find(".extra-services-input").prop("disabled", false);
+  });
+
   $(document).on("click", ".delete-panel", function(e) {
     e.preventDefault();
     $(this).text("Taking it out....");
@@ -164,7 +169,7 @@ jQuery(function() {
 
   $(".search_products").on("input", function(e) {
     var $self = $(this),
-      payLoad = {product_name: $self.val()};
+      payLoad = { product_name: $self.val() };
     $.ajax({
       type: "GET",
       url: "/admin/related/products",
@@ -209,16 +214,17 @@ jQuery(function() {
     }).done(function(response) {});
   });
 
-  $("#product-type").on("change", function() {
+  $("#apartment-type").on("change", function() {
     $self = $(this);
-    if ($self.val() === "simple") {
-      $(".simple-product").removeClass("hide");
-      $(".variable-product").addClass("hide");
-      $(".variable-products").addClass("hide");
+    console.log($self.val());
+    if ($self.val() === "single") {
+      $(".simple-apartment").removeClass("hide");
+      $(".variation-panel").addClass("hide");
+      $(".new-room").addClass("hide");
     } else {
-      $(".simple-product").addClass("hide");
-      $(".variable-product").removeClass("hide");
-      $(".variable-products").removeClass("hide");
+      $(".simple-apartment").addClass("hide");
+      $(".new-room").removeClass("hide");
+      $(".variation-panel").removeClass("hide");
     }
   });
 

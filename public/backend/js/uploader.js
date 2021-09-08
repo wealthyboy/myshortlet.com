@@ -1,10 +1,11 @@
-function getFile(e, name, model = null, multiple = true) {
+function getFile(e, name, model = null, multiple = true, edit_mode = false) {
   let parent = e.parentNode;
   let file = e.parentNode.querySelector(".upload_input");
   let file_error = e.parentNode.querySelector("#img-error");
   if (file_error !== null) {
     file_error.remove();
   }
+
   parent.querySelector(".upload-text").classList.add("hide");
   let target = parent.querySelector("#j-details");
   let parent1 = document.createElement("div");

@@ -189,15 +189,14 @@
                                 <div class="custom-control custom-checkbox">
                                 <input type="checkbox" 
                                 {{ $helper->check($room->attributes , $extra_service->id) ? 'checked' : '' }} 
-
-                                class="custom-control-input" value="{{ $extra_service->id }}" name="attribute_id[]" id="{{ $extra_service->name }}-{{ $room->id }}" />
+                                    class="custom-control-input" value="{{ $extra_service->id }}" name="attribute_id[]" id="{{ $extra_service->name }}-{{ $room->id }}" />
                                 <label class="custom-control-label" for="{{ $extra_service->name }}-{{ $room->id }}">{{ $extra_service->name }}</label>
                                 </div>
                                 <div class="ml-3 col-md-3">
-                                <div class="form-group">
-                                    <input name="extra_services_price[{{ $extra_service->id }}][{{ optional($extra_service->attribute_price)->id }}]" type="number" value="{{ optional($extra_service->attribute_price)->price }}" class="form-control" id="" placeholder="Price   " /> 
-                                    optional
-                                </div>
+                                    <div class="form-group">
+                                        <input name="extra_services_price[{{ $extra_service->id }}][{{ optional($extra_service->attribute_price)->id }}]" type="number" value="{{ optional($extra_service->attribute_price)->price }}" class="form-control" id="" placeholder="Price   " /> 
+                                        optional
+                                    </div>
                                 </div>
                         </li>
                         @endforeach 
@@ -303,7 +302,7 @@
                     @if ($bedrooms->count())
                     @foreach($bedrooms as $key =>  $parent)
                     <div class="bedroom-{{ $key + 1 }} d-none">
-                        <h6> {{ $parent->name }} </h6>
+                        <h6>{{ $parent->name }}</h6>
                         <div class="d-flex flex-grow-1">
                             @foreach($parent->children as $bedroom)
                             <div class="custom-control custom-radio mr-3">
@@ -349,15 +348,16 @@
                         <li class="list-group-item px-0 pt-0 pb-2">
                             <div class="d-flex">
                                 <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" value="{{ $extra_service->id }}" name="attribute_id[]" id="{{ $extra_service->name }}" />
-                                <label class="custom-control-label" for="{{ $extra_service->name }}">{{ $extra_service->name }}</label>
+                                   <input type="checkbox" class="custom-control-input" value="{{ $extra_service->id }}" name="attribute_id[]" id="{{ $extra_service->name }}" />
+                                    <label class="custom-control-label" for="{{ $extra_service->name }}">{{ $extra_service->name }}</label>
                                 </div>
                                 <div class="ml-3 col-md-3">
-                                <div class="form-group">
-                                    <input name="extra_services_price[{{ $extra_service->id }}]" type="number" class="form-control" id="" placeholder="Price   " /> 
-                                    optional
+                                    <div class="form-group">
+                                        <input name="extra_services_price[{{ $extra_service->id }}]" type="number" class="form-control" id="" placeholder="Price   " /> 
+                                        optional
+                                    </div>
                                 </div>
-                                </div>
+                            </div>
                         </li>
                         @endforeach 
                     </ul>

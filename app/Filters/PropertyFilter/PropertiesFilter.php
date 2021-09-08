@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filters\ApartmentFilter;
+namespace App\Filters\PropertyFilter;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,7 +18,7 @@ use App\Filters\ApartmentFilter\SortByFilter;
 
 
 
-class ApartmentsFilter extends AbstractFilters
+class PropertiesFilter extends AbstractFilters
 {
     
     protected $filters = [

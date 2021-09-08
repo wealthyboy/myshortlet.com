@@ -3,7 +3,7 @@
        <div class="checkbox">
             <label>
                 <input 
-                {{ $helper->check($apartment->locations , $obj->id) ? 'checked' : '' }} 
+                {{ $helper->check($property->locations , $obj->id) ? 'checked' : '' }} 
                 type="checkbox" value="{{ trim($obj->id) }}" name="location_id[]" >
                 {{ $obj->name }}  
             </label>

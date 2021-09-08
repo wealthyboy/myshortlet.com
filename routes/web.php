@@ -19,9 +19,6 @@ Route::group(['middleware' => 'admin','prefix' => 'admin'], function(){
     Route::resource('orders','Admin\Orders\OrdersController',['names' => 'admin.orders']);
     Route::get('orders/invoice/{id}','Admin\Orders\OrdersController@invoice')->name('order.invoice');
     Route::post('update/ordered_product/status','Admin\Orders\OrdersController@updateStatus');
-
-  
-
     Route::post('upload','Admin\Uploads\UploadsController@store');
     Route::get('delete/upload','Admin\Uploads\UploadsController@destroy');
 
@@ -52,8 +49,8 @@ Route::group(['middleware' => 'admin','prefix' => 'admin'], function(){
     Route::resource('rates','Admin\CurrencyRates\CurrencyRatesController',['name'=>'rates']);
     Route::resource('vouchers','Admin\Vouchers\VouchersController',['names'=>'vouchers']);
 
-    Route::get('apartments/room','Admin\Apartments\ApartmentsController@newRoom');
-    Route::resource('apartments','Admin\Apartments\ApartmentsController',['names' => 'admin.apartments']);
+    Route::get('properties/apartment','Admin\Properties\PropertiesController@newRoom');
+    Route::resource('properties','Admin\Properties\PropertiesController',['names' => 'admin.properties']);
     Route::delete('room/{id}/delete','Admin\Rooms\RoomsController@destroy');
 
     // Route::delete('variation/delete/{id}',  'Admin\Product\ProductController@destroyVariation');
@@ -109,33 +106,33 @@ Route::group(['middleware' => 'currencyByIp'], function(){
 Route::get('account', 'Account\AccountController@index');
 Route::resource('profile', 'Profile\ProfileController',['names' => 'profiles']);
 Route::post('password/reset/link',            'Auth\ForgotPasswordController@sendResetLinkEmail');
+
 Route::post('reset/password',  'Auth\ForgotPasswordController@reset');
 Route::get('change/password',  'ChangePassword\ChangePasswordController@index');
-
+Route::post('guests',           'Guests\GuestsController@store');
 Auth::routes();
 Route::get('login/{service}',           'Auth\SocialLoginController@redirect');
 Route::get('login/{service}/callback',  'Auth\SocialLoginController@callback');
 Route::post('login',                    'Auth\LoginController@login');
 
-Route::get('apartments/{location}',     'Apartments\ApartmentsController@index');
-Route::get('apartment/{apartment}',     'Apartments\ApartmentsController@show');
+Route::get('properties/{location}',     'Apartments\ApartmentsController@index');
+Route::get('property/{property}',       'Apartments\ApartmentsController@show');
 Route::get('add/apartment',             'Properties\PropertiesController@addApartment');
+Route::post('check/apartment/availablility',     'Apartments\ApartmentsController@checkAvailability');
 
 Route::get('checkout/{room}', 'Checkout\CheckoutController@index');
-Route::get('book/{apartment}', 'Booking\BookingController@book');
+Route::get('book/{property}', 'Booking\BookingController@book');
+Route::post('book/coupon',    'Booking\BookingController@coupon');
+
 
 
 
 Route::resource('properties',   'Properties\PropertiesController',['name' => 'properties']);
-
 Route::get('saved',   'SavedItems\SavedItemsController@index');
 Route::get('reservations',   'Reservation\ReservationController@index');
 
 
-
-
 Route::get('get/location/{id}', 'Properties\PropertiesController@getLocation');
-
 Route::get('/search',         'Apartments\ApartmentsController@search');
 Route::get('listings', 'Listings\ListingsController@index');
 

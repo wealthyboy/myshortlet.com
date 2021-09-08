@@ -31,7 +31,6 @@ class VouchersController  extends Controller
 
 	public function index() {
 		$vouchers = Voucher::all();
-		//$categories = Category::all();
 		return view('admin.vouchers.index',compact('vouchers'));
 	}
 
@@ -55,8 +54,7 @@ class VouchersController  extends Controller
 		$voucher->user_id  = \Auth::user()->id;
 		$voucher->amount   = $request->discount;
 		$voucher->type   = $request->type;
-
-		$voucher->expires  = Helper::getFormatedDate($request->expiry);
+		$voucher->expires  = Helper::getFDate($request->expiry);
 		$voucher->from_value = $request->has('from_value') ? $request->from_value : null;
 		$voucher->category_id = $request->has('category') ? $request->category : null;
 		$voucher->status =$request->status;
@@ -86,12 +84,14 @@ class VouchersController  extends Controller
 			'discount'  => 'required',
 		]);
 
+		//dd($request->expiry);
+
 
 		$coupon->code     =  $request->code; 
 		$coupon->user_id  = \Auth::user()->id;
 		$coupon->amount   = $request->discount;
 		$coupon->type     = $request->type;
-		$coupon->expires  = Helper::getFormatedDate($request->expiry);
+		$coupon->expires  = Helper::getFDate($request->expiry);
 		$coupon->from_value = $request->has('from_value') ? $request->from_value : null;
 		//$coupon->category_id = $request->has('category') ? $request->category : null;
 		$coupon->status =$request->status;
