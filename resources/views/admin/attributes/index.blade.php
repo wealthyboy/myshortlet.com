@@ -118,9 +118,11 @@
                             @foreach($attrs as $key => $attribute)
                                 <div class="parent" value="{{ $attribute->id }}">
                                     <div class="checkbox">
-                                        <label>
+                                        <label >
                                             <input type="checkbox" value="{{ $attribute->id }}" name="selected[]" >
-                                            {{ $attribute->name }}  <a href="{{ route('attributes.edit',['attribute'=>$attribute->id]) }}"><i class="fa fa-pencil"></i> Edit</a> 
+                                            <strong>
+                                            {{ $attribute->name }}
+                                            </strong>    
                                         </label>
                                     </div>   
                                     @include('includes.children',['obj'=>$attribute,'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
