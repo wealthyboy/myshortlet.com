@@ -54,7 +54,6 @@
                                     <input  required="true" name="address" data-msg="" value="{{ isset($property) ? $property->address :  old('address') }}" class="form-control" type="text">
                                     </div>
                                 </div>
-                                
                             </div>
 
                             <div class="row">
@@ -104,31 +103,26 @@
                            <div class="">
                               <div class="row mb-3">
                                  <div  class="col-md-12">
-                                       
-
-                                       <div id="j-drop" class=" j-drop">
-                                          <input accept="image/*"   onchange="getFile(this,'image','Product',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
-                                          <div   class="{{ optional($property)->images ? 'hide' : '' }} upload-text"> 
-                                             <a   class="" href="#">
-                                             <img class="" src="/backend/img/upload_icon.png">
-                                             <b>Click to upload image</b> 
-                                             </a>
-                                          </div>
-                                          <div id="j-details"  class="j-details">
-                                             <div id="{{ $property->id }}" class="j-complete">
-                                                   <div class="j-preview">
-                                                      <img class="img-thumnail" src="{{ $property->image }}">
-                                                      <div id="remove_image" class="remove_image remove-image">
-                                                         <a class="remove-image" data-mode="edit" data-randid="{{ $property->id }}"  data-id="{{ $property->id }}" data-url="{{ $property->image }}" href="#">Remove</a> 
-                                                      </div>
-                                                      <input type="hidden" class="file_upload_input stored_image_url" value="{{ $property->image }}" name="image">
+                                    <div id="j-drop" class=" j-drop">
+                                       <input accept="image/*"   onchange="getFile(this,'image','Product',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
+                                       <div   class="{{ optional($property)->images ? 'hide' : '' }} upload-text"> 
+                                          <a   class="" href="#">
+                                          <img class="" src="/backend/img/upload_icon.png">
+                                          <b>Click to upload image</b> 
+                                          </a>
+                                       </div>
+                                       <div id="j-details"  class="j-details">
+                                          <div id="{{ $property->id }}" class="j-complete">
+                                                <div class="j-preview">
+                                                   <img class="img-thumnail" src="{{ $property->image }}">
+                                                   <div id="remove_image" class="remove_image remove-image">
+                                                      <a class="remove-image" data-mode="edit" data-randid="{{ $property->id }}"  data-id="{{ $property->id }}" data-url="{{ $property->image }}" href="#">Remove</a> 
                                                    </div>
-                                             </div>
+                                                   <input type="hidden" class="file_upload_input stored_image_url" value="{{ $property->image }}" name="image">
+                                                </div>
                                           </div>
                                        </div>
-
-
-
+                                    </div>
                                  </div>
                               </div>
                            </div>

@@ -51,12 +51,16 @@
                         <label class="control-label"></label>
                         <select name="parent_id" class="form-control">
                         <option  value="">--Choose Parent--</option>
+                            
+
                             @foreach($attributes as $attribute)
-                                @if($attr->parent_id == $attribute->id)
-                                    <option class="" value="{{  $attribute->id }}" selected="selected">{{ $attribute->name }} </option>
+                                @if($attr->parent_id ==  $attribute->id )
+                                    <option class="" value="{{ $attribute->id }}" selected="selected">{{ $attribute->name }} </option>                                        
+                                    @include('includes.children_options',['obj'=>$attribute,'space'=>'&nbsp;&nbsp;'])
+
                                 @else
-                                    <option class="" value="{{  $attribute->id }}">{{ $attribute->name }}  </option>
-                                    @include('includes.product_attr',['attribute'=>$attribute])
+                                    <option class="" value="{{ $attribute->id }}" >{{ $attribute->name }} </option>
+                                    @include('includes.children_options',['model' => $attr,'obj'=>$attribute,'space'=>'&nbsp;&nbsp;'])
                                 @endif
                             @endforeach
                         </select>
@@ -81,7 +85,7 @@
                             <div class="upload-text {{ $attr->image !== null  ?  'hide' : '' }}"> 
                                     
                                     <a class="activate-file" href="#">
-                                    <img src="{{ asset('store/img/upload_icon.png') }}">
+                                    <img src="{{ asset('backend/img/upload_icon.png') }}">
                                     <b>Add Image </b> 
                                     </a>
                             </div>
