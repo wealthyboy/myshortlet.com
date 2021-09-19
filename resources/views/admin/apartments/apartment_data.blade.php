@@ -67,7 +67,6 @@
             <div class="">
                 <div class="row mb-3">
                     <div  class="col-md-12">
-                        @if (!isset($apartment))
                         <div id="j-drop" class=" j-drop">
                         <input accept="image/*"  required="true" onchange="getFile(this,'image','Apartment',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
                         <div   class="upload-text"> 
