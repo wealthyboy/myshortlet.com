@@ -1,4 +1,4 @@
-    <h4 class="info-text ">Enter Apartment Details</h4>        
+<h4 class="info-text ">Enter Apartment Details</h4>        
     <div class="row">
         <div class="col-md-8">
             <div class="row">
@@ -8,16 +8,7 @@
                     <input  required="true" name="apartment_name" data-msg="" value="{{ isset($apartment) ? $apartment->name :  old('apartment_name') }}" class="form-control" type="text">
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="form-group label-floating is-ty">
-                        <label class="control-label">Virtual Tour</label>
-                        <input name="virtual_tour"  required="true" value="{{ old('virtual_tour') }}" class="form-control  variation" type="text">
-                        <span class="material-input"></span>
-                    </div>
-                </div>
             </div>
-
-            
 
             <div class="row">
                 <div class="col-md-12">
@@ -74,7 +65,21 @@
         </div>
         <div class="col-md-4">
             <div class="">
-                
+                <div class="row mb-3">
+                    <div  class="col-md-12">
+                        @if (!isset($apartment))
+                        <div id="j-drop" class=" j-drop">
+                        <input accept="image/*"  required="true" onchange="getFile(this,'image','Apartment',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
+                        <div   class="upload-text"> 
+                            <a   class="" href="#">
+                                <img class="" src="/backend/img/upload_icon.png">
+                                <b>Click to upload image</b> 
+                            </a>
+                        </div>
+                        <div id="j-details"  class="j-details"></div>
+                    </div>
+                </div>
+            </div>
             <label>Location </label>
             <div class="well well-sm" style="height: 250px; background-color: #fff; color: black; overflow: auto;">
                 @foreach($locations as $location)
