@@ -101,49 +101,37 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="col-md-4">
-                        <div class="">
-                           <div class="row mb-3">
-                              <div  class="col-md-12">
-                                    @if (!isset($apartment))
-                                    <div id="j-drop" class=" j-drop">
-                                    <input accept="image/*"  required="true" onchange="getFile(this,'image','Product',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
-                                    <div   class="upload-text"> 
-                                       <a   class="" href="#">
-                                          <img class="" src="/backend/img/upload_icon.png">
-                                          <b>Click to upload image</b> 
-                                       </a>
-                                    </div>
-                                    <div id="j-details"  class="j-details"></div>
+                           <div class="">
+                              <div class="row mb-3">
+                                 <div  class="col-md-12">
+                                       
 
-                                    @else
-
-                                    <div id="j-drop" class=" j-drop">
-                                       <input accept="image/*"   onchange="getFile(this,'image','Product',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
-                                       <div   class="{{ optional($apartment)->images ? 'hide' : '' }} upload-text"> 
-                                          <a   class="" href="#">
-                                          <img class="" src="/backend/img/upload_icon.png">
-                                          <b>Click to upload image</b> 
-                                          </a>
-                                       </div>
-                                       <div id="j-details"  class="j-details">
-                                          <div id="{{ $apartment->id }}" class="j-complete">
-                                                <div class="j-preview">
-                                                   <img class="img-thumnail" src="{{ $apartment->image }}">
-                                                   <div id="remove_image" class="remove_image remove-image">
-                                                      <a class="remove-image" data-mode="edit" data-randid="{{ $apartment->id }}"  data-id="{{ $apartment->id }}" data-url="{{ $apartment->image }}" href="#">Remove</a> 
+                                       <div id="j-drop" class=" j-drop">
+                                          <input accept="image/*"   onchange="getFile(this,'image','Product',false)" class="upload_input"   data-msg="Upload  your image" type="file"  name="img"  />
+                                          <div   class="{{ optional($property)->images ? 'hide' : '' }} upload-text"> 
+                                             <a   class="" href="#">
+                                             <img class="" src="/backend/img/upload_icon.png">
+                                             <b>Click to upload image</b> 
+                                             </a>
+                                          </div>
+                                          <div id="j-details"  class="j-details">
+                                             <div id="{{ $property->id }}" class="j-complete">
+                                                   <div class="j-preview">
+                                                      <img class="img-thumnail" src="{{ $property->image }}">
+                                                      <div id="remove_image" class="remove_image remove-image">
+                                                         <a class="remove-image" data-mode="edit" data-randid="{{ $property->id }}"  data-id="{{ $property->id }}" data-url="{{ $property->image }}" href="#">Remove</a> 
+                                                      </div>
+                                                      <input type="hidden" class="file_upload_input stored_image_url" value="{{ $property->image }}" name="image">
                                                    </div>
-                                                   <input type="hidden" class="file_upload_input stored_image_url" value="{{ $apartment->image }}" name="image">
-                                                </div>
+                                             </div>
                                           </div>
                                        </div>
-                                    </div>
-
-                                    @endif
 
 
+
+                                 </div>
                               </div>
                            </div>
-                        </div>
                             
                             <label>Country/State/City </label>
                             <div class="well well-sm" style="height: 250px; background-color: #fff; color: black; overflow: auto;">
