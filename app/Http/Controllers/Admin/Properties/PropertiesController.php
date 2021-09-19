@@ -125,7 +125,7 @@ class PropertiesController extends Controller
         $title     = $id ? $request->apartment_name.'-'.$property->token : $request->apartment_name.'-'.$token;
         $property->name      = $request->apartment_name;
         $property->address   = $request->address;
-        $property->image     = $request->room_images[0];
+        $property->image     = $request->image;
         $property->type      = $request->type;
         $property->description          = $request->description;
         $property->allow_cancellation   =  $request->allow_cancellation ? 1 : 0;
