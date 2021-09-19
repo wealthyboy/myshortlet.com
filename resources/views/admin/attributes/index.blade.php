@@ -51,7 +51,7 @@
                             <label class="control-label"></label>
                             <select name="parent_id" class="form-control">
                             <option  value="" selected="">--Choose Parent--</option>
-                                @foreach($attributes as $attribute)
+                                @foreach($parents  as $attribute)
                                     <option class="" value="{{ $attribute->id }}" >{{ $attribute->name }} </option>
                                     @include('includes.product_attr',['attributes'=>$attribute])
                                 @endforeach
@@ -112,18 +112,22 @@
                     @csrf
                     @method('DELETE')
                     <div class="material-datatables">
-                        @foreach($attributes as $attribute)
+                        @foreach($attributes as $key => $attrs)
+                        <h3 class="text-capitalize">{{ $str::replaceFirst('_', ' ', $key) }}</h3>
                         <div class="well well-sm" style="height: 250px; background-color: #fff; color: black; overflow: auto;">
+                            @foreach($attrs as $key => $attribute)
+                                <div class="parent" value="{{ $attribute->id }}">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="{{ $attribute->id }}" name="selected[]" >
+                                            {{ $attribute->name }}  <a href="{{ route('attributes.edit',['attribute'=>$attribute->id]) }}"><i class="fa fa-pencil"></i> Edit</a> 
+                                        </label>
+                                    </div>   
+                                    @include('includes.children',['obj'=>$attribute,'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
+                                </div>
+                            @endforeach  
 
-                            <div class="parent" value="{{ $attribute->id }}">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="{{ $attribute->id }}" name="selected[]" >
-                                        {{ $attribute->name }}  <a href="{{ route('attributes.edit',['attribute'=>$attribute->id]) }}"><i class="fa fa-pencil"></i> Edit</a> 
-                                    </label>
-                                </div>   
-                                @include('includes.children',['obj'=>$attribute,'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
-                            </div>
+
                         </div>
 
                         @endforeach  

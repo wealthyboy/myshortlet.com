@@ -9,6 +9,8 @@ use App\Http\Helper;
 use App\Models\Activity;
 use App\Models\User;
 use App\Models\Attribute;
+use  Illuminate\Support\Str;
+
 
 class AttributesController extends Controller
 {
@@ -23,9 +25,12 @@ class AttributesController extends Controller
      */
     public function index(Request $request)
     {
-        $attributes = Attribute::parents()->get(); 
+        $attributes = Attribute::parents()->get()->groupBy('type'); 
+        $parents = Attribute::parents()->get(); 
         $helper = new Helper();
-        return view('admin.attributes.index',compact('attributes','helper'));
+        $str =new  Str;
+
+        return view('admin.attributes.index',compact('str','attributes','parents','helper'));
     }
 
 
