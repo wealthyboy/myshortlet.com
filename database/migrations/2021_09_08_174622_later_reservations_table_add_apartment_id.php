@@ -14,8 +14,10 @@ class LaterReservationsTableAddApartmentId extends Migration
     public function up()
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->integer('apartment_id')->nullable();
-            $table->string('currency')->nullable();
+           if (!Schema::hasColumn('apartment_id')) {
+               $table->integer('apartment_id')->nullable();
+               $table->string('currency')->nullable();
+            }
         });
     }
 
