@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Properties;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Apartment;
+use App\Models\Property;
 use App\Models\Location;
 use App\Models\Attribute;
 use App\Models\Room;
@@ -34,8 +34,8 @@ class PropertiesController extends Controller
     public function index()
     {   
         $user = \Auth::user();
-        $apartments = Apartment::where('user_id', $user->id)->latest()->simplePaginate(5);
-        return view('properties.index',compact('apartments'));
+        $properties = Property::where('user_id', $user->id)->latest()->simplePaginate(20);
+        return view('properties.index',compact('properties'));
     }
 
     /**
@@ -45,7 +45,6 @@ class PropertiesController extends Controller
      */
     public function create(Request $request)
     {   
-        
         
         $step = $request->step;
         $type = $request->type;
@@ -99,7 +98,6 @@ class PropertiesController extends Controller
         $user  = $request->user();
         
 
-       // dd($request->all());
 
         $ap = Apartment::latest()->first();
         $token =  null !== $ap ? mt_rand() + $ap->id : mt_rand(); 

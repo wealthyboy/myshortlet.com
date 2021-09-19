@@ -1,0 +1,39 @@
+@import "scss/variables";
+@import "scss/mixins";
+@import "scss/core-bootstrap";
+
+// Core Components
+@import "scss/buttons";
+@import "scss/checkboxes";
+@import "scss/radios";
+@import "scss/forms";
+@import "scss/input-group";
+@import "scss/images";
+@import "scss/navbar";
+@import "scss/alerts";
+@import "scss/headers";
+@import "scss/type";
+@import "scss/tabs";
+@import "scss/tooltip";
+@import "scss/popover";
+@import "scss/dropdown";
+@import "scss/togglebutton";
+@import "scss/ripples";
+@import "scss/footers";
+@import "scss/sidebar-and-main-panel";
+@import "scss/fixed-plugin";
+@import "scss/tables";
+@import "scss/misc";
+@import "scss/social-buttons";
+
+@import "scss/cards";
+@import "scss/cards/card-stats";
+@import "scss/cards/card-profile";
+@import "scss/cards/card-plain";
+
+//plugin scss
+@import "scss/plugins/animate";
+@import "scss/plugins/chartist";
+@import "scss/plugins/perfect-scrollbar";
+
+@import "scss/responsive";

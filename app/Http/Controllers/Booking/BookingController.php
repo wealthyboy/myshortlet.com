@@ -35,6 +35,8 @@ class BookingController extends Controller
             return back();
         }
 
+		//dd($request->all());
+
         $date  = explode("to",$request->date);
         $date1 = trim($date[0]);
         $date2 = trim($date[1]);
@@ -48,8 +50,8 @@ class BookingController extends Controller
         $to                   = $date2->format('l') .' '. $date2->format('d') . ' ' .$date2->format('F').' '.$date2->isoFormat('Y');
         $apartment_quantities = array_keys(array_filter($request->apartment_quantity));
         $apartments           = Apartment::whereIn('uuid', $apartment_quantities)->get(); 
-		$apartment_ids        = Apartment::whereIn('uuid', $apartment_quantities)->pluck('id')->toarray();   
-        $booking_details      = ['currency' => $property->currency, 'apartment_ids' => $apartment_ids, 'date_range' => $request->date, 'from' => $from, 'to' => $to, 'nights' => $nights, 'total' => $apartments->sum('price'), 'apartment_quantity' => $request->apartment_quantity];		
+		$property_id          = $request->property_id;   
+        $booking_details      = ['property_id' => $property_id,'currency' => $property->currency, 'date_range' => $request->date, 'from' => $from, 'to' => $to, 'nights' => $nights, 'total' => $apartments->sum('price'), 'apartment_quantity' => $request->apartment_quantity];		
 		return view('book.index', compact('property','apartments','booking_details'));
     }
 

@@ -1,172 +1,144 @@
-@extends('layouts.app')
+@extends('layouts.listing')
 @section('content')
-<section class="pb-8 page-title shadow">
-   <div class="container-fluid ">
-   <div class="text-center bg-light">
-   <div class="col-md-11 p-lg-5 mx-auto my-5">
-      <h1 class="display-4 font-weight-normal">Find deals on Apartments.</h1>
-      <form  action="/search" method="GET">
-         <div class="form-row">
-            <div class="col-md-4">
-               <div class="form-group mb-4">
-                  <div class="input-group input-group-lg">
-                     <div class="input-group-prepend ">
-                        <span
-                           class="input-group-text  border-0 text-muted fs-18"
-                           id="inputGroup-sizing-lg"
-                           >
-                        <i class="fas fa-location"></i>
-                        </span>
-                     </div>
-                     <input
-                        type="text"
-                        class="form-control  shadow-none fs-13"
-                        id="location"
-                        name="location"
-                        required="true"
-                        placeholder="Where are you going"
-                        autocomplete="off"
-                     />
-                  </div>
-               </div>
+<div class="clearfix"></div>
+<div class="d-flex mt-5 justify-content-center align-items-center" >
+   <div class="container">
+      <div class="row">
+      <div class="col-md-12 ml-auto mr-auto">
+         <div class="">
+            <div class="mt-5">
+               @include('_partials.search_form')
             </div>
-            <div class="col-md-3">
-               <div class="form-group mb-4">
-                  <div class="input-group input-group-lg">
-                     <div class="input-group-prepend">
-                        <span
-                           class="input-group-text  border-0 text-muted fs-18"
-                           id="inputGroup-sizing-lg"
-                           >
-                        <i class="fal fa-calendar-week"></i>
-                        </span>
-                     </div>
-                     <input
-                        type="text"
-                        class="form-control  shadow-none fs-13"
-                        id="flatpickr-input-f"
-                        name="check_in_check_out"
-                        placeholder="Check in-Check out"
-                        />
-                  </div>
-               </div>
-            </div>
-            <div class="col-md-3">
-               <persons />
-            </div>
-            <div class="col-md-2">
-               <button type="submit" class="btn btn-block btn-primary">Search</button>
-            </div>
-         </div>
-      </form>
-   </div>
-</div>
-      <div class="row justify-content-end mb-5">
-         <div class="col-lg-3 ">
-            <div class="primary-sidebar-inner">
-               
-               <section class="">
-                  <h4 class="fs-22 text-heading mb-6"></h4>
-                  @if ( $attributes->count() )
-                  @foreach( $attributes as $attribute )
-                  <h3 class="card-title mb-0 text-heading fs-22 lh-15">{{ $attribute->name }}</h3>
-                  @foreach($attribute->children->sortBy('name') as $child)
-                  <div class="">
-                     <ul class="list-group list-group-no-border">
-                        <li class="list-group-item px-0 pt-0 pb-2">
-                           <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" name="features[]" id="{{ $child->id }}">
-                              <label class="custom-control-label" for="{{ $child->id }}">{{ $child->name }}</label>
-                           </div>
-                        </li>
-                     </ul>
-                  </div>
-                  @endforeach
-                  @endforeach
-                  @endif
-               </section>
-            </div>
-         </div>
-         <div class="col-lg-9 mb-8 mb-lg-0 order-1 order-lg-2">
-            <div class="row align-items-sm-center mb-4">
-               <div class="col-md-6">
-                  <h2 class="fs-15 text-dark mb-0">We found <span class="text-primary">45</span> properties
-                     available for
-                     you
-                  </h2>
-               </div>
-               <div class="col-md-6 mt-4 mt-md-0">
-                  <div class="d-flex justify-content-md-end align-items-center">
-                     <div class="input-group border rounded input-group-lg w-auto bg-white mr-3">
-                        <label class="input-group-text bg-transparent border-0 text-uppercase letter-spacing-093 pr-1 pl-3" for="inputGroupSelect01"><i class="fas fa-align-left fs-16 pr-2"></i>Sortby:</label>
-                        <select class="form-control border-0 bg-transparent shadow-none p-0 selectpicker sortby" data-style="bg-transparent border-0 font-weight-600 btn-lg pl-0 pr-3" id="inputGroupSelect01" name="sortby">
-                           <option selected>Top Selling</option>
-                           <option value="1">Most Viewed</option>
-                           <option value="2">Price(low to high)</option>
-                           <option value="3">Price(high to low)</option>
-                        </select>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            @if ($properties->count())
-               @foreach($properties as $property)
-                  <div class="" data-animate="fadeInUp">
-                     <div class="row mb-5">
-                        <div class="col-sm-3">
-                           <a class="" href="/property/{{ $property->slug }}">
-                              <img src="{{ $property->image_m }}" class="card-img" alt="{{ $property->name }}">
-                           </a>
-                        </div>
-                        <div class="col-sm-9">
-                           <div>
-                              <div class="" style="">{{ $property->type }}</div>
-                              <a href="/property/{{ $property->slug }}" class="fs-16 lh-2 text-dark hover-primary d-block">
-                                 <h2 class="my-0">{{ $property->name }}</h2>
-                              </a>
-                              <button aria-label="Add listing to a list" type="button" class="_1mm2a5z"><span class="_e296pg"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style="display: block; fill: transparent; height: 24px; width: 24px; stroke: rgb(34, 34, 34); stroke-width: 2; overflow: visible;"><path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"></path></svg></span></button>
-                           </div>
-                           
-                           @if( $property->type == 'single')
-                           <div>
-                              <span class=""> guests</span>
-                              <span aria-hidden="true"> · </span>
-                              <span class="">1 bedroom</span>
-                              <span aria-hidden="true"> · </span>
-                              <span class="">1 bed</span>
-                              <span aria-hidden="true"> · </span>
-                              <span class="">1.5 baths</span>
-                           </div>
-                           @endif
-
-                           <div>
-                              <span class="">Kitchen</span>
-                              <span aria-hidden="true"> · </span>
-                              <span class="">Air conditioning</span>
-                           </div>
-
-                           <div>
-                              <span class="">Free conditioning</span>
-                           </div>
-
-                           <div class="">
-                              <div>4.72 (29 reviews)</div>
-
-                              <div>$20 - $20 per night</div>
-                           </div>
-                     
-                        </div>
-                  </div>
-               @endforeach
-            @else
-            <div class="col-lg-9 main-content">No Apartments</div>
-            @endif
-            <nav class="pt-6">
-            </nav>
          </div>
       </div>
+      </div>
    </div>
-</section>
+</div>
+<div class="container-fluid">
+   <div class="row">
+      
+      <div class="col-md-3 ">
+         <div class="card">
+            <div class="text-left pl-3">
+               @if ( $attributes->count() )
+                  @foreach( $attributes as $key => $attribute )
+                     <div class="text-capitalize ">{{ $str::replaceFirst('_', ' ', $key) }}</div>
+                     @foreach($attribute->sortBy('name') as $child)
+                        <div class="m-0 border-bottom">
+                           <div class="checkbox">
+                              <label  id="box50" class="checkbox-label">
+                              <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
+                                 <span class="checkbox-custom rectangular"></span>
+                                 <span class="checkbox-label-text mt-1">{{$child->name }}</span> 
+                              </label>
+                           </div> 
+                        </div>
+                     @endforeach
+                  @endforeach
+               @endif
+               
+            </div>
+         </div>
+         
+      </div>
+      <div class="col-md-9">
+         @if ( $properties->count())
+         @foreach( $properties as $property)
+            <div class="card position-relative">
+               <div class="row no-gutters">
+                  <div class="col-md-3 position-relative">
+                     <div class="">
+                        <a href="/apartment/{{ $property->slug }}">
+                           <img class="img img-raised img-fluid" src="{{ $property->image_m }}">
+                        </a>
+                        <div class="fav-icon position-absolute">
+                           <a href="#"  title="Wishlist">
+                              <svg  class="">
+                                 <use xlink:href="#favorites-outline"></use>
+                              </svg>
+                              <svg  class="d-none">
+                                 <use xlink:href="#favorites"></use>
+                              </svg>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-6 pl-3">
+                     <h6 class="card-category text-info">{{ $property->type }}</h6>
+                     <h3 class="card-title">
+                        <a href="/apartment/{{ $property->slug }}">{{ $property->name }}</a>
+                     </h3>
+                     <div class="">
+                        <samll class=""> <a class="p-0" href="/apartment/{{ optional($property)->slug }}"> <i class="material-icons">location_on</i> {{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
+                     </div>
+
+                     <div>
+                        <span class="">Kitchen</span>
+                        <span aria-hidden="true"> · </span>
+                        <span class="">Air conditioning</span>
+                     </div>
+
+                     @if( $property->type == 'single')
+                     <div>
+                        <span class="">4 guests</span>
+                        <span aria-hidden="true"> · </span>
+                        <span class="">1 bedroom</span>
+                        <span aria-hidden="true"> · </span>
+                        <span class="">1 bed</span>
+                        <span aria-hidden="true"> · </span>
+                        <span class="">1.5 baths</span>
+                     </div>
+                     @endif
+
+                     
+                     
+                  </div>
+                  <div class="col-md-3  d-flex justify-content-start align-items-end pl-3">
+                     <div>
+                        <p>
+                           @if( $property->apartments->count() && $property->apartments->count() >  1  )
+                           <span class="text-heading lh-15 font-weight-bold fs-17">From {{ $property->currency }}{{ optional($property->single_room)->price }} </span>
+                           @else
+                           <span class="text-heading lh-15 font-weight-bold fs-17">{{ $property->currency }}{{ optional(optional($property->apartments)->first())->price }}</span>
+                           @endif
+                           <span class="text-gray-light">/ night</span>
+                        </p>
+                        @if ($property->allow_cancellation)
+                        <div class=""><span class="">FREE CANCELLATION</span></div>
+                        @endif
+                        <a href="/apartment/{{ $property->slug }}" class="btn btn-primary btn-round">
+                           Check Availability  <i class="material-icons">arrow_forward_ios</i>
+                        </a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         @endforeach
+         <div id="pagination" class=" text-center mb-20 md-offset-1">
+               @if(!empty($properties->hasMorePages()))
+                  <a href="{{ $properties->nextPageUrl() }}" id="load_more" class="btn btn-primary loadmore btn-loadmore load_more mt-4 mb-2">
+                     <span class="spinner-grow spinner-grow-md d-none"></span>
+                     Load More  <i class="material-icons">arrow_forward_ios</i>
+                  </a>
+               @endif
+         </div>
+         @else
+            <div class="no-apartments">
+               <div class=" d-flex justify-content-center fa-2x"  >
+                  <div class="text-center pb-3">
+                     <i class="material-icons display-1">apartment</i>
+                     <p class="bold">You have not added any property.</p>
+                  </div>
+               </div>
+            </div>
+         @endif
+      </div>
+   </div>
+</div>
+
+@include('_partials.svg')
+
+   
 @endsection
 @section('page-scripts')
 @stop

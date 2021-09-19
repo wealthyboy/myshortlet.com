@@ -1,7 +1,7 @@
 {
     "/js/services_js.js": "/js/services_js.js",
     "/css/services_style.css": "/css/services_style.css",
+    "/css/account_styles.css": "/css/account_styles.css",
     "/backend/css/admin.css": "/backend/css/admin.css",
-    "/backend/js/dashboard.js": "/backend/js/dashboard.js",
-    "/js/app.js": "/js/app.js"
+    "/backend/js/dashboard.js": "/backend/js/dashboard.js"
 }

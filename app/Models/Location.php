@@ -27,6 +27,12 @@ class Location extends Model
 	}
 
 
+    public function attributes()
+    {
+        return $this->belongsToMany(Attribute::class);
+	}
+
+
     public function  properties()
     {
         return $this->belongsToMany(Property::class);

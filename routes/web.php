@@ -16,9 +16,7 @@ Route::group(['middleware' => 'admin','prefix' => 'admin'], function(){
 
     Route::resource('permissions','Admin\Permission\PermissionsController',['names'=>'permissions']);
 
-    Route::resource('orders','Admin\Orders\OrdersController',['names' => 'admin.orders']);
-    Route::get('orders/invoice/{id}','Admin\Orders\OrdersController@invoice')->name('order.invoice');
-    Route::post('update/ordered_product/status','Admin\Orders\OrdersController@updateStatus');
+    Route::resource('reservations','Admin\Reservations\ReservationsController',['names' => 'admin.reservations']);
     Route::post('upload','Admin\Uploads\UploadsController@store');
     Route::get('delete/upload','Admin\Uploads\UploadsController@destroy');
 
@@ -53,9 +51,8 @@ Route::group(['middleware' => 'admin','prefix' => 'admin'], function(){
     Route::resource('properties','Admin\Properties\PropertiesController',['names' => 'admin.properties']);
     Route::delete('room/{id}/delete','Admin\Rooms\RoomsController@destroy');
 
-    // Route::delete('variation/delete/{id}',  'Admin\Product\ProductController@destroyVariation');
-    // Route::get('related/products',     'Admin\Product\ProductController@getRelatedProducts');
-    // Route::delete('delete/{id}/related_products',     'Admin\Product\ProductController@destroyRelatedProduct');
+    Route::resource('category','Admin\Category\CategoryController',['names'=>'category']);
+    Route::post('category/delete/image','Admin\Category\CategoryController@undo');
 
   
     /* INFORMATION */
@@ -103,6 +100,13 @@ Route::group(['middleware' => 'currencyByIp'], function(){
 });
 
 
+Route::get('/mailable', function () {
+    $user_reservation = App\Models\UserReservation::find(2);
+    $settings =  App\Models\SystemSetting::first();
+    return new App\Mail\ReservationReceipt($user_reservation, $settings);
+});
+
+
 Route::get('account', 'Account\AccountController@index');
 Route::resource('profile', 'Profile\ProfileController',['names' => 'profiles']);
 Route::post('password/reset/link',            'Auth\ForgotPasswordController@sendResetLinkEmail');
@@ -111,12 +115,17 @@ Route::post('reset/password',  'Auth\ForgotPasswordController@reset');
 Route::get('change/password',  'ChangePassword\ChangePasswordController@index');
 Route::post('guests',           'Guests\GuestsController@store');
 Auth::routes();
+Route::get('register/listings',   'Auth\RegisterMerchantController@create');
+Route::post('register/listings',   'Auth\RegisterMerchantController@store');
+
+
+
 Route::get('login/{service}',           'Auth\SocialLoginController@redirect');
 Route::get('login/{service}/callback',  'Auth\SocialLoginController@callback');
 Route::post('login',                    'Auth\LoginController@login');
 
-Route::get('properties/{location}',     'Apartments\ApartmentsController@index');
-Route::get('property/{property}',       'Apartments\ApartmentsController@show');
+Route::get('apartments/{location}',     'Apartments\ApartmentsController@index');
+Route::get('apartment/{property}',       'Apartments\ApartmentsController@show');
 Route::get('add/apartment',             'Properties\PropertiesController@addApartment');
 Route::post('check/apartment/availablility',     'Apartments\ApartmentsController@checkAvailability');
 
@@ -127,12 +136,17 @@ Route::post('book/coupon',    'Booking\BookingController@coupon');
 
 
 
-Route::resource('properties',   'Properties\PropertiesController',['name' => 'properties']);
+
+
 Route::get('saved',   'SavedItems\SavedItemsController@index');
-Route::get('reservations',   'Reservation\ReservationController@index');
+Route::resource('reservations',   'Reservation\ReservationController',['names' => 'reservations']);
+
+
 
 
 Route::get('get/location/{id}', 'Properties\PropertiesController@getLocation');
+Route::resource('properties',   'Properties\PropertiesController',['name' => 'properties']);
+
 Route::get('/search',         'Apartments\ApartmentsController@search');
 Route::get('listings', 'Listings\ListingsController@index');
 

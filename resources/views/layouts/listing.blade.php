@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
    <head>
@@ -17,6 +16,8 @@
       <link rel="apple-touch-icon" href="/img/favicon-96x96.png">
       <!-- CSS -->
       <!-- Main CSS File -->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
       <link href="/css/services_style.css?version={{ str_random(6) }}" rel="stylesheet">
       @yield('page-css')
       <meta property="og:site_name" content="myshorlet.com">
@@ -38,105 +39,123 @@
          }
       </script>
    </head>
+
    <body>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-         <a class="navbar-brand" href="/">MyShortLet</a>
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-         </button>
-         <div class="collapse navbar-collapse" id="navbar">
-            <ul class="nav navbar-nav ml-auto">
-               
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-               <div class="text-white"> Already a partner? </div>
-               <a href="/login" class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</a>
-            </form>
-         </div>
-      </nav>
-      <main role="main">
-         @yield('content')
-      </main>
-      <footer class="footer">
-         <div class="footer-middle">
-            <div class="container-fluid">
-               <div class="row">
-                  <div class="col-lg-12 col-md-8">
-                     <div class="row pt-3">
-                        @foreach($footer_info as $info)
-                        <div class="col-sm-3 col-6 col-lg-3">
-                           <div class="widget">
-                              <h2 class="widget-title">{{ title_case($info->title) }}</h2>
-                              @if($info->children->count())
-                              <ul class="">
-                                 @foreach($info->children as $info)
-                                 <li>
-                                    <a href="{{ $info->link }}">
-                                    {{ $info->title }}
-                                    </a>
-                                 </li>
-                                 @endforeach
-                              </ul>
-                              @endif
+      <div id="app"  class="app">
+         <nav class="navbar  fixed-top navbar-expand-lg " id="sectionsNav">
+            <div class="container">
+               <div class="navbar-translate">
+               <a href="/" class="navbar-brand">
+
+                  <div class="logo-small">
+                         <img src="{{ $system_settings->logo_path() }}" class="img-fluid">
+                  </div>
+               </a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="navbar-toggler-icon"></span>
+                  <span class="navbar-toggler-icon"></span>
+                  <span class="navbar-toggler-icon"></span>
+               </button>
+               </div>
+               <div class="collapse navbar-collapse">
+                  <ul class="navbar-nav ml-auto">
+                     <li class="active nav-item">
+                     <a href="javascript:;" class="nav-link">
+                        <i class="material-icons">gite</i>
+       
+                        Become a host
+                     </a>
+                     </li>
+                     <li class="nav-item">
+                       <a href="javascript:;" class="nav-link">
+                          <i class="material-icons">attach_money</i>
+                       </a>
+                     </li>
+                     @guest
+
+                     <li class="nav-item">
+                        <a href="/login" class="nav-link">
+                           <i class="material-icons">login</i>
+                           Login
+                        </a>
+                     </li>
+                     @endguest
+
+                     @auth
+                     <li class="dropdown nav-item">
+                        <a href="#" class="profile-photo dropdown-toggle nav-link" data-toggle="dropdown">
+                           <div class="profile-photo-small">
+                              <img src="/images/svg/baseline_person_outline_black_24dp.png" alt="Circle Image" class="rounded-circle img-fluid">
                            </div>
-                           <!-- End .widget -->
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                           <a href="/account" class="dropdown-item">Account</a>
+                           <a href="/profile" class="dropdown-item">Profile</a>
+                           <a href="/bookings" class="dropdown-item">Bookings</a>
+                           <a href="#" onclick="event.preventDefault();
+                                    document.getElementById('logout-form-nav').submit();"
+                                     class="dropdown-item">
+                              <i class="material-icons">logout</i>
+    
+                              Sign out
+                           </a>
+                           <form id="logout-form-nav" action="/logout" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+
                         </div>
-                        <!-- End .col-sm-6 -->
-                        @endforeach
-                     </div>
-                     <!-- End .row -->
-                  </div>
-                  <!-- End .col-lg-9 -->
+                     </li>
+                     @endauth
+
+                  </ul>
                </div>
-               <!-- End .row -->
             </div>
-            <!-- End .container -->
+         </nav>
+         
+         <div class="main  index-page">
+            @yield('content')
          </div>
-         <!-- End .footer-middle -->
-         <section class="footer-widget-area">
-            <div class="container">
-               <div class="row">
-                  <div class="footer-widget col-5 col-lg-6  mb-lg-0 mb-3">
-                     <h5 class=" widget-title  text-uppercase ">Follow Us</h5>
-                     <div class="social-icons">
-                        <a  href="{{ $system_settings->facebook_link }}"><i class="fab fa-facebook-f fa-2x mr-5"></i></a>
-                        <a  href="{{  $system_settings->instagram_link }}"><i class="fab fa-instagram fa-2x mr-5"></i></a>
-                        <a  href="{{  $system_settings->twitter_link}} "><i class="fab fa-twitter fa-2x"></i></a>
-                     </div>
-                  </div>
-                  <div class="footer-widget  col-7  col-lg-6 mb-lg-0 mb-3">
-                     <h5 class="widget-title text-uppercase">Payments</h5>
-                     <ul class="payment-icons  icons">
-                        <li class="mastercard">
-                           <img   src="{{ asset('img/business.png') }}" alt="Master card" /> 
+         <footer class="bg-dark pt-8 pb-6 footer text-muted">
+         <div class="container container-xxl">
+            <div class="row">
+               @foreach($footer_info as $info)
+               <div class="col-md-6 col-lg-2 mb-6 mb-md-0">
+                  <h4 class="text-white fs-16 my-4 font-weight-500">{{ title_case($info->title) }}</h4>
+                  @if($info->children->count())
+                     <ul class="list-group list-group-flush list-group-no-border">
+                        @foreach($info->children as $info)
+                        <li class="list-group-item bg-transparent p-0">
+                           <a href="home-01.html#" class="text-muted lh-26 font-weight-500 hover-white">{{ $info->title }}</a>
                         </li>
-                        <li class="visa">
-                           <img  src="{{ asset('img/visa.png') }}" alt="visa card" />
-                        </li>
-                        <li class="verve">
-                           <img  src="{{ asset('img/verve1.png') }}" alt="verve card" /> 
-                        </li>
+                        @endforeach
                      </ul>
-                  </div>
+                  @endif
+
+               </div>
+               @endforeach
+            </div>
+            <div class="mt-0 mt-md-10 row">
+               <div class="col-md-12 text-center">
+                  <p class="">© Copyright <a href="{{ Config('app.url') }}"> {{ Config('app.name') }}</a>   {{ date('Y') }}. All rights reserved.  
+                     @if ( auth()->check() && auth()->user()->isAdmin() )
+                     <a target="_blank" href="/admin" >Go to Admin</a>
+                     @endif 
+                  </p>
                </div>
             </div>
-         </section>
-         <!--Footer Copyright Bar-->
-         <section class="footer-bottom-area bg--primary">
-            <div class="container">
-               <div class="row">
-                  <div class="col-md-12 text-center">
-                     <p class="">© Copyright <a href="{{ Config('app.url') }}"> {{ Config('app.name') }}</a>   {{ date('Y') }}. All rights reserved.  
-                        @if ( auth()->check() && auth()->user()->isAdmin() )
-                        <a target="_blank" href="/admin" >Go to Admin</a>
-                        @endif 
-                     </p>
-                  </div>
-               </div>
-            </div>
-         </section>
+         </div>
       </footer>
+      </div>
+
+      <script src="/js/popper.min.js" type="text/javascript"></script>
       <script src="/js/services_js.js"></script>
+      @yield('page-scripts')    
+      <script type="text/javascript">
+        @yield('inline-scripts')
+      </script>
+  
    </body>
+
 </html>
 

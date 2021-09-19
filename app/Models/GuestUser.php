@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class GuestUser extends Model
 {
     use HasFactory;
+
+    
+	public function fullname() { 
+		return ucfirst($this->name) . ' '. ucfirst($this->last_name);
+	}
 }

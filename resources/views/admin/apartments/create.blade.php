@@ -29,16 +29,31 @@
                </div>
                <div class="tab-pane" id="Cancelation">
                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="card-content">
+                           <div class="form-group">
+                              <label class="label-control">Check in iime</label>
+                              <input type="text" required="true" name="check_in_time" class="form-control timepicker" value="14:00"/>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                       <div class="card-content">
+                           <div class="form-group">
+                              <label class="label-control">Check out Time</label>
+                              <input name="check_out_time"  required="true" type="text" class="form-control timepicker" value="14:00"/>
+                           </div>
+                        </div>
+                     </div>
                      <div class="col-md-12 mt-3 pr-5 ">
-                        <h5>Cancellation  </h5>
+                        <h4 class="card-title">Cancellation</h4>
+
                         <div class="togglebutton cancel form-inline">
                            <label>
                            <input  name="allow_cancellation" id="allow_cancellation"  value="1" type="checkbox" >
                            Allow Cancellation 
                            </label>
-                           <div class="form-group ml-5">
-                                 <input name="cancellation_fee"  type="number"  class="form-control "  placeholder="Percentage discount   (Optional)" /> 
-                           </div>
+                           
                         </div>
                      </div>
                      <div class="col-sm-7  cancellation-message  d-none  {{ isset($apartment) &&  $apartment->allow_cancellation ? '' : ''}} ">
@@ -48,55 +63,26 @@
                         </div>
                      </div>
 
-                                    
-                     <div class="col-md-12 mt-3 pr-5 ">
-                        <h5>Rules </h5>
-                        @foreach($rules as $rule)
-                           <div class="togglebutton">
-                              <label>
-                              <input   
-                                 name="attribute_id[]"  value="{{ $rule->id }}" type="checkbox" >
-                                 {{ $rule->name }} 
-                              </label>
-                           </div>
-                        @endforeach  
-                     </div>
-
                      <div class="col-md-12 mt-1 pr-5 ">
-                        <h5>Facilities </h5>
-                        @foreach( $facilities as $facility )
-                           <div>{{ $facility->name }}</div>                       
-                           @foreach($facility->children->sortBy('name') as $child)
+                        @foreach( $attributes as $attribute )
+                           <div>{{ $attribute->name }}</div>                       
+                           @foreach($attribute->children->sortBy('name') as $child)
                            <div class="mt-2 mb-2">
                               <div class="togglebutton">
                                     <label>
                                        <input   
-                                          name="facility_id[]"  value="{{ $child->id }}" type="checkbox" 
+                                          name="attribute_id[]"  value="{{ $child->id }}" type="checkbox" 
                                        >
-                                    {{ $child->name }}
-                              </label>
+                                     {{ $child->name }}
+                                    </label>
+                                    @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => 'Attribute','url' => 'attribute'])
                               </div>
                            </div>
                            @endforeach
                         @endforeach
                      </div>
 
-                     <div class="col-md-12 mt-1 pr-3">
-                           <h5>Extra Services </h5>
-                           @foreach($extra_services as $extra_service)
-                           <div class="mt-2 mb-2">
-                              <div class="togglebutton form-inline">
-                                 <label>
-                                 <input  
-                                    class="extra_services"   
-                                    name="attribute_id[]"  value="{{ $extra_service->id }}" type="checkbox" >
-                                 {{ $extra_service->name }}                        
-                                 </label>
-                                 
-                              </div>
-                           </div>
-                           @endforeach  
-                     </div>
+
                   </div>
                </div>
                <div class="tab-pane" id="ProductVariations">
@@ -118,24 +104,19 @@
                         <div class="col-md-12">
                            <input name="has_more_room"     value="1"   class="" type="hidden">
                            <input name="new_room"     value="1"   class="" type="hidden">  
-                           <div class="col-md-4">
-                              <div class="form-group label-floating">
-                                 <label class="control-label">From Date Available</label>
-                                 <input name="single_room_avaiable_from"  required="true" value="" class="form-control  datepicker" type="text">
-                              </div>
-                           </div>
                            
-                           <div class="col-md-4">
+                           
+                           <div class="col-md-3">
                               <div class="form-group">
                                  <select  name="single_room_number" name="bedrooms" id="bedrooms" class="form-control  bedrooms">
                                     <option value="" selected>Choose Bedrooms</option>
-                                    @for ($i = 1; $i< 5; $i++) 
+                                    @for ($i = 1; $i< 7; $i++) 
                                     <option value="{{ $i }}"> {{ $i }}</option>
                                     @endfor 
                                  </select>
                               </div>
                            </div>
-                           <div class="col-md-4">
+                           <div class="col-md-3">
                               <div class="form-group">
                                  <select name="single_room_toilets" id="children" class="form-control">
                                     <option  value="" selected>Choose Toilets</option>
@@ -145,13 +126,13 @@
                                  </select>
                               </div>
                            </div>
-                           <div class="col-md-6">
+                           <div class="col-md-3">
                               <div class="form-group label-floating is-empty">
                                  <label class="control-label">Max Adults</label>
                                  <input name="single_room_max_adults"  required="true" value="" class="form-control   variation" type="number">
                               </div>
                            </div>
-                           <div class="col-md-6">
+                           <div class="col-md-3">
                               <div class="form-group label-floating is-empty">
                                  <label class="control-label">Max Children</label>
                                  <input name="single_room_max_children"  required="true" value="" class="form-control   variation" type="number">
@@ -177,23 +158,23 @@
                               </div>
                            </div>
                            <div class="col-md-12 bed mb-5">
-                              @if ($bedrooms->count())
-                                 @foreach($bedrooms as $key =>  $parent)
-                                 <div class="bedroom-{{ $key + 1 }} d-none mb-2">
+                           @if ($bedrooms->count())
+                              @foreach($bedrooms as $key =>  $parent)
+                                    <div class="bedroom-{{ $key + 1 }} d-none mb-2">
                                     <div class="mb-2">{{ $parent->name }} </div>
-                                    @foreach($parent->children as $bedroom)
-                                    <label for="bedroom-{{ $bedroom->id }}-{{ $counter }}" class="radio-inline">
-                                    <input  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $counter }}" name="{{ $parent->slug }}" type="radio" name="optradio">{{ $bedroom->name }}
-                                    </label>
-                                    @endforeach
-                                 </div>
-                                 @endforeach
-                              @endif
+                                       @foreach($parent->children as $bedroom)
+                                       <label for="bedroom-{{ $bedroom->id }}-{{ $counter }}" class="radio-inline">
+                                          <input  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $counter }}" name="{{ $parent->slug }}" type="radio" name="optradio">{{ $bedroom->name }}
+                                       </label>
+                                       @endforeach
+                                    </div>
+                              @endforeach
+                           @endif
                            </div>
                            <div class="clearfix"></div>
                            <div class="col-sm-12">
                               <div id="j-drop"  class="j-drop">
-                                 <input accept="image/*"   onchange="getFile(this,'room_images[]')" class="upload_input"  multiple="true"   type="file" id="upload_file_input" name="product_image"  />
+                                 <input accept="image/*" required="true"  data-msg="Upload  at least 5 images"   onchange="getFile(this,'room_images[]')" class="upload_input"  multiple="true"   type="file" id="upload_file_input" name="product_image"  />
                                  <div   class=" upload-text  {{ $counter }}"> 
                                     <a  class="" href="#">
                                     <img class="" src="/backend/img/upload_icon.png">
@@ -202,6 +183,26 @@
                                  </div>
                                  <div id="j-details"  class="j-details"></div>
                               </div>
+                           </div>
+
+
+                           <div class="col-md-12 mt-5 pr-5 kkk">
+                              @foreach( $apartment_facilities as $apartment_facility )
+                                 <div>{{ $apartment_facility->name }}</div>                       
+                                 @foreach($apartment_facility->children->sortBy('name') as $child)
+                                 <div class="mt-2 mb-2">
+                                    <div class="togglebutton">
+                                          <label>
+                                             <input   
+                                                name="attribute_id[]"  value="{{ $child->id }}" type="checkbox" 
+                                             >
+                                          {{ $child->name }}
+                                          </label>
+                                          @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => 'Attribute','url' => 'attribute'])
+                                    </div>
+                                 </div>
+                                 @endforeach
+                              @endforeach
                            </div>
                         </div>
                      </div>
@@ -249,3 +250,11 @@ height: '400px'
 })       
 });
 @stop
+
+
+
+
+
+
+
+

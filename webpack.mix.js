@@ -2,6 +2,10 @@ const mix = require("laravel-mix");
 
 mix.js("resources/js/services.js", "public/js/services_js.js").vue();
 mix.sass("resources/css/services.scss", "public/css/services_style.css");
+mix.sass(
+  "resources/css/user_account_scss/account.scss",
+  "public/css/account_styles.css"
+);
 
 mix.styles(
   [
@@ -25,20 +29,4 @@ mix.scripts(
     "public/backend/js/scripts.js",
   ],
   "public/backend/js/dashboard.js"
-);
-
-mix.scripts(
-  [
-    "public/js/bootstrap-select.js",
-    "public/js/countUp.js",
-    "public/js/slick.js",
-    "public/js/timepicker.js",
-    "public/js/waypoints.js",
-    "public/js/popup.js",
-    "public/js/sticky.js",
-    "public/js/tweenMax.js",
-    "public/js/mapbox.js",
-    "public/js/scripts.js",
-  ],
-  "public/js/app.js"
 );

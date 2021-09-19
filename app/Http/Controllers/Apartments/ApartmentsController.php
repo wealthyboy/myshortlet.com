@@ -11,6 +11,8 @@ use App\Models\SystemSetting;
 use App\Models\Attribute;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filters\ApartmentFilter\AttributesFilter;
+use  Illuminate\Support\Str;
+
 
 
 
@@ -26,11 +28,20 @@ class ApartmentsController extends Controller
      */
     public function index(Request $request, Location $location)
     {   
-        $attributes = Attribute::parents()->has('children')->get();
+        $types =  [
+            'extra_services',
+            'facilities',
+            'rules',
+            'room_facilities',
+            'other' => 'other'
+        ];
+        $str =new  Str;
+
+        $attributes = $location->attributes->groupBy('parent.slug'); 
         $page_title = implode(" ",explode('-',$location->slug));
-        $properties = Property::whereHas('locations',function(Builder  $builder) use ($location){
+        $properties = Property::where('allow',true)->whereHas('locations',function(Builder  $builder) use ($location){
                 $builder->where('locations.slug',$location->slug);
-            })->filter($request,$this->getFilters($attributes))->latest()->paginate(20);
+            })->filter($request,$this->getFilters($attributes))->latest()->paginate(5);
         $properties->appends(request()->all());
         $breadcrumb = $location->name; 
         return  view('apartments.index',compact(
@@ -38,7 +49,8 @@ class ApartmentsController extends Controller
             'page_title',
             'breadcrumb',
             'properties',
-            'attributes'
+            'attributes',
+            'str'
         )); 
     }
 
@@ -47,8 +59,8 @@ class ApartmentsController extends Controller
     public function getFilters($attributes)
     {
         $filters = [];
-        foreach ($attributes as $attribute){
-           $filters[$attribute->slug] = AttributesFilter::class;
+        foreach ($attributes as $key => $attribute){
+           $filters[$key] = AttributesFilter::class;
         }
         return $filters;
     }
@@ -56,13 +68,14 @@ class ApartmentsController extends Controller
     public function checkAvailability(Request $request)
     {   
         $property = Property::find($request->property_id);
-        
         $avalability = Reservation::whereIn('id', [1, 2, 3]);
-
     }
 
+
     public function search(Request $request)
-    {
+    {   
+
+        //dd($request->all());
         $date = explode("to",$request->check_in_check_out);
         $date1 = trim($date[0]);
         $date2 = trim($date[1]);
@@ -72,15 +85,15 @@ class ApartmentsController extends Controller
         $data['max_children'] = $request->no_of_children ?? 1;
         $data['max_adults'] = $request->no_of_adults ?? 1;
         $data['rooms'] = $request->rooms;
-        $apartments = Property::whereHas('locations',function($query) use ($data){
+        $properties = Property::whereHas('locations',function($query) use ($data){
             $query->where('locations.name','like','%' .$data['location']. '%');
         })->orWhereHas('apartments', function( $query ) use ( $data ){
             $query->where('apartments.max_adults', '<=',  $data['max_children']);
             $query->where('apartments.max_children', '<=', $data['max_adults'] );
             $query->where('apartments.no_of_rooms', '<=', $data['rooms'] );
-            $query->whereDate('available_from', '>=', $date);
+            //$query->whereDate('available_from', '>=', $date);
         })->latest()->paginate(20);
-        $apartments->appends(request()->all());
+        $properties->appends(request()->all());
         $breadcrumb = $request->name; 
         $page_title = $request->name; 
         $location = 'test'; 
@@ -88,7 +101,7 @@ class ApartmentsController extends Controller
             'location',
             'page_title',
             'breadcrumb',
-            'apartments',
+            'properties',
             'attributes'
         ));
          

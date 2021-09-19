@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown">
     <button
-      class="btn btn-secondary btn-block  pb-2 pt-2 dropdown-toggle"
+      class="btn btn-secondary dropdown-btn btn-block  pb-2 pt-2"
       type="button"
       id=""
       aria-haspopup="true"
@@ -12,8 +12,8 @@
       {{ rooms }} Rooms
     </button>
     <div
-      :class="{'d-none': showDropDown}"
-      class="position-absolute  z-index-1"
+      :class="{ 'd-none': showDropDown }"
+      class="position-absolute  p-dropdown-toggle z-index-1"
       aria-labelledby=""
     >
       <div type="button" class="menu-dropdown p-3">
@@ -95,7 +95,7 @@
               aria-label="decrease value"
               aria-describedby=""
               class="mr-5"
-              @click="addSubtract('rooms', 's')"
+              @click="addSubtract($event, 'rooms', 's')"
             >
               <span class=""><i class="fas fa-minus"></i></span>
             </button>
@@ -129,12 +129,26 @@ export default {
   },
 
   methods: {
-    addSubtract(type, as) {
+    addSubtract(e, type, as) {
       as === "a" ? this[type]++ : this[type]--;
+      e.stopPropagation();
     },
     dropDownToggle() {
       this.showDropDown = !this.showDropDown;
     },
   },
 };
+
+// window.onclick = function(event) {
+//   if (!event.target.matches(".dropdown-btn")) {
+//     var dropdowns = document.getElementsByClassName("p-dropdown-toggle");
+//     var i;
+//     for (i = 0; i < dropdowns.length; i++) {
+//       var openDropdown = dropdowns[i];
+//       if (!openDropdown.classList.contains("d-none")) {
+//         openDropdown.classList.add("d-none");
+//       }
+//     }
+//   }
+// };
 </script>

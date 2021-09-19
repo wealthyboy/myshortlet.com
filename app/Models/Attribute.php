@@ -44,12 +44,6 @@ class Attribute extends Model
         return $this->belongsTo(Attribute::class,'parent_id','id');
     }
 
-    public function products()
-    {
-        return $this->belongsToMany(Product::class)
-                    ->groupBy('attribute_id');
-    }
-
 
     public function categories()
     {
@@ -66,13 +60,6 @@ class Attribute extends Model
     {
         return $this->hasOne(ProductVariationValue::class,'attribute_parent_id');
     }
-
-    
-
-  
-    
-    
-   
 
 
 }

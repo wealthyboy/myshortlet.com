@@ -1,237 +1,189 @@
-
-
+@inject('helper', 'App\Http\Helper')
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-   <head>
-      <meta charset="utf-8" />
-      <title>{{ isset( $page_title) ?  $page_title .' |  '.config('app.name') :  $system_settings->meta_title  }}</title>
-      <meta name="csrf-token" content="{{ csrf_token() }}">
-      <meta name="description" content="{{ isset($page_meta_description) ? $page_meta_description : $system_settings->meta_description }}">
-      <meta name="keywords" content="{{ isset($system_settings->meta_tag_keywords) ? $system_settings->meta_tag_keywords : 'cleanse,detox,flattummy,flattummy tea ng,slimming tea' }}" />
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <link rel="canonical" href="{{ Config('app.url') }}">
-      <!-- Favicone Icon -->
-      <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
-      <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
-      <link rel="icon" type="image/png" href="/img/favicon-96x96.png">
-      <link rel="apple-touch-icon" href="/img/favicon-96x96.png">
-      <!-- CSS -->
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Material Dashboard by Creative Tim
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
       <!-- Main CSS File -->
-      <link href="/css/services_style.css?version={{ str_random(6) }}" rel="stylesheet">
-      @yield('page-css')
-      <meta property="og:site_name" content="myshorlet.com">
-      <meta property="og:url" content="https://myshortlet.com/">
-      <meta property="og:title" content="myshortlet">
-      <meta property="og:type" content="website">
-      <meta property="og:description" content="{{ isset($page_meta_description) ? $page_meta_description : $system_settings->meta_description }}">
-      <meta property="og:image:alt" content="">
-      <meta name="twitter:site" content="@myshortlet">
-      <meta name="twitter:card" content="summary_large_image">
-      <meta name="twitter:title" content="{{ isset($page_meta_description) ? $page_meta_description : $system_settings->meta_description }}">
-      <meta name="twitter:description" content="{{ isset($page_meta_description) ? $page_meta_description : $system_settings->meta_description }}">
-      <script>
-         Window.user = {
-         	user: {!! auth()->check() ? auth()->user() : 0000 !!},
-         	loggedIn: {!! auth()->check() ? 1 : 0 !!},
-         	settings: {!! isset($system_settings) ? $system_settings : '' !!},
-         	token: '{!! csrf_token() !!}'
-         }
-      </script>
-   </head>
-   <body>
-      <div id="app" class="wrapper dashboard-wrapper">
-         <div class="d-flex flex-wrap flex-xl-nowrap">
-            <div class="db-sidebar bg-white">
-               <nav class="navbar navbar-expand-xl navbar-light d-block px-0 header-sticky dashboard-nav py-0">
-                  <div class="sticky-area shadow-xs-1 py-3">
-                     <div class="d-flex px-3 px-xl-6 w-100">
-                        
-                        <div class="ml-auto d-flex align-items-center ">
-                           <div class="d-flex align-items-center d-xl-none">
-                              <div class="dropdown px-3">
-                                 <a href="/#" class="dropdown-toggle d-flex align-items-center text-heading" data-toggle="dropdown">
-                                    <span class="fs-13 font-weight-500 d-none d-sm-inline ml-2">
-                                    Ronald Hunter
-                                    </span>
-                                 </a>
-                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="dashboard.html#">My Profile</a>
-                                    <a class="dropdown-item" href="dashboard.html#">Logout</a>
-                                 </div>
-                              </div>
-                              <div class="dropdown no-caret py-4 px-3 d-flex align-items-center notice mr-3">
-                                 <a href="#" class="dropdown-toggle text-heading fs-20 font-weight-500 lh-1" data-toggle="dropdown">
-                                 <i class="far fa-bell"></i>
-                                 <span class="badge badge-primary badge-circle badge-absolute font-weight-bold fs-13">1</span>
-                                 </a>
-                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="dashboard.html#">Action</a>
-                                 </div>
-                              </div>
-                           </div>
-                           <button class="navbar-toggler border-0 px-0" type="button" data-toggle="collapse" data-target="#primaryMenuSidebar" aria-controls="primaryMenuSidebar" aria-expanded="false" aria-label="Toggle navigation">
-                           <span class="navbar-toggler-icon"></span>
-                           </button>
-                        </div>
-                     </div>
-                     <div class="collapse navbar-collapse bg-white" id="primaryMenuSidebar">
-                        <form class="d-block d-xl-none pt-5 px-3">
-                           <div class="input-group">
-                              <div class="input-group-prepend mr-0 bg-input">
-                                 <button class="btn border-0 shadow-none fs-20 text-muted pr-0" type="submit"><i class="far fa-search"></i></button>
-                              </div>
-                              <input type="text" class="form-control border-0 form-control-lg shadow-none" placeholder="Search for..." name="search">
-                           </div>
-                        </form>
-                        <ul class="list-group list-group-flush w-100">
-                           <li class="list-group-item pt-6 pb-4">
-                              <h5 class="fs-13 letter-spacing-087 text-muted mb-3 text-uppercase px-3">Main</h5>
-                              <ul class="list-group list-group-no-border rounded-lg">
-                                 <li class="list-group-item px-3 px-xl-4 py-2 sidebar-item">
-                                    <a href="/account" class="text-heading lh-1 sidebar-link">
-                                    <span class="sidebar-item-icon d-inline-block mr-3 fs-20"><i class="bi bi-gear"></i></span>
-                                    <span class="sidebar-item-text">Dashboard</span>
-                                    </a>
-                                 </li>
-                              </ul>
-                           </li>
-                           <li class="list-group-item pt-6 pb-4">
-                              <h5 class="fs-13 letter-spacing-087 text-muted mb-3 text-uppercase px-3">Manage Listings</h5>
-                              <ul class="list-group list-group-no-border rounded-lg">
-                                 
-                                 <li class="list-group-item px-3 px-xl-4 py-2 sidebar-item">
-                                    <a href="/properties" class="text-heading lh-1 sidebar-link d-flex align-items-center">
-                                       <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-20">
-                                          <svg class="icon icon-my-properties">
-                                             <use xlink:href="#icon-my-properties"></use>
-                                          </svg>
-                                       </span>
-                                       <span class="sidebar-item-text">My Properties</span>
-                                       <span class="sidebar-item-number ml-auto text-primary fs-15 font-weight-bold">29</span>
-                                    </a>
-                                 </li>
-                                 <li class="list-group-item px-3 px-xl-4 py-2 sidebar-item">
-                                    <a href="/saved" class="text-heading lh-1 sidebar-link d-flex align-items-center">
-                                       <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-20">
-                                          <svg class="icon icon-heart">
-                                             <use xlink:href="#icon-heart"></use>
-                                          </svg>
-                                       </span>
-                                       <span class="sidebar-item-text">My Favorites</span>
-                                       <span class="sidebar-item-number ml-auto text-primary fs-15 font-weight-bold">5</span>
-                                    </a>
-                                 </li>
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-                                 <li class="list-group-item px-3 px-xl-4 py-2 sidebar-item">
-                                    <a href="/reservations" class="text-heading lh-1 sidebar-link d-flex align-items-center">
-                                       <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-20">
-                                          <svg class="icon icon-heart">
-                                             <use xlink:href="#icon-heart"></use>
-                                          </svg>
-                                       </span>
-                                       <span class="sidebar-item-text">My Reservations</span>
-                                       <span class="sidebar-item-number ml-auto text-primary fs-15 font-weight-bold">5</span>
-                                    </a>
-                                 </li>
-                              </ul>
-                           </li>
-                           <li class="list-group-item pt-6 pb-4">
-                              <h5 class="fs-13 letter-spacing-087 text-muted mb-3 text-uppercase px-3">Manage Acount</h5>
-                              <ul class="list-group list-group-no-border rounded-lg">
-                                 
-                                 <li class="list-group-item px-3 px-xl-4 py-2 sidebar-item">
-                                    <a href="/profile" class="text-heading lh-1 sidebar-link">
-                                       <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-20">
-                                          <svg class="icon icon-my-profile">
-                                             <use xlink:href="#icon-my-profile"></use>
-                                          </svg>
-                                       </span>
-                                       <span class="sidebar-item-text">My Profile</span>
-                                    </a>
-                                 </li>
-                                 <li class="list-group-item px-3 px-xl-4 py-2 sidebar-item">
-                                    <a href="/change/password" class="text-heading lh-1 sidebar-link">
-                                       <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-20">
-                                          <svg class="icon icon-log-out">
-                                             <use xlink:href="#icon-log-out"></use>
-                                          </svg>
-                                       </span>
-                                       <span class="sidebar-item-text">Change Password</span>
-                                    </a>
-                                 </li>
-                                 <li class="list-group-item px-3 px-xl-4 py-2 sidebar-item">
-                                    <a href="#" class="text-heading lh-1 sidebar-link">
-                                       <span class="sidebar-item-icon d-inline-block mr-3 text-muted fs-20">
-                                          <svg class="icon icon-log-out">
-                                             <use xlink:href="#icon-log-out"></use>
-                                          </svg>
-                                       </span>
-                                       <span class="sidebar-item-text">Log Out</span>
-                                    </a>
-                                 </li>
-                              </ul>
-                           </li>
-                        </ul>
-                     </div>
+   <link href="/css/account_styles.css?version={{ str_random(6) }}" rel="stylesheet">
+  </head>
 
-                  </div>
-               </nav>
+<body class="">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+      <div class="logo">
+         <a href="/" class="simple-text logo-normal">
+           <div class="logo-small">
+               <img width="100" height="100" src="{{ $system_settings->logo_path() }}" class="img-fluid">
             </div>
-            <div class="page-content">
-               <header class="main-header shadow-none shadow-lg-xs-1 bg-white position-relative d-none d-xl-block">
-                  <div class="container-fluid">
-                     <nav class="navbar navbar-light py-0 row no-gutters px-3 px-lg-0">
-                        <div class="col-md-4 px-0 px-md-6 order-1 order-md-0">
-                           <form>
-                              <div class="input-group">
-                                 <div class="input-group-prepend mr-0">
-                                    <button class="btn border-0 shadow-none fs-20 text-muted p-0" type="submit"><i class="far fa-search"></i></button>
-                                 </div>
-                                 <input type="text" class="form-control border-0 bg-transparent shadow-none" placeholder="Search for..." name="search">
-                              </div>
-                           </form>
-                        </div>
-                        <div class="col-md-6 d-flex flex-wrap justify-content-md-end order-0 order-md-1">
-                           <div class="dropdown border-md-right border-0 py-3 text-right">
-                              <a href="dashboard.html#" class="dropdown-toggle text-heading pr-3 pr-sm-6 d-flex align-items-center justify-content-end" data-toggle="dropdown">
-                                 <div class="mr-4 w-48px">
-                                    <img src="images/testimonial-5.jpg" alt="Ronald Hunter" class="rounded-circle">
-                                 </div>
-                                 <div class="fs-13 font-weight-500 lh-1">
-                                    Ronald Hunter
-                                 </div>
-                              </a>
-                              <div class="dropdown-menu dropdown-menu-right w-100">
-                                 <a class="dropdown-item" href="dashboard-my-profiles.html">My Profile</a>
-                                 <a class="dropdown-item" href="dashboard.html#">Logout</a>
-                              </div>
-                           </div>
-                           <div class="dropdown no-caret py-3 px-3 px-sm-6 d-flex align-items-center justify-content-end notice">
-                              <a href="dashboard.html#" class="dropdown-toggle text-heading fs-20 font-weight-500 lh-1" data-toggle="dropdown">
-                              <i class="far fa-bell"></i>
-                              <span class="badge badge-primary badge-circle badge-absolute font-weight-bold fs-13">1</span>
-                              </a>
-                              <div class="dropdown-menu dropdown-menu-right">
-                                 <a class="dropdown-item" href="dashboard.html#">Action</a>
-                                 <a class="dropdown-item" href="dashboard.html#">Another action</a>
-                                 <a class="dropdown-item" href="dashboard.html#">Something else here</a>
-                              </div>
-                           </div>
-                        </div>
-                     </nav>
-                  </div>
-               </header>
-               <main id="content" class="bg-gray-01">
-                  @yield('content')
-               </main>
-            </div>
-         </div>
+         </a>
       </div>
-      <script src="/js/services_js.js"></script>
-      @include('_partials.svg')
-      <div class="position-fixed pos-fixed-bottom-right p-6 z-index-10">
-         <a href="home-01.html#" class="gtf-back-to-top bg-white text-primary hover-white bg-hover-primary shadow p-0 w-52px h-52 rounded-circle fs-20 d-flex align-items-center justify-content-center" title="Back To Top"><i class="fal fa-arrow-up"></i></a>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+         <li class="nav-item {{ $helper->active_link(['account']) }} ">
+            <a class="nav-link" href="/account">
+              <i class="material-icons">dashboard</i>
+              <p>Dashboard</p>
+            </a>
+         </li>
+         <li class="nav-item {{ $helper->active_link(['reservations']) }} ">
+            <a class="nav-link" href="/reservations">
+              <i class="material-icons">holiday_village</i>
+              <p>My Bookings</p>
+            </a>
+         </li>
+         <li class="nav-item {{ $helper->active_link(['properties']) }} ">
+            <a class="nav-link" href="/properties">
+              <i class="material-icons">apartment</i>
+              <p>Listings</p>
+            </a>
+          </li>
+
+          <li class="nav-item {{ $helper->active_link(['change']) }} ">
+            <a class="nav-link" href="/change/password">
+              <i class="material-icons">password</i>
+              <p>Change Password</p>
+            </a>
+          </li>
+          
+          <li class="nav-item {{ $helper->active_link(['profile']) }} ">
+            <a class="nav-link" href="/profile">
+              <i class="material-icons">person_outline</i>
+              <p>Profile</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/rents">
+              <i class="material-icons">receipt</i>
+              <p>Rents</p>
+            </a>
+          </li>
+
+
+          <li class="nav-item ">
+            <a class="nav-link" href="/saved">
+              <i class="material-icons">favorite</i>
+              <p>Saved</p>
+            </a>
+          </li>
+          
+          <li class="nav-item ">
+            <a class="nav-link" 
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form-nav').submit();" href="#">
+              <i class="material-icons">logout</i>
+              <p>Logout</p>
+            </a>
+            <form id="logout-form-nav" action="/logout" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+
+          </li>
+
+          
+        </ul>
       </div>
-   </body>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <a class="navbar-brand" href="javascript:;">Dashboard</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end">
+           
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="javascript:;">
+                  <i class="material-icons">dashboard</i>
+                  <p class="d-lg-none d-md-block">
+                    Stats
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons">notifications</i>
+                  <span class="notification">5</span>
+                  <p class="d-lg-none d-md-block">
+                    Some Actions
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#"></a>
+                 
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons">person</i>
+                  <p class="d-lg-none d-md-block">
+                    Account
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+                  <a href="#"  class="dropdown-item"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                Log out
+                                </a>
+                                <form id="logout-form" action="/logout" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="content">
+          @yield('content')
+      </div>
+      <footer class="footer">
+        <div class="container-fluid">
+          <nav class="float-left">
+            <ul>
+              <li>
+                <a href="">
+                  About Us
+                </a>
+              </li>
+             
+            </ul>
+          </nav>
+          <div class="copyright float-right">
+            © Copyright <a href="{{ Config('app.url') }}"> {{ Config('app.name') }}</a>  {{ date('Y') }}. All rights reserved.
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  
+
+   <script src="/js/popper.min.js" type="text/javascript"></script>
+   <script src="/js/services_js.js"></script>
+ 
+</body>
+
 </html>
-

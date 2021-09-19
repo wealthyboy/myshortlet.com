@@ -14,16 +14,11 @@
             <div class="col-md-6">
                 <div class="form-group label-floating is-ty">
                     <label class="control-label">Accommodation Type Name</label>
-                    <input name="room_name[{{ $counter }}]"  required="true" value="{{ old('price') }}" class="form-control  variation" type="text">
+                    <input name="room_name[{{ $counter }}]"  required="true" value="" class="form-control  variation" type="text">
                     <span class="material-input"></span>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group label-floating">
-                    <label class="control-label">From Date Available</label>
-                    <input name="room_avaiable_from[{{ $counter }}]"  required="true" value="" class="form-control  datepicker" type="text">
-                </div>
-            </div>
+           
             <div class="col-md-2">
                 <div class="form-group">
                     <select  name="room_quantity[{{ $counter }}]" name="quantity" id="" required="true" class="form-control">
@@ -39,18 +34,18 @@
                 <div class="form-group">
                     <select  name="room_number[{{ $counter }}]" name="bedrooms" id="bedrooms" class="form-control  bedrooms">
                         <option value="" selected>Choose Bedrooms</option>
-                        @for ($i = 1; $i< 5; $i++) 
+                        @for ($i = 1; $i< 10; $i++) 
                             <option value="{{ $i }}"> {{ $i }}</option>
                         @endfor 
                     </select>
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group">
                     <select name="room_toilets[{{ $counter }}]" id="children" class="form-control">
                         <option  value="" selected>Choose Toilets</option>
-                        @for ($i = 1; $i< 6; $i++) 
+                        @for ($i = 1; $i< 10; $i++) 
                         <option value="{{ $i }}"> {{ $i }}</option>
                         @endfor 
                     </select>
@@ -58,28 +53,27 @@
             </div>
 
 
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group label-floating is-empty">
                     <label class="control-label">Max Adults</label>
                     <input name="room_max_adults[{{ $counter }}]"  required="true" value="" class="form-control   variation" type="number">
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group label-floating is-empty">
                     <label class="control-label">Max Children</label>
                     <input name="room_max_children[{{ $counter }}]"  required="true" value="" class="form-control   variation" type="number">
                 </div>
             </div>
 
-            <div class="clearfix"></div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group label-floating is-empty">
                     <label class="control-label">Price per/night</label>
                     <input name="room_price[{{ $counter }}]"  required="true" value="{{ old('price') }}" class="form-control   variation" type="number">
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group label-floating is-empty">
                     <label class="control-label">Sale Price</label>
                     <input name="room_sale_price[{{ $counter }}]"   value=""  class="form-control variation_sale_price variation" type="number">
@@ -96,8 +90,8 @@
             <div class="col-md-12 bed mb-5">
                 @if ($bedrooms->count())
                     @foreach($bedrooms as $key =>  $parent)
-                          <div class="bedroom-{{ $key + 1 }} d-none mb-2">
-                          <div class="mb-2">{{ $parent->name }} </div>
+                        <div class="bedroom-{{ $key + 1 }} d-none mb-2">
+                        <div class="mb-2">{{ $parent->name }} </div>
                             @foreach($parent->children as $bedroom)
                             <label for="bedroom-{{ $bedroom->id }}-{{ $counter }}" class="radio-inline">
                                 <input  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $counter }}" name="{{ $parent->slug }}_{{ $counter }}" type="radio" name="optradio">{{ $bedroom->name }}
@@ -113,7 +107,7 @@
             
             <div class="col-sm-12">
                 <div id="j-drop"  class="j-drop">
-                <input accept="image/*"   onchange="getFile(this,'room_images[{{ $counter }}][]')" class="upload_input"  multiple="true"   type="file" id="upload_file_input" name="product_image"  />
+                <input accept="image/*"  required="true"  data-msg="Upload  at least 5 images"  onchange="getFile(this,'room_images[{{ $counter }}][]')" class="upload_input"  multiple="true"   type="file" id="upload_file_input" name="product_image"  />
                     <div   class=" upload-text  {{ $counter }}"> 
                     <a  class="" href="#">
                         <img class="" src="/backend/img/upload_icon.png">
@@ -122,6 +116,27 @@
                     </div>
                     <div id="j-details"  class="j-details"></div>
                 </div>
+            </div>
+
+
+            <div class="col-md-12 mt-5 pr-5 kkk">
+                @foreach( $apartment_facilities as $apartment_facility )
+                    <div>{{ $apartment_facility->name }}</div>                       
+                    @foreach($apartment_facility->children->sortBy('name') as $child)
+                    <div class="mt-2 mb-2">
+                        <div class="togglebutton">
+                            <label>
+                                <input 
+                                    name="attribute_id[]"  value="{{ $child->id }}" type="checkbox" 
+                                >
+                                <span class="toggle"></span>
+                               {{ $child->name }}
+                            </label>
+                            @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => 'Attribute','url' => 'attribute'])
+                        </div>
+                    </div>
+                    @endforeach
+                @endforeach
             </div>
         </div>
         

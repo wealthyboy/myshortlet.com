@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use App\Http\Helper;
-
-
 use App\Models\Activity;
 use App\Models\User;
 use App\Models\Attribute;
@@ -26,14 +24,8 @@ class AttributesController extends Controller
     public function index(Request $request)
     {
         $attributes = Attribute::parents()->get(); 
-        $type = null;
-
-        if ($request->type){
-            $attributes = Attribute::parents()->where('type',$request->type)->get();
-            $type = $request->type; 
-        }
-
-        return view('admin.attributes.index',compact('attributes','type'));
+        $helper = new Helper();
+        return view('admin.attributes.index',compact('attributes','helper'));
     }
 
 
@@ -106,15 +98,9 @@ class AttributesController extends Controller
         User::canTakeAction(4);
         $attr = Attribute::find($id);
         $attributes = Attribute::parents()->get(); 
-        $type = null;
+        $helper = new Helper();
 
-        if ($request->type){
-            $attributes = Attribute::parents()->where('type',$request->type)->get();
-            $type = $request->type; 
-        }  else {
-            $attributes = Attribute::parents()->get(); 
-        }     
-        return view('admin.attributes.edit',compact('attributes','attr','type'));
+        return view('admin.attributes.edit',compact('attributes','attr','helper'));
     }
 
     /**

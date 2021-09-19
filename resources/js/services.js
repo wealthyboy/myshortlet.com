@@ -1,12 +1,15 @@
 require("./bootstrap");
 import Vue from "vue";
 import flatpickr from "flatpickr";
+window.flexslider = require("flexslider");
 import store from "./store";
+require("./scripts.js");
 
 const Persons = require("./components/persons/Persons.vue").default;
 const RoomAvailable = require("./components/search/RoomAvailable.vue").default;
 const BookIndex = require("./components/book/BookIndex.vue").default;
 const AddProperty = require("./components/properties/AddProperty.vue").default;
+const Location = require("./components/search/Location.vue").default;
 
 $().ready(function() {
   $.ajaxSetup({
@@ -25,6 +28,7 @@ const app = new Vue({
     RoomAvailable,
     BookIndex,
     AddProperty,
+    Location,
   },
 });
 

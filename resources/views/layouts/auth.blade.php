@@ -70,6 +70,7 @@
             </div>
          </section>
       </footer>
+      <script src="/js/popper.min.js" type="text/javascript"></script>
       <script src="/js/services_js.js"></script>
 
       @yield('page-scripts')  

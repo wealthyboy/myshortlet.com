@@ -57,13 +57,15 @@
                                 @endforeach
                             </select>
                         </div>
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <label class="control-label"></label>
-                            <select name="type"  class="form-control">
-                                <option  value="" selected></option>
-                                <option  value="facilities" selected>Facilities</option>
+                            <select name="type"  required class="form-control">
+                                <option  value="" selected>Choose Type</option>
+                                @foreach($helper::attribute_types() as $key => $attribute_type)
+                                   <option  value="{{ $key }}">{{ $attribute_type }}</option>
+                                @endforeach
                             </select>
-                        </div> -->
+                        </div>
                         <h4 class="info-text">Upload Image Here</h4>
                         <div class="">
                             <div id="m_image"  class="uploadloaded_image text-center mb-3">

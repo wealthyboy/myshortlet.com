@@ -2,6 +2,7 @@
   <div class="">
     <form :action="'/book/' + property.slug" method="GET" class="form-group">
       <input type="hidden" name="_token" :value="$root.token" />
+      <input type="hidden" name="property_id" :value="property.id" />
       <div class="form-row">
         <div class="col-md-6">
           <div class="form-group mb-4">

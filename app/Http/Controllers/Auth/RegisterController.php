@@ -66,15 +66,19 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
+    {   
+
+        $user = User::create([
+            'name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'phone_number' => $data['phone_number'],
             'type' => 'subscriber',
             'password' => Hash::make($data['password']),
         ]);
+
+        return $user;
+
     }
 
 
@@ -89,6 +93,9 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {   
+
+        
+
         if ($request->ajax()){
             return response()->json([
                 'loggenIn' => true,
@@ -97,6 +104,11 @@ class RegisterController extends Controller
             ],200);
         }
 		return redirect()->intended($this->redirectPath());
+    }
+
+
+    public function verify(Request $request){
+       return view('auth.verify');
     }
 
 

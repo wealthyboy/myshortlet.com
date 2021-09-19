@@ -36,6 +36,8 @@ class Property extends Model
         return (new PropertiesFilter($request))->add($filters)->filter($builder);
     }
 
+    
+
 
     public function images()
     {

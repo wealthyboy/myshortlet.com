@@ -97,7 +97,7 @@
 
             </li>
             
-            <li class="{{ $helper->active_link(['category','attributes','vouchers']) }} ">
+            <li class="{{ $helper->active_link(['category','attributes','vouchers','category']) }} ">
                 <a data-toggle="collapse" href="#Properties">
                 <i class="fa fa-home" aria-hidden="true"></i>
                     <p> Properties 
@@ -107,10 +107,6 @@
 
                 <div class="collapse 
                    {{ $helper->active_link([
-                        'attributes?type=facilities',
-                        'attributes?type=rules',
-                        'attributes?type=bedroom',
-                        'attributes?type=extra_services',
                         'properties',
                         'category',
                         'fine_art',
@@ -133,39 +129,13 @@
                             </a>
                         </li>
                         
-                        <li class="{{ $helper->active_link(['attributes?type=category']) }}">
-                            <a  href="{{ route('attributes.index',['type'=>'category']) }}">
+                        <li class="{{ $helper->active_link(['category']) }}">
+                            <a  href="{{ route('category.index',['type'=>'category']) }}">
                                 <span class="sidebar-mini"> C </span>
                                 <span class="sidebar-normal"> Categories </span>
                             </a>
                         </li>
-                        <li class="{{ $helper->active_link(['attributes?type=extra_services']) }} ">
-                            <a  href="{{ route('attributes.index',['type'=>'extra_services']) }}">
-                                <span class="sidebar-mini"> P </span>
-                                <span class="sidebar-normal"> Extra Services </span>
-                            </a>
-                        </li>
-
-                        <li class="{{ $helper->active_link(['attributes?type=bedroom']) }} ">
-                            <a  href="{{ route('attributes.index',['type'=>'bedroom']) }}">
-                                <span class="sidebar-mini"> P </span>
-                                <span class="sidebar-normal"> Bedrooms </span>
-                            </a>
-                        </li>
-
-                        <li class="{{ $helper->active_link(['attributes?type=facilities']) }} ">
-                            <a  href="{{ route('attributes.index',['type'=>'facilities']) }}">
-                                <span class="sidebar-mini"> P </span>
-                                <span class="sidebar-normal"> Facilities </span>
-                            </a>
-                        </li>
-                        <li class="{{ $helper->active_link(['attributes?type=rules']) }} ">
-                            <a  href="{{ route('attributes.index',['type'=>'rules']) }}">
-                                <span class="sidebar-mini"> R</span>
-                                <span class="sidebar-normal"> Rules </span>
-                            </a>
-                        </li>
-
+                    
                         <li class="{{ $helper->active_link(['vouchers']) }} ">
                             <a href="{{ route('vouchers.index') }}">        
                                 <span class="sidebar-mini"> V </span>
@@ -180,7 +150,7 @@
            
 
 
-            <li class="{{ $helper->active_link(['orders']) }}">
+            <li class="{{ $helper->active_link(['reservations']) }}">
                 <a data-toggle="collapse" href="dashboard.html#shop">
                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>   
                     <p> Reservations 
@@ -188,10 +158,10 @@
                     </p>
                 </a>
 
-                <div class="collapse {{ $helper->active_link(['Reservations']) ? 'in' : ''}}" id="shop">
+                <div class="collapse {{ $helper->active_link(['reservations']) ? 'in' : ''}}" id="shop">
                     <ul class="nav">
                         <li>
-                            <a href="{{ route('admin.orders.index',['type'=> 'reservation']) }}">
+                            <a href="{{ route('admin.reservations.index') }}">
                                 <span class="sidebar-mini"> C </span>
                                 <span class="sidebar-normal"> Reservations </span>
                             </a>

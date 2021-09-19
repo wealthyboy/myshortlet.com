@@ -1,112 +1,140 @@
-
-
-@extends('layouts.app')
+@extends('layouts.listing')
 @section('content')
-<section>
+<div class="">
+   <nav aria-label="breadcrumb" class="mt-5" role="navigation">
+      <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="#">Home</a></li>
+         <li class="breadcrumb-item"><a href="#">Library</a></li>
+         <li class="breadcrumb-item active" aria-current="page">Data</li>
+      </ol>
+   </nav>
    <div class="container">
-      <nav aria-label="breadcrumb">
-         <ol class="breadcrumb pt-lg-0 pb-3">
-            <li class="breadcrumb-item fs-12 letter-spacing-087">
-               <a href="index.html">Home</a>
-            </li>
-            <li class="breadcrumb-item fs-12 letter-spacing-087">
-               <a href="listing-grid-with-left-filter.html">Listing</a>
-            </li>
-            <li class="breadcrumb-item fs-12 letter-spacing-087 active">Villa on Hollywood Boulevard</li>
-         </ol>
-      </nav>
-   </div>
-   <div class="container-fluid">
       <div class="row">
-         <div class="col-lg-9">
+         <div class="col-lg-12">
             <div>
-               <h1>{{ $property->name }}</h1>
-               <p><i class="bi bi-geo-alt-fill"></i> {{ $property->address }}</p>
-            </div>
-         </div>
-         <div class="col-lg-3">
-            <div class="text-right">
-               <span class="mr-3">
-               <i class="bi bi-heart"></i>
-               </span>
-               <span>
-               <i class="bi bi-share-fill"></i>             
-               </span>
+               <div>{{ $property->name }}</div>
+               <p><i class="material-icons">location_on</i> {{ $property->address }}</p>
             </div>
          </div>
       </div>
-      <div class="position-relative" >
-         <div class="position-absolute pos-fixed-top-right z-index-3">
-            <ul class="list-inline pt-4 pr-5">
-               <li class="list-inline-item mr-2">
-                  <a href="#" data-toggle="tooltip" title="Favourite" class="d-flex align-items-center justify-content-center w-40px h-40 bg-white text-heading bg-hover-primary hover-white rounded-circle">
-                  <i class="far fa-heart"></i></a>
-               </li>
-               <li class="list-inline-item mr-2">
-                  <button type="button" class="btn btn-white p-0 d-flex align-items-center justify-content-center w-40px h-40 text-heading bg-hover-primary hover-white rounded-circle border-0 shadow-none" data-container="body" data-toggle="popover" data-placement="top" data-html="true" data-content=' <ul class="list-inline mb-0">
-                     <li class="list-inline-item">
-                     <a href="#" class="text-muted fs-15 hover-dark lh-1 px-2"><i
-                     class="fab fa-twitter"></i></a>
-                     </li>
-                     <li class="list-inline-item ">
-                     <a href="#" class="text-muted fs-15 hover-dark lh-1 px-2"><i
-                     class="fab fa-facebook-f"></i></a>
-                     </li>
-                     <li class="list-inline-item">
-                     <a href="#" class="text-muted fs-15 hover-dark lh-1 px-2"><i
-                     class="fab fa-instagram"></i></a>
-                     </li>
-                     <li class="list-inline-item">
-                     <a href="#" class="text-muted fs-15 hover-dark lh-1 px-2"><i
-                     class="fab fa-youtube"></i></a>
-                     </li>
-                     </ul>
-                     '>
-                  <i class="far fa-share-alt"></i>
-                  </button>
-               </li>
-               <li class="list-inline-item">
-                  <a href="#" data-toggle="tooltip" title="Print" class="d-flex align-items-center justify-content-center w-40px h-40 bg-white text-heading bg-hover-primary hover-white rounded-circle">
-                  <i class="far fa-print"></i>
-                  </a>
-               </li>
-            </ul>
+   </div>
+</div>
+<div class="">
+   <div class="container">
+      <div class="row no-gutters">
+         <div class="col-md-8">
+            <div class="">
+               <div class="">
+                  <img src="https://avenuemontaigne.ng/uploads/xeoziKXfykSDUyJVFXzTSkiZ0f5v5vGFnO2fzwP4.jpg" alt="" class="img-fluid" >   
+               </div>
+            </div>
          </div>
-         <div class="row galleries m-n1">
-            <div class="col-lg-6 p-1">
-               <div class="item item-size-4-3">
-                  <div class="card p-0 hover-zoom-in">
-                     <a href="{{ $property->image }}" class="card-img" data-gtf-mfp="true" data-gallery-id="01" style="background-image:url({{  $property->image }})">
+         <div class="col-md-4">
+            <div class="row no-gutters">
+               <div class="col-md-6 col-3">
+                  <img src="https://avenuemontaigne.ng/uploads/m/xeoziKXfykSDUyJVFXzTSkiZ0f5v5vGFnO2fzwP4.jpg" alt="" class="img-fluid" >   
+               </div>
+               <div class="col-md-6 col-3">
+                  <img src="https://avenuemontaigne.ng/uploads/m/xeoziKXfykSDUyJVFXzTSkiZ0f5v5vGFnO2fzwP4.jpg" alt="" class="img-fluid" >   
+               </div>
+               <div class="col-md-6 col-3">
+                  <img src="https://avenuemontaigne.ng/uploads/m/xeoziKXfykSDUyJVFXzTSkiZ0f5v5vGFnO2fzwP4.jpg" alt="" class="img-fluid" >   
+               </div>
+               <div class="col-md-6 col-3">
+                  <div>
+                     <img src="https://avenuemontaigne.ng/uploads/m/xeoziKXfykSDUyJVFXzTSkiZ0f5v5vGFnO2fzwP4.jpg" alt="" class="img-fluid" >   
+                     <a href="#" class="card-img-overlay d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
+                        <p class="fs-48 font-weight-600 text-white lh-1 mb-4">+12</p>
+                        <p class="fs-16 font-weight-bold text-white lh-1625 text-uppercase">View more</p>
                      </a>
                   </div>
                </div>
             </div>
-            <div class="col-lg-6 p-1">
-               <div class="row m-n1">
-                  @foreach($property->apartments as $apartment)
-                     <div class="col-md-6 p-1">
-                        <div class="item item-size-4-3">
-                           <div class="card p-0 hover-zoom-in">
-                              <a href="{{ $apartment->image }}" class="card-img" data-gtf-mfp="true" data-gallery-id="01" style="background-image:url({{  $apartment->image }})">
-                              </a>
-                           </div>
-                        </div>
+         </div>
+         <div class="clearfix"></div>
+         <div class="col-12">
+            <nav class="nav">
+               <a class="nav-link active" href="#0">Apartments</a>
+               <a class="nav-link" href="#0">About </a>
+               <a class="nav-link" href="#0">Amenities</a>
+               <a class="nav-link" href="#0">Reviews</a>
+            </nav>
+         </div>
+         <div class="clearfix"></div>
+
+         
+         
+      </div>
+
+      <div class="row">
+         <div class="col-md-6">
+            <div>
+               <div>{{ $property->name }}</div>
+               <p><i class="material-icons">location_on</i> {{ $property->address }}</p>
+            </div>
+            <div class="pt-6 border-bottom">
+               <h4>Description</h4>
+               <p>
+               Conveniently situated at a prime location in Abu Dhabi, Al Diar Sawa Hotel Apartments is the destination for those who want an exclusive lifestyle that combines luxury, comfort and dedicated service.
+
+Each apartment unit has a flat-screen TV, highly comfortable beds, and special amenities. Apartments have a seating area, fully equipped kitchen and a private bathroom. Underground parking is conveniently available for guests and residents.
+
+Guests can relax and enjoy at the outdoor swimming pool, Jacuzzi and kids swimming pool at the roof top. Separate men’s and women’s sauna and steam cabins are also available to complement the recreation offers.
+
+In addition to the services and facilities, a meeting space up to 6 persons, secretarial services at the Reception desk and wireless internet connection are available upon request.
+
+Al Diar Sawa Hotel Apartments is located at Al Nahyan Camp area. It is just a 26-minute drive from Abu Dhabi International Airport, Yas Marina Circuit and Ferrari World, 17-minutes drive from Abu Dhabi National Exhibitions Centre 
+               </p>
+            </div>
+
+            <div class="pt-6 border-bottom">
+              <h4>What this place offers</h4>
+            </div>
+
+            <div class="pt-6 border-bottom">
+              <h4>Reviews</h4>
+            </div>
+
+            <div class="pt-6 border-bottom">
+              <h4>What is Nearby?</h4>
+            </div>
+         
+         </div>
+         <div class="col-6">
+            <div class="card position-relative">
+               <div class="row no-gutters">
+                  <div class="col-md-3 position-relative">
+                     <div class="">
+                        <img class="img img-raised img-fluid" src="http://myshortlet.test/images/apartments/m/4PeVUoGLRAjZrxvoYOY520jU6NvdcVMLQJQN68ic.jpg">
                      </div>
-                  @endforeach
-                  
-                  
-                  <div class="col-md-6 p-1">
-                     <div class="item item-size-4-3">
-                        <div class="card p-0 hover-zoom-in">
-                           <a href="{{ $property->image }}" class="card-img" data-gtf-mfp="true" data-gallery-id="01" style="background-image:url({{ $property->image }})">
-                           </a>
-                           <a href="single-property-1.html#" class="card-img-overlay d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
-                              <p class="fs-48 font-weight-600 text-white lh-1 mb-4">+12</p>
-                              <p class="fs-16 font-weight-bold text-white lh-1625 text-uppercase">View
-                                 more
-                              </p>
-                           </a>
-                        </div>
+                  </div>
+                  <div class="col-md-6 pl-3">
+                     <div class="card-title">
+                        <a href="/apartment/lovely-studio-apartment-at-lekki-agungi-wwifi-1447616684">Lovely Studio Apartment at Lekki, Agungi w/WIFI</a>
+                     </div>
+                     
+                     <div>
+                        <span class="">Kitchen</span>
+                        <span aria-hidden="true"> · </span>
+                        <span class="">Air conditioning</span>
+                     </div>
+                     <div>
+                        <span class="">4 guests</span>
+                        <span aria-hidden="true"> · </span>
+                        <span class="">1 bedroom</span>
+                        <span aria-hidden="true"> · </span>
+                        <span class="">1 bed</span>
+                        <span aria-hidden="true"> · </span>
+                        <span class="">1.5 baths</span>
+                     </div>
+                  </div>
+                  <div class="col-md-3  d-flex justify-content-start align-items-end pl-3">
+                     <div>
+                        <p>
+                           <span class="text-heading lh-15 font-weight-bold fs-17">₦5000</span>
+                           <span class="text-gray-light">/ night</span>
+                        </p>
+                        
                      </div>
                   </div>
                </div>
@@ -114,21 +142,7 @@
          </div>
       </div>
    </div>
-</section>
-<div class="primary-content pt-8">
-   <div class="container-fluid">
-      <div class="row">
-         <article class="col-lg-6 pr-xl-7"></article>
-         <aside class="col-lg-6 pl-xl-4 primary-sidebar sidebar-sticky" id="sidebar">
-            <room-available  :property="{{ $property->load('extra_services') }}" :apartments="{{ $property->apartments->load('images') }}" />
-         </aside>
-      </div>
-   </div>
 </div>
-
-
-
 @endsection
 @section('page-scripts')
 @stop
-

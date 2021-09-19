@@ -88,7 +88,7 @@ class Apartment extends Model
 
 
     public function bedrooms(){
-        return $this->belongsToMany(Attribute::class)->where('type', 'bedroom');
+        return $this->belongsToMany(Attribute::class)->where('type', 'bedrooms');
     }
 
 }

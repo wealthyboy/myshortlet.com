@@ -243,6 +243,7 @@ export default {
               currency: context.booking_details.currency,
               apartment_quantity: context.booking_details.apartment_quantity,
               range: context.booking_details.date_range,
+              property_id: context.booking_details.property_id,
             },
           ],
         },
@@ -256,6 +257,7 @@ export default {
               currency: context.booking_details.currency,
               apartment_quantity: context.booking_details.apartment_quantity,
               range: context.booking_details.date_range,
+              property_id: context.booking_details.property_id,
             })
             .then((response) => {
               this.submiting = false;

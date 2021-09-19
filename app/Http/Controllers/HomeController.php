@@ -44,15 +44,16 @@ class HomeController
         $site_status = Live::first();
 
         $states      = Location::where('location_type', 'state')->has('properties')->latest()->get();
-        $featureds   = Property::where('featured',true)->skip(1)->take(2)->get();
-        $featured    = Property::where('featured',true)->first();
+        $cities      = Location::where('location_type', 'city')->has('properties')->latest()->get();
+        $featureds   = Property::where('featured',true)->take(4)->get();
         $posts       = Information::orderBy('created_at','DESC')->where('blog',true)->take(3)->get();
+        //dd($cities);
         if (!$site_status->make_live ) {
-            return view('index',compact('states','posts','featureds','featured'));
+            return view('index',compact('states','posts','featureds','cities'));
         } else {
             //Show site if admin is logged in
             if ( auth()->check()  && auth()->user()->isAdmin()){
-                return view('index',compact('states','posts','featureds','featured'));
+                return view('index',compact('states','posts','featureds','cities'));
             }
             return view('underconstruction.index');
         } 

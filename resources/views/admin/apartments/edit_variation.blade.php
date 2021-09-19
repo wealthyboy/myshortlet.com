@@ -21,23 +21,30 @@
                 
             <div class="col-md-6">
                 <div class="form-group label-floating is-ty">
-                    <label class="control-label">Accommodation Type Name 33</label>
+                    <label class="control-label">Accommodation Type Name</label>
                     <input name="edit_room_name[{{ $apartment->id }}]"  required="true" value="{{ $apartment->name }}" class="form-control  variation" type="text">
                     <span class="material-input"></span>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="form-group label-floating">
-                    <label class="control-label">From Date Available</label>
-                    <input name="edit_room_avaiable_from[{{ $apartment->id }}]"  required="true" value="{{ $helper::getReversedFormatedDate($apartment->available_from) }}" class="form-control  datepicker" type="text">
+                <div class="col-md-2">
+                    <select  name="room_quantity[{{ $counter }}]" name="quantity" id="" required="true" class="form-control">
+                        <option value="" selected>Select Quantity</option>
+                        @for ($i = 1; $i< 10; $i++) 
+                            @if($apartment->quantity == $i)
+                            <option value="{{ $i }}" selected>{{ $i }}</option>
+                            @else
+                            <option value="{{ $i }}">{{ $i }}</option>
+                            @endif
+                        @endfor
+                    </select>
                 </div>
-            </div>
 
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    <select  name="room_number[{{ $apartment->id }}]" name="bedrooms" id="bedrooms" class="form-control  bedrooms">
+        
+            <div class="col-md-2">
+               <div class="form-group label-floating is-ty">
+                    <label class="control-label">Bedrooms</label>
+                    <select  name="room_number[{{ $apartment->id }}]" name="bedrooms" id="bedrooms" required class="form-control  bedrooms">
                         <option value="" selected>Choose Bedrooms</option>
                         @for ($i = 1; $i< 11; $i++) 
                             @if($apartment->no_of_rooms == $i)
@@ -50,11 +57,12 @@
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="form-group label-floating">
+            <div class="col-lg-2">
+              <div class="form-group label-floating is-ty">
+                <label class="control-label">Toilets</label>
                     <select name="apartment_toilets[{{ $apartment->id }}]" id="children" class="form-control">
                         <option  value="">Choose toilets... </option>
-                        @for ($i = 1; $i< 4; $i++) 
+                        @for ($i = 1; $i< 10; $i++) 
                             @if($apartment->toilets == $i)
                             <option value="{{ $i }}" selected> {{ $i }}</option>
                             @else
@@ -65,28 +73,28 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+
+            <div class="col-md-2">
                 <div class="form-group label-floating ">
                     <label class="control-label">Max Adults</label>
                     <input name="room_max_adults[{{ $apartment->id }}]"  required="true" value="{{ $apartment->max_adults }}" class="form-control   variation" type="number">
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group label-floating ">
                     <label class="control-label">Max Children</label>
                     <input name="room_max_children[{{ $apartment->id }}]"  required="true" value="{{ $apartment->max_children }}" class="form-control   variation" type="number">
                 </div>
             </div>
 
-            <div class="clearfix"></div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group label-floating ">
                     <label class="control-label">Price  </label>
                     <input name="edit_room_price[{{ $apartment->id }}]"  required="true" value="{{ $apartment->price }}" class="form-control   variation" type="number">
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group label-floating ">
                     <label class="control-label">Sale Price</label>
                     <input name="edit_room_sale_price[{{ $apartment->id }}]"   value="{{ $apartment->sale_price }}"  class="form-control variation_sale_price variation" type="number">
@@ -99,10 +107,9 @@
                 </div>
             </div>
             
-            <div class="clearfix"></div>
 
             <div class="col-md-12 bed mb-5">
-                @if ($bedrooms->count())
+               @if ($bedrooms->count())
 
                     @foreach($bedrooms as $key =>  $parent)
                         @if ($apartment->no_of_rooms > $key )
@@ -110,7 +117,7 @@
                                 <h6> {{ $parent->name }} </h6>
                                 @foreach($parent->children as $bedroom)
                                 <label for="bedroom-{{ $bedroom->id }}-{{ $apartment->id }}"  class="radio-inline">
-                                    <input  {{  $apartment->bedrooms->contains($bedroom) ? 'checked' : ''}}  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $apartment->id }}" name="{{ $parent->slug }}" type="radio" >{{ $bedroom->name }}
+                                    <input  {{  $apartment->bedrooms->contains($bedroom) ? 'checked' : ''}}  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $apartment->id }}" name="{{ $parent->slug }}_{{ $apartment->id }}" type="radio" >{{ $bedroom->name }}
                                 </label>
                                 @endforeach
                             </div>
@@ -124,7 +131,6 @@
                                 @endforeach
                             </div>
                         @endif
-
                     @endforeach
 
                 @endif
@@ -133,7 +139,7 @@
             
             <div class="col-sm-12">
                 <div id="j-drop"  class="j-drop">
-                <input accept="image/*"   onchange="getFile(this,'new_room_images[{{ $apartment->id }}][]')" class="upload_input"  multiple="true"   type="file" id="upload_file_input" name="product_image"  />
+                <input accept="image/*"  required="true"  data-msg="Upload  at least 5 images"  onchange="getFile(this,'new_room_images[{{ $apartment->id }}][]')" class="upload_input"  multiple="true"   type="file" id="upload_file_input" name="product_image"  />
                    <div   class=" upload-text {{ $apartment->images->count() ||  $apartment->image ? 'hide' : ''}}"> 
                         <a  class="" href="#">
                             <img class="" src="/backend/img/upload_icon.png">
@@ -156,6 +162,29 @@
                         @endif
                     </div>
                 </div>
+            </div>
+
+
+
+            <div class="col-md-12 mt-5 pr-5 kkk">
+                @foreach( $apartment_facilities as $apartment_facility )
+                    <div>{{ $apartment_facility->name }}</div>                       
+                    @foreach($apartment_facility->children->sortBy('name') as $child)
+                    <div class="mt-2 mb-2">
+                        <div class="togglebutton">
+                            <label>
+                                <input 
+                                    {{ $helper->check($apartment->attributes , $child->id) ? 'checked' : '' }} 
+
+                                    name="attribute_id[]"  value="{{ $child->id }}" type="checkbox" 
+                                >
+                            {{ $child->name }}
+                            </label>
+                            @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $apartment])
+                        </div>
+                    </div>
+                    @endforeach
+                @endforeach
             </div>
         </div>
 

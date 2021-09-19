@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
    <head>
@@ -17,6 +16,8 @@
       <link rel="apple-touch-icon" href="/img/favicon-96x96.png">
       <!-- CSS -->
       <!-- Main CSS File -->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
       <link href="/css/services_style.css?version={{ str_random(6) }}" rel="stylesheet">
       @yield('page-css')
       <meta property="og:site_name" content="myshorlet.com">
@@ -38,119 +39,83 @@
          }
       </script>
    </head>
-   <body>
-      <div id="app" class="app">
-      <header class="main-header navbar-light header-sticky header-sticky-smart header-mobile-xl">
-         <div class="sticky-area">
-            <div class="container container-xxl">
-               <nav class="navbar navbar-expand-xl px-0 w-100">
-                  <a class="navbar-brand mr-7" href="/">
-                  <img src="{{ $system_settings->logo_path() }}" alt="myshortlet logo" class="d-none d-xl-inline-block">
-                  <img src="{{ $system_settings->logo_path() }}" alt="myshortlet logo" class="d-inline-block d-xl-none">
-                  </a>
-                  <div class="d-flex d-xl-none ml-auto">
-                     <a class="d-block mr-4 position-relative text-white p-2" href="/">
-                     <i class="fal fa-heart fs-large-4"></i>
-                     <span class="badge badge-primary badge-circle badge-absolute">1</span>
-                     </a>
-                     <button class="navbar-toggler border-0 px-0 ml-0" type="button" data-toggle="collapse" data-target="#primaryMenu05" aria-controls="primaryMenu05" aria-expanded="false" aria-label="Toggle navigation">
-                     <span class="text-white fs-24"><i class="fal fa-bars"></i></span>
-                     </button>
-                  </div>
-                  <div class="collapse navbar-collapse mt-3 mt-xl-0 flex-grow-0" id="primaryMenu05">
-                     <ul class="navbar-nav hover-menu main-menu px-0 mx-xl-n4"> 
-                     </ul>
-                     <div class="d-block d-xl-none">
-                        <ul class="navbar-nav flex-row ml-auto align-items-center justify-content-lg-end flex-wrap py-2">
-                           @if( $system_settings->allow_multi_currency )
-                           <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle mr-md-2 pr-2 pl-0 pl-lg-2" href="home-07.html#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              {{ optional($system_settings->currency)->iso_code3 }}
-                              </a>
-                              <div class="dropdown-menu dropdown-sm dropdown-menu-right" aria-labelledby="bd-versions">
-                                 @foreach($currencies as $currency)
-											<a class="dropdown-item" href="/currency/{{ $currency->id }}"> {{ $currency->symbol }} {{ $currency->iso_code3 }} </a>
-									    	@endforeach
-                              </div>
-                           </li>
-                           @endif
-                           <li class="nav-item mr-2">
-                              <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/listing">
-                              Add listing
-                              </a>
-                           </li>
-                           @auth
-                              <li class="nav-item">
-                                 <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/account">
-                                 <i class="fal fa-user-alt"></i> Account
-                                 </a>
-                              </li>
-                           @endauth
-                           @guest
-                              <li class="nav-item">
-                                 <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/login">
-                                 <i class="fal fa-sign-in"></i> Login
-                                 </a>
-                              </li>
-                              <li class="nav-item">
-                                 <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block" href="/register">
-                                 <i class="fal fa-user-plus"></i> Register
-                                 </a>
-                              </li>
-                           @endguest
-                        </ul>
-                     </div>
-                  </div>
-                  <div class="ml-auto d-none d-xl-block">
-                     <ul class="navbar-nav flex-row ml-auto align-items-center justify-content-lg-end flex-wrap py-2">
-                        
-                        @if( $system_settings->allow_multi_currency )
-                           <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle mr-md-2 pr-2 pl-0 pl-lg-2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              {{ $currency->symbol }}  {{ optional($system_settings->currency)->iso_code3 }}
-                              </a>
-                              <div class="dropdown-menu dropdown-sm dropdown-menu-right" aria-labelledby="bd-versions">
-                                 @foreach($currencies as $currency)
-											<a class="dropdown-item" href="/currency/{{ $currency->id }}"> {{ $currency->symbol }} {{ $currency->iso_code3 }} </a>
-									    	@endforeach
-                              </div>
-                           </li>
-                           @endif
-                        <li class="nav-item">
-                           <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/listings">
-                           <i class="fal fa-building"></i> Add listing
-                           </a>
-                        </li>
 
-                        @auth
-                           <li class="nav-item">
-                              <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/account">
-                              <i class="fal fa-user-alt"></i> Account
-                              </a>
-                           </li>
-                        @endauth
-                        @guest
-                           <li class="nav-item">
-                              <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block mr-2" href="/login">
-                              <i class="fal fa-sign-in"></i> Login
-                              </a>
-                           </li>
-                           <li class="nav-item">
-                              <a class="btn btn-lg text-heading border bg-hover-primary border-hover-primary hover-white d-none d-lg-block" href="/register">
-                              <i class="fal fa-user-plus"></i> Register
-                              </a>
-                           </li>
-                        @endguest
-                     </ul>
+   <body>
+      <div id="app"  class="app">
+         <nav class="navbar navbar-color-on-scroll fixed-top navbar-expand-lg navbar-transparent" color-on-scroll="100" id="sectionsNav">
+            <div class="container">
+               <div class="navbar-translate">
+               <a class="navbar-brand">
+                  <div class="logo-small">
+                     <img src="{{ $system_settings->logo_path() }}" class="img-fluid">
                   </div>
-               </nav>
+               </a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="navbar-toggler-icon"></span>
+                  <span class="navbar-toggler-icon"></span>
+                  <span class="navbar-toggler-icon"></span>
+               </button>
+               </div>
+               <div class="collapse navbar-collapse">
+                  <ul class="navbar-nav ml-auto">
+                     <li class=" nav-item">
+                     <a href="javascript:;" class="nav-link">
+                        <i class="material-icons">gite</i>
+       
+                        Become a host
+                     </a>
+                     </li>
+                     <li class="nav-item">
+                       <a href="javascript:;" class="nav-link">
+                          <i class="material-icons">attach_money</i>
+                       </a>
+                     </li>
+                     @guest
+
+                     <li class="nav-item">
+                        <a href="/login" class="nav-link">
+                           <i class="material-icons">login</i>
+                           Login
+                        </a>
+                     </li>
+                     @endguest
+
+                     @auth
+                     <li class="dropdown nav-item">
+                        <a href="#" class="profile-photo dropdown-toggle nav-link" data-toggle="dropdown">
+                           <div class="profile-photo-small">
+                              <img src="/images/svg/baseline_person_outline_black_24dp.png" alt="Circle Image" class="rounded-circle img-fluid">
+                           </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                           <a href="/account" class="dropdown-item">Account</a>
+                           <a href="/profile" class="dropdown-item">Profile</a>
+                           <a href="/bookings" class="dropdown-item">Bookings</a>
+                           <a href="#" onclick="event.preventDefault();
+                                    document.getElementById('logout-form-nav').submit();"
+                                     class="dropdown-item">
+                              <i class="material-icons">logout</i>
+    
+                              Sign out
+                           </a>
+                           <form id="logout-form-nav" action="/logout" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+
+                        </div>
+                     </li>
+                     @endauth
+
+                  </ul>
+               </div>
             </div>
+         </nav>
+         
+         <div class="main  index-page">
+            @yield('content')
          </div>
-      </header>
-      <main id="content">
-         @yield('content')
-      </main>
-      <footer class="bg-dark pt-8 pb-6 footer text-muted">
+         <footer class="bg-dark pt-8 pb-6 footer text-muted">
          <div class="container container-xxl">
             <div class="row">
                @foreach($footer_info as $info)
@@ -180,21 +145,16 @@
             </div>
          </div>
       </footer>
-
       </div>
 
+      <script src="/js/popper.min.js" type="text/javascript"></script>
       <script src="/js/services_js.js"></script>
       @yield('page-scripts')    
-
-      <script src="/js/app.js"></script>
-
       <script type="text/javascript">
         @yield('inline-scripts')
       </script>
-      @include('_partials.svg')
-      <div class="position-fixed pos-fixed-bottom-right p-6 z-index-10">
-         <a href="home-01.html#" class="gtf-back-to-top bg-white text-primary hover-white bg-hover-primary shadow p-0 w-52px h-52 rounded-circle fs-20 d-flex align-items-center justify-content-center" title="Back To Top"><i class="fal fa-arrow-up"></i></a>
-      </div>
+  
    </body>
+
 </html>
 

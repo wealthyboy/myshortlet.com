@@ -11,9 +11,9 @@
         
 
         <!--<p class="large">Great to have you back!</p>-->
-        <p class="form-group">
-            <label for="username">Email address</label>
-            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+        <div class="form-group bmd-form-group">
+        <label class="bmd-label-floating">Email address</label>
+        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
             @if ($errors->all() )
                 @foreach($errors->all()  as $error)
                     <span class="error">
@@ -21,23 +21,25 @@
                     </span>
                 @endforeach
             @endif
-        </p>
-        <p class="form-group">
-            <label for="password">Password</label>
-            <input id="password" type="password" class="form-control" name="password" required>
-        </p>
-        <div class="d-flex justify-content-between">
-            <p class="form-group">
-                <div class="form-group-custom-control flex-grow-1">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="change-bill-address" value="1">
-                        <label class="custom-control-label" for="change-bill-address">Remember Me</label>
-                    </div><!-- End .custom-checkbox -->
-                </div><!-- End .form-group -->
-            </p>
-            <p class="form-group text-right mt-2">
+        </div>
+
+
+        <div class="form-group bmd-form-group">
+        <label class="bmd-label-floating">Password</label>
+        <input id="password" type="password" class="form-control" name="password" required>
+        </div>
+        
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="checkbox">
+                <label  id="box50" class="checkbox-label">
+                <input for="box50" name="remember" value="1" class="filter-product" type="checkbox">
+                    <span class="checkbox-custom rectangular"></span>
+                    <span class="checkbox-label-text">Remember Me</span> 
+                </label>
+            </div>
+            <div class="text-right mt-2">
                 <a  class="color--primary bold"  href="/password/reset">Forget your password?</a>
-            </p>
+            </div>
         </div>
         <div class="clearfix"></div>
 

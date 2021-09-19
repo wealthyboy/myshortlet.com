@@ -16,10 +16,9 @@ class Helper{
 
 
     function active_link (array $url)  { 
-        $uri =   $_SERVER['REQUEST_URI'];
-        $link = explode("/",$uri);
-        $link = isset( $link[2] ) ? strtolower($link[2]) : '';
-        return in_array($link, $url) ? 'active' : '';
+        $path =   $_SERVER['REQUEST_URI'];
+        $link = explode("/",$path);
+        return array_intersect($link, $url) ? 'active' : '';
     }
     
 
@@ -225,6 +224,18 @@ class Helper{
             'col-lg-3',
             'col-lg-2',
             'col-lg-1',
+        ];
+    }
+
+
+    public static function attribute_types(){
+        return [
+            'bedrooms' => 'Bedrooms',
+            'extra_services' => 'Extra Services',
+            'facilities' => 'Facilities',
+            'rules' => 'Rules',
+            'room_facilities' => 'Room Facilities',
+            'other' => 'other'
         ];
     }
 

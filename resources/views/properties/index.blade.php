@@ -1,102 +1,74 @@
 @extends('layouts.user')
 @section('content')
-<div class="px-3 px-lg-6 px-xxl-13 py-5 py-lg-10">
-   <div class="d-flex flex-wrap flex-md-nowrap mb-6">
-      <div class="mr-0 mr-md-auto">
-         <h2 class="mb-0 text-heading fs-22 lh-15">My Properties<span class="badge badge-white badge-pill text-primary fs-18 font-weight-bold ml-2">{{ $apartments->count() }}</span></h2>
-      </div>
-      <div class="form-inline justify-content-md-end mx-n2">
-         <a href="/properties/create" class="btn btn-primary btn-lg">
-            <span>Add New Property</span>
-            <span class="d-inline-block ml-1 fs-20 lh-1">
-               <svg class="icon icon-add-new">
-                  <use xlink:href="#icon-add-new"></use>
-               </svg>
-            </span>
-         </a>
-         
-      </div>
-   </div>
-   @include('includes.success')
-   @if ( $apartments->count())
-   <div class="table-responsive">
-      <table class="table table-hover bg-white border rounded-lg">
-         <thead class="thead-sm thead-black">
-            <tr>
-               <th scope="col" class="border-top-0 px-6 pt-5 pb-4">Listing title</th>
-               <th scope="col" class="border-top-0 pt-5 pb-4">Date Published</th>
-               <th scope="col" class="border-top-0 pt-5 pb-4">Status</th>
-               <th scope="col" class="border-top-0 pt-5 pb-4">View</th>
-               <th scope="col" class="border-top-0 pt-5 pb-4">Action</th>
-            </tr>
-         </thead>
-         <tbody>
-            @foreach( $apartments as $apartment)
-               <tr class="shadow-hover-xs-2 bg-hover-white">
-                  <td class="align-middle pt-6 pb-4 px-6">
-                     <div class="media">
-                        <div class="w-120px mr-4 position-relative">
-                           <a href="">
-                           <img src="{{ $apartment->image_m }}" alt="Home in Metric Way">
-                           </a>
-                           <span class="badge badge-indigo position-absolute pos-fixed-top"></span>
-                        </div>
-                        <div class="media-body">
-                           <a href="#" class="text-dark hover-primary">
-                              <h5 class="fs-16 mb-0 lh-18">{{ $apartment->name }}</h5>
-                           </a>
-                           <p class="mb-1 font-weight-500">{{ $apartment->address }}</p>
-                           @if( $apartment->rooms->count() && $apartment->rooms->count() >  1  )
-                              <span class="text-heading lh-15 font-weight-bold fs-17">{{ $apartment->currency }}{{ $apartment->rooms->first()->price }}  - {{ $apartment->currency }}{{ $apartment->rooms[$apartment->rooms->count() - 1]->first()->price }} </span>
-                           @else
-                              <span class="text-heading lh-15 font-weight-bold fs-17">{{ $apartment->currency }}{{ optional(optional($apartment->rooms)->first())->price }}</span>
-                           @endif
-                           <span class="text-gray-light">/month</span>
-                        </div>
-                     </div>
-                  </td>
-                  <td class="align-middle">{{ $apartment->created_at->format('d/m/y')}}</td>
-                  <td class="align-middle">
-                     <span class="badge text-capitalize font-weight-normal fs-12 badge-yellow">{{ $apartment->status }}</span>
-                  </td>
-                  <td class="align-middle">0</td>
-                  <td class="align-middle">
-                     <a href="{{ route('properties.edit',['property'=>$apartment->id, 'type' =>  $apartment->type,'token' => $apartment->token,'update' =>  $apartment->user_id, 'step' => $apartment->is_completed ? 'one' : $apartment ]) }}" data-toggle="tooltip" title="Edit" class="d-inline-block fs-18 text-muted hover-primary mr-5"><i class="fal fa-pencil-alt"></i></a>
-                     <a href="#" data-toggle="tooltip" title="Delete" class="d-inline-block fs-18 text-muted hover-primary"  
-                                                onclick="event.preventDefault();
-                                                        document.getElementById('logout-form{{ $apartment->id }}').submit();"><i class="fal fa-trash-alt"></i></a>
-                     <form id="logout-form{{ $apartment->id }}" action="{{ route('properties.destroy',['property'=>$apartment->id]) }}" method="POST" style="display: none;">
-                        @csrf
-                        @method('DELETE')
-                     </form>
-                  </td>
-               </tr>
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-md-12 ml-auto mr-auto">
+        <div class="text-right">
+            <a href="{{ route('properties.index') }}" rel="tooltip" title="Refresh" class="btn btn-primary btn-simple btn-xs">
+                <i class="material-icons">refresh</i>
+                Refresh
+            </a>
+            <a href="{{ route('properties.create') }}"  title="Add New" class="btn btn-primary btn-simple btn-xs">
+                    <i class="material-icons">add</i>
+                    Add Property
+            </a>
             
-            @endforeach
-         </tbody>
-      </table>
-   </div>
-   @else
-   <div class="no-apartments">
-      <div class=" d-flex justify-content-center fa-2x"  >
-            <div class="text-center pb-3">
-               <svg class="icon icon-my-properties fa-4x">
-                  <use xlink:href="#icon-my-properties"></use>
-               </svg>               
-               <p class="bold">You have not added any apartments.</p>
+
+         </div>
+         <h2 class="title"></h2>
+         @include('includes.success')
+         @if ( $properties->count())
+         @foreach( $properties as $property)
+         <div class="card card-plain border">
+            <div class="row">
+               <div class="col-md-2">
+                  <div class="card-header card-header-image">
+                     <img class="img img-raised" src="{{ $property->image_m }}">
+                  </div>
+               </div>
+               <div class="col-md-7">
+                  <h6 class="card-category text-info">{{ $property->status }}</h6>
+                  <h3 class="card-title">
+                     <a href="#">{{ $property->name }}</a>
+                  </h3>
+                  <div class="">
+                  </div>
+                  <div class="">
+                     {{ $property->address }}                     
+                  </div>
+                  <p>
+                     @if( $property->apartments->count() && $property->apartments->count() >  1  )
+                     <span class="text-heading lh-15 font-weight-bold fs-17">{{ $property->currency }}{{ $property->apartments->single_room->price }}  - {{ $property->currency }}{{ $property->apartments[$property->apartments->count() - 1]->first()->price }} </span>
+                     @else
+                     <span class="text-heading lh-15 font-weight-bold fs-17">{{ $property->currency }}{{ optional(optional($property->apartments)->first())->price }}</span>
+                     @endif
+                     <span class="text-gray-light">/month</span>
+                  </p>
+               </div>
+               <div class="col-md-3  d-flex justify-content-senter align-items-center">
+                  <a href="" class="btn btn-primary  btn-link ">
+                  <i class="material-icons">edit</i> Edit
+                  </a>
+                  <a href="" class="btn btn-primary  btn-link ">
+                  <i class="material-icons">delete_forever</i> delete
+                  </a>
+               </div>
             </div>
+         </div>
+         @endforeach
+         @else
+         <div class="no-apartments">
+            <div class=" d-flex justify-content-center fa-2x"  >
+               <div class="text-center pb-3">
+                  <i class="material-icons display-1">apartment</i>
+                  <p class="bold">You have not added any property.</p>
+               </div>
+            </div>
+         </div>
+         @endif
       </div>
    </div>
-   @endif
-   <nav class="mt-6">
-      {{ $apartments->links() }}
-      
-   </nav>
 </div>
-
-
-
 @endsection
 @section('page-scripts')
 @stop
-
