@@ -1,9 +1,7 @@
 
 @extends('admin.layouts.app')
 @section('content')
-@section('pagespecificstyles')
-<link href="{{ asset('store/css/bootstrap-colorpicker.min.css') }}" rel="stylesheet" />
-@stop
+
 <div class="row">
     <div class="col-md-10">
         @include('errors.errors')
@@ -37,22 +35,21 @@
                         />
                     </div>
                     <div class="form-group label-floating">
-                            <label class="control-label">
-                                Hex Code
-                                <small>*</small>
-                            </label>
-                            <input class="form-control  colorpicker"
-                                name="color_code"
-                                type="text"
-                                value="{{ $attr->color_code }}"  
-                            />
-                        </div>
+                        <label class="control-label">
+                            Hex Code
+                            <small>*</small>
+                        </label>
+                        <input class="form-control  colorpicker"
+                            name="color_code"
+                            type="text"
+                            value="{{ $attr->color_code }}"  
+                        />
+                    </div>
                     <div class="form-group ">
                         <label class="control-label"></label>
                         <select name="parent_id" class="form-control">
-                        <option  value="">--Choose Parent--</option>
+                            <option  value="">--Choose Parent--</option>
                             
-
                             @foreach($attributes as $attribute)
                                 @if($attr->parent_id ==  $attribute->id )
                                     <option class="" value="{{ $attribute->id }}" selected="selected">{{ $attribute->name }} </option>                                        
@@ -83,11 +80,10 @@
                     <div class="">
                         <div id="m_image"  class="uploadloaded_image text-center mb-3">
                             <div class="upload-text {{ $attr->image !== null  ?  'hide' : '' }}"> 
-                                    
-                                    <a class="activate-file" href="#">
+                                <a class="activate-file" href="#">
                                     <img src="{{ asset('backend/img/upload_icon.png') }}">
                                     <b>Add Image </b> 
-                                    </a>
+                                </a>
                             </div>
                             <div id="remove_image" class="remove_image {{ $attr->image !== null  ?  '' : 'hide' }}">
                                 <a class="delete_image" data-id="{{ $attr->id }}" href="#">Remove</a> 
@@ -110,9 +106,7 @@
     </div>
 </div>
 @endsection
-@section('page-scripts')
-   <script src="{{ asset('store/js/bootstrap-colorpicker.min.js') }}"></script>
-@stop
+
 @section('inline-scripts')
 $(document).ready(function() {		
 });
