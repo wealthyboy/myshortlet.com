@@ -24,8 +24,6 @@
         {{ $obj->name }}
         </label>
     </div>
-    @include('includes.loop',['obj'=>$obj])
-
 
 @endif
 
