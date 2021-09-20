@@ -15,7 +15,6 @@
 @endforeach
 
 @else
-   @foreach($obj as $obj) 
     <div class="togglebutton ml-3">
         <label>
             <input  
@@ -27,7 +26,6 @@
     </div>
     @include('includes.loop',['obj'=>$obj])
 
-  @endforeach
 
 @endif
 
