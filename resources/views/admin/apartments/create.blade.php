@@ -64,18 +64,12 @@
                      </div>
 
                      <div class="col-md-12 mt-1 pr-5 ">
-                        @foreach( $attributes as $attribute )
-                           <div>{{ $attribute->name }}</div>                       
-                           @foreach($attribute->children->sortBy('name') as $child)
+                         @foreach($attributes as $key => $attrs)
+                          <h4 class="text-capitalize">{{ $str::replaceFirst('_', ' ', $key) }}</h4>
+                           @foreach($attrs as $child)
                            <div class="mt-2 mb-2">
                               <div class="togglebutton">
-                                    <label>
-                                       <input   
-                                          name="attribute_id[]"  value="{{ $child->id }}" type="checkbox" 
-                                       >
-                                     {{ $child->name }}
-                                    </label>
-                                    @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => 'Attribute','url' => 'attribute'])
+                                 @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => 'Attribute','url' => 'attribute'])
                               </div>
                            </div>
                            @endforeach

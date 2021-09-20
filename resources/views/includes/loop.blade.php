@@ -1,4 +1,6 @@
-@foreach($obj->children->sortBy('name') as $obj)
+
+@if ($obj->children->count())
+@foreach($obj->children as $obj)
     <div class="togglebutton ml-3">
         <label>
             <input  
@@ -11,4 +13,5 @@
      
     @include('includes.loop',['obj'=>$obj])
 @endforeach
+@endif
 

@@ -71,11 +71,12 @@ class PropertiesController extends Controller
         ];
 
         $locations = Location::parents()->get();
-        $attributes = Attribute::parents()->whereIn('type' ,$this->types)->get();
+        $attributes = Attribute::parents()->whereIn('type' ,$this->types)->get()->groupBy('type');
         $apartment_facilities =  Attribute::parents()->where('type','apartment_facilities')->orderBy('sort_order','asc')->get();
         $bedrooms =  Attribute::parents()->where('type','bedrooms')->orderBy('sort_order','asc')->get();
         $helper = new Helper;
-        return view('admin.apartments.create',compact('helper','bedrooms','apartment_facilities','counter','locations','attributes'));
+        $str = new Str;
+        return view('admin.apartments.create',compact('str','helper','bedrooms','apartment_facilities','counter','locations','attributes'));
     }
     /**
      * Store a newly created resource in storage.
@@ -257,11 +258,12 @@ class PropertiesController extends Controller
         $locations  = Location::parents()->get();
         $helper  = new Helper();
         $counter = rand(1,500);
-        $attributes = Attribute::parents()->whereIn('type' ,$this->types)->get();
+        $attributes = Attribute::parents()->whereIn('type' ,$this->types)->get()->groupBy('type');
         $apartment_facilities =  Attribute::parents()->where('type','apartment_facilities')->orderBy('sort_order','asc')->get();
         $counter = rand(1,500);
+        $str = new Str;
         $bedrooms =  Attribute::parents()->where('type','bedrooms')->orderBy('sort_order','asc')->get();
-        return view('admin.apartments.edit',compact('bedrooms','counter','attributes','locations','property','helper','apartment_facilities'));
+        return view('admin.apartments.edit',compact('str','bedrooms','counter','attributes','locations','property','helper','apartment_facilities'));
     }
 
     /**
