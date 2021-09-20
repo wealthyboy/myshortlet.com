@@ -126,8 +126,6 @@
                                     @include('includes.children',['obj'=>$attribute,'space'=>'&nbsp;&nbsp;','model' => 'attributes','url' => 'attribute'])
                                 </div>
                             @endforeach  
-
-
                         </div>
 
                         @endforeach  

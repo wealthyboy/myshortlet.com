@@ -117,6 +117,7 @@ class AttributesController extends Controller
      */
     public function update(Request $request,$id)
     {
+        
         $attribute = Attribute::find($id);
         if( $request->filled('parent_id') ) {
             $this->validate($request,[
@@ -135,13 +136,13 @@ class AttributesController extends Controller
                 ],
         ]);
 
-        $attribute->name=$request->name;
+        $attribute->name=        $request->name;
         $attribute->sort_order = $request->sort_order;
         $attribute->parent_id  = $request->parent_id ? $request->parent_id : null;
         $attribute->color_code = $request->color_code;
-        $attribute->image = $request->image;
-        $attribute->slug = str_slug($request->name, '_');
-        $attribute->type  = $request->type;
+        $attribute->image      = $request->image;
+        $attribute->slug       = str_slug($request->name, '_');
+        $attribute->type       = $request->type;
         $attribute->save();
         //Log Activity
         (new Activity)->Log("Updated  Attribute {$request->name} ");
