@@ -51,6 +51,10 @@
 @import "./styles/cards/card-plain";
 @import "./styles/responsive";
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .navbar-brand img {
   max-width: 100px;
   height: 40px;

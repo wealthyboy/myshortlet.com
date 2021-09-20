@@ -72,7 +72,7 @@ class PropertiesController extends Controller
 
         $locations = Location::parents()->get();
         $attributes = Attribute::parents()->whereIn('type' ,$this->types)->get();
-        $apartment_facilities =  Attribute::parents()->where('type','room_facilities')->orderBy('sort_order','asc')->get();
+        $apartment_facilities =  Attribute::parents()->where('type','apartment_facilities')->orderBy('sort_order','asc')->get();
         $bedrooms =  Attribute::parents()->where('type','bedrooms')->orderBy('sort_order','asc')->get();
         $helper = new Helper;
         return view('admin.apartments.create',compact('helper','bedrooms','apartment_facilities','counter','locations','attributes'));
@@ -236,7 +236,7 @@ class PropertiesController extends Controller
         $counter = rand(1,500);
         $bedrooms =  Attribute::parents()->where('type','bedrooms')->orderBy('sort_order','asc')->get();
         $attributes = Attribute::parents()->whereIn('type' ,$this->types)->get();
-        $apartment_facilities =  Attribute::parents()->where('type','room_facilities')->orderBy('sort_order','asc')->get();
+        $apartment_facilities =  Attribute::parents()->where('type','apartment_facilities')->orderBy('sort_order','asc')->get();
                 return view('admin.apartments.variation',
                         compact('bedrooms','apartment_facilities','counter','attributes')
                     );
@@ -258,7 +258,7 @@ class PropertiesController extends Controller
         $helper  = new Helper();
         $counter = rand(1,500);
         $attributes = Attribute::parents()->whereIn('type' ,$this->types)->get();
-        $apartment_facilities =  Attribute::parents()->where('type','room_facilities')->orderBy('sort_order','asc')->get();
+        $apartment_facilities =  Attribute::parents()->where('type','apartment_facilities')->orderBy('sort_order','asc')->get();
         $counter = rand(1,500);
         $bedrooms =  Attribute::parents()->where('type','bedrooms')->orderBy('sort_order','asc')->get();
         return view('admin.apartments.edit',compact('bedrooms','counter','attributes','locations','property','helper','apartment_facilities'));
