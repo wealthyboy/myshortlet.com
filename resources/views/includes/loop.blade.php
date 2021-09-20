@@ -5,7 +5,7 @@
         <label>
             <input  
                 {{ $helper->check(optional($model)->attributes , $obj->id) ? 'checked' : '' }} 
-                name="attribute_id[]"  value="{{ $obj->id }}" type="checkbox" 
+                name="{{ $name }}[]"  value="{{ $obj->id }}" type="checkbox" 
             >
         {{ $obj->name }}
         </label>

@@ -204,7 +204,7 @@
                                           >
                                        {{ $child->name }}
                                        </label>
-                                       @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $property])
+                                       @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $property,'name' =>'attribute_id'])
                                  </div>
                               </div>
                            @endforeach
@@ -371,11 +371,11 @@
                                                    <input 
                                                      {{ $helper->check($property->attributes , $child->id) ? 'checked' : '' }} 
   
-                                                      name="attribute_id[]"  value="{{ $child->id }}" type="checkbox" 
+                                                      name="apartment_facilities_id[]"  value="{{ $child->id }}" type="checkbox" 
                                                    >
                                                 {{ $child->name }}
                                                 </label>
-                                                @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $property])
+                                                @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $property,'name' => 'apartment_facilities_id'])
                                           </div>
                                        </div>
                                        @endforeach

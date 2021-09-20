@@ -127,12 +127,12 @@
                         <div class="togglebutton">
                             <label>
                                 <input 
-                                    name="attribute_id[]"  value="{{ $child->id }}" type="checkbox" 
+                                    name="apartment_facilities_id[]"  value="{{ $child->id }}" type="checkbox" 
                                 >
                                 <span class="toggle"></span>
                                {{ $child->name }}
                             </label>
-                            @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => 'Attribute','url' => 'attribute'])
+                            @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => 'Attribute','name' => 'apartment_facilities_id'])
                         </div>
                     </div>
                     @endforeach

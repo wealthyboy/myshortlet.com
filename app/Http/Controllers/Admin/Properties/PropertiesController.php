@@ -142,7 +142,7 @@ class PropertiesController extends Controller
         $property->token                = $token;
         $property->save();
         $property->locations()->sync($request->location_id);
-        $property->attributes()->sync($request->facility_id);
+        $property->attributes()->sync($request->apartment_facilities_id);
         $property->attributes()->syncWithoutDetaching($request->attribute_id);
         $locations = Location::find($request->location_id);        
         foreach( $locations as $location )
@@ -208,7 +208,7 @@ class PropertiesController extends Controller
     public function syncAttributes($request, $apartment, $key=null){
         $beds = array_filter($this->beds($request, $key));
         $apartment->attributes()->sync($beds);
-        $apartment->attributes()->syncWithoutDetaching($request->attribute_id);
+        $apartment->attributes()->syncWithoutDetaching($request->apartment_facilities_id);
     }
 
 
