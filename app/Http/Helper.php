@@ -234,7 +234,7 @@ class Helper{
             'extra_services' => 'Extra Services',
             'facilities' => 'Facilities',
             'rules' => 'Rules',
-            'room_facilities' => 'Room Facilities',
+            'apartment_facilities' => 'Apartment Facilities',
             'other' => 'other'
         ];
     }
