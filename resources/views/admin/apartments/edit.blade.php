@@ -204,7 +204,6 @@
                                           >
                                        {{ $child->name }}
                                        </label>
-                                       @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $property])
                                  </div>
                               </div>
                            @endforeach
