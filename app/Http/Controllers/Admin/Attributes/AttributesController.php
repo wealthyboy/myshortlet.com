@@ -141,7 +141,7 @@ class AttributesController extends Controller
         $attribute->color_code = $request->color_code;
         $attribute->image = $request->image;
         $attribute->slug = str_slug($request->name, '_');
-
+        $product_attribute->type  = $request->type;
         $attribute->save();
         //Log Activity
         (new Activity)->Log("Updated  Attribute {$request->name} ");

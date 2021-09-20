@@ -6,7 +6,7 @@
     <div class="col-md-10">
         @include('errors.errors')
         <div class="card">
-            <form id="" action="{{ route('attributes.update',['attribute'=>$attr->id ,'type'=> $type ?? '']) }}" method="post">
+            <form id="" action="{{ route('attributes.update',['attribute'=>$attr->id]) }}" method="post">
                 @csrf
                 @method('PATCH')
                 <div class="card-content">
