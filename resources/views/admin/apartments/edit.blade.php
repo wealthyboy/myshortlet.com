@@ -197,8 +197,7 @@
                            @foreach($attrs as $child)
                               <div class="mt-2 mb-2">
                                  <div class="togglebutton">
-                                       
-                                       @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $property])
+                                    @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $property])
                                  </div>
                               </div>
                            @endforeach
