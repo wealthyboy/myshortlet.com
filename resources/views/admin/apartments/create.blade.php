@@ -69,6 +69,13 @@
                            @foreach($attrs as $child)
                            <div class="mt-2 mb-2">
                               <div class="togglebutton">
+                                 <label>
+                                    <input   
+                                       name="attribute_id[]"  value="{{ $child->id }}" type="checkbox" 
+                                    >
+                                    {{ $child->name }}
+                                 </label>
+
                                  @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => 'Attribute','name' => 'attribute_id'])
                               </div>
                            </div>
