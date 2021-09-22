@@ -138,11 +138,15 @@
                      <div class="">
                         <samll class=""> <a class="p-0" href="/apartment/{{ optional($property)->slug }}"> <i class="material-icons">location_on</i> {{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
                      </div>
+                     <div class="d-flex">
+
                      @foreach($property->facilities->take(3) as $facility)
-                     <div>
+                     <div class="">
                         <span class="">  <span class="c"><?php echo  html_entity_decode($facility->svg) ?></span> {{ $facility->name }}</span>
                      </div>
                      @endforeach
+                     </div>
+
 
                      @if( $property->type == 'single')
                      <div>
