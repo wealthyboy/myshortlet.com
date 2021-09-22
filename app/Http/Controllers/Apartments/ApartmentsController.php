@@ -70,7 +70,7 @@ class ApartmentsController extends Controller
     {
         $filters = [];
         foreach ($attributes as $key => $attribute){
-           $filters[$attribute->slug] = AttributesFilter::class;
+           $filters[$key] = AttributesFilter::class;
         }
         return $filters;
     }
