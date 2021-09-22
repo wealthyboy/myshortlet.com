@@ -140,7 +140,7 @@
                      </div>
                      @foreach($property->facilities->take(3) as $facility)
                      <div>
-                        <span class="">  <span class="c"><?php echo  html_entity_decode($$facility->svg) ?></span> {{ $facility->name }}</span>
+                        <span class="">  <span class="c"><?php echo  html_entity_decode($facility->svg) ?></span> {{ $facility->name }}</span>
                      </div>
                      @endforeach
 
