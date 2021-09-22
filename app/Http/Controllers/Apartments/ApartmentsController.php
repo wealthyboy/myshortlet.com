@@ -43,6 +43,9 @@ class ApartmentsController extends Controller
 
         $cites = [];
 
+        $attributes = $location->attributes->groupBy('type'); 
+
+
         $filters = [];
         foreach ($attributes as $key => $attribute){
             foreach ($attribute as $attr){
@@ -51,7 +54,6 @@ class ApartmentsController extends Controller
         }
         dd($filters);
 
-        $attributes = $location->attributes->groupBy('type'); 
         $page_title = implode(" ",explode('-',$location->slug));
         $properties = Property::where('allow',true)->whereHas('locations',function(Builder  $builder) use ($location){
                 $builder->where('locations.slug',$location->slug);
