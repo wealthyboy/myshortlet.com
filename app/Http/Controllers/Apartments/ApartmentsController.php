@@ -44,16 +44,6 @@ class ApartmentsController extends Controller
         $cites = [];
 
         $attributes = $location->attributes->groupBy('type'); 
-
-
-        $filters = [];
-        foreach ($attributes as $key => $attribute){
-            foreach ($attribute as $attr){
-               $filters[$attr->slug] = AttributesFilter::class;
-            }
-        }
-        dd($filters);
-
         $page_title = implode(" ",explode('-',$location->slug));
         $properties = Property::where('allow',true)->whereHas('locations',function(Builder  $builder) use ($location){
                 $builder->where('locations.slug',$location->slug);
@@ -80,9 +70,10 @@ class ApartmentsController extends Controller
     {
         $filters = [];
         foreach ($attributes as $key => $attribute){
-           $filters[$key] = AttributesFilter::class;
+            foreach ($attribute as $attr){
+               $filters[$attr->slug] = AttributesFilter::class;
+            }
         }
-        return $filters;
     }
     
     public function checkAvailability(Request $request)
