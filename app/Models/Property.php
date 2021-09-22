@@ -62,7 +62,7 @@ class Property extends Model
     }
 
     public function facilities(){
-        return $this->belongsToMany(Facility::class,'apartment_facility');
+        return $this->belongsToMany(Attribute::class)->where('type','facilities');
     }
 
 

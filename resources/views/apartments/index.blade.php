@@ -132,34 +132,32 @@
                      </div>
                   </div>
                   <div class="col-md-6 pl-3">
-                     <h6 class="card-category text-info">{{ $property->type }}</h6>
                      <h3 class="card-title">
                         <a href="/apartment/{{ $property->slug }}">{{ $property->name }}</a>
                      </h3>
                      <div class="">
                         <samll class=""> <a class="p-0" href="/apartment/{{ optional($property)->slug }}"> <i class="material-icons">location_on</i> {{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
                      </div>
-
+                     @foreach($property->facilities->take(3) as $facility)
                      <div>
-                        <span class="">Kitchen</span>
-                        <span aria-hidden="true"> · </span>
-                        <span class="">Air conditioning</span>
+                        <span class="">  <span class="c">{{ $facility->svg }}</span> {{ $facility->name }}</span>
                      </div>
+                     @endforeach
 
                      @if( $property->type == 'single')
                      <div>
-                        <span class="">4 guests</span>
+                        <span class="">{{  $property->single_room->max_children + $property->single_room->no_of_rooms }} guests</span>
                         <span aria-hidden="true"> · </span>
-                        <span class="">1 bedroom</span>
+                        <span class="">{{ $property->single_room->no_of_rooms }} bedroom</span>
                         <span aria-hidden="true"> · </span>
-                        <span class="">1 bed</span>
                         <span aria-hidden="true"> · </span>
-                        <span class="">1.5 baths</span>
+                        <span class="">{{ $property->single_room->toilets }}baths</span>
                      </div>
                      @endif
 
-                     
-                     
+                     <div class="position-absolute">
+                        3 reviews
+                     </div>
                   </div>
                   <div class="col-md-3  d-flex justify-content-start align-items-end pl-3">
                      <div>
