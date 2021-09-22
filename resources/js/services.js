@@ -1,7 +1,8 @@
 require("./bootstrap");
 import Vue from "vue";
 import flatpickr from "flatpickr";
-window.flexslider = require("flexslider");
+import validate from "jquery-validation";
+
 import store from "./store";
 require("./scripts.js");
 
@@ -18,6 +19,8 @@ $().ready(function() {
     },
   });
 });
+
+//console.log(intlTelInput());
 
 const app = new Vue({
   el: "#app",

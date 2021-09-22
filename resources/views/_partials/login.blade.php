@@ -1,15 +1,9 @@
 <form method="POST" class="login_form pl-4 pr-4" action="/login">
         @csrf
-        
         <div class="text-center"> 
             <h2>Login</h2>
             <p class="">Welcome Back!</p>
-            <!-- <a href="/login/facebook" class="btn btn-facebook btn-round">
-                <i class="fab fa-facebook-f"></i> Sign in with Facebook 
-            </a> -->
         </div>
-        
-
         <!--<p class="large">Great to have you back!</p>-->
         <div class="form-group bmd-form-group">
         <label class="bmd-label-floating">Email address</label>
@@ -30,9 +24,9 @@
         </div>
         
         <div class="d-flex justify-content-between align-items-center">
-            <div class="checkbox">
+            <div class="checkbox flex-grow-1">
                 <label  id="box50" class="checkbox-label">
-                <input for="box50" name="remember" value="1" class="filter-product" type="checkbox">
+                <input for="box50" name="remember" value="1" class="" type="checkbox">
                     <span class="checkbox-custom rectangular"></span>
                     <span class="checkbox-label-text">Remember Me</span> 
                 </label>

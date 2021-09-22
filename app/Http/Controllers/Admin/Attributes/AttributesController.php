@@ -67,15 +67,16 @@ class AttributesController extends Controller
                 ],
             ]);
         }
-        $product_attribute = new Attribute;
-        $product_attribute->name = $request->name;
-        $product_attribute->sort_order = $request->sort_order;
-        $product_attribute->color_code = $request->color_code;
-        $product_attribute->image = $request->image;
-        $product_attribute->slug = str_slug($request->name, '_');
-        $product_attribute->parent_id  = $request->parent_id ? $request->parent_id : null;
-        $product_attribute->type  = $request->type ? $request->type : null;
-        $product_attribute->save();
+        $attribute = new Attribute;
+        $attribute->name = $request->name;
+        $attribute->sort_order = $request->sort_order;
+        $attribute->color_code = $request->color_code;
+        $attribute->image = $request->image;
+        $attribute->svg = $request->svg;
+        $attribute->slug = str_slug($request->name, '_');
+        $attribute->parent_id  = $request->parent_id ? $request->parent_id : null;
+        $attribute->type  = $request->type ? $request->type : null;
+        $attribute->save();
         (new Activity)->Log("Created a new attribute called {$request->name}");
         return redirect()->back();
     }
@@ -141,6 +142,8 @@ class AttributesController extends Controller
         $attribute->parent_id  = $request->parent_id ? $request->parent_id : null;
         $attribute->color_code = $request->color_code;
         $attribute->image      = $request->image;
+        $attribute->svg = $request->svg;
+
         $attribute->slug       = str_slug($request->name, '_');
         $attribute->type       = $request->type;
         $attribute->save();

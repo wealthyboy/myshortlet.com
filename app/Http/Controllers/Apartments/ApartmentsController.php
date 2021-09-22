@@ -9,9 +9,12 @@ use App\Models\Property;
 use App\Models\Reservation;
 use App\Models\SystemSetting;
 use App\Models\Attribute;
+use App\Http\Helper;
+
 use Illuminate\Database\Eloquent\Builder;
 use App\Filters\ApartmentFilter\AttributesFilter;
 use  Illuminate\Support\Str;
+
 
 
 
@@ -36,6 +39,9 @@ class ApartmentsController extends Controller
             'other' => 'other'
         ];
         $str =new  Str;
+        $codes = Helper::phoneCodes();
+
+        $cites = [];
 
         $attributes = $location->attributes->groupBy('parent.slug'); 
         $page_title = implode(" ",explode('-',$location->slug));
@@ -44,13 +50,17 @@ class ApartmentsController extends Controller
             })->filter($request,$this->getFilters($attributes))->latest()->paginate(5);
         $properties->appends(request()->all());
         $breadcrumb = $location->name; 
+        $saved =  auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];
+
         return  view('apartments.index',compact(
             'location',
             'page_title',
             'breadcrumb',
             'properties',
             'attributes',
-            'str'
+            'str',
+            'saved',
+            'codes'
         )); 
     }
 

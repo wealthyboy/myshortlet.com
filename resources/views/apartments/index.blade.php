@@ -16,15 +16,71 @@
 </div>
 <div class="container-fluid">
    <div class="row">
-      
+      <div class="col-12 d-flex justify-content-between">
+         <div>{{ $properties->count() }} properties in Lagos</div>
+         <div>
+            <div class="d-flex justify-content-md-end align-items-center">
+               <div class="input-group border rounded  w-auto bg-white mr-3">
+               <label class="input-group-text bg-transparent border-0   pr-1 pl-3" for="inputGroupSelect01"><i class="fas fa-align-left fs-16 pr-2"></i>Sortby:</label>
+               <select class="form-control border-0 bg-transparent  sortby" data-style="bg-transparent border-0 font-weight-600 btn-lg pl-0 pr-3" id="inputGroupSelect01" name="sortby">
+               <option selected>Top Selling</option>
+               <option value="1">Most Viewed</option>
+               <option value="2">Price(low to high)</option>
+               <option value="3">Price(high to low)</option>
+               </select>
+               </div>
+            </div>
+            
+
+         </div>
+      </div>
+      <div class="clearfix"></div>
       <div class="col-md-3 ">
          <div class="card">
             <div class="text-left pl-3">
+               <div class="text-capitalize pb-2 pt-3">Your Budget</div>
+               <div class="mb-2">
+                  <div class="checkbox">
+                     <label  id="box50" class="checkbox-label">
+                     <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
+                        <span class="checkbox-custom rectangular"></span>
+                        <span class="checkbox-label-text mt-1">less than 200k</span> 
+                     </label>
+                  </div> 
+               </div>
+               <div class="mb-2">
+                  <div class="checkbox">
+                     <label  id="box50" class="checkbox-label">
+                     <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
+                        <span class="checkbox-custom rectangular"></span>
+                        <span class="checkbox-label-text mt-1">200k - 500k</span> 
+                     </label>
+                  </div> 
+               </div>
+               <div class="mb-2">
+                  <div class="checkbox">
+                     <label  id="box50" class="checkbox-label">
+                     <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
+                        <span class="checkbox-custom rectangular"></span>
+                        <span class="checkbox-label-text mt-1">500k - 1M</span> 
+                     </label>
+                  </div> 
+               </div>
+               <div class="mb-2">
+                  <div class="checkbox">
+                     <label  id="box50" class="checkbox-label">
+                     <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
+                        <span class="checkbox-custom rectangular"></span>
+                        <span class="checkbox-label-text mt-1">1M - 10M</span> 
+                     </label>
+                  </div> 
+               </div>
+               
                @if ( $attributes->count() )
                   @foreach( $attributes as $key => $attribute )
-                     <div class="text-capitalize ">{{ $str::replaceFirst('_', ' ', $key) }}</div>
+                     <div class="text-capitalize pb-2">{{ $str::replaceFirst('_', ' ', $key) }}</div>
                      @foreach($attribute->sortBy('name') as $child)
-                        <div class="m-0 border-bottom">
+                        <div class="mb-2">
                            <div class="checkbox">
                               <label  id="box50" class="checkbox-label">
                               <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
@@ -36,12 +92,31 @@
                      @endforeach
                   @endforeach
                @endif
+               @if ( $attributes->count() )
+
+               <div class="text-capitalize ">Cities</div>
+
+               <div class="m-0 ">
+                  <div class="checkbox">
+                     <label  id="box50" class="checkbox-label">
+                     <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
+                        <span class="checkbox-custom rectangular"></span>
+                        <span class="checkbox-label-text mt-1">less than 200k</span> 
+                     </label>
+                  </div> 
+               </div>
+
+
+               @endif
+
+
                
             </div>
          </div>
          
       </div>
       <div class="col-md-9">
+            
          @if ( $properties->count())
          @foreach( $properties as $property)
             <div class="card position-relative">
@@ -52,14 +127,7 @@
                            <img class="img img-raised img-fluid" src="{{ $property->image_m }}">
                         </a>
                         <div class="fav-icon position-absolute">
-                           <a href="#"  title="Wishlist">
-                              <svg  class="">
-                                 <use xlink:href="#favorites-outline"></use>
-                              </svg>
-                              <svg  class="d-none">
-                                 <use xlink:href="#favorites"></use>
-                              </svg>
-                           </a>
+                            @include('_partials.saved',['obj'=> $property])
                         </div>
                      </div>
                   </div>

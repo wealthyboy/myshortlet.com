@@ -138,7 +138,7 @@ Route::post('book/coupon',    'Booking\BookingController@coupon');
 
 
 
-Route::get('saved',   'SavedItems\SavedItemsController@index');
+Route::post('/api/saved',   'Api\Favorites\FavoritesController@store');
 Route::resource('reservations',   'Reservation\ReservationController',['names' => 'reservations']);
 
 

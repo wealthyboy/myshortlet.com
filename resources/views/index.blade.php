@@ -71,14 +71,7 @@
                   <img class="card-img-top" src="{{ optional($featured)->image_m }}" rel="nofollow" alt="Card image cap">
                   </a>
                   <div class="fav-icon position-absolute">
-                     <a href="#"  title="Wishlist">
-                        <svg  class="">
-                           <use xlink:href="#favorites-outline"></use>
-                        </svg>
-                        <svg  class="d-none">
-                           <use xlink:href="#favorites"></use>
-                        </svg>
-                     </a>
+                     @include('_partials.saved',['obj'=> $featured])
                   </div>
                   <div class="card-body p-1">
                      <a href="/property/{{ $featured->slug }}">
@@ -92,6 +85,8 @@
          </div>
       </div>
    </section>
+
+   
    <div class="row no-gutters">
       <div class="col-md-12">
          <h2>Explore nearby</h2>
@@ -162,6 +157,9 @@
    @endif
 </div>
 @include('_partials.svg')
+
+
+
 
 @endsection
 @section('page-scripts')

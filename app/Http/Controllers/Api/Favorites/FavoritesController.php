@@ -35,7 +35,7 @@ class FavoritesController  extends Controller
 	{
 		$user = $request->user();
 		
-		$favorite = Favorite::where(['user_id'=>$user->id,'product_variation_id'=>$request->product_variation_id])->first();
+		$favorite = Favorite::where(['user_id'=>$user->id,'property_id'=>$request->property_id])->first();
          if ( null !== $favorite ) { 
             if ( $favorite->delete() ){
 				return response()->json([ 'count' => $user->favorites->count(), 'status' => 'deleted' ]);
@@ -43,10 +43,10 @@ class FavoritesController  extends Controller
          }  else {
             $favorite = new Favorite;
             $favorite->user_id = $user->id;
-            $favorite->product_variation_id = $request->product_variation_id;
+            $favorite->property_id = $request->property_id;
             $favorite->save();
 			return response()->json([ 'count' => $user->favorites->count(),  'status' => 'added' ]);
-         }
+        }
 
 		
 		return response()->json([ 'error' => 'We could not save your item at the moment' ]);

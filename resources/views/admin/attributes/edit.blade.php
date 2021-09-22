@@ -35,16 +35,30 @@
                         />
                     </div>
                     <div class="form-group label-floating">
-                        <label class="control-label">
-                            Hex Code
-                            <small>*</small>
-                        </label>
-                        <input class="form-control  colorpicker"
-                            name="color_code"
-                            type="text"
-                            value="{{ $attr->color_code }}"  
-                        />
+                            <label class="control-label">
+                                Price
+                                <small>*</small>
+                            </label>
+                            <input class="form-control"
+                                name="price"
+                                type="text"
+                                value="{{ $attr->price }}"
+
+                            />
+                        </div>
+                        <div class="form-group label-floating">
+                            <label class="control-label">
+                                Svg icon
+                                <small>*</small>
+                            </label>
+                            <input class="form-control"
+                                name="svg"
+                                type="text"
+                                value="{{ $attr->svg }}"
+
+                            />
                     </div>
+                    
                     <div class="form-group ">
                         <label class="control-label"></label>
                         <select name="parent_id" class="form-control">

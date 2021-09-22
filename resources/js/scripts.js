@@ -1,3 +1,5 @@
+const { param } = require("jquery");
+
 !(function(t, e) {
   "object" == typeof exports && "undefined" != typeof module
     ? e(require("jquery"), require("popper.js"))
@@ -4375,6 +4377,150 @@ $(document).ready(function() {
   //   }
   // }
 });
+let types = {
+  adults: 1,
+  children: 1,
+  rooms: 1,
+};
+
+$(document).on("click", ".add-subtract", function(e) {
+  let self = $(this);
+  let n = self.data("name");
+  if (self.data("math") == "add") {
+    let counter = types[n]++;
+    $("input[name=" + n + "]").val(counter);
+    $("." + n).text(counter);
+    if (counter >= 1) {
+      $(".min-" + n).attr("disabled", false);
+    }
+  } else {
+    types[n]--;
+    if (self.data("math") != "add") {
+      let e = $("input[name=" + n + "]").val();
+      let m = parseInt(e) - 1;
+      $("input[name=" + n + "]").val(m);
+      $("." + n).text(m);
+      if (m < 1) {
+        $(".min-" + n).attr("disabled", true);
+      }
+      return;
+    }
+  }
+});
+
+$("body").on("click", function(evt) {
+  if ($(evt.target).closest("#people-number").length) return;
+  if ($(evt.target).closest("#people-dropdown").length) return;
+  let ddown = $("#people-dropdown");
+  if (ddown.hasClass("show")) {
+    ddown
+      .animate({
+        opacity: 0,
+      })
+      .removeClass("show");
+  }
+});
+
+$(document).on("click", ".people-number", function(e) {
+  let dropdown = $("#people-dropdown");
+  if (dropdown.hasClass("show")) {
+    dropdown
+      .animate({
+        opacity: 0,
+      })
+      .removeClass("show");
+  } else {
+    dropdown
+      .animate({
+        opacity: 1,
+      })
+      .addClass("show");
+  }
+});
+
+$loading_spinner = $(".loading-spinner");
+$login_form = $(".login-form");
+$register_form = $(".register-form");
+$auth_spinner = $(".auth-spinner");
+
+$(document).on("click", ".saved", function(e) {
+  e.preventDefault();
+  let self = $(this);
+  $status = self.data("toggle");
+  $id = self.data("id");
+  setTimeout(function() {
+    $loading_spinner.addClass("d-none");
+    if ($status == "modal") {
+      $login_form.removeClass("d-none");
+    }
+  }, 1000);
+
+  if ($status != "modal") {
+    let params = {
+      property_id: self.data("id"),
+    };
+    $.ajax({
+      url: "/api/saved",
+      type: "POST",
+      data: params,
+      beforeSend: function() {},
+    })
+      .done(function(res) {
+        if (res.status == "added") {
+          self.find("#saved-none-outline").removeClass("d-none");
+          self.find("#saved-outline").addClass("d-none");
+        } else {
+          self.find("#saved-none-outline").addClass("d-none");
+          self.find("#saved-outline").removeClass("d-none");
+        }
+      })
+      .fail(function(e) {
+        self.find("#saved-outline").addClass("d-none");
+      });
+  }
+});
+
+$(document).on("click", ".auth-form", function(e) {
+  e.preventDefault();
+  let self = $(this);
+  $loading_spinner.removeClass("d-none");
+  let to = self.data("to");
+  $login_form.addClass("d-none");
+  $register_form.addClass("d-none");
+  setTimeout(function() {
+    if (to == "register") {
+      $register_form.removeClass("d-none");
+    } else {
+      $login_form.removeClass("d-none");
+    }
+    $loading_spinner.addClass("d-none");
+  }, 900);
+});
+
+$("#loadModal").on("hidden.bs.modal", function() {
+  $loading_spinner.removeClass("d-none");
+  $login_form.addClass("d-none");
+  $register_form.addClass("d-none");
+});
+
+$(document).on("submit", ".sign-in-or-sign-up", function(e) {
+  e.preventDefault();
+  let self = $(this);
+  $(".lt").addClass("d-none");
+  $auth_spinner.removeClass("d-none");
+  $.ajax({
+    url: self.attr("action"),
+    type: "POST",
+    data: self.serialize(),
+    beforeSend: function() {},
+  })
+    .done(function(res) {
+      location.reload();
+    })
+    .fail(function(e) {
+      alert("We could not log you in. PLease try again later");
+    });
+});
 
 $(document).on("click", ".navbar-toggler", function() {
   $toggle = $(this);
@@ -4533,10 +4679,3 @@ var BrowserDetect = {
     },
   ],
 };
-
-$(window).on('load',function() {
-  $(".flexslider").flexslider({
-    animation: "slide",
-    controlNav: "thumbnails",
-  });
-});

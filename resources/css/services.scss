@@ -1,5 +1,6 @@
 @import "~flatpickr/dist/flatpickr.css";
 @import "~flexslider/flexslider.css";
+@import "intl-tel-input/build/css/intlTelInput.css";
 
 @import "../../public/css/all.css";
 // @import "~bootstrap-icons/font/bootstrap-icons.css";
@@ -36,7 +37,6 @@
 @import "./styles/tabs";
 @import "./styles/tooltip";
 @import "./styles/popover";
-@import "./styles/modal";
 @import "./styles/dropdown";
 @import "./styles/drawer";
 @import "./styles/progress";
@@ -51,8 +51,82 @@
 @import "./styles/cards/card-plain";
 @import "./styles/responsive";
 
+.iti__flag {
+  background-image: url("../../public/images/utilities/flags.png");
+}
+
 .cursor-pointer {
   cursor: pointer;
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 20px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 8px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: $brown-500;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+.cover-overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
 }
 
 .navbar-brand img {
@@ -120,6 +194,10 @@
 /**
   Forms
 */
+
+input {
+  filter: none !important;
+}
 
 .search .form-control {
   background-image: none !important;

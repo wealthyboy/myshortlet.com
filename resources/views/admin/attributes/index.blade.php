@@ -47,6 +47,16 @@
                                 type="text"
                             />
                         </div>
+                        <div class="form-group label-floating">
+                            <label class="control-label">
+                                Svg icon
+                                <small>*</small>
+                            </label>
+                            <input class="form-control"
+                                name="svg"
+                                type="text"
+                            />
+                        </div>
                         <div class="form-group">
                             <label class="control-label"></label>
                             <select name="parent_id" class="form-control">

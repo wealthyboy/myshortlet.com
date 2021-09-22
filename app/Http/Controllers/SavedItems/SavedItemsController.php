@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SavedItems;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+
 class SavedItemsController extends Controller
 {
     /**
@@ -14,20 +15,10 @@ class SavedItemsController extends Controller
      */
     public function index()
     {   
-
-        //$saved_items = 
         return  view('saved.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.
