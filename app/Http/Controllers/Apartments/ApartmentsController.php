@@ -74,6 +74,8 @@ class ApartmentsController extends Controller
                $filters[$attr->slug] = AttributesFilter::class;
             }
         }
+
+        return $filters;
     }
     
     public function checkAvailability(Request $request)
