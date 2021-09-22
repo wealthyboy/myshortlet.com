@@ -49,7 +49,7 @@ class ApartmentsController extends Controller
                $filters[$attr->slug] = AttributesFilter::class;
             }
         }
-        return dd($filters);
+        dd($filters);
 
         $attributes = $location->attributes->groupBy('type'); 
         $page_title = implode(" ",explode('-',$location->slug));
