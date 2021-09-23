@@ -18962,10 +18962,6 @@ footer .pull-center {
     width: 245px;
   }
 }
-.property-name-section {
-  margin-top: 4.5rem;
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -18979,6 +18975,46 @@ svg {
   height: 25px;
 }
 
+.sidebar-toggle.sidebar-opened {
+  left: 280px;
+  z-index: 9000;
+}
+
+.adjust.material-icons {
+  position: relative;
+  display: inline-block;
+  top: 0;
+  margin-top: -1em;
+  margin-bottom: -1em;
+  font-size: 2rem;
+  vertical-align: middle;
+}
+
+.sidebar-toggle {
+  position: fixed;
+  transition: left 0.2s ease-in-out 0s;
+  top: 20%;
+  left: 0;
+  border: #dcdcda solid 1px;
+  cursor: pointer;
+  z-index: 999;
+  margin-top: 50px;
+  height: 40px;
+  padding: 6px 10px 6px 10px;
+  font-weight: bold;
+  background-color: #fff;
+}
+
+/**
+   Listings page
+*/
+.apartment-review {
+  bottom: 0;
+}
+
+/***
+  Show Page
+*/
 .galleries {
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -18996,6 +19032,12 @@ svg {
   height: 200px;
 }
 
+/**
+  End Show page
+**/
+/***
+  loaders
+**/
 .lds-ellipsis {
   display: inline-block;
   position: relative;
@@ -19087,27 +19129,9 @@ svg {
     transform: translate(24px, 0);
   }
 }
-.cover-overlay {
-  position: fixed;
-  /* Sit on top of the page content */
-  display: none;
-  /* Hidden by default */
-  width: 100%;
-  /* Full width (cover the whole page) */
-  height: 100%;
-  /* Full height (cover the whole page) */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  /* Black background with opacity */
-  z-index: 1;
-  /* Specify a stack order in case you're using a different order for other elements */
-  cursor: pointer;
-  /* Add a pointer on hover */
-}
-
+/***
+   end loaders
+**/
 .navbar-brand img {
   max-width: 100px;
   height: 40px;
@@ -19330,4 +19354,33 @@ input {
 .carousel-fade .active.carousel-item-prev {
   transform: translateX(0);
   transform: translate3d(0, 0, 0);
+}
+
+@media (max-width: 991px) {
+  .mobile-sidebar {
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 280px;
+    padding: 0;
+    margin: 0;
+    transform: translate(-280px);
+    transition: transform 0.2s ease-in-out 0s;
+    background-color: #fff;
+    z-index: 9999;
+    overflow-y: auto;
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #000;
+    opacity: 0.35;
+    z-index: 8999;
+  }
 }

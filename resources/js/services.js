@@ -4,6 +4,8 @@ import flatpickr from "flatpickr";
 import validate from "jquery-validation";
 
 import store from "./store";
+require("./loadProperties.js");
+
 require("./scripts.js");
 
 const Persons = require("./components/persons/Persons.vue").default;

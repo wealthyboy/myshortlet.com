@@ -44,9 +44,11 @@
       </footer>
       </div>
 
-
+   
 
       @include('_partials.modal')
+
+
 
 
       <script src="/js/popper.min.js" type="text/javascript"></script>

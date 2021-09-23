@@ -65,3 +65,4 @@
         </ul>
     </div>
 </div>
+@include('_partials.svg')

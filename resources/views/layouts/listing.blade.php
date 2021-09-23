@@ -6,8 +6,9 @@
 
    <body>
       <div id="app"  class="app">
-         <nav class="navbar  fixed-top navbar-expand-lg " id="sectionsNav">
+         <nav class="navbar   navbar-expand-lg " id="sectionsNav">
             @include('_partials.header')
+
          </nav>
          
          <div class="main  index-page">

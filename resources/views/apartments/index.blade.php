@@ -1,7 +1,6 @@
 @extends('layouts.listing')
 @section('content')
-<div class="clearfix"></div>
-<div class="d-flex mt-5 justify-content-center align-items-center" >
+<div class="d-flex  justify-content-center align-items-center" >
    <div class="container">
       <div class="row">
       <div class="col-md-12 ml-auto mr-auto">
@@ -35,8 +34,13 @@
          </div>
       </div>
       <div class="clearfix"></div>
-      <div class="col-md-3 ">
-         <div class="card">
+
+
+      <div class="sidebar-toggle d-block d-sm-none ">  <i class="material-icons filter adjust">sort</i> filter</div>
+      <div class="sidebar-overlay d-none"></div>
+      
+      <div class="col-md-3 mobile-sidebar">
+         <div class="card  sidebar-section">
             <div class="text-left pl-3">
                <div class="text-capitalize pb-2 pt-3">Your Budget</div>
                <div class="mb-2">
@@ -93,9 +97,7 @@
                   @endforeach
                @endif
                @if ( $attributes->count() )
-
                <div class="text-capitalize ">Cities</div>
-
                <div class="m-0 ">
                   <div class="checkbox">
                      <label  id="box50" class="checkbox-label">
@@ -105,8 +107,6 @@
                      </label>
                   </div> 
                </div>
-
-
                @endif
 
 
@@ -115,6 +115,7 @@
          </div>
          
       </div>
+
       <div class="col-md-9">
             
          @if ( $properties->count())
@@ -136,7 +137,7 @@
                         <a href="/apartment/{{ $property->slug }}">{{ $property->name }}</a>
                      </h3>
                      <div class="">
-                        <samll class=""> <a class="p-0" href="/apartment/{{ optional($property)->slug }}"> <i class="material-icons">location_on</i> {{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
+                        <small class=""> <a class="p-0" href="/apartment/{{ optional($property)->slug }}"> <i class="material-icons">location_on</i> {{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
                      </div>
                      <div class="d-flex">
 
@@ -159,7 +160,7 @@
                      </div>
                      @endif
 
-                     <div class="position-absolute">
+                     <div class="position-absolute apartment-review">
                         3 reviews
                      </div>
                   </div>
@@ -176,7 +177,7 @@
                         @if (!$property->allow_cancellation)
                         <div class=""><span class="">FREE CANCELLATION</span></div>
                         @endif
-                        <a href="/apartment/{{ $property->slug }}" class="btn btn-primary btn-round">
+                        <a href="/apartment/{{ $property->slug }}" class="btn btn-primary btn-round d-none d-lg-block d-xl-block">
                            Check Availability  <i class="material-icons">arrow_forward_ios</i>
                         </a>
                      </div>
@@ -205,10 +206,31 @@
       </div>
    </div>
 </div>
-
-@include('_partials.svg')
-
    
 @endsection
 @section('page-scripts')
+@stop
+
+@section('inline-scripts')
+    $(document).ready(function() {
+        $("#load-products").loadProperties({
+           'form':$('form#collections input'),
+           'form_data':$("form#collections"),
+           'form_sort_by':$("select#sort_by "),
+           'target':'load-products',
+           'loggedInStatus':8,
+           'load_more':$(document).find('a.load_more'),
+           'filter_url':'{{ request()->fullUrl() }}',
+           'overlay': '.product-overlay'
+        });
+   
+        //reset form
+        $("#reset-search-form").on("click", function () {
+           //  Reset all selections fields to default option.          
+           $('input[type=checkbox]').each(function () {
+               this.checked = false;
+           }); 
+        });   
+   });
+   
 @stop

@@ -4441,6 +4441,27 @@ $(document).on("click", ".people-number", function(e) {
   }
 });
 
+$(document).on("click", ".sidebar-toggle", function(e) {
+  let self = $(this);
+  if (self.hasClass("sidebar-opened")) {
+    self.removeClass("sidebar-opened");
+    $(".sidebar-overlay").addClass("d-none");
+    $(".mobile-sidebar")
+      .css("transform", "translate(-280px)")
+      .removeClass("sidebar-opened");
+    $(".sidebar-section").addClass("card");
+    $(".material-icons.filter").text("sort");
+  } else {
+    $(".sidebar-section").removeClass("card");
+    self.addClass("sidebar-opened");
+    $(".mobile-sidebar")
+      .css("transform", "translate(0px)")
+      .addClass("sidebar-opened");
+    $(".sidebar-overlay").removeClass("d-none");
+    $(".material-icons.filter").text("clear");
+  }
+});
+
 $loading_spinner = $(".loading-spinner");
 $login_form = $(".login-form");
 $register_form = $(".register-form");
