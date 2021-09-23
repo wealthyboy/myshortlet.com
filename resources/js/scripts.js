@@ -4417,7 +4417,8 @@ $("body").on("click", function(evt) {
       .animate({
         opacity: 0,
       })
-      .removeClass("show");
+      .removeClass("show")
+      .addClass("d-none");
   }
 });
 
@@ -4428,13 +4429,15 @@ $(document).on("click", ".people-number", function(e) {
       .animate({
         opacity: 0,
       })
-      .removeClass("show");
+      .removeClass("show")
+      .addClass("d-none");
   } else {
     dropdown
       .animate({
         opacity: 1,
       })
-      .addClass("show");
+      .addClass("show")
+      .removeClass("d-none");
   }
 });
 

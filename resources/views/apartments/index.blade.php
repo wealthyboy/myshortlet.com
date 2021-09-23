@@ -142,7 +142,7 @@
 
                      @foreach($property->facilities->take(3) as $facility)
                      <div class="">
-                        <span class="">  <span class="c"><?php echo  html_entity_decode($facility->svg) ?></span> {{ $facility->name }}</span>
+                        <span class=""><span class="c"><?php echo  html_entity_decode($facility->svg) ?></span> {{ $facility->name }}</span>
                      </div>
                      @endforeach
                      </div>
@@ -173,7 +173,7 @@
                            @endif
                            <span class="text-gray-light">/ night</span>
                         </p>
-                        @if ($property->allow_cancellation)
+                        @if (!$property->allow_cancellation)
                         <div class=""><span class="">FREE CANCELLATION</span></div>
                         @endif
                         <a href="/apartment/{{ $property->slug }}" class="btn btn-primary btn-round">

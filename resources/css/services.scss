@@ -1,6 +1,4 @@
 @import "~flatpickr/dist/flatpickr.css";
-@import "~flexslider/flexslider.css";
-@import "intl-tel-input/build/css/intlTelInput.css";
 
 @import "../../public/css/all.css";
 // @import "~bootstrap-icons/font/bootstrap-icons.css";
@@ -51,12 +49,38 @@
 @import "./styles/cards/card-plain";
 @import "./styles/responsive";
 
-.iti__flag {
-  background-image: url("../../public/images/utilities/flags.png");
+.property-name-section {
+  margin-top: 4.5rem;
 }
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+svg {
+  width: 25px;
+  height: 25px;
+}
+
+.galleries {
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  border-radius: 5px;
+  width: 100%;
+  display: block;
+  background-size: cover;
+}
+
+.galleries.card-img {
+  height: 400px;
+}
+
+.galleries.card-img-tn {
+  height: 200px;
 }
 
 .lds-ellipsis {
