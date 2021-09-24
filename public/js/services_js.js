@@ -3918,13 +3918,12 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
     };
 
     function filter(form, url) {
-      $(settings.overlay).removeClass("d-none");
+      // $(settings.overlay).removeClass("d-none");
       $.ajax({
         url: url,
         type: "get",
         cache: false
-      }).done(function (json) {
-        contents(json.products, true);
+      }).done(function (json) {// contents(json.products, true);
       }).fail(function () {
         alert("Posts could not be loaded.");
       });
@@ -3962,9 +3961,9 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
     $(document).ready(function () {
       settings.form.click(function () {
-        // buildUrl();
-        //  filter(settings.form_data, window.location);
-        console.log(true);
+        buildUrl();
+        filter(settings.form_data, window.location);
+        console.log(settings.form_data);
       });
       $(document).on("click", ".load_more", function (e) {
         e.preventDefault();

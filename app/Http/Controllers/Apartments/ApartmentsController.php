@@ -12,7 +12,7 @@ use App\Models\Attribute;
 use App\Http\Helper;
 
 use Illuminate\Database\Eloquent\Builder;
-use App\Filters\ApartmentFilter\AttributesFilter;
+use App\Filters\PropertyFilter\AttributesFilter;
 use  Illuminate\Support\Str;
 
 

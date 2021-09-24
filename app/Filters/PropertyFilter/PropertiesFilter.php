@@ -5,12 +5,12 @@ namespace App\Filters\PropertyFilter;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filters\AbstractFilters;
-use App\Filters\ProductsFilter\CategoryFilter;
-use App\Filters\ProductsFilter\PriceFromFilter;
-use App\Filters\ProductsFilter\PriceToFilter;
-use App\Filters\ProductsFilter\TotalFilter;
-use App\Filters\ApartmentFilter\AttributesFilter;
-use App\Filters\ApartmentFilter\SortByFilter;
+use App\Filters\PropertyFilter\CategoryFilter;
+use App\Filters\PropertyFilter\PriceFromFilter;
+use App\Filters\PropertyFilter\PriceToFilter;
+use App\Filters\PropertyFilter\TotalFilter;
+use App\Filters\PropertyFilter\AttributesFilter;
+use App\Filters\PropertyFilter\SortByFilter;
 
 
 

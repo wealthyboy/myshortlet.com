@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filters\ProductsFilter;
+namespace App\Filters\PropertyFilter;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;

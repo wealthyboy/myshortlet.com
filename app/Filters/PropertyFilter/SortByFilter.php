@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filters\ProductsFilter;
+namespace App\Filters\PropertyFilter;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,7 +11,9 @@ class SortByFilter  extends AbstractFilter
 {
     public function filter(Builder $builder,$value){
         $sort = explode(',',$value);
-        return $builder->orderBy($sort[0],$sort[1]);
+        return $builder->whereHas('apartments',function(Builder  $builder) use ($sort){
+            $builder->orderBy($sort[0],$sort[1]);
+        });
     }
     
 }
