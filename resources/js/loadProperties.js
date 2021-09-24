@@ -228,8 +228,9 @@
 
     $(document).ready(function() {
       settings.form.click(function() {
-        buildUrl();
-        filter(settings.form_data, window.location);
+        // buildUrl();
+        //  filter(settings.form_data, window.location);
+        console.log(true);
       });
 
       $(document).on("click", ".load_more", function(e) {

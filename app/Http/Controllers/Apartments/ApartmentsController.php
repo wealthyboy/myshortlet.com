@@ -90,8 +90,6 @@ class ApartmentsController extends Controller
 
         //dd($request->all());
         $date = explode("to",$request->check_in_check_out);
-        $date1 = trim($date[0]);
-        $date2 = trim($date[1]);
         $data = [];
         $attributes = Attribute::parents()->get();
         $data['location'] =  $request->location;
@@ -110,12 +108,18 @@ class ApartmentsController extends Controller
         $breadcrumb = $request->name; 
         $page_title = $request->name; 
         $location = 'test'; 
+        $str =new  Str;
+        $saved =  auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];
+
+
         return  view('apartments.index',compact(
             'location',
             'page_title',
             'breadcrumb',
             'properties',
-            'attributes'
+            'attributes',
+            'str',
+            'saved'
         ));
          
     }

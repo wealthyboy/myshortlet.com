@@ -1,15 +1,15 @@
-<form method="" action="">
+<form method="GET" action="/search">
     <div class="row no-gutters">
         <div class="col-md-3 pr-1">
             <div class="form-group search border pl-2">
                 <label class="pl-2" for="Location-input">Location</label>
-                <input type="text" class="form-control" id="Location-input" placeholder="Where are you going">
+                <input type="text" class="form-control" name="location" id="Location-input" placeholder="Where are you going">
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group  search border pl-2">
                 <label  class="pl-2" for="flatpickr-input-f">Check-in - Check-out</label>
-                <input type="text" class="form-control" id="flatpickr-input-f" placeholder="Add Dates">
+                <input type="text" name="check_in_check_out" class="form-control" id="flatpickr-input-f" placeholder="Add Dates">
             </div>
         </div>
         <div id="people-number" class="col-md-4 cursor-pointer">
@@ -126,13 +126,13 @@
                 </div>
             </div>
 
-            <input type="hidden"  name="rooms" />
+            <input type="hidden"  name="rooms"  value="1"/>
             <input type="hidden"  name="children" />
-            <input type="hidden"  name="adults"  />
+            <input type="hidden"  name="adults" value="1"  />
             
         </div>
         <div class="col-md-2">
-            <button type="button" class="btn btn-primary btn-block">
+            <button type="submit" class="btn btn-primary btn-block">
             <i class="material-icons">search</i> Search
             </button>
         </div>

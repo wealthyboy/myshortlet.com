@@ -3,13 +3,11 @@
 <div class="d-flex  justify-content-center align-items-center" >
    <div class="container">
       <div class="row">
-      <div class="col-md-12 ml-auto mr-auto">
-         <div class="">
+         <div class="col-md-12 ml-auto mr-auto">
             <div class="mt-5">
                @include('_partials.search_form')
             </div>
          </div>
-      </div>
       </div>
    </div>
 </div>
@@ -41,82 +39,12 @@
       
       <div class="col-md-3 mobile-sidebar">
          <div class="card  sidebar-section">
-            <div class="text-left pl-3">
-               <div class="text-capitalize pb-2 pt-3">Your Budget</div>
-               <div class="mb-2">
-                  <div class="checkbox">
-                     <label  id="box50" class="checkbox-label">
-                     <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
-                        <span class="checkbox-custom rectangular"></span>
-                        <span class="checkbox-label-text mt-1">less than 200k</span> 
-                     </label>
-                  </div> 
-               </div>
-               <div class="mb-2">
-                  <div class="checkbox">
-                     <label  id="box50" class="checkbox-label">
-                     <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
-                        <span class="checkbox-custom rectangular"></span>
-                        <span class="checkbox-label-text mt-1">200k - 500k</span> 
-                     </label>
-                  </div> 
-               </div>
-               <div class="mb-2">
-                  <div class="checkbox">
-                     <label  id="box50" class="checkbox-label">
-                     <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
-                        <span class="checkbox-custom rectangular"></span>
-                        <span class="checkbox-label-text mt-1">500k - 1M</span> 
-                     </label>
-                  </div> 
-               </div>
-               <div class="mb-2">
-                  <div class="checkbox">
-                     <label  id="box50" class="checkbox-label">
-                     <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
-                        <span class="checkbox-custom rectangular"></span>
-                        <span class="checkbox-label-text mt-1">1M - 10M</span> 
-                     </label>
-                  </div> 
-               </div>
-               
-               @if ( $attributes->count() )
-                  @foreach( $attributes as $key => $attribute )
-                     <div class="text-capitalize pb-2">{{ $str::replaceFirst('_', ' ', $key) }}</div>
-                     @foreach($attribute->sortBy('name') as $child)
-                        <div class="mb-2">
-                           <div class="checkbox">
-                              <label  id="box50" class="checkbox-label">
-                              <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
-                                 <span class="checkbox-custom rectangular"></span>
-                                 <span class="checkbox-label-text mt-1">{{$child->name }}</span> 
-                              </label>
-                           </div> 
-                        </div>
-                     @endforeach
-                  @endforeach
-               @endif
-               @if ( $attributes->count() )
-               <div class="text-capitalize ">Cities</div>
-               <div class="m-0 ">
-                  <div class="checkbox">
-                     <label  id="box50" class="checkbox-label">
-                     <input for="box50" name="prices[]" value="200000" class="filter-product" type="checkbox">
-                        <span class="checkbox-custom rectangular"></span>
-                        <span class="checkbox-label-text mt-1">less than 200k</span> 
-                     </label>
-                  </div> 
-               </div>
-               @endif
-
-
-               
-            </div>
+            @include('_partials.search')
          </div>
          
       </div>
 
-      <div class="col-md-9">
+      <div  id="load-products" class="col-md-9">
             
          @if ( $properties->count())
          @foreach( $properties as $property)
@@ -125,63 +53,74 @@
                   <div class="col-md-3 position-relative">
                      <div class="">
                         <a href="/apartment/{{ $property->slug }}">
-                           <img class="img img-raised img-fluid" src="{{ $property->image_m }}">
+                           <img class="img  img-fluid" src="{{ $property->image_m }}">
                         </a>
                         <div class="fav-icon position-absolute">
                             @include('_partials.saved',['obj'=> $property])
                         </div>
                      </div>
                   </div>
-                  <div class="col-md-6 pl-3">
-                     <h3 class="card-title">
-                        <a href="/apartment/{{ $property->slug }}">{{ $property->name }}</a>
-                     </h3>
-                     <div class="">
-                        <small class=""> <a class="p-0" href="/apartment/{{ optional($property)->slug }}"> <i class="material-icons">location_on</i> {{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
-                     </div>
-                     <div class="d-flex">
-
-                     @foreach($property->facilities->take(3) as $facility)
-                     <div class="">
-                        <span class=""><span class="c"><?php echo  html_entity_decode($facility->svg) ?></span> {{ $facility->name }}</span>
-                     </div>
-                     @endforeach
-                     </div>
-
-
-                     @if( $property->type == 'single')
-                     <div>
-                        <span class="">{{  $property->single_room->max_children + $property->single_room->no_of_rooms }} guests</span>
-                        <span aria-hidden="true"> · </span>
-                        <span class="">{{ $property->single_room->no_of_rooms }} bedroom</span>
-                        <span aria-hidden="true"> · </span>
-                        <span aria-hidden="true"> · </span>
-                        <span class="">{{ $property->single_room->toilets }}baths</span>
-                     </div>
-                     @endif
-
-                     <div class="position-absolute apartment-review">
-                        3 reviews
-                     </div>
-                  </div>
-                  <div class="col-md-3  d-flex justify-content-start align-items-end pl-3">
-                     <div>
-                        <p>
+                  <div class="col-md-9 position-relative col-12 pl-3">
+                     <div class="d-flex  justify-content-between">
+                        <div class="">
+                           <a href="/apartment/{{ $property->slug }}">{{ $property->name }}</a>
+                        </div>
+                        <div class="">
                            @if( $property->apartments->count() && $property->apartments->count() >  1  )
-                           <span class="text-heading lh-15 font-weight-bold fs-17">From {{ $property->currency }}{{ optional($property->single_room)->price }} </span>
-                           @else
-                           <span class="text-heading lh-15 font-weight-bold fs-17">{{ $property->currency }}{{ optional(optional($property->apartments)->first())->price }}</span>
+                              <span class="">From {{ $property->currency }}{{ optional($property->single_room)->price }}/ night </span>
+                              @else
+                              <span class="">{{ $property->currency }}{{ optional(optional($property->apartments)->first())->price }}/ night</span>
+                              @endif
+                           @if (!$property->allow_cancellation)
+                              <div class="">FREE CANCELLATION</div>
                            @endif
-                           <span class="text-gray-light">/ night</span>
-                        </p>
-                        @if (!$property->allow_cancellation)
-                        <div class=""><span class="">FREE CANCELLATION</span></div>
+                        </div>
+                     </div>
+                     
+                     <div class="">
+                        <small class=""> <a class="p-0" href="/apartment/{{ optional($property)->slug }}">{{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
+                     </div>
+
+                     <div class="mb-5">
+                        @foreach($property->facilities->take(3) as $facility)
+                        <div class="">
+                           <span class=""> {{ $facility->name }}</span>
+                        </div>
+                        @endforeach
+                        @if( $property->type == 'single')
+                        <div class="">
+                           <span class="">{{ $property->single_room->max_children + $property->single_room->no_of_rooms }} guests</span>
+                           <span aria-hidden="true"> · </span>
+                           <span class="">{{ $property->single_room->no_of_rooms }} bedroom</span>
+                           <span aria-hidden="true"> · </span>
+                           <span class="">{{ $property->single_room->toilets }} baths</span>
+                        </div>
                         @endif
-                        <a href="/apartment/{{ $property->slug }}" class="btn btn-primary btn-round d-none d-lg-block d-xl-block">
-                           Check Availability  <i class="material-icons">arrow_forward_ios</i>
-                        </a>
+                     </div>
+
+
+                     
+
+                     <div class="d-flex position-absolute apartment-review justify-content-between mt-1 align-items-end">
+                        <div class="">
+                          3 reviews
+                        </div>
+                        <div class="d-none d-lg-block d-xl-block text-right mr-2">
+                           @if( $property->apartments->count() && $property->apartments->count() >  1  )
+                              <span class="">From {{ $property->currency }}{{ optional($property->single_room)->price }}/ night</span>
+                              @else
+                              <span class="">{{ $property->currency }}{{ optional(optional($property->apartments)->first())->price }} / night</span>
+                              @endif
+                             @if (!$property->allow_cancellation)
+                              <div class="">FREE CANCELLATION</div>
+                              @endif
+                           <a href="/apartment/{{ $property->slug }}" class="btn btn-primary btn-round d-none d-lg-block d-xl-block">
+                              Check Availability  <i class="material-icons">arrow_forward_ios</i>
+                           </a>
+                        </div>
                      </div>
                   </div>
+                  
                </div>
             </div>
          @endforeach
