@@ -47,10 +47,18 @@ class ApartmentsController extends Controller
         $page_title = implode(" ",explode('-',$location->slug));
         $properties = Property::where('allow',true)->whereHas('locations',function(Builder  $builder) use ($location){
                 $builder->where('locations.slug',$location->slug);
-            })->filter($request,$this->getFilters($attributes))->latest()->paginate(5);
+            })->filter($request,  $this->getFilters($attributes))->latest()->paginate(5);
         $properties->appends(request()->all());
         $breadcrumb = $location->name; 
-        $saved =  auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];
+        $saved =  $this->saved();
+        if( $request->ajax() ) { 
+            $properties->load('facilities','single_room');
+
+            return response()->json([
+                'properties' => $properties->toArray(),
+                'attributes' => $attributes->count()
+            ]); 
+        }
 
         return  view('apartments.index',compact(
             'location',
@@ -92,25 +100,37 @@ class ApartmentsController extends Controller
         $date = explode("to",$request->check_in_check_out);
         $data = [];
         $attributes = Attribute::parents()->get();
-        $data['location'] =  $request->location;
+        $data['location'] =  $request->going_to;
         $data['max_children'] = $request->no_of_children ?? 1;
         $data['max_adults'] = $request->no_of_adults ?? 1;
         $data['rooms'] = $request->rooms;
+        $cities =  Property::where('location_full_name','like','%' .$data['location']. '%')->first();
+
+        $attributes = $cities->attributes()->where('type','!=','apartment_facilities')->get()->groupBy('type'); 
+        $location = $cities->locations()->where('locations.name','like','%' .$data['location']. '%')->first();
+        if ($location){
+           $location->load('children');
+        }
+
         $properties = Property::whereHas('locations',function($query) use ($data){
             $query->where('locations.name','like','%' .$data['location']. '%');
         })->orWhereHas('apartments', function( $query ) use ( $data ){
             $query->where('apartments.max_adults', '<=',  $data['max_children']);
             $query->where('apartments.max_children', '<=', $data['max_adults'] );
             $query->where('apartments.no_of_rooms', '<=', $data['rooms'] );
-            //$query->whereDate('available_from', '>=', $date);
-        })->latest()->paginate(20);
+        })->filter($request,  $this->getFilters($attributes))->latest()->paginate(5);
         $properties->appends(request()->all());
         $breadcrumb = $request->name; 
         $page_title = $request->name; 
-        $location = 'test'; 
-        $str =new  Str;
-        $saved =  auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];
+        $str        =    new  Str;
+        $saved =  $this->saved();
 
+        if( $request->ajax() ) { 
+            return response()->json([
+                'properties' => $properties->toArray(),
+                'attributes' => $attributes->count()
+            ]); 
+        }
 
         return  view('apartments.index',compact(
             'location',
@@ -119,9 +139,14 @@ class ApartmentsController extends Controller
             'properties',
             'attributes',
             'str',
-            'saved'
+            'saved',
         ));
          
+    }
+
+
+    public function saved(){
+       return   auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];
     }
 
     

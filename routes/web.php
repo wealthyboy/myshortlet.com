@@ -147,7 +147,7 @@ Route::resource('reservations',   'Reservation\ReservationController',['names' =
 Route::get('get/location/{id}', 'Properties\PropertiesController@getLocation');
 Route::resource('properties',   'Properties\PropertiesController',['name' => 'properties']);
 
-Route::get('/search',         'Apartments\ApartmentsController@search');
+Route::get('property/search',         'Apartments\ApartmentsController@search');
 Route::get('listings', 'Listings\ListingsController@index');
 
 Route::post('webhook/payment',     'WebHook\WebHookController@payment');

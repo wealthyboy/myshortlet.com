@@ -12,7 +12,7 @@ class AttributesFilter  extends AbstractFilter
     public function filter(Builder $builder,$value){
         
         return $builder->whereHas('attributes',function(Builder  $builder) use ($value){
-            $builder->whereIn('slug',$value);
+            $builder->whereIn('slug', $value);
         });
     }  
 }

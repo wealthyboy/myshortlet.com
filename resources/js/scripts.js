@@ -4345,7 +4345,7 @@ const { param } = require("jquery");
 
 var big_image;
 
-$(document).ready(function() {
+jQuery(function() {
   BrowserDetect.init();
 
   // Init Material scripts for buttons ripples, inputs animations etc, more info on the next link https://github.com/FezVrasta/bootstrap-material-design#materialjs
@@ -4466,6 +4466,9 @@ $loading_spinner = $(".loading-spinner");
 $login_form = $(".login-form");
 $register_form = $(".register-form");
 $auth_spinner = $(".auth-spinner");
+$email_error = $("#auth-error");
+$auth_email_error = $("#auth-email-error");
+$phone_number = $("#auth-phone-number-error");
 
 $(document).on("click", ".saved", function(e) {
   e.preventDefault();
@@ -4508,6 +4511,9 @@ $(document).on("click", ".auth-form", function(e) {
   e.preventDefault();
   let self = $(this);
   $loading_spinner.removeClass("d-none");
+  // $(document)
+  //   .find("label.error")
+  //   .remove();
   let to = self.data("to");
   $login_form.addClass("d-none");
   $register_form.addClass("d-none");
@@ -4525,11 +4531,87 @@ $("#loadModal").on("hidden.bs.modal", function() {
   $loading_spinner.removeClass("d-none");
   $login_form.addClass("d-none");
   $register_form.addClass("d-none");
+  $email_error.css("display", "none").text("");
+  $(document)
+    .find("label.error")
+    .remove();
 });
 
-$(document).on("submit", ".sign-in-or-sign-up", function(e) {
+$rvalidator = $(".register-form").validate({
+  rules: {
+    first_name: "required",
+    last_name: "required",
+    phone_number: {
+      required: true,
+      number: true,
+    },
+    password: {
+      required: true,
+      minlength: 8,
+    },
+    password_confirmation: {
+      required: true,
+      minlength: 8,
+      equalTo: "#r-password",
+    },
+    email: {
+      required: true,
+      email: true,
+    },
+  },
+  messages: {
+    first_name: "Please enter your first name",
+    last_name: "Please enter your last name",
+
+    password: {
+      required: "Please provide a password",
+      minlength: "Your password must be at least 8 characters long",
+    },
+    confirm_password: {
+      required: "Please provide a password",
+      minlength: "Your password must be at least 5 characters long",
+      equalTo: "Please enter the same password as above",
+    },
+    email: "Please enter a valid email address",
+  },
+});
+
+$validator = $(".login-form").validate({
+  rules: {
+    password: {
+      required: true,
+      minlength: 8,
+    },
+    email: {
+      required: true,
+      email: true,
+    },
+  },
+  messages: {
+    password: {
+      required: "Please provide a password",
+      minlength: "Your password must be at least 8 characters long",
+    },
+    confirm_password: {
+      required: "Please provide a password",
+      minlength: "Your password must be at least 5 characters long",
+      equalTo: "Please enter the same password as above",
+    },
+    email: "Please enter a valid email address",
+  },
+});
+
+$(document).on("submit", ".register-form", function(e) {
   e.preventDefault();
   let self = $(this);
+
+  var $valid = self.valid();
+  if (!$valid) {
+    $rvalidator.focusInvalid();
+    return false;
+  }
+
+  $(".auth-form-button").attr("disabled", true);
   $(".lt").addClass("d-none");
   $auth_spinner.removeClass("d-none");
   $.ajax({
@@ -4542,7 +4624,55 @@ $(document).on("submit", ".sign-in-or-sign-up", function(e) {
       location.reload();
     })
     .fail(function(e) {
-      alert("We could not log you in. PLease try again later");
+      $auth_spinner.addClass("d-none");
+      $(".lt").removeClass("d-none");
+      $(".auth-form-button").attr("disabled", false);
+      $auth_email_error
+        .css("display", "block")
+        .text(e.responseJSON.errors.email[0]);
+      $phone_number
+        .css("display", "block")
+        .text(e.responseJSON.errors.phone_number[0]);
+      //$email_error.css("display", "block").text(e.responseJSON.errors.email[0]);
+      setTimeout(function() {
+        $auth_email_error.css("display", "none");
+      }, 2000);
+
+      //alert("We could not log you in. PLease try again later");
+    });
+});
+
+$(document).on("submit", ".login-form", function(e) {
+  e.preventDefault();
+  let self = $(this);
+
+  var $valid = self.valid();
+  if (!$valid) {
+    $validator.focusInvalid();
+    return false;
+  }
+
+  $(".auth-form-button").attr("disabled", true);
+
+  $(".lt").addClass("d-none");
+  $auth_spinner.removeClass("d-none");
+  $.ajax({
+    url: self.attr("action"),
+    type: "POST",
+    data: self.serialize(),
+    beforeSend: function() {},
+  })
+    .done(function(res) {
+      location.reload();
+    })
+    .fail(function(e) {
+      $auth_spinner.addClass("d-none");
+      $(".lt").removeClass("d-none");
+      $(".auth-form-button").attr("disabled", false);
+      $email_error.css("display", "block").text(e.responseJSON.error);
+      setTimeout(function() {
+        $email_error.css("display", "none");
+      }, 2000);
     });
 });
 

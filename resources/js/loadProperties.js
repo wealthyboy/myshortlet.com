@@ -21,8 +21,6 @@
     );
 
     contents = function(obj, clear_html) {
-      // var body = $("html, body");
-      // body.stop().animate({scrollTop:200}, 1000, 'swing', function() { });
       $(settings.overlay).addClass("d-none");
       if (obj.empty) {
         $(this.container.selector).append(
@@ -40,13 +38,9 @@
       if (json) {
         var url = json.next_page_url;
         var data = json.data;
-        //  settings.total_no_of_products =json.total;
-        //  showNoOfProducts(data,json);
       } else {
         var data = obj.data;
         url = obj.next_page_url;
-        //  settings.total_no_of_products =obj.total;
-        //  showNoOfProducts(data,obj);
       }
 
       if (obj.next_page_url) {
@@ -78,94 +72,62 @@
       let col = null;
       let html = "";
       if (data.length == 0) {
-        html =
-          '<div class="col-12 d-flex justify-content-center"><div class="text-center pb-3"><img  width="200" height="200" src="/images/utilities/empty_product.svg" /><p class="bold">No products found</p></div></div>';
+        html = "";
       } else {
-        for (var i in data) {
-          col =
-            data[i].category_attributes >= 1
-              ? "col-md-3 col-6"
-              : "col-md-4 col-6";
-          name =
-            typeof data[i].name != null ? data[i].name : data[i].product_name;
-
-          if (
-            name == null ||
-            !data[i].converted_price ||
-            data[i].converted_price == 0
-          ) {
-            continue;
-          }
-          html += '<div  class="col-6   ' + col + '">';
-          html += '<div class="product-default inner-quickview inner-icon">';
-          html += "<figure>";
-          html += '<a href="' + data[i].link + '">';
+        for (let i in data) {
+          html += '<div class="card position-relative loaded-apartments">';
+          html += '<div class="row no-gutters">';
+          html += '<div class="col-md-3 position-relative">';
+          html += "<div>";
           html +=
-            '<img src="' +
-            data[i].image_to_show_m +
-            '" alt="' +
-            data[i].name +
-            '" /></a>';
-          html += '<div class="btn-icon-group">';
+            '<a href=""><img src="' +
+            data[i].image_m +
+            '" class="img  img-fluid"></a>';
+          html += '<div class="fav-icon position-absolute">';
+          html +=
+            '<a href="#" data-id="189" data-toggle="loggedIn" data-target="#auth" title="Wishlist" class="saved">';
+          html +=
+            '<svg id="saved-outline" class="d-none"><use xlink:href="#favorites-outline"></use></svg>';
+          html +=
+            '<svg id="saved-none-outline"><use xlink:href="#favorites"></use></svg>';
+          html += "</a>";
           html += "</div>";
-          html += "</figure>";
-          html += '<div class="product-details">';
-          html += '<div class="">';
-          if (data[i].product.colors.length) {
-            html += '<div  class="justify-content-start d-flex mb-1">';
-
-            for (c in data[i].product.colors) {
-              if (data[i].product.colors[c].image) {
-                html +=
-                  '<div  style="border:1px solid #222; height: 12px; width: 12px; border-radius: 50%; background-size: cover; background-image: url(' +
-                  data[i].product.colors[c].image +
-                  ');" class="mr-1"></div>';
-              } else {
-                html +=
-                  '<div  style="border:1px solid #222; height: 12px; width: 12px; border-radius: 50%; background-color: ' +
-                  data[i].product.colors[c].color_code +
-                  ';" class="mr-1"></div>';
-              }
-            }
-            html += "</div>";
-          }
-          if (data[i].brand_name) {
-            html +=
-              '<div  class="product-brand bold">' +
-              data[i].brand_name +
-              "</div>";
-          }
-
-          html += '<div class="d-lg-flex d-xl-flex color--primary">';
+          html += "</div>";
+          html += "</div>";
+          html += '<div class="col-md-9 position-relative col-12 pl-3">';
+          html += '<div class="d-flex  justify-content-between">';
+          html += '<div><a href="">' + data[i].name + "</a></div>";
+          html += '<div class="d-block d-sm-none">';
+          html += "<span>₦5000/ night</span>";
+          html += "</div>";
+          html += "</div>";
+          html += "<div class='ap-location'>";
+          html += "<small>";
           html +=
-            '<div class="text-left  mr-5"><a href="' +
-            data[i].link +
-            '">' +
-            name +
-            "</a></div>";
-          html += '<div class="text-right">';
-          if (data[i].default_discounted_price) {
-            html +=
-              '<span class="old-price bold text-danger"> ' +
-              data[i].currency +
-              "" +
-              formatNumber(data[i].converted_price) +
-              " </span>";
-            html +=
-              '<span class="product-price bold ">' +
-              data[i].currency +
-              "" +
-              formatNumber(data[i].default_discounted_price) +
-              " </span>";
-          } else {
-            html +=
-              '<span class="product-price bold ">' +
-              data[i].currency +
-              "" +
-              formatNumber(data[i].converted_price) +
-              " </span>";
-          }
-          html += "</div></div></div></div></div> </div> </div>";
+            '<a href="" class="p-0">' +
+            data[i].city +
+            '</a>,  <a href="">' +
+            data[i].state +
+            "</a></small></div>";
+          html += '<div class="mb-5">';
+          html += "<div><span> Air condition</span></div>";
+          html += "";
+          html += "<div>";
+          html += "<span>10 guests</span>";
+          html += '<span aria-hidden="true"> · </span>';
+          html += '<span>2 bedroom</span> <span aria-hidden="true"> · </span>';
+          html += "<span>2 baths</span>";
+          html += "</div>";
+          html += "</div>";
+          html +=
+            '<div class="d-flex position-absolute apartment-review justify-content-between mt-1 align-items-end">';
+          html += "<div>3 reviews</div>";
+          html += "";
+          html +=
+            '<div class="d-none d-lg-block d-xl-block text-right mr-2"><span>₦5000 / night</span>';
+          html +=
+            '<a href="" class="btn btn-primary btn-round d-none d-lg-block d-xl-block">Check Availability  <i class="material-icons">arrow_forward_ios</i></a>';
+          html += "</div></div></div></div></div>";
         }
       }
 
@@ -181,14 +143,13 @@
     };
 
     function filter(form, url) {
-      // $(settings.overlay).removeClass("d-none");
       $.ajax({
         url: url,
         type: "get",
         cache: false,
       })
         .done(function(json) {
-          // contents(json.products, true);
+          contents(json.properties, true);
         })
         .fail(function() {
           alert("Posts could not be loaded.");
@@ -205,8 +166,8 @@
         beforeSend: function(xhr) {},
       })
         .done(function(json) {
-          contents(json.products, false);
-          $(".spinner-grow-md").addClass("d-none");
+          contents(json.properties, false);
+          //$(".spinner-grow-md").addClass("d-none");
         })
         .fail(function() {
           alert("Something went wrong.");
@@ -226,11 +187,18 @@
       window.history.pushState({}, "", "?" + qs.join("&"));
     };
 
+    qS = function() {
+      const url = new URL(window.location);
+      return url.search.toString();
+    };
+
     $(document).ready(function() {
       settings.form.click(function() {
+        $(".ap-loaders").removeClass("d-none");
+        $(".loaded-apartments").remove();
         buildUrl();
+
         filter(settings.form_data, window.location);
-        console.log(settings.form_data);
       });
 
       $(document).on("click", ".load_more", function(e) {
@@ -250,8 +218,6 @@
         window.history.pushState({}, "", url);
         filter(settings.form_sort_by, window.location);
       });
-
-      //})
     });
 
     return this;

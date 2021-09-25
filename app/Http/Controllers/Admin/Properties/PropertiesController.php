@@ -123,6 +123,9 @@ class PropertiesController extends Controller
 
         $property  = $id ?  Property::find($id) : new Property;
         $token     = mt_rand(); 
+        $location_ids = array_reverse($request->location_id);
+        $location_ids = Location::find($location_ids);
+        $location_full_name = implode(', ', array_reverse($location_ids->pluck('name')->toArray()));
         $title     = $id ? $request->apartment_name.'-'.$property->token : $request->apartment_name.'-'.$token;
         $property->name      = $request->apartment_name;
         $property->address   = $request->address;
@@ -138,13 +141,17 @@ class PropertiesController extends Controller
         $property->virtual_tour         = $request->virtual_tour;
         $property->featured             = $request->featured ? 1 : 0;
         $property->allow                = $request->allow ? 1 : 0;
+        $property->location_full_name   = $location_full_name;
+
         $property->slug                 = str_slug($title);
         $property->token                = $token;
         $property->save();
         $property->locations()->sync($request->location_id);
         $property->attributes()->sync($request->apartment_facilities_id);
         $property->attributes()->syncWithoutDetaching($request->attribute_id);
-        $locations = Location::find($request->location_id);        
+        $locations = Location::find($request->location_id);  
+        
+        
         foreach( $locations as $location )
         {
             $location->attributes()->sync($request->attribute_id);

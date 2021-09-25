@@ -7,6 +7,7 @@
    <div class="form-group bmd-form-group">
       <label class="bmd-label-floating">Email address</label>
       <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+      <label id="auth-error" class="error" for=""></label>
    </div>
    <div class="form-group bmd-form-group">
       <label class="bmd-label-floating">Password</label>
@@ -31,7 +32,7 @@
    </div>
    <div class="clearfix"></div>
    <p class="form-group mt-3">
-      <button type="submit" id="login_form_button"  class="ml-1 btn btn-primary btn-round  btn-block" name="login" value="Log in">
+      <button type="submit"   class="ml-1 btn btn-primary btn-round  btn-block auth-form-button">
          <div class="auth-spinner d-none">
             @include('_partials.spinner',['bgcolor' => '#ffffff'])
          </div> 

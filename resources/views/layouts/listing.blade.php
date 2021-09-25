@@ -11,7 +11,7 @@
 
          </nav>
          
-         <div class="main  index-page">
+         <div style="background-color: #f8f5f4;" class="main  index-page">
             @yield('content')
          </div>
          <footer class="bg-dark pt-8 pb-6 footer text-muted">

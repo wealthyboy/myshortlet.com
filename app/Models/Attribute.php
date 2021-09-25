@@ -51,6 +51,12 @@ class Attribute extends Model
     }
 
 
+    public function properties()
+    {
+        return $this->belongsToMany(Property::class);
+    }
+
+
     public function information()
     {
         return $this->belongsToMany(Information::class)->withPivot('information_id');

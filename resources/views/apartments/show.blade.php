@@ -1,7 +1,7 @@
 @extends('layouts.listing')
 @section('content')
 <div class="clearfix"></div>
-<section  style="background-color: floralwhite;">
+<section  style="background-color: #f8f5f4;">
    <div class="property-name-section">
       <div class="container-fluid">
          <div class="row mt-5">
@@ -13,7 +13,7 @@
             </div>
 
             <div class="col-md-4">
-               <div>Virtual Tour</div>
+               <div>                Virtual Tour</div>
                <div></div>
             </div>
          </div>
@@ -189,77 +189,90 @@
                </div>
             </div>
             <div class="col-12 col-md-5">
-              <h3>Check Availability</h3>
-
-              <div class="bg-white">
-                 <div class="form-row">
-                     <div class="form-group  search border pl-2 col-7">
-                        <label  class="pl-2" for="flatpickr-input-f">Check-in - Check-out</label>
-                        <input type="text" class="form-control" id="flatpickr-input-f" placeholder="Add Dates">
-                     </div>
-                     <div class="col-2">
-                        <button type="submit" class="btn btn-primary">Check Availability</button>
-                     </div>
-                 </div>
-               </div>
+               <h3>Check Availability</h3>
                <div class="card position-relative">
-               <div class="row no-gutters border-bottom mb-1 mt-1 pl-1 pb-1">
-                     <div class="col-md-4 position-relative">
-                        <div class="">
-                           <img class="img  img-fluid" src="http://myshortlet.test/images/apartments/m/4PeVUoGLRAjZrxvoYOY520jU6NvdcVMLQJQN68ic.jpg">
+                  <form action="/book/{{ $property->slug }}" method="GET" class="">
+                     @csrf
+                     <input type="hidden" name="property_id" value="{{ $property->id }}" />
+                     <div class="form-row">
+                        <div class="form-group  search border pl-2 col-7">
+                           <label  class="pl-2" for="flatpickr-input-f">Check-in - Check-out</label>
+                           <input type="text" class="form-control" name="date" id="flatpickr-input-f" placeholder="Add Dates">
+                        </div>
+                        <div class="col-2">
+                           <button type="submit" class="btn btn-primary">Check Availability</button>
                         </div>
                      </div>
-                     <div class="col-md-6 pl-2">
-                        <div class="card-title">
-                           <a href="/apartment/lovely-studio-apartment-at-lekki-agungi-wwifi-1447616684">Lovely Studio Apartment at Lekki, Agungi w/WIFI</a>
+
+                     @if ($property->apartments->count())
+                        @foreach($property->apartments as $apartment)
+                        <div class="row no-gutters border-bottom mb-1 mt-1 pl-1 pb-1">
+                           <div class="col-md-3 position-relative">
+                              <div class="">
+                                 <img class="img  img-fluid" src="{{ $apartment->images[0]->image_m }}">
+                              </div>
+                           </div>
+                           <div class="col-md-7 pl-2">
+                              <div class="card-title">
+                                 <a href="">Lovely Studio Apartment at Lekki, Agungi w/WIFI</a>
+                              </div>
+                              <div>
+                                 <span class="">Kitchen</span>
+                                 <span aria-hidden="true"> · </span>
+                                 <span class="">Air conditioning</span>
+                                 <div>
+                                    <span class="">4 guests</span>
+                                    <span aria-hidden="true"> · </span>
+                                    <span class="">1 bedroom</span>
+                                    <span aria-hidden="true"> · </span>
+                                    <span class="">1 bed</span>
+                                    <span aria-hidden="true"> · </span>
+                                    <span class="">1.5 baths</span>
+                                 </div>
+                              </div>
+                             
+                           </div>
+                           <div class="col-md-2">
+                              <div class="form-group">
+                                 <label for="qty">Qty</label>
+                                 <select class="form-control" name="apartment_quantity[{{ $apartment->uuid }}]" id="qty">
+                                    @for($i = 1; $i <= $apartment->quantity; $i++ )
+                                    <option>{{ $i }}</option>
+                                    @endfor
+                                 </select>
+                              </div>
+                           </div>
                         </div>
-                        <div>
-                           <span class="">Kitchen</span>
-                           <span aria-hidden="true"> · </span>
-                           <span class="">Air conditioning</span>
-                        </div>
-                        <div>
-                           <span class="">4 guests</span>
-                           <span aria-hidden="true"> · </span>
-                           <span class="">1 bedroom</span>
-                           <span aria-hidden="true"> · </span>
-                           <span class="">1 bed</span>
-                           <span aria-hidden="true"> · </span>
-                           <span class="">1.5 baths</span>
-                        </div>
-                     </div>
-                     <div class="col-md-2 ">
-                        <div class="">
-                           <select class="form-control" id="">
-                              <option value="33" >33</option>
-                              <option value="33" >33</option>
-                              <option value="33" >33</option>
-                              <option value="33" >33</option>
-                           </select>
-                        </div>
-                     </div>
-                  </div>
+                        @endforeach
+                     @endif
                   
                   <div>
                      <ul class="list-unstyled mb-0 p-2">
                         <li class="d-flex justify-content-between lh-22">
-                        <p class="text-gray-light mb-0">Package Time:</p>
-                        <p class="font-weight-500 text-heading mb-0">01 year</p>
+                        <p class="text-gray-light mb-0">2nights</p>
+                        <p class="font-weight-500 text-heading mb-0">s</p>
+                        </li>
+                        <li class="d-flex justify-content-between lh-22">
+                        <p class="text-gray-light mb-0">Apartment</p>
+                        <p class="font-weight-500 text-heading mb-0">2</p>
                         </li>
                      </ul>
                   </div>
                         
                   <div class="card-footer p-2  bg-transparent d-flex justify-content-between p-0 align-items-center">
                      <p class="text-heading mb-0">Total Price:</p>
-                     <span class="fs-32 font-weight-bold text-heading">$80</span>
+                     <span class="fs-32 font-weight-bold text-heading total-price">0</span>
                   </div>
-                  <button type="submit"   class="ml-1 btn btn-primary btn-round  mr-1 btn-block" name="login" value="Log in">
+                  <button type="submit"   class="ml-1 btn btn-primary btn-round  mr-1 btn-block">
                         <div class="auth-spinner d-none">
                            @include('_partials.spinner',['bgcolor' => '#ffffff'])
                         </div> 
                      <span class="lt">Book now</span> 
                   </button>
+                  </form>
+
                </div>
+               
             </div>
 
          </div>

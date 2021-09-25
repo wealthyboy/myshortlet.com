@@ -28,6 +28,7 @@ class Property extends Model
         'city',
         'street',
         'currency',
+        'priceRange'
         
 	];
 
@@ -36,7 +37,13 @@ class Property extends Model
         return (new PropertiesFilter($request))->add($filters)->filter($builder);
     }
 
-    
+    public function getPriceRangeAttribute(){
+        // if ($this->type == 'single') {
+            
+        // } else {
+
+        // }
+    }
 
 
     public function images()

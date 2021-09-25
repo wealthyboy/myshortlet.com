@@ -49,6 +49,11 @@
 @import "./styles/cards/card-plain";
 @import "./styles/responsive";
 
+label.error {
+  color: red;
+  font-size: 12px;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -185,6 +190,28 @@ svg {
   }
 }
 
+.apart-loading {
+  border-radius: 10px;
+  border: 1px solid #eee;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: rgb(116, 110, 110);
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 1000px 104px;
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
 /***
    end loaders
 **/
@@ -199,13 +226,6 @@ svg {
   min-width: 100%;
   top: 150px;
 }
-
-// .menu-dropdown {
-//   width: 330px;
-//   box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px !important;
-//   background: rgb(255, 255, 255) none repeat scroll 0% 0% !important;
-//   border-radius: 9px !important;
-// }
 
 /*
   Flat Pickr

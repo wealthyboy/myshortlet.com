@@ -14,12 +14,13 @@
 <div class="container-fluid">
    <div class="row">
       <div class="col-12 d-flex justify-content-between">
-         <div>{{ $properties->count() }} properties in Lagos</div>
+         <div>{{ $properties->total() }} properties found</div>
          <div>
             <div class="d-flex justify-content-md-end align-items-center">
                <div class="input-group border rounded  w-auto bg-white mr-3">
                <label class="input-group-text bg-transparent border-0   pr-1 pl-3" for="inputGroupSelect01"><i class="fas fa-align-left fs-16 pr-2"></i>Sortby:</label>
                <select name="sort_by" id="sort_by" class="form-control border-0 bg-transparent  sortby" data-style="bg-transparent border-0 font-weight-600 btn-lg pl-0 pr-3" id="inputGroupSelect01">
+               <option value="">Recommended</option>
                <option value="price,asc ">Price(low to high)</option>
                <option value="price,desc">Price(high to low)</option>
                </select>
@@ -43,14 +44,20 @@
       </div>
 
       <div  id="load-products" class="col-md-9">
-            
+         <div class="d-none ap-loaders">
+         @for($i =1; $i < 6; $i++)
+         <div class="card position-relative"><div class="row no-gutters"><div class="col-md-3 position-relative"><div class="apart-loading" style="width: 100%; height: 232px; background-color: rgb(204, 204, 204);"><a href=""></a> <div class="fav-icon position-absolute"><a href="#" data-id="189" data-toggle="loggedIn" data-target="#auth" title="Wishlist" class="saved"></a></div></div></div> <div class="col-md-9 position-relative col-12 pl-3"><div class="d-flex  justify-content-between"><div class="apart-loading" style="width: 50%; height: 12px; background-color: rgb(204, 204, 204);"></div> <div class="apart-loading" style="width: 40%; height: 12px; background-color: rgb(204, 204, 204);"></div></div> <div><small><a class="p-0 d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></a>,  <a href="" class="d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></a></small></div> <div class="mb-5"><div><span class="d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></span> <span class="d-inline-block  apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></span> <span class="d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></span></div> <div><span class="d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></span> <span class="d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></span> <span class="d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></span></div></div> <div class="d-flex position-absolute apartment-review justify-content-between mt-1 align-items-end"><div class="apart-loading mb-2" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></div> <div class="d-none d-lg-block d-xl-block text-right mr-2"><span class="apart-loading d-inline-block" style="width: 100%; height: 12px; background-color: rgb(204, 204, 204);"></span> <div class=" apart-loading btn btn-primary btn-round d-none d-lg-block d-xl-block" style="width: 100%; height: 12px; background-color: rgb(204, 204, 204);"></div></div></div></div></div></div>
+         @endfor
+         </div>
+         
+  
          @if ( $properties->count())
          @foreach( $properties as $property)
-            <div class="card position-relative">
+            <div class="card position-relative loaded-apartments">
                <div class="row no-gutters">
                   <div class="col-md-3 position-relative">
                      <div class="">
-                        <a href="/apartment/{{ $property->slug }}">
+                        <a href="/apartment/{{ $property->slug }}?check_in_checkout={{ request()->check_in_check_out }}">
                            <img class="img  img-fluid" src="{{ $property->image_m }}">
                         </a>
                         <div class="fav-icon position-absolute">
@@ -61,9 +68,9 @@
                   <div class="col-md-9 position-relative col-12 pl-3">
                      <div class="d-flex  justify-content-between">
                         <div class="">
-                           <a href="/apartment/{{ $property->slug }}">{{ $property->name }}</a>
+                           <a href="/apartment/{{ $property->slug }}?check_in_checkout={{ request()->check_in_check_out }}">{{ $property->name }}</a>
                         </div>
-                        <div class="">
+                        <div class="d-block d-sm-none">
                            @if( $property->apartments->count() && $property->apartments->count() >  1  )
                               <span class="">From {{ $property->currency }}{{ optional($property->single_room)->price }}/ night </span>
                               @else
@@ -76,23 +83,25 @@
                      </div>
                      
                      <div class="">
-                        <small class=""> <a class="p-0" href="/apartment/{{ optional($property)->slug }}">{{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
+                        <small class=""> <a class="p-0" href="/apartment/{{ optional($property)->slug }}?check_in_checkout={{ request()->check_in_check_out }}">{{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
                      </div>
 
                      <div class="mb-5">
-                        @foreach($property->facilities->take(3) as $facility)
-                        <div class="">
-                           <span class=""> {{ $facility->name }}</span>
-                        </div>
-                        @endforeach
+                        @if($property->facilities->count())
+                           <div class="">
+                              @foreach($property->facilities->take(3) as $facility)
+                              <span class=""> {{ $facility->name }}</span>
+                              @endforeach
+                           </div>
+                        @endif
                         @if( $property->type == 'single')
-                        <div class="">
-                           <span class="">{{ $property->single_room->max_children + $property->single_room->no_of_rooms }} guests</span>
-                           <span aria-hidden="true"> · </span>
-                           <span class="">{{ $property->single_room->no_of_rooms }} bedroom</span>
-                           <span aria-hidden="true"> · </span>
-                           <span class="">{{ $property->single_room->toilets }} baths</span>
-                        </div>
+                           <div class="">
+                              <span class="">{{ $property->single_room->max_children + $property->single_room->no_of_rooms }} guests</span>
+                              <span aria-hidden="true"> · </span>
+                              <span class="">{{ $property->single_room->no_of_rooms }} bedroom</span>
+                              <span aria-hidden="true"> · </span>
+                              <span class="">{{ $property->single_room->toilets }} baths</span>
+                           </div>
                         @endif
                      </div>
 
@@ -112,7 +121,7 @@
                              @if (!$property->allow_cancellation)
                               <div class="">FREE CANCELLATION</div>
                               @endif
-                           <a href="/apartment/{{ $property->slug }}" class="btn btn-primary btn-round d-none d-lg-block d-xl-block">
+                           <a href="/apartment/{{ $property->slug }}?check_in_checkout={{ request()->check_in_check_out }}" class="btn btn-primary btn-round d-none d-lg-block d-xl-block">
                               Check Availability  <i class="material-icons">arrow_forward_ios</i>
                            </a>
                         </div>
@@ -156,6 +165,8 @@
            'form_sort_by':$("select#sort_by "),
            'target':'load-products',
            'loggedInStatus':8,
+           'box':$('.filter-property'),
+
            'load_more':$(document).find('a.load_more'),
            'filter_url':'{{ request()->fullUrl() }}',
            'overlay': '.product-overlay'

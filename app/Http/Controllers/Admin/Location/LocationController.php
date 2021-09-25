@@ -90,6 +90,8 @@ class LocationController extends Controller
         $location->description = $request->description;
         $location->location_type = $request->location_type;
         $location->slug= $this->makeSlug($request->parent_id,$request->name);
+        $location->location_full_name = $this->makeSlug($request->parent_id,$request->name, ', ');
+
         $location->parent_id  = $request->parent_id;
         $location->save();
         (new Activity)->Log("Created a new Location called {$request->name}");
@@ -160,10 +162,11 @@ class LocationController extends Controller
         $location->image = $request->image;
         $location->description = $request->description;
         $location->location_type = $request->location_type;
-        $location->slug= $this->makeSlug($request->parent_id,$request->name);
+        $location->slug= $this->makeSlug($request->parent_id,$request->name, );
+        $location->location_full_name = $this->makeSlug($request->parent_id,$request->name, ', ');
+
         $location->parent_id  = $request->parent_id;
         $location->save();
-
         //Log Activity
         (new Activity)->Log("Updated  Location {$request->name} ");
         return redirect()->action('Admin\Location\LocationController@index');
@@ -197,20 +200,22 @@ class LocationController extends Controller
 
 
 
-    public function makeSlug($parent_id,$name){
-        //Tempral solution
+    public function makeSlug($parent_id,$name, $format='-')
+    {
         $cat = $parent_id ? Location::find($parent_id) : null;
         if ( null !== $cat ){
             if ($cat->parent_id){
                 $parent = Location::find($cat->parent_id);
                 if ($parent->parent_id){
                     $parent = Location::find($parent->parent_id);
-                    return  str_slug($parent->name.' '.$cat->name.' '.$name);
+                    return  str_slug($name.' '.$cat->name.' '.$parent->name, $format);
+
                 }
-                return  str_slug($parent->name.' '.$cat->name.' '.$name);
+                return  str_slug($name.' '.$cat->name.' '.$parent->name, $format);
+
             }
-            return $slug = null !== $cat ? str_slug($cat->name.' '.$name) : str_slug($name);
+            return $slug = null !== $cat ? str_slug($name.' '.$cat->name, $format) : str_slug($name, $format);
         }
-        return str_slug($name);
+        return str_slug($name, $format);
     }
 }
