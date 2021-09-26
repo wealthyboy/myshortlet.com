@@ -1,25 +1,39 @@
 <form method="GET" action="/property/search">
-    <div class="row no-gutters">
-        <div class="col-md-3 pr-1">
-            <div class="form-group search border pl-2">
-                <label class="pl-2" for="Location-input">Location</label>
-                <input type="text" class="form-control" name="going_to" value="{{ request()->going_to }}" id="Location-input" placeholder="Where are you going">
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group  search border pl-2">
-                <label  class="pl-2" for="flatpickr-input-f">Check-in - Check-out </label>
-                <input type="text" name="check_in_check_out" class="form-control" id="flatpickr-input-f" value="{{ request()->check_in_check_out }}" placeholder=" Add Dates">
-            </div>
-        </div>
-        <div id="people-number" class="col-md-4 cursor-pointer">
-           <div  class="people-number  border pl-2 pb-1 ">
-               <div  class="pl-1">Rooms and Guests</div>
-                <div class="people-dropdown-info">
-                   <span class="adults">1</span>  adults 
-                   <span class="children">1</span> children -
-                   <span class="rooms">1</span>  rooms 
+    <div class="form-row">
+        <div class="form-group form-border search  pl-2 col-md-3">
+            <label class="pl-4" for="Location-input">Location</label>
+
+            <div class="input-group input-group-lg">
+                <div class="input-group-prepend">
+                    <span
+                        class="input-group-text  border-0 text-muted fs-18"
+                        id="inputGroup-sizing-lg"
+                    >
+                        <i class="fas fa-map-marker-alt"></i>
+                    </span>
                 </div>
+                <input type="text" class="form-control ml-2" name="going_to" value="{{ request()->going_to }}" id="Location-input" placeholder="Where are you going">
+            </div>
+        </div>
+    
+        <div class="form-group form-border  search  pl-2 col-md-3">
+           @include('_partials.date')
+        </div>
+
+         <div id="people-number"  class="col-md-3  cursor-pointer">
+           <div  class="people-number  d-flex  form-border  pl-2  ">
+               <div class="align-self-center">
+                 <i class="fas fa-user-friends"></i>
+                </div>
+               <div>
+                    <label  class="pl-1">Rooms and Guests</label>
+                    <div class="people-dropdown-info pb-1">
+                        <span class="adults">1</span>  adults 
+                        <span class="children">1</span> children -
+                        <span class="rooms">1</span>  rooms 
+                    </div>
+               </div>
+               
             </div>
             <div style="min-width: 100%; z-index: 1; background: #ffffff; opacity: 0;" id="people-dropdown" class="people-dropdown d-none pl-4 pt-3 pb-4 pr-4 position-absolute  border">
                 <div class=" d-flex p-2 justify-content-between">

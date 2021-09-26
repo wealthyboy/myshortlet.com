@@ -67,6 +67,10 @@ svg {
   height: 23px;
 }
 
+.bold {
+  font-weight: 700;
+}
+
 .sidebar-toggle.sidebar-opened {
   left: 280px;
   z-index: 9000;
@@ -277,6 +281,12 @@ svg {
 
 input {
   filter: none !important;
+}
+
+.form-border {
+  border: 2px solid $brown-500;
+  border-radius: 0.5rem;
+  background-color: #fff;
 }
 
 .search .form-control {

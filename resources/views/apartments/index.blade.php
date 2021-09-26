@@ -12,8 +12,8 @@
    </div>
 </div>
 <div class="container-fluid">
-   <div class="row">
-      <div class="col-12 d-flex justify-content-between">
+   <div class="row no-gutters ">
+      <div class="col-12 d-flex  mb-1 justify-content-between">
          <div>{{ $properties->total() }} properties found</div>
          <div>
             <div class="d-flex justify-content-md-end align-items-center">
@@ -36,14 +36,14 @@
       <div class="sidebar-toggle d-block d-sm-none ">  <i class="material-icons filter adjust">sort</i> filter</div>
       <div class="sidebar-overlay d-none"></div>
       
-      <div class="col-md-3 mobile-sidebar">
-         <div class="card  sidebar-section">
+      <div class="col-md-3 pr-2 mobile-sidebar">
+         <div class=" bg-white  sidebar-section">
             @include('_partials.search')
          </div>
          
       </div>
 
-      <div  id="load-products" class="col-md-9">
+      <div  id="load-products" class="col-md-7 pl-1">
          <div class="d-none ap-loaders">
          @for($i =1; $i < 6; $i++)
          <div class="card position-relative"><div class="row no-gutters"><div class="col-md-3 position-relative"><div class="apart-loading" style="width: 100%; height: 232px; background-color: rgb(204, 204, 204);"><a href=""></a> <div class="fav-icon position-absolute"><a href="#" data-id="189" data-toggle="loggedIn" data-target="#auth" title="Wishlist" class="saved"></a></div></div></div> <div class="col-md-9 position-relative col-12 pl-3"><div class="d-flex  justify-content-between"><div class="apart-loading" style="width: 50%; height: 12px; background-color: rgb(204, 204, 204);"></div> <div class="apart-loading" style="width: 40%; height: 12px; background-color: rgb(204, 204, 204);"></div></div> <div><small><a class="p-0 d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></a>,  <a href="" class="d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></a></small></div> <div class="mb-5"><div><span class="d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></span> <span class="d-inline-block  apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></span> <span class="d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></span></div> <div><span class="d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></span> <span class="d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></span> <span class="d-inline-block apart-loading" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></span></div></div> <div class="d-flex position-absolute apartment-review justify-content-between mt-1 align-items-end"><div class="apart-loading mb-2" style="width: 10%; height: 12px; background-color: rgb(204, 204, 204);"></div> <div class="d-none d-lg-block d-xl-block text-right mr-2"><span class="apart-loading d-inline-block" style="width: 100%; height: 12px; background-color: rgb(204, 204, 204);"></span> <div class=" apart-loading btn btn-primary btn-round d-none d-lg-block d-xl-block" style="width: 100%; height: 12px; background-color: rgb(204, 204, 204);"></div></div></div></div></div></div>
@@ -53,7 +53,7 @@
   
          @if ( $properties->count())
          @foreach( $properties as $property)
-            <div class="card position-relative loaded-apartments">
+            <div class="bg-white mb-2 rounded position-relative loaded-apartments">
                <div class="row no-gutters">
                   <div class="col-md-3 position-relative">
                      <div class="">
@@ -68,22 +68,15 @@
                   <div class="col-md-9 position-relative col-12 pl-3">
                      <div class="d-flex  justify-content-between">
                         <div class="">
-                           <a href="/apartment/{{ $property->slug }}?check_in_checkout={{ request()->check_in_check_out }}">{{ $property->name }}</a>
+                           <a href="/apartment/{{ $property->slug }}?check_in_checkout={{ $date }}">{{ $property->name }}</a>
                         </div>
                         <div class="d-block d-sm-none">
-                           @if( $property->apartments->count() && $property->apartments->count() >  1  )
-                              <span class="">From {{ $property->currency }}{{ optional($property->single_room)->price }}/ night </span>
-                              @else
-                              <span class="">{{ $property->currency }}{{ optional(optional($property->apartments)->first())->price }}/ night</span>
-                              @endif
-                           @if (!$property->allow_cancellation)
-                              <div class="">FREE CANCELLATION</div>
-                           @endif
+                           @include('_partials.price')
                         </div>
                      </div>
                      
                      <div class="">
-                        <small class=""> <a class="p-0" href="/apartment/{{ optional($property)->slug }}?check_in_checkout={{ request()->check_in_check_out }}">{{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
+                        <small class=""> <a class="p-0" href="/apartment/{{ optional($property)->slug }}?check_in_checkout={{ $date }}">{{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
                      </div>
 
                      <div class="mb-5">
@@ -104,24 +97,28 @@
                            </div>
                         @endif
                      </div>
-
-
-                     
-
                      <div class="d-flex position-absolute apartment-review justify-content-between mt-1 align-items-end">
                         <div class="">
-                          3 reviews
+                          
                         </div>
                         <div class="d-none d-lg-block d-xl-block text-right mr-2">
-                           @if( $property->apartments->count() && $property->apartments->count() >  1  )
-                              <span class="">From {{ $property->currency }}{{ optional($property->single_room)->price }}/ night</span>
+                           @if( $property->type != 'single' )
+                           <span class="">From {{ $property->currency }}{{ optional($property->single_room)->price }} </span> <span>per night</span>
+                           @else
+                              @if ( optional($property->single_room)->sale_price )
+                              <span class="old-price text">
+                                 {{ $property->currency }}{{ optional($property->single_room)->sale_price }}
+                              </span>
+                              <span class="new-price">{{ $property->currency }}{{ optional($property->single_room)->price }}</span><span>per night</span>
                               @else
-                              <span class="">{{ $property->currency }}{{ optional(optional($property->apartments)->first())->price }} / night</span>
+                              <span class="">{{ $property->currency }}{{ optional($property->single_room)->price }}</span><span>per night</span>
+
                               @endif
-                             @if (!$property->allow_cancellation)
+                           @endif
+                           @if (!$property->allow_cancellation)
                               <div class="">FREE CANCELLATION</div>
-                              @endif
-                           <a href="/apartment/{{ $property->slug }}?check_in_checkout={{ request()->check_in_check_out }}" class="btn btn-primary btn-round d-none d-lg-block d-xl-block">
+                           @endif
+                           <a href="/apartment/{{ $property->slug }}?check_in_checkout={{ $date }}" class="btn btn-primary btn-round d-none d-lg-block d-xl-block">
                               Check Availability  <i class="material-icons">arrow_forward_ios</i>
                            </a>
                         </div>
@@ -149,6 +146,10 @@
                </div>
             </div>
          @endif
+      </div>
+
+      <div class="col-md-2">
+         <img src="" alt="">
       </div>
    </div>
 </div>

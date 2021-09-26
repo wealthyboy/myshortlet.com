@@ -14,6 +14,7 @@ use App\Http\Helper;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filters\PropertyFilter\AttributesFilter;
 use  Illuminate\Support\Str;
+use Carbon\Carbon;
 
 
 
@@ -31,6 +32,7 @@ class ApartmentsController extends Controller
      */
     public function index(Request $request, Location $location)
     {   
+
         $types =  [
             'extra_services',
             'facilities',
@@ -40,6 +42,9 @@ class ApartmentsController extends Controller
         ];
         $str =new  Str;
         $codes = Helper::phoneCodes();
+
+        $date = $request->check_in_checkout;
+        $property_is_not_available = null;
 
         $cites = [];
 
@@ -68,7 +73,9 @@ class ApartmentsController extends Controller
             'attributes',
             'str',
             'saved',
-            'codes'
+            'codes',
+            'date',
+            'property_is_not_available'
         )); 
     }
 
@@ -96,15 +103,16 @@ class ApartmentsController extends Controller
     public function search(Request $request)
     {   
 
-        //dd($request->all());
-        $date = explode("to",$request->check_in_check_out);
+        $date = explode("to",$request->date);
+        $property_is_not_available = null;
+
         $data = [];
         $attributes = Attribute::parents()->get();
-        $data['location'] =  $request->going_to;
+        $data['location']     =  $request->going_to;
         $data['max_children'] = $request->no_of_children ?? 1;
-        $data['max_adults'] = $request->no_of_adults ?? 1;
+        $data['max_adults']   = $request->no_of_adults ?? 1;
         $data['rooms'] = $request->rooms;
-        $cities =  Property::where('location_full_name','like','%' .$data['location']. '%')->first();
+        $cities        = Property::where('location_full_name','like','%' .$data['location']. '%')->first();
 
         $attributes = $cities->attributes()->where('type','!=','apartment_facilities')->get()->groupBy('type'); 
         $location = $cities->locations()->where('locations.name','like','%' .$data['location']. '%')->first();
@@ -132,6 +140,8 @@ class ApartmentsController extends Controller
             ]); 
         }
 
+        $date = $request->check_in_checkout;
+
         return  view('apartments.index',compact(
             'location',
             'page_title',
@@ -140,6 +150,8 @@ class ApartmentsController extends Controller
             'attributes',
             'str',
             'saved',
+            'date',
+            'property_is_not_available'
         ));
          
     }
@@ -149,7 +161,6 @@ class ApartmentsController extends Controller
        return   auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];
     }
 
-    
 
     /**
      * Store a newly created resource in storage.
@@ -158,8 +169,28 @@ class ApartmentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, Property $property)
-    {    
-        return view('apartments.show',compact('property'));
+    {   
+        $date  = explode("-",$request->check_in_checkout);
+        $property_is_not_available = null;
+        if (!empty($date)) {
+            $date1 = trim($date[0]);
+            $date2 = trim($date[1]);
+            $data  = [];
+            if ($date1 || $date2) {
+                $date = Carbon::createFromDate($date1);
+                $date2 = Carbon::createFromDate($date2);
+            } 
+
+            $property_is_not_available = Reservation::whereDate('checkout', '>=', $date )
+            ->where('apartment_id', $property->single_room->id)
+            ->orderBy('created_at','desc')->first();
+
+        }
+        
+        $saved =  $this->saved();
+        $date = $request->check_in_checkout;
+
+        return view('apartments.show',compact('property_is_not_available','date','saved','property'));
     }
 
     
