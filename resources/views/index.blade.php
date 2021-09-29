@@ -100,7 +100,7 @@
             <img class="card-img-top" src="{{ optional($city)->image }}" rel="nofollow" alt="Card image cap">
             </a>
             <div class="card-body p-1">
-               <a href="/apartments/{{ $featured->slug }}">
+               <a href="/apartments/{{ $city->slug }}">
                   <h4 class="card-title">{{ optional($city)->name }}</h4>
                   <p class="card-text"></p>
                </a>
@@ -134,7 +134,7 @@
    @if ($posts->count()) 
    <div class="row">
       <div class="col-md-12">
-         <h2>  Get inspiration for your next trip </h2>
+         <h2>Get inspiration for your next trip</h2>
       </div>
       @foreach($posts as $post)
       <div class="col-md-4">

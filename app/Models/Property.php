@@ -56,7 +56,7 @@ class Property extends Model
     }
 
     public function extra_services(){
-        return $this->belongsToMany(Attribute::class)->where('type','extra_service');
+        return $this->belongsToMany(Attribute::class)->where('type','extra_services')->withPivot('price');
     }
 
 

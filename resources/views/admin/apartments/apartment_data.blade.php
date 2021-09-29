@@ -1,11 +1,22 @@
-<h4 class="info-text ">Enter Apartment Details</h4>        
+<h4 class="info-text ">Enter Apartment Details</h4> 
+          
     <div class="row">
         <div class="col-md-8">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <div class="form-group {{ isset($apartment) ? ''  : 'label-floating is-empty' }}">
                     <label class="control-label">Apartment Name</label>
                     <input  required="true" name="apartment_name" data-msg="" value="{{ isset($apartment) ? $apartment->name :  old('apartment_name') }}" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                   <div class="form-group">
+                        <select name="attribute_id[]" required class="form-control">
+                        <option  value="" selected="">--Choose Property Type--</option>
+                            @foreach($property_types  as $property_type)
+                                <option class="" value="{{ $property_type->id }}">{{ $property_type->name }} </option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
@@ -17,6 +28,7 @@
                     <input  required="true" name="address" data-msg="" value="{{ isset($apartment) ? $apartment->address :  old('address') }}" class="form-control" type="text">
                     </div>
                 </div>
+
                 
             </div>
 
@@ -51,7 +63,7 @@
                 </div>
                 <div class="col-md-6">
                     <legend>  
-                    Featured Product
+                    Featured Propert
                     </legend>
                     <div class="togglebutton">
                     <label>

@@ -104,7 +104,7 @@ class CategoryController extends Controller
         (new Activity)->Log("Created a new category called {$request->name}");
         return redirect()->back();
     }
-
+    //AIzaSyDXuWdx1GjEyyLT5G7j7GTGtTADVAxlY-w
 
     public function makeSlug($parent_id,$name){
         //Tempral solution

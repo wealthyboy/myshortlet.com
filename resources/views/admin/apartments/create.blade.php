@@ -51,7 +51,7 @@
                         <div class="togglebutton cancel form-inline">
                            <label>
                            <input  name="allow_cancellation" id="allow_cancellation"  value="1" type="checkbox" >
-                           Allow Cancellation 
+                              Free Cancellation 
                            </label>
                            
                         </div>
@@ -64,25 +64,19 @@
                      </div>
 
                      <div class="col-md-12 mt-1 pr-5 ">
-                         @foreach($attributes as $key => $attrs)
-                          <h4 class="text-capitalize">{{ $str::replaceFirst('_', ' ', $key) }}</h4>
-                           @foreach($attrs as $child)
-                           <div class="mt-2 mb-2">
-                              <div class="togglebutton">
-                                 <label>
-                                    <input   
-                                       name="attribute_id[]"  value="{{ $child->id }}" type="checkbox" 
-                                    >
-                                    {{ $child->name }}
-                                 </label>
-
-                                 @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => 'Attribute','name' => 'attribute_id'])
-                              </div>
-                           </div>
-                           @endforeach
-                        @endforeach
+                       @include('admin.apartments.attributes',['ob' => null])
                      </div>
 
+                     <div class="col-md-12 mt-1 pr-5 ">
+                        <h4 class="">Property Extras</h4>
+                        @include('admin.apartments.extras',[
+                           'obj' => null, 
+                           'name' => 'property_extra_services',
+                           'attribute_name' => 'property_extras'
+                        ])
+                     </div>
+
+                     
 
                   </div>
                </div>
@@ -105,8 +99,7 @@
                         <div class="col-md-12">
                            <input name="has_more_room"     value="1"   class="" type="hidden">
                            <input name="new_room"     value="1"   class="" type="hidden">  
-                           
-                           
+                        
                            <div class="col-md-3">
                               <div class="form-group">
                                  <select  name="single_room_number" name="bedrooms" id="bedrooms" class="form-control  bedrooms">
@@ -161,14 +154,17 @@
                            <div class="col-md-12 bed mb-5">
                            @if ($bedrooms->count())
                               @foreach($bedrooms as $key =>  $parent)
-                                    <div class="bedroom-{{ $key + 1 }} d-none mb-2">
-                                    <div class="mb-2">{{ $parent->name }} </div>
-                                       @foreach($parent->children as $bedroom)
-                                       <label for="bedroom-{{ $bedroom->id }}-{{ $counter }}" class="radio-inline">
-                                          <input  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $counter }}" name="{{ $parent->slug }}" type="radio" name="optradio">{{ $bedroom->name }}
-                                       </label>
-                                       @endforeach
-                                    </div>
+                                 <div class="bedroom-{{ $key + 1 }} d-none mb-2">
+                                 <div class="mb-2">{{ $parent->name }} </div>
+                                    @foreach($parent->children as $bedroom)
+                                    <label for="bedroom-{{ $bedroom->id }}-{{ $counter }}" class="radio-inline">
+                                       <input  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $counter }}" name="{{ $parent->slug }}" type="radio" name="optradio">{{ $bedroom->name }}
+                                       <div class="bed-count">
+                                          <input name="bed_count[{{ $bedroom->id }}]"  placeholder="Number of beds" class="form-control" value="" type="number">
+                                       </div>
+                                    </label>
+                                    @endforeach
+                                 </div>
                               @endforeach
                            @endif
                            </div>
@@ -186,25 +182,26 @@
                               </div>
                            </div>
 
+                           
+
 
                            <div class="col-md-12 mt-5 pr-5 kkk">
-                              @foreach( $apartment_facilities as $apartment_facility )
-                                 <h4>{{ $apartment_facility->name }}</h4>                       
-                                 @foreach($apartment_facility->children->sortBy('name') as $child)
-                                 <div class="mt-2 mb-2">
-                                    <div class="togglebutton">
-                                          <label>
-                                             <input   
-                                                name="apartment_facilities_id[]"  value="{{ $child->id }}" type="checkbox" 
-                                             >
-                                          {{ $child->name }}
-                                          </label>
-                                          @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => 'Attribute','name' => 'apartment_facilities_id'])
-                                    </div>
-                                 </div>
-                                 @endforeach
-                              @endforeach
+                              @include('admin.apartments.apartment_fac',['model' => 'apartment'])
                            </div>
+
+                           <div class="col-md-12 mt-1 pr-5 ">
+                              <h4 class="text-capitalize">Apartment Extras</h4>
+                              @include('admin.apartments.extras',[
+                                 'obj' => '', 
+                                 'name' => 'single_apartment_extra_services',
+                                 'attribute_name' => 'single_apartment_extras'
+                              ])
+                           </div>
+
+                           <div class="col-md-6">
+                              @include('admin.apartments.occupied')
+                           </div>
+                           
                         </div>
                      </div>
                   </div>

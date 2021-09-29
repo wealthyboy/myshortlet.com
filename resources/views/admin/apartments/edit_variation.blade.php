@@ -16,9 +16,7 @@
     <div id="variation-panel" data-id="{{ $apartment->id }}"   class="hide v-panel">
         <div class="clearfix"></div>
         <div class="col-md-12">
-        <input name="edit_room"  value="1"   class="" type="hidden">
-
-                
+            <input name="edit_room"  value="1"   class="" type="hidden">
             <div class="col-md-6">
                 <div class="form-group label-floating is-ty">
                     <label class="control-label">Accommodation Type Name</label>
@@ -27,18 +25,18 @@
                 </div>
             </div>
 
-                <div class="col-md-2">
-                    <select  name="room_quantity[{{ $counter }}]" name="quantity" id="" required="true" class="form-control">
-                        <option value="" selected>Select Quantity</option>
-                        @for ($i = 1; $i< 10; $i++) 
-                            @if($apartment->quantity == $i)
-                            <option value="{{ $i }}" selected>{{ $i }}</option>
-                            @else
-                            <option value="{{ $i }}">{{ $i }}</option>
-                            @endif
-                        @endfor
-                    </select>
-                </div>
+            <div class="col-md-2">
+                <select  name="room_quantity[{{ $counter }}]" name="quantity" id="" required="true" class="form-control">
+                    <option value="" selected>Select Quantity</option>
+                    @for ($i = 1; $i< 10; $i++) 
+                        @if($apartment->quantity == $i)
+                        <option value="{{ $i }}" selected>{{ $i }}</option>
+                        @else
+                        <option value="{{ $i }}">{{ $i }}</option>
+                        @endif
+                    @endfor
+                </select>
+            </div>
 
         
             <div class="col-md-2">
@@ -109,31 +107,7 @@
             
 
             <div class="col-md-12 bed mb-5">
-               @if ($bedrooms->count())
-
-                    @foreach($bedrooms as $key =>  $parent)
-                        @if ($apartment->no_of_rooms > $key )
-                            <div class="bedroom-{{ $key + 1 }} mt-3">
-                                <h6> {{ $parent->name }} </h6>
-                                @foreach($parent->children as $bedroom)
-                                <label for="bedroom-{{ $bedroom->id }}-{{ $apartment->id }}"  class="radio-inline">
-                                    <input  {{  $apartment->bedrooms->contains($bedroom) ? 'checked' : ''}}  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $apartment->id }}" name="{{ $parent->slug }}_{{ $apartment->id }}" type="radio" >{{ $bedroom->name }}
-                                </label>
-                                @endforeach
-                            </div>
-                        @else
-                            <div class="bedroom-{{ $key + 1 }} d-none  {{ $key }}">
-                                <div>{{ $parent->name }} </div>
-                                @foreach($parent->children as $bedroom)
-                                <label for="bedroom-{{ $bedroom->id }}" class="radio-inline">
-                                    <input  value="{{ $bedroom->id }}" value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}" name="{{ $parent->slug }}_{{ $apartment->id }}" type="radio" >{{ $bedroom->name }}
-                                </label>
-                                @endforeach
-                            </div>
-                        @endif
-                    @endforeach
-
-                @endif
+               @include('admin.apartments.beds')
             </div>
 
             
@@ -165,26 +139,19 @@
             </div>
 
 
-
             <div class="col-md-12 mt-5 pr-5 kkk">
-                @foreach( $apartment_facilities as $apartment_facility )
-                    <div>{{ $apartment_facility->name }}</div>                       
-                    @foreach($apartment_facility->children->sortBy('name') as $child)
-                    <div class="mt-2 mb-2">
-                        <div class="togglebutton">
-                            <label>
-                                <input 
-                                    {{ $helper->check($apartment->attributes , $child->id) ? 'checked' : '' }} 
+                @include('admin.apartments.apartment_fac',['variation' => true])
+            </div>
 
-                                    name="attribute_id[]"  value="{{ $child->id }}" type="checkbox" 
-                                >
-                            {{ $child->name }}
-                            </label>
-                            @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $apartment])
-                        </div>
-                    </div>
-                    @endforeach
-                @endforeach
+
+            <div class="col-md-12 mt-1 pr-5 ">
+                <h4 class="text-capitalize">Apartment Extras</h4>
+                @include('admin.apartments.extras',[
+                    'obj' => $apartment, 
+                    'name' => 'multiple_apartment_extra_services',
+                    'attribute_name' => 'multiple_apartment_extras',
+                    'variation' => true
+                ])
             </div>
         </div>
 

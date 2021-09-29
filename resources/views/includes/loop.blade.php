@@ -1,6 +1,6 @@
 
-@if ($obj->children->count())
-@foreach($obj->children as $obj)
+@if ($child->children->count())
+@foreach($child->children as $obj)
     <div class="togglebutton ml-3">
         <label>
             <input  
@@ -11,7 +11,7 @@
         </label>
     </div>
      
-    @include('includes.loop',['obj'=>$obj])
+    @include('includes.loop',['child'=>$obj])
 @endforeach
 
 @endif

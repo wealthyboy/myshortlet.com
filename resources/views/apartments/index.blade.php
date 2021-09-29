@@ -148,8 +148,8 @@
          @endif
       </div>
 
-      <div class="col-md-2">
-         <img src="" alt="">
+      <div class="col-md-2 pl-2">
+         <img class="img-fluid" src="https://avenuemontaigne.ng/uploads/Lfr25dG9jV42zCJ3iDQLymqDYOhzYYfCQi0ddaYn.gif" alt="">
       </div>
    </div>
 </div>

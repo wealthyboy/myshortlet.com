@@ -3853,7 +3853,7 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
         html = "";
       } else {
         for (var i in data) {
-          html += '<div class="card position-relative loaded-apartments">';
+          html += '<div class="position-relative loaded-apartments">';
           html += '<div class="row no-gutters">';
           html += '<div class="col-md-3 position-relative">';
           html += "<div>";
@@ -7150,6 +7150,9 @@ var f = (0,flatpickr__WEBPACK_IMPORTED_MODULE_0__.default)("#flatpickr-input-f",
   mode: "range",
   minDate: "today",
   dateFormat: "Y-m-d"
+});
+f.config.onChange.push(function (selectedDates, dateStr, instance) {
+  console.log(dateStr);
 });
 
 /***/ }),

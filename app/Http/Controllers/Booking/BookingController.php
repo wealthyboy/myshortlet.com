@@ -31,13 +31,13 @@ class BookingController extends Controller
     public function book(Request $request,Property $property)
     {   
         //Check id date has expired
-        if (!$request->date){
+        if (!$request->check_in_checkout){
             return back();
         }
 
 		//dd($request->all());
 
-        $date  = explode("to",$request->date);
+        $date  = explode("to",$request->check_in_checkout);
         $date1 = trim($date[0]);
         $date2 = trim($date[1]);
         $data  = [];

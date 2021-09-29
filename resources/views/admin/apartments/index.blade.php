@@ -3,23 +3,22 @@
 @section('content')
 
 <div class="row">
-        <div class="col-md-12">
+    <div class="col-md-12">
         <div class="text-right">
             <a href="{{ route('admin.properties.index') }}" rel="tooltip" title="Refresh" class="btn btn-primary btn-simple btn-xs">
                 <i class="material-icons">refresh</i>
                 Refresh
             </a>
             <a href="{{ route('admin.properties.create') }}" rel="tooltip" title="Add New" class="btn btn-primary btn-simple btn-xs">
-                    <i class="material-icons">add</i>
-                    Add Property
+                <i class="material-icons">add</i>
+                Add Property
             </a>
             <a href="javascript:void(0)" onclick="confirm('Are you sure?') ? $('#form-apartments').submit() : false;" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
                 <i class="material-icons">close</i>
                 Remove
             </a>
-
-            </div>
         </div>
+    </div>
 
         <div class="col-md-12">
             <div class="card">

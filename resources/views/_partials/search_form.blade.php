@@ -12,7 +12,7 @@
                         <i class="fas fa-map-marker-alt"></i>
                     </span>
                 </div>
-                <input type="text" class="form-control ml-2" name="going_to" value="{{ request()->going_to }}" id="Location-input" placeholder="Where are you going">
+                <input type="text" class="form-control ml-2" name="check_in_checkout" value="{{ request()->going_to }}" id="Location-input" placeholder="Where are you going">
             </div>
         </div>
     

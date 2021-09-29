@@ -32,19 +32,28 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-8">
                                     <div class="form-group {{ isset($property) ? ''  : 'label-floating is-empty' }}">
                                     <label class="control-label">Apartment Name</label>
                                     <input  required="true" name="apartment_name" data-msg="" value="{{ isset($property) ? $property->name :  old('apartment_name') }}" class="form-control" type="text">
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group label-floating is-ty">
-                                        <label class="control-label">Virtual Tour</label>
-                                        <input name="virtual_tour"  required="true" value="{{ isset($property) ? $property->virtual_tour :  old('virtual_tour') }}" class="form-control  variation" type="text">
-                                        <span class="material-input"></span>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                          <select name="attribute_id[]" required class="form-control">
+                                          <option  value="" >--Choose Property Type--</option>
+                                             @foreach($property_types  as $property_type)
+                                                <option 
+                                                  {{ $helper->check(optional($property)->attributes , $property_type->id) ? 'selected' : '' }} 
+                                                  value="{{ $property_type->id }}"
+                                                >
+                                                  {{ $property_type->name }} 
+                                                </option>
+                                             @endforeach
+                                          </select>
                                     </div>
-                                </div>
+                                 </div>
+                                
                             </div>
 
                             <div class="row">
@@ -129,21 +138,8 @@
                             
                             <label>Country/State/City </label>
                             <div class="well well-sm" style="height: 250px; background-color: #fff; color: black; overflow: auto;">
-                            @foreach($locations as $location)
-                                <div class="parent" value="{{ $location->id }}">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" 
-                                            {{ $helper->check($property->locations , $location->id) ? 'checked' : '' }} 
-                                            value="{{ $location->id }}" name="location_id[]" >
-                                            {{ $location->name }}  
-                                        </label>
-                                    </div>   
-                                        @include('includes.product_categories_children',['obj'=>$location,'space'=>'&nbsp;&nbsp;','model' => 'location','url' => 'location'])
-                                </div>
-                            @endforeach
+                              @include('admin.apartments.location')
                             </div>
-                            
                             
                         </div>
                     </div>
@@ -192,25 +188,17 @@
 
                      
                      <div class="col-md-12 mt-1 pr-5 ">
-                        @foreach($attributes as $key => $attrs)
-                        <h4 class="text-capitalize">{{ $str::replaceFirst('_', ' ', $key) }}</h4>
-                           @foreach($attrs as $child)
-                              <div class="mt-2 mb-2">
-                                 <div class="togglebutton ggg">
-                                       <label>
-                                          <input 
-                                             {{ $helper->check($property->attributes , $child->id) ? 'checked' : '' }} 
-                                             name="attribute_id[]"  value="{{ $child->id }}" type="checkbox" 
-                                          >
-                                       {{ $child->name }}
-                                       </label>
-                                       @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $property,'name' =>'attribute_id'])
-                                 </div>
-                              </div>
-                           @endforeach
-                        @endforeach
+                        @include('admin.apartments.attributes', ['ob' => $property])
                      </div>
 
+                     <div class="col-md-12 mt-1 pr-5 ">
+                        <h4 class="text-capitalize">Property Extras</h4>
+                        @include('admin.apartments.extras',[
+                           'obj' => $property, 
+                           'name' => 'property_extra_services',
+                           'attribute_name' => 'property_extras'
+                        ])
+                     </div>
 
                   </div>
                </div>
@@ -305,7 +293,7 @@
                                  </div>
 
                                  
-                                    <div class="col-md-12 bed mb-5">
+                                 <div class="col-md-12 bed mb-5">
 
                                     @if ($bedrooms->count() && null !== $property->single_room)
                                        @foreach($bedrooms as $key =>  $parent)
@@ -315,6 +303,9 @@
                                                    @foreach($parent->children as $bedroom)
                                                    <label for="bedroom-{{ $bedroom->id }}-{{ $property->single_room->id }}"  class="radio-inline">
                                                       <input  {{  $property->single_room->bedrooms->contains($bedroom) ? 'checked' : ''}}  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $property->single_room->id }}" name="{{ $parent->slug }}" type="radio" >{{ $bedroom->name }}
+                                                      <div class="bed-count">
+                                                         <input name="bed_count[{{ $bedroom->id }}]"  placeholder="Number of beds" class="form-control" value="{{ $helper->check(optional($property->single_room)->bedrooms, $bedroom->id,'bed_count')   }}" type="number">
+                                                      </div>
                                                    </label>
                                                    @endforeach
                                              </div>
@@ -324,6 +315,9 @@
                                                    @foreach($parent->children as $bedroom)
                                                    <label for="bedroom-{{ $bedroom->id }}" class="radio-inline">
                                                       <input  value="{{ $bedroom->id }}" value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}" name="{{ $parent->slug }}_{{ $property->id }}" type="radio" >{{ $bedroom->name }}
+                                                      <div class="bed-count">
+                                                         <input name="bed_count[{{ $bedroom->id }}]"  placeholder="Number of beds" class="form-control" value="" type="number">
+                                                      </div>
                                                    </label>
                                                    @endforeach
                                              </div>
@@ -345,41 +339,35 @@
                                             </a>
                                        </div>
                                        <div id="j-details"  class="j-details">
-                                       @if( optional(optional($property->single_room)->images)->count() )
-                                            @foreach($property->single_room->images as $image)
+                                          @if( optional(optional($property->single_room)->images)->count() )
+                                             @foreach($property->single_room->images as $image)
                                                 <div id="{{ $image->id }}" class="j-complete">
-                                                      <div class="j-preview">
-                                                         <img class="img-thumnail" src="{{ $image->image }}">
-                                                         <div id="remove_image" class="remove_image remove-image">
-                                                            <a class="remove-image"  data-id="{{ $image->id }}" data-randid="{{ $image->id }}" data-model="Image" data-type="complete"  data-url="{{ $image->image }}" href="#">Remove</a>
-                                                         </div>
+                                                   <div class="j-preview">
+                                                      <img class="img-thumnail" src="{{ $image->image }}">
+                                                      <div id="remove_image" class="remove_image remove-image">
+                                                         <a class="remove-image"  data-id="{{ $image->id }}" data-randid="{{ $image->id }}" data-model="Image" data-type="complete"  data-url="{{ $image->image }}" href="#">Remove</a>
                                                       </div>
+                                                   </div>
                                                 </div>
-                                            @endforeach
-                                        @endif
+                                             @endforeach
+                                          @endif
                                        </div>
                                     </div>
                                  </div>
 
                                  <div class="col-md-12 mt-5 pr-5 kkk">
-                                    @foreach( $apartment_facilities as $apartment_facility )
-                                       <h4>{{ $apartment_facility->name }}</h4>                       
-                                       @foreach($apartment_facility->children->sortBy('name') as $child)
-                                       <div class="mt-2 mb-2">
-                                          <div class="togglebutton">
-                                                <label>
-                                                   <input 
-                                                     {{ $helper->check($property->attributes , $child->id) ? 'checked' : '' }} 
-  
-                                                      name="apartment_facilities_id[]"  value="{{ $child->id }}" type="checkbox" 
-                                                   >
-                                                {{ $child->name }}
-                                                </label>
-                                                @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $property,'name' => 'apartment_facilities_id'])
-                                          </div>
-                                       </div>
-                                       @endforeach
-                                    @endforeach
+                                    @include('admin.apartments.apartment_fac',['apartment' => $property->single_room,'model' => $property->single_room])
+                                 </div>
+
+
+                                 <div class="col-md-12 mt-1 pr-5 ">
+                                    <h4 class="text-capitalize">Apartment Extras</h4>
+                                    @include('admin.apartments.extras',[
+                                       'obj' => $property->single_room, 
+                                       'name' => 'single_apartment_extra_services',
+                                       'attribute_name' => 'single_apartment_extras',
+                                       
+                                    ])
                                  </div>
                               </div>
                         

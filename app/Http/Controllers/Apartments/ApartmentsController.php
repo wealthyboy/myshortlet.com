@@ -172,7 +172,12 @@ class ApartmentsController extends Controller
     {   
         $date  = explode("-",$request->check_in_checkout);
         $property_is_not_available = null;
-        if (!empty($date)) {
+        $nights = '1 night';
+        $sub_total = null;
+        $days = null;
+        $ids = $property->apartments->pluck('id')->toArray();
+        $days = 1;
+        if ($request->check_in_checkout && !empty($date)) {
             $date1 = trim($date[0]);
             $date2 = trim($date[1]);
             $data  = [];
@@ -180,17 +185,16 @@ class ApartmentsController extends Controller
                 $date = Carbon::createFromDate($date1);
                 $date2 = Carbon::createFromDate($date2);
             } 
-
             $property_is_not_available = Reservation::whereDate('checkout', '>=', $date )
-            ->where('apartment_id', $property->single_room->id)
+            ->whereIn('apartment_id', $ids)
             ->orderBy('created_at','desc')->first();
-
+            $days   = $date->diffInDays($date2);
+            $nights   = $days == 1 ? "1 night" : $days." nights";
         }
         
         $saved =  $this->saved();
         $date = $request->check_in_checkout;
-
-        return view('apartments.show',compact('property_is_not_available','date','saved','property'));
+        return view('apartments.show',compact('property_is_not_available','date','saved','sub_total','property','days','nights'));
     }
 
     

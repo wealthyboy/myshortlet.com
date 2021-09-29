@@ -84,35 +84,9 @@
 
                      <div class="row">
                         @if($property->type == 'single')
-                        <div class="col-12">
-                           <h3> Entire apartment </h3>
-                           <div class="d-flex justify-content-between">
-                              <div class="">
-                                 <span class="">
-                                    <svg  class="">
-                                       <use xlink:href="#bedrooms-icon"></use>
-                                    </svg>
-                                 </span> 
-                                 {{ $property->single_room->no_of_rooms }} Bedrooms
-                              </div>
-                              <div class=""> 
-                                 <span class="">
-                                    <svg  class="">
-                                       <use xlink:href="#bathroom-icon"></use>
-                                    </svg>
-                                 </span> 
-                                 {{ $property->single_room->toilets }}  bathrooms
-                              </div>
-                              <div class="">
-                                 <span class="">
-                                    <svg  class="">
-                                       <use xlink:href="#sleeps-icon"></use>
-                                    </svg>
-                                 </span>
-                                 {{ $property->single_room->no_of_rooms }} Sleeps
-                              </div>
+                           <div class="col-12 entire-apartment">
+                              @include('_partials.entire_apartments',['obj' => $property->single_room])
                            </div>
-                        </div>
                         @endif
 
 
@@ -157,89 +131,19 @@
                </div>
 
                @if ($property->type != 'single')
-               <div id="" class="name mt-1 rounded bg-white p-2">
-                  <h3>Check Availability</h3>
-                  <div class=" position-relative">
-                     <form action="/book/{{ $property->slug }}" method="GET" class="">
-                        @csrf
-                        <input type="hidden" name="property_id" value="{{ $property->id }}" />
+                 <form action="/book/{{ $property->slug }}" method="GET" class="">
+                     <div >
+                        <h3>Choose your unit</h3>
                         <div class="form-row">
-                           <div class="form-group  search border pl-2 col-7">
-                              <label  class="pl-2" for="flatpickr-input-f">Check-in - Check-out</label>
-                              <input type="text" class="form-control" name="date" id="flatpickr-input-f" placeholder="Add Dates">
-                           </div>
-                           <div class="col-2">
-                              <button type="submit" class="btn btn-primary">Check Availability</button>
+                           <div class="form-group form-border search border pl-2 col-7">
+                                 @include('_partials.date')
                            </div>
                         </div>
-
-                        @if ($property->apartments->count())
-                           @foreach($property->apartments as $apartment)
-                           <div class="row no-gutters border-bottom mb-1 mt-1 pl-1 pb-1">
-                              <div class="col-md-3 position-relative">
-                                 <div class="">
-                                    <img class="img  img-fluid" src="{{ $apartment->images[0]->image_m }}">
-                                 </div>
-                              </div>
-                              <div class="col-md-7 pl-2">
-                                 <div class="card-title">
-                                    <a href="">Lovely Studio Apartment at Lekki, Agungi w/WIFI</a>
-                                 </div>
-                                 @if($property->facilities->count())
-                                    @foreach($property->facilities->take(3) as $facility)
-                                       <div class="col-6 d-flex align-items-center">
-                                          <span class="mt-1">
-                                             <?php echo  html_entity_decode($facility->svg) ?>
-                                          </span>
-                                          <span class="ml-2">{{ $facility->name }}</span>
-                                       </div>
-                                    @endforeach
-                                 @endif
-                                 
-                              
-                              </div>
-                              <div class="col-md-2">
-                                 <div class="form-group">
-                                    <label for="qty">Qty</label>
-                                    <select class="form-control" name="apartment_quantity[{{ $apartment->uuid }}]" id="qty">
-                                       @for($i = 1; $i <= $apartment->quantity; $i++ )
-                                       <option>{{ $i }}</option>
-                                       @endfor
-                                    </select>
-                                 </div>
-                              </div>
-                           </div>
-                           @endforeach
-                        @endif
-                     
-                     <div>
-                        <ul class="list-unstyled mb-0 p-2">
-                           <li class="d-flex justify-content-between lh-22">
-                              <p class="text-gray-light mb-0">2nights</p>
-                              <p class="font-weight-500 text-heading mb-0">s</p>
-                           </li>
-                           <li class="d-flex justify-content-between lh-22">
-                              <p class="text-gray-light mb-0">Apartment</p>
-                              <p class="font-weight-500 text-heading mb-0">2</p>
-                           </li>
-                        </ul>
                      </div>
-                           
-                     <div class="card-footer p-2  bg-transparent d-flex justify-content-between p-0 align-items-center">
-                        <p class="text-heading mb-0">Total Price:</p>
-                        <span class="fs-32 font-weight-bold text-heading total-price">0</span>
+                     <div id="" class="name mt-1 rounded bg-white p-2">
+                        @include('_partials.multiple')
                      </div>
-                     <button type="submit"   class="ml-1 btn btn-primary btn-round  mr-1 btn-block">
-                           <div class="auth-spinner d-none">
-                              @include('_partials.spinner',['bgcolor' => '#ffffff'])
-                           </div> 
-                        <span class="lt">Book now</span> 
-                     </button>
-                     </form>
-
-                  </div>
-                  
-               </div>
+                  </form>
                @endif
 
                <div class="name bg-white rounded">
@@ -252,57 +156,12 @@
             </div>
 
             @if ($property->type == 'single')
-            <div class="col-12 pl-1 rounded col-md-5">
-               <div class="name rounded mt-1 bg-white">
-                  <div class="card-body">
-                     <form action="/book/{{ $property->slug }}" method="GET" class="">
-
-                        <div class="d-flex pb-3 border-bottom mb-3 justify-content-between">
-                           <div class="">
-                              <div><del>100</del></div>
-                              <span>{{ $property->currency }}{{ $property->single_room->price }}</span><span>  per night</span>
-                           </div>
-                           <div class=""> 10% off</div>
-                        </div>
-                        <div class="mb-4">Non - refundable</div>
-                        <div class="form-row mt-2">
-                           @if ($date && $property_is_not_available) {
-                              <div class="text-danger">This property is not available for you selected date</div>
-                           @else
-                              
-                              <div class="form-group  search border rounded pl-2 col-12">
-                                 @include('_partials.date')
-                                 </div>
-                              </div>
-                           @endif
-                           
-                        <div>
-                           <ul class="list-unstyled mb-4 ">
-                              <li class="d-flex justify-content-between lh-22">
-                                 <p class="text-gray-light mb-0">1 night</p>
-                                 <p class="font-weight-500 text-heading mb-0">100</p>
-                              </li>
-                           </ul>
-                        </div>
-      
-                        <div class="card-footer pt-4 bg-transparent d-flex justify-content-between p-0 align-items-center">
-                              <p class="text-heading mb-0">Total Price:</p>
-                              <span class="fs-32 font-weight-bold text-heading total-price">0</span>
-                        </div>
-
-                        <button type="submit"   class=" btn btn-primary btn-round  mt-3  btn-block">
-                              <div class="auth-spinner d-none">
-                                 @include('_partials.spinner',['bgcolor' => '#ffffff'])
-                              </div> 
-                           <span class="lt">Reserve</span> 
-                        </button>
-                     </form>
-
-
-                  </div>
-               </div>
+            <div class="col-12 pl-1 single-apartment rounded col-md-5">
+               @include('_partials.single_apartments',['obj' => $property->single_room])
             </div>
             @endif
+
+            
 
             <div class="col-12  mt-1 col-md-12">
                <div id="Amenities" class="name mt-2 bg-white">
@@ -332,4 +191,32 @@
    
 @endsection
 @section('page-scripts')
+  var geocoder;
+  var map;
+  initialize()
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var mapOptions = {
+      zoom: 8,
+      center: latlng
+    }
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  }
+
+  function codeAddress() {
+    var address = document.getElementById('address').value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
+
 @stop

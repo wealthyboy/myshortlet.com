@@ -148,12 +148,12 @@ class Helper{
     }
 
 
-    public static function check($collections,$id)
+    public static function check($collections,$id, $col=null)
     {   
-        if ($collections) {
+        if (null !== $collections) {
             foreach($collections as $collection){
                 if(null !== $collection->id && $collection->id === $id ){
-                    return $collection->id;
+                    return $col ? $collection->pivot->$col: $collection->id;
                 }
             }
         }
@@ -235,6 +235,7 @@ class Helper{
             'facilities' => 'Facilities',
             'rules' => 'Rules',
             'apartment_facilities' => 'Apartment Facilities',
+            'property_type' => 'Property Type',
             'other' => 'other'
         ];
     }

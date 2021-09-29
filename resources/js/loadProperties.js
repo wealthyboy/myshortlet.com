@@ -75,7 +75,7 @@
         html = "";
       } else {
         for (let i in data) {
-          html += '<div class="card position-relative loaded-apartments">';
+          html += '<div class="position-relative loaded-apartments">';
           html += '<div class="row no-gutters">';
           html += '<div class="col-md-3 position-relative">';
           html += "<div>";

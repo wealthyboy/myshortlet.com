@@ -22,11 +22,10 @@ class Apartment extends Model
 
     public $appends = [
         'discounted_price',
-		'default_discounted_price',
 		'currency',
 		'converted_price',
 		'customer_price',
-		'default_percentage_off',
+		'percentage_off',
 		'image_m',
         'image_tn',
 	];
@@ -77,7 +76,7 @@ class Apartment extends Model
 
 
     public function extra_services(){
-        return $this->belongsToMany(Attribute::class)->where('type', 'extra_services');
+        return $this->belongsToMany(Attribute::class)->where('type','extra_services')->withPivot('price');
     }
 
 
@@ -88,7 +87,7 @@ class Apartment extends Model
 
 
     public function bedrooms(){
-        return $this->belongsToMany(Attribute::class)->where('type', 'bedrooms');
+        return $this->belongsToMany(Attribute::class)->where('type', 'bedrooms')->withPivot('bed_count');
     }
 
 }

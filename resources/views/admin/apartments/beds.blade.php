@@ -1,0 +1,25 @@
+@if ($bedrooms->count())
+
+    @foreach($bedrooms as $key =>  $parent)
+        @if ($apartment->no_of_rooms > $key )
+            <div class="bedroom-{{ $key + 1 }} mt-3">
+                <h6> {{ $parent->name }} </h6>
+                @foreach($parent->children as $bedroom)
+                <label for="bedroom-{{ $bedroom->id }}-{{ $apartment->id }}"  class="radio-inline">
+                    <input  {{  $apartment->bedrooms->contains($bedroom) ? 'checked' : ''}}  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $apartment->id }}" name="{{ $parent->slug }}_{{ $apartment->id }}" type="radio" >{{ $bedroom->name }}
+                </label>
+                @endforeach
+            </div>
+        @else
+            <div class="bedroom-{{ $key + 1 }} d-none  {{ $key }}">
+                <div>{{ $parent->name }} </div>
+                @foreach($parent->children as $bedroom)
+                <label for="bedroom-{{ $bedroom->id }}" class="radio-inline">
+                    <input  value="{{ $bedroom->id }}" value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}" name="{{ $parent->slug }}_{{ $apartment->id }}" type="radio" >{{ $bedroom->name }}
+                </label>
+                @endforeach
+            </div>
+        @endif
+    @endforeach
+
+@endif

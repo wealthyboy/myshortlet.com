@@ -42,3 +42,7 @@ const f = flatpickr("#flatpickr-input-f", {
   minDate: "today",
   dateFormat: "Y-m-d",
 });
+
+f.config.onChange.push(function(selectedDates, dateStr, instance) {
+  console.log(dateStr);
+});
