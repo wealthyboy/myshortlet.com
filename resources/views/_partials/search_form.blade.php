@@ -1,6 +1,6 @@
 <form method="GET" action="/property/search">
     <div class="form-row">
-        <div class="form-group form-border search  pl-2 col-md-3">
+        <div class="form-group form-border search  pl-2 col-md-3 mr-1">
             <label class="pl-4" for="Location-input">Location</label>
 
             <div class="input-group input-group-lg">
