@@ -168,13 +168,13 @@
                         <div class="togglebutton cancel form-inline">
                            <label>
                               <input  
-                                 name="allow_cancellation" 
+                                 name="is_refundable" 
                                  id="allow_cancellation" 
                                  value="1" 
                                  type="checkbox" 
-                                 {{ isset($property) &&  $property->allow_cancellation ? 'checked' : ''}}
+                                 {{ isset($property) &&  $property->is_refundable ? 'checked' : ''}}
                               >
-                              Allow Cancellation 
+                              Refundable 
                            </label>
                            
                         </div>
@@ -186,9 +186,12 @@
                         </div>
                      </div>
 
-                     
                      <div class="col-md-12 mt-1 pr-5 ">
-                        @include('admin.apartments.attributes', ['ob' => $property])
+                       @include('admin.apartments.attributes',['attris'=> $attributes, 'ob' => $property])
+                     </div>
+
+                     <div class="col-md-12 mt-1 pr-5 ">
+                       @include('admin.apartments.attributes',['attris'=> $others,'ob' => $property])
                      </div>
 
                      <div class="col-md-12 mt-1 pr-5 ">

@@ -28,8 +28,7 @@ class Property extends Model
         'city',
         'street',
         'currency',
-        'priceRange'
-        
+        'priceRange',
 	];
 
 
@@ -38,17 +37,12 @@ class Property extends Model
     }
 
     public function getPriceRangeAttribute(){
-        // if ($this->type == 'single') {
-            
-        // } else {
-
-        // }
     }
 
 
     public function images()
     {
-        return $this->morphMany(Image::class, 'imageable')->orderBy('id','asc');
+        return $this->hasMany(Image::class)->orderBy('id','asc');
 	}
 
     public function apartments(){
@@ -57,6 +51,32 @@ class Property extends Model
 
     public function extra_services(){
         return $this->belongsToMany(Attribute::class)->where('type','extra_services')->withPivot('price');
+    }
+
+
+    public function free_services(){
+        return $this->belongsToMany(Attribute::class)
+        ->where('type','extra_services')                
+        ->wherePivotNull('price');
+    }
+
+
+    public function areas(){
+        return $this->belongsToMany(Attribute::class)
+        ->wherePivot('name','area');               
+    }
+
+
+    public function safety_practicies(){
+        return $this->belongsToMany(Attribute::class)
+        ->wherePivot('name','Safety');               
+    }
+
+
+    public function paid_services(){
+        return $this->belongsToMany(Attribute::class)
+             ->where('type','extra_services')
+             ->wherePivotNotNull('price');
     }
 
 
@@ -70,6 +90,15 @@ class Property extends Model
 
     public function facilities(){
         return $this->belongsToMany(Attribute::class)->where('type','facilities');
+    }
+
+    public function apartment_facilities(){
+        return $this->belongsToMany(Attribute::class)->where('type','apartment_facilities');
+    }
+
+
+    public function rules(){
+        return $this->belongsToMany(Attribute::class)->where('type','rules');
     }
 
 

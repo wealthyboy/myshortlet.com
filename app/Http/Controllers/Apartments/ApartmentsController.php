@@ -176,6 +176,10 @@ class ApartmentsController extends Controller
         $sub_total = null;
         $days = null;
         $ids = $property->apartments->pluck('id')->toArray();
+        $areas= $property->areas; 
+        $safety_practices = $property->safety_practicies;
+        $amenities = $property->apartment_facilities->groupBy('parent.name');
+        $property_type = $property->type == 'single' ?  $property->single_room : $property->multiple_rooms[0];
         $days = 1;
         if ($request->check_in_checkout && !empty($date)) {
             $date1 = trim($date[0]);
@@ -194,12 +198,20 @@ class ApartmentsController extends Controller
         
         $saved =  $this->saved();
         $date = $request->check_in_checkout;
-        return view('apartments.show',compact('property_is_not_available','date','saved','sub_total','property','days','nights'));
+        return view('apartments.show',
+                   compact(
+                    'property_type',
+                    'property_is_not_available',
+                    'date',
+                    'saved',
+                    'sub_total',
+                    'property',
+                    'days',
+                    'nights',
+                    'areas',
+                    'safety_practices',
+                    'amenities'
+                ));
     }
-
-    
-
-    
-
    
 }

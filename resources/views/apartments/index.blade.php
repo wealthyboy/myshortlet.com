@@ -26,8 +26,6 @@
                </select>
                </div>
             </div>
-            
-
          </div>
       </div>
       <div class="clearfix"></div>
@@ -54,78 +52,7 @@
          @if ( $properties->count())
          @foreach( $properties as $property)
             <div class="bg-white mb-2 rounded position-relative loaded-apartments">
-               <div class="row no-gutters">
-                  <div class="col-md-3 position-relative">
-                     <div class="">
-                        <a href="/apartment/{{ $property->slug }}?check_in_checkout={{ request()->check_in_check_out }}">
-                           <img class="img  img-fluid" src="{{ $property->image_m }}">
-                        </a>
-                        <div class="fav-icon position-absolute">
-                            @include('_partials.saved',['obj'=> $property])
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-md-9 position-relative col-12 pl-3">
-                     <div class="d-flex  justify-content-between">
-                        <div class="">
-                           <a href="/apartment/{{ $property->slug }}?check_in_checkout={{ $date }}">{{ $property->name }}</a>
-                        </div>
-                        <div class="d-block d-sm-none">
-                           @include('_partials.price')
-                        </div>
-                     </div>
-                     
-                     <div class="">
-                        <small class=""> <a class="p-0" href="/apartment/{{ optional($property)->slug }}?check_in_checkout={{ $date }}">{{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
-                     </div>
-
-                     <div class="mb-5">
-                        @if($property->facilities->count())
-                           <div class="">
-                              @foreach($property->facilities->take(3) as $facility)
-                              <span class=""> {{ $facility->name }}</span>
-                              @endforeach
-                           </div>
-                        @endif
-                        @if( $property->type == 'single')
-                           <div class="">
-                              <span class="">{{ $property->single_room->max_children + $property->single_room->no_of_rooms }} guests</span>
-                              <span aria-hidden="true"> · </span>
-                              <span class="">{{ $property->single_room->no_of_rooms }} bedroom</span>
-                              <span aria-hidden="true"> · </span>
-                              <span class="">{{ $property->single_room->toilets }} baths</span>
-                           </div>
-                        @endif
-                     </div>
-                     <div class="d-flex position-absolute apartment-review justify-content-between mt-1 align-items-end">
-                        <div class="">
-                          
-                        </div>
-                        <div class="d-none d-lg-block d-xl-block text-right mr-2">
-                           @if( $property->type != 'single' )
-                           <span class="">From {{ $property->currency }}{{ optional($property->single_room)->price }} </span> <span>per night</span>
-                           @else
-                              @if ( optional($property->single_room)->sale_price )
-                              <span class="old-price text">
-                                 {{ $property->currency }}{{ optional($property->single_room)->sale_price }}
-                              </span>
-                              <span class="new-price">{{ $property->currency }}{{ optional($property->single_room)->price }}</span><span>per night</span>
-                              @else
-                              <span class="">{{ $property->currency }}{{ optional($property->single_room)->price }}</span><span>per night</span>
-
-                              @endif
-                           @endif
-                           @if (!$property->allow_cancellation)
-                              <div class="">FREE CANCELLATION</div>
-                           @endif
-                           <a href="/apartment/{{ $property->slug }}?check_in_checkout={{ $date }}" class="btn btn-primary btn-round d-none d-lg-block d-xl-block">
-                              Check Availability  <i class="material-icons">arrow_forward_ios</i>
-                           </a>
-                        </div>
-                     </div>
-                  </div>
-                  
-               </div>
+               @include('_partials.apartments')
             </div>
          @endforeach
          <div id="pagination" class=" text-center mb-20 md-offset-1">

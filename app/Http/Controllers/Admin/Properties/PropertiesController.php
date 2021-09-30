@@ -69,9 +69,22 @@ class PropertiesController extends Controller
         $property_types       =  Attribute::parents()->where('type','property_type')->orderBy('sort_order','asc')->get();
         $extras               =  Attribute::parents()->where('type','extra_services')->orderBy('sort_order','asc')->get();
         $bedrooms             =  Attribute::parents()->where('type','bedrooms')->orderBy('sort_order','asc')->get();
+        $others               =  Attribute::parents()->where('type','others')->orderBy('sort_order','asc')->get();
+
         $helper               =  new Helper;
         $str = new Str;
-        return view('admin.apartments.create',compact('property_types','str','helper','extras','bedrooms','apartment_facilities','counter','locations','attributes'));
+        return view('admin.apartments.create',
+                compact(
+                    'others',
+                    'property_types',
+                    'str','helper',
+                    'extras',
+                    'bedrooms',
+                    'apartment_facilities',
+                    'counter',
+                    'locations',
+                    'attributes'
+                ));
     }
     /**
      * Store a newly created resource in storage.
@@ -124,17 +137,16 @@ class PropertiesController extends Controller
         $property->image     = $request->image;
         $property->type                 = $request->type;
         $property->description          = $request->description;
-        $property->allow_cancellation   =  $request->allow_cancellation ? 1 : 0;
+        $property->is_refundable        =  $request->is_refundable ? 1 : 0;
         $property->check_in_time        =  $request->check_in_time;
         $property->check_out_time       =  $request->check_out_time;
-        $property->allow_cancellation   =  $request->allow_cancellation ? 1 : 0;
+        $property->is_refundable        =  $request->is_refundable ? 1 : 0;
         $property->cancellation_message = $request->cancellation_message;
         $property->cancellation_fee     = $request->cancellation_fee;
         $property->virtual_tour         = $request->virtual_tour;
         $property->featured             = $request->featured ? 1 : 0;
         $property->allow                = $request->allow ? 1 : 0;
         $property->location_full_name   = $location_full_name;
-
         $property->slug                 = str_slug($title);
         $property->token                =  $id ? $property->token : $token;
         $property->save();
@@ -142,12 +154,19 @@ class PropertiesController extends Controller
         $property->attributes()->sync($request->apartment_facilities_id);
         $property->attributes()->syncWithoutDetaching($request->attribute_id);
         $this->syncExtras($request->property_extras,  $request->property_extra_services, $property);
-        $locations = Location::find($request->location_id); 
-
+        $locations = Location::find($request->location_id);
+        foreach($request->attribute_id as $key => $attribute ){
+           if ($key && is_string($key)){
+                $property->attributes()->updateExistingPivot($attribute, [
+                    'name' => $key,
+                ]);
+           }
+        }
         foreach( $locations as $location )
         {
             $location->attributes()->sync($request->attribute_id);
         }
+
         return $property;
     }
 
@@ -184,7 +203,7 @@ class PropertiesController extends Controller
             $apartment->uuid                    =  time();
             $apartment->toilets                 = $request->room_toilets[$key];
             $apartment->save();
-            $this->syncImages($room_images, $apartment);
+            $this->syncImages($room_images, $apartment, $property);
             $this->syncAttributes($request, $apartment, $key);
             $this->syncExtras($request->multiple_apartment_extras,  $request->multiple_apartment_extra_services, $apartment);
         }
@@ -208,7 +227,7 @@ class PropertiesController extends Controller
         $apartment->uuid                 = time();
         $apartment->toilets              = $request->single_room_toilets;
         $apartment->save();
-        $this->syncImages($room_images, $apartment);
+        $this->syncImages($room_images, $apartment, $property);
         $this->syncAttributes($request, $apartment);
         $this->syncExtras($request->single_apartment_extras,  $request->single_apartment_extra_services, $apartment);
     }
@@ -233,11 +252,11 @@ class PropertiesController extends Controller
         $apartment->attributes()->syncWithoutDetaching($request->attribute_id);
     }
 
-    public function syncImages($images, $attr){
+    public function syncImages($images, $attr, $property=null){
         if ( count( $images )  > 0) {
             $images = array_filter($images);
             foreach ( $images  as $image) {
-                $imgs= new Image(['image' => $image]);
+                $imgs= new Image(['image' => $image,'property_id' => $property->id]);
                 $attr->images()->save($imgs);
             }
         }
@@ -283,10 +302,11 @@ class PropertiesController extends Controller
         $apartment_facilities  = Attribute::parents()->where('type','apartment_facilities')->orderBy('sort_order','asc')->get();
         $counter               = rand(1,500);
         $str                   = new Str;
+        $others               =  Attribute::where('type','other')->orderBy('sort_order','asc')->get()->groupBy('parent.name');
         $bedrooms              = Attribute::parents()->where('type','bedrooms')->orderBy('sort_order','asc')->get();
         $extras =  Attribute::parents()->where('type','extra_services')->orderBy('sort_order','asc')->get();
         $property_types =  Attribute::parents()->where('type','property_type')->orderBy('sort_order','asc')->get();
-        return view('admin.apartments.edit',compact('property_types','extras','str','bedrooms','counter','attributes','locations','property','helper','apartment_facilities'));
+        return view('admin.apartments.edit',compact('others','property_types','extras','str','bedrooms','counter','attributes','locations','property','helper','apartment_facilities'));
     }
 
     /**
@@ -329,7 +349,6 @@ class PropertiesController extends Controller
                         'slug'                 => str_slug($request->edit_room_name[$room_id]),
                         'max_adults'           => $request->room_max_adults[$room_id],
                         'max_children'         => $request->room_max_children[$room_id],
-                        //'available_from'       => Helper::getFormatedDate($request->edit_room_avaiable_from[$room_id],true),
                         'property_id'          => $property->id,
                         'no_of_rooms'          => $request->room_number[$room_id],
                         'toilets'              => $request->apartment_toilets[$room_id],
@@ -348,18 +367,14 @@ class PropertiesController extends Controller
                             if ($image == ''){
                                continue;
                             }
-                            $images = new Image(['image' => $image]);
+                            $images = new Image(['image' => $image,'property_id' => $property->id]);
                             $variation->images()->save($images);
                         }
                     }
                 }
 
-
-
                 $this->syncAttributes($request, $apartment, $room_id);
                 $this->syncExtras($request->multiple_apartment_extras,  $request->multiple_apartment_extra_services, $apartment);
-
-
             }
         }
 

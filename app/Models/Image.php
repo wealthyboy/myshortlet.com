@@ -11,7 +11,7 @@ use App\Traits\ImageFiles  as Img;
 class Image extends Model
 {
 
-    protected $fillable = [ 'parent_id', 'image','imageable_type','imageable_id'];
+    protected $fillable = [ 'parent_id', 'image','imageable_type','imageable_id','property_id'];
 
    // use Img;//,SoftDeletes,CascadeSoftDeletes;
 

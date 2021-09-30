@@ -50,8 +50,8 @@
 
                         <div class="togglebutton cancel form-inline">
                            <label>
-                           <input  name="allow_cancellation" id="allow_cancellation"  value="1" type="checkbox" >
-                              Free Cancellation 
+                           <input  name="is_refundable" id="allow_cancellation"  value="1" type="checkbox">
+                              Refundable 
                            </label>
                            
                         </div>
@@ -59,12 +59,16 @@
                      <div class="col-sm-7  cancellation-message  d-none  {{ isset($apartment) &&  $apartment->allow_cancellation ? '' : ''}} ">
                         <div class="form-group">
                            <label for="cancellation_message">Cancellation Policy</label>
-                           <textarea class="form-control" name="cancellation_message" id="cancellation_message" rows="5">{{ isset($apartment) ?   $apartment->cancellation_message : '' }}</textarea>
+                           <textarea class="form-control" name="cancellation_message" id="cancellation_message" rows="5">{{ isset($apartment) ?   $apartment->is_refundable : '' }}</textarea>
                         </div>
                      </div>
 
                      <div class="col-md-12 mt-1 pr-5 ">
-                       @include('admin.apartments.attributes',['ob' => null])
+                       @include('admin.apartments.attributes',['attris'=> $attributes, 'ob' => null])
+                     </div>
+
+                     <div class="col-md-12 mt-1 pr-5 ">
+                       @include('admin.apartments.attributes',['attris'=> $others,'ob' => null])
                      </div>
 
                      <div class="col-md-12 mt-1 pr-5 ">

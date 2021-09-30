@@ -2,9 +2,7 @@
 @section('content')
 <div class="clearfix"></div>
 <section  style="background-color: #f8f5f4;">
-      
-
-
+   
    <div class="container">
        
       <div class="row no-gutters bg-white">
@@ -16,41 +14,39 @@
             </div>
          </div>
 
-         <div class="col-md-4 d-flex  align-items-end  justify-content-between">
-            <div class="bg-white">
-               <a  href="#" class="">
-                  <svg  id="" class="mt-2">
-                     <use xlink:href="#virtual-tour"></use>
-                  </svg>
-                  Virtual Tour
-               </a>
-            </div>
+         <div class="col-md-4 d-flex  align-items-end  justify-content-end">
             <div>@include('_partials.saved',['obj'=> $property])</div>
          </div>
 
          <div class="clearfix"></div>
          <div class="col-md-8  position-relative bg-white">
-            <a href="#" class="img card-img galleries" style="background-image: url('{{ $property->image }}')">
-               
-            </a>
+            <a href="#" class="img card-img galleries" style="background-image: url('{{ $property->image }}')"></a>
          </div>
          <div class="col-md-4">
             <div class="row no-gutters">
                <div class="col-6 pl-1  pb-1 pr-1">
-                  <a  href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ $property->image }}')"></a>
+                  <a  href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ optional($property_type->images[0])->image }}')"></a>
                </div>
                <div class="col-6 ">
-                  <a  href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ $property->image }}')"></a>
+                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $property_type->images[1]->image }}')"></a>
+                  <a href="" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
+                     <p class="fs-48 font-weight-600 text-white lh-1 mb-1">
+                        <svg  id="" class="mt-2">
+                           <use xlink:href="#virtual-tour"></use>
+                        </svg>
+                     </p>
+                     <p class="fs-16 font-weight-bold text-white lh-1625 text-uppercase">Virtual Tour</p>
+                  </a> 
                </div>
                <div class="col-6 pl-1  pr-1">
-                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ $property->image }}')"></a>
+                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ $property_type->images[2]->image }}')"></a>
                </div>
 
                <div class="col-6 pb-2 position-relative">
-                  <a class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ $property->image }}')"></a>
+                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $property_type->images[3]->image }}')"></a>
                   <a href="" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
-                     <p class="fs-48 font-weight-600 text-white lh-1 mb-4">+12</p>
-                     <p class="fs-16 font-weight-bold text-white lh-1625 text-uppercase">View more</p>
+                     <p class="fs-48 font-weight-600 text-white lh-1 mb-1">+{{ $property->images->count() }}</p>
+                     <p class="fs-16 font-weight-bold text-white lh-1625 text-uppercase">View Gallery</p>
                   </a>
                </div>
             </div>
@@ -93,7 +89,6 @@
                         <div class="col-md-7">
                            <h3>Popular amenities</h3>
                            <div class="row">
-                              
                               @if($property->facilities->count())
                                  @foreach($property->facilities->take(3) as $facility)
                                     <div class="col-6 d-flex align-items-center">
@@ -112,19 +107,23 @@
                            </div>
                            <h3>Cleaning and safety practices</h3>
                            <div class="row">
-                              <div class="col-6 d-flex align-items-center">
-                                 <span class="mt-1"><svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M9.82 11.64h.01a4.15 4.15 0 014.36 0h.01c.76.46 1.54.47 2.29 0l.41-.23L10.48 5C8.93 3.45 7.5 2.99 5 3v2.5c1.82-.01 2.89.39 4 1.5l1 1-3.25 3.25c.27.1.52.25.77.39.75.47 1.55.47 2.3 0z"></path><path fill-rule="evenodd" d="M21.98 16.5c-1.1 0-1.71-.37-2.16-.64h-.01a2.08 2.08 0 00-2.29 0 4.13 4.13 0 01-4.36 0h-.01a2.08 2.08 0 00-2.29 0 4.13 4.13 0 01-4.36 0h-.01a2.08 2.08 0 00-2.29 0l-.03.02c-.47.27-1.08.62-2.17.62v-2c.56 0 .78-.13 1.15-.36a4.13 4.13 0 014.36 0h.01c.76.46 1.54.47 2.29 0a4.13 4.13 0 014.36 0h.01c.76.46 1.54.47 2.29 0a4.13 4.13 0 014.36 0h.01c.36.22.6.36 1.14.36v2z" clip-rule="evenodd"></path><path d="M19.82 20.36c.45.27 1.07.64 2.18.64v-2a1.8 1.8 0 01-1.15-.36 4.13 4.13 0 00-4.36 0c-.75.47-1.53.46-2.29 0h-.01a4.15 4.15 0 00-4.36 0h-.01c-.75.47-1.55.47-2.3 0a4.15 4.15 0 00-4.36 0h-.01A1.8 1.8 0 012 19v2c1.1 0 1.72-.36 2.18-.63l.01-.01a2.07 2.07 0 012.3 0c1.39.83 2.97.82 4.36 0h.01a2.08 2.08 0 012.29 0h.01c1.38.83 2.95.83 4.34.01l.02-.01a2.08 2.08 0 012.29 0h.01zM19 5.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path></svg></span>
-                                 <span class="ml-2">Pool</span>
-                              </div>
-                              <div class="col-6 d-flex align-items-center">
-                                 <span class="mt-1"><svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M9.82 11.64h.01a4.15 4.15 0 014.36 0h.01c.76.46 1.54.47 2.29 0l.41-.23L10.48 5C8.93 3.45 7.5 2.99 5 3v2.5c1.82-.01 2.89.39 4 1.5l1 1-3.25 3.25c.27.1.52.25.77.39.75.47 1.55.47 2.3 0z"></path><path fill-rule="evenodd" d="M21.98 16.5c-1.1 0-1.71-.37-2.16-.64h-.01a2.08 2.08 0 00-2.29 0 4.13 4.13 0 01-4.36 0h-.01a2.08 2.08 0 00-2.29 0 4.13 4.13 0 01-4.36 0h-.01a2.08 2.08 0 00-2.29 0l-.03.02c-.47.27-1.08.62-2.17.62v-2c.56 0 .78-.13 1.15-.36a4.13 4.13 0 014.36 0h.01c.76.46 1.54.47 2.29 0a4.13 4.13 0 014.36 0h.01c.76.46 1.54.47 2.29 0a4.13 4.13 0 014.36 0h.01c.36.22.6.36 1.14.36v2z" clip-rule="evenodd"></path><path d="M19.82 20.36c.45.27 1.07.64 2.18.64v-2a1.8 1.8 0 01-1.15-.36 4.13 4.13 0 00-4.36 0c-.75.47-1.53.46-2.29 0h-.01a4.15 4.15 0 00-4.36 0h-.01c-.75.47-1.55.47-2.3 0a4.15 4.15 0 00-4.36 0h-.01A1.8 1.8 0 012 19v2c1.1 0 1.72-.36 2.18-.63l.01-.01a2.07 2.07 0 012.3 0c1.39.83 2.97.82 4.36 0h.01a2.08 2.08 0 012.29 0h.01c1.38.83 2.95.83 4.34.01l.02-.01a2.08 2.08 0 012.29 0h.01zM19 5.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path></svg></span>
-                                 <span class="ml-2">Pool</span>
-                              </div>
+                              <ul class="list-group p-0 list-unstyled m-0">
+                                 @foreach($safety_practices as $key => $safety_practice)
+                                   <li  class="">{{ $safety_practice->name }}</li>
+                                 @endforeach
+                              </ul>
                            </div>
                         </div>
+
+                        
                         <div class="col-md-5">
                            <h3>Explore the area</h3>
-                           Silverbird Galleria
+                           <ul class="list-unstyled">
+                             @foreach($areas as $key => $area)
+                              <li  class="">{{ $area->name }}</li>
+                              @endforeach
+                           </ul>
+                           
                         </div>
                      </div>
                   </div>
@@ -167,18 +166,129 @@
                <div id="Amenities" class="name mt-2 bg-white">
                   <h3 class="card-title  p-3 border-bottom">Amenities</h3>
                   <div class="card-body">
+                     <div class="row">
+                        @foreach($amenities as $key => $apartment_facilities)
+                        <div class="col-md-3">
+                           <h3>{{ $key }}</h3>
+                           <ul class="list-unstyled">
+                              @foreach($apartment_facilities as $key => $apartment_facility)
+                                 <li>
+                                    {{ $apartment_facility->name }}
+                                 </li>
+                              @endforeach
+                           </ul>
+                        </div>
+                        @endforeach
+                     </div>
+                     
                   </div>  
                </div>
                <div class="name mt-1 bg-white">
                   <h3 class="card-title  p-3 border-bottom">House Rules</h3>
                   <div class="card-body">
+                     <ul class="list-unstyled">
+                           <li>
+                              Check in  -   {{ $property->check_in_time }}  
+                           </li>
+                           <li>
+                              Check out -  {{ $property->check_out_time }} 
+                           </li>
+                        @foreach($property->rules as $rule)
+                           <li>
+                              {{ $rule->name }}
+                           </li>
+                        @endforeach
+
+                        <li>
+                           <div>{{ $property->cancellation_message }}</div>
+                        </li>
+                     </ul>
+                     
                   </div>  
                </div>
                <div id="Reviews" class="name mt-1 bg-white mb-5">
                   <h3 class="card-title  p-3 border-bottom">Reviews</h3>
                   <div class="card-body">
-                     <div>No reviews yet</div>
+                     <div class="row">
+                        <div class="col-md-4">
+                           
 
+                           <ul class="list-unstyled mb-4 ">
+                              <li class="d-flex justify-content-between lh-22">
+                                 <p class="text-gray-light mb-0">5 - Excellent</p>
+                                 <p class="font-weight-500 text-heading mb-0">0</p>
+                              </li>
+                              <li>
+                                 <div class="progress progress-line-primary">
+                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="00" aria-valuemin="0" aria-valuemax="100" style="width: 00%;">
+                                       <span class="sr-only">0% Complete</span>
+                                    </div>
+                                 </div>
+                              </li>
+
+                              <li class="d-flex justify-content-between lh-22">
+                                 <p class="text-gray-light mb-0">4 - Good</p>
+                                 <p class="font-weight-500 text-heading mb-0">0</p>
+                              </li>
+                              <li>
+                                 <div class="progress progress-line-primary">
+                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                       <span class="sr-only">0% Complete</span>
+                                    </div>
+                                 </div>
+                              </li>
+
+
+                              <li class="d-flex justify-content-between lh-22">
+                                 <p class="text-gray-light mb-0">3 - Okay</p>
+                                 <p class="font-weight-500 text-heading mb-0">0</p>
+                              </li>
+                              <li>
+                                 <div class="progress progress-line-primary">
+                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                       <span class="sr-only">0% Complete</span>
+                                    </div>
+                                 </div>
+                              </li>
+
+
+                              <li class="d-flex justify-content-between lh-22">
+                                 <p class="text-gray-light mb-0">2 - Poor</p>
+                                 <p class="font-weight-500 text-heading mb-0">0</p>
+                              </li>
+                              <li>
+                                 <div class="progress progress-line-primary">
+                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                       <span class="sr-only">0% Complete</span>
+                                    </div>
+                                 </div>
+                              </li>
+
+
+                              <li class="d-flex justify-content-between lh-22">
+                                 <p class="text-gray-light mb-0">1 - Really Bad</p>
+                                 <p class="font-weight-500 text-heading mb-0">0</p>
+                              </li>
+                              <li>
+                                 <div class="progress progress-line-primary">
+                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                       <span class="sr-only">0% Complete</span>
+                                    </div>
+                                 </div>
+                              </li>
+                           </ul>
+                        </div>
+                        <div class="col-md-8">
+                           <div class="text-center">
+                              <h4>
+                                 No reviews yet
+                              </h4>
+                              <p>Be the first to leave a review for this property after your stay.</p>
+                           </div>
+                           
+                        </div>
+
+                     </div>
                   </div>  
                </div>
             </div>
