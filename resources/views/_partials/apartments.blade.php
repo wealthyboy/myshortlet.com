@@ -13,10 +13,10 @@
         <div class="d-flex  justify-content-between">
         <div class="">
             <a href="/apartment/{{ $property->slug }}?check_in_checkout={{ $date }}">{{ $property->name }}</a>
-
             <div class="d">
-             <small class=""> <a class="p-0" href="/apartment/{{ optional($property)->slug }}?check_in_checkout={{ $date }}">{{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
-        </div>
+                <small class=""> 
+                <a class="p-0" href="/apartment/{{ optional($property)->slug }}?check_in_checkout={{ $date }}">{{ $property->city }}</a>,  <a href="">{{ $property->state }}</a> </small>
+            </div>
 
         <div class="mb-5">
         @if($property->facilities->count())

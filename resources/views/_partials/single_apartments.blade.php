@@ -1,6 +1,9 @@
 <div class="name  rounded mt-1 bg-white">
     <div class="card-body">
         <form action="/book/{{ $property->slug }}" method="GET" class="">
+
+        <input type="hidden" name="apartment_quantity[{{ $property->single_room->uuid }}]" id="qty">
+
         <div class="d-flex pb-3 border-bottom mb-3 justify-content-between">
             @if( $property->single_room->discounted_price)
                 <div class="">
