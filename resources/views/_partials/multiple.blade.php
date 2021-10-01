@@ -34,9 +34,14 @@
 
 
                 @if( $apartment->free_services->count() )
-                    <div class="d-inline-flex">
+                    <div class="d-inline-flex flex-wrap">
                     @foreach( $apartment->free_services as $free_service)
-                    <div class="included">{{ $free_service->name }} included</div>
+                    <div class="position-relative">
+                        <span class="position-absolute svg-icon-section">
+                            <?php echo  html_entity_decode($free_service->svg) ?>
+                        </span>
+                        <span class="svg-icon-text">{{ $free_service->name }} included</span>
+                    </div>
                     @endforeach
                 </div>
                 @endif

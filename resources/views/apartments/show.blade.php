@@ -10,7 +10,6 @@
          <div class="col-lg-8">
             <div class="bg-white">
                <div>{{ $property->name }}</div>
-               <p><i class="material-icons">location_on</i> {{ $property->address }} {{ $property->type }}</p>
             </div>
          </div>
 
@@ -90,7 +89,7 @@
                            
                               @if($property->facilities->count())
                                  @foreach($property->facilities->take(3) as $facility)
-                                      <div class="col-6 d-flex align-items-center">
+                                      <div class="col-6 d-flex mb-2 align-items-center">
                                           <span class="position-absolute svg-icon-section">
                                              <?php echo  html_entity_decode($facility->svg) ?>
                                           </span>
