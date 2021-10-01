@@ -75,6 +75,13 @@ class Apartment extends Model
     }
 
 
+    public function free_services(){
+        return $this->belongsToMany(Attribute::class)
+        ->where('type','extra_services')                
+        ->wherePivotNull('price');
+    }
+
+
     public function extra_services(){
         return $this->belongsToMany(Attribute::class)->where('type','extra_services')->withPivot('price');
     }

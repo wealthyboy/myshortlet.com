@@ -180,6 +180,7 @@ class ApartmentsController extends Controller
         $safety_practices = $property->safety_practicies;
         $amenities = $property->apartment_facilities->groupBy('parent.name');
         $property_type = $property->type == 'single' ?  $property->single_room : $property->multiple_rooms[0];
+        $bedrooms = $property_type->bedrooms->groupBy('parent.name');
         $days = 1;
         if ($request->check_in_checkout && !empty($date)) {
             $date1 = trim($date[0]);
@@ -210,7 +211,8 @@ class ApartmentsController extends Controller
                     'nights',
                     'areas',
                     'safety_practices',
-                    'amenities'
+                    'amenities',
+                    'bedrooms'
                 ));
     }
    

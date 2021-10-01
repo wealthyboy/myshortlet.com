@@ -1,9 +1,7 @@
 <div class="name  rounded mt-1 bg-white">
     <div class="card-body">
         <form action="/book/{{ $property->slug }}" method="GET" class="">
-
         <input type="hidden" name="apartment_quantity[{{ $property->single_room->uuid }}]" id="qty">
-
         <div class="d-flex pb-3 border-bottom mb-3 justify-content-between">
             @if( $property->single_room->discounted_price)
                 <div class="">
@@ -26,7 +24,6 @@
             <div class="form-group form-border search border rounded pl-2 col-md-12">
                 @include('_partials.date')
             </div>
-
         </div>
 
         @if (!$property_is_not_available) 

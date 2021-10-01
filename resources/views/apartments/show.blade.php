@@ -71,13 +71,11 @@
 
    <div class="">
       <div class="container">
-        
          <div  class="row   align-items-start">
             <div class=" {{ $property->type == 'single' ? 'col-md-7' : 'col-md-12' }} rounded  mt-1">
                <div id="Overview" class="name rounded bg-white">
                  <div class="card-body">
                      <h2 class="card-title">{{ $property->name }}</h2>
-
                      <div class="row">
                         @if($property->type == 'single')
                            <div class="col-12 entire-apartment">
@@ -89,14 +87,15 @@
                         <div class="col-md-7">
                            <h3>Popular amenities</h3>
                            <div class="row">
+                           
                               @if($property->facilities->count())
                                  @foreach($property->facilities->take(3) as $facility)
-                                    <div class="col-6 d-flex align-items-center">
-                                       <span class="mt-1">
-                                          <?php echo  html_entity_decode($facility->svg) ?>
-                                       </span>
-                                       <span class="ml-2">{{ $facility->name }}</span>
-                                    </div>
+                                      <div class="col-6 d-flex align-items-center">
+                                          <span class="position-absolute svg-icon-section">
+                                             <?php echo  html_entity_decode($facility->svg) ?>
+                                          </span>
+                                          <span class="svg-icon-text">{{ $facility->name }}</span>
+                                       </div>
                                  @endforeach
                               @endif
                              
@@ -106,10 +105,11 @@
                               
                            </div>
                            <h3>Cleaning and safety practices</h3>
-                           <div class="row">
-                              <ul class="list-group p-0 list-unstyled m-0">
+                           
+                           <div class="">
+                              <ul class="list-unstyled ">
                                  @foreach($safety_practices as $key => $safety_practice)
-                                   <li  class="">{{ $safety_practice->name }}</li>
+                                 <li  class="">{{ $safety_practice->name }}</li>
                                  @endforeach
                               </ul>
                            </div>
@@ -117,13 +117,15 @@
 
                         
                         <div class="col-md-5">
+                           <div id=""></div>
                            <h3>Explore the area</h3>
-                           <ul class="list-unstyled">
-                             @foreach($areas as $key => $area)
-                              <li  class="">{{ $area->name }}</li>
-                              @endforeach
-                           </ul>
-                           
+                           <div class="">
+                              <ul class="list-unstyled ">
+                                 @foreach($areas as $key => $area)
+                                 <li  class="">{{ $area->name }}</li>
+                                 @endforeach
+                              </ul>
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -134,9 +136,15 @@
                      <div >
                         <h3>Choose your unit</h3>
                         <div class="form-row">
-                           <div class="form-group form-border search border pl-2 col-7">
+                              <div class="form-group ml-1 form-border  search   col-md-3">
                                  @include('_partials.date')
-                           </div>
+                              </div>
+                              @include('_partials.people')
+                              <div class="col-md-2">
+                                 <button type="submit" class="btn btn-primary btn-block">
+                                 <i class="material-icons">search</i> Search
+                                 </button>
+                              </div>
                         </div>
                      </div>
                      <div id="" class="name mt-1 rounded bg-white p-2">

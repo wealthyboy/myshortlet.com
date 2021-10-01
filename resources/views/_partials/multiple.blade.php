@@ -3,10 +3,9 @@
     @csrf
     <input type="hidden" name="property_id" value="{{ $property->id }}" />
     
-
     @if ($property->apartments->count())
         @foreach($property->apartments as $apartment)
-        <div class="row no-gutters border-bottom mb-1 mt-1 pl-1 pb-1">
+        <div class="row border-bottom mb-1 mt-1 pl-1 pb-1">
             <div class="col-md-3 position-relative">
                 <div class="">
                 <img class="img  img-fluid" src="{{ $apartment->images[0]->image_m }}">
@@ -16,25 +15,49 @@
                 <div class="card-title">
                    <a href="#">{{ $apartment->name }}</a>
                 </div>
-                <div class=""><i class="fas fa-info-circle mr-2"></i>Non - refundable</div>
                 <div class=""><i class="fas fa-info-circle mr-2"></i>Instant Confirmation</div>
-
-                
                 <div class="entire-apartment">
                     @include('_partials.entire_apartments',['obj' => $apartment])
                 </div>
 
                 @if($property->facilities->count())
                     @foreach($property->facilities->take(3) as $facility)
-                        <div class="d-flex mt-2">
-                            <span class="mt-1">
+                        <div class="position-relative ">
+                           <span class="position-absolute svg-icon-section">
                                 <?php echo  html_entity_decode($facility->svg) ?>
                             </span>
-                            <span class="ml-2">{{ $facility->name }}</span>
+                            <span class="svg-icon-text">{{ $facility->name }}</span>
                         </div>
+                        
                     @endforeach
                 @endif
 
+
+                @if( $apartment->free_services->count() )
+                    <div class="d-inline-flex">
+                    @foreach( $apartment->free_services as $free_service)
+                    <div class="included">{{ $free_service->name }} included</div>
+                    @endforeach
+                </div>
+                @endif
+
+
+                @if($bedrooms->count())
+                    @foreach($bedrooms as $key => $beds)
+                        @foreach($beds as $bed)
+                        <div class="position-relative ">
+                           <span class="position-absolute svg-icon-section">
+                                <?php echo  html_entity_decode($bed->svg) ?>
+                            </span>
+                            <span class="svg-icon-text">{{ $key }}</span>    <span class="svg-icon-text">{{ $bed->pivot->bed_count }} {{ $bed->name }}</span>
+                        </div>
+                        @endforeach
+                    @endforeach
+                @endif
+
+                <div class="">
+                    @include('_partials.price')
+                </div>
             
             </div>
             <div class="col-md-2 position-relative">

@@ -48,7 +48,9 @@
 
       @include('_partials.modal')
 
-      
+      <script
+         src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP') }}&callback=initMap&v=weekly&channel=2"  async ></script>
+
       <script src="/js/popper.min.js" type="text/javascript"></script>
       <script src="/js/services_js.js"></script>
       @yield('page-scripts')    
