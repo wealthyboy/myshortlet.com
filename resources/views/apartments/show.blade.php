@@ -28,7 +28,7 @@
                </div>
                <div class="col-6 ">
                   <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $property_type->images[1]->image }}')"></a>
-                  <a href="" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
+                  <a href="#" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
                      <p class="fs-48 font-weight-600 text-white lh-1 mb-1">
                         <svg  id="" class="mt-2">
                            <use xlink:href="#virtual-tour"></use>
@@ -43,7 +43,7 @@
 
                <div class="col-6 pb-2 position-relative">
                   <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $property_type->images[3]->image }}')"></a>
-                  <a href="" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
+                  <a href="#" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
                      <p class="fs-48 font-weight-600 text-white lh-1 mb-1">+{{ $property->images->count() }}</p>
                      <p class="fs-16 font-weight-bold text-white lh-1625 text-uppercase">View Gallery</p>
                   </a>
@@ -131,25 +131,7 @@
                </div>
 
                @if ($property->type != 'single')
-                 <form action="/book/{{ $property->slug }}" method="GET" class="">
-                     <div >
-                        <h3>Choose your unit</h3>
-                        <div class="form-row">
-                              <div class="form-group ml-1 form-border  search   col-md-3">
-                                 @include('_partials.date')
-                              </div>
-                              @include('_partials.people')
-                              <div class="col-md-2">
-                                 <button type="submit" class="btn btn-primary btn-block">
-                                 <i class="material-icons">search</i> Search
-                                 </button>
-                              </div>
-                        </div>
-                     </div>
-                     <div id="" class="name mt-1 rounded bg-white p-2">
-                        @include('_partials.multiple')
-                     </div>
-                  </form>
+                 <room-available :apartments="{{ $property->multiple_rooms->load('images','free_services','bedrooms', 'bedrooms.parent') }}" :property="{{ $property }}"  />
                @endif
 
                <div class="name bg-white rounded">
@@ -304,6 +286,4 @@
       </div>
    </div>
 </section>
-
-   
 @endsection

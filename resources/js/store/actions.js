@@ -19,48 +19,74 @@ export const applyVoucher = ({ commit }, coupon) => {
     .catch((error) => {});
 };
 
+export const attrFilter = ({ commit }) => {
+  var inputs = document.querySelectorAll("input.filter-property:checked");
+  var checkboxesChecked = [];
+  for (var i = 0; i < inputs.length; i++) {}
+  for (var i = 0; i < inputs.length; i++) {
+    if (inputs[i].checked) {
+      checkboxesChecked.push(inputs[i].name + "=" + inputs[i].value);
+    }
+  }
+  commit("setAttributesCheckboxes", checkboxesChecked);
+};
+
+export const lSearch = ({ commit }) => {
+  let locationSearch = [];
+  document.querySelectorAll(".location-search").forEach((e, i) => {
+    locationSearch.push(e.name + "=" + e.value);
+  });
+  commit("setLocationSearch", locationSearch);
+};
+
+export const getProperties = ({ commit }, url) => {
+  commit("setPropertyLoading", true);
+  return axios
+    .get(url)
+    .then((response) => {
+      commit("setProperties", response.data.data);
+      commit("setAttributes", response.data.attributes);
+      commit("setLinks", response.data.links);
+      commit("setNextPageUrl", response.data.links.next);
+      commit("setPropertyLoading", false);
+      return Promise.resolve();
+    })
+    .catch((error) => {
+      commit("setPropertyLoading", false);
+      commit("setProperties", []);
+    });
+};
+
 export const updateCartMeta = ({ commit }, payload) => {
   commit("setCartMeta", payload);
 };
 
-export const addProductToWishList = (
+export const saveProperty = (
   { commit, dispatch },
-  { product_variation_id, context }
+  { property_id, context }
 ) => {
   return axios
-    .post("/api/wishlist", {
-      product_variation_id: product_variation_id,
+    .post("/api/saved", {
+      property_id: property_id,
     })
     .then((res) => {
-      let resp = res.data;
-      resp.status == "added"
-        ? (context.is_wishlist = true)
-        : (context.is_wishlist = false);
-      context.wishlistText = false;
-      $(".wishlist-count")
-        .removeClass("d-none")
-        .text(resp.count);
+      if (res.data.status == "added") {
+        document.querySelector("#saved-outline").classList.add("d-none");
+        document
+          .querySelector("#saved-none-outline")
+          .classList.remove("d-none");
+      } else {
+        document.querySelector("#saved-none-outline").classList.add("d-none");
+        document.querySelector("#saved-outline").classList.remove("d-none");
+      }
+
+      return Promise.resolve();
     })
     .catch((error) => {
       dispatch(
         "flashMessage",
         "Sorry your item could not be saved.Please try again"
       );
-    });
-};
-
-export const getWislist = ({ commit }) => {
-  commit("Loading", true);
-  return axios
-    .get("/api/wishlist")
-    .then((response) => {
-      document.getElementById("js-loading").style.display = "none";
-      commit("setWishlist", response.data.data);
-      commit("Loading", false);
-      return Promise.resolve();
-    })
-    .catch((error) => {
-      console.log("could not get wishlist");
     });
 };
 
@@ -167,29 +193,6 @@ export const registerGuest = ({ dispatch, commit }, { form }) => {
     });
 };
 
-export const getAddresses = ({ dispatch, commit }, { context }) => {
-  return axios
-    .get("/api/addresses")
-    .then((response) => {
-      if (!response.data.data.length) {
-        commit("setShowForm", true);
-      }
-      dispatch("setADl", response);
-      return Promise.resolve();
-    })
-    .catch((error) => {
-      //commit('setLoading',false)
-      // if ( error.response.status == 500 ){
-      //     context.error = "We could not change your password at the moment .Please try again"
-      //     return;
-      // }
-      // if (error.response.data.errors){
-      //     context.error =  error.response.data.errors
-      //     commit('setFormErrors', error.response.data.errors)
-      // }
-    });
-};
-
 export const updatePassword = ({ commit, dispatch }, { payload, context }) => {
   return axios
     .put("/change/password", payload)
@@ -230,10 +233,6 @@ export const resetPassword = ({ commit }, { payload, context }) => {
         return;
       }
     });
-};
-
-export const updateAddress = ({ commit }, payload) => {
-  commit("addToAddress", payload);
 };
 
 export const updateLocations = ({ commit }, payload) => {

@@ -25,26 +25,48 @@ trait FormatPrice
      */
     public function formatted_discount_price()
     {
-      return null !== $this->sale_price  &&  optional($this->sale_price_expires)->isFuture()  
-      ? $this->ConvertCurrencyRate($this->sale_price)
-      : null;
-      
+      if ( $this->type == 'multiple' && optional(optional($this->variant)->sale_price_expires)->isFuture() ) {
+            return  null !== $this->variant  &&  null !== $this->variant->sale_price 
+          ? $this->ConvertCurrencyRate(optional($this->variant)->sale_price)
+          : null;
+      } else {
+          return null !== optional($this->single_room)->sale_price  &&  optional(optional($this->single_room)->sale_price_expires)->isFuture()  
+          ? $this->ConvertCurrencyRate(optional($this->single_room)->sale_price)
+          : null;
+      }
+      return null;
     }
 
     public function display_price(){
+      
+      if ($this->formatted_discount_price() !== null) {
+        if (  $this->type == 'multiple') {
+          echo "<i style='text-decoration: line-through;'>" . $this->variant->price. "</i>" .'  '. $this->variant->sale_price; 
+        } else {
+          echo  "<i style='text-decoration: line-through;'>" . $this->single_room->price. "</i>" .'  '. $this->single_room->sale_price; 
+        }
+      } else {
+        if (  $this->type == 'multiple') {
+          echo  optional($this->variant)->price;
+        }
         echo  $this->price; 
+      }
     }
 
     public function getDefaultPercentageOffAttribute(){      
       if ($this->formatted_discount_price() !== null) {
-        return $this->calPercentageOff($this->price,$this->sale_price);
+          if (null !== !empty($this->variant)  &&  null !== $this->variant->sale_price ){
+            return $this->calPercentageOff($this->variant->price,$this->variant->sale_price);
+          } else {
+            return $this->calPercentageOff($this->single_room->price,$this->single_room->sale_price);
+          }
       }
 	    return null;
     }
 
     public function percentageOff(){
       if ($this->formatted_discount_price() !== null){
-        return $this->calPercentageOff($this->price,$this->sale_price);
+        return $this->calPercentageOff($this->single_room->price,$this->single_room->sale_price);
       }
       return null;
     }
@@ -83,12 +105,13 @@ trait FormatPrice
       }
 		  return $this->setting->currency->symbol;
     }
-    
 
     public function getConvertedPriceAttribute(){
-      return $this->ConvertCurrencyRate($this->price);   
+  
+      return  $this->type == 'multiple'  
+      ? $this->ConvertCurrencyRate(optional($this->variant)->price)
+      : $this->ConvertCurrencyRate(optional($this->single_room)->price);   
     }
-
     
     public function ConvertCurrencyRate($price){
       

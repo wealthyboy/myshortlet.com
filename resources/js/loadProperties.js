@@ -162,7 +162,6 @@
         data: data,
         type: "get",
         cache: false,
-
         beforeSend: function(xhr) {},
       })
         .done(function(json) {
@@ -177,7 +176,6 @@
     buildUrl = function() {
       let sort_by = settings.form_sort_by.serializeArray().shift();
       const qs = [];
-
       if (sort_by.value !== "") {
         qs.push(sort_by.name + "=" + sort_by.value);
       }
@@ -197,7 +195,6 @@
         $(".ap-loaders").removeClass("d-none");
         $(".loaded-apartments").remove();
         buildUrl();
-
         filter(settings.form_data, window.location);
       });
 

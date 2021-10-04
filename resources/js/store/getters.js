@@ -81,3 +81,31 @@ export const edit = (state) => {
 export const userType = (state) => {
   return state.userType;
 };
+
+export const properties = (state) => {
+  return state.properties;
+};
+
+export const attributes = (state) => {
+  return state.attributes;
+};
+
+export const propertyLoading = (state) => {
+  return state.propertyLoading;
+};
+
+export const attributesCheckboxes = (state) => {
+  return state.attributesCheckboxes;
+};
+
+export const locationSearch = (state) => {
+  return state.locationSearch;
+};
+
+export const links = (state) => {
+  return state.links;
+};
+
+export const next_page_url = (state) => {
+  return state.next_page_url;
+};

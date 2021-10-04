@@ -9,11 +9,10 @@ use App\Filters\AbstractFilter;
 
 class SortByFilter  extends AbstractFilter
 {
+    
     public function filter(Builder $builder,$value){
         $sort = explode(',',$value);
-        return $builder->whereHas('apartments',function(Builder  $builder) use ($sort){
-            $builder->orderBy($sort[0],$sort[1]);
-        });
+        return $builder->orderBy($sort[0],$sort[1]);
     }
     
 }

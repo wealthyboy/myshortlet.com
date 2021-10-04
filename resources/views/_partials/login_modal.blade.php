@@ -1,4 +1,4 @@
-<form method="POST" class="d-none login-form sign-in-or-sign-up pl-4 pr-4" action="/login">
+<form method="POST" class=" login-form sign-in-or-sign-up pl-4 pr-4" action="/login">
    @csrf
    <div class="text-center">
       <h2>Login</h2>

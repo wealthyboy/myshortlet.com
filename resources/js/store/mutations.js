@@ -1,3 +1,5 @@
+import { lowerFirst } from "lodash";
+
 export const setCoupon = (state, voucher) => {
   state.voucher.push(voucher);
 };
@@ -56,4 +58,36 @@ export const setFormErrors = (state, errors) => {
 
 export const setUserType = (state, type) => {
   state.userType = type;
+};
+
+export const setProperties = (state, p) => {
+  state.properties = p;
+};
+
+export const setAttributes = (state, a) => {
+  state.attributes = a;
+};
+
+export const setIsSaved = (state, p) => {
+  state.properties = p;
+};
+
+export const setPropertyLoading = (state, l) => {
+  state.propertyLoading = l;
+};
+
+export const setAttributesCheckboxes = (state, c) => {
+  state.attributesCheckboxes = c;
+};
+
+export const setLocationSearch = (state, location) => {
+  state.locationSearch = location;
+};
+
+export const setLinks = (state, links) => {
+  state.links.push(links);
+};
+
+export const setNextPageUrl = (state, links) => {
+  state.next_page_url = links;
 };

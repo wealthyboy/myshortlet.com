@@ -12,7 +12,7 @@
                         <i class="fas fa-map-marker-alt"></i>
                     </span>
                 </div>
-                <input type="text" class="form-control ml-2" name="check_in_checkout" value="{{ request()->going_to }}" id="Location-input" placeholder="Where are you going">
+                <input type="text" class="form-control ml-2" name="going_to" value="{{ request()->going_to }}" id="Location-input" placeholder="Where are you going">
             </div>
         </div>
     
@@ -32,8 +32,7 @@
                         <span class="children">1</span> children -
                         <span class="rooms">1</span>  rooms 
                     </div>
-               </div>
-               
+                </div>
             </div>
             <div style="min-width: 100%; z-index: 1; background: #ffffff; opacity: 0;" id="people-dropdown" class="people-dropdown d-none pl-4 pt-3 pb-4 pr-4 position-absolute  border">
                 <div class=" d-flex p-2 justify-content-between">

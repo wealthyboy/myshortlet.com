@@ -172,14 +172,17 @@ class PropertiesController extends Controller
 
     public function syncExtras($extras, $extra_services_price = [],  $obj){
         $obj->attributes()->syncWithoutDetaching($extras);
-        $prices = array_filter($extra_services_price);
-        if(!empty($prices)){
-            foreach( $prices as $key  => $extra ) {
-                $obj->attributes()->updateExistingPivot($key, [
-                    'price' => $extra,
-                ]);
+        if(!empty($extra_services_price)) {
+            $prices = array_filter($extra_services_price);
+            if(!empty($prices)){
+                foreach( $prices as $key  => $extra ) {
+                    $obj->attributes()->updateExistingPivot($key, [
+                        'price' => $extra,
+                    ]);
+                }
             }
         }
+        
           
     }
 
@@ -208,6 +211,8 @@ class PropertiesController extends Controller
             $this->syncExtras($request->multiple_apartment_extras,  $request->multiple_apartment_extra_services, $apartment);
         }
 
+        $property->price  =  $request->room_sale_price[0];
+        $property->save();
     }
 
     public function propertyWithSingleApartments($request, $apartment, $property)
@@ -226,7 +231,11 @@ class PropertiesController extends Controller
         $apartment->property_id          = $property->id;
         $apartment->uuid                 = time();
         $apartment->toilets              = $request->single_room_toilets;
+        
         $apartment->save();
+        $property->price  =  $request->single_room_price;
+        $property->save();
+
         $this->syncImages($room_images, $apartment, $property);
         $this->syncAttributes($request, $apartment);
         $this->syncExtras($request->single_apartment_extras,  $request->single_apartment_extra_services, $apartment);
@@ -299,13 +308,13 @@ class PropertiesController extends Controller
         $helper     = new Helper();
         $counter    = rand(1,500);
         $attributes = Attribute::parents()->whereIn('type' ,$this->types)->get()->groupBy('type');
-        $apartment_facilities  = Attribute::parents()->where('type','apartment_facilities')->orderBy('sort_order','asc')->get();
+        $apartment_facilities  = Attribute::parents()->where('type','apartment facilities')->orderBy('sort_order','asc')->get();
         $counter               = rand(1,500);
         $str                   = new Str;
         $others               =  Attribute::where('type','other')->orderBy('sort_order','asc')->get()->groupBy('parent.name');
         $bedrooms              = Attribute::parents()->where('type','bedrooms')->orderBy('sort_order','asc')->get();
-        $extras =  Attribute::parents()->where('type','extra_services')->orderBy('sort_order','asc')->get();
-        $property_types =  Attribute::parents()->where('type','property_type')->orderBy('sort_order','asc')->get();
+        $extras =  Attribute::parents()->where('type','extra services')->orderBy('sort_order','asc')->get();
+        $property_types =  Attribute::parents()->where('type','property type')->orderBy('sort_order','asc')->get();
         return view('admin.apartments.edit',compact('others','property_types','extras','str','bedrooms','counter','attributes','locations','property','helper','apartment_facilities'));
     }
 

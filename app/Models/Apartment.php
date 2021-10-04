@@ -28,6 +28,7 @@ class Apartment extends Model
 		'percentage_off',
 		'image_m',
         'image_tn',
+        'guests'
 	];
 
 
@@ -77,13 +78,13 @@ class Apartment extends Model
 
     public function free_services(){
         return $this->belongsToMany(Attribute::class)
-        ->where('type','extra_services')                
+        ->where('type','extra services')                
         ->wherePivotNull('price');
     }
 
 
     public function extra_services(){
-        return $this->belongsToMany(Attribute::class)->where('type','extra_services')->withPivot('price');
+        return $this->belongsToMany(Attribute::class)->where('type','extra services')->withPivot('price');
     }
 
 
@@ -96,5 +97,11 @@ class Apartment extends Model
     public function bedrooms(){
         return $this->belongsToMany(Attribute::class)->where('type', 'bedrooms')->withPivot('bed_count');
     }
+
+
+    public function getGuestsAttribute(){
+       return $this->max_children + $this->max_adults;
+    }
+
 
 }

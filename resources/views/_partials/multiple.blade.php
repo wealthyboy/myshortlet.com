@@ -12,6 +12,8 @@
                 </div>
             </div>
             <div class="col-md-7">
+            <div> This property is not available on your selected fate</div>
+
                 <div class="card-title">
                    <a href="#">{{ $apartment->name }}</a>
                 </div>

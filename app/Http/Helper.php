@@ -231,11 +231,11 @@ class Helper{
     public static function attribute_types(){
         return [
             'bedrooms' => 'Bedrooms',
-            'extra_services' => 'Extra Services',
+            'extra services' => 'Extra Services',
             'facilities' => 'Facilities',
             'rules' => 'Rules',
-            'apartment_facilities' => 'Apartment Facilities',
-            'property_type' => 'Property Type',
+            'apartment facilities' => 'Apartment Facilities',
+            'property type' => 'Property Type',
             'other' => 'other'
         ];
     }

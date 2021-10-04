@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filters\PropertyFilter\AttributesFilter;
 use  Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Http\Resources\PropertyLists;
 
 
 
@@ -41,8 +42,6 @@ class ApartmentsController extends Controller
             'other' => 'other'
         ];
         $str =new  Str;
-        $codes = Helper::phoneCodes();
-
         $date = $request->check_in_checkout;
         $property_is_not_available = null;
 
@@ -50,32 +49,33 @@ class ApartmentsController extends Controller
 
         $attributes = $location->attributes->groupBy('type'); 
         $page_title = implode(" ",explode('-',$location->slug));
-        $properties = Property::where('allow',true)->whereHas('locations',function(Builder  $builder) use ($location){
-                $builder->where('locations.slug',$location->slug);
-            })->filter($request,  $this->getFilters($attributes))->latest()->paginate(5);
-        $properties->appends(request()->all());
         $breadcrumb = $location->name; 
         $saved =  $this->saved();
-        if( $request->ajax() ) { 
-            $properties->load('facilities','single_room');
 
-            return response()->json([
-                'properties' => $properties->toArray(),
-                'attributes' => $attributes->count()
-            ]); 
+        $properties = Property::where('allow',true)->whereHas('locations',function(Builder  $builder) use ($location){
+            $builder->where('locations.slug',$location->slug);
+        })
+        ->filter($request,  $this->getFilters($attributes))
+        ->latest()->paginate(3);
+        $properties->appends(request()->all());
+        if( $request->ajax() ) { 
+            return PropertyLists::collection(
+                $properties
+            )->additional(['attributes' => $attributes]);
         }
+        $next_page= [];
+
+        $next_page[] = $properties->nextPageUrl();
 
         return  view('apartments.index',compact(
             'location',
             'page_title',
             'breadcrumb',
-            'properties',
             'attributes',
             'str',
             'saved',
-            'codes',
-            'date',
-            'property_is_not_available'
+            'properties',
+            'next_page'
         )); 
     }
 
@@ -103,44 +103,70 @@ class ApartmentsController extends Controller
     public function search(Request $request)
     {   
 
-        $date = explode("to",$request->date);
+        $date = explode("to",$request->check_in_checkout);
         $property_is_not_available = null;
 
+
         $data = [];
-        $attributes = Attribute::parents()->get();
+        $attributes = null;
         $data['location']     =  $request->going_to;
         $data['max_children'] = $request->no_of_children ?? 1;
         $data['max_adults']   = $request->no_of_adults ?? 1;
         $data['rooms'] = $request->rooms;
-        $cities        = Property::where('location_full_name','like','%' .$data['location']. '%')->first();
+        $cities        = Property::where('location_full_name','like','%' .$data['location']. '%')->get();
+        $properties = null;
+        $location = null;
 
-        $attributes = $cities->attributes()->where('type','!=','apartment_facilities')->get()->groupBy('type'); 
-        $location = $cities->locations()->where('locations.name','like','%' .$data['location']. '%')->first();
-        if ($location){
-           $location->load('children');
+
+        if ($cities->count() !== 0) {
+
+            $cities = $cities->first();
+            $attributes = $cities->attributes()->where('type','!=','apartment_facilities')->get()->groupBy('type'); 
+            $location = optional($cities->locations()->where('locations.name','like','%' .$data['location']. '%'))->first();
+            if ($location){
+               $location->load('children');
+            }
+
+
+            $properties = Property::whereHas('locations',function($query) use ($data){
+                $query->where('locations.name','like','%' .$data['location']. '%');
+            })->orWhereHas('apartments', function( $query ) use ( $data ){
+                $query->where('apartments.max_adults', '<=',  $data['max_children']);
+                $query->where('apartments.max_children', '<=', $data['max_adults'] );
+                $query->where('apartments.no_of_rooms', '<=', $data['rooms'] );
+            })->filter($request,  $this->getFilters($attributes))->latest()->paginate(5);
+            $properties->appends(request()->all());
+            if( $request->ajax() ) { 
+                return  PropertyLists::collection(
+                    $properties
+                )->additional(['attributes' => $attributes]);
+            }
+            
         }
 
-        $properties = Property::whereHas('locations',function($query) use ($data){
-            $query->where('locations.name','like','%' .$data['location']. '%');
-        })->orWhereHas('apartments', function( $query ) use ( $data ){
-            $query->where('apartments.max_adults', '<=',  $data['max_children']);
-            $query->where('apartments.max_children', '<=', $data['max_adults'] );
-            $query->where('apartments.no_of_rooms', '<=', $data['rooms'] );
-        })->filter($request,  $this->getFilters($attributes))->latest()->paginate(5);
-        $properties->appends(request()->all());
+        if( $request->ajax() ) { 
+            return response()->json([
+                "data" => []
+            ],200);
+        }
+
+        
+
+        
+
+
         $breadcrumb = $request->name; 
         $page_title = $request->name; 
         $str        =    new  Str;
         $saved =  $this->saved();
 
-        if( $request->ajax() ) { 
-            return response()->json([
-                'properties' => $properties->toArray(),
-                'attributes' => $attributes->count()
-            ]); 
-        }
+        
 
         $date = $request->check_in_checkout;
+        $next_page= [];
+
+        $next_page[] = $properties->nextPageUrl();
+
 
         return  view('apartments.index',compact(
             'location',
@@ -151,7 +177,8 @@ class ApartmentsController extends Controller
             'str',
             'saved',
             'date',
-            'property_is_not_available'
+            'property_is_not_available',
+            'next_page'
         ));
          
     }
@@ -170,7 +197,8 @@ class ApartmentsController extends Controller
      */
     public function show(Request $request, Property $property)
     {   
-        $date  = explode("-",$request->check_in_checkout);
+        $date  = explode("to",$request->check_in_checkout);
+       // dd($from = date('2018-01-01')    );
         $property_is_not_available = null;
         $nights = '1 night';
         $sub_total = null;
@@ -181,22 +209,25 @@ class ApartmentsController extends Controller
         $amenities = $property->apartment_facilities->groupBy('parent.name');
         $property_type = $property->type == 'single' ?  $property->single_room : $property->multiple_rooms[0];
         $bedrooms = $property_type->bedrooms->groupBy('parent.name');
+
         $days = 1;
         if ($request->check_in_checkout && !empty($date)) {
             $date1 = trim($date[0]);
             $date2 = trim($date[1]);
             $data  = [];
-            if ($date1 || $date2) {
-                $date = Carbon::createFromDate($date1);
-                $date2 = Carbon::createFromDate($date2);
-            } 
-            $property_is_not_available = Reservation::whereDate('checkout', '>=', $date )
-            ->whereIn('apartment_id', $ids)
-            ->orderBy('created_at','desc')->first();
-            $days   = $date->diffInDays($date2);
+            $start_date = Carbon::createFromDate($date1);
+            $end_date = Carbon::createFromDate($date2);
+            
+            $property_is_not_available = Reservation::whereIn('apartment_id', $ids)
+                                                       ->whereDate('checkin', '<=', $start_date)
+                                                        ->whereDate('checkout', '>=', $end_date)
+                                                       ->pluck('apartment_id')->toArray();
+
+              
+            $days   = $start_date->diffInDays($end_date);
             $nights   = $days == 1 ? "1 night" : $days." nights";
         }
-        
+        //dd($property_is_not_available);
         $saved =  $this->saved();
         $date = $request->check_in_checkout;
         return view('apartments.show',

@@ -41,7 +41,7 @@
                   <div>From cosy country homes to funky city flats</div>
                </div>
                <div class="card-body ">
-                  @include('_partials.search_form')
+                 <category-search  :reload="1" />
                </div>
             </div>
          </div>

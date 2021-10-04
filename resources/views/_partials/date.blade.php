@@ -8,5 +8,5 @@
             <i class="fal fa-calendar-week"></i>
         </span>
     </div>
-    <input type="text" class="form-control ml-2" name="check_in_checkout" id="flatpickr-input-f" placeholder="Add Dates">
+    <input type="text" class="form-control ml-2"  value="{{ request()->check_in_checkout }}" name="check_in_checkout" id="flatpickr-input-f" placeholder="Add Dates">
 </div>

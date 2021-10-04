@@ -9,6 +9,9 @@ class Reservation extends Model
 {
     use HasFactory;
 
+    protected $dates = ['checkin', 'checkout'];
+
+
     public function user_reservation()
     {
         return $this->belongsTo(UserReservation::class);
