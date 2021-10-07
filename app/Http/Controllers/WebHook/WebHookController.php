@@ -38,7 +38,9 @@ class WebHookController extends Controller
         //     return;
         // } 
 
-        //return $request->all();
+        \Log::info($request->all());
+
+        return;
 
         $apartment_quantities = array_filter($request->apartment_quantity);
 
