@@ -40,40 +40,33 @@ class WebHookController extends Controller
 
         \Log::info($request->all());
 
-        return;
 
-        $apartment_quantities = array_filter($request->apartment_quantity);
 
-        $date  = explode("to",$request->range);
-        $date1 = trim($date[0]);
-        $date2 = trim($date[1]);
-        $data  = [];
-        if ($date1 || $date2) {
-            $date =  Carbon::createFromDate($date1);
-            $date2 = Carbon::createFromDate($date2);
-        }
+        
         $user_reservation = new UserReservation;
-        if ($request->user_type && $request->user_type == 'guest' ){
-            $user = GuestUser::find($request->user_id);
-            $user_reservation->guest_user_id = $user->id;
-         } else {
-            $user = User::find($request->user_id);
-            $user_reservation->user_id = $user->id;
-         }
+        $guest = new GuestUser;
+        $guest->name      =  $request->booking->first_name;
+        $guest->last_name        =  $request->booking->last_name;
+        $guest->email   =  $request->booking->email;
+        $guest->phone_number    = $request->booking->phone_number;
+        $guest->save();
+
+        $user_reservation->user_id        = optional($request->user())->id;
+        $user_reservation->guest_user_id  = $guest->id;
         $user_reservation->currency       =  $request->currency;
         $user_reservation->invoice        =  "INV-".date('Y')."-".rand(10000,time());
         $user_reservation->payment_type   =  'online';
         $user_reservation->property_id    =  $request->property_id;
         $user_reservation->coupon         =  $request->coupon;
-
         $user_reservation->checkin        =  $date;
         $user_reservation->checkout       =  $date2;
         $user_reservation->total          =  $request->total;
         $user_reservation->ip             =  $request->ip();
         $user_reservation->save();
 
-        foreach ( $apartment_quantities   as $key =>  $apartment_quantity ){
-            $apartment = Apartment::where('uuid', $key)->first();
+
+        $bookings = BookingDetail::find($request->booking->booking_ids);
+        foreach ( $bookings   as $key =>  $apartment_quantity ){
             $reservation = new Reservation;
             $reservation->quantity       =  $apartment_quantity;
             $reservation->apartment_id   =  $apartment->id;

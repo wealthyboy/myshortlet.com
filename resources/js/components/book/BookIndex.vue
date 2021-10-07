@@ -1,6 +1,27 @@
 <template>
   <div class="row">
-    <div class="col-md-7">
+    <div v-if="paymentIsComplete" class="d-flex col-md-12 aligh">
+      <!--Content-->
+      <section class="">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 offset-md-2">
+              <div class="error-page text-center">
+                <h1>Thank you for shopping with us</h1>
+                <p class="large">Your order has been received .</p>
+                <p class="large"></p>
+                <a href="/" class="btn btn--primary space-t--2">Continue</a>
+                <a href="/orders" class="btn btn--primary space-t--2"
+                  >View order history</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--End Content-->
+    </div>
+    <div v-if="!paymentIsComplete" class="col-md-7">
       <h3>Review and book</h3>
     </div>
     <div class="col-md-7">
@@ -470,6 +491,7 @@ export default {
       coupon: null,
       amount: this.booking_details.total,
       payment_method: null,
+      paymentIsComplete: null,
       coupon_error: null,
       voucher: [],
       order_text: null,
@@ -481,6 +503,7 @@ export default {
         code: null,
         phone_number: null,
         services: [],
+        booking_ids: this.booking_details.booking_ids,
       },
     };
   },
@@ -596,10 +619,11 @@ export default {
         },
         callback: function(response) {
           axios
-            .post("/webhook/payment")
+            .post("/webhook/payment", {
+              booking: context.form,
+            })
             .then((response) => {
               this.submiting = false;
-              //this.amount = parseInt(response.data.sub_total);
               console.log(response.data);
             })
             .catch((error) => {

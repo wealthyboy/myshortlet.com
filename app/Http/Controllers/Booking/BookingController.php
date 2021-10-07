@@ -38,6 +38,7 @@ class BookingController extends Controller
         }
         
 		$bookings = BookingDetail::all_items_in_cart($property->id);
+		$ids = $bookings->pluck('id')->toArray();
 		$booking = $bookings[0];
 		$nights = [];
 		$phone_codes = Helper::phoneCodes();
@@ -50,7 +51,7 @@ class BookingController extends Controller
 		$total = $total * $days;
         $from                 = $booking->checkin->format('l') .' '. $booking->checkin->format('d') . ' ' .$booking->checkin->format('F') .' '.$booking->checkin->isoFormat('Y');
         $to                   = $booking->checkout->format('l') .' '. $booking->checkout->format('d') . ' ' .$booking->checkout->format('F').' '.$booking->checkout->isoFormat('Y');
-        $booking_details      = ['days'=>$days, 'from' => $from, 'to' => $to, 'nights' => $nights, 'total' => $total];
+        $booking_details      = ['days'=>$days, 'from' => $from, 'to' => $to, 'nights' => $nights, 'total' => $total, 'booking_ids' => $ids];
 		return view('book.index', compact('phone_codes','property','bookings','booking_details'));
     }
 
