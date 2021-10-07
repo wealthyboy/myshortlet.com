@@ -77,6 +77,7 @@ class BookingController extends Controller
 
 
 		$ap_ids = [];
+		$cookie = null;
         foreach ($apartment_quantity as $key => $apartments) {
 			foreach ($apartments as $apartment_id => $quantity) {
 				$booking = new BookingDetail;
@@ -119,8 +120,10 @@ class BookingController extends Controller
 
 		}
 
-
 		return response()->json([],200)->withCookie($cookie);
+
+
+
 
 
 
