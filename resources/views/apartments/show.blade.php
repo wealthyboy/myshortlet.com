@@ -14,7 +14,9 @@
          </div>
 
          <div class="col-md-4 d-flex  align-items-end  justify-content-end">
-            <div>@include('_partials.saved',['obj'=> $property])</div>
+            <div>
+            <saved :property="{{$property}}" />
+            </div>
          </div>
 
          <div class="clearfix"></div>
@@ -43,7 +45,7 @@
 
                <div class="col-6 pb-2 position-relative">
                   <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $property_type->images[3]->image }}')"></a>
-                  <a href="#" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
+                  <a href="#" id="full-image" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
                      <p class="fs-48 font-weight-600 text-white lh-1 mb-1">+{{ $property->images->count() }}</p>
                      <p class="fs-16 font-weight-bold text-white lh-1625 text-uppercase">View Gallery</p>
                   </a>
@@ -104,7 +106,6 @@
                               
                            </div>
                            <h3>Cleaning and safety practices</h3>
-                           
                            <div class="">
                               <ul class="list-unstyled ">
                                  @foreach($safety_practices as $key => $safety_practice)
@@ -131,7 +132,7 @@
                </div>
 
                @if ($property->type != 'single')
-                 <room-available :apartments="{{ $property->multiple_rooms->load('images','free_services','bedrooms', 'bedrooms.parent') }}" :property="{{ $property }}"  />
+                 <multiple-apartments  :propertys_not_available="{{ collect($properties_not_available) }}" :apartments="{{ $apartments->load('images','free_services','bedrooms', 'bedrooms.parent', 'property') }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple"/>
                @endif
 
                <div class="name bg-white rounded">
@@ -145,12 +146,11 @@
 
             @if ($property->type == 'single')
             <div class="col-12 pl-1 single-apartment rounded col-md-5">
-               @include('_partials.single_apartments',['obj' => $property->single_room])
+               <single-apartment  :propertys_not_available="{{ collect($properties_not_available) }}" :apartment="{{ $apartments[0]->load('property') }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple"/>
             </div>
             @endif
 
-            
-
+         
             <div class="col-12  mt-1 col-md-12">
                <div id="Amenities" class="name mt-2 bg-white">
                   <h3 class="card-title  p-3 border-bottom">Amenities</h3>
@@ -285,5 +285,33 @@
          </div>
       </div>
    </div>
+
+   
 </section>
+
+
+<div style="position: fixed; display:none; width: 100%; height: 100vh; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); z-index: 91; cursor: pointer;" class="c-slider">
+   <div class="flexslider">
+       <ul class="slides">
+        @foreach($property->images as $image)
+
+          <li>
+             <img src="{{ $image->image }}" alt="">
+          </li>
+         @endforeach
+       </ul>
+   </div>  
+</div>
 @endsection
+
+@section('inline-scripts')
+jQuery(function() {
+   $("#full-image").on('click',function(e){
+      e.preventDefault()
+   })
+})
+
+   
+@stop
+
+

@@ -65,12 +65,11 @@ class PropertiesController extends Controller
         $counter = rand(1,500);
         $locations  = Location::parents()->get();
         $attributes = Attribute::parents()->whereIn('type' ,$this->types)->get()->groupBy('type');
-        $apartment_facilities =  Attribute::parents()->where('type','apartment_facilities')->orderBy('sort_order','asc')->get();
-        $property_types       =  Attribute::parents()->where('type','property_type')->orderBy('sort_order','asc')->get();
-        $extras               =  Attribute::parents()->where('type','extra_services')->orderBy('sort_order','asc')->get();
+        $apartment_facilities =  Attribute::parents()->where('type','apartment facilities')->orderBy('sort_order','asc')->get();
+        $property_types       =  Attribute::parents()->where('type','property type')->orderBy('sort_order','asc')->get();
+        $extras               =  Attribute::parents()->where('type','extra services')->orderBy('sort_order','asc')->get();
         $bedrooms             =  Attribute::parents()->where('type','bedrooms')->orderBy('sort_order','asc')->get();
         $others               =  Attribute::parents()->where('type','others')->orderBy('sort_order','asc')->get();
-
         $helper               =  new Helper;
         $str = new Str;
         return view('admin.apartments.create',
@@ -187,7 +186,8 @@ class PropertiesController extends Controller
     }
 
     public function propertyWithMultipleApartments($request,  $property) 
-    {
+    {    
+        $price = implode(array_values($request->room_price));
         foreach ($request->room_price  as $key => $room) {
             $apartment = new Apartment;  
             $room_images = !empty($request->room_images[$key]) ? $request->room_images[$key] : [];
@@ -209,10 +209,12 @@ class PropertiesController extends Controller
             $this->syncImages($room_images, $apartment, $property);
             $this->syncAttributes($request, $apartment, $key);
             $this->syncExtras($request->multiple_apartment_extras,  $request->multiple_apartment_extra_services, $apartment);
+            
         }
 
-        $property->price  =  $request->room_sale_price[0];
+        $property->price  =  $price;
         $property->save();
+
     }
 
     public function propertyWithSingleApartments($request, $apartment, $property)
@@ -287,8 +289,8 @@ class PropertiesController extends Controller
         $counter = rand(1,500);
         $bedrooms =  Attribute::parents()->where('type','bedrooms')->orderBy('sort_order','asc')->get();
         $attributes = Attribute::parents()->whereIn('type' ,$this->types)->get();
-        $apartment_facilities =  Attribute::parents()->where('type','apartment_facilities')->orderBy('sort_order','asc')->get();
-        $extras =  Attribute::parents()->where('type','extra_services')->orderBy('sort_order','asc')->get();
+        $apartment_facilities =  Attribute::parents()->where('type','apartment facilities')->orderBy('sort_order','asc')->get();
+        $extras =  Attribute::parents()->where('type','extra services')->orderBy('sort_order','asc')->get();
         $helper = new Helper;
         return view('admin.apartments.variation',
                 compact('extras','bedrooms','apartment_facilities','counter','attributes','helper')
@@ -346,6 +348,9 @@ class PropertiesController extends Controller
         
 
         if(!empty($request->edit_room_name) && !$request->has('new_room')){
+            $price = implode(array_values($request->edit_room_price));
+            $property->price  =  $price;
+            $property->save();
             foreach($request->edit_room_name as $room_id => $room ){ 
                 $room_images = !empty($request->edit_room_images[$room_id]) ? $request->edit_room_images[$room_id] : [];
                 $apartment       =  Apartment::updateOrCreate(

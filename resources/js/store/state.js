@@ -25,4 +25,6 @@ export default {
   locationSearch: [],
   links: [],
   next_page_url: null,
+  bookings: [],
+  bookingTotal: null,
 };

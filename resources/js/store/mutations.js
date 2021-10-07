@@ -91,3 +91,11 @@ export const setLinks = (state, links) => {
 export const setNextPageUrl = (state, links) => {
   state.next_page_url = links;
 };
+
+export const setBookings = (state, bookings) => {
+  state.bookings = bookings;
+};
+
+export const setBookingTotal = (state, total) => {
+  state.bookingTotal = total;
+};

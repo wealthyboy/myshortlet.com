@@ -65,10 +65,8 @@ trait FormatPrice
     }
 
     public function percentageOff(){
-      if ($this->formatted_discount_price() !== null){
-        return $this->calPercentageOff($this->single_room->price,$this->single_room->sale_price);
-      }
-      return null;
+      return $this->calPercentageOff($this->price,$this->sale_price);
+      
     }
 
     public function calPercentageOff($price,$sale_price){
@@ -89,7 +87,7 @@ trait FormatPrice
       }
     }
 
-    public function getCustomerPriceAttribute(){
+    public function getDisplayPriceAttribute(){
       return $this->discounted_price ?? $this->converted_price ;
     }
   
@@ -107,10 +105,7 @@ trait FormatPrice
     }
 
     public function getConvertedPriceAttribute(){
-  
-      return  $this->type == 'multiple'  
-      ? $this->ConvertCurrencyRate(optional($this->variant)->price)
-      : $this->ConvertCurrencyRate(optional($this->single_room)->price);   
+      return $this->ConvertCurrencyRate($this->price);
     }
     
     public function ConvertCurrencyRate($price){

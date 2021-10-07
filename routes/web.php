@@ -131,12 +131,9 @@ Route::post('check/apartment/availablility',     'Apartments\ApartmentsControlle
 
 Route::get('checkout/{room}', 'Checkout\CheckoutController@index');
 Route::get('book/{property}', 'Booking\BookingController@book');
+Route::post('book/store',     'Booking\BookingController@store');
+
 Route::post('book/coupon',    'Booking\BookingController@coupon');
-
-
-
-
-
 
 Route::post('/api/saved',   'Api\Favorites\FavoritesController@store');
 Route::resource('reservations',   'Reservation\ReservationController',['names' => 'reservations']);

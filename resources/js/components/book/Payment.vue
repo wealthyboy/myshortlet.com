@@ -1,52 +1,39 @@
 <template>
-    <paystack
-        :amount="amount"
-        :email="email"
-        :paystackkey="paystackkey"
-        :reference="reference"
-        :callback="callback"
-        :close="close"
-        :embed="false"
-    >
-       <i class="fas fa-money-bill-alt"></i>
-       Make Payment
-    </paystack>
+  <div class="col-md-5">
+    <div class="bg-white">
+      <h4 class="card-title p-3 border-bottom">Your Booking Details</h4>
+      <div>
+        <ul class="list-unstyled mb-0 p-2">
+          <li class="d-flex justify-content-between lh-22">
+            <p class="text-gray-light mb-0">Check in</p>
+            <p class="font-weight-500 text-heading mb-0">s</p>
+          </li>
+          <li class="d-flex justify-content-between lh-22">
+            <p class="text-gray-light mb-0">Check out</p>
+            <p class="font-weight-500 text-heading mb-0">s</p>
+          </li>
+          <li class="d-flex justify-content-between lh-22">
+            <p class="text-gray-light mb-0">Total length of stay</p>
+            <p class="font-weight-500 text-heading mb-0">2 nights</p>
+          </li>
+        </ul>
+      </div>
+      <div
+        class=" p-2  bg-transparent d-flex justify-content-between p-0 align-items-center"
+      >
+        <p class="text-heading mb-0">1 X Superior King Room</p>
+        <span class="fs-32 font-weight-bold text-heading total-price"
+          >5000</span
+        >
+      </div>
+      <div
+        class="card-footer p-2  bg-transparent d-flex justify-content-between p-0 align-items-center"
+      >
+        <p class="text-heading mb-0">Total Price:</p>
+        <span class="fs-32 font-weight-bold text-heading total-price">0</span>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
-import paystack from 'vue-paystack';
-export default {
-    components: {
-        paystack
-    },
-    data(){
-        return{
-          paystackkey: "pk_test_844112398c9a22ef5ca147e85860de0b55a14e7c", //paystack public key
-          email: "foobar@example.com", // Customer email
-          amount: 1000000 // in kobo  tejumade1991ADE*
-        }
-    },
-    computed: {
-      reference(){
-        let text = "";
-        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        for( let i=0; i < 10; i++ )
-          text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-        return text;
-      }
-    },
-    methods: {
-      callback: function(response){
-        console.log(response)
-      },
-      close: function(){
-          console.log("Payment closed")
-      }
-    }
-}
-</script>
-
-
-
+<script></script>

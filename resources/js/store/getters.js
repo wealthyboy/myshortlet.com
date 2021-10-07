@@ -109,3 +109,11 @@ export const links = (state) => {
 export const next_page_url = (state) => {
   return state.next_page_url;
 };
+
+export const bookings = (state) => {
+  return state.bookings;
+};
+
+export const bookingTotal = (state) => {
+  return state.bookingTotal;
+};

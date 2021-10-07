@@ -4470,43 +4470,6 @@ $email_error = $("#auth-error");
 $auth_email_error = $("#auth-email-error");
 $phone_number = $("#auth-phone-number-error");
 
-// $(document).on("click", ".saved", function(e) {
-//   e.preventDefault();
-//   let self = $(this);
-//   $status = self.data("toggle");
-//   $id = self.data("id");
-//   setTimeout(function() {
-//     $loading_spinner.addClass("d-none");
-//     if ($status == "modal") {
-//       $login_form.removeClass("d-none");
-//     }
-//   }, 1000);
-
-//   if ($status != "modal") {
-//     let params = {
-//       property_id: self.data("id"),
-//     };
-//     $.ajax({
-//       url: "/api/saved",
-//       type: "POST",
-//       data: params,
-//       beforeSend: function() {},
-//     })
-//       .done(function(res) {
-//         if (res.status == "added") {
-//           self.find("#saved-none-outline").removeClass("d-none");
-//           self.find("#saved-outline").addClass("d-none");
-//         } else {
-//           self.find("#saved-none-outline").addClass("d-none");
-//           self.find("#saved-outline").removeClass("d-none");
-//         }
-//       })
-//       .fail(function(e) {
-//         self.find("#saved-outline").addClass("d-none");
-//       });
-//   }
-// });
-
 $(document).on("click", ".auth-form", function(e) {
   e.preventDefault();
   let self = $(this);

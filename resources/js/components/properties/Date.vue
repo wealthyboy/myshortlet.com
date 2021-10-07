@@ -9,12 +9,12 @@
       </span>
     </div>
     <pickr
-      v-model="date"
+      v-model="check_in_checkout"
       :config="config"
-      class="form-control cursor-pointer ml-2"
+      class="form-control date-range cursor-pointer ml-2 location-search"
       placeholder="Check in - Check out"
-      name="date"
-      @on-change="getApartmentAvailability"
+      name="check_in_checkout"
+      ref="datePicker"
     />
   </div>
 </template>
@@ -40,6 +40,17 @@ export default {
   },
   components: {
     Pickr,
+  },
+  mounted() {
+    // this.bus.$on("showDate", (args) => {
+    //   // do something with args.data
+    //   this.$refs.datePicker.fp.open();
+    // });
+  },
+  methods: {
+    checkForDates() {
+      //this.$refs.datePicker.fp.open();
+    },
   },
 };
 </script>

@@ -13,33 +13,7 @@
                 <img :src="property.image_m" class="img  img-fluid" />
               </a>
               <div class="fav-icon position-absolute">
-                <a
-                  href="#"
-                  :data-id="property.id"
-                  :data-toggle="!$root.loggedIn ? 'modal' : 'loggedIn'"
-                  :data-target="!$root.loggedIn ? '#loadModal' : '#auth'"
-                  title="Wishlist"
-                  class="saved"
-                  @click.prevent="favorite($event, property.id)"
-                >
-                  <svg
-                    id="saved-outline"
-                    :class="[
-                      !property.is_saved ? '' : 'd-none',
-                      'is_not_saved_' + property.id,
-                    ]"
-                  >
-                    <use xlink:href="#favorites-outline"></use>
-                  </svg>
-                  <svg
-                    id="saved-none-outline"
-                    :class="[
-                      !property.is_saved ? 'd-none' : 'is_saved_' + property.id,
-                    ]"
-                  >
-                    <use xlink:href="#favorites"></use>
-                  </svg>
-                </a>
+                <saved :property="property" />
               </div>
             </div>
           </div>
@@ -158,6 +132,7 @@
 import { mapActions, mapGetters } from "vuex";
 import Pagination from "../pagination/Pagination.vue";
 import Loaders from "./Loaders.vue";
+import Saved from "./Saved.vue";
 
 export default {
   name: "Index",
@@ -169,6 +144,7 @@ export default {
   components: {
     Pagination,
     Loaders,
+    Saved,
   },
   data() {
     return {

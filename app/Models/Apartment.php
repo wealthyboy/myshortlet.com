@@ -24,11 +24,12 @@ class Apartment extends Model
         'discounted_price',
 		'currency',
 		'converted_price',
-		'customer_price',
 		'percentage_off',
 		'image_m',
         'image_tn',
-        'guests'
+        'guests',
+        'display_price',
+        'percentage_off'
 	];
 
 
@@ -64,10 +65,11 @@ class Apartment extends Model
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable')->orderBy('id','asc');
-	}
+    }
 
-    public function reservation(){
-        return $this->belongsToMany(Reservation::class);
+
+    public function reservations(){
+        return $this->hasMany(Reservation::class);
     }
 
 
@@ -84,7 +86,7 @@ class Apartment extends Model
 
 
     public function extra_services(){
-        return $this->belongsToMany(Attribute::class)->where('type','extra services')->withPivot('price');
+        return $this->belongsToMany(Attribute::class)->where('type','extra services')->wherePivotNotNull('price')->withPivot('price');
     }
 
 
@@ -102,6 +104,15 @@ class Apartment extends Model
     public function getGuestsAttribute(){
        return $this->max_children + $this->max_adults;
     }
+
+    public function getImageMAttribute(){
+        $image = basename($this->images[0]->image);
+        return asset('images/'.$this->folder.'/'. 'm' .'/'.$image);
+    }
+    
+
+
+    
 
 
 }

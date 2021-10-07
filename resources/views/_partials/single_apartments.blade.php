@@ -30,7 +30,7 @@
             <div>
                 <ul class="list-unstyled mb-4 ">
                     <li class="d-flex justify-content-between lh-22">
-                    <p class="text-gray-light mb-0">{{ $nights }} </p>
+                    <p class="text-gray-light mb-0">{{ 3 }} nights </p>
                     @if( $property->single_room->discounted_price)
                         <p class="font-weight-500 text-heading mb-0">{{ $property->currency }} {{ $property->single_room->discounted_price * $days }}</p>
                     @else

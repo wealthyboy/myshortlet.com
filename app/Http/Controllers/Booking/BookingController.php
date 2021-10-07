@@ -9,6 +9,8 @@ use App\Models\Property;
 use Carbon\Carbon;
 use App\Models\Voucher;
 use App\Models\SystemSetting;
+use App\Http\Helper;
+use App\Models\BookingDetail;
 
 
 
@@ -30,29 +32,26 @@ class BookingController extends Controller
      */
     public function book(Request $request,Property $property)
     {   
-        //Check id date has expired
-        if (!$request->check_in_checkout){
+        
+		if (!$request->check_in_checkout){
             return back();
         }
-
-		//dd($request->all());
-
-        $date  = explode("to",$request->check_in_checkout);
-        $date1 = trim($date[0]);
-        $date2 = trim($date[1]);
-        $data  = [];
-        if ($date1 || $date2) {
-            $date = Carbon::createFromDate($date1);
-            $date2 = Carbon::createFromDate($date2);
-        }   
-        $nights               = $date->diffInDays($date2);
-        $from                 = $date->format('l') .' '. $date->format('d') . ' ' .$date->format('F') .' '.$date->isoFormat('Y');
-        $to                   = $date2->format('l') .' '. $date2->format('d') . ' ' .$date2->format('F').' '.$date2->isoFormat('Y');
-        $apartment_quantities = array_keys(array_filter($request->apartment_quantity));
-        $apartments           = Apartment::whereIn('uuid', $apartment_quantities)->get(); 
-		$property_id          = $request->property_id;   
-        $booking_details      = ['property_id' => $property_id,'currency' => $property->currency, 'date_range' => $request->date, 'from' => $from, 'to' => $to, 'nights' => $nights, 'total' => $apartments->sum('price'), 'apartment_quantity' => $request->apartment_quantity];		
-		return view('book.index', compact('property','apartments','booking_details'));
+        
+		$bookings = BookingDetail::all_items_in_cart($property->id);
+		$booking = $bookings[0];
+		$nights = [];
+		$phone_codes = Helper::phoneCodes();
+        $days               = $booking->checkin->diffInDays($booking->checkout);
+		$stays   = $days == 1 ? "night" : " nights";
+        $nights[] = $days;
+        $nights[] = $stays;
+		$property->load('free_services', 'facilities','extra_services');
+		$total = BookingDetail::sum_items_in_cart($property->id);
+		$total = $total * $days;
+        $from                 = $booking->checkin->format('l') .' '. $booking->checkin->format('d') . ' ' .$booking->checkin->format('F') .' '.$booking->checkin->isoFormat('Y');
+        $to                   = $booking->checkout->format('l') .' '. $booking->checkout->format('d') . ' ' .$booking->checkout->format('F').' '.$booking->checkout->isoFormat('Y');
+        $booking_details      = ['days'=>$days, 'from' => $from, 'to' => $to, 'nights' => $nights, 'total' => $total];
+		return view('book.index', compact('phone_codes','property','bookings','booking_details'));
     }
 
     /**
@@ -62,7 +61,71 @@ class BookingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        $booking = new BookingDetail;
+		$apartment_quantity = $request->apartment_quantity;
+		$date  = explode("to",$request->check_in_checkout);
+        $date1 = trim($date[0]);
+        $date2 = trim($date[1]);
+        $data  = [];
+		$nights = [];
+		$start_date =null;
+        if ($date1 || $date2) {
+            $start_date = Carbon::createFromDate($date1);
+            $end_date = Carbon::createFromDate($date2);
+        } 
+
+
+		$ap_ids = [];
+        foreach ($apartment_quantity as $key => $apartments) {
+			foreach ($apartments as $apartment_id => $quantity) {
+				$booking = new BookingDetail;
+
+			   $ap = Apartment::find($apartment_id);
+			   $price = optional($ap)->discounted_price ??  optional($ap)->converted_price;
+				if (\Cookie::get('booking') !== null) {
+					$token  = \Cookie::get('booking');
+					$result = $booking->updateOrCreate(
+						['apartment_id' => $apartment_id,'token' => $token],
+						[
+							'apartment_id' => $apartment_id,
+							'property_id' => $request->property_id,
+							'user_id' => optional($request->user())->id,
+							'quantity'   => $quantity,
+							'price'      => $price,
+							'total'      => $price * $quantity,
+							'checkin' => $start_date,
+							'checkout' => $end_date,
+							
+						]
+					);
+				}  else  {
+					$value = bcrypt('^%&#*$((j1a2c3o4b5@+-40');
+					session()->put('booking',$value);
+					$cookie = cookie('booking',session()->get('booking'), time() + 86400);
+					$booking->apartment_id   = $ap->id;
+					$booking->quantity   = $quantity;
+					$booking->property_id = $request->property_id;
+					$booking->price      = $price;
+					$booking->total      = $price * $quantity;
+					$booking->user_id      = optional($request->user())->id;
+					$booking->checkin      = $start_date;
+					$booking->checkout      = $end_date;
+					$booking->token =$cookie->getValue();
+					$booking->save();
+				}
+
+		    }
+
+		}
+
+
+		return response()->json([],200)->withCookie($cookie);
+
+
+
+
+		
         
     }
 

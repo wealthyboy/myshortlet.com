@@ -50,20 +50,28 @@ class Property extends Model
         return $this->hasMany(Image::class)->orderBy('id','asc');
 	}
 
-    
-    
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+	}
+
+
+
     public function is_saved(){
         $saved = auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];
         return in_array($this->id, $saved) ? true : false;
     }
-
 
     public function apartments(){
         return $this->hasMany(Apartment::class);
     }
 
     public function extra_services(){
-        return $this->belongsToMany(Attribute::class)->where('type','extra services')->withPivot('price');
+        return $this->belongsToMany(Attribute::class)
+        ->where('type','extra services')
+        ->wherePivotNotNull('price')
+        ->withPivot('price');
     }
 
 
@@ -164,7 +172,11 @@ class Property extends Model
 
 
     public function getLinkAttribute(){
-       return  '/apartment/'. $this->slug. '?check_in_checkout='.request()->check_in_checkout;
+       $rooms = request()->rooms ? "&rooms=".request()->rooms : null;
+       $check_in_checkout = request()->check_in_checkout ? "?check_in_checkout=".request()->check_in_checkout : null;
+       $children = request()->children ? "&children=".request()->children : null;
+       $adults = request()->adults ? "&adults=".request()->adults : null;
+       return  '/apartment/'. $this->slug.$check_in_checkout.$rooms.$children.$adults;
     }
 
 

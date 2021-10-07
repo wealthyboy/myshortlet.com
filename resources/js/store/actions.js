@@ -61,6 +61,46 @@ export const updateCartMeta = ({ commit }, payload) => {
   commit("setCartMeta", payload);
 };
 
+export const updateBooking = (
+  { commit },
+  { product_variation_id, quantity }
+) => {
+  return axios
+    .post("/api/cart", {
+      product_variation_id: product_variation_id,
+      quantity,
+    })
+    .then((response) => {
+      commit("setBooking", response.data);
+      //document.getElementById("icon-trigger").click();
+      return Promise.resolve();
+    });
+};
+
+export const getBookings = ({ commit }) => {
+  commit("Loading", true);
+
+  return axios
+    .get("/api/cart")
+    .then((response) => {
+      commit("setBooking", response.data);
+      //document.getElementById("js-loading").style.display = "none";
+      //commit("Loading", false);
+      return Promise.resolve();
+    })
+    .catch(() => {});
+};
+
+export const deleteBooking = ({ commit }, { cart_id }) => {
+  return axios.delete("/api/cart/delete/" + cart_id + "").then((response) => {
+    commit("setBooking", response.data);
+    if (response.data.data.length == 0) {
+      $(".cart-page").remove();
+    }
+    return Promise.resolve();
+  });
+};
+
 export const saveProperty = (
   { commit, dispatch },
   { property_id, context }
@@ -71,13 +111,19 @@ export const saveProperty = (
     })
     .then((res) => {
       if (res.data.status == "added") {
-        document.querySelector("#saved-outline").classList.add("d-none");
         document
-          .querySelector("#saved-none-outline")
+          .querySelector(".is_not_saved_" + property_id)
+          .classList.add("d-none");
+        document
+          .querySelector(".is_saved_" + property_id)
           .classList.remove("d-none");
       } else {
-        document.querySelector("#saved-none-outline").classList.add("d-none");
-        document.querySelector("#saved-outline").classList.remove("d-none");
+        document
+          .querySelector(".is_saved_" + property_id)
+          .classList.add("d-none");
+        document
+          .querySelector(".is_not_saved_" + property_id)
+          .classList.remove("d-none");
       }
 
       return Promise.resolve();

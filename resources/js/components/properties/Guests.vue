@@ -127,18 +127,21 @@
         class="location-search"
         name="rooms"
         :value="rooms"
+        id="rooms"
       />
       <input
         type="hidden"
         class="location-search"
         name="children"
         :value="children"
+        id="children"
       />
       <input
         type="hidden"
         class="location-search"
         name="adults"
         :value="adults"
+        id="adults"
       />
     </div>
   </div>

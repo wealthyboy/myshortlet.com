@@ -36,24 +36,7 @@
         <label class="pl-2 ml-4" for="flatpickr-input-f"
           >Check-in - Check-out</label
         >
-
-        <div class="input-group input-group-lg">
-          <div class="input-group-prepend">
-            <span
-              class="input-group-text  border-0 text-muted fs-18"
-              id="inputGroup-sizing-lg"
-            >
-              <i class="fal fa-calendar-week"></i>
-            </span>
-          </div>
-          <pickr
-            v-model="check_in_checkout"
-            :config="config"
-            class="form-control cursor-pointer ml-2 location-search"
-            placeholder="Check in - Check out"
-            name="check_in_checkout"
-          />
-        </div>
+        <date-range />
       </div>
 
       <div id="people-number" class="col-md-3  cursor-pointer">
@@ -83,6 +66,7 @@ import { mapActions, mapGetters } from "vuex";
 
 import Pickr from "vue-flatpickr-component";
 import Guests from "./Guests.vue";
+import DateRange from "./Date.vue";
 
 export default {
   props: ["reload"],
@@ -94,21 +78,12 @@ export default {
         selectedRooms: [],
         location: this.$root.request.going_to,
       },
-      check_in_checkout: this.$root.request.check_in_checkout,
-      config: {
-        wrap: true, // set wrap to true only when using 'input-group'
-        altFormat: "M j, Y",
-        altInput: true,
-        mode: "range",
-        minDate: "today",
-        dateFormat: "Y-m-d",
-        showMonths: 2,
-      },
     };
   },
   components: {
     Pickr,
     Guests,
+    DateRange,
   },
   computed: {
     ...mapGetters({
