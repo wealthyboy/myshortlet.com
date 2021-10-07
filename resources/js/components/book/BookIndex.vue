@@ -590,7 +590,7 @@ export default {
         metadata: {
           custom_fields: [
             {
-              guests: context.form,
+              guests: 33,
             },
           ],
         },
