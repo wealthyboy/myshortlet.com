@@ -99,11 +99,11 @@ class BookingController extends Controller
 							'price'      => $price,
 							'total'      => $price * $quantity,
 							'checkin' => $start_date,
-							'checkout' => $end_date,
-							
+							'checkout' => $end_date,	
 						]
 					);
 				}  else  {
+
 					$value = bcrypt('^%&#*$((j1a2c3o4b5@+-40');
 					session()->put('booking',$value);
 					$cookie = cookie('booking',session()->get('booking'), time() + 86400);
@@ -122,6 +122,8 @@ class BookingController extends Controller
 		    }
 
 		}
+
+		$cookie = \Cookie::get('booking');
 
 		return response()->json([],200)->withCookie($cookie);
 
