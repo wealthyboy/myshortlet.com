@@ -8,12 +8,9 @@
             <div class="col-md-8 offset-md-2">
               <div class="error-page text-center">
                 <h1>Thank you for shopping with us</h1>
-                <p class="large">Your order has been received .</p>
+                <p class="large">Your booking has been received .</p>
                 <p class="large"></p>
                 <a href="/" class="btn btn--primary space-t--2">Continue</a>
-                <a href="/orders" class="btn btn--primary space-t--2"
-                  >View order history</a
-                >
               </div>
             </div>
           </div>
@@ -289,8 +286,11 @@
                     />
                     <span class="checkbox-custom rectangular"></span>
                     <span class="checkbox-label-text mt-1"
-                      >{{ extra_service.name }} {{ booking_details.days }}
-                      {{ booking_details.nights[1] }}</span
+                      >{{ extra_service.name }}
+                    </span>
+                    <span style="margin-left: 8rem;" class="">
+                      ( {{ booking_details.days }}
+                      {{ booking_details.nights[1] }} )</span
                     >
                   </label>
                   <p>
@@ -618,6 +618,7 @@ export default {
           ],
         },
         callback: function(response) {
+          this.paymentIsComplete = true;
           axios
             .post("/webhook/payment", {
               booking: context.form,

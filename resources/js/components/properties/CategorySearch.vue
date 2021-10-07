@@ -21,13 +21,6 @@
             v-model="form.location"
           />
         </div>
-        <div class="auto-complete position-absolute">
-          <ul>
-            <li>one</li>
-            <li>two</li>
-            <li>three</li>
-          </ul>
-        </div>
       </div>
 
       <div
