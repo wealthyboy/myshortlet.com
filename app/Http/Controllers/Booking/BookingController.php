@@ -77,7 +77,10 @@ class BookingController extends Controller
 
 
 		$ap_ids = [];
-		$cookie = null;
+		
+		$value = bcrypt('^%&#*$((j1a2c3o4b5@+-40');
+		session()->put('booking',$value);
+		$cookie = cookie('booking',session()->get('booking'), time() + 86400);
         foreach ($apartment_quantity as $key => $apartments) {
 			foreach ($apartments as $apartment_id => $quantity) {
 				$booking = new BookingDetail;
