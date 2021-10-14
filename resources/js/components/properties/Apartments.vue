@@ -7,7 +7,7 @@
     </div>
     <div class="col-md-7">
       <div class="card-title">
-        <a href="#">{{ room.name }} {{ propertyLoading }}</a>
+        <a href="#">{{ room.name }}</a>
       </div>
       <div><i class="fas fa-info-circle mr-2"></i>Instant Confirmation</div>
       <div class="entire-apartment">
@@ -91,26 +91,37 @@
         <div v-if="room.property.is_refundable">Fully Refundable</div>
       </div>
     </div>
-    <div class="col-md-2 position-relative">
+    <div v-if="stays && stays[1] != null" class="col-md-2 position-relative">
       <div class="form-group ">
         <label for="qty">Qty</label>
-        <select
-          :name="'apartment_quantity[' + room.uuid + ']'"
-          class="form-control room-q"
-          @change="getApartmentQuantity($event, room)"
+        <template
+          v-if="room.reservation_qty && room.quantity == room.reservation_qty"
         >
-          <option value="">0</option>
-          <option
-            :key="a"
-            :data-sale="2"
-            :data-price="a * room.display_price"
-            :data-id="room.id"
-            v-for="a in parseInt(room.no_of_rooms)"
-            :value="a"
-            >{{ a }}</option
+          <div class="text-muted ">
+            This apartment is not available for your seclected date
+          </div>
+        </template>
+        <template v-else>
+          <select
+            :name="'apartment_quantity[' + room.uuid + ']'"
+            class="form-control room-q"
+            @change="getApartmentQuantity($event, room)"
           >
-        </select>
-        <small>Please select one or more option you want to book</small>
+            <option value="">0</option>
+            <option
+              :key="a"
+              :data-sale="2"
+              :data-price="a * room.display_price"
+              :data-id="room.id"
+              v-for="a in parseInt(room.quantity)"
+              :value="a"
+              >{{ a }}</option
+            >
+          </select>
+          <small v-if="qty" class="text-danger"
+            >Please select one or more option you want to book</small
+          >
+        </template>
       </div>
     </div>
   </div>
@@ -119,9 +130,10 @@
 export default {
   props: {
     property: Object,
-    properties_not_available: Array,
     room: Object,
     propertyLoading: Boolean,
+    stays: Array,
+    qty: Boolean,
   },
   data() {
     return {
@@ -133,7 +145,6 @@ export default {
       checkedAttr: [],
       guests: 0,
       sub_total: 0,
-      stays: null,
       propertyQty: [],
       form: {
         room_quantity: [],
@@ -173,6 +184,11 @@ export default {
         });
       }
 
+      let aps = this.aps;
+      let t = this.total;
+      console.log(total, this.total);
+
+      this.$emit("qtyChange", { total: t, aps: aps });
       // Turn on extra services
     },
   },

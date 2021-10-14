@@ -106,7 +106,7 @@ class Apartment extends Model
     }
 
     public function getImageMAttribute(){
-        $image = basename($this->images[0]->image);
+        $image = basename(optional(optional($this->images)->first())->image);
         return asset('images/'.$this->folder.'/'. 'm' .'/'.$image);
     }
     

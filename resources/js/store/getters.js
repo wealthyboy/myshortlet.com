@@ -83,7 +83,7 @@ export const userType = (state) => {
 };
 
 export const properties = (state) => {
-  return state.properties;
+  return state.properties.filter((property) => !property.reservation_id);
 };
 
 export const attributes = (state) => {
@@ -116,4 +116,16 @@ export const bookings = (state) => {
 
 export const bookingTotal = (state) => {
   return state.bookingTotal;
+};
+
+export const bookingSubTotal = (state) => {
+  return state.bookingSubTotal;
+};
+
+export const bookingServicesTotal = (state) => {
+  return state.bookingServicesTotal;
+};
+
+export const bookingPropertyServicesTotal = (state) => {
+  return state.bookingPropertyServicesTotal;
 };

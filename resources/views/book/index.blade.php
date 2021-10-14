@@ -2,6 +2,9 @@
 @extends('layouts.checkout')
 @section('content')
 <div class="container vh-100">
+    <div class="row">
+       <div class="col-12"> <a href="{{ request()->url() }}"> <i class=""></i> Back to selection</a> </div>
+    </div>
     <book-index 
       :booking_details="{{ collect($booking_details) }}" 
       :property="{{ $property }}"  

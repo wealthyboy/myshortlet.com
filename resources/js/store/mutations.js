@@ -99,3 +99,15 @@ export const setBookings = (state, bookings) => {
 export const setBookingTotal = (state, total) => {
   state.bookingTotal = total;
 };
+
+export const setBookingSubTotal = (state, total) => {
+  state.bookingSubTotal = total;
+};
+
+export const setBookingServicesTotal = (state, total) => {
+  state.bookingServicesTotal = total;
+};
+
+export const setBookingPropertyServicesTotal = (state, total) => {
+  state.bookingPropertyServicesTotal = total;
+};

@@ -132,7 +132,7 @@
                </div>
 
                @if ($property->type != 'single')
-                 <multiple-apartments  :propertys_not_available="{{ collect($properties_not_available) }}" :apartments="{{ $apartments->load('images','free_services','bedrooms', 'bedrooms.parent', 'property') }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple"/>
+                 <multiple-apartments  :apartments="{{ $apartments }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple"/>
                @endif
 
                <div class="name bg-white rounded">
@@ -146,7 +146,7 @@
 
             @if ($property->type == 'single')
             <div class="col-12 pl-1 single-apartment rounded col-md-5">
-               <single-apartment  :propertys_not_available="{{ collect($properties_not_available) }}" :apartment="{{ $apartments[0]->load('property') }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple"/>
+               <single-apartment   :apartment="{{ $apartments[0]->load('property') }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple"/>
             </div>
             @endif
 

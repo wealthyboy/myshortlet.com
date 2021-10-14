@@ -152,6 +152,8 @@ export default {
       has_filters: 0,
       full_width: false,
       loading: false,
+      search: false,
+      propes: [],
     };
   },
   computed: {

@@ -48,7 +48,7 @@
       @include('_partials.modal')
 
       <script src="/js/popper.min.js" type="text/javascript"></script>
-      <script src="/js/services_js.js"></script>
+      <script src="/js/services_js.js?version={{ str_random(6) }}"></script>
       @yield('page-scripts')    
       <script type="text/javascript">
         @yield('inline-scripts')

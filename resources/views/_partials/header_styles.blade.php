@@ -13,7 +13,6 @@
       <link rel="apple-touch-icon" href="/img/favicon-96x96.png">
       <!-- CSS -->
       <!-- Main CSS File -->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
       <link href="/css/services_style.css?version={{ str_random(6) }}" rel="stylesheet">
       @yield('page-css')

@@ -23,18 +23,27 @@ class BookingDetail extends Model
         'token',
         'checkin',
         'checkout',
+        'sale_price'
       ];
 
   public static function all_items_in_cart($property_id) {  
     $cookie=\Cookie::get('booking',);
-    $booking = BookingDetail::with(["apartment",'apartment.free_services','apartment.bedrooms', 'apartment.bedrooms.parent', 'apartment.property','apartment.extra_services'])->where(['token'=>$cookie, 'property_id' => $property_id])->get();
+    $booking = BookingDetail::with(["apartment",'apartment.free_services','apartment.bedrooms', 'apartment.bedrooms.parent', 'apartment.property','apartment.extra_services'])
+              ->where(['token'=>$cookie, 'property_id' => $property_id])
+              ->whereDate('checkin','>=', now())
+              ->get();
     static::sync($booking);
     return $booking;
   }
 
   public static function sum_items_in_cart($property_id) {   
     $cookie=\Cookie::get('booking'); 
-    $total = \DB::table('booking_details')->select(\DB::raw('SUM(booking_details.total) as items_total'))->where(['token'=>$cookie, 'property_id' => $property_id])->where('quantity','>=',1)->get();
+    $total = \DB::table('booking_details')
+              ->select(\DB::raw('SUM(booking_details.total) as items_total'))
+              ->where(['token'=>$cookie, 'property_id' => $property_id])
+              ->where('quantity','>=',1)
+              ->whereDate('checkin','>=', now())
+              ->get();
     return 	$total = $total[0]->items_total;
   }
 

@@ -30,6 +30,8 @@ class PropertyLists extends JsonResource
             'image_tn' => $this->image_tn,
             'link' => $this->link,
             'type' => $this->type,
+            'reservation_id'=> $this->reservation_id,
+            'reservation_qty' => $this->reservation_qty,
             'single_room' => $this->single_room,
             'multiple_apartment' => $this->multiple_rooms,
             'is_refundable' =>$this->is_refundable,

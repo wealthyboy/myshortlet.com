@@ -101,7 +101,7 @@ Route::group(['middleware' => 'currencyByIp'], function(){
 
 
 Route::get('/mailable', function () {
-    $user_reservation = App\Models\UserReservation::find(2);
+    $user_reservation = App\Models\UserReservation::find(31);
     $settings =  App\Models\SystemSetting::first();
     return new App\Mail\ReservationReceipt($user_reservation, $settings);
 });
@@ -131,6 +131,8 @@ Route::post('check/apartment/availablility',     'Apartments\ApartmentsControlle
 
 Route::get('checkout/{room}', 'Checkout\CheckoutController@index');
 Route::get('book/{property}', 'Booking\BookingController@book');
+Route::post('book/delete/{id}', 'Booking\BookingController@destroy');
+
 Route::post('book/store',     'Booking\BookingController@store');
 
 Route::post('book/coupon',    'Booking\BookingController@coupon');

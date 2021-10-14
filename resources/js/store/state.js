@@ -26,5 +26,8 @@ export default {
   links: [],
   next_page_url: null,
   bookings: [],
-  bookingTotal: null,
+  bookingTotal: 0,
+  bookingSubTotal: 0,
+  bookingServicesTotal: 0,
+  bookingPropertyServicesTotal: 0,
 };

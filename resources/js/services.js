@@ -25,6 +25,8 @@ const SingleApartment = require("./components/properties/SingleApartment.vue")
 const MultipleApartments = require("./components/properties/MultipleApartments.vue")
   .default;
 
+const PropertyCreate = require("./components/properties/Create.vue").default;
+
 const Saved = require("./components/properties/Saved.vue").default;
 
 const Location = require("./components/search/Location.vue").default;
@@ -39,7 +41,9 @@ $().ready(function() {
 
 //console.log(intlTelInput());
 
-Vue.prototype.$eventBus = new Vue(); // Global event bus
+Vue.filter("priceFormat", function(value) {
+  return new Intl.NumberFormat().format(value);
+});
 
 const app = new Vue({
   el: "#app",
@@ -57,6 +61,7 @@ const app = new Vue({
     SingleApartment,
     MultipleApartments,
     Saved,
+    PropertyCreate,
   },
 });
 

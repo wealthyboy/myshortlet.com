@@ -36,13 +36,19 @@ class BookingController extends Controller
 		if (!$request->check_in_checkout){
             return back();
         }
+
         
 		$bookings = BookingDetail::all_items_in_cart($property->id);
+
+		if (null == $bookings){
+			return back();
+
+		}
 		$ids = $bookings->pluck('id')->toArray();
 		$booking = $bookings[0];
 		$nights = [];
-		$phone_codes = Helper::phoneCodes();
-        $days               = $booking->checkin->diffInDays($booking->checkout);
+		$phone_codes = Helper::phoneCodes();	
+        $days   = $booking->checkin->diffInDays($booking->checkout);
 		$stays   = $days == 1 ? "night" : " nights";
         $nights[] = $days;
         $nights[] = $stays;
@@ -54,6 +60,8 @@ class BookingController extends Controller
         $booking_details      = ['days'=>$days, 'from' => $from, 'to' => $to, 'nights' => $nights, 'total' => $total, 'booking_ids' => $ids];
 		return view('book.index', compact('phone_codes','property','bookings','booking_details'));
     }
+
+	
 
     /**
      * Store a newly created resource in storage.
@@ -84,20 +92,23 @@ class BookingController extends Controller
 				$booking = new BookingDetail;
 
 			   $ap = Apartment::find($apartment_id);
-			   $price = optional($ap)->discounted_price ??  optional($ap)->converted_price;
+			   $price = optional($ap)->converted_price;
+			   $sale_price = optional($ap)->discounted_price;
+			   $sp  = $sale_price ?? $price;
 				if (\Cookie::get('booking') !== null) {
 					$token  = \Cookie::get('booking');
 					$result = $booking->updateOrCreate(
 						['apartment_id' => $apartment_id,'token' => $token],
 						[
 							'apartment_id' => $apartment_id,
-							'property_id' => $request->property_id,
-							'user_id' => optional($request->user())->id,
-							'quantity'   => $quantity,
-							'price'      => $price,
-							'total'      => $price * $quantity,
-							'checkin' => $start_date,
-							'checkout' => $end_date,	
+							'property_id'  => $request->property_id,
+							'user_id'      => optional($request->user())->id,
+							'quantity'     => $quantity,
+							'price'        => $price,
+							'sale_price'   => optional($ap)->discounted_price,
+							'total'        => $sp * $quantity,
+							'checkin'      => $start_date,
+							'checkout'     => $end_date,	
 						]
 					);
 				}  else  {
@@ -106,14 +117,15 @@ class BookingController extends Controller
 					session()->put('booking',$value);
 					$cookie = cookie('booking',session()->get('booking'), time() + 86400);
 					$booking->apartment_id   = $ap->id;
-					$booking->quantity   = $quantity;
-					$booking->property_id = $request->property_id;
-					$booking->price      = $price;
-					$booking->total      = $price * $quantity;
-					$booking->user_id      = optional($request->user())->id;
-					$booking->checkin      = $start_date;
-					$booking->checkout      = $end_date;
-					$booking->token =$cookie->getValue();
+					$booking->quantity       = $quantity;
+					$booking->property_id    = $request->property_id;
+					$booking->price          = $price;
+					$booking->sale_price     = optional($ap)->discounted_price;
+					$booking->total          = $sp * $quantity;
+					$booking->user_id        = optional($request->user())->id;
+					$booking->checkin        = $start_date;
+					$booking->checkout       = $end_date;
+					$booking->token          = $cookie->getValue();
 					$booking->save();
 				}
 
@@ -122,7 +134,6 @@ class BookingController extends Controller
 		}
 
 		$cookie = \Cookie::get('booking');
-
 		return response()->json([],200)->withCookie($cookie);
     }
 
@@ -209,6 +220,43 @@ class BookingController extends Controller
 					
 	}
 
+
+
+	public function loadCart(Request $request){
+
+		$carts = Cart::all_items_in_cart();
+		$sub_total =  Cart::sum_items_in_cart();
+		$rate=\Cookie::get('rate');
+        return  CartIndexResource::collection($carts)->additional([
+			'meta' => [
+				'sub_total'=>$sub_total,
+				'currency' => Helper::rate()->symbol ?? optional(optional($this->settings)->currency)->symbol,
+				'currency_code' => Helper::rate()->iso_code3 ?? optional(optional($this->settings)->currency)->iso_code3,
+				'user' => $request->user(),
+				'isAdmin' => null !== $request->user() ? $request->user()->isAdmin() : false 
+			],
+        ]);
+	}
+	
+	public function destroy(Request $request,$bookin_id) { 
+		
+		if($request->ajax()){
+			$booking =  BookingDetail::find($bookin_id);
+			$booking->delete();
+			$bookings = BookingDetail::all_items_in_cart($request->property_id);
+		    $total = BookingDetail::sum_items_in_cart($request->property_id);
+			return  response()->json([
+				'data' => [
+					'bookings'=>$bookings,
+					'total' => $total 
+				],
+			]);
+
+
+
+		    //return $this->loadBooking($request);
+		}
+    }
 
 
     

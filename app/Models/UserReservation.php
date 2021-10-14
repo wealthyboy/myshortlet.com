@@ -13,7 +13,6 @@ class UserReservation extends Model
     protected $dates = ['checkin', 'checkout'];
 
 
-
     public function registered_user()
     {
         return $this->belongsTo(User::class,'user_id');
@@ -25,7 +24,7 @@ class UserReservation extends Model
         return $this->hasMany(Reservation::class);
     }
 
-
+ 
     public function guest_user()
     {
         return $this->belongsTo(User::class,'guest_user_id');

@@ -48,13 +48,7 @@
                <label for="location-city">City</label>
                <select  name="location_id[]" id="location-city" class="form-control">
                   <option value="">Choose...</option>
-                  @foreach($cities as $city)
-                      @if(isset($apartment)   && isset($update)  && $city->id == optional(optional($apartment->cities)->first())->id )
-                        <option value="{{ $city->id }}"  selected>{{ $city->name  }}</option>
-                        @else
-                        <option value="{{ $city->id }}">{{ $city->name  }}</option>
-                     @endif
-                  @endforeach
+                  
                </select>
             </div>
 
@@ -62,13 +56,7 @@
                <label for="location-town">Town</label>
                <select name="location_id[]" id="location-town" class="form-control">
                   <option value="">Choose...</option>
-                     @foreach($streets as $street)
-                         @if(isset($apartment)   && isset($update)  && $street->id == optional(optional($apartment->streets)->first())->id )
-                         <option value="{{ $street->id }}" selected>{{ $street->name  }}</option>
-                        @else
-                        <option value="{{ $street->id }}">{{ $street->name  }}</option>
-                         @endif
-                     @endforeach
+                     
                </select>
             </div>
          </div>

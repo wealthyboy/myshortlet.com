@@ -100,7 +100,7 @@
                                                       </tr>
                                                       <tr>
                                                          <td class="wz" width="30"></td>
-                                                         <td class="RegularTextTD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #000;font-family: sans-serif;font-size: 13px;font-weight: lighter;text-align: left;line-height: 23px;">Dear {{ $user_reservation->user->fullname() }},<br>Your booking has been placed. Your booking details are below.</td>
+                                                         <td class="RegularTextTD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #000;font-family: sans-serif;font-size: 13px;font-weight: lighter;text-align: left;line-height: 23px;">Dear {{ $user_reservation->user->fullname() }},<br>Thank you for choosing The Avenue montaigne for your stay. We are pleased to inform you that your reservation request is CONFIRMED and your reservation details are as follows.</td>
                                                          <td class="wz" width="30"></td>
                                                       </tr>
                                                       <tr>
@@ -146,16 +146,24 @@
                                                          <td colspan="3" style="font-size:0;line-height:0;" height="25">&nbsp;</td>
                                                       </tr>
                                                       <tr>
-                                                         <td class="wz" width="30"></td>
+                                                         <td class="wz" width="900"></td>
                                                          <td valign="top" align="center">
-                                                            <table class="tableTxt" width="252" cellspacing="0" cellpadding="0" border="0" align="left">
+                                                            <table class="tableTxt" width="600" cellspacing="0" cellpadding="0" border="0" align="left">
                                                                
                                                                <tr>
                                                                   <td class="RegularText4TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="SectionInfoLink" data-color="SectionInfoTXT" style="color: #425065;font-family: sans-serif;font-size: 18px;font-weight: bold;text-align: left;line-height: 23px;" width="179" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="SectionInfoLink"></a>Property Address</td>
                                                                </tr>
                                                               
                                                                <tr>
-                                                                  <td colspan="3" class="RegularTextTD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="margin-left: 3px;color: #000;font-family: sans-serif;font-size: 13px;font-weight: lighter;line-height: 23px;"> {{ $user_reservation->property->address }}  <br/>  <div style="font-size: 18px;font-weight: bold;">Check-in - Check-out:</div> {{ $user_reservation->checkin->isoFormat('dddd, MMMM Do YYYY') }} - {{ $user_reservation->checkout->isoFormat('dddd, MMMM Do YYYY') }}  <div style="font-size: 18px;font-weight: bold;">Property Contact:</div>  Email: {{ optional(optional($user_reservation->property)->user)->email }} <br/> Phone number: {{  optional(optional($user_reservation->property)->user)->phone_number }}</td>
+                                                                  <td colspan="3" class="RegularTextTD" data-color="RegularTXT" style="margin-left: 3px;color: #000;font-family: sans-serif;font-size: 13px;font-weight: lighter;line-height: 23px; margin-bottom: 6px;"> {{ $user_reservation->property->address }}  <br/>  
+                                                                  <div style="font-size: 18px;font-weight: bold; margin-bottom: 6px;">Arrival Date:  <span style="font-size: 13px;font-weight: normal;">  {{ optional($user_reservation->checkin)->isoFormat('dddd, MMMM Do YYYY') }}</span></div>
+                                                                  <div style="font-size: 18px;font-weight: bold;  margin-bottom: 6px;">Departure Date:   <span style="font-size: 13px;font-weight: normal;">  {{ optional($user_reservation->checkout)->isoFormat('dddd, MMMM Do YYYY') }}</span></div>
+                                                                  <div style="font-size: 18px;font-weight: bold;  margin-bottom: 6px;">Check-in Time:   <span style="font-size: 13px;font-weight: normal;">  {{ optional($user_reservation->property)->check_in_time }}</span></div>
+                                                                  <div style="font-size: 18px;font-weight: bold;  margin-bottom: 6px;">Check-out Time:   <span style="font-size: 13px;font-weight: normal;">  {{ optional($user_reservation->property)->check_out_time }}</span></div>
+
+                                                                  <div style="font-size: 18px;font-weight: bold;">Property Contact:</div>  
+                                                                  Email: {{ optional(optional($user_reservation->property)->user)->email }} 
+                                                                  <br/> Phone number: {{  optional(optional($user_reservation->property)->user)->phone_number }}</td>
                                                                </tr>
                                                                <tr>
                                                                   <td colspan="3" style="font-size:0;line-height:0;" height="25"></td>
@@ -202,13 +210,11 @@
                                                       <tr>
                                                          <td class="wz" width="30"></td>
                                                          <td valign="top" align="center">
-                                                            <table class="tableTxt" width="145" cellspacing="0" cellpadding="0" border="0" align="left">
+                                                            <table class="tableTxt" width="200" cellspacing="0" cellpadding="0" border="0" align="left">
                                                                <tr>
-                                                                  <td rowspan="2" style="line-height:1px;" width="25" valign="top" align="center">
-                                                                       <!-- <img src="{{ Config('app.url')}}/images/logo/number-icon-20x20.png" style="display:block;" alt="IMG" vspace="0" hspace="0" border="0"> -->
-                                                                  </td> 
-                                                                  <td rowspan="2" style="font-size:0;line-height:0;" width="14">&nbsp;</td>
-                                                                  <td class="header2TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="scl" data-color="SectionCaptionTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;text-align: left;line-height: 19px;font-weight: lighter;" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="scl"></a>Invoice No</td>
+                                                                   
+                                                                  <td rowspan="2" style="font-size:0;line-height:0;" width="31">&nbsp;</td>
+                                                                  <td class="header2TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="scl" data-color="SectionCaptionTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;text-align: left;line-height: 19px;font-weight: lighter;" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="scl"></a>Booking No</td>
                                                                </tr>
                                                                <tr>
                                                                   <td class="RegularText4TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="sil" data-color="SectionInfoTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: bold;text-align: left;line-height: 23px;" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="sil"></a>{{ $user_reservation->invoice }}</td>
@@ -267,7 +273,7 @@
                                                                   <td class="header2TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="scl" data-color="SectionCaptionTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;text-align: left;line-height: 19px;font-weight: lighter;" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="scl"></a>Invoice Total</td>
                                                                </tr>
                                                                <tr>
-                                                                  <td class="RegularText4TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="sil" data-color="SectionInfoTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: bold;text-align: left;line-height: 23px;" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="sil"></a>{{ $user_reservation->currency }}{{  $user_reservation->total }}</td>
+                                                                  <td class="RegularText4TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="sil" data-color="SectionInfoTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: bold;text-align: left;line-height: 23px;" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="sil"></a>{{ $user_reservation->property->currency }}{{  $user_reservation->total }}</td>
                                                                </tr>
                                                                <tr>
                                                                   <td colspan="3" style="font-size:0;line-height:0;" height="25">&nbsp;</td>
@@ -308,48 +314,17 @@
                                              <tr>
                                                
                                                 <th class="stack2" style="margin: 0px; padding: 0px; vertical-align: top; border-bottom: 1px solid rgb(200, 198, 198);" data-border-bottom-color="borderColor" width="209">
-                                                   <table class="table60032" width="209" cellspacing="0" cellpadding="0" border="0" align="center">
+                                                   <table class="table60032" width="600" cellspacing="0" cellpadding="0" border="0" align="center">
                                                      
                                                       <tr>
                                                        
-                                                         <td class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="padding: 4px;color: #ffffff;font-family: sans-serif;font-size: 15px;text-align: center;line-height: 27px;font-weight: bold;"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>Product Name</td>
+                                                         <td class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="padding: 4px;color: #ffffff;font-family: sans-serif;font-size: 15px;text-align: left;line-height: 27px;font-weight: bold;"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>Rooms Details</td>
                                                         
                                                       </tr>
                                                       
                                                    </table>
                                                 </th>
-                                                <th class="stack3" data-border-left-color="borderColor" data-border-bottom-color="borderColor" style="border-left: 1px solid rgb(200, 198, 198); border-bottom: 1px solid rgb(200, 198, 198); margin: 0px; padding: 0px; vertical-align: top;" width="139">
-                                                   <table class="table60033" width="139" cellspacing="0" cellpadding="0" border="0" align="center">
-                                                      
-                                                      <tr>
-                                                        
-                                                         <td class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="color: #ffffff; padding: 4px;font-family: sans-serif;font-size: 15px;text-align: center;line-height: 27px;font-weight: bold;"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>Price</td>
-                                                        
-                                                      </tr>
-                                                   </table>
-                                                </th>
-                                                <th class="stack3" data-border-left-color="borderColor" data-border-bottom-color="borderColor" style="border-left: 1px solid rgb(200, 198, 198); border-bottom: 1px solid rgb(200, 198, 198); margin: 0px; padding: 0px; vertical-align: top;" width="139">
-                                                   <table class="table60033" width="139" cellspacing="0" cellpadding="0" border="0" align="center">
-                                                      
-                                                      <tr>
-                                                        
-                                                         <td class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="padding: 4px;color: #ffffff;font-family: sans-serif;font-size: 15px;text-align: center;line-height: 27px;font-weight: bold;"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>Quantity</td>
-                                                        
-                                                      </tr>
-                                                      
-                                                   </table>
-                                                </th>
-                                                <th class="stack3" data-border-left-color="borderColor" data-border-bottom-color="borderColor" style="border-left: 1px solid rgb(200, 198, 198); border-bottom: 1px solid rgb(200, 198, 198); margin: 0px; padding: 0px; vertical-align: top;" width="139">
-                                                   <table class="table60033" width="139" cellspacing="0" cellpadding="0" border="0" align="center">
-                                                      
-                                                      <tr>
-                                                        
-                                                         <td class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="padding: 4px;color: #ffffff;font-family: sans-serif;font-size: 15px;text-align: center;line-height: 27px;font-weight: bold;"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>Total</td>
-                                                        
-                                                      </tr>
-                                                      
-                                                   </table>
-                                                </th>
+                                                
                                              </tr>
                                           </table>
                                        </td>
@@ -382,90 +357,76 @@
                                              <tr>
 
                                           
-                                                 <th class="stack2" style="margin: 0px; padding: 0px; border-bottom: 1px solid rgb(200, 198, 198);" data-border-bottom-color="borderColor" width="209">
-                                                   <table class="table60032" width="209" cellspacing="0" cellpadding="0" border="0" align="center">
-                                                       <tr>
-                                                          <td class="wz2" height="10" width="30"></td>
-                                                      </tr>
-                                                      
+                                                 <th class="stack2" style="margin: 0px; padding: 0px; border-bottom: 1px solid rgb(200, 198, 198);" data-border-bottom-color="borderColor" width="1000">
+                                                     
+                                                   <table class="action" align="center" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; margin: 30px auto; padding: 0; text-align: center; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%;">
                                                       <tr>
-                                                         <td class="wz2" width="30"></td>
-                                                         <td class="header2TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;text-align: left;line-height: 19px;font-weight: lighter;">
-                                                          <div style="width: 120px;max-height: 160px;overflow: hidden;display: block;" class="">
-                                                             <img style="outline: 0 none;max-width: 100%;" src="{{ $reservation->apartment->images[0]->image }}" /> 
-                                                          </div> 
-                                                          <br/>
-                                                          <div>{{ $reservation->apartment->name ?? $reservation->apartment->property->name }}</div>
-                                                          <div class="">
-                                                               <small href=""
-                                                                  >{{ $reservation->apartment->max_adults + $reservation->apartment->max_children }}
-                                                                  Guests,
-                                                                  {{ $reservation->apartment->no_of_rooms }} bedroom</small
-                                                               >
-                                                         </div>
+                                                         <td align="center" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box;">
+                                                            <table width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box;">
+                                                               <tr>
+                                                                  <th width="50%" align="left" class="container-wrap" valign="top" style="vertical-align: top; width:30%;">
+                                                                     <table width="100%" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+                                                                        <tbody>
+                                                                           <tr>
+                                                                              <td align="right"  class="container-image"><img  class="p-img" src="{{ $reservation->apartment->image_m }}" width="100%" height="auto" alt="locl" style="width: 100%; max-width: 150px; display: block; border: 0px;"></td>
+                                                                           </tr>
+                                                                        </tbody>
+                                                                     </table>
+                                                                  </th>
+                                                                  <th width="50%" align="left" class="container-wrap" valign="top" style="vertical-align: top; width:70%;">
+                                                                     <table width="100%" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+                                                                        <tbody>
+                                                                           <tr>
+                                                                              <td align="left" class="pn" style="padding-left:10px;">
+                                                                                 <table width="260" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:260px;">
+                                                                                    <tbody>
+                                                                                       
+                                                                                       <tr>
+                                                                                          <td class="text"  style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em">
+                                                                                          {{ $reservation->apartment->name ?? $reservation->property->name }}
+                                                                                          </td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                          <td height="9"></td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                          <td  class="text"  data-color="#000000" data-fontsize="13"  data-fontweight="400"  data-letterspacing="0.05" data-lineheight="20"  data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
+                                                                                            {{ $user_reservation->currency }}{{ $reservation->price }} per night X {{ $reservation->quantity }} -   {{ $user_reservation->currency }}{{  $reservation->price *  $reservation->quantity }}
+                                                                                          </td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                          <td height="9"></td>
+                                                                                       </tr>
 
-                                                         
-                                                      </td>
-                                                         <td class="wz2" width="30"></td>
+                                                                                       <tr>
+                                                                                          <td class="text"  style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em">
+                                                                                             Room Extras
+                                                                                          </td>
+                                                                                       </tr>
+
+                                                                                       <tr>
+                                                                                          <td  class="text"  data-color="#000000" data-fontsize="13"  data-fontweight="400"  data-letterspacing="0.05" data-lineheight="20"  data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
+                                                                                              Breakfast 4000  X 2 nights  -  9000
+                                                                                          </td>
+                                                                                       </tr>
+                                                                                    </tbody>
+                                                                                 </table>
+                                                                              </td>
+                                                                           </tr>
+                                                                     </table>
+                                                                  </th>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
                                                       </tr>
-                                                      
-                                                      <tr>
-                                                         <td class="wz2" height="10" width="30"></td>
-                                                      </tr>  
-                                                      
                                                    </table>
                                                 </th>
                                              
-                                                <th class="stack3" data-border-left-color="borderColor" data-border-bottom-color="borderColor" style="border-left: 1px solid rgb(200, 198, 198); border-bottom: 1px solid rgb(200, 198, 198); margin: 0px; padding: 0px;" width="139">
-                                                   <table class="table60033" width="139" cellspacing="0" cellpadding="0" border="0" align="center">
-                                                      <tr>
-                                                         <td class="wz2" height="10" width="30"></td>
-                                                      </tr>
-                                                      <tr>
-                                                        
-                                                         <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>{{ $user_reservation->currency }}{{   $reservation->apartment->price }}</td>
-                                                         
-                                                      </tr>
-                                                      <tr>
-                                                         <td class="wz2" height="10" width="30"></td>
-                                                      </tr>
-                                                   </table>
-                                                </th>
                                                 
-                                                 <th class="stack3" data-border-left-color="borderColor" data-border-bottom-color="borderColor" style="border-left: 1px solid rgb(200, 198, 198); border-bottom: 1px solid rgb(200, 198, 198); margin: 0px; padding: 0px;" width="139">
-                                                   <table class="table60033" width="139" cellspacing="0" cellpadding="0" border="0" align="center">
-                                                      <tr>
-                                                         <td class="wz2" height="10" width="30"></td>
-                                                      </tr>
-                                                      <tr>
-                                                        
-                                                         <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>{{ $reservation->quantity }}</td>
-                                                         
-                                                      </tr>
-                                                      <tr>
-                                                         <td class="wz2" height="10" width="30"></td>
-                                                      </tr>
-                                                   </table>
-                                                </th>
-                                                
-                                                 <th class="stack3" data-border-left-color="borderColor" data-border-bottom-color="borderColor" style="border-left: 1px solid rgb(200, 198, 198); border-bottom: 1px solid rgb(200, 198, 198); margin: 0px; padding: 0px;" width="139">
-                                                   <table class="table60033" width="139" cellspacing="0" cellpadding="0" border="0" align="center">
-                                                      <tr>
-                                                         <td class="wz2" height="10" width="30"></td>
-                                                      </tr>
-                                                      <tr>
-                                                        
-                                                         <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>{{ $user_reservation->currency }}{{ $reservation->apartment->price }}</td>
-                                                         
-                                                      </tr>
-                                                      <tr>
-                                                         <td class="wz2" height="10" width="30"></td>
-                                                      </tr>
-                                                   </table>
-                                                </th>
+                                                 
                                                 
                                               
-                                    
+               
                                              </tr>
                                           </table>
                                        </td>
@@ -560,7 +521,7 @@
                                              </tr> 
                                              <tr>
                                                 <td class="wz2" width="30"><br></td>
-                                                <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>  {{  $user_reservation->coupon ?  $user_reservation->coupon.'  -%'.$user_reservation->voucher()->amount .' off' : '---' }}</td>
+                                                <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>  ---- </td>
                                                 <td class="wz2" width="30"><br></td>
                                              </tr>
                                              <tr>
@@ -636,7 +597,7 @@
                                    
                                     <tr>
                                                                                  			
-                                       <td class="moptd" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="MailingOptionsLink" data-color="MailingOptionsTXT" style="color: rgb(13, 14, 12); font-family: sans-serif; font-size: 12px; text-align: center; line-height: 170%;">All rights Reserved {{ config('app.name') }} </td>
+                                       <td class="moptd" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="MailingOptionsLink" data-color="MailingOptionsTXT" style="color: rgb(13, 14, 12); font-family: sans-serif; font-size: 12px; text-align: center; line-height: 170%;">All rights Reserved name </td>
                                     </tr>
                                     
                                  </table>

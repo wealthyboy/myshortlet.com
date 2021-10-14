@@ -15,6 +15,7 @@
       placeholder="Check in - Check out"
       name="check_in_checkout"
       ref="datePicker"
+      @on-change="dateSelected"
     />
   </div>
 </template>
@@ -22,6 +23,9 @@
 import Pickr from "vue-flatpickr-component";
 
 export default {
+  props: {
+    isDateNeedsToToOpen: Boolean,
+  },
   data() {
     return {
       guests: 0,
@@ -41,15 +45,20 @@ export default {
   components: {
     Pickr,
   },
-  mounted() {
-    // this.bus.$on("showDate", (args) => {
-    //   // do something with args.data
-    //   this.$refs.datePicker.fp.open();
-    // });
+  watch: {
+    isDateNeedsToToOpen: {
+      handler(val, oldVal) {
+        if (val) {
+          console.log(val);
+          this.$refs.datePicker.fp.open();
+        }
+      },
+    },
   },
   methods: {
-    checkForDates() {
-      //this.$refs.datePicker.fp.open();
+    dateSelected() {
+      console.log(this.check_in_checkout);
+      this.$emit("dateSelected", this.check_in_checkout);
     },
   },
 };

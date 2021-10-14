@@ -241,6 +241,38 @@ class Helper{
     }
 
 
+    public static function toAndFromDate($date){
+        $date  = $date ?  explode("to",$date)  : explode("to", "2012-10-21 to 2012-10-23");
+        if ($date) {
+            $date1 = trim($date[0]);
+            $date2 = trim($date[1]);
+            $start_date = Carbon::createFromDate($date1);
+            $end_date = Carbon::createFromDate($date2); 
+            return ['start_date' => $start_date, 'end_date' => $end_date];
+        }
+        return [];
+    }
+
+
+    public static function nights($date = []){
+        if (count($date) > 1) {
+
+            $nights = [];
+            if ($date['start_date'] == Carbon::createFromDate('2012-10-21')){
+                return $nights;
+            }
+
+
+            $start_date = $date['start_date'];
+            $end_date   = $date['end_date'];
+            $days   = $start_date->diffInDays($end_date);
+            $stays   = $days == 1 ? "night" : " nights";
+            $nights[] = $days;
+            $nights[] = $stays;
+            return $nights;
+        }
+        return [];
+    }
 
 
     public static function getPercentageDiscount($percentage_value,$fee){
@@ -260,7 +292,7 @@ class Helper{
 
     public static function phoneCodes(){
 
-      return  $array = [
+        $array = [
             '44' => 'UK (+44)',
             '1' => 'USA (+1)',
             '213' => 'Algeria (+213)',
@@ -476,6 +508,8 @@ class Helper{
             '260' => 'Zambia (+260)',
             '263' => 'Zimbabwe (+263)',
         ];
+
+        return $array;
     }
 
     public static function Countries(){
