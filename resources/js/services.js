@@ -1,10 +1,16 @@
+Window.Popper = require("popper.js").default; // pay attention to "default"
+
 require("./bootstrap");
 import Vue from "vue";
+
 import flatpickr from "flatpickr";
 import validate from "jquery-validation";
+
 window.flexslider = require("flexslider");
+require("owl.carousel");
 
 import store from "./store";
+require("./waypoints.js");
 
 require("./scripts.js");
 
@@ -65,12 +71,40 @@ const app = new Vue({
   },
 });
 
-jQuery(function() {
-  $(".flexslider").flexslider({
-    animation: "slide",
-  });
-});
+(function($) {
+  "use strict";
 
-// f.config.onChange.push(function(selectedDates, dateStr, instance) {
-//   console.log(dateStr);
-// });
+  jQuery(function() {
+    $(".flexslider").flexslider({
+      animation: "slide",
+    });
+
+    $(".home-flexslider").flexslider({
+      animation: "slide",
+    });
+
+    $(".main-slider").owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      dots: true,
+      animateIn: "fadeIn",
+      animateOut: "fadeOut",
+      navText: [
+        '<div class="nav-btn prev-slide"><svg width="31" height="50" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+        '<div class="nav-btn next-slide"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+      ],
+      responsive: {
+        0: {
+          items: 1,
+        },
+        600: {
+          items: 1,
+        },
+        1000: {
+          items: 1,
+        },
+      },
+    });
+  });
+})(jQuery);

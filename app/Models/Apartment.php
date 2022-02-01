@@ -29,7 +29,8 @@ class Apartment extends Model
         'image_tn',
         'guests',
         'display_price',
-        'percentage_off'
+        'percentage_off',
+        
 	];
 
 
@@ -46,7 +47,8 @@ class Apartment extends Model
         'max_children',
         'no_of_rooms',
         'toilets',
-        'type'
+        'type',
+        'price_mode'
     ];
 
 
@@ -87,6 +89,15 @@ class Apartment extends Model
 
     public function extra_services(){
         return $this->belongsToMany(Attribute::class)->where('type','extra services')->wherePivotNotNull('price')->withPivot('price');
+    }
+
+
+    public function facilities(){
+        return $this->belongsToMany(Attribute::class)->where('type','facilities');
+    }
+
+    public function apartment_facilities(){
+        return $this->belongsToMany(Attribute::class)->where('type','apartment facilities');
     }
 
 

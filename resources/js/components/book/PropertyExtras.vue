@@ -1,7 +1,9 @@
 <template>
   <div class=" bg-white mt-2">
-    <div class="p-2">You may be intrested in</div>
-    <div class="card-body">
+    <h4 class="card-title  p-3 border-bottom mb-0">
+      You may be intrested in
+    </h4>
+    <div class="card-body pt-0">
       <div
         class="  bg-transparent d-flex justify-content-between p-0 align-items-center"
       >
@@ -22,7 +24,7 @@
             }}</span>
           </label>
         </div>
-        <span class="fs-32 mt-4 font-weight-bold text-heading total-price"
+        <span class="fs-32 mt-4 bold text-heading total-price"
           >{{ property.currency }}
           {{ extra_service.pivot.price | priceFormat }}</span
         >

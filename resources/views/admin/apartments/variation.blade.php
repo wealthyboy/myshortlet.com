@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <input name="has_more_room"  value="1"   class="" type="hidden">
             <input name="new_room"       value="1"   class="" type="hidden">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group label-floating is-ty">
                     <label class="control-label">Accommodation Type Name</label>
                     <input name="room_name[{{ $counter }}]"  required="true" value="" class="form-control  variation" type="text">
@@ -19,6 +19,20 @@
                 </div>
             </div>
            
+            <div class="col-md-2">
+                <div class="form-group">
+                    <select  name="price_mode[{{ $counter }}]"  id="" required="true" class="form-control">
+                        <option value="">Price Mode</option>
+                        <option value="per night">Per  night</option>
+                        <option value="per week"> Per  week</option>
+                        <option value="per month">Per  month</option>
+                        <option value="per year"> Per  year</option>
+                    </select>
+                </div>
+            </div>
+
+
+
             <div class="col-md-2">
                 <div class="form-group">
                     <select  name="room_quantity[{{ $counter }}]" name="quantity" id="" required="true" class="form-control">
@@ -43,7 +57,7 @@
 
             <div class="col-md-2">
                 <div class="form-group">
-                    <select name="room_toilets[{{ $counter }}]" id="children" class="form-control">
+                    <select required="required" name="room_toilets[{{ $counter }}]" id="children" class="form-control">
                         <option  value="" selected>Choose Toilets</option>
                         @for ($i = 1; $i< 10; $i++) 
                         <option value="{{ $i }}"> {{ $i }}</option>
@@ -94,9 +108,9 @@
                         <div class="mb-2">{{ $parent->name }} </div>
                             @foreach($parent->children as $bedroom)
                             <label for="bedroom-{{ $bedroom->id }}-{{ $counter }}" class="radio-inline">
-                                <input  value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $counter }}" name="{{ $parent->slug }}_{{ $counter }}" type="radio" name="optradio">{{ $bedroom->name }}
+                                <input  class="radio-button" value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}-{{ $counter }}" name="{{ $parent->slug }}_{{ $counter }}" type="radio" name="optradio">{{ $bedroom->name }}
                                 <div class="bed-count form-group">
-                                    <input name="bed_count[{{ $bedroom->id }}]"  placeholder="Number of beds" class="form-control" value="" type="number">
+                                    <input name="bed_count[{{ $counter }}][{{ $bedroom->id }}]"  placeholder="Number of beds" class="form-control" value="" type="number">
                                 </div>
                             </label>
                             @endforeach
@@ -110,7 +124,7 @@
             
             <div class="col-sm-12">
                 <div id="j-drop"  class="j-drop">
-                <input accept="image/*"  required="true"  data-msg="Upload  at least 5 images"  onchange="getFile(this,'room_images[{{ $counter }}][]')" class="upload_input"  multiple="true"   type="file" id="upload_file_input" name="product_image"  />
+                <input accept="image/*"  required="true"  data-msg="Upload  at least 5 images"  onchange="getFile(this,'images[{{ $counter }}][]')" class="upload_input"  multiple="true"   type="file" id="upload_file_input" name="product_image"  />
                     <div   class=" upload-text  {{ $counter }}"> 
                         <a  class="" href="#">
                             <img class="" src="/backend/img/upload_icon.png">
@@ -122,19 +136,56 @@
             </div>
 
         
-            <div class="col-md-12 mt-5 pr-5 kkk">
-               @include('admin.apartments.apartment_fac',['model' => 'apartment','variation' => true])
+            <div class="col-md-12 mt-5 pr-5">
+               @foreach( $apartment_facilities as $apartment_facility )
+                    <div>{{ $apartment_facility->name }}</div>                       
+                    @foreach($apartment_facility->children->sortBy('name') as $child)
+                    <div class="mt-2 mb-2">
+                        <div class="togglebutton">
+                            <label>
+                                <input 
+                                    name="apartment_facilities_id[{{ $counter }}][]"  value="{{ $child->id }}" type="checkbox" 
+                                >
+                                <span class="toggle"></span>
+                            {{ $child->name }}
+                            </label>
+                            @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;'])
+                        </div>
+                    </div>
+                    @endforeach
+                @endforeach
             </div>
 
             <div class="col-md-12 mt-1 pr-5 ">
                 <h4 class="text-capitalize">Room Extras</h4>
-                @include('admin.apartments.extras',[
+                <!-- include('admin.apartments.extras',[
                     'obj' => '', 
                     'name' => 'multiple_apartment_extra_services',
                     'attribute_name' => 'multiple_apartment_extras',
                     'model' => 'apartment',
                     'variation' => true
-                ])
+                ]) -->
+
+
+                @foreach($extras as $child)
+                    <div class="mt-2 mb-2">
+                        <div class="togglebutton d-flex">
+                            <label>
+                            <input 
+                                name="multiple_apartment_extras[{{ $counter }}][]"  
+                                value="{{ $child->id }}" 
+                                type="checkbox" 
+                            >
+                            <span class="toggle"></span>
+                            {{ $child->name }}
+                            </label>
+                            @include('includes.loop',['child'=>$child,'space'=>'&nbsp;&nbsp;','model' => 'Attribute','name' => 'attribute_id'])
+                        </div>
+                        <div class="extras-se  form-group">
+                            <input name="multiple_apartment_extra_services[{{ $counter }}][{{ $child->id }}]"  value="" placeholder="Leave blank if you want it free" class="form-control" type="number">
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
         

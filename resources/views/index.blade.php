@@ -1,135 +1,207 @@
 @extends('layouts.app')
 @section('content')
+@if ($sliders->count())
+<div  class="carousel">
+   
+   <div class="owl-carousel main-slider svg-arrows owl-them">
+      @foreach($sliders as $key =>  $slider)
+      <div class="item">
+         <div class="page-header banner-filter" style="background-image: url('{{ $slider->image }}');">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12 text-center ">
+                     <h1 class="title">Avenue Montaigne</h1>
+                     <p>Luxury Apartments</p>
+                     <div class="mt-2 mb-2">
+                        <a href="#" class="play-video">
+                           <i class="fas fa-play"></i>
+                        </a>
+                     </div>
+                     <br>
+                     <div class="buttons">
+                        <a href="{{ $slider->link }}" class="btn rounded btn-primary btn-lg">
+                           Check Availability 
+                        </a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      @endforeach
+   </div>
+   
+</div>
+@endif
 
-<!-- Carousel Card -->
-<div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
-   <div class="carousel-inner">
-      <div class="carousel-item active">
-         <div class="page-header header-filter" style="background-image: url('https://avenuemontaigne.ng/uploads/CYTb8rEICf4n8z5kJLcPoBH9mxOkYZDIB9NqIzmI.jpg');">
-            <div class="container">
-               <div class="row">
-               </div>
-            </div>
-         </div>
+
+<div class="container-fluid ">
+   <section class="bg-grey">
+      <div class="text-center ">               
+         <h3 class="bold pt-3">Welcome to Avenue Montiagne</h3>
       </div>
-      <div class="carousel-item">
-         <div class="page-header header-filter" style="background-image: url('https://avenuemontaigne.ng/uploads/MfsU4nIKSo0WVog3rBC5tXwPCFtHHczs9l4roB00.jpg');">
-            <div class="container">
-               <div class="row">
-               </div>
-            </div>
-         </div>
-      </div>
-      <div class="carousel-item">
-         <div class="page-header header-filter" style="background-image: url('https://avenuemontaigne.ng/uploads/xeoziKXfykSDUyJVFXzTSkiZ0f5v5vGFnO2fzwP4.jpg');">
-            <div class="container">
-               <div class="row">
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-<!-- End Carousel Card -->
-<div class="search-box">
-   <div class="container">
-      <div class="row">
-         <div class="col-md-12 ml-auto mr-auto">
-            <div class="card card-raised card-form-horizontal">
-               <div class="col-md-8 text-left">
-                  <div class="card-title">Find deals on Apartment homes...</div>
-                  <div>From cosy country homes to funky city flats</div>
-               </div>
-               <div class="card-body ">
-                 <category-search  :reload="1" />
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-<div class="container-fluid mt-3 position-relative">
-   <section class="pt-9 pt-xl-7 pb-6">
-      <div class="">
-         <div class="row">
-            <div class="col-md-6">
-               <h2 class="text-heading">Cool Plus stays</h2>
-               <span class="heading-divider"></span>
-               <p class="mb-6">Where Avm  members are staying and saving</p>
-            </div>
-            <div class="col-md-6 text-md-right">
-               <a href="" class="btn btn-lg text-secondary btn-accent rounded-lg mb-6">See all properties
-               <i class="far fa-long-arrow-right ml-1"></i>
-               </a>
-            </div>
-         </div>
-         <div class="row no-gutters">
-            @foreach( $featureds as $featured)
-            <div class="col-lg-3 col-xl-3 custom-col-5-xl-to-xxl mb-6 pr-1 pl-1" >
-               <div class="card card-profile card-plain mb-3 position-relative">
-                  <a href="/apartment/{{ $featured->slug }}">
-                  <img class="card-img-top" src="{{ optional($featured)->image_m }}" rel="nofollow" alt="Card image cap">
+      <div class="row bg-grey pb-5 pt-3 position-relative">
+         <div id="operator" style="background-image: url('http://myshortlet.test/uploads/GUSAX89nsYHONae8aQOD4HkhhdUqrrS2NIolUNsz.jpg');" class="col-md-8 rounded  card-background-image"></div>
+         <div class="col-md-4 text-center d-flex justify-content-center align-items-center">
+            <div class="bg-panel bg-panel-white p-5">
+               <h3 class=" bold">Welcome to Avenue Montiagne</h3>
+               <p class="mt-4 text-left">
+                  Our apartments in Lagos offer amazing amenities, stylish design, and a perfect location for living the lagos dream. With your choice of spacious, meticulously-designed 1-, 2-, or 3-bedroom apartments, youll be sure to find the ideal fit for your needs and lifestyle. Get ready for apartment living on a whole new level, with two resort-style pools, a luxurious spa, and a state-of-the-art fitness center for your convenience and enjoyment. Get excited about everything that awaits you at Avm, Lagos!
+               </p>
+               <div class="buttons">
+                  <a href="http://myshortlet.test/property/lovely-studio-apartment-at-lekki-agungi-wwifi-716059713" class="btn bold rounded btn-primary btn-lg">
+                     Check Availability 
                   </a>
-                  <div class="fav-icon position-absolute">
-                     @include('_partials.saved',['obj'=> $featured])
-                  </div>
-                  <div class="card-body p-1">
-                     <a href="/property/{{ $featured->slug }}">
-                        <h4 class="card-title">{{ optional($featured)->name }}</h4>
-                        <p class="card-text"></p>
-                     </a>
-                  </div>
                </div>
             </div>
-            @endforeach
          </div>
       </div>
    </section>
-
    
-   <div class="row no-gutters">
-      <div class="col-md-12">
-         <h2>Explore nearby</h2>
-         <p>See the top destinations people are traveling to</p>
+
+   <section data-animated-id="2" class="wprt-section how-we-build pt-5 pb-5 mt-5 mb-5">
+      <div class="row">
+         <div class="col-md-4 col-12">
+            <div class="wprt-icon-box">
+               <div class="icon-wrap bg-primary  d-flex justify-content-center align-items-center  text-center">
+                  <svg
+                     id=""
+                  >
+                     <use xlink:href="#check-icon"></use>
+                  </svg>
+               </div>
+            </div>
+            <div class="content-wrap">
+               <h3 class="dd-title bold text-center">Wired & Ready</h3>
+               <p>
+                  Walk in & flip the switch. All utilities, including 100 mbps WiFi and HD TV, are taken care of.
+               </p>
+            </div>
+         </div>
+         <!-- /.col-md-4 -->
+         <div class="col-md-4 col-12">
+            <div class="wprt-icon-box">
+               <div class="icon-wrap bg-primary   d-flex justify-content-center align-items-center  text-center">
+                  <svg
+                     id=""
+                  >
+                     <use xlink:href="#question-icon"></use>
+                  </svg>
+               </div>
+               
+            </div>
+            <div class="content-wrap">
+               <h3 class="bold text-center">Just Bring Yourself</h3>
+               <p>We offer reliable information to our clients that will aid effective and efficient decision making.</p>
+            </div>
+         </div>
+         <!-- /.col-md-4 -->
+         <div class="col-md-4  col-12">
+            <div class="wprt-icon-box">
+               <div class="icon-wrap bg-primary  d-flex justify-content-center align-items-center  text-center">
+               <svg
+                  id=""
+               >
+                  <use xlink:href="#check-icon"></use>
+               </svg>
+               </div>
+               
+            </div>
+            <div class="content-wrap">
+               <h3 class="dd-title bold text-center text-center">Stylish Comfort</h3>
+               <p>We are professional and flexible to our clients’ dynamic needs.</p>
+            </div>
+         </div>
+
       </div>
-      @if ($cities->count())
-      @foreach($cities as $city)
-      <div class="col-lg-3  pr-1 pl-1" >
-         <div class="card card-profile card-plain position-relative">
-            <a href="/apartments/{{ $city->slug }}">
-            <img class="card-img-top" src="{{ optional($city)->image }}" rel="nofollow" alt="Card image cap">
-            </a>
-            <div class="card-body p-1">
-               <a href="/apartments/{{ $city->slug }}">
-                  <h4 class="card-title">{{ optional($city)->name }}</h4>
-                  <p class="card-text"></p>
-               </a>
+      <!-- /.row -->
+   </section>
+
+
+   <section class="bg-grey mb-1">
+     <div class="row bg-grey position-relative  pb-5 pt-5">
+         <div class="col-md-5  re-order text-center d-flex justify-content-center align-items-center">
+            <div class="bg-panel-white bg-left-panel p-5">
+               <h3 class="mb-4 bold">Relax and enjoy</h3>
+               <p class="mt-4">
+               Throughout your stay, you’ll enjoy a residents-only bar and lounge, a spectacular pool deck with panoramic views, a private screening room, a 24-hour Technogym® fitness center , and indoor parking. The open-air retail plaza features Fred S boutique, lifestyle brand KITH, Tesse restaurant, and Boutellier wine shop.
+
+
+                  <div class="buttons">
+                     <a href="#" class="btn rounded bold btn-primary btn-lg">
+                        Check Availability 
+                     </a>
+                  </div>
+               </p>
+            </div>
+         </div>
+         <div style="background-image: url('http://myshortlet.test/uploads/M0oTm4VwHit8yGVeA6gRTL2gVwu47ioaMU6V1YyM.jpg');" class="col-md-7  rounded  card-background-image"></div>
+      </div>
+   </section>
+
+
+   <section class="bg-grey">
+      <div class="row bg-grey  pb-5 pt-5 position-relative">
+         <div style="background-image: url('http://myshortlet.test/uploads/4b2fVBQMd3OkPvATKDpuIxFK61PbgdcoEvJ3qI4j.jpg');" class="col-md-7 rounded  card-background-image">
+         </div>
+         <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
+            <div class="about-panel  bg-panel-white  bg-panel p-5">
+               <h3 class="mb-4 bold">Luxury & Convenience</h3>
+               <p class="mt-4">
+                  Our apartment is truly a cut above the rest, with spacious walk-in closets, private balcony or patio, central air conditioning, and high-speed internet. We are ideally located in Lagos,  making any commute or relaxing day trip a breeze. 
+               </p>
+
+               <div class="buttons">
+                  <a href="#" class="btn rounded bold btn-primary btn-lg">
+                     Check Availability 
+                  </a>
+               </div>
             </div>
          </div>
       </div>
-      @endforeach
-      @endif
-   </div>
-   <div class="row">
-      <div class="col-md-12">
-         <h2> Top destinations</h2>
-         <p>See the top destinations people are traveling to</p>
-      </div>
-      @if ($states->count())
-      @foreach($states as $state)
-      <div class="col-md-4">
-         <div class="card bg-dark text-white">
-            <a href="/apartments/{{ $state->slug }}">
-               <img class="card-img" src="{{ $state->image }}" rel="nofollow" alt="Card image">
-               <div class="card-img-overlay">
-                  <h4 class="card-title">{{ $state->name }} properties</h4>
+   </section>
+   <section  class="explore-cities mb-3">
+      <div class="row">
+
+         <div class="col-12 text-center mt-3">
+            <h1 class="bold">Photo Gallery</h1>
+            <p>Live Your Lifestyle In Comfort</p>
+         </div>
+         
+         <div class="col-md-12 pt-5 pb-4">
+            <div class="owl-carousel svg-arrows owl-them">
+               @foreach($global_property->images  as $key => $image)
+               <div class="item position-relative ">
+                  <a href="#">
+                     <img src="{{ $image->image }}" alt="" class="img-raised  ">
+                  </a>
+                  <div class="position-absolute  bottom-0 location-name">
+                     <a href="#">
+                       <h4 class="text-white  ml-3 bold">{{ $image->name }}</h4>
+                     </a>
+                  </div>
                </div>
-            </a>
+               @endforeach
+            </div>
          </div>
       </div>
-      @endforeach
-      @endif
-   </div>
+   </section>
+   <section class="bg-single-image-02  mt-3 bg-accent pt-5 pb-5" data-animated-id="3">
+      <div class="row bg-gray">
+        <div class="col-md-12 mb-3">
+            <h2 class="text-center  bold text-uppercase">For more information about our services</h2>
+            <p class="subtitle text-center text-size-1-big bold">  
+               <span class="text-gold"> Get in touch</span> with our expert consultants
+            </p>
+         </div>
+         
+         <div class="col-lg-12 col-sm-5 text-center mt-sm-0 mt-8 " data-animate="fadeInRight">
+            <i class="fal fa-phone fa-2x text-primary"></i>
+            <p class="text-uppercase text-size-1-big   mt-3">Call for help now!</p>
+            <p class="text-size-2-big text-secondary text-gold bold mt-3">{{ $system_settings->store_phone }}</p>
+         </div>
+      </div>
+   </section>
    <div class="clearfix"></div>
    @if ($posts->count()) 
    <div class="row">
@@ -156,11 +228,50 @@
    </div>
    @endif
 </div>
-@include('_partials.svg')
-
-
-
-
 @endsection
-@section('page-scripts')
+@section('inline-scripts')
+
+
+   
+$('.owl-carousel').owlCarousel({
+   loop:true,
+   margin:10,
+   nav:true,
+   dots: true,
+   center: true,
+   navText: [
+        '<div class="nav-btn prev-slide"><svg width="31" height="50" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+        '<div class="nav-btn next-slide"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+   ],
+   responsive:{
+      0:{
+         items:1
+      },
+      600:{
+         items:1
+      },
+      1000:{
+        items:1
+      }
+   }
+})
+
+
+$(".cities-carousel").owlCarousel({
+   margin: 1,
+   nav: false,
+   dots: true,
+   responsive: {
+      0: {
+         items: 1,
+      },
+      600: {
+         items: 3,
+      },
+      1000: {
+         items: 1,
+      },
+   }
+   
+})
 @stop

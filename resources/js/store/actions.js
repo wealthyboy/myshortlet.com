@@ -47,6 +47,7 @@ export const getProperties = ({ commit }, url) => {
     .get(url)
     .then((response) => {
       commit("setProperties", response.data.data);
+      commit("setMeta", response.data.meta);
       commit("setAttributes", response.data.attributes);
       commit("setLinks", response.data.links);
       commit("setNextPageUrl", response.data.links.next);
@@ -233,7 +234,7 @@ export const registerGuest = ({ dispatch, commit }, { form }) => {
 
 export const deleteBooking = (
   { commit },
-  { booking_id, property_id, amount }
+  { context, booking_id, property_id, amount }
 ) => {
   axios
     .post("delete/" + booking_id, {
@@ -242,6 +243,10 @@ export const deleteBooking = (
     .then((response) => {
       let total = parseInt(response.data.data.total);
       let t = parseInt(amount) + total;
+
+      context.amount = t;
+
+      console.log(context.amount);
 
       commit("setBookingSubTotal", total);
       commit("setBookings", response.data.data.bookings);

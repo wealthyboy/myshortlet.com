@@ -6,26 +6,32 @@
    @include('_partials.header_styles')
    <body>
       <div id="app"  class="app">
-         <nav class="navbar navbar-color-on-scroll fixed-top navbar-expand-lg navbar-transparent" color-on-scroll="100" id="sectionsNav">
+         <nav class="navbar    fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
             @include('_partials.header')
          </nav>
-         <div class="main  index-page">
+         <div  id="content" class="main  index-page">
             @yield('content')
          </div>
          @include('_partials.footer')
 
-      </footer>
+         </footer>
       </div>
 
    
 
       @include('_partials.modal')
 
+      <div class="check-availablity pt-3">
+         <a class="" target="_blank" href="">Check Availability  </a>
+      </div>
 
-       
+      <div class="watsapp pt-3">
+         <a class="chat-on-watsapp" target="_blank" href="https://wa.me/{{ $system_settings->store_phone }}">
+         Need help? Chat with us  <i class="fab fa-whatsapp fa-2x float-right mr-2"></i></a>
+      </div>
 
-      <script src="/js/popper.min.js" type="text/javascript"></script>
-      <script src="/js/services_js.js"></script>
+      <script src="/js/services_js.js" ></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
 
       @yield('page-scripts')    
       <script type="text/javascript">
@@ -35,4 +41,8 @@
    </body>
 
 </html>
+
+
+
+
 

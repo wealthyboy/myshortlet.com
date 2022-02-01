@@ -80,6 +80,8 @@
                     </div>
 
 
+
+
                          <div class="row">
                             <div class="">
                                 <div id="m_image"  class="uploadloaded_image text-center mb-3">
@@ -103,6 +105,16 @@
                                 </div>
                             </div>
                         </div>
+
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <div class="form-group ">
+                           <label class="control-label"> </label>
+                           <textarea name="description" 
+                           id="description" class="form-control"  rows="7">{{  $banner->description  }}</textarea>
+                        </div>
+                     </div>
                   
                
                      <!-- /.box-body -->

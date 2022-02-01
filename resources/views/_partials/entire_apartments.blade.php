@@ -1,4 +1,4 @@
-<div> Entire apartment </div>
+<div class="bold mb-2"> Entire apartment </div>
 <div class="d-flex justify-content-between flex-wrap">
     <div class="position-relative">
         <span class="position-absolute svg-icon-section">

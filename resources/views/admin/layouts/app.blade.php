@@ -117,10 +117,12 @@
                     <ul class="nav">
                         <li class="{{ $helper->active_link(['apartments']) }} ">
                            <a href="{{ route('admin.properties.index') }}">
-                                <span class="sidebar-mini"> R </span>
+                                <span class="sidebar-mini"> A </span>
                                 <span class="sidebar-normal"> Properties </span>
                             </a>
                         </li>
+
+
 
                         <li class="{{ $helper->active_link(['attributes']) }} ">
                             <a  href="{{ route('attributes.index') }}">

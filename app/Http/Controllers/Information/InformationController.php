@@ -24,6 +24,8 @@ class InformationController extends Controller
     }
 	
 	public function  index(Request $request)  {
+
+
 		$pages = Information::where('blog',false)->get(); 
 	    return view('admin.information.index',compact('pages'));
 	}
@@ -105,10 +107,12 @@ class InformationController extends Controller
 
 
 	public function  show(Request $request,Information $information)  
-	{
+	{   
 		$page_title = $information->name;
 		return view('pages.index',compact('information','page_title'));
 	}
+
+
 
 	public function  destroy(Request $request,$id)  
 	{

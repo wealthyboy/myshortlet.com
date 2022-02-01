@@ -3,7 +3,7 @@
     v-if="properties.length"
     class="col-12 d-flex  mb-3 justify-content-between"
   >
-    <div>{{ properties.total }} properties found</div>
+    <div class="bold text-gray">{{ meta.total }} properties found</div>
     <div class="d-flex justify-content-md-end align-items-center">
       <div class="input-group border rounded  w-auto bg-white mr-3">
         <label
@@ -33,6 +33,7 @@ export default {
   computed: {
     ...mapGetters({
       properties: "properties",
+      meta: "meta",
     }),
   },
   methods: {

@@ -273,7 +273,7 @@
                                                                   <td class="header2TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="scl" data-color="SectionCaptionTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;text-align: left;line-height: 19px;font-weight: lighter;" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="scl"></a>Invoice Total</td>
                                                                </tr>
                                                                <tr>
-                                                                  <td class="RegularText4TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="sil" data-color="SectionInfoTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: bold;text-align: left;line-height: 23px;" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="sil"></a>{{ $user_reservation->property->currency }}{{  $user_reservation->total }}</td>
+                                                                  <td class="RegularText4TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="sil" data-color="SectionInfoTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: bold;text-align: left;line-height: 23px;" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="sil"></a>{{ $user_reservation->property->currency }}{{  number_format($user_reservation->total) }}</td>
                                                                </tr>
                                                                <tr>
                                                                   <td colspan="3" style="font-size:0;line-height:0;" height="25">&nbsp;</td>
@@ -317,9 +317,7 @@
                                                    <table class="table60032" width="600" cellspacing="0" cellpadding="0" border="0" align="center">
                                                      
                                                       <tr>
-                                                       
                                                          <td class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="padding: 4px;color: #ffffff;font-family: sans-serif;font-size: 15px;text-align: left;line-height: 27px;font-weight: bold;"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>Rooms Details</td>
-                                                        
                                                       </tr>
                                                       
                                                    </table>
@@ -397,18 +395,24 @@
                                                                                        <tr>
                                                                                           <td height="9"></td>
                                                                                        </tr>
+                                                                                       @if($reservation->extras->count())
 
-                                                                                       <tr>
-                                                                                          <td class="text"  style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em">
-                                                                                             Room Extras
-                                                                                          </td>
-                                                                                       </tr>
-
-                                                                                       <tr>
-                                                                                          <td  class="text"  data-color="#000000" data-fontsize="13"  data-fontweight="400"  data-letterspacing="0.05" data-lineheight="20"  data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
-                                                                                              Breakfast 4000  X 2 nights  -  9000
-                                                                                          </td>
-                                                                                       </tr>
+                                                                                             <tr>
+                                                                                                <td class="text"  style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em">
+                                                                                                   Room Services
+                                                                                                </td>
+                                                                                             </tr>
+                                                                                             <tr>
+                                                                                                <td height="9"></td>
+                                                                                             </tr>
+                                                                                             @foreach($reservation->extras as $extra)
+                                                                                                <tr>
+                                                                                                   <td  class="text"  data-color="#000000" data-fontsize="13"  data-fontweight="400"  data-letterspacing="0.05" data-lineheight="20"  data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
+                                                                                                      {{ $extra->attribute->name }}  {{ $user_reservation->currency }}{{ $extra->price }}  X {{ $extra->quantity }} night(s)  -  {{ $user_reservation->currency }}{{ $extra->quantity * $extra->price}}
+                                                                                                   </td>
+                                                                                                </tr>
+                                                                                             @endforeach
+                                                                                       @endif
                                                                                     </tbody>
                                                                                  </table>
                                                                               </td>
@@ -443,7 +447,99 @@
       </table>
       
       <?php  } ?>
-      <table data-bgcolor="tbc" style="table-layout: fixed; margin: 0px auto; background-color: rgb(234, 235, 235);" data-module="FinalCalculationsModule-4ROWS" data-thumb="http://www.emailtemplatebuilders.com/INVOICE-Generator/03_TBThumbnails/module-8.jpg" class="" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#384855" align="center">
+      @if($user_reservation->extras->count())
+
+      <table data-bgcolor="tbc" style="table-layout: fixed; margin: 0px auto; background-color: rgb(234, 235, 235);" data-module="InvoiceItemDetailsModule"  class="" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#384855" align="center">
+         <tr>
+            <td align="center">
+               <table data-bgcolor="tbc" class="table600Min" style="table-layout: fixed; margin: 0px auto; min-width: 668px; background-color: rgb(234, 235, 235);" width="668" cellspacing="0" cellpadding="0" border="0" bgcolor="#384855" align="center">
+                  <tr>
+                     <td class="table600st" style="min-width:668px;" align="center">
+                        <table class="table600Min" style="min-width:629px;" width="629" cellspacing="0" cellpadding="0" border="0" align="center">
+                           <tr>
+                              <td class="table600st" style="min-width:629px;">
+                                 <table data-bgcolor="CalculationsBGColor" class="table600" width="629" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" align="left">
+                                    <tr>
+                                       <td align="left">
+                                          <table cellspacing="0" cellpadding="0" border="0" align="center">
+                                             <tr>
+
+                  
+                                                 <th class="stack2" style="margin: 0px; padding: 0px; border-bottom: 1px solid rgb(200, 198, 198);" data-border-bottom-color="borderColor" width="1000">
+                                                     
+                                                   <table class="action" align="center" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; margin: 30px auto; padding: 0; text-align: center; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%;">
+                                                      <tr>
+                                                         <td align="center" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box;">
+                                                            <table width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box;">
+                                                               <tr>
+                                                                  
+                                                                  <th width="50%" align="left" class="container-wrap" valign="top" style="vertical-align: top; width:70%;">
+                                                                     <table width="100%" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+                                                                        <tbody>
+                                                                           <tr>
+                                                                              <td align="left" class="pn" style="padding-left:10px;">
+                                                                                 <table width="260" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:260px;">
+                                                                                    <tbody>
+                                                   
+                                                                                       
+
+
+
+                                                                                             <tr>
+                                                                                                <td class="text"  style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em">
+                                                                                                Extras
+                                                                                                </td>
+                                                                                             </tr>
+                                                                                             <tr>
+                                                                                                <td height="9"></td>
+                                                                                             </tr>
+                                                                                             @foreach($user_reservation->extras as $extra)
+                                                                                                <tr>
+                                                                                                   <td  class="text"  data-color="#000000" data-fontsize="13"  data-fontweight="400"  data-letterspacing="0.05" data-lineheight="20"  data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
+                                                                                                      {{ $extra->attribute->name }}  {{ $user_reservation->currency }}{{ $extra->price }}     -  {{ $user_reservation->currency }}{{  $extra->price }}
+                                                                                                   </td>
+                                                                                                </tr>
+                                                                                             @endforeach
+
+
+                                                                                    </tbody>
+                                                                                 </table>
+                                                                              </td>
+                                                                           </tr>
+                                                                     </table>
+                                                                  </th>
+                                                               </tr>
+                                                            </table>
+                                                         </td>
+                                                      </tr>
+                                                   </table>
+                                                </th>
+                                             
+                                                
+                                                 
+                                                
+                                              
+               
+                                             </tr>
+                                          </table>
+                                       </td>
+                                    </tr>
+                                 </table>
+                              </td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+      </table>
+
+      @endif
+
+
+
+      <table data-bgcolor="tbc" style="table-layout: fixed; margin: 0px auto; background-color: rgb(234, 235, 235);" data-module="FinalCalculationsModule-4ROWS"  class="" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#384855" align="center">
          <tr>
             <td align="center">
                <table data-bgcolor="tbc" class="table600Min" style="table-layout: fixed; margin: 0px auto; min-width: 668px; background-color: rgb(234, 235, 235);" width="668" cellspacing="0" cellpadding="0" border="0" bgcolor="#384855" align="center">
@@ -489,7 +585,7 @@
                                              </tr> 
                                              <tr>
                                                 <td class="wz2" width="30"><br></td>
-                                                <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>{{ $user_reservation->currency }}{{  $user_reservation->total   }}</td>
+                                                <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>{{ $user_reservation->currency }}{{  number_format($user_reservation->total)   }}</td>
                                                 <td class="wz2" width="30"><br></td>
                                              </tr>
                                              <tr>
@@ -555,7 +651,7 @@
                                              </tr> 
                                              <tr>
                                                 <td class="wz2" width="30"><br></td>
-                                                <td data-bgcolor="ThemeColorBG" class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="color: rgb(255, 255, 255); font-family: sans-serif; font-size: 15px; text-align: center; line-height: 27px; font-weight: bold; background-color:#342c27;" bgcolor="#67bffd"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>{{ $user_reservation->currency }}{{  $user_reservation->total }}</td>
+                                                <td data-bgcolor="ThemeColorBG" class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="color: rgb(255, 255, 255); font-family: sans-serif; font-size: 15px; text-align: center; line-height: 27px; font-weight: bold; background-color:#342c27;" bgcolor="#67bffd"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>{{ $user_reservation->currency }}{{  number_format($user_reservation->total) }}</td>
                                                 <td class="wz2" width="30"><br></td>
                                              </tr>
                                              <tr>

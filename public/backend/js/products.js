@@ -114,6 +114,15 @@ jQuery(function() {
     });
   });
 
+  $(document).on("click", ".radio-button", function() {
+    //console.log(true);
+    let self = $(this);
+    let p = self.parent().parent();
+    console.log(p);
+
+    p.find(".bed-qty").val("");
+  });
+
   $('[data-toggle="collapse"]').on("click", function(e) {
     console.log(true);
   });

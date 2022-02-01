@@ -19,6 +19,7 @@ use App\Mail\ReservationReceipt;
 use App\Models\SystemSetting;
 use App\Models\BookingDetail;
 use App\Models\Extra;
+use App\Models\ApartmentAttribute;
 
 
 
@@ -37,21 +38,99 @@ class WebHookController extends Controller
 
     public function payment(Request $request)
     {   
+        
         // if ( !array_key_exists('x-paystack-signature', $_SERVER) ) {
         //     return;
         // } 
 
+        $input    =  $request->data['metadata']['custom_fields'][0];
+
+
         \Log::info($request->all());
 
+        if ( isset($input['type'])  && $input['type'] == 'fashion') {
+            try {
+                $input    =  $request->data['metadata']['custom_fields'][0];
+                $user     =  User::findOrFail($input['customer_id']);
+                $carts    =  Cart::find($input['cart']);
+                $currency =  Currency::where('iso_code3',$request->data['currency'])->first();
+                $order->user_id = $user->id;
+                $order->address_id     =  optional($user->active_address)->id;
+                $order->coupon         =  $input['coupon'];
+                $order->status         = 'Processing';
+                $order->shipping_id    =  $input['shipping_id'];
+                $order->shipping_price =  optional(Shipping::find($input['shipping_id']))->converted_price;
+                $order->currency       =  optional($currency)->symbol ?? '₦';
+                $order->invoice        =  "INV-".date('Y')."-".rand(10000,39999);
+                $order->payment_type   =  $request->data['authorization']['channel'];
+                $order->type   =  $input['type'];
+                $order->delivery_note   =  $input['delivery_note'];
+                $order->total          =  $input['total'];
+                $order->ip             =  $request->data['ip_address'];
+                $order->save();
+    
+                foreach ( $carts   as $cart){
+                    $insert = [
+                        'order_id'=>$order->id,
+                        'product_variation_id'=>$cart->product_variation_id,
+                        'quantity'=>$cart->quantity,
+                        'status'=>"Processing",
+                        'price'=>$cart->ConvertCurrencyRate($cart->price),
+                        'total'=>$cart->ConvertCurrencyRate($cart->quantity * $cart->price),
+                        'created_at'=>\Carbon\Carbon::now()
+                    ];
+                    OrderedProduct::Insert($insert);
+                    $product_variation = ProductVariation::find($cart->product_variation_id);
+                    $qty  = $product_variation->quantity - $cart->quantity;
+                    $product_variation->quantity =  $qty < 1 ? 0 : $qty;
+                    $product_variation->save();
+                    //Delete all the cart
+                    $cart->remember_token = null;
+                    $cart->status = 'paid';
+                    $cart->save();
+                }
+                $admin_emails = explode(',',$this->settings->alert_email);
+                $symbol = optional($currency)->symbol  ;
+                
+                try {
+                    $when = now()->addMinutes(5); 
+                    
+                    \Mail::to($user->email)
+                    ->bcc($admin_emails[0])
+                    ->send(new OrderReceipt($order,$this->settings,$symbol));
+                } catch (\Throwable $th) {
+                    Log::error("Mail error :". $th);
+                }
+    
+                //delete cart
+                if ( $input['coupon'] ) {
+                    $code = trim($input['coupon']);
+                    $coupon =  Voucher::where('code', $input['coupon'])->first();
+                    if(null !== $coupon && $coupon->type == 'specific'){
+                        $coupon->update(['valid'=>false]);
+                    }
+                }
+            } catch (\Throwable $th) {
+                Log::info("Custom error :".$th);
+    
+            }
+        }
+        
 
 
-        $user_reservation = new UserReservation;
-        $guest = new GuestUser;
-        $guest->name      =  $request->booking['first_name'];
-        $guest->last_name        =  $request->booking['last_name'];
-        $guest->email   =  $request->booking['email'];
-        $guest->phone_number    = $request->booking['phone_number'];
-        $guest->save();
+        try {
+            $input    =  $request->data['metadata']['custom_fields'][0];
+            $user_reservation = new UserReservation;
+            $guest = new GuestUser;
+            $guest->name   =  $input['booking']['first_name'];
+            $guest->last_name        =  $input['booking']['last_name'];
+            $guest->email   =  $input['booking']['email'];
+            $guest->phone_number    = $input['booking']['phone_number'];
+            $guest->save();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
 
         $bookings = BookingDetail::find($request->booking['booking_ids']);
 
@@ -69,6 +148,25 @@ class WebHookController extends Controller
         $user_reservation->ip             =  $request->ip();
         $user_reservation->save();
 
+        $e_services = [];
+
+        $services = $request->booking['services'];
+        $property_extras = $request->booking['property_services'];
+        $e_services = [];
+        $aq = [];
+        $services = $request->booking['services'];
+        $property_extras = $request->booking['property_services'];
+
+        foreach($services as $key => $room_serices) {
+            foreach($room_serices as $key => $room_serice) {
+                foreach($room_serice as $attribute_id => $qty) {
+                    $aq[$attribute_id] = $qty;
+                    $e_services[$key] = $aq;
+                } 
+            }
+        }
+
+
         foreach ( $bookings   as  $booking ){
             $reservation = new Reservation;
             $reservation->quantity       =  $booking->quantity;
@@ -80,34 +178,41 @@ class WebHookController extends Controller
             $reservation->checkin        =  $booking->checkin;
             $reservation->checkout       =  $booking->checkout;
             $reservation->save();
+            foreach($e_services as $key => $attributes) {
+                foreach($attributes as $attribute_id => $qty) {
+                    $extras = new Extra;
+                    if ($booking->apartment_id == $key){
+                        $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
+                        $extras->apartment_id  = $key;
+                        $extras->property_id   = $request->property_id;
+                        $extras->quantity      = $qty;
+                        $extras->user_id       = optional($request->user())->id;
+                        $extras->reservation_id  = $reservation->id;
+                        $extras->price           = $attribute->converted_price;
+                        $extras->guest_user_id   = $guest->id;
+                        $extras->attribute_id    = $attribute_id;
+                        $extras->save();
+                    }
+
+                }
+                
+            } 
         }
 
-        $services = $request->booking['services'];
-        $property_extras = $request->booking['property_services'];
 
 
-        foreach($services as $key => $service) {
-            foreach($service as $k => $services) {
-                foreach($services as $attribute_id => $qty) {
-                    $extras = new Extra;
-                    $extras->apartment_id  = $k;
-                    $extras->property_id   = $request->property_id;
-                    $extras->quantity      = $qty;
-                    $extras->user_id       = optional($request->user())->id;
-                    $extras->guest_user_id = $guest->id;
-                    $extras->attribute_id  = $attribute_id;
-                    $extras->save();
-                }
-            }
-        } 
+        
 
 
         foreach($property_extras as $attribute_id ) {
+            $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
             $extras = new Extra;
-            $extras->property_id   = $request->property_id;
-            $extras->user_id       = optional($request->user())->id;
-            $extras->guest_user_id = $guest->id;
-            $extras->attribute_id  = $attribute_id;
+            $extras->property_id     = $request->property_id;
+            $extras->user_id         = optional($request->user())->id;
+            $extras->guest_user_id   = $guest->id;
+            $extras->attribute_id    = $attribute_id;
+            $extras->user_reservation_id  = $user_reservation->id;
+            $extras->price                = $attribute->converted_price;
             $extras->save();
         }
         
@@ -215,7 +320,7 @@ class WebHookController extends Controller
 
     public function gitHub()
     {
-        $output =  shell_exec('sh /home/forge/myshortlet.com/deploy.sh');
+        $output =  shell_exec('sh /home/forge/royalbnbproperties.com/deploy.sh');
         echo "Successfull";
         Log::info($output);
     }

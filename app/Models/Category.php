@@ -23,29 +23,27 @@ class Category extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
 
-    public function products()
+    public function properties()
     {
-        return $this->belongsToMany(Product::class)->where('allow',1);
+        return $this->belongsToMany(Property::class)->where('allow',1);
+    }
+
+    public function locations()
+    {
+        return $this->belongsToMany(Location::class);
+    }
+
+
+    public function states()
+    {
+        return $this->belongsToMany(Location::class)->where('location_type','state');
     }
 
 
     public function link()
     {
-        return "/products";
+        return "/property";
     }
-
-
-    public function product_variations()
-    {
-        return $this->belongsToMany(ProductVariation::class);
-    }
-
-
-    public function product_variants()
-    {
-        return $this->belongsToMany(ProductVariation::class)->whereNotNull('name');
-    }
-
 
     
     public function parent()
@@ -78,38 +76,11 @@ class Category extends Model
     }
 
 
-    // public function attribute_childrens()
-    // {
-    //     return $this->belongsToMany(AttributeCategoryChildren::class,'attribute_category_childrens')
-    //                 ->withPivot('id');
-    //     return $this->belongsToMany(AttributeCategoryChildren::class, 'attribute_category_childrens', 'user_id', 'role_id');
-    // }
-
 
     public function attribute_parents()
     {
         return $this->hasMany(AttributeCategory::class)->whereNull('parent_id');
     }
-
-
-    public function parent_attributes()
-    {
-        return $this->belongsToMany(Attribute::class)
-                    ->wherePivot('parent_id',null)
-                    ->withPivot('id');
-    }
-
-
-    public function check($collections,$id)
-    {
-        foreach($collections as $collection){
-            if(null !== $collection->id && $collection->id == $id ){
-                return $collection->id;
-            }
-        }
-        return false;
-    }
-
 
 
     public function getRouteKeyName(){

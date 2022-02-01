@@ -148,13 +148,13 @@ class ApartmentsController extends Controller
         $property_is_not_available = null;
         $data = [];
         $attributes = null;
-        $data['location']     =  $request->going_to;
+        $data['location']     =  'lagos';
         $data['max_children'] = $request->children ?? 1;
         $data['max_adults']   = $request->adults ?? 1;
         $data['rooms'] = $request->rooms ?? 1;
-        $cities        = Property::where('location_full_name','like','%' .$data['location']. '%')->get();
+        $cities     = Property::where('location_full_name','like','%' .$data['location']. '%')->get();
         $properties = null;
-        $location = null;
+        $location   = null;
 
         //return $data;
 
@@ -188,7 +188,9 @@ class ApartmentsController extends Controller
                     ->whereDate('reservations.checkout', '>=', $end_date);
             })
             
-            ->filter($request,  $this->getFilters($attributes))->latest()->paginate(5);
+            ->filter($request,  $this->getFilters($attributes))
+            ->groupBy('properties.id')
+            ->latest()->paginate(5);
             $properties->appends(request()->all());
             if( $request->ajax() ) { 
                 return  PropertyLists::collection(
@@ -244,11 +246,14 @@ class ApartmentsController extends Controller
         $sub_total = null;
         $ids = $property->apartments->pluck('id')->toArray();
         $areas= $property->areas; 
+        $restaurants= $property->restaurants; 
+
         $safety_practices = $property->safety_practicies;
         $amenities = $property->apartment_facilities->groupBy('parent.name');
         $property_type = $property->type == 'single' ?  $property->single_room : $property->multiple_rooms[0];
         $bedrooms = $property_type->bedrooms->groupBy('parent.name');
         $days = 0;
+
         
         $date = Helper::toAndFromDate($request->check_in_checkout);
         $data['max_children'] = $request->children ?? 0;
@@ -266,8 +271,10 @@ class ApartmentsController extends Controller
                 $join->on('apartments.id', '=', 'reservations.apartment_id')
                     ->whereDate('reservations.checkin', '<=', $start_date)
                     ->whereDate('reservations.checkout', '>=', $end_date);
-            })->get();
-        $apartments->load('images','free_services','bedrooms', 'bedrooms.parent', 'property');
+            })                
+            ->groupBy('apartments.id')
+            ->get();
+        $apartments->load('images','free_services','bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities','apartment_facilities.parent');
         $saved =  $this->saved();
         $date = $request->check_in_checkout;
         return view('apartments.show',
@@ -284,6 +291,7 @@ class ApartmentsController extends Controller
                     'safety_practices',
                     'amenities',
                     'bedrooms',
+                    'restaurants'
                 ));
     }
    

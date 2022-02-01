@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="bg-white ">
-      <div class="card-title border-bottom p-3">Your Booking Details</div>
+      <div class="card-title border-bottom p-3 text-size-1-big">
+        Your Booking Details
+      </div>
       <div>
         <ul class="list-unstyled mb-2 p-3">
           <li class="d-flex justify-content-between  mb-3 lh-22">
@@ -26,7 +28,9 @@
       </div>
     </div>
     <div class="bg-white mt-2">
-      <div class="card-title border-bottom p-3">Price Details</div>
+      <div class="card-title border-bottom p-3 text-size-1-big">
+        Price Details
+      </div>
 
       <div
         v-for="booking in bookings"
@@ -39,13 +43,15 @@
               {{ booking.quantity }} X
               {{ booking.apartment.name || property.name }}
             </div>
-            <span>
+            <span class="bold">
               <del>{{ booking.currency }}{{ booking.price | priceFormat }}</del>
-              {{ booking.currency
-              }}{{ booking.sale_price | priceFormat }} </span
-            ><span> per night</span>
+              {{ booking.currency }}{{ booking.sale_price | priceFormat }}
+            </span>
           </div>
-          <div>{{ property.currency }}{{ booking.total | priceFormat }}</div>
+          <span class="text-size-2"> per night</span>
+          <div class="bold">
+            {{ property.currency }}{{ booking.total | priceFormat }}
+          </div>
         </template>
         <template v-else>
           <div>
@@ -53,10 +59,14 @@
               {{ booking.quantity }} X
               {{ booking.apartment.name || property.name }}
             </div>
-            <span>{{ booking.currency }}{{ booking.price | priceFormat }}</span
-            ><span> per night</span>
+            <div class="bold">
+              {{ property.currency }}{{ booking.price | priceFormat }}
+              <div class="text-size-2">per night</div>
+            </div>
           </div>
-          <div>{{ property.currency }}{{ booking.total | priceFormat }}</div>
+          <div class="bold">
+            {{ property.currency }}{{ booking.total | priceFormat }}
+          </div>
         </template>
       </div>
       <div
@@ -65,7 +75,7 @@
         <p class="text-heading mb-0">
           Sub Total
         </p>
-        <span class="fs-32 font-weight-bold text-heading total-price"
+        <span class=" text-heading total-price bold"
           >{{ property.currency }}{{ parseInt(sub_total) | priceFormat }}</span
         >
       </div>
@@ -73,15 +83,19 @@
       <div
         class="card-footer p-3  bg-transparent d-flex justify-content-between p-0 align-items-center"
       >
-        <p class="text-heading mb-0">Total Price:</p>
+        <p class="text-heading bold mb-0">
+          Total Price:
+        </p>
         <span
           :data-total="
-            amount + bookingPropertyServicesTotal + bookingServicesTotal
+            bookingTotal + bookingPropertyServicesTotal + bookingServicesTotal
           "
-          class="fs-32 font-weight-bold text-heading total-price"
+          class=" bold text-heading total-price price"
           >{{ property.currency
           }}{{
-            (amount + bookingPropertyServicesTotal + bookingServicesTotal)
+            (bookingTotal +
+              bookingPropertyServicesTotal +
+              bookingServicesTotal)
               | priceFormat
           }}</span
         >

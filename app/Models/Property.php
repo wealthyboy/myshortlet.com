@@ -25,6 +25,7 @@ class Property extends Model
         'image_tn',
         'country',
         'state',
+        'state_description',
         'city',
         'street',
         'currency',
@@ -45,9 +46,15 @@ class Property extends Model
 	}
 
 
+    // public function imgs()
+    // {
+    //     return $this->morphMany(Image::class, 'imageable')->orderBy('id','asc');
+    // }
+
+
     public function images()
     {
-        return $this->hasMany(Image::class)->orderBy('id','asc');
+        return $this->morphMany(Image::class, 'imageable')->orderBy('id','asc');
 	}
 
 
@@ -57,6 +64,10 @@ class Property extends Model
 	}
 
 
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 
     public function is_saved(){
         $saved = auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];
@@ -85,6 +96,11 @@ class Property extends Model
     public function areas(){
         return $this->belongsToMany(Attribute::class)
         ->wherePivot('name','area');               
+    }
+
+    public function restaurants(){
+        return $this->belongsToMany(Attribute::class)
+        ->wherePivot('name','Restaurants');               
     }
 
 
@@ -158,6 +174,10 @@ class Property extends Model
 		return optional($this->location('location_type','state'))->name;
 	}
 
+    public function getStateDescriptionAttribute(){
+		return optional($this->location('location_type','state'))->description;
+	}
+
     public function getCityAttribute(){
 		return optional($this->location('location_type','city'))->name;
 	}
@@ -176,7 +196,7 @@ class Property extends Model
        $check_in_checkout = request()->check_in_checkout ? "?check_in_checkout=".request()->check_in_checkout : null;
        $children = request()->children ? "&children=".request()->children : null;
        $adults = request()->adults ? "&adults=".request()->adults : null;
-       return  '/apartment/'. $this->slug.$check_in_checkout.$rooms.$children.$adults;
+       return  '/property/'. $this->slug.$check_in_checkout.$rooms.$children.$adults;
     }
 
 

@@ -9,12 +9,12 @@
       <input type="hidden" name="_token" :value="$root.token" />
       <input type="hidden" name="property_id" :value="property.id" />
       <div>
-        <h3>Choose your unit</h3>
+        <h3 class="bold">Choose your unit</h3>
         <div class="form-row">
           <div
             class="form-group ml-1 form-border cursor-pointer search col-md-4 bmd-form-group"
           >
-            <label class="pl-2 ml-4 " for="flatpickr-input-f"
+            <label class="pl-2 " for="flatpickr-input-f"
               >Check-in - Check-out</label
             >
             <date
@@ -22,16 +22,16 @@
               @dateSelected="dateSelected"
             />
           </div>
-          <div id="people-number" class="col-md-4 cursor-pointer">
+          <div id="people-number" class="col-md-4 cursor-pointer ">
             <guests />
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 check-availablility">
             <button
               type="button"
               @click.prevent="checkAvailabity()"
-              class="btn btn-primary btn-block"
+              class="btn btn-primary btn-block m-auto bold check-availablility-button"
             >
-              <i class="material-icons">search</i> Check availablity
+              <i class="material-icons"></i> Check availablity
             </button>
           </div>
         </div>
@@ -42,7 +42,9 @@
         class="name mt-1 rounded bg-white p-2"
       >
         <div class="text-muted text-danger">
-          There are not available apartmnets for your search.
+          {{
+            error_msg || "There are not available apartments for your search."
+          }}
         </div>
       </div>
 
@@ -72,13 +74,13 @@
                   {{ stays[0] || 0 }} {{ stays[1] || "night" }}
                 </p>
                 <p v-if="!stays">Choose dates</p>
-                <p class="font-weight-500 text-heading mb-0">
+                <p class="bold text-heading mb-0">
                   {{ property.currency }}{{ total | priceFormat }}
                 </p>
               </li>
               <li class="d-flex justify-content-between mb-2 lh-22">
                 <p class="text-gray-light mb-0">{{ aps }} Apartment(s)</p>
-                <p class="font-weight-500 text-heading mb-0">
+                <p class="bold text-heading mb-0">
                   {{ property.currency }}{{ apTotal | priceFormat }}
                 </p>
               </li>
@@ -88,7 +90,7 @@
             class="card-footer p-2  bg-transparent d-flex justify-content-between p-0 align-items-center"
           >
             <p class="text-heading mb-0">Total Price:</p>
-            <span class="fs-32 font-weight-bold text-heading total-price"
+            <span class="fs-32 bold text-heading total-price"
               >{{ property.currency }}{{ amount | priceFormat }}</span
             >
           </div>
@@ -142,13 +144,14 @@ export default {
       loading: false,
       propertyLoading: false,
       isDateNeedsToToOpen: false,
+      error_msg: null,
       form: {
         room_quantity: [],
         selectedRooms: [],
         children: null,
         adults: null,
         rooms: null,
-        check_in_checkout: null,
+        check_in_checkout: this.$root.request.check_in_checkout,
         property_id: this.property.id,
       },
     };
@@ -156,6 +159,26 @@ export default {
   created() {
     this.stays = this.nights;
     this.roomsAv = this.apartments;
+  },
+  mounted() {
+    jQuery(function() {
+      $(".owl-carousel").owlCarousel({
+        margin: 10,
+        nav: true,
+        dots: false,
+        responsive: {
+          0: {
+            items: 1,
+          },
+          600: {
+            items: 1,
+          },
+          1000: {
+            items: 1,
+          },
+        },
+      });
+    });
   },
   components: {
     Pickr,
@@ -185,6 +208,24 @@ export default {
           this.roomsAv = response.data.data;
           this.stays = response.data.nights;
           this.propertyLoading = false;
+          jQuery(function() {
+            $(".room-carousel").owlCarousel({
+              margin: 10,
+              nav: true,
+              dots: false,
+              responsive: {
+                0: {
+                  items: 1,
+                },
+                600: {
+                  items: 1,
+                },
+                1000: {
+                  items: 1,
+                },
+              },
+            });
+          });
         })
         .catch((error) => {});
     },
@@ -242,10 +283,20 @@ export default {
       axios
         .post("/book/store", form)
         .then((response) => {
-          document.querySelector("#multiple-form").submit();
+          this.propertyLoading = false;
+          console.log(response.data);
+
+          if (response.data) {
+            document.querySelector("#multiple-form").submit();
+          } else {
+            this.error_msg =
+              "It seems we could not further your request .Try a diffrent date.";
+            this.roomsAv = [];
+          }
         })
         .catch((error) => {
-          alert("We could not make your reservation.Please try again later");
+          this.error_msg =
+            "It seems we could not further your request .Try a diffrent date.";
         });
     },
   },

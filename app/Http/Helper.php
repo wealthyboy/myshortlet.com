@@ -236,7 +236,9 @@ class Helper{
             'rules' => 'Rules',
             'apartment facilities' => 'Apartment Facilities',
             'property type' => 'Property Type',
-            'other' => 'other'
+            'other' => 'other',
+            'furnishing' => 'Furnishing',
+            'condition' => 'Condition'
         ];
     }
 

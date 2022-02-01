@@ -111,3 +111,7 @@ export const setBookingServicesTotal = (state, total) => {
 export const setBookingPropertyServicesTotal = (state, total) => {
   state.bookingPropertyServicesTotal = total;
 };
+
+export const setMeta = (state, meta) => {
+  state.meta = meta;
+};

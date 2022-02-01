@@ -3,11 +3,11 @@
       <div class="modal-content">
          <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i class="material-icons">clear</i>
+            <i class="fal fa-times"></i>
           </button>
         </div>
 
-         <div class="modal-body ">
+         <div class="modal-body">
             <div class="text-center  loading-spinner">
                @include('_partials.spinner',['bgcolor' => '#333'])
             </div>

@@ -19,6 +19,7 @@ class   GlobalVariables {
 		$system_settings = SystemSetting::first();
 	    $view->with([
 			'system_settings'=>$system_settings,
+			'glo'
 		]);
 		
     }

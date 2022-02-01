@@ -37,7 +37,9 @@ class PropertyLists extends JsonResource
             'is_refundable' =>$this->is_refundable,
             'free_services' =>$this->free_services,
             'facilities' => $this->facilities,
-            'check_in_checkout' => request()->check_in_checkout
+            'check_in_checkout' => request()->check_in_checkout,
+            'categories' => $this->categories
+
         ];
     }
 

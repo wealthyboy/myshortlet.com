@@ -36,6 +36,8 @@
                            <input id="link" required="required" type="text" name="link" value="{{ !empty(  $banner->link )  ? $banner->link : old('link')   }}" class="form-control" id="link" placeholder="link">
                         </div>
                      </div>
+
+
                      <div class="form-group">
                         <label for="title" class="col-sm-2 control-label">Col Width</label>
                         <div class="col-sm-10">
@@ -60,39 +62,49 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">Type</label>
-                        <div class="col-sm-10">
-                           <select name="type" required="required" class="form-control select2" style="width: 100%;">
-                              <option value="" selected="selected">--choose one--</option>
-                                 
-                                 <option value="slider">Slider</option>
-                                 <option value="banner">Banner</option>
+                  <div class="form-group">
+                     <label for="title" class="col-sm-2 control-label">Type</label>
+                     <div class="col-sm-10">
+                        <select name="type" required="required" class="form-control select2" style="width: 100%;">
+                           <option value="" selected="selected">--choose one--</option>
+                              
+                              <option value="slider">Slider</option>
+                              <option value="banner">Banner</option>
 
-                                 
-                           </select>
-                        </div>
-                    </div>
+                              
+                        </select>
+                     </div>
+                  </div>
 
             
-                         <div class="row">
-                           <div class="">
-                              <div id="m_image"  class="uploadloaded_image text-center mb-3">
-                                 <div class="upload-text"> 
-                                          <a class="activate-file" href="#">
-                                          <img src="{{ asset('backend/img/upload_icon.png') }}">
-                                          <b>Add Image </b> 
-                                          </a>
-                                 </div>
-                                 <div id="remove_image" class="remove_image hide">
-                                       <a class="delete_image" href="#">Remove</a>
-                                 </div>
-
-                                 <input accept="image/*"  class="upload_input" data-msg="Upload  your image" type="file" id="file_upload_input" name="product_image"  />
-                                 <input type="hidden" data-msg="Uplaod  your art work" class="file_upload_input  stored_image" id="stored_image" name="image">
-                              </div>
+                  <div class="row">
+                     <div class="">
+                        <div id="m_image"  class="uploadloaded_image text-center mb-3">
+                           <div class="upload-text"> 
+                                    <a class="activate-file" href="#">
+                                    <img src="{{ asset('backend/img/upload_icon.png') }}">
+                                    <b>Add Image </b> 
+                                    </a>
                            </div>
+                           <div id="remove_image" class="remove_image hide">
+                                 <a class="delete_image" href="#">Remove</a>
+                           </div>
+
+                           <input accept="image/*"  class="upload_input" data-msg="Upload  your image" type="file" id="file_upload_input" name="product_image"  />
+                           <input type="hidden" data-msg="Uplaod  your art work" class="file_upload_input  stored_image" id="stored_image" name="image">
                         </div>
+                     </div>
+                  </div>
+
+                     
+                     <div class="form-group">
+                        <label>Description</label>
+                        <div class="form-group ">
+                           <label class="control-label"> </label>
+                           <textarea name="description" 
+                           id="description" class="form-control"  rows="7"></textarea>
+                        </div>
+                     </div>
                   
                
                      <!-- /.box-body -->

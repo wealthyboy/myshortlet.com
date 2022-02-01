@@ -1,27 +1,22 @@
-<footer class="bg-dark pt-8 pb-6 footer text-muted">
+<footer class=" pt-8 pb-6 footer text-muted">
 <div class="container container-xxl">
-<div class="row">
-    @foreach($footer_info as $info)
-    <div class="col-md-6 col-lg-4 mb-6 mb-md-0">
-        <h4 class="text-white fs-16 my-4 font-weight-500">{{ title_case($info->title) }}</h4>
-        @if($info->children->count())
-            <ul class="list-group list-group-flush list-group-no-border">
-            @foreach($info->children as $info)
-            <li class="list-group-item bg-transparent p-0">
-                <a href="home-01.html#" class="text-muted lh-26 font-weight-500 hover-white">{{ $info->title }}</a>
-            </li>
-            @endforeach
-            </ul>
-        @endif
 
-    </div>
-    @endforeach
-</div>
 <div class="mt-0 mt-md-10 row">
-    <div class="col-md-12 text-center">
-        <p class="">© Copyright <a href="{{ Config('app.url') }}"> {{ Config('app.name') }}</a>   {{ date('Y') }}. All rights reserved.  
+   <div class="col-md-12 text-center">
+       <ul class="pull-center">
+            @foreach($footer_info as $info)
+                <li>
+                    <a href="/pages/{{ $info->slug }}">
+                    {{ title_case($info->title) }}
+                    </a>
+                </li>  
+            @endforeach
+        </ul>
+    </div>
+    <div class="col-md-12 copyright text-center">
+        <p class="">© Copyright  {{ Config('app.name') }}  {{ date('Y') }}. All rights reserved.  
             @if ( auth()->check() && auth()->user()->isAdmin() )
-            <a target="_blank" href="/admin" >Go to Admin</a>
+            <a target="_blank" class="text-white" href="/admin" >Go to Admin</a>
             @endif 
         </p>
     </div>

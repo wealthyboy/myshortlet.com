@@ -26,4 +26,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(Property::class);
     }
+
+    public function extras()
+    {
+        return $this->hasMany(Extra::class);
+    }
 }

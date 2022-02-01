@@ -13,4 +13,9 @@ class GuestUser extends Model
 	public function fullname() { 
 		return ucfirst($this->name) . ' '. ucfirst($this->last_name);
 	}
+
+
+    public function extras(){
+        return $this->hasMany(Extra::class);
+    }
 }

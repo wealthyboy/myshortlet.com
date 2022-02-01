@@ -16,10 +16,12 @@ use App\Models\Facility;
 use App\Models\Requirement;
 use App\Models\Location;
 use App\Models\Apartment;
+use App\Models\Category;
 use App\Models\Attribute;
+
 use App\Models\AttributePrice;
 use Illuminate\Support\Str;
-
+use App\Models\ApartmentAttribute;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
@@ -38,6 +40,12 @@ class PropertiesController extends Controller
         'rules',
     ];
 
+    public $house_attrs =  [
+        'property type',
+        'furnishing',
+        'condition'
+    ];
+
     public function __construct()
     {	  
 	  $this->settings =  SystemSetting::first();
@@ -48,9 +56,9 @@ class PropertiesController extends Controller
      *
      * return \Illuminate\Http\Response
      */
-    public function index()
-    {   
-        $properties = Property::orderBy('created_at','desc')->paginate(3);
+    public function index(Request $request)
+    {    
+        $properties = Property::orderBy('created_at','desc')->paginate(10);
         return view('admin.apartments.index',compact('properties'));
     }
 
@@ -59,17 +67,25 @@ class PropertiesController extends Controller
      *
      * return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         User::canTakeAction(2);
-        $counter = rand(1,500);
+        $counter    = rand(1,500);
         $locations  = Location::parents()->get();
+        $categories = Category::parents()->get();
+
         $attributes = Attribute::parents()->whereIn('type' ,$this->types)->get()->groupBy('type');
+        $house_attributes = null;
+        if ($request->mode == 'house'){
+            $house_attributes = Attribute::parents()->whereIn('type' ,$this->house_attrs)->get()->groupBy('type');
+        }
+
         $apartment_facilities =  Attribute::parents()->where('type','apartment facilities')->orderBy('sort_order','asc')->get();
         $property_types       =  Attribute::parents()->where('type','property type')->orderBy('sort_order','asc')->get();
         $extras               =  Attribute::parents()->where('type','extra services')->orderBy('sort_order','asc')->get();
         $bedrooms             =  Attribute::parents()->where('type','bedrooms')->orderBy('sort_order','asc')->get();
-        $others               =  Attribute::parents()->where('type','others')->orderBy('sort_order','asc')->get();
+        $others               =  Attribute::where('type','other')->orderBy('sort_order','asc')->get()->groupBy('parent.name');
+        
         $helper               =  new Helper;
         $str = new Str;
         return view('admin.apartments.create',
@@ -82,7 +98,9 @@ class PropertiesController extends Controller
                     'apartment_facilities',
                     'counter',
                     'locations',
-                    'attributes'
+                    'attributes',
+                    'categories',
+                    'house_attributes'
                 ));
     }
     /**
@@ -101,75 +119,217 @@ class PropertiesController extends Controller
         ]);
 
         $property =  $this->property($request);
+
+        
  
         /**
          * Rooms
         */
-        if ($request->type == 'single' ){
+        if ($request->mode == 'shortlet' &&  $request->type == 'single' ){
             $apartment = new Apartment;  
             $this->propertyWithSingleApartments($request, $apartment, $property);
         }
 
         $data = [];
-        if ($request->type != 'single' ){
+        if ( $request->mode == 'shortlet' && $request->type != 'single' ){
             $this->propertyWithMultipleApartments($request, $property);
         }
   
         /**
          * Rooms with have includes
         */
+
         (new Activity)->Log("Created a new property {$request->apartment_name}");
         return \Redirect::to('/admin/properties');
     }
 
     public function property($request, $id=null, $update=false) 
-    {   
+    {    
 
         $property  = $id ?  Property::find($id) : new Property;
         $token     = mt_rand(); 
-        $location_ids = array_reverse($request->location_id);
-        $location_ids = Location::find($location_ids);
-        $location_full_name = implode(', ', array_reverse($location_ids->pluck('name')->toArray()));
+        $images = !empty($request->images) ? $request->images : [];
+        $location_full_name = null;
+        if (!empty($request->location_id)){
+            $location_ids = array_reverse($request->location_id);
+            $location_ids = Location::find($location_ids);
+            $location_full_name = implode(', ', array_reverse($location_ids->pluck('name')->toArray()));
+        }
+
         $title     = $id ? $request->apartment_name.'-'.$property->token : $request->apartment_name.'-'.$token;
         $property->name      = $request->apartment_name;
         $property->address   = $request->address;
         $property->image     = $request->image;
         $property->type                 = $request->type;
-        $property->description          = $request->description;
-        $property->is_refundable        =  $request->is_refundable ? 1 : 0;
-        $property->check_in_time        =  $request->check_in_time;
-        $property->check_out_time       =  $request->check_out_time;
-        $property->is_refundable        =  $request->is_refundable ? 1 : 0;
-        $property->cancellation_message = $request->cancellation_message;
-        $property->cancellation_fee     = $request->cancellation_fee;
-        $property->virtual_tour         = $request->virtual_tour;
-        $property->featured             = $request->featured ? 1 : 0;
-        $property->allow                = $request->allow ? 1 : 0;
-        $property->location_full_name   = $location_full_name;
-        $property->slug                 = str_slug($title);
-        $property->token                =  $id ? $property->token : $token;
+        $property->mode                 = $request->mode;
+        $property->price                = $request->price;
+        $property->size                 = $request->size;
+
+        $property->description           = $request->description;
+        $property->is_refundable         =  $request->is_refundable ? 1 : 0;
+        $property->check_in_time         =  $request->check_in_time;
+        $property->check_out_time        =  $request->check_out_time;
+        $property->is_refundable         =  $request->is_refundable ? 1 : 0;
+        $property->cancellation_message  = $request->cancellation_message;
+        $property->cancellation_fee    = $request->cancellation_fee;
+        $property->virtual_tour        = $request->virtual_tour;
+        $property->featured            = $request->featured ? 1 : 0;
+        $property->allow               = $request->allow ? 1 : 0;
+        $property->is_price_negotiable  = $request->is_price_negotiable ? 1 : 0;
+        $property->is_shortlet  = $request->is_shortlet ? 1 : 1;
+        $property->bedrooms  = $request->bedrooms;
+        $property->toilets  = $request->toilets;
+
+        $property->location_full_name  = $location_full_name;
+        $property->slug                = str_slug($title);
+        $property->token               =  $id ? $property->token : $token;
         $property->save();
-        $property->locations()->sync($request->location_id);
-        $property->attributes()->sync($request->apartment_facilities_id);
-        $property->attributes()->syncWithoutDetaching($request->attribute_id);
-        $this->syncExtras($request->property_extras,  $request->property_extra_services, $property);
+
+
+        
+        if (!empty($request->location_id)){
+            $property->locations()->sync($request->location_id);
+        }
+        
+
+        $property->attributes()->sync($request->attribute_id);
+        $property->categories()->sync($request->category_id);
         $locations = Location::find($request->location_id);
-        foreach($request->attribute_id as $key => $attribute ){
-           if ($key && is_string($key)){
-                $property->attributes()->updateExistingPivot($attribute, [
-                    'name' => $key,
-                ]);
-           }
+
+        
+
+        if (!empty($request->attribute_id)) {
+            foreach($request->attribute_id as $key => $attribute ){
+                if ($key && is_string($key)){
+                    $property->attributes()->updateExistingPivot($attribute, [
+                        'name' => $key,
+                    ]);
+                }
+            }
         }
-        foreach( $locations as $location )
-        {
-            $location->attributes()->sync($request->attribute_id);
+
+
+        if (!empty($request->location_id)){
+            foreach( $locations as $location )
+            {
+                $location->attributes()->sync($request->attribute_id);
+            }
         }
+
+        
+        // foreach( $request->category_id as $category_id )
+        // {
+        //     $category = Category::find($category_id);
+        //     $category->locations()->sync($request->location_id);
+        //     $category->attributes()->sync($request->attribute_id);
+        // }
+
+
+        if ($request->mode == 'shortlet'){
+            if(!empty($request->property_extra_services)) {
+                $prices = array_filter($request->property_extra_services);
+                if(!empty($prices)){
+                    foreach( $prices as $key  => $extra ) {
+                        $property->attributes()->updateExistingPivot($key, [
+                            'price' => $extra,
+                        ]);
+                        
+                    }
+                }
+            }
+    
+            $this->syncExtras($request->property_extras,  $request->property_extra_services, $property);
+            if (!empty($request->apartment_facilities_id)){
+                foreach( $request->apartment_facilities_id as $key  => $apartment_facility_id )
+                {
+                    $property->attributes()->syncWithoutDetaching($apartment_facility_id);
+                }
+            }
+        }
+        
 
         return $property;
     }
 
-    public function syncExtras($extras, $extra_services_price = [],  $obj){
+    
+
+    public function propertyWithMultipleApartments($request,  $property) 
+    {    
+
+        $price = implode(array_values($request->room_price));
+        foreach ($request->room_price  as $key => $room) {
+
+            //dd($request->apartment_facilities_id[$key]);
+            $apartment = new Apartment;  
+            $room_images = !empty($request->images[$key]) ? $request->images[$key] : [];
+            $apartment->name = $request->room_name[$key];
+            $apartment->price = $request->room_price[$key];
+            $apartment->sale_price          = $request->room_sale_price[$key];
+            $apartment->slug                    = str_slug($request->room_name[$key]);
+            $apartment->max_adults              = $request->room_max_adults[$key];
+            $apartment->quantity                = $request->room_quantity[$key];
+            $apartment->type                    = $request->type;
+            $apartment->price_mode           = $request->price_mode[$key];
+
+            $apartment->max_children            = $request->room_max_children[$key];
+            $apartment->no_of_rooms             = $request->room_number[$key];
+            $apartment->sale_price_expires      = Helper::getFormatedDate($request->room_sale_price_expires[$key],true);
+            $apartment->property_id             = $property->id;
+            $apartment->uuid                    =  time();
+            $apartment->toilets                 = $request->room_toilets[$key];
+            $apartment->save();
+            if (isset($request->apartment_facilities_id[$key])) {
+                $apartment->attributes()->sync(array_filter($request->apartment_facilities_id[$key]));
+            }
+
+            if (isset($request->multiple_apartment_extras[$key])) {
+                $this->syncExtras($request->multiple_apartment_extras[$key],  $request->multiple_apartment_extra_services[$key], $apartment);
+            }
+
+            $this->syncImages($room_images, $apartment, $property);
+            $this->syncAttributes($request, $apartment, $key);
+        }
+
+        $property->price  =  $price;
+        $property->save();
+    }
+
+    public function propertyWithSingleApartments($request, $apartment, $property)
+    {   
+        $room_images           = !empty($request->images) ? $request->images : [];
+        $apartment->price      = $request->single_room_price;
+        $apartment->sale_price           = $request->single_room_sale_price;
+        $apartment->slug                 = str_slug($request->single_room_name);
+        $apartment->max_adults           = $request->single_room_max_adults;
+        $apartment->quantity             = 1;
+        $apartment->price_mode           = $request->sinble_price_mode;
+
+        $apartment->type                 = $request->type;
+        $apartment->max_children         = $request->single_room_max_children;
+        $apartment->no_of_rooms          = $request->single_room_number;
+        $apartment->size                 = $request->size;
+        $apartment->sale_price_expires   = Helper::getFormatedDate($request->single_room_sale_price_expires,true);
+        $apartment->property_id          = $property->id;
+        $apartment->uuid                 = time();
+        $apartment->toilets              = $request->single_room_toilets;
+        $apartment->save();
+        $property->price  =  $request->single_room_price;
+        $property->save();
+        $apartment->attributes()->sync(array_filter($request->attribute_id));
+
+        if (!$request->land) {
+            if (isset($request->single_apartment_extras[212])) {
+                $this->syncExtras($request->single_apartment_extras[212],  $request->single_apartment_extra_services[212], $apartment);
+            }
+
+            $this->syncImages($room_images, $apartment, $property);
+            $this->syncAttributes($request, $apartment, 212);
+        }
+        
+    }
+
+
+    public function syncExtras($extras, $extra_services_price,  $obj){
         $obj->attributes()->syncWithoutDetaching($extras);
         if(!empty($extra_services_price)) {
             $prices = array_filter($extra_services_price);
@@ -178,97 +338,38 @@ class PropertiesController extends Controller
                     $obj->attributes()->updateExistingPivot($key, [
                         'price' => $extra,
                     ]);
+                    
                 }
             }
-        }
-        
-          
+        }   
     }
 
-    public function propertyWithMultipleApartments($request,  $property) 
-    {    
-        $price = implode(array_values($request->room_price));
-        foreach ($request->room_price  as $key => $room) {
-            $apartment = new Apartment;  
-            $room_images = !empty($request->room_images[$key]) ? $request->room_images[$key] : [];
-            $apartment->name = $request->room_name[$key];
-            $apartment->price = $request->room_price[$key];
-            $apartment->sale_price          = $request->room_sale_price[$key];
-            $apartment->slug                    = str_slug($request->room_name[$key]);
-            $apartment->max_adults              = $request->room_max_adults[$key];
-            $apartment->quantity                = $request->room_quantity[$key];
-            $apartment->type                    = $request->type;
-            $apartment->max_children            = $request->room_max_children[$key];
-            $apartment->no_of_rooms             = $request->room_number[$key];
-            //$apartment->available_from          = Helper::getFormatedDate($request->room_avaiable_from[$key],true);
-            $apartment->sale_price_expires      = Helper::getFormatedDate($request->room_sale_price_expires[$key],true);
-            $apartment->property_id             = $property->id;
-            $apartment->uuid                    =  time();
-            $apartment->toilets                 = $request->room_toilets[$key];
-            $apartment->save();
-            $this->syncImages($room_images, $apartment, $property);
-            $this->syncAttributes($request, $apartment, $key);
-            $this->syncExtras($request->multiple_apartment_extras,  $request->multiple_apartment_extra_services, $apartment);
-            
-        }
-
-        $property->price  =  $price;
-        $property->save();
-
-    }
-
-    public function propertyWithSingleApartments($request, $apartment, $property)
+    public function syncAttributes($request, $apartment, $key=null)
     {   
-        $room_images           = !empty($request->room_images) ? $request->room_images : [];
-        $apartment->price      = $request->single_room_price;
-        $apartment->sale_price           = $request->single_room_sale_price;
-        $apartment->slug                 = str_slug($request->single_room_name);
-        $apartment->max_adults           = $request->single_room_max_adults;
-        $apartment->quantity             = 1;
-        $apartment->type                 = $request->type;
-        $apartment->max_children         = $request->single_room_max_children;
-        $apartment->no_of_rooms          = $request->single_room_number;
-        //$apartment->available_from     = Helper::getFormatedDate($request->single_room_avaiable_from,true);
-        $apartment->sale_price_expires   = Helper::getFormatedDate($request->single_room_sale_price_expires,true);
-        $apartment->property_id          = $property->id;
-        $apartment->uuid                 = time();
-        $apartment->toilets              = $request->single_room_toilets;
-        
-        $apartment->save();
-        $property->price  =  $request->single_room_price;
-        $property->save();
-
-        $this->syncImages($room_images, $apartment, $property);
-        $this->syncAttributes($request, $apartment);
-        $this->syncExtras($request->single_apartment_extras,  $request->single_apartment_extra_services, $apartment);
-    }
-
-    public function syncAttributes($request, $apartment, $key=null){
-        $beds = array_filter($this->beds($request, $key));
-        $apartment->attributes()->sync($beds);
-        foreach( $apartment->bedrooms  as $bed ) {
-            if (!empty($request->bed_count)){
-                foreach( $request->bed_count as $k  => $b ) {
-                   if ($k  == $bed->id ){
-                        $apartment->attributes()->updateExistingPivot($k, [
-                            'bed_count' => $b,
-                        ]);
-                   }
+        $bed_count = array_filter($request->bed_count);
+        $beds = [];
+        if (!empty($bed_count)){
+            foreach( $bed_count as $ky  => $value ) {
+                $value = array_filter($value);
+                foreach( $value as $k  => $v ) {  
+                    $beds[$ky][$k] = ['bed_count'=>$v]; 
                 }
             }
-            
-        }
-
-
-        $apartment->attributes()->syncWithoutDetaching($request->attribute_id);
+        }        
+        $apartment->attributes()->syncWithoutDetaching($beds[$key]);  
     }
 
     public function syncImages($images, $attr, $property=null){
         if ( count( $images )  > 0) {
             $images = array_filter($images);
             foreach ( $images  as $image) {
-                $imgs= new Image(['image' => $image,'property_id' => $property->id]);
+                $imgs= new Image(['image' => $image]);
                 $attr->images()->save($imgs);
+            }
+
+            foreach ( $images  as $image) {
+                $imgs= new Image(['image' => $image]);
+                $property->images()->save($imgs);
             }
         }
     }
@@ -281,6 +382,7 @@ class PropertiesController extends Controller
             $input  =  $key ?  'bedroom_'.$i.'_'.$key : 'bedroom_'.$i;
             $input  =  $request->$input;
             $beds[] =  $input;
+
         }
         return $beds;
     }
@@ -303,12 +405,17 @@ class PropertiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {   
         $property   = Property::find($id);
         $locations  = Location::parents()->get();
         $helper     = new Helper();
         $counter    = rand(1,500);
+        $house_attributes = null;
+        if ($request->mode == 'house'){
+            $house_attributes = Attribute::parents()->whereIn('type' ,$this->house_attrs)->get()->groupBy('type');
+        }
+
         $attributes = Attribute::parents()->whereIn('type' ,$this->types)->get()->groupBy('type');
         $apartment_facilities  = Attribute::parents()->where('type','apartment facilities')->orderBy('sort_order','asc')->get();
         $counter               = rand(1,500);
@@ -317,7 +424,9 @@ class PropertiesController extends Controller
         $bedrooms              = Attribute::parents()->where('type','bedrooms')->orderBy('sort_order','asc')->get();
         $extras =  Attribute::parents()->where('type','extra services')->orderBy('sort_order','asc')->get();
         $property_types =  Attribute::parents()->where('type','property type')->orderBy('sort_order','asc')->get();
-        return view('admin.apartments.edit',compact('others','property_types','extras','str','bedrooms','counter','attributes','locations','property','helper','apartment_facilities'));
+        $categories = Category::parents()->get();
+
+        return view('admin.apartments.edit',compact('house_attributes','categories','others','property_types','extras','str','bedrooms','counter','attributes','locations','property','helper','apartment_facilities'));
     }
 
     /**
@@ -334,14 +443,16 @@ class PropertiesController extends Controller
             'address'=> "required",
             "description" => "required"
         ]);
+
          
         $property = $this->property($request, $id, true);
+
         /**
          * Reservation Images
         */
         $data = [];
 
-        if ( $request->type == 'single' ) {
+        if ($request->mode == 'shortlet' &&  $request->type == 'single' ){
             $apartment = $property->single_room; 
             $this->propertyWithSingleApartments($request, $apartment, $property);
         }
@@ -359,6 +470,7 @@ class PropertiesController extends Controller
                         'name'                 => $request->edit_room_name[$room_id],
                         'price'                => $request->edit_room_price[$room_id],
                         'sale_price'           => $request->edit_room_sale_price[$room_id],
+                        'price_mode'           => $request->edit_room_price_mode[$room_id],
                         'sale_price_expires'   => Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]),
                         'slug'                 => str_slug($request->edit_room_name[$room_id]),
                         'max_adults'           => $request->room_max_adults[$room_id],
@@ -387,8 +499,17 @@ class PropertiesController extends Controller
                     }
                 }
 
+
+                if (isset($request->apartment_facilities_id[$room_id])) {
+                    $apartment->attributes()->sync(array_filter($request->apartment_facilities_id[$room_id]));
+                }
+    
+                if (isset($request->multiple_apartment_extras[$room_id])) {
+                    $this->syncExtras($request->multiple_apartment_extras[$room_id],  $request->multiple_apartment_extra_services[$room_id], $apartment);
+                }
+    
+                $this->syncImages($room_images, $apartment, $property);
                 $this->syncAttributes($request, $apartment, $room_id);
-                $this->syncExtras($request->multiple_apartment_extras,  $request->multiple_apartment_extra_services, $apartment);
             }
         }
 

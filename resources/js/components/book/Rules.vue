@@ -1,14 +1,14 @@
 <template>
   <div class=" bg-white">
-    <h4 class="card-title p-3 border-bottom">
+    <h3 class="card-title  p-3 border-bottom mb-0">
       Important Trip Information
-    </h4>
-    <div class="card-body">
+    </h3>
+    <div class="card-body pt-0">
       <div>
         <h5>House Rules</h5>
         <ul class="list-unstyled">
           <li class="">
-            <p class="font-weight-500 text-heading mb-0">
+            <p class=" text-heading mb-0">
               Check-in -- {{ property.check_in_time }}
             </p>
           </li>
@@ -25,7 +25,7 @@
           </li>
         </ul>
       </div>
-      <div>
+      <div v-if="property.cancellation_message">
         <h5>Other Information</h5>
         <ul class="list-unstyled">
           <li class="">

@@ -4,10 +4,10 @@
       <div
         v-for="property in properties"
         :key="property.id"
-        class="bg-white mb-2 rounded position-relative loaded-apartments"
+        class="bg-white mb-2 rounded position-relative border-radius loaded-apartments"
       >
         <div class="row no-gutters">
-          <div class="col-md-3 position-relative">
+          <div class="col-md-3 col-12 position-relative">
             <div>
               <a target="_blank" :href="property.link">
                 <img :src="property.image_m" class="img  img-fluid" />
@@ -17,10 +17,18 @@
               </div>
             </div>
           </div>
-          <div class="col-md-9 position-relative col-12 pl-3">
+          <div class="col-md-9 position-relative  pl-3">
+            <h6 class="card-category text-gold">
+              {{ property.categories[0].name }}
+            </h6>
             <div class="d-flex  justify-content-between">
               <div>
-                <a target="_blank" :href="property.link">{{ property.name }}</a>
+                <a
+                  target="_blank"
+                  class="bold text-size-1-big"
+                  :href="property.link"
+                  >{{ property.name }}</a
+                >
                 <div class="d">
                   <small
                     ><a :href="property.link" class="p-0">{{ property.city }}</a
@@ -28,7 +36,10 @@
                   >
                 </div>
                 <div class="mb-5">
-                  <div v-if="property.facilities.length" class="facilities">
+                  <div
+                    v-if="property.facilities.length"
+                    class="facilities text-gold text-size-1"
+                  >
                     <span
                       :key="facility.id"
                       v-for="facility in property.facilities"
@@ -36,7 +47,10 @@
                     </span>
                   </div>
 
-                  <div v-if="property.type == 'single'" class="guests-section">
+                  <div
+                    v-if="property.type == 'single'"
+                    class="guests-section text-size-1 "
+                  >
                     <span>{{ property.guests }} guests</span>
                     <span aria-hidden="true"> · </span>
                     <span>{{ property.rooms }} bedroom</span>
@@ -44,15 +58,20 @@
                     <span>{{ property.baths }} baths</span>
                   </div>
 
-                  <div v-if="property.is_refundable">Fully Refundable</div>
+                  <div
+                    class="text-size-1 text-gray"
+                    v-if="property.is_refundable"
+                  >
+                    Fully Refundable
+                  </div>
                   <div
                     v-if="property.free_services.length"
-                    class="d-inline-flex"
+                    class="d-inline-flex mr-2 text-size-1 "
                   >
                     <div
                       v-for="free_service in property.free_services"
                       :key="free_service.id"
-                      class="refundable"
+                      class="free-services mr-2 text-size-1"
                     >
                       {{ free_service.name }} included
                     </div>
@@ -67,30 +86,39 @@
               <div class="text-right mr-2">
                 <div class="d-inline-flex">
                   <template v-if="property.default_discounted_price">
-                    <div class="sale-price mr-3">
-                      {{ property.currency }}{{ property.converted_price }}
-                    </div>
-                    <div class="price">
+                    <div class="sale-price bold mr-3 text-gold">
                       {{ property.currency
-                      }}{{ property.default_discounted_price }}
+                      }}{{ property.converted_price | priceFormat }}
+                    </div>
+                    <div class="price bold">
+                      {{ property.currency }}
+                      {{ property.default_discounted_price | priceFormat }}
                     </div>
                   </template>
                   <template v-else>
-                    <div class="price">
-                      {{ property.currency }}{{ property.converted_price }}
+                    <div class="price bold">
+                      {{ property.currency
+                      }}{{ property.converted_price | priceFormat }}
                     </div>
                   </template>
                 </div>
-                <div>per night</div>
-                <div v-if="property.is_refundable">Fully Refundable</div>
+                <div class="text-size-2">
+                  {{ property.price_mode }}
+                </div>
+                <div
+                  class="text-size-1 text-gray"
+                  v-if="property.is_refundable"
+                >
+                  Fully Refundable
+                </div>
                 <a
+                  v-if="property.mode == 'shortlet'"
                   target="_blank"
                   :href="property.link"
-                  class="btn btn-primary btn-round d-none d-lg-block d-xl-block"
+                  class="btn btn-primary btn-round d-none bold d-lg-block d-xl-block"
                 >
                   Check Availability
-                  <i class="material-icons">arrow_forward_ios</i></a
-                >
+                </a>
               </div>
             </div>
           </div>
@@ -140,6 +168,7 @@ export default {
     user: Object,
     propertys: Array,
     next_page: Array,
+    total: Number,
   },
   components: {
     Pagination,
@@ -170,6 +199,9 @@ export default {
     let time = new Date().getTime();
     setTimeout(() => {
       this.$store.commit("setProperties", this.propertys);
+      this.$store.commit("setMeta", this.total);
+      console.log(this.total);
+
       this.$store.commit("setPropertyLoading", false);
     }, 1000);
     this.$store.commit("setNextPageUrl", this.next_page[0]);

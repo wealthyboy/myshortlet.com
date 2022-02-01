@@ -12,7 +12,7 @@
         <div class="col-md-9 position-relative col-12 pl-3">
           <div class="d-flex  justify-content-between">
             <div>
-              <a target="_blank" :href="property.link">{{ property.name }}</a>
+              <a class="bold" :href="property.link">{{ property.name }}</a>
               <div class="d">
                 <small
                   ><a :href="property.link" class="p-0">{{ property.city }}</a
@@ -41,9 +41,9 @@
                   <div
                     v-for="free_service in property.free_services"
                     :key="free_service.id"
-                    class="refundable"
+                    class="refundable mr-2 text-gold"
                   >
-                    {{ free_service.name }} included
+                    {{ free_service.name }}
                   </div>
                 </div>
               </div>

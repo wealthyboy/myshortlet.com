@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Extra extends Model
 {
     use HasFactory;
+
+    public function attribute(){
+        return $this->belongsTo(Attribute::class);
+    }
 }

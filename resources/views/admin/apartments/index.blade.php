@@ -9,7 +9,8 @@
                 <i class="material-icons">refresh</i>
                 Refresh
             </a>
-            <a href="{{ route('admin.properties.create') }}" rel="tooltip" title="Add New" class="btn btn-primary btn-simple btn-xs">
+            
+            <a href="{{ route('admin.properties.create', ['mode'=>'shortlet']) }}" rel="tooltip" title="Add New" class="btn btn-primary btn-simple btn-xs">
                 <i class="material-icons">add</i>
                 Add Property
             </a>
@@ -74,7 +75,7 @@
                                     <th>Image</th>
                                     <th>Name</th>
                                     <th>Status</th>
-                                    <th>Rooms</th>
+                                    <th>category</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -89,8 +90,6 @@
                                             </label>
                                         </div>
                                     </td>
-                                    <!-- cart-active -->
-                                    <!-- cart-sidebar-btn active -->
                                     <td>
                                         <div class="img-container">
                                             <img class="" src="{{  $property->image  }}" alt="...">
@@ -99,11 +98,10 @@
                                     <td><a target="_blank">{{ $property->name }} {{ optional($property->city)->name }} {{ optional($property->state)->name }}</a></td>
                                     <td>{{ $property->allow == 1 ? 'Live' : 'Offline' }}</td>
                                     <td>
-                                        <span class="amount">
-                                        </span> 
+                                        {{ optional(optional($property->categories)->first())->name }}
                                     </td>
                                     <td class="td-actions ">                     
-                                        <a href="{{ route('admin.properties.edit',['property'=>$property->id] ) }}" rel="tooltip" title="Edit" class="btn btn-primary btn-simple btn-xs">
+                                        <a href="{{ route('admin.properties.edit',['property'=>$property->id,'mode' => $property->mode ] ) }}" rel="tooltip" title="Edit" class="btn btn-primary btn-simple btn-xs">
                                             <i class="material-icons">edit</i>
                                             Edit
                                         </a>

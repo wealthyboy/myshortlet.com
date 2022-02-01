@@ -1,20 +1,9 @@
 <template>
   <div class="row">
-    <div v-if="payment_is_processing && !paymentIsComplete" class="c-overlay">
-      <div class=" mr-2 ml-2 bold text-center" id="text">
-        <span
-          class="spinner-border spinner-border-lg"
-          role="status"
-          aria-hidden="true"
-        ></span>
-        Please wait while we finish processing your order. Do not leave your
-        browser.
-      </div>
-    </div>
     <div v-if="paymentIsComplete" class="d-flex col-md-12 aligh">
       <booking-complete />
     </div>
-    <div v-if="!paymentIsComplete" class="col-md-7">
+    <div v-if="!paymentIsComplete" class="col-md-7 mb-3">
       <h3>Review and book</h3>
     </div>
     <div v-if="!paymentIsComplete" class="col-md-7">
@@ -24,8 +13,8 @@
         <booking-login />
 
         <div class=" bg-white ">
-          <h4 class="card-title p-3 border-bottom">Who's checking in?</h4>
-          <div class="card-body">
+          <h3 class="card-title p-3 border-bottom">Who's checking in?</h3>
+          <div class="card-body pt-0">
             <div class="form-row">
               <div class="form-group bmd-form-group col-6">
                 <label class="bmd-label-floating">First name</label>
@@ -40,7 +29,7 @@
                   :class="{ 'has-danger': errors.first_name }"
                 />
                 <span v-if="errors.first_name">
-                  <strong class="text-danger">{{
+                  <strong class="text-danger text-size-2">{{
                     formatError(errors.first_name)
                   }}</strong>
                 </span>
@@ -58,14 +47,14 @@
                   :class="{ 'has-danger': errors.last_name }"
                 />
                 <span v-if="errors.last_name">
-                  <strong class="text-danger">{{
+                  <strong class="text-danger text-size-2">{{
                     formatError(errors.last_name)
                   }}</strong>
                 </span>
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group pt-4 col-3">
+              <div class="form-group pt-4 col-3 ">
                 <select name="phone_code" class="form-control required" id="">
                   <template v-for="(map, k) in codes">
                     <option
@@ -91,7 +80,7 @@
                 />
 
                 <span v-if="errors.phone_number">
-                  <strong class="text-danger">{{
+                  <strong class="text-danger text-size-2">{{
                     formatError(errors.phone_number)
                   }}</strong>
                 </span>
@@ -110,7 +99,7 @@
                 />
 
                 <span v-if="errors.email">
-                  <strong class="text-danger">{{
+                  <strong class="text-danger text-size-2">{{
                     formatError(errors.email)
                   }}</strong>
                 </span>
@@ -139,7 +128,7 @@
           />
         </template>
 
-        <div class="col-md-5 d-block d-sm-none">
+        <div class="d-block d-sm-none">
           <price-details
             :bookings="bookings"
             :property="property"
@@ -151,9 +140,43 @@
 
         <rules :property="property" />
 
-        <div class=" bg-white ">
-          <h4 class="card-title p-3 border-bottom">Payment</h4>
-          <div class="card-body">
+        <div class=" bg-white  mt-2">
+          <div class="card-body pt-0">
+            <div class="border-bottom">
+              <div class="d-flex  justify-content-between align-items-center ">
+                <h3 class="card-title mt-2 pb-3 mb-0">
+                  Payment
+                </h3>
+                <div
+                  class="payment-icons d-flex justify-content-center align-items-center"
+                >
+                  <div class="payment-image mr-3">
+                    <img
+                      src="/img/business.png"
+                      class="img-fluid"
+                      alt="make payment with mastercard"
+                    />
+                  </div>
+                  <div class="payment-image mr-3">
+                    <img
+                      class="img-fluid"
+                      src="/img/visa-card-ohram.png"
+                      alt="make payment with mastercard"
+                    />
+                  </div>
+                  <div class="payment-image">
+                    <img
+                      src="/img/Verve.png"
+                      class="img-fluid"
+                      alt="make payment with mastercard"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body pt-0">
             <div>
               By clicking on the button below, I acknowledge that I have read
               and understand the rules and regulations of this property
@@ -168,7 +191,7 @@
                 <div class="auth-spinner d-none">
                   spinner
                 </div>
-                <span class="lt">Make Payment</span>
+                <span class="lt bold text-white">Make Payment</span>
               </button>
             </p>
           </div>
@@ -467,10 +490,12 @@ export default {
     });
 
     this.amount = this.booking_details.total;
-
     this.$store.commit("setBookings", this.apartments);
     this.$store.commit("setBookingTotal", this.booking_details.total);
     this.$store.commit("setBookingSubTotal", this.booking_details.total);
+  },
+  mounted() {
+    document.getElementById("full-bg").remove();
   },
   components: {
     PriceDetails,
@@ -554,7 +579,7 @@ export default {
       axios
         .post("/book/coupon", {
           coupon: this.coupon,
-          total: this.booking_details.total,
+          total: this.bookingTotal,
         })
         .then((response) => {
           this.submiting = false;
@@ -582,7 +607,6 @@ export default {
 
       this.payment_is_processing = true;
 
-      this.amount = this.amount != 0 ? this.amount : this.booking_details.total;
       let context = this;
 
       let payload = {
@@ -596,7 +620,7 @@ export default {
         total:
           context.bookingPropertyServicesTotal +
           context.bookingServicesTotal +
-          context.amount,
+          context.bookingTotal,
         booking_ids: context.booking_details.booking_ids,
         property_id: context.property.id,
         coupon: this.coupon_code,
@@ -610,7 +634,7 @@ export default {
         amount:
           (context.bookingPropertyServicesTotal +
             context.bookingServicesTotal +
-            context.amount) *
+            context.bookingTotal) *
           100,
         currency: "NGN",
         first_name: context.form.first_name,
@@ -622,18 +646,10 @@ export default {
           ],
         },
         callback: function(response) {
-          this.paymentIsComplete = true;
-          axios
-            .post("/webhook/payment", {
-              booking: payload,
-            })
-            .then((response) => {
-              context.payment_is_processing = false;
-              context.paymentIsComplete = true;
-            })
-            .catch((error) => {
-              this.submiting = false;
-            });
+          if (response.status == "") {
+            context.payment_is_processing = false;
+            context.paymentIsComplete = true;
+          }
         },
         onClose: function() {
           context.order_text = "Make Payment";

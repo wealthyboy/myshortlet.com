@@ -37,14 +37,20 @@ class BookingController extends Controller
             return back();
         }
 
+		$referer = request()->headers->get('referer');
+
+	    //dd(\Cookie::get('booking'));
+
+
         
 		$bookings = BookingDetail::all_items_in_cart($property->id);
 
 		if (null == $bookings){
 			return back();
-
 		}
+		
 		$ids = $bookings->pluck('id')->toArray();
+		//dd($bookings);
 		$booking = $bookings[0];
 		$nights = [];
 		$phone_codes = Helper::phoneCodes();	
@@ -58,7 +64,8 @@ class BookingController extends Controller
         $from                 = $booking->checkin->format('l') .' '. $booking->checkin->format('d') . ' ' .$booking->checkin->format('F') .' '.$booking->checkin->isoFormat('Y');
         $to                   = $booking->checkout->format('l') .' '. $booking->checkout->format('d') . ' ' .$booking->checkout->format('F').' '.$booking->checkout->isoFormat('Y');
         $booking_details      = ['days'=>$days, 'from' => $from, 'to' => $to, 'nights' => $nights, 'total' => $total, 'booking_ids' => $ids];
-		return view('book.index', compact('phone_codes','property','bookings','booking_details'));
+		$qs = request()->all();
+		return view('book.index', compact('qs','referer','phone_codes','property','bookings','booking_details'));
     }
 
 	
@@ -73,12 +80,12 @@ class BookingController extends Controller
     {   
         $booking = new BookingDetail;
 		$apartment_quantity = $request->apartment_quantity;
-		$date  = explode("to",$request->check_in_checkout);
-        $date1 = trim($date[0]);
-        $date2 = trim($date[1]);
-        $data  = [];
-		$nights = [];
-		$start_date =null;
+		$date               = explode("to",$request->check_in_checkout);
+        $date1              = trim($date[0]);
+        $date2              = trim($date[1]);
+        $data               = [];
+		$nights             = [];
+		$start_date         = null;
         if ($date1 || $date2) {
             $start_date = Carbon::createFromDate($date1);
             $end_date = Carbon::createFromDate($date2);
@@ -86,18 +93,20 @@ class BookingController extends Controller
 
 
 		$ap_ids = [];
-		
+		$value = bcrypt('^%&#*$((j1a2c3o4b5@+-40');
+		session()->put('booking',$value);
+		$cookie = null;
+
         foreach ($apartment_quantity as $key => $apartments) {
 			foreach ($apartments as $apartment_id => $quantity) {
-				$booking = new BookingDetail;
-
-			   $ap = Apartment::find($apartment_id);
-			   $price = optional($ap)->converted_price;
-			   $sale_price = optional($ap)->discounted_price;
-			   $sp  = $sale_price ?? $price;
-				if (\Cookie::get('booking') !== null) {
+				$booking    = new BookingDetail;
+			    $ap         = Apartment::find($apartment_id);
+			    $price      = optional($ap)->converted_price;
+			    $sale_price = optional($ap)->discounted_price;
+			    $sp         = $sale_price ?? $price;
+				if ( \Cookie::get('booking') !== null ) {
 					$token  = \Cookie::get('booking');
-					$result = $booking->updateOrCreate(
+					$booking = $booking->updateOrCreate(
 						['apartment_id' => $apartment_id,'token' => $token],
 						[
 							'apartment_id' => $apartment_id,
@@ -112,10 +121,9 @@ class BookingController extends Controller
 						]
 					);
 				}  else  {
-
 					$value = bcrypt('^%&#*$((j1a2c3o4b5@+-40');
-					session()->put('booking',$value);
-					$cookie = cookie('booking',session()->get('booking'), time() + 86400);
+		            session()->put('booking',$value);
+		            $cookie                  = cookie('booking',session()->get('booking'), time() + 86400);
 					$booking->apartment_id   = $ap->id;
 					$booking->quantity       = $quantity;
 					$booking->property_id    = $request->property_id;
@@ -133,8 +141,16 @@ class BookingController extends Controller
 
 		}
 
-		$cookie = \Cookie::get('booking');
-		return response()->json([],200)->withCookie($cookie);
+       
+        if ($cookie == null) {
+			return response()->json([
+				'msg' => 'Reservation sucessfully added'
+			],200);
+		
+		}
+		return response()->json([
+			'msg' => 'Reservation sucessfully added'
+		],200)->withCookie($cookie);
     }
 
 

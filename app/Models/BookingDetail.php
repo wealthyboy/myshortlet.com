@@ -27,7 +27,7 @@ class BookingDetail extends Model
       ];
 
   public static function all_items_in_cart($property_id) {  
-    $cookie=\Cookie::get('booking',);
+    $cookie=\Cookie::get('booking');
     $booking = BookingDetail::with(["apartment",'apartment.free_services','apartment.bedrooms', 'apartment.bedrooms.parent', 'apartment.property','apartment.extra_services'])
               ->where(['token'=>$cookie, 'property_id' => $property_id])
               ->whereDate('checkin','>=', now())

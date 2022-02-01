@@ -63,12 +63,12 @@
         <div class="auth-spinner d-none">
             @include('_partials.spinner',['bgcolor' => '#ffffff'])
          </div> 
-        <span class="lt">Sign up</span> 
+        <span class="lt bold text-white">Sign up</span> 
       </button>
    </p>
    <div class="mt-4 pt-4 text-center border-top">
       <p class="form-group col-12">
-        Alraedy have an account?  <a class="auth-form" data-to="login"   href="#">Login</a>
+        Alraedy have an account?  <a class="auth-form bold text-white" data-to="login"   href="#">Login</a>
       </p>
       </p>
    </div>

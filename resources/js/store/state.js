@@ -30,4 +30,5 @@ export default {
   bookingSubTotal: 0,
   bookingServicesTotal: 0,
   bookingPropertyServicesTotal: 0,
+  meta: null,
 };

@@ -2,7 +2,7 @@
   <div class="bg-white mt-2">
     <div class="d-flex justify-content-between align-items-center">
       <div>
-        <h4 class="card-title p-3 ">
+        <h4 class="card-title p-3 mb-0">
           {{ booking.apartment.name || property.name }}
         </h4>
       </div>
@@ -19,10 +19,13 @@
       </div>
     </div>
 
-    <div class="card-body">
-      <div><i class="fas fa-info-circle mr-2"></i>Instant Confirmation</div>
+    <div class="card-body pt-0">
+      <div class="text-gold">
+        <i class="fas fa-info-circle mr-2 text-gold text-size-2"></i>Instant
+        Confirmation
+      </div>
       <div class="entire-apartment">
-        <div>Entire apartment</div>
+        <div class="mb-3">Entire apartment</div>
         <div class="d-flex justify-content-between flex-wrap">
           <div class="position-relative">
             <span class="position-absolute svg-icon-section">
@@ -105,12 +108,17 @@
                 <label id="box50" class="checkbox-label">
                   <input
                     for="box50"
-                    :name="'extra_services_' + booking.apartment.id"
+                    :name="
+                      'extra_services_' +
+                        booking.apartment.id +
+                        '_' +
+                        extra_service.id
+                    "
                     :class="'extra_services_' + booking.apartment.id"
                     :value="extra_service.id"
                     class="filter-attribute"
                     type="radio"
-                    @change="addServices($event)"
+                    @click="addServices($event)"
                     :data-quantity="parseInt(x)"
                     :data-price="extra_service.pivot.price * parseInt(x)"
                     :data-apartment="booking.apartment.id"
@@ -151,7 +159,7 @@ export default {
     bookings: Array,
   },
   data() {
-    return { amount: 0, checkboxesChecked: [], extras: [] };
+    return { amount: 0, checkboxesChecked: [], extras: [], isChecked: false };
   },
   computed: {
     ...mapGetters({
@@ -166,55 +174,92 @@ export default {
       deleteBooking: "deleteBooking",
     }),
     addServices(evt) {
-      let services = {};
+      this.isChecked = !this.isChecked;
+
+      if (!evt.target.classList.contains("checked")) {
+        this.isChecked = true;
+      }
+
+      if (this.isChecked) {
+        evt.target.checked = true;
+        evt.target.classList.add("checked");
+      } else {
+        evt.target.checked = false;
+        evt.target.classList.remove("checked");
+      }
+
+      let services = {},
+        checkboxesChecked = [],
+        extras = [];
       var inputs = document.querySelectorAll("input.filter-attribute:checked");
+
       for (var i = 0; i < inputs.length; i++) {
         if (inputs[i].checked) {
-          this.checkboxesChecked.push(inputs[i].dataset.price);
+          checkboxesChecked.push(inputs[i].dataset.price);
           services = {
             [inputs[i].dataset.apartment]: {
               [inputs[i].value]: inputs[i].dataset.quantity,
             },
           };
-          this.extras.push(services);
+          extras.push(services);
         }
       }
 
-      let amt = this.sum(this.checkboxesChecked);
-      console.log(amt);
+      let amt = this.sum(checkboxesChecked);
       this.$store.commit("setBookingServicesTotal", amt);
-      let extras = this.extras;
       this.$emit("addExtraService", { extras: extras });
     },
     removeFromBooking(evt, booking_id, ap_id) {
       let attributes = document.querySelectorAll(".extra_services_" + ap_id);
 
-      let c = [];
-      var inputs = document.querySelectorAll("input.filter-attribute:checked");
+      let c = [],
+        services = {},
+        checkboxesChecked = [],
+        extras = [];
+
       for (var i = 0; i < attributes.length; i++) {
-        if (inputs[i].checked) {
-          c.push(inputs[i].dataset.price);
+        if (attributes[i].checked) {
+          c.push(attributes[i].dataset.price);
         }
       }
-      let price = c.shift();
 
-      this.extras.forEach((e, i) => {
+      var inputs = document.querySelectorAll("input.filter-attribute:checked");
+      for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].checked) {
+          checkboxesChecked.push(inputs[i].dataset.price);
+          services = {
+            [inputs[i].dataset.apartment]: {
+              [inputs[i].value]: inputs[i].dataset.quantity,
+            },
+          };
+          extras.push(services);
+        }
+      }
+
+      //let price = c.shift();
+
+      extras.forEach((e, i) => {
         for (const key in e) {
           if (e.hasOwnProperty.call(e, key)) {
-            delete this.extras[i][ap_id];
+            delete extras[i][ap_id];
           }
         }
       });
 
-      let extras = this.extras;
-      const index = this.checkboxesChecked.indexOf(price);
-      if (index != -1) {
-        this.checkboxesChecked.splice(index, 1);
-      }
+      // console.log(price);
+      c.forEach((e, i) => {
+        console.log(e);
+        const index = checkboxesChecked.indexOf(e);
+        if (index != -1) {
+          checkboxesChecked.splice(index, 1);
+        }
+      });
 
-      let amount = this.sum(this.checkboxesChecked);
+      let amount = this.sum(checkboxesChecked);
+      this.$store.commit("setBookingServicesTotal", amount);
 
       this.deleteBooking({
+        context: this,
         booking_id: booking_id,
         property_id: this.property.id,
         amount: amount,
