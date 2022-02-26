@@ -41,7 +41,7 @@
          <h3 class="bold pt-3">Welcome to Avenue Montiagne</h3>
       </div>
       <div  class="row bg-grey pb-5 pt-3 position-relative">
-         <div id="operator"  style="background-image: url('http://myshortlet.test/uploads/GUSAX89nsYHONae8aQOD4HkhhdUqrrS2NIolUNsz.jpg');" class="col-md-8 rounded  card-background-image"></div>
+         <div id="operator"  style="background-image: url('/uploads/GUSAX89nsYHONae8aQOD4HkhhdUqrrS2NIolUNsz.jpg');" class="col-md-8 rounded  card-background-image"></div>
          <div   style="z-index: 2;" class="col-md-4 text-center d-flex justify-content-center align-items-center">
             <div class="bg-panel bg-panel-white p-5">
                <h3 class=" bold">Welcome to Avenue Montiagne</h3>
@@ -131,14 +131,14 @@
                </p>
             </div>
          </div>
-         <div style="background-image: url('http://myshortlet.test/uploads/M0oTm4VwHit8yGVeA6gRTL2gVwu47ioaMU6V1YyM.jpg');" class="col-md-7  rounded  card-background-image"></div>
+         <div style="background-image: url('/uploads/M0oTm4VwHit8yGVeA6gRTL2gVwu47ioaMU6V1YyM.jpg');" class="col-md-7  rounded  card-background-image"></div>
       </div>
    </section>
 
 
    <section class="bg-grey">
       <div   class="row bg-grey  pb-5 pt-5 position-relative">
-         <div style="background-image: url('http://myshortlet.test/uploads/4b2fVBQMd3OkPvATKDpuIxFK61PbgdcoEvJ3qI4j.jpg');" class="col-md-7 rounded  card-background-image">
+         <div style="background-image: url('/uploads/4b2fVBQMd3OkPvATKDpuIxFK61PbgdcoEvJ3qI4j.jpg');" class="col-md-7 rounded  card-background-image">
          </div>
          <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
             <div class="about-panel  bg-panel-white  bg-panel p-5">
