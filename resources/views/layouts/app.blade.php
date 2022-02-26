@@ -21,9 +21,6 @@
 
       @include('_partials.modal')
 
-      <div class="check-availablity pt-3">
-         <a class="" target="_blank" href="">Check Availability  </a>
-      </div>
 
       <div class="watsapp pt-3">
          <a class="chat-on-watsapp" target="_blank" href="https://wa.me/{{ $system_settings->store_phone }}">

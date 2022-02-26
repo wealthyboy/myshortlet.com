@@ -2,6 +2,7 @@ Window.Popper = require("popper.js").default; // pay attention to "default"
 
 require("./bootstrap");
 import Vue from "vue";
+import AOS from "aos";
 
 import flatpickr from "flatpickr";
 import validate from "jquery-validation";
@@ -43,6 +44,11 @@ $().ready(function() {
       "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     },
   });
+});
+
+AOS.init({
+  delay: 50, // values from 0 to 3000, with step 50ms
+  duration: 1000, // values from 0 to 3000, with step 50ms
 });
 
 //console.log(intlTelInput());

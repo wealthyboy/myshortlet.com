@@ -40,9 +40,9 @@
       <div class="text-center ">               
          <h3 class="bold pt-3">Welcome to Avenue Montiagne</h3>
       </div>
-      <div class="row bg-grey pb-5 pt-3 position-relative">
-         <div id="operator" style="background-image: url('http://myshortlet.test/uploads/GUSAX89nsYHONae8aQOD4HkhhdUqrrS2NIolUNsz.jpg');" class="col-md-8 rounded  card-background-image"></div>
-         <div class="col-md-4 text-center d-flex justify-content-center align-items-center">
+      <div  class="row bg-grey pb-5 pt-3 position-relative">
+         <div id="operator"  style="background-image: url('http://myshortlet.test/uploads/GUSAX89nsYHONae8aQOD4HkhhdUqrrS2NIolUNsz.jpg');" class="col-md-8 rounded  card-background-image"></div>
+         <div   style="z-index: 2;" class="col-md-4 text-center d-flex justify-content-center align-items-center">
             <div class="bg-panel bg-panel-white p-5">
                <h3 class=" bold">Welcome to Avenue Montiagne</h3>
                <p class="mt-4 text-left">
@@ -61,7 +61,7 @@
 
    <section data-animated-id="2" class="wprt-section how-we-build pt-5 pb-5 mt-5 mb-5">
       <div class="row">
-         <div class="col-md-4 col-12">
+         <div class="col-md-4 mb-sm-5 col-12">
             <div class="wprt-icon-box">
                <div class="icon-wrap bg-primary  d-flex justify-content-center align-items-center  text-center">
                   <svg
@@ -73,13 +73,11 @@
             </div>
             <div class="content-wrap">
                <h3 class="dd-title bold text-center">Wired & Ready</h3>
-               <p>
-                  Walk in & flip the switch. All utilities, including 100 mbps WiFi and HD TV, are taken care of.
-               </p>
+               
             </div>
          </div>
          <!-- /.col-md-4 -->
-         <div class="col-md-4 col-12">
+         <div class="col-md-4  mb-sm-5 col-12">
             <div class="wprt-icon-box">
                <div class="icon-wrap bg-primary   d-flex justify-content-center align-items-center  text-center">
                   <svg
@@ -92,11 +90,10 @@
             </div>
             <div class="content-wrap">
                <h3 class="bold text-center">Just Bring Yourself</h3>
-               <p>We offer reliable information to our clients that will aid effective and efficient decision making.</p>
             </div>
          </div>
          <!-- /.col-md-4 -->
-         <div class="col-md-4  col-12">
+         <div class="col-md-4 mb-sm-5  col-12">
             <div class="wprt-icon-box">
                <div class="icon-wrap bg-primary  d-flex justify-content-center align-items-center  text-center">
                <svg
@@ -109,7 +106,6 @@
             </div>
             <div class="content-wrap">
                <h3 class="dd-title bold text-center text-center">Stylish Comfort</h3>
-               <p>We are professional and flexible to our clients’ dynamic needs.</p>
             </div>
          </div>
 
@@ -141,7 +137,7 @@
 
 
    <section class="bg-grey">
-      <div class="row bg-grey  pb-5 pt-5 position-relative">
+      <div   class="row bg-grey  pb-5 pt-5 position-relative">
          <div style="background-image: url('http://myshortlet.test/uploads/4b2fVBQMd3OkPvATKDpuIxFK61PbgdcoEvJ3qI4j.jpg');" class="col-md-7 rounded  card-background-image">
          </div>
          <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
@@ -186,20 +182,15 @@
          </div>
       </div>
    </section>
-   <section class="bg-single-image-02  mt-3 bg-accent pt-5 pb-5" data-animated-id="3">
+   <section class="bg-single-image-02  mt-3 bg-accent pb-5" data-animated-id="3">
       <div class="row bg-gray">
         <div class="col-md-12 mb-3">
-            <h2 class="text-center  bold text-uppercase">For more information about our services</h2>
+            <h2 class="text-center  bold text-uppercase">Avenue Montaigne</h2>
             <p class="subtitle text-center text-size-1-big bold">  
-               <span class="text-gold"> Get in touch</span> with our expert consultants
+              Victoria Island, Lagos.
             </p>
          </div>
          
-         <div class="col-lg-12 col-sm-5 text-center mt-sm-0 mt-8 " data-animate="fadeInRight">
-            <i class="fal fa-phone fa-2x text-primary"></i>
-            <p class="text-uppercase text-size-1-big   mt-3">Call for help now!</p>
-            <p class="text-size-2-big text-secondary text-gold bold mt-3">{{ $system_settings->store_phone }}</p>
-         </div>
       </div>
    </section>
    <div class="clearfix"></div>
@@ -231,8 +222,6 @@
 @endsection
 @section('inline-scripts')
 
-
-   
 $('.owl-carousel').owlCarousel({
    loop:true,
    margin:10,
@@ -240,8 +229,8 @@ $('.owl-carousel').owlCarousel({
    dots: true,
    center: true,
    navText: [
-        '<div class="nav-btn prev-slide"><svg width="31" height="50" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-        '<div class="nav-btn next-slide"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+      '<div class="nav-btn prev-slide"><svg width="31" height="50" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+      '<div class="nav-btn next-slide"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
    ],
    responsive:{
       0:{
@@ -259,7 +248,7 @@ $('.owl-carousel').owlCarousel({
 
 $(".cities-carousel").owlCarousel({
    margin: 1,
-   nav: false,
+   nav:  false,
    dots: true,
    responsive: {
       0: {

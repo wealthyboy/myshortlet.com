@@ -15,6 +15,8 @@
       <!-- Main CSS File -->
 
       <link href="/css/services_style.css?version={{ str_random(6) }}" rel="stylesheet">
+      <link href="/css/banner.css?version={{ str_random(6) }}" rel="stylesheet">
+
       @yield('page-css')
       <meta property="og:site_name" content="royalbnbproperties.com">
       <meta property="og:url" content="https://royalbnbproperties.com/">

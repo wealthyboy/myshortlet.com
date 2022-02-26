@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="col-md-7">
-      <div class="card-title bold text-size-1-big">
+      <div class="card-title bold text-size-1-big  mt-lg-0 mt-sm-3 ">
         <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
       </div>
       <div class="text-size-2 text-gold">
@@ -68,8 +68,8 @@
           <span class="position-absolute svg-icon-section"></span>
           <span class="svg-icon-text">{{ bed.parent.name }}</span>
           <span class="svg-icon-text">
-            {{ bed.pivot.bed_count }} {{ bed.name }}</span
-          >
+            {{ bed.pivot.bed_count }} {{ bed.name }}
+          </span>
         </div>
       </template>
 

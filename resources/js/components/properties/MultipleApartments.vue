@@ -12,7 +12,7 @@
         <h3 class="bold">Choose your unit</h3>
         <div class="form-row">
           <div
-            class="form-group ml-1 form-border cursor-pointer search col-md-4 bmd-form-group"
+            class="form-group ml-1 mr-sm-1  form-border cursor-pointer search col-md-4 bmd-form-group"
           >
             <label class="pl-2 " for="flatpickr-input-f"
               >Check-in - Check-out</label
@@ -25,7 +25,9 @@
           <div id="people-number" class="col-md-4 cursor-pointer ">
             <guests />
           </div>
-          <div class="col-md-3 check-availablility">
+          <div
+            class="col-md-3  mb-lg-0 mt-lg-0 mt-sm-3 mb-sm-3  ml-1 mr-1 check-availablility"
+          >
             <button
               type="button"
               @click.prevent="checkAvailabity()"
