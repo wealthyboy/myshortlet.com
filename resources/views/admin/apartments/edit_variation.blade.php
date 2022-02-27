@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-2">
+            <div class="col-lg-1">
               <div class="form-group label-floating is-ty">
                 <label class="control-label">Toilets</label>
                     <select name="edit_room_toilets[{{ $apartment->id }}]" id="children" class="form-control">
@@ -110,7 +110,7 @@
                     <input name="edit_room_sale_price[{{ $apartment->id }}]"   value="{{ $apartment->sale_price }}"  class="form-control variation_sale_price variation" type="number">
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group label-floating">
                     <label class="control-label">End Date</label>
                     <input class="form-control  datepicker pull-right" value="{{ $helper::getReversedFormatedDate($apartment->sale_price_expires) }}" name="edit_room_sale_price_expires[{{ $apartment->id }}]" id="datepicker" type="text">
