@@ -185,18 +185,13 @@ class PropertiesController extends Controller
         $property->token               =  $id ? $property->token : $token;
         $property->save();
 
-
-        
         if (!empty($request->location_id)){
             $property->locations()->sync($request->location_id);
         }
-        
 
         $property->attributes()->sync($request->attribute_id);
         $property->categories()->sync($request->category_id);
         $locations = Location::find($request->location_id);
-
-        
 
         if (!empty($request->attribute_id)) {
             foreach($request->attribute_id as $key => $attribute ){
@@ -217,12 +212,7 @@ class PropertiesController extends Controller
         }
 
         
-        // foreach( $request->category_id as $category_id )
-        // {
-        //     $category = Category::find($category_id);
-        //     $category->locations()->sync($request->location_id);
-        //     $category->attributes()->sync($request->attribute_id);
-        // }
+        
 
 
         if ($request->mode == 'shortlet'){
@@ -473,11 +463,11 @@ class PropertiesController extends Controller
                         'price_mode'           => $request->edit_room_price_mode[$room_id],
                         'sale_price_expires'   => Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]),
                         'slug'                 => str_slug($request->edit_room_name[$room_id]),
-                        'max_adults'           => $request->room_max_adults[$room_id],
-                        'max_children'         => $request->room_max_children[$room_id],
+                        'max_adults'           => $request->edit_room_max_adults[$room_id],
+                        'max_children'         => $request->edit_room_max_children[$room_id],
                         'property_id'          => $property->id,
-                        'no_of_rooms'          => $request->room_number[$room_id],
-                        'toilets'              => $request->apartment_toilets[$room_id],
+                        'no_of_rooms'          => $request->edit_room_number[$room_id],
+                        'toilets'              => $request->edit_room_toilets[$room_id],
                         'type'                 => $request->type,             
                     ]
                 );

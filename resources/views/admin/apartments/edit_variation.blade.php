@@ -26,7 +26,19 @@
             </div>
 
             <div class="col-md-2">
-                <select  name="room_quantity[{{ $counter }}]" name="quantity" id="" required="true" class="form-control">
+                <div class="form-group">
+                    <select  name="edit_room_price_mode[{{ $apartment->id }}]"  id="" required="true" class="form-control">
+                        <option value="">Price Mode</option>
+                        <option value="per night"  {{  $apartment->price_mode == 'per night' ? 'selected' : '' }}>Per  night</option>
+                        <option value="per week"   {{  $apartment->price_mode == 'per week'  ? 'selected' : '' }}> Per  week</option>
+                        <option value="per month"  {{  $apartment->price_mode == 'per month' ? 'selected' : '' }}>Per  month</option>
+                        <option value="per year"   {{  $apartment->price_mode == 'per year'  ? 'selected' : '' }}> Per  year</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <select  name="edit_room_quantity[{{ $apartment->id }}]" name="quantity" id="" required="true" class="form-control">
                     <option value="" selected>Select Quantity</option>
                     @for ($i = 1; $i< 10; $i++) 
                         @if($apartment->quantity == $i)
@@ -42,7 +54,7 @@
             <div class="col-md-2">
                <div class="form-group label-floating is-ty">
                     <label class="control-label">Bedrooms</label>
-                    <select  name="room_number[{{ $apartment->id }}]" name="bedrooms" id="bedrooms" required class="form-control  bedrooms">
+                    <select  name="edit_room_number[{{ $apartment->id }}]" name="bedrooms" id="bedrooms" required class="form-control  bedrooms">
                         <option value="" selected>Choose Bedrooms</option>
                         @for ($i = 1; $i< 11; $i++) 
                             @if($apartment->no_of_rooms == $i)
@@ -58,7 +70,7 @@
             <div class="col-lg-2">
               <div class="form-group label-floating is-ty">
                 <label class="control-label">Toilets</label>
-                    <select name="apartment_toilets[{{ $apartment->id }}]" id="children" class="form-control">
+                    <select name="edit_room_toilets[{{ $apartment->id }}]" id="children" class="form-control">
                         <option  value="">Choose toilets... </option>
                         @for ($i = 1; $i< 10; $i++) 
                             @if($apartment->toilets == $i)
@@ -75,14 +87,14 @@
             <div class="col-md-2">
                 <div class="form-group label-floating ">
                     <label class="control-label">Max Adults</label>
-                    <input name="room_max_adults[{{ $apartment->id }}]"  required="true" value="{{ $apartment->max_adults }}" class="form-control   variation" type="number">
+                    <input name="edit_room_max_adults[{{ $apartment->id }}]"  required="true" value="{{ $apartment->max_adults }}" class="form-control   variation" type="number">
                 </div>
             </div>
 
             <div class="col-md-2">
                 <div class="form-group label-floating ">
                     <label class="control-label">Max Children</label>
-                    <input name="room_max_children[{{ $apartment->id }}]"  required="true" value="{{ $apartment->max_children }}" class="form-control   variation" type="number">
+                    <input name="edit_room_max_children[{{ $apartment->id }}]"  required="true" value="{{ $apartment->max_children }}" class="form-control   variation" type="number">
                 </div>
             </div>
 

@@ -82,12 +82,11 @@
                         <label class="control-label">Apartment Type</label>
                         <select name="type" id="apartment-type" class="form-control"  required="true" title="Please select product type"  title="" data-size="7">
                            <option  value="" selected>Choose One</option>
-                           <option  value="single">Single</option>
-                           <option  value="multiple">Multiple</option>
+                           <option  value="multiple" selected>Multiple</option>
                         </select>
                      </div>
                   </div>
-                  <div class="simple-apartment hide">
+                  <div class="simple-apartment ">
                      <div id="" data-id="{{ 212 }}"   class="">
                         <div class="clearfix"></div>
                         <div class="col-md-12">
