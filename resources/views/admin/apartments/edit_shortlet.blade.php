@@ -176,13 +176,11 @@
       <div class="form-group">
          <label class="control-label">Apartment Type</label>
          <select name="type" id="apartment-type" class="form-control"  required="true" title="Please select product type"  title="" data-size="7">
-            <option value="">Choose One</option>
-            <option {{ $property->type == 'single' ? 'selected' : '' }}    value="single">Single</option>
-            <option  {{ $property->type != 'single' ? 'selected' : '' }} value="multiple">Multiple</option>
+            <option value="multiple">Multiple</option>
          </select>
       </div>
    </div>
-   <div class="simple-apartment {{ $property->type == 'single' ? '' : 'hide' }}">
+   <div class="simple-apartment hide">
       <div id="" data-id="{{ $counter }}"   class="">
          <div class="clearfix"></div>
          <div class="col-md-12">

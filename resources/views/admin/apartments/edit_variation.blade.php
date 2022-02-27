@@ -50,7 +50,6 @@
                 </select>
             </div>
 
-        
             <div class="col-md-2">
                <div class="form-group label-floating is-ty">
                     <label class="control-label">Bedrooms</label>
@@ -82,7 +81,6 @@
                     </select>
                 </div>
             </div>
-
 
             <div class="col-md-2">
                 <div class="form-group label-floating ">

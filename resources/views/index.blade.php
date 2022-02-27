@@ -49,7 +49,7 @@
                   Our apartments in Lagos offer amazing amenities, stylish design, and a perfect location for living the lagos dream. With your choice of spacious, meticulously-designed 1-, 2-, or 3-bedroom apartments, youll be sure to find the ideal fit for your needs and lifestyle. Get ready for apartment living on a whole new level, with two resort-style pools, a luxurious spa, and a state-of-the-art fitness center for your convenience and enjoyment. Get excited about everything that awaits you at Avm, Lagos!
                </p>
                <div class="buttons">
-                  <a href="http://myshortlet.test/property/lovely-studio-apartment-at-lekki-agungi-wwifi-716059713" class="btn bold rounded btn-primary btn-lg">
+                  <a href="/property/lovely-studio-apartment-at-lekki-agungi-wwifi-716059713" class="btn bold rounded btn-primary btn-lg">
                      Check Availability 
                   </a>
                </div>
@@ -120,9 +120,7 @@
             <div class="bg-panel-white bg-left-panel p-5">
                <h3 class="mb-4 bold">Relax and enjoy</h3>
                <p class="mt-4">
-               Throughout your stay, you’ll enjoy a residents-only bar and lounge, a spectacular pool deck with panoramic views, a private screening room, a 24-hour Technogym® fitness center , and indoor parking. The open-air retail plaza features Fred S boutique, lifestyle brand KITH, Tesse restaurant, and Boutellier wine shop.
-
-
+                  Throughout your stay, you’ll enjoy a residents-only bar and lounge, a spectacular pool deck with panoramic views, a private screening room, a 24-hour Technogym® fitness center , and indoor parking. The open-air retail plaza features Fred S boutique, lifestyle brand KITH, Tesse restaurant, and Boutellier wine shop.
                   <div class="buttons">
                      <a href="#" class="btn rounded bold btn-primary btn-lg">
                         Check Availability 

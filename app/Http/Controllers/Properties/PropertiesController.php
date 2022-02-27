@@ -544,7 +544,7 @@ class PropertiesController extends Controller
 
         $safety_practices = $property->safety_practicies;
         $amenities = $property->apartment_facilities->groupBy('parent.name');
-        if ($property->mode == 'shortlet'){
+       // if ($property->mode == 'shortlet'){
             $property_type = $property->type == 'single' ?  $property->single_room : $property->multiple_rooms->first();
             $bedrooms = optional($property_type->bedrooms)->groupBy('parent.name');
             $date = Helper::toAndFromDate($request->check_in_checkout);
@@ -587,19 +587,7 @@ class PropertiesController extends Controller
                         'bedrooms',
                         'restaurants'
                     ));
-        } else {
-            $bedrooms = $property->bedrooms;
-            return view('properties.show',
-                    compact(
-                        'property',
-                        'saved',
-                        'sub_total',
-                        'areas',
-                        'amenities',
-                        'bedrooms',
-                        'restaurants'
-                    ));
-        }
+       // } 
 
 
         
