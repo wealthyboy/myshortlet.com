@@ -8,9 +8,7 @@
       <div id="app"  class="appp">
          <nav class="navbar   navbar-expand-lg " id="sectionsNav">
             @include('_partials.header')
-
          </nav>
-         
          <div style="background-color: #f8f5f4;" class="main  index-page">
             @yield('content')
          </div>
@@ -18,7 +16,6 @@
       </div>
 
       @include('_partials.modal')
-
       <script
          src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map.key') }}&v=weekly&channel=2"  async ></script>
 
