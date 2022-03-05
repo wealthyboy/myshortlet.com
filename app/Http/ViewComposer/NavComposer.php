@@ -25,7 +25,8 @@ use Illuminate\Support\Facades\Cache;
 class   NavComposer { 
    
    
-    public function compose (View $view) { 
+    public function compose (View $view) 
+	{ 
 		$footer_info       = Information::where('blog',false)->parents()->get(); 
 		$global_promos     = Promo::where('make_live',1)->get(); 
 		$system_settings   = SystemSetting::first();
