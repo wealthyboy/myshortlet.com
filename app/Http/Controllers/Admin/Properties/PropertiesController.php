@@ -212,9 +212,7 @@ class PropertiesController extends Controller
         }
 
         
-        
-
-
+    
         if ($request->mode == 'shortlet'){
             if(!empty($request->property_extra_services)) {
                 $prices = array_filter($request->property_extra_services);
@@ -246,7 +244,10 @@ class PropertiesController extends Controller
     public function propertyWithMultipleApartments($request,  $property) 
     {    
 
-        $price = implode(array_values($request->room_price));
+      //  $price = implode(array_values($request->room_price));
+       // dd();
+
+      //  dd($request->all());
         foreach ($request->room_price  as $key => $room) {
 
             //dd($request->apartment_facilities_id[$key]);
@@ -280,7 +281,7 @@ class PropertiesController extends Controller
             $this->syncAttributes($request, $apartment, $key);
         }
 
-        $property->price  =  $price;
+       // $property->price  =  $price;
         $property->save();
     }
 
