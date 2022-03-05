@@ -14,12 +14,12 @@
       <button style="z-index: 2; right:10px; top: 10px;" class="close-icon  cursor-pointer raised position-absolute"><i class="fal fa-times"></i></button>
       <div id="gallery-images" class="carousel slide carousel-fade" data-ride="carousel">
          <ol class="carousel-indicators">
-            @foreach($property->images  as $key => $image)
+            @foreach($property_type->images  as $key => $image)
             <li data-target="#gallery-images" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : ''}}"></li>
             @endforeach
          </ol>
          <div class="carousel-inner">
-            @foreach($property->images  as $key => $image)
+            @foreach($property_type->images  as $key => $image)
             <div class="carousel-item {{ $key == 0 ? 'active' : ''}}">
                <div  class="full-background" style="background-image: url('{{ $image->image }}');">
                   <div class="container">
