@@ -48,7 +48,7 @@
                <div class="col-6 pb-2 position-relative">
                   <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $property_type->images[3]->image }}')"></a>
                   <a href="#" id="full-image" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image ">
-                     <p class="fs-48 font-weight-600 text-white lh-1 mb-1 bold">+{{ $property->images->count() }}</p>
+                     <p class="fs-48 font-weight-600 text-white lh-1 mb-1 bold">+{{ $property_type->images->count() }}</p>
                      <p class="fs-16 font-weight-bold text-white lh-1625 text-uppercase bold">View Gallery</p>
                   </a>
                </div>
