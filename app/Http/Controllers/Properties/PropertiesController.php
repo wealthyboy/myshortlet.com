@@ -541,6 +541,8 @@ class PropertiesController extends Controller
         $restaurants= $property->restaurants; 
         $saved =  $this->saved();
 
+        dd($property->load('images'));
+
 
         $safety_practices = $property->safety_practicies;
         $amenities = $property->apartment_facilities->groupBy('parent.name');
