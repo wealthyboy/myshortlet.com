@@ -73,7 +73,6 @@
             </div>
             <div class="content-wrap">
                <h3 class="dd-title bold text-center">Wired & Ready</h3>
-               
             </div>
          </div>
          <!-- /.col-md-4 -->
@@ -156,7 +155,6 @@
    </section>
    <section  class="explore-cities mb-3">
       <div class="row">
-
          <div class="col-12 text-center mt-3">
             <h1 class="bold">Photo Gallery</h1>
             <p>Live Your Lifestyle In Comfort</p>
