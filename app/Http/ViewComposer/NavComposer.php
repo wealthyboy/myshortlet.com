@@ -31,7 +31,7 @@ class   NavComposer {
 		$system_settings   = SystemSetting::first();
 		$global_categories = Category::parents('sort_order', 'asc')->get();
 		$global_property   = Property::first();
-		dd($global_property->load('images'));
+		//dd($global_property->load('images'));
 		$currencies        = Currency::all();
 	    $view->with([
 		   	'footer_info'       => $footer_info,
