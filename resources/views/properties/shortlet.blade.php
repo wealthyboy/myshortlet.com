@@ -140,7 +140,7 @@
                   <div class="card-body">
                      <div  class="row   align-items-start">
                         <div class="col-md-4">
-                           <h3> {{ $property->state }}</h3>
+                           <h3 class="card-title"> {{ $property->state }}</h3>
                            {{ $property->state_description }}
                         </div>
                         <div class="col-md-7">
@@ -186,7 +186,7 @@
                      <div class="row">
                         @foreach($amenities as $key => $apartment_facilities)
                         <div class="col-md-3">
-                           <h5>{{ $key }}</h5>
+                           <h5 class="card-title">{{ $key }}</h5>
                            <ul class="list-unstyled">
                               @foreach($apartment_facilities as $key => $apartment_facility)
                               <li>
