@@ -65,7 +65,21 @@
           :key="bed.id"
           class="position-relative"
         >
-          <span class="position-absolute svg-icon-section"></span>
+          <span class="position-absolute svg-icon-section">
+            <svg
+              class=""
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M11 7h8a4 4 0 014 4v9h-2v-3H3v3H1V5h2v9h8V7zm-1 3a3 3 0 11-6 0 3 3 0 016 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </span>
           <span class="svg-icon-text">{{ bed.parent.name }}</span>
           <span class="svg-icon-text">
             {{ bed.pivot.bed_count }} {{ bed.name }}

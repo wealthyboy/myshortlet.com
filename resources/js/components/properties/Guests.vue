@@ -14,7 +14,7 @@
       </div>
     </div>
     <div
-      style="min-width: 100%; z-index: 1; background: #ffffff; opacity: 0;"
+      style="min-width: 100%; z-index: 2; background: #ffffff; opacity: 0;"
       id="people-dropdown"
       class="people-dropdown d-none pl-4 pt-3 pb-4 pr-4 position-absolute  border"
     >
