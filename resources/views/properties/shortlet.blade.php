@@ -149,7 +149,7 @@
                              @if ($areas->count())
 
                               <div class="col-md-6">
-                                 <h5>What's near by</h5>
+                                 <h5 class="card-title">What's near by</h5>
                                  <ul class="list-unstyled">
                                     @foreach($areas as $key => $area)
                                     <li  class="">{{ $area->name }}</li>
@@ -158,7 +158,7 @@
                               </div>
                               @endif
                               <div class="col-md-6">
-                                 <h5>Restuarants</h5>
+                                 <h5 class="card-title">Restuarants</h5>
                                  <ul class="list-unstyled ">
                                     @foreach($restaurants as $key => $restaurant)
                                     <li  class=""><span class="position-absolute svg-icon-section">
