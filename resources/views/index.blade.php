@@ -19,7 +19,7 @@
                      </div>
                      <br>
                      <div class="buttons">
-                        <a href="{{ $slider->link }}" class="btn rounded btn-primary btn-lg">
+                        <a href="/property/{{ $global_property->slug }}" class="btn rounded btn-primary btn-lg">
                            Check Availability 
                         </a>
                      </div>
@@ -49,7 +49,7 @@
                   Our apartments in Lagos offer amazing amenities, stylish design, and a perfect location for living the lagos dream. With your choice of spacious, meticulously-designed 1-, 2-, or 3-bedroom apartments, youll be sure to find the ideal fit for your needs and lifestyle. Get ready for apartment living on a whole new level, with two resort-style pools, a luxurious spa, and a state-of-the-art fitness center for your convenience and enjoyment. Get excited about everything that awaits you at Avm, Lagos!
                </p>
                <div class="buttons">
-                  <a href="/property/lovely-studio-apartment-at-lekki-agungi-wwifi-716059713" class="btn bold rounded btn-primary btn-lg">
+                  <a href="/property/{{ $global_property->slug }}" class="btn bold rounded btn-primary btn-lg">
                      Check Availability 
                   </a>
                </div>
@@ -121,7 +121,7 @@
                <p class="mt-4">
                   Throughout your stay, you’ll enjoy a residents-only bar and lounge, a spectacular pool deck with panoramic views, a private screening room, a 24-hour Technogym® fitness center , and indoor parking. The open-air retail plaza features Fred S boutique, lifestyle brand KITH, Tesse restaurant, and Boutellier wine shop.
                   <div class="buttons">
-                     <a href="#" class="btn rounded bold btn-primary btn-lg">
+                     <a href="/property/{{ $global_property->slug }}" class="btn rounded bold btn-primary btn-lg">
                         Check Availability 
                      </a>
                   </div>
@@ -145,7 +145,7 @@
                </p>
 
                <div class="buttons">
-                  <a href="#" class="btn rounded bold btn-primary btn-lg">
+                  <a href="/property/{{ $global_property->slug }}" class="btn rounded bold btn-primary btn-lg">
                      Check Availability 
                   </a>
                </div>
@@ -161,14 +161,14 @@
          </div>
          
          <div class="col-md-12 pt-5 pb-4">
-            <div class="owl-carousel svg-arrows owl-them">
+            <div class="cities-carousel owl-carousel svg-arrows ">
                @foreach($global_property->images  as $key => $image)
                <div class="item position-relative ">
                   <a href="#">
                      <img src="{{ $image->image }}" alt="" class="img-raised  ">
                   </a>
                   <div class="position-absolute  bottom-0 location-name">
-                     <a href="#">
+                     <a href="/property/{{ $global_property->slug }}">
                        <h4 class="text-white  ml-3 bold">{{ $image->name }}</h4>
                      </a>
                   </div>
@@ -218,45 +218,8 @@
 @endsection
 @section('inline-scripts')
 
-$('.owl-carousel').owlCarousel({
-   loop:true,
-   margin:10,
-   nav:true,
-   dots: true,
-   center: true,
-   navText: [
-      '<div class="nav-btn prev-slide"><svg width="31" height="50" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-      '<div class="nav-btn next-slide"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-   ],
-   responsive:{
-      0:{
-         items:1
-      },
-      600:{
-         items:1
-      },
-      1000:{
-        items:1
-      }
-   }
-})
 
 
-$(".cities-carousel").owlCarousel({
-   margin: 1,
-   nav:  false,
-   dots: true,
-   responsive: {
-      0: {
-         items: 1,
-      },
-      600: {
-         items: 3,
-      },
-      1000: {
-         items: 1,
-      },
-   }
-   
-})
+
+
 @stop

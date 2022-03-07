@@ -191,7 +191,7 @@
                 <div class="auth-spinner d-none">
                   spinner
                 </div>
-                <span class="lt bold text-white">Make Payment</span>
+                <span class="lt bold text-white">{{ order_text }}</span>
               </button>
             </p>
           </div>
@@ -452,7 +452,7 @@ export default {
       coupon_error: null,
       payment_is_processing: null,
       voucher: [],
-      order_text: null,
+      order_text: "Make reservation",
       error: null,
       errorsBag: [],
       form: {
@@ -597,7 +597,6 @@ export default {
     },
     makePayment: function() {
       let input = document.querySelectorAll(".required");
-
       this.validateForm({ context: this, input: input });
       if (Object.keys(this.errors).length !== 0) {
         this.error = "Please check for errors";
@@ -606,8 +605,8 @@ export default {
       }
 
       this.payment_is_processing = true;
-
       let context = this;
+      context.order_text = "Processing.......";
 
       let payload = {
         first_name: this.form.first_name,
@@ -627,36 +626,18 @@ export default {
         property_services: this.form.property_services,
       };
 
-      this.payment_method = "card";
-      var handler = PaystackPop.setup({
-        key: "pk_test_c5b3db1649d534eec8ab6a35ed696ad624e3070a",
-        email: context.form.email,
-        amount:
-          (context.bookingPropertyServicesTotal +
-            context.bookingServicesTotal +
-            context.bookingTotal) *
-          100,
-        currency: "NGN",
-        first_name: context.form.first_name,
-        metadata: {
-          custom_fields: [
-            {
-              booking: payload,
-            },
-          ],
-        },
-        callback: function(response) {
-          if (response.status == "") {
-            context.payment_is_processing = false;
-            context.paymentIsComplete = true;
-          }
-        },
-        onClose: function() {
+      axios
+        .post("/webhook/payment", {
+          booking: payload,
+        })
+        .then((response) => {
+          context.payment_is_processing = false;
+          context.paymentIsComplete = true;
+        })
+        .catch((error) => {
           context.order_text = "Make Payment";
           context.payment_is_processing = false;
-        },
-      });
-      handler.openIframe();
+        });
     },
   },
 };

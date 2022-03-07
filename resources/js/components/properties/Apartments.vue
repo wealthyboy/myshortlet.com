@@ -89,7 +89,7 @@
 
       <div>
         <div class="price-box">
-          <div class="d-inline-flex ">
+          <div class="d-inline-flex  mt-sm-3">
             <template v-if="room.discounted_price">
               <div class="sale-price mr-3">
                 {{ room.currency }}{{ room.converted_price | priceFormat }}
@@ -104,7 +104,7 @@
               </div>
             </template>
           </div>
-          <div class="text-size-2">per night</div>
+          <div class="text-size-2">{{ room.price_mode }}</div>
         </div>
         <div v-if="room.property.is_refundable">Fully Refundable</div>
       </div>
