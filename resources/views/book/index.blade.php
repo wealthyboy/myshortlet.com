@@ -12,7 +12,6 @@
          <div class="loading">
                <div class="loader"></div>
          </div>
-         <img src="{{ $system_settings->logo_path() }}" height="80" width="80" alt="myshotlet sale Logo">
       </div>  
    </div>
     
