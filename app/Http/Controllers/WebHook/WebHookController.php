@@ -28,23 +28,23 @@ use App\Models\ApartmentAttribute;
 class WebHookController extends Controller
 {
 
-	public  $settings;
+    public  $settings;
 
-	public function __construct()
-	{
-		$this->settings =  SystemSetting::first();
+    public function __construct()
+    {
+        $this->settings =  SystemSetting::first();
     }
-    
+
 
     public function payment(Request $request)
-    {   
-        
+    {
+
 
 
         \Log::info($request->all());
 
 
-        
+
         try {
             $input    =  $request->all();
             $user_reservation = new UserReservation;
@@ -63,7 +63,7 @@ class WebHookController extends Controller
         $user_reservation->user_id        =  optional($request->user())->id;
         $user_reservation->guest_user_id  =  $guest->id;
         $user_reservation->currency       =  $request->booking['currency'];
-        $user_reservation->invoice        =  "INV-".date('Y')."-".rand(10000,time());
+        $user_reservation->invoice        =  "INV-" . date('Y') . "-" . rand(10000, time());
         $user_reservation->payment_type   =  'online';
         $user_reservation->property_id    =  $request->booking['property_id'];
         $user_reservation->coupon         =  $request->booking['coupon'];
@@ -82,16 +82,16 @@ class WebHookController extends Controller
         $services = $request->booking['services'];
         $property_extras = $request->booking['property_services'];
 
-        foreach($services as $key => $room_serices) {
-            foreach($room_serices as $key => $room_serice) {
-                foreach($room_serice as $attribute_id => $qty) {
+        foreach ($services as $key => $room_serices) {
+            foreach ($room_serices as $key => $room_serice) {
+                foreach ($room_serice as $attribute_id => $qty) {
                     $aq[$attribute_id] = $qty;
                     $e_services[$key] = $aq;
-                } 
+                }
             }
         }
 
-        foreach ( $bookings   as  $booking ){
+        foreach ($bookings   as  $booking) {
             $reservation = new Reservation;
             $reservation->quantity       =  $booking->quantity;
             $reservation->apartment_id   =  $booking->apartment_id;
@@ -102,10 +102,10 @@ class WebHookController extends Controller
             $reservation->checkin        =  $booking->checkin;
             $reservation->checkout       =  $booking->checkout;
             $reservation->save();
-            foreach($e_services as $key => $attributes) {
-                foreach($attributes as $attribute_id => $qty) {
+            foreach ($e_services as $key => $attributes) {
+                foreach ($attributes as $attribute_id => $qty) {
                     $extras = new Extra;
-                    if ($booking->apartment_id == $key){
+                    if ($booking->apartment_id == $key) {
                         $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
                         $extras->apartment_id  = $key;
                         $extras->property_id   = $request->property_id;
@@ -117,13 +117,11 @@ class WebHookController extends Controller
                         $extras->attribute_id    = $attribute_id;
                         $extras->save();
                     }
-
                 }
-                
-            } 
+            }
         }
 
-        foreach($property_extras as $attribute_id ) {
+        foreach ($property_extras as $attribute_id) {
             $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
             $extras = new Extra;
             $extras->property_id     = $request->property_id;
@@ -131,27 +129,27 @@ class WebHookController extends Controller
             $extras->guest_user_id   = $guest->id;
             $extras->attribute_id    = $attribute_id;
             $extras->user_reservation_id  = $user_reservation->id;
-            $extras->price                = $attribute->converted_price;
+            $extras->price = optional($attribute)->converted_price;
             $extras->save();
         }
-        
-        $admin_emails = explode(',',$this->settings->alert_email);
-            
+
+        $admin_emails = explode(',', $this->settings->alert_email);
+
         try {
             //$when = now()->addMinutes(5); 
             \Mail::to($guest->email)
-            ->bcc($admin_emails[0])
-            ->send(new ReservationReceipt($user_reservation,$this->settings));
+                ->bcc($admin_emails[0])
+                ->send(new ReservationReceipt($user_reservation, $this->settings));
         } catch (\Throwable $th) {
-            Log::error("Mail error :". $th);
+            Log::error("Mail error :" . $th);
         }
 
         //delete cart
-        if ( $request->coupon ) {
+        if ($request->coupon) {
             $code = trim($request->coupon);
             $coupon =  Voucher::where('code', $request->coupon)->first();
-            if(null !== $coupon && $coupon->type == 'specific'){
-                $coupon->update(['valid'=>false]);
+            if (null !== $coupon && $coupon->type == 'specific') {
+                $coupon->update(['valid' => false]);
             }
         }
 
@@ -164,6 +162,4 @@ class WebHookController extends Controller
         echo "Successfull";
         Log::info($output);
     }
-
-   
 }
