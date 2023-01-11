@@ -38,7 +38,7 @@
 <div class="container-fluid ">
    <section class="bg-grey">
       <div class="text-center ">
-         <h3 class="bold pt-3">Welcome to Avenue Montiagne && Others && others</h3>
+         <h3 class="bold pt-3">Welcome to Avenue Montiagne </h3>
       </div>
       <div class="row bg-grey pb-5 pt-3 position-relative">
          <div id="operator" style="background-image: url('/uploads/GUSAX89nsYHONae8aQOD4HkhhdUqrrS2NIolUNsz.jpg');" class="col-md-8 rounded  card-background-image"></div>
