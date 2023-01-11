@@ -3,7 +3,7 @@
 <div class="">
    <div class="container">
       <div class="row">
-         <div class="col-md-12 ml-auto mr-auto">
+         <div class="col-md-12 ml-auto mr-auto mt-4">
             <category-search :reload="0" />
          </div>
       </div>
