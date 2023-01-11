@@ -3,7 +3,7 @@
 <div class="">
    <div class="container">
       <div class="row">
-         <div class="col-md-12 ml-auto mr-auto">
+         <div class="col-md-12 ml-auto mr-auto mt-4">
             <category-search :reload="0" />
          </div>
       </div>
@@ -13,6 +13,12 @@
    <div class="sidebar-toggle d-block d-sm-none "> <i class="material-icons filter adjust">sort</i> filter</div>
    <div class="sidebar-overlay d-none"></div>
    <div class="row no-gutters ">
+
+      <div class="col-md-2 pl-2">
+         <a href="" class="h">
+            <img class="img-fluid" src="https://avenuemontaigne.ng/uploads/Lfr25dG9jV42zCJ3iDQLymqDYOhzYYfCQi0ddaYn.gif" alt="">
+         </a>
+      </div>
 
 
       @if (!$properties)
