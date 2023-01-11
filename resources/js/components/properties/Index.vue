@@ -106,7 +106,7 @@
                   </template>
                 </div>
                 <div class="text-size-2">
-                  {{ property.price_mode }}
+                  {{ property.price_mode }} per night
                 </div>
                 <div
                   class="text-size-1 text-gray"

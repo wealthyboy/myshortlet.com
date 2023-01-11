@@ -63951,7 +63951,7 @@ var render = function() {
                                 _vm._v(
                                   "\n                " +
                                     _vm._s(property.price_mode) +
-                                    "\n              "
+                                    " per night\n              "
                                 )
                               ]),
                               _vm._v(" "),
