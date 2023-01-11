@@ -14,12 +14,6 @@
    <div class="sidebar-overlay d-none"></div>
    <div class="row no-gutters ">
 
-      <div class="col-md-2 pl-2">
-         <a href="" class="h">
-            <img class="img-fluid" src="https://avenuemontaigne.ng/uploads/Lfr25dG9jV42zCJ3iDQLymqDYOhzYYfCQi0ddaYn.gif" alt="">
-         </a>
-      </div>
-
 
       @if (!$properties)
       <div id="load-products" class="col-md-10 pl-1">
@@ -31,9 +25,10 @@
          </div>
       </div>
       @else
-      <div class="col-md-2 pr-2 mobile-sidebar">
-         <div class=" bg-white  sidebar-section">
-         </div>
+      <div class="col-md-2 pl-2">
+         <a href="" class="h">
+            <img class="img-fluid" src="https://avenuemontaigne.ng/uploads/Lfr25dG9jV42zCJ3iDQLymqDYOhzYYfCQi0ddaYn.gif" alt="">
+         </a>
       </div>
       <div id="load-products" class="col-md-8 pl-1">
          <products-index :next_page="{{ collect($next_page) }}" :propertys="{{ $properties->load('facilities','free_services') }}" />
