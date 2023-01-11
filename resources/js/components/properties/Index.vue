@@ -197,8 +197,7 @@ export default {
     }),
   },
 
-  created() {
-    this.getProperties();
+  mounted() {
     this.$store.commit("setPropertyLoading", true);
     let time = new Date().getTime();
     setTimeout(() => {

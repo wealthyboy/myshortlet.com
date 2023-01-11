@@ -6261,10 +6261,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     links: "links",
     next_page_url: "next_page_url"
   })),
-  created: function created() {
+  mounted: function mounted() {
     var _this = this;
 
-    this.getProperties();
     this.$store.commit("setPropertyLoading", true);
     var time = new Date().getTime();
     setTimeout(function () {
