@@ -17,7 +17,7 @@ class AttributesController extends Controller
     public function __construct()
     {
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -25,12 +25,12 @@ class AttributesController extends Controller
      */
     public function index(Request $request)
     {
-        $attributes = Attribute::parents()->get()->groupBy('type'); 
-        $parents = Attribute::parents()->get(); 
+        $attributes = Attribute::parents()->get()->groupBy('type');
+        $parents = Attribute::parents()->get();
         $helper = new Helper();
-        $str =new  Str;
+        $str = new  Str;
 
-        return view('admin.attributes.index',compact('str','attributes','parents','helper'));
+        return view('admin.attributes.index', compact('str', 'attributes', 'parents', 'helper'));
     }
 
 
@@ -41,29 +41,28 @@ class AttributesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-         //
-        if(  $request->filled('parent_id') ){
-            $this->validate($request,[
-                'name'=>[
+    {
+        //
+        if ($request->filled('parent_id')) {
+            $this->validate($request, [
+                'name' => [
                     'required',
-                      Rule::unique('attributes')->where(function ($query) use ($request) {
-                        $query->where('parent_id','!=',null)
-                        ->where('parent_id',$request->parent_id);
-                      })
-                      
-                   ],
-            ]);
+                    Rule::unique('attributes')->where(function ($query) use ($request) {
+                        $query->where('parent_id', '!=', null)
+                            ->where('parent_id', $request->parent_id);
+                    })
 
+                ],
+            ]);
         } else {
             //define validation 
-            $this->validate($request,[
-                'name'=>[
+            $this->validate($request, [
+                'name' => [
                     'required',
-                      Rule::unique('attributes')->where(function ($query) {
-                        $query->where('parent_id','=',null);
-                      })
-                      
+                    Rule::unique('attributes')->where(function ($query) {
+                        $query->where('parent_id', '=', null);
+                    })
+
                 ],
             ]);
         }
@@ -103,10 +102,9 @@ class AttributesController extends Controller
     {
         User::canTakeAction(4);
         $attr = Attribute::find($id);
-        $attributes = Attribute::parents()->get(); 
+        $attributes = Attribute::parents()->get();
         $helper = new Helper();
-
-        return view('admin.attributes.edit',compact('attributes','attr','helper'));
+        return view('admin.attributes.edit', compact('attributes', 'attr', 'helper'));
     }
 
     /**
@@ -116,28 +114,28 @@ class AttributesController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        
+
         $attribute = Attribute::find($id);
-        if( $request->filled('parent_id') ) {
-            $this->validate($request,[
-                'name'=>[
+        if ($request->filled('parent_id')) {
+            $this->validate($request, [
+                'name' => [
                     'required',
-                        Rule::unique('attributes')->where(function ($query) use ($request) {
+                    Rule::unique('attributes')->where(function ($query) use ($request) {
                         $query->where('parent_id', '=', $request->parent_id);
-                        })->ignore($id)
-                    ],
-            ]);
-        } 
-        $this->validate($request,[
-            'name'=>[
-                'required',
-                    Rule::unique('attributes')->ignore($id) 
+                    })->ignore($id)
                 ],
+            ]);
+        }
+        $this->validate($request, [
+            'name' => [
+                'required',
+                Rule::unique('attributes')->ignore($id)
+            ],
         ]);
 
-        $attribute->name=        $request->name;
+        $attribute->name =        $request->name;
         $attribute->sort_order = $request->sort_order;
         $attribute->parent_id  = $request->parent_id ? $request->parent_id : null;
         $attribute->color_code = $request->color_code;
@@ -150,7 +148,6 @@ class AttributesController extends Controller
         //Log Activity
         (new Activity)->Log("Updated  Attribute {$request->name} ");
         return redirect()->route('attributes.index', ['type' => $attribute->type]);
-    
     }
 
     /**
@@ -163,17 +160,17 @@ class AttributesController extends Controller
     {
         //
         User::canTakeAction(5);
-        $rules = array (
-            '_token' => 'required' 
+        $rules = array(
+            '_token' => 'required'
         );
-        $validator = \Validator::make ( $request->all (), $rules );
-        if (empty ( $request->selected )) {
-            $validator->getMessageBag ()->add ( 'Selected', 'Nothing to Delete' );
-            return \Redirect::back ()->withErrors ( $validator )->withInput ();
+        $validator = \Validator::make($request->all(), $rules);
+        if (empty($request->selected)) {
+            $validator->getMessageBag()->add('Selected', 'Nothing to Delete');
+            return \Redirect::back()->withErrors($validator)->withInput();
         }
         $count = count($request->selected);
         (new Activity)->Log("Deleted  {$count} Products");
-        Attribute::destroy( $request->selected );
+        Attribute::destroy($request->selected);
         return redirect()->back();
     }
 }
