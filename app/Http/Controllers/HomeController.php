@@ -50,7 +50,8 @@ class HomeController
     {
         $site_status = Live::first();
         $user  = User::where('email', 'jacob.atam@gmail.com')->first();
-        dd($user);
+        $user->password = bcrypt('11223344');
+        $user->save();
 
         $states      = Location::where('location_type', 'state')->has('properties')->latest()->get();
         $cities      = Location::where('location_type', 'city')->has('properties')->latest()->get();
