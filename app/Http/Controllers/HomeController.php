@@ -27,8 +27,7 @@ class HomeController
     public function index(Request $request)
     {
 
-        $user  = User::where('email', 'jacob.atam@gmail.com')->first();
-        dd($user);
+
         $site_status = Live::first();
         $banners =  Banner::banners()->get();
 
@@ -50,6 +49,8 @@ class HomeController
     public function home()
     {
         $site_status = Live::first();
+        $user  = User::where('email', 'jacob.atam@gmail.com')->first();
+        dd($user);
 
         $states      = Location::where('location_type', 'state')->has('properties')->latest()->get();
         $cities      = Location::where('location_type', 'city')->has('properties')->latest()->get();
