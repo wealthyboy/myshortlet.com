@@ -25,7 +25,7 @@
           </div>
           <div class="col-md-9 position-relative  pl-3">
             <h6 class="card-category text-gold">
-              {{ property.categories[0].name }}
+              {{ property }}
             </h6>
             <div class="d-flex  justify-content-between">
               <div>

@@ -63713,9 +63713,7 @@ var render = function() {
                       [
                         _c("h6", { staticClass: "card-category text-gold" }, [
                           _vm._v(
-                            "\n            " +
-                              _vm._s(property.categories[0].name) +
-                              "\n          "
+                            "\n            " + _vm._s(property) + "\n          "
                           )
                         ]),
                         _vm._v(" "),
