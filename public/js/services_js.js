@@ -5489,6 +5489,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -62862,12 +62867,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("form", { attrs: { method: "GET", action: "/property/search" } }, [
-    _c("div", { staticClass: "form-row" }, [
+    _c("div", { staticClass: "d-flex justify-content-between " }, [
       _c(
         "div",
         {
           staticClass:
-            "form-group  form-border cursor-pointer search col-md-5 bmd-form-group"
+            "form-group form-border w-100 cursor-pointer search  bmd-form-group"
         },
         [
           _c(
@@ -62884,14 +62889,14 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "col-md-5  cursor-pointer p-0",
+          staticClass: "w-100 ml-2 cursor-pointer p-0",
           attrs: { id: "people-number" }
         },
         [_c("guests")],
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-2  check-availablility" }, [
+      _c("div", { staticClass: "w-25 ml-2 check-availablility" }, [
         _c(
           "button",
           {

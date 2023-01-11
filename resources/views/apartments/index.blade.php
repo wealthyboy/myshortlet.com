@@ -1,6 +1,6 @@
 @extends('layouts.listing')
 @section('content')
-<div class="d-flex  justify-content-center align-items-center mt-4">
+<div class="">
    <div class="container">
       <div class="row">
          <div class="col-md-12 ml-auto mr-auto">

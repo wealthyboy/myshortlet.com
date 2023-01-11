@@ -1,19 +1,24 @@
 <template>
-  <form method="GET" action="/property/search">
-    <div class="form-row">
-      <div
-        class="form-group  form-border cursor-pointer search col-md-5 bmd-form-group"
-      >
-        <label class="pl-2 ml-4" for="flatpickr-input-f"
-          >Check-in - Check-out</label
-        >
+  <form
+    method="GET"
+    action="/property/search"
+  >
+    <div class="d-flex justify-content-between ">
+      <div class="form-group form-border w-100 cursor-pointer search  bmd-form-group">
+        <label
+          class="pl-2 ml-4"
+          for="flatpickr-input-f"
+        >Check-in - Check-out</label>
         <date-range />
       </div>
 
-      <div id="people-number" class="col-md-5  cursor-pointer p-0">
+      <div
+        id="people-number"
+        class="w-100 ml-2 cursor-pointer p-0"
+      >
         <guests />
       </div>
-      <div class="col-md-2  check-availablility">
+      <div class="w-25 ml-2 check-availablility">
         <button
           type="button"
           @click.prevent="search()"
@@ -77,7 +82,7 @@ export default {
 
       this.$store.commit("setLocationSearch", locationSearch);
     },
-    search: function() {
+    search: function () {
       this.build();
 
       this.getProperties(window.location);
