@@ -20491,3 +20491,9 @@ button.owl-next {
 .payment-image:first-child > img {
   height: 25px;
 }
+
+.form-border .bmd-label-static {
+  font-size: 0.7rem;
+  top: 0.3rem;
+  left: 12px;
+}
