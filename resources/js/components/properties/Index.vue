@@ -9,8 +9,14 @@
         <div class="row no-gutters">
           <div class="col-md-3 col-12 position-relative">
             <div>
-              <a target="_blank" :href="property.link">
-                <img :src="property.image_m" class="img  img-fluid" />
+              <a
+                target="_blank"
+                :href="property.link"
+              >
+                <img
+                  :src="property.image_m"
+                  class="img  img-fluid"
+                />
               </a>
               <div class="fav-icon position-absolute">
                 <saved :property="property" />
@@ -27,13 +33,12 @@
                   target="_blank"
                   class="bold text-size-1-big"
                   :href="property.link"
-                  >{{ property.name }}</a
-                >
+                >{{ property.name }}</a>
                 <div class="d">
-                  <small
-                    ><a :href="property.link" class="p-0">{{ property.city }}</a
-                    >, <a href="">{{ property.state }}</a></small
-                  >
+                  <small><a
+                      :href="property.link"
+                      class="p-0"
+                    >{{ property.city }}</a>, <a href="">{{ property.state }}</a></small>
                 </div>
                 <div class="mb-5">
                   <div
@@ -43,7 +48,7 @@
                     <span
                       :key="facility.id"
                       v-for="facility in property.facilities"
-                      >{{ facility.name }}.
+                    >{{ facility.name }}.
                     </span>
                   </div>
 
@@ -79,9 +84,7 @@
                 </div>
               </div>
             </div>
-            <div
-              class="d-flex position-absolute apartment-review justify-content-between mt-1 align-items-end"
-            >
+            <div class="d-flex position-absolute apartment-review justify-content-between mt-1 align-items-end">
               <div class="reviews-section"></div>
               <div class="text-right mr-2">
                 <div class="d-inline-flex">
@@ -195,6 +198,7 @@ export default {
   },
 
   created() {
+    this.getProperties();
     this.$store.commit("setPropertyLoading", true);
     let time = new Date().getTime();
     setTimeout(() => {
@@ -211,7 +215,7 @@ export default {
       getProperties: "getProperties",
       saveProperty: "saveProperty",
     }),
-    favorite: function(e, property_id) {
+    favorite: function (e, property_id) {
       this.saveProperty({
         property_id: property_id,
       }).then((res) => {});
@@ -219,9 +223,9 @@ export default {
     loadMore(e) {
       let t = new Date().getTime();
       let href = e.target.getAttribute("href");
-      this.getProperties(
-        href + "&timestamp=${new Date().getTime()}"
-      ).then((r) => {});
+      this.getProperties(href + "&timestamp=${new Date().getTime()}").then(
+        (r) => {}
+      );
     },
   },
 };
