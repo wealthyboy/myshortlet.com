@@ -5,18 +5,21 @@
       <div class="row">
          <div class="col-md-12 pt-5 pb-4">
             <div class="owl-carousel svg-arrows owl-them">
-               @foreach($global_property->images  as $key => $image)
-               <div class="item position-relative ">
-                  <a href="#">
-                     <img src="{{ $image->image }}" alt="" class="img-raised  ">
-                  </a>
-                  <div class="position-absolute  bottom-0 location-name">
-                     <a href="#">
-                        <h4 class="text-white  ml-3 bold">{{ $image->name }}</h4>
-                     </a>
-                  </div>
-               </div>
-               @endforeach
+               @if (optional($global_property)->images)
+                  @foreach($global_property->images  as $key => $image)
+                     <div class="item position-relative ">
+                        <a href="#">
+                           <img src="{{ $image->image }}" alt="" class="img-raised  ">
+                        </a>
+                        <div class="position-absolute  bottom-0 location-name">
+                           <a href="#">
+                              <h4 class="text-white  ml-3 bold">{{ $image->name }}</h4>
+                           </a>
+                        </div>
+                     </div>
+                  @endforeach
+               @endif
+
             </div>
          </div>
       </div>

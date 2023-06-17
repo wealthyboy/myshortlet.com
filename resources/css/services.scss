@@ -183,10 +183,40 @@ span.svg-icon-text {
     z-index: 1;
 }
 
+.video-section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+
+.video-section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+
+
+
+video.vidoeo-intro {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* display: none; */
+}
+
 .bg-panel {
-    position: absolute;
-    left: -112px;
-    right: 62px;
+   
     z-index: 2;
 }
 

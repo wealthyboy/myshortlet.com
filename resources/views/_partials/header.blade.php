@@ -15,42 +15,16 @@
     </div>
 
     <div class="collapse navbar-collapse">
-        <ul class="navbar-nav navbar-center ml-auto">
-            <li class="nav-item">
-                <a href="/" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item">
-                <a href="/apartments" class="nav-link">Apartments</a>
-            </li>
-
-            <li class="nav-item">
-                <a href="/virtual-tour" class="nav-link">Virtual Tours</a>
-            </li>
-
-            <li class="nav-item">
-                <a href="/neighborhood" class="nav-link">NEIGHBORHOOD</a>
-            </li>
-
-            <li class="nav-item">
-                <a href="/contact-us" class="nav-link">Contact Us</a>
-            </li>
-        </ul>
+       
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a href="/property/{{ $global_property->slug }}" class="nav-link">
+            <li class="nav-item p-1">
+                <a href="/property/{{ optional($global_property)->slug }}" class="nav-link btn p-1 px-3 bg-dark text-white btn-outline-primary">
                     <i class="fal fa-sign-in"></i>
                     Book Now
                 </a>
             </li>
 
-            @guest
-            <li class="nav-item">
-                <a data-toggle="modal" href="#" data-to="login" data-target="#loadModal" class="nav-link auth-form">
-                    <i class="fal fa-sign-in"></i>
-                    Login
-                </a>
-            </li>
-            @endguest
+            
 
             @auth
             <li class="dropdown nav-item">

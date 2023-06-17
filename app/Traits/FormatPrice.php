@@ -101,7 +101,7 @@ trait FormatPrice
       if ($rate){
          return $rate->symbol;
       }
-		  return $this->setting->currency->symbol;
+		  return  optional($this->setting->currency)->symbol;
     }
 
     public function getConvertedPriceAttribute(){

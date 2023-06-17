@@ -336,18 +336,21 @@ class PropertiesController extends Controller
     }
 
     public function syncAttributes($request, $apartment, $key=null)
-    {   
-        $bed_count = array_filter($request->bed_count);
-        $beds = [];
-        if (!empty($bed_count)){
-            foreach( $bed_count as $ky  => $value ) {
-                $value = array_filter($value);
-                foreach( $value as $k  => $v ) {  
-                    $beds[$ky][$k] = ['bed_count'=>$v]; 
+    {    
+        if (is_array($request->bed_count) && !empty($request->bed_count) ) {
+            $bed_count = array_filter($request->bed_count);
+            $beds = [];
+            if (!empty($bed_count)){
+                foreach( $bed_count as $ky  => $value ) {
+                    $value = array_filter($value);
+                    foreach( $value as $k  => $v ) {  
+                        $beds[$ky][$k] = ['bed_count'=>$v]; 
+                    }
                 }
-            }
-        }        
-        $apartment->attributes()->syncWithoutDetaching($beds[$key]);  
+            }        
+            $apartment->attributes()->syncWithoutDetaching($beds[$key]);  
+        }
+       
     }
 
     public function syncImages($images, $attr, $property=null){

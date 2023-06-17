@@ -13,18 +13,22 @@
       <link rel="apple-touch-icon" href="/img/favicon-96x96.png">
       <!-- CSS -->
       <!-- Main CSS File -->
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
 
       <link href="/css/services_style.css?version={{ str_random(6) }}" rel="stylesheet">
       <link href="/css/banner.css?version={{ str_random(6) }}" rel="stylesheet">
 
       @yield('page-css')
-      <meta property="og:site_name" content="royalbnbproperties.com">
-      <meta property="og:url" content="https://royalbnbproperties.com/">
-      <meta property="og:title" content="royalbnbproperties">
+      <meta property="og:site_name" content="avenuemontaigne.com">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+
+      <meta property="og:url" content="https://avenuemontaigne.ng/">
+      <meta property="og:title" content="avenuemontaigne">
       <meta property="og:type" content="website">
       <meta property="og:description" content="{{ isset($page_meta_description) ? $page_meta_description : $system_settings->meta_description }}">
       <meta property="og:image:alt" content="">
-      <meta name="twitter:site" content="@royalbnbproperties">
+      <meta name="twitter:site" content="@avenuemontaigne">
       <meta name="twitter:card" content="summary_large_image">
       <meta name="twitter:title" content="{{ isset($page_meta_description) ? $page_meta_description : $system_settings->meta_description }}">
       <meta name="twitter:description" content="{{ isset($page_meta_description) ? $page_meta_description : $system_settings->meta_description }}">

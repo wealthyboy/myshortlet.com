@@ -6,7 +6,7 @@
    @include('_partials.header_styles')
    <body>
       <div id="app"  class="app">
-         <nav class="navbar    fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
+         <nav class="navbar    fixed-top navbar-expand-lg  navbar-transparent navbar-absolute" color-on-scroll="100" id="sectionsNav">
             @include('_partials.header')
          </nav>
          <div  id="content" class="main  index-page">

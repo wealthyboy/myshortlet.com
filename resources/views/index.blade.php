@@ -1,55 +1,33 @@
 @extends('layouts.app')
 @section('content')
-@if ($sliders->count())
-<div class="carousel">
 
-   <div class="owl-carousel main-slider svg-arrows owl-them">
-      @foreach($sliders as $key => $slider)
-      <div class="item">
-         <div class="page-header banner-filter" style="background-image: url('{{ $slider->image }}');">
-            <div class="container">
-               <div class="row">
-                  <div class="col-md-12 text-center ">
-                     <h1 class="title">Avenue Montaigne</h1>
-                     <p>Luxury Apartments</p>
-                     <div class="mt-2 mb-2">
-                        <a href="#" class="play-video">
-                           <i class="fas fa-play"></i>
-                        </a>
-                     </div>
-                     <br>
-                     <div class="buttons">
-                        <a href="/property/{{ $global_property->slug }}" class="btn rounded btn-primary btn-lg">
-                           Check Availability
-                        </a>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      @endforeach
+<div class="video-section">
+   <div class="intro-image">
+      <img src="/images/logo/avm_residences.png" alt="">
    </div>
-
+   <video  class=" vidoeo-intro"   src="/video/avem.mp4" autoplay muted loop></video>
 </div>
-@endif
+
 
 
 <div class="container-fluid ">
-   <section class="bg-grey">
-      <div class="text-center ">
-         <h3 class="bold pt-3">Welcome to Avenue Montiagne </h3>
+   <section class="">
+      <div class="text-center  mb-5">
+         <p class="pt-3 mt-5">AvenueMontiagne  Residences
+         </p>
+
+         <h3 class="bold pt-3">A Fresh Take on the California Dream</h3>
       </div>
-      <div class="row bg-grey pb-5 pt-3 position-relative">
-         <div id="operator" style="background-image: url('/uploads/GUSAX89nsYHONae8aQOD4HkhhdUqrrS2NIolUNsz.jpg');" class="col-md-8 rounded  card-background-image"></div>
-         <div style="z-index: 2;" class="col-md-4 text-center d-flex justify-content-center align-items-center">
+      <div class="row  pb-5 pt-3 position-relative">
+         <div id="operator" style="background-image: url('/uploads/GUSAX89nsYHONae8aQOD4HkhhdUqrrS2NIolUNsz.jpg');" class="col-md-7 rounded  card-background-image"></div>
+         <div style="z-index: 2;" class="col-md-5 text-center d-flex justify-content-center align-items-center">
             <div class="bg-panel bg-panel-white p-5">
                <h3 class=" bold">Welcome to Avenue Montiagne</h3>
                <p class="mt-4 text-left">
                   Our apartments in Lagos offer amazing amenities, stylish design, and a perfect location for living the lagos dream. With your choice of spacious, meticulously-designed 1-, 2-, or 3-bedroom apartments, youll be sure to find the ideal fit for your needs and lifestyle. Get ready for apartment living on a whole new level, with two resort-style pools, a luxurious spa, and a state-of-the-art fitness center for your convenience and enjoyment. Get excited about everything that awaits you at Avm, Lagos!
                </p>
                <div class="buttons">
-                  <a href="/property/{{ $global_property->slug }}" class="btn bold rounded btn-primary btn-lg">
+                  <a href="/property/{{ optional($global_property)->slug }}" class="btn bold rounded btn-primary btn-lg">
                      Check Availability
                   </a>
                </div>
@@ -59,55 +37,10 @@
    </section>
 
 
-   <section data-animated-id="2" class="wprt-section how-we-build pt-5 pb-5 mt-5 mb-5">
-      <div class="row">
-         <div class="col-md-4 mb-sm-5 col-12">
-            <div class="wprt-icon-box">
-               <div class="icon-wrap bg-primary  d-flex justify-content-center align-items-center  text-center">
-                  <svg id="">
-                     <use xlink:href="#check-icon"></use>
-                  </svg>
-               </div>
-            </div>
-            <div class="content-wrap">
-               <h3 class="dd-title bold text-center">Wired & Ready</h3>
-            </div>
-         </div>
-         <!-- /.col-md-4 -->
-         <div class="col-md-4  mb-sm-5 col-12">
-            <div class="wprt-icon-box">
-               <div class="icon-wrap bg-primary   d-flex justify-content-center align-items-center  text-center">
-                  <svg id="">
-                     <use xlink:href="#question-icon"></use>
-                  </svg>
-               </div>
-
-            </div>
-            <div class="content-wrap">
-               <h3 class="bold text-center">Just Bring Yourself</h3>
-            </div>
-         </div>
-         <!-- /.col-md-4 -->
-         <div class="col-md-4 mb-sm-5  col-12">
-            <div class="wprt-icon-box">
-               <div class="icon-wrap bg-primary  d-flex justify-content-center align-items-center  text-center">
-                  <svg id="">
-                     <use xlink:href="#check-icon"></use>
-                  </svg>
-               </div>
-
-            </div>
-            <div class="content-wrap">
-               <h3 class="dd-title bold text-center text-center">Stylish Comfort</h3>
-            </div>
-         </div>
-
-      </div>
-      <!-- /.row -->
-   </section>
+ 
 
 
-   <section class="bg-grey mb-1">
+   <section class=" mb-1">
       <div class="row bg-grey position-relative  pb-5 pt-5">
          <div class="col-md-5  re-order text-center d-flex justify-content-center align-items-center">
             <div class="bg-panel-white bg-left-panel p-5">
@@ -115,7 +48,7 @@
                <p class="mt-4">
                   Throughout your stay, you’ll enjoy a residents-only bar and lounge, a spectacular pool deck with panoramic views, a private screening room, a 24-hour Technogym® fitness center , and indoor parking. The open-air retail plaza features Fred S boutique, lifestyle brand KITH, Tesse restaurant, and Boutellier wine shop.
                <div class="buttons">
-                  <a href="/property/{{ $global_property->slug }}" class="btn rounded bold btn-primary btn-lg">
+                  <a href="/property/{{ optional($global_property)->slug }}" class="btn rounded bold btn-primary btn-lg">
                      Check Availability
                   </a>
                </div>
@@ -127,8 +60,8 @@
    </section>
 
 
-   <section class="bg-grey">
-      <div class="row bg-grey  pb-5 pt-5 position-relative">
+   <section class="">
+      <div class="row   pb-5 pt-5 position-relative">
          <div style="background-image: url('/uploads/4b2fVBQMd3OkPvATKDpuIxFK61PbgdcoEvJ3qI4j.jpg');" class="col-md-7 rounded  card-background-image">
          </div>
          <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
@@ -139,7 +72,7 @@
                </p>
 
                <div class="buttons">
-                  <a href="/property/{{ $global_property->slug }}" class="btn rounded bold btn-primary btn-lg">
+                  <a href="/property/{{ optional($global_property)->slug }}" class="btn rounded bold btn-primary btn-lg">
                      Check Availability
                   </a>
                </div>
@@ -147,31 +80,7 @@
          </div>
       </div>
    </section>
-   <section class="explore-cities mb-3">
-      <div class="row">
-         <div class="col-12 text-center mt-3">
-            <h1 class="bold">Photo Gallery</h1>
-            <p>Live Your Lifestyle In Comfort</p>
-         </div>
-
-         <div class="col-md-12 pt-5 pb-4">
-            <div class="cities-carousel owl-carousel svg-arrows ">
-               @foreach($global_property->images as $key => $image)
-               <div class="item position-relative ">
-                  <a href="#">
-                     <img src="{{ $image->image }}" alt="" class="img-raised  ">
-                  </a>
-                  <div class="position-absolute  bottom-0 location-name">
-                     <a href="/property/{{ $global_property->slug }}">
-                        <h4 class="text-white  ml-3 bold">{{ $image->name }}</h4>
-                     </a>
-                  </div>
-               </div>
-               @endforeach
-            </div>
-         </div>
-      </div>
-   </section>
+ 
    <section class="bg-single-image-02  mt-3 bg-accent pb-5" data-animated-id="3">
       <div class="row bg-gray">
          <div class="col-md-12 mb-3">

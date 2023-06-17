@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <div v-if="!propertyLoading && properties.length">
       <div
         v-for="property in properties"
@@ -203,8 +204,6 @@ export default {
     setTimeout(() => {
       this.$store.commit("setProperties", this.propertys);
       this.$store.commit("setMeta", this.total);
-      console.log(this.total);
-
       this.$store.commit("setPropertyLoading", false);
     }, 1000);
     this.$store.commit("setNextPageUrl", this.next_page[0]);
