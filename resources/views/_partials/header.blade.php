@@ -1,56 +1,47 @@
-<div class="container">
-    <div class="navbar-translate">
+<div class="container-fluid">
+
+    <div class="navbar-translate d-flex justify-content-between w-100 fixed-top">
         <a href="/" class="navbar-brand">
             <div class="logo-small">
                 <img src="{{ $system_settings->logo_path() }}" class="img-fluid">
             </div>
         </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="navbar-toggler-icon"></span>
-            <span class="navbar-toggler-icon"></span>
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="d-flex">
+
+            <a href="/property/{{ optional($global_property)->slug }}" class="align-self-center text-white  bg-dark px-3 py-1">
+                <i class="fal fa-sign-in"></i>
+                Book Now
+            </a>
+            <button class="navbar-toggler d-block text-white" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon text-white"></span>
+                <span class="navbar-toggler-icon text-white"></span>
+                <span class="navbar-toggler-icon text-white"></span>
+            </button>
+        </div>
+
+
     </div>
 
-    <div class="collapse navbar-collapse">
-       
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item p-1">
-                <a href="/property/{{ optional($global_property)->slug }}" class="nav-link btn p-1 px-3 bg-dark text-white btn-outline-primary">
-                    <i class="fal fa-sign-in"></i>
-                    Book Now
-                </a>
+    <div class="collapse navbar-collapse ">
+
+        <ul class="nav navbar-nav navbar-center w-100 mt-5">
+            <li class="w-100 py-3">
+                <a href="/apartments">Residences</a>
             </li>
-
-            
-
-            @auth
-            <li class="dropdown nav-item">
-                <a href="#" class="profile-photo dropdown-toggle nav-link" data-toggle="dropdown">
-                    <div class="profile-photo-small">
-                        <img src="/images/svg/baseline_person_outline_black_24dp.png" alt="Circle Image" class="rounded-circle img-fluid">
-                    </div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="/account" class="dropdown-item">Account</a>
-                    <a href="/profile" class="dropdown-item">Profile</a>
-                    <a href="/bookings" class="dropdown-item">Bookings</a>
-                    <a href="#" onclick="event.preventDefault();
-                        document.getElementById('logout-form-nav').submit();" class="dropdown-item">
-                        <i class="material-icons">logout</i>
-
-                        Sign out
-                    </a>
-                    <form id="logout-form-nav" action="/logout" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-
-                </div>
+            <li class="w-100 ">
+                <a href="/about">About Us</a>
             </li>
-            @endauth
-
+            <li class="w-100 py-3">
+                <a href="/experience">Experience</a>
+            </li>
+            <li class="w-100 ">
+                <a href="/events">Events</a>
+            </li>
+            <li class="w-100 py-3">
+                <a href="https://theluxurysale.com">Shop @avm</a>
+            </li>
         </ul>
     </div>
 </div>
