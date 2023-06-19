@@ -20,7 +20,7 @@ export default {
   userType: "",
   properties: [],
   attributes: [],
-  propertyLoading: false,
+  propertyLoading: true,
   attributesCheckboxes: [],
   locationSearch: [],
   links: [],

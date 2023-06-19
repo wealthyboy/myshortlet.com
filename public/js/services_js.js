@@ -3909,7 +3909,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   })),
   mounted: function mounted() {
     var _this = this;
-    this.$store.commit("setPropertyLoading", true);
     var time = new Date().getTime();
     setTimeout(function () {
       _this.$store.commit("setProperties", _this.propertys);
@@ -12783,7 +12782,7 @@ __webpack_require__.r(__webpack_exports__);
   userType: "",
   properties: [],
   attributes: [],
-  propertyLoading: false,
+  propertyLoading: true,
   attributesCheckboxes: [],
   locationSearch: [],
   links: [],

@@ -199,7 +199,6 @@ export default {
   },
 
   mounted() {
-    this.$store.commit("setPropertyLoading", true);
     let time = new Date().getTime();
     setTimeout(() => {
       this.$store.commit("setProperties", this.propertys);
