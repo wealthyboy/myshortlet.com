@@ -1,16 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/aos/dist/aos.js":
-/*!**************************************!*\
-  !*** ./node_modules/aos/dist/aos.js ***!
-  \**************************************/
-/***/ (function(module) {
-
-!function(e,t){ true?module.exports=t():0}(this,function(){return function(e){function t(o){if(n[o])return n[o].exports;var i=n[o]={exports:{},id:o,loaded:!1};return e[o].call(i.exports,i,i.exports,t),i.loaded=!0,i.exports}var n={};return t.m=e,t.c=n,t.p="dist/",t(0)}([function(e,t,n){"use strict";function o(e){return e&&e.__esModule?e:{default:e}}var i=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&(e[o]=n[o])}return e},r=n(1),a=(o(r),n(6)),u=o(a),c=n(7),s=o(c),f=n(8),d=o(f),l=n(9),p=o(l),m=n(10),b=o(m),v=n(11),y=o(v),g=n(14),h=o(g),w=[],k=!1,x={offset:120,delay:0,easing:"ease",duration:400,disable:!1,once:!1,startEvent:"DOMContentLoaded",throttleDelay:99,debounceDelay:50,disableMutationObserver:!1},j=function(){var e=arguments.length>0&&void 0!==arguments[0]&&arguments[0];if(e&&(k=!0),k)return w=(0,y.default)(w,x),(0,b.default)(w,x.once),w},O=function(){w=(0,h.default)(),j()},M=function(){w.forEach(function(e,t){e.node.removeAttribute("data-aos"),e.node.removeAttribute("data-aos-easing"),e.node.removeAttribute("data-aos-duration"),e.node.removeAttribute("data-aos-delay")})},S=function(e){return e===!0||"mobile"===e&&p.default.mobile()||"phone"===e&&p.default.phone()||"tablet"===e&&p.default.tablet()||"function"==typeof e&&e()===!0},_=function(e){x=i(x,e),w=(0,h.default)();var t=document.all&&!window.atob;return S(x.disable)||t?M():(x.disableMutationObserver||d.default.isSupported()||(console.info('\n      aos: MutationObserver is not supported on this browser,\n      code mutations observing has been disabled.\n      You may have to call "refreshHard()" by yourself.\n    '),x.disableMutationObserver=!0),document.querySelector("body").setAttribute("data-aos-easing",x.easing),document.querySelector("body").setAttribute("data-aos-duration",x.duration),document.querySelector("body").setAttribute("data-aos-delay",x.delay),"DOMContentLoaded"===x.startEvent&&["complete","interactive"].indexOf(document.readyState)>-1?j(!0):"load"===x.startEvent?window.addEventListener(x.startEvent,function(){j(!0)}):document.addEventListener(x.startEvent,function(){j(!0)}),window.addEventListener("resize",(0,s.default)(j,x.debounceDelay,!0)),window.addEventListener("orientationchange",(0,s.default)(j,x.debounceDelay,!0)),window.addEventListener("scroll",(0,u.default)(function(){(0,b.default)(w,x.once)},x.throttleDelay)),x.disableMutationObserver||d.default.ready("[data-aos]",O),w)};e.exports={init:_,refresh:j,refreshHard:O}},function(e,t){},,,,,function(e,t){(function(t){"use strict";function n(e,t,n){function o(t){var n=b,o=v;return b=v=void 0,k=t,g=e.apply(o,n)}function r(e){return k=e,h=setTimeout(f,t),M?o(e):g}function a(e){var n=e-w,o=e-k,i=t-n;return S?j(i,y-o):i}function c(e){var n=e-w,o=e-k;return void 0===w||n>=t||n<0||S&&o>=y}function f(){var e=O();return c(e)?d(e):void(h=setTimeout(f,a(e)))}function d(e){return h=void 0,_&&b?o(e):(b=v=void 0,g)}function l(){void 0!==h&&clearTimeout(h),k=0,b=w=v=h=void 0}function p(){return void 0===h?g:d(O())}function m(){var e=O(),n=c(e);if(b=arguments,v=this,w=e,n){if(void 0===h)return r(w);if(S)return h=setTimeout(f,t),o(w)}return void 0===h&&(h=setTimeout(f,t)),g}var b,v,y,g,h,w,k=0,M=!1,S=!1,_=!0;if("function"!=typeof e)throw new TypeError(s);return t=u(t)||0,i(n)&&(M=!!n.leading,S="maxWait"in n,y=S?x(u(n.maxWait)||0,t):y,_="trailing"in n?!!n.trailing:_),m.cancel=l,m.flush=p,m}function o(e,t,o){var r=!0,a=!0;if("function"!=typeof e)throw new TypeError(s);return i(o)&&(r="leading"in o?!!o.leading:r,a="trailing"in o?!!o.trailing:a),n(e,t,{leading:r,maxWait:t,trailing:a})}function i(e){var t="undefined"==typeof e?"undefined":c(e);return!!e&&("object"==t||"function"==t)}function r(e){return!!e&&"object"==("undefined"==typeof e?"undefined":c(e))}function a(e){return"symbol"==("undefined"==typeof e?"undefined":c(e))||r(e)&&k.call(e)==d}function u(e){if("number"==typeof e)return e;if(a(e))return f;if(i(e)){var t="function"==typeof e.valueOf?e.valueOf():e;e=i(t)?t+"":t}if("string"!=typeof e)return 0===e?e:+e;e=e.replace(l,"");var n=m.test(e);return n||b.test(e)?v(e.slice(2),n?2:8):p.test(e)?f:+e}var c="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},s="Expected a function",f=NaN,d="[object Symbol]",l=/^\s+|\s+$/g,p=/^[-+]0x[0-9a-f]+$/i,m=/^0b[01]+$/i,b=/^0o[0-7]+$/i,v=parseInt,y="object"==("undefined"==typeof t?"undefined":c(t))&&t&&t.Object===Object&&t,g="object"==("undefined"==typeof self?"undefined":c(self))&&self&&self.Object===Object&&self,h=y||g||Function("return this")(),w=Object.prototype,k=w.toString,x=Math.max,j=Math.min,O=function(){return h.Date.now()};e.exports=o}).call(t,function(){return this}())},function(e,t){(function(t){"use strict";function n(e,t,n){function i(t){var n=b,o=v;return b=v=void 0,O=t,g=e.apply(o,n)}function r(e){return O=e,h=setTimeout(f,t),M?i(e):g}function u(e){var n=e-w,o=e-O,i=t-n;return S?x(i,y-o):i}function s(e){var n=e-w,o=e-O;return void 0===w||n>=t||n<0||S&&o>=y}function f(){var e=j();return s(e)?d(e):void(h=setTimeout(f,u(e)))}function d(e){return h=void 0,_&&b?i(e):(b=v=void 0,g)}function l(){void 0!==h&&clearTimeout(h),O=0,b=w=v=h=void 0}function p(){return void 0===h?g:d(j())}function m(){var e=j(),n=s(e);if(b=arguments,v=this,w=e,n){if(void 0===h)return r(w);if(S)return h=setTimeout(f,t),i(w)}return void 0===h&&(h=setTimeout(f,t)),g}var b,v,y,g,h,w,O=0,M=!1,S=!1,_=!0;if("function"!=typeof e)throw new TypeError(c);return t=a(t)||0,o(n)&&(M=!!n.leading,S="maxWait"in n,y=S?k(a(n.maxWait)||0,t):y,_="trailing"in n?!!n.trailing:_),m.cancel=l,m.flush=p,m}function o(e){var t="undefined"==typeof e?"undefined":u(e);return!!e&&("object"==t||"function"==t)}function i(e){return!!e&&"object"==("undefined"==typeof e?"undefined":u(e))}function r(e){return"symbol"==("undefined"==typeof e?"undefined":u(e))||i(e)&&w.call(e)==f}function a(e){if("number"==typeof e)return e;if(r(e))return s;if(o(e)){var t="function"==typeof e.valueOf?e.valueOf():e;e=o(t)?t+"":t}if("string"!=typeof e)return 0===e?e:+e;e=e.replace(d,"");var n=p.test(e);return n||m.test(e)?b(e.slice(2),n?2:8):l.test(e)?s:+e}var u="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},c="Expected a function",s=NaN,f="[object Symbol]",d=/^\s+|\s+$/g,l=/^[-+]0x[0-9a-f]+$/i,p=/^0b[01]+$/i,m=/^0o[0-7]+$/i,b=parseInt,v="object"==("undefined"==typeof t?"undefined":u(t))&&t&&t.Object===Object&&t,y="object"==("undefined"==typeof self?"undefined":u(self))&&self&&self.Object===Object&&self,g=v||y||Function("return this")(),h=Object.prototype,w=h.toString,k=Math.max,x=Math.min,j=function(){return g.Date.now()};e.exports=n}).call(t,function(){return this}())},function(e,t){"use strict";function n(e){var t=void 0,o=void 0,i=void 0;for(t=0;t<e.length;t+=1){if(o=e[t],o.dataset&&o.dataset.aos)return!0;if(i=o.children&&n(o.children))return!0}return!1}function o(){return window.MutationObserver||window.WebKitMutationObserver||window.MozMutationObserver}function i(){return!!o()}function r(e,t){var n=window.document,i=o(),r=new i(a);u=t,r.observe(n.documentElement,{childList:!0,subtree:!0,removedNodes:!0})}function a(e){e&&e.forEach(function(e){var t=Array.prototype.slice.call(e.addedNodes),o=Array.prototype.slice.call(e.removedNodes),i=t.concat(o);if(n(i))return u()})}Object.defineProperty(t,"__esModule",{value:!0});var u=function(){};t.default={isSupported:i,ready:r}},function(e,t){"use strict";function n(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function o(){return navigator.userAgent||navigator.vendor||window.opera||""}Object.defineProperty(t,"__esModule",{value:!0});var i=function(){function e(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}return function(t,n,o){return n&&e(t.prototype,n),o&&e(t,o),t}}(),r=/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i,a=/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i,u=/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i,c=/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i,s=function(){function e(){n(this,e)}return i(e,[{key:"phone",value:function(){var e=o();return!(!r.test(e)&&!a.test(e.substr(0,4)))}},{key:"mobile",value:function(){var e=o();return!(!u.test(e)&&!c.test(e.substr(0,4)))}},{key:"tablet",value:function(){return this.mobile()&&!this.phone()}}]),e}();t.default=new s},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=function(e,t,n){var o=e.node.getAttribute("data-aos-once");t>e.position?e.node.classList.add("aos-animate"):"undefined"!=typeof o&&("false"===o||!n&&"true"!==o)&&e.node.classList.remove("aos-animate")},o=function(e,t){var o=window.pageYOffset,i=window.innerHeight;e.forEach(function(e,r){n(e,i+o,t)})};t.default=o},function(e,t,n){"use strict";function o(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var i=n(12),r=o(i),a=function(e,t){return e.forEach(function(e,n){e.node.classList.add("aos-init"),e.position=(0,r.default)(e.node,t.offset)}),e};t.default=a},function(e,t,n){"use strict";function o(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var i=n(13),r=o(i),a=function(e,t){var n=0,o=0,i=window.innerHeight,a={offset:e.getAttribute("data-aos-offset"),anchor:e.getAttribute("data-aos-anchor"),anchorPlacement:e.getAttribute("data-aos-anchor-placement")};switch(a.offset&&!isNaN(a.offset)&&(o=parseInt(a.offset)),a.anchor&&document.querySelectorAll(a.anchor)&&(e=document.querySelectorAll(a.anchor)[0]),n=(0,r.default)(e).top,a.anchorPlacement){case"top-bottom":break;case"center-bottom":n+=e.offsetHeight/2;break;case"bottom-bottom":n+=e.offsetHeight;break;case"top-center":n+=i/2;break;case"bottom-center":n+=i/2+e.offsetHeight;break;case"center-center":n+=i/2+e.offsetHeight/2;break;case"top-top":n+=i;break;case"bottom-top":n+=e.offsetHeight+i;break;case"center-top":n+=e.offsetHeight/2+i}return a.anchorPlacement||a.offset||isNaN(t)||(o=t),n+o};t.default=a},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=function(e){for(var t=0,n=0;e&&!isNaN(e.offsetLeft)&&!isNaN(e.offsetTop);)t+=e.offsetLeft-("BODY"!=e.tagName?e.scrollLeft:0),n+=e.offsetTop-("BODY"!=e.tagName?e.scrollTop:0),e=e.offsetParent;return{top:n,left:t}};t.default=n},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=function(e){return e=e||document.querySelectorAll("[data-aos]"),Array.prototype.map.call(e,function(e){return{node:e}})};t.default=n}])});
-
-/***/ }),
-
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -3864,16 +3854,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _pagination_Pagination_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../pagination/Pagination.vue */ "./resources/js/components/pagination/Pagination.vue");
 /* harmony import */ var _Loaders_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Loaders.vue */ "./resources/js/components/properties/Loaders.vue");
 /* harmony import */ var _Saved_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Saved.vue */ "./resources/js/components/properties/Saved.vue");
+/* harmony import */ var _Guests_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Guests.vue */ "./resources/js/components/properties/Guests.vue");
+/* harmony import */ var _Date__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Date */ "./resources/js/components/properties/Date.vue");
+/* harmony import */ var _CategorySearch_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CategorySearch.vue */ "./resources/js/components/properties/CategorySearch.vue");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+
 
 
 
@@ -3889,7 +3885,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   components: {
     Pagination: _pagination_Pagination_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     Loaders: _Loaders_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Saved: _Saved_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    Saved: _Saved_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    CategorySearch: _CategorySearch_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    Guests: _Guests_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    DatePicker: _Date__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
@@ -3901,7 +3900,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       propes: []
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)({
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)({
     properties: "properties",
     propertyLoading: "propertyLoading",
     links: "links",
@@ -3909,15 +3908,18 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   })),
   mounted: function mounted() {
     var _this = this;
+    this.$store.commit("setPropertyLoading", true);
     var time = new Date().getTime();
     setTimeout(function () {
+      document.getElementById("ap-loaders").classList.add('d-none');
+      document.getElementById("category-loader").classList.add('d-none');
       _this.$store.commit("setProperties", _this.propertys);
       _this.$store.commit("setMeta", _this.total);
       _this.$store.commit("setPropertyLoading", false);
     }, 1000);
     this.$store.commit("setNextPageUrl", this.next_page[0]);
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)({
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)({
     getProperties: "getProperties",
     saveProperty: "saveProperty"
   })), {}, {
@@ -4110,6 +4112,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     getApartmentQuantity: function getApartmentQuantity(_ref) {
       var total = _ref.total,
         aps = _ref.aps;
+      console.log(total, aps);
       this.total = total;
       this.aps = aps;
       this.apTotal = total;
@@ -4142,7 +4145,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.propertyLoading = true;
       axios__WEBPACK_IMPORTED_MODULE_4___default().post("/book/store", form).then(function (response) {
         _this2.propertyLoading = false;
-        console.log(response.data);
         if (response.data) {
           document.querySelector("#multiple-form").submit();
         } else {
@@ -5112,7 +5114,9 @@ var render = function render() {
     staticClass: "d-flex col-md-12 aligh"
   }, [_c("booking-complete")], 1) : _vm._e(), _vm._v(" "), !_vm.paymentIsComplete ? _c("div", {
     staticClass: "col-md-7 mb-3"
-  }, [_c("h3", [_vm._v("Review and book")])]) : _vm._e(), _vm._v(" "), !_vm.paymentIsComplete ? _c("div", {
+  }, [_c("h3", {
+    staticClass: "bold"
+  }, [_vm._v("Review and book")])]) : _vm._e(), _vm._v(" "), !_vm.paymentIsComplete ? _c("div", {
     staticClass: "col-md-7"
   }, [_c("form", {
     attrs: {
@@ -5126,7 +5130,7 @@ var render = function render() {
   }), _vm._v(" "), _c("booking-login"), _vm._v(" "), _c("div", {
     staticClass: "bg-white"
   }, [_c("h3", {
-    staticClass: "card-title p-3 border-bottom"
+    staticClass: "card-title p-3 border-bottom bold"
   }, [_vm._v("Who's checking in?")]), _vm._v(" "), _c("div", {
     staticClass: "card-body pt-0"
   }, [_c("div", {
@@ -5375,7 +5379,7 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "d-flex justify-content-between align-items-center"
   }, [_c("h3", {
-    staticClass: "card-title mt-2 pb-3 mb-0"
+    staticClass: "card-title mt-2 pb-3 mb-0 bold"
   }, [_vm._v("\n                Payment\n              ")]), _vm._v(" "), _c("div", {
     staticClass: "payment-icons d-flex justify-content-center align-items-center"
   }, [_c("div", {
@@ -5429,7 +5433,9 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("section", {}, [_c("div", {
+  return _c("section", {
+    staticClass: "bg-white"
+  }, [_c("div", {
     staticClass: "container"
   }, [_c("div", {
     staticClass: "row"
@@ -5437,11 +5443,11 @@ var staticRenderFns = [function () {
     staticClass: "col-md-8 offset-md-2"
   }, [_c("div", {
     staticClass: "error-page text-center"
-  }, [_c("h1", [_vm._v("CONFIRMED")]), _vm._v(" "), _c("p", {
+  }, [_c("h1", {
+    staticClass: "bold"
+  }, [_vm._v("CONFIRMED")]), _vm._v(" "), _c("p", {
     staticClass: "large"
-  }, [_vm._v("\n            Thank you for choosing The Avenue montaigne for your stay. We are\n            pleased to inform you that your reservation request is CONFIRMED\n            and your reservation details are as follows.\n          ")]), _vm._v(" "), _c("p", {
-    staticClass: "large"
-  }, [_vm._v("\n            Thank you for choosing The Avenue montaigne for your stay. We are\n            pleased to inform you that your reservation request is CONFIRMED\n            and your reservation details are as follows.\n          ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n            Thank you for choosing  Avenue montaigne for your stay. We are\n            pleased to inform you that your reservation request is CONFIRMED\n            \n          ")]), _vm._v(" "), _c("p", {
     staticClass: "large"
   }), _vm._v(" "), _c("a", {
     staticClass: "btn btn--primary space-t--2",
@@ -5512,7 +5518,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex justify-content-between align-items-center"
   }, [_c("div", [_c("h4", {
-    staticClass: "card-title p-3 mb-0"
+    staticClass: "card-title p-3 mb-0 bold"
   }, [_vm._v("\n        " + _vm._s(_vm.booking.apartment.name || _vm.property.name) + "\n      ")])]), _vm._v(" "), _vm.bookings.length > 1 ? _c("div", {
     staticClass: "mr-2"
   }, [_c("a", {
@@ -5679,7 +5685,7 @@ var render = function render() {
   return _c("div", [_c("div", {
     staticClass: "bg-white"
   }, [_c("div", {
-    staticClass: "card-title border-bottom p-3 text-size-1-big"
+    staticClass: "card-title border-bottom p-3 text-size-1-big bold"
   }, [_vm._v("\n      Your Booking Details\n    ")]), _vm._v(" "), _c("div", [_c("ul", {
     staticClass: "list-unstyled mb-2 p-3"
   }, [_c("li", {
@@ -5860,7 +5866,7 @@ var render = function render() {
   return _c("div", {
     staticClass: "bg-white mt-2"
   }, [_c("h4", {
-    staticClass: "card-title p-3 border-bottom mb-0"
+    staticClass: "card-title p-3 border-bottom mb-0 bold"
   }, [_vm._v("\n    You may be intrested in\n  ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body pt-0"
   }, [_c("div", {
@@ -5920,10 +5926,12 @@ var render = function render() {
   return _c("div", {
     staticClass: "bg-white"
   }, [_c("h3", {
-    staticClass: "card-title p-3 border-bottom mb-0"
+    staticClass: "card-title p-3 border-bottom mb-0 bold"
   }, [_vm._v("\n    Important Trip Information\n  ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body pt-0"
-  }, [_c("div", [_c("h5", [_vm._v("House Rules")]), _vm._v(" "), _c("ul", {
+  }, [_c("div", [_c("h5", {
+    staticClass: "bold"
+  }, [_vm._v("House Rules")]), _vm._v(" "), _c("ul", {
     staticClass: "list-unstyled"
   }, [_c("li", {}, [_c("p", {
     staticClass: "text-heading mb-0"
@@ -7279,6 +7287,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("form", {
+    staticClass: "form-row",
     attrs: {
       method: "GET",
       action: "/property/search"
@@ -7286,19 +7295,19 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex justify-content-between"
   }, [_c("div", {
-    staticClass: "form-group form-border w-100 cursor-pointer search bmd-form-group"
+    staticClass: "form-group ml-1 mr-sm-1 form-border cursor-pointer search col-md-4 bmd-form-group"
   }, [_c("label", {
     staticClass: "pl-2 ml-4",
     attrs: {
       "for": "flatpickr-input-f"
     }
   }, [_vm._v("Check-in - Check-out")]), _vm._v(" "), _c("date-range")], 1), _vm._v(" "), _c("div", {
-    staticClass: "w-100 ml-2 cursor-pointer p-0",
+    staticClass: "w-100 ml-2 col-md-4 cursor-pointer p-0",
     attrs: {
       id: "people-number"
     }
   }, [_c("guests")], 1), _vm._v(" "), _c("div", {
-    staticClass: "w-25 ml-2 check-availablility"
+    staticClass: "w-25 ml-2 col- check-availablility"
   }, [_c("button", {
     staticClass: "btn btn-primary btn-block m-auto bold check-availablility-button",
     attrs: {
@@ -7765,9 +7774,9 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "align-self-center ml-2"
+    staticClass: "align-self-center ml-3"
   }, [_c("i", {
-    staticClass: "fas fa-user-friends"
+    staticClass: "fas fa-user-friends text-black"
   })]);
 }, function () {
   var _vm = this,
@@ -7925,7 +7934,38 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [!_vm.propertyLoading && _vm.properties.length ? _c("div", _vm._l(_vm.properties, function (property) {
+  return _c("div", [!_vm.propertyLoading && _vm.properties.length ? _c("div", [_c("div", {
+    staticClass: "col-md-12 category-search ml-auto mr-auto mt-4"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "form-group category-search ml-1 mr-sm-1 form-border cursor-pointer search col-md-4 bmd-form-grup"
+  }, [_c("label", {
+    staticClass: "pl-2 bmd-label-static checkin mb-0 pl-1",
+    attrs: {
+      "for": "flatpickr-input-f"
+    }
+  }, [_vm._v("Check-in - Check-out")]), _vm._v(" "), _c("date-picker")], 1), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4 cursor-pointer",
+    attrs: {
+      id: "people-number"
+    }
+  }, [_c("guests")], 1), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3 mb-lg-0 mt-lg-0 mt-sm-3 mb-sm-3 ml-1 mr-1 check-availablility"
+  }, [_c("button", {
+    staticClass: "btn btn-primary btn-block m-auto bold check-availablility-button",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.checkAvailabity();
+      }
+    }
+  }, [_c("i", {
+    staticClass: "material-icons"
+  }), _vm._v(" Check availablity\n          ")])])]), _vm._v(" "), _vm._l(_vm.properties, function (property) {
     return _c("div", {
       key: property.id,
       staticClass: "bg-white mb-2 rounded position-relative border-radius loaded-apartments"
@@ -8004,7 +8044,7 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "reviews-section"
     }), _vm._v(" "), _c("div", {
-      staticClass: "text-right mr-2"
+      staticClass: "text-right mr-4"
     }, [_c("div", {
       staticClass: "d-inline-flex"
     }, [property.default_discounted_price ? [_c("div", {
@@ -8016,7 +8056,7 @@ var render = function render() {
     }, [_vm._v("\n                    " + _vm._s(property.currency) + _vm._s(_vm._f("priceFormat")(property.converted_price)) + "\n                  ")])]], 2), _vm._v(" "), _c("div", {
       staticClass: "text-size-2"
     }, [_vm._v("\n                " + _vm._s(property.price_mode) + " per night\n              ")]), _vm._v(" "), property.is_refundable ? _c("div", {
-      staticClass: "text-size-1 text-gray"
+      staticClass: "text-size-1 text-success"
     }, [_vm._v("\n                Fully Refundable\n              ")]) : _vm._e(), _vm._v(" "), property.mode == "shortlet" ? _c("a", {
       staticClass: "btn btn-primary btn-round d-none bold d-lg-block d-xl-block",
       attrs: {
@@ -8024,7 +8064,7 @@ var render = function render() {
         href: property.link
       }
     }, [_vm._v("\n                Check Availability\n              ")]) : _vm._e()])])])])]);
-  }), 0) : _vm._e(), _vm._v(" "), !_vm.propertyLoading && _vm.properties.length && _vm.next_page_url ? _c("div", {
+  })], 2) : _vm._e(), _vm._v(" "), !_vm.propertyLoading && _vm.properties.length && _vm.next_page_url ? _c("div", {
     staticClass: "d-flex justify-content-center",
     attrs: {
       id: "pagination"
@@ -8866,7 +8906,9 @@ var render = function render() {
     }
   }, [_vm._v("\n              Make Payment\n            ")])])])], 1)], 1), _vm._v(" "), _c("div", {
     staticClass: "col-md-6 d-none d-lg-block"
-  }, [_c("h1", [_vm._v("Your booking details")]), _vm._v(" "), _c("cart-index", {
+  }, [_c("h1", {
+    staticClass: "bold"
+  }, [_vm._v("Your booking details")]), _vm._v(" "), _c("cart-index", {
     attrs: {
       apartments: _vm.apartments,
       booking_details: _vm.booking_details
@@ -11836,24 +11878,16 @@ var BrowserDetect = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var aos__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! aos */ "./node_modules/aos/dist/aos.js");
-/* harmony import */ var aos__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(aos__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flatpickr */ "./node_modules/flatpickr/dist/esm/index.js");
-/* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery-validation */ "./node_modules/jquery-validation/dist/jquery.validate.js");
-/* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery_validation__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-Window.Popper = (__webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"]); // pay attention to "default"
-
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery-validation */ "./node_modules/jquery-validation/dist/jquery.validate.js");
+/* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery_validation__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-
-
 
 
 window.flexslider = __webpack_require__(/*! flexslider */ "./node_modules/flexslider/jquery.flexslider.js");
 __webpack_require__(/*! owl.carousel */ "./node_modules/owl.carousel/dist/owl.carousel.js");
 
-__webpack_require__(/*! ./waypoints.js */ "./resources/js/waypoints.js");
 __webpack_require__(/*! ./scripts.js */ "./resources/js/scripts.js");
 var RoomAvailable = (__webpack_require__(/*! ./components/search/RoomAvailable.vue */ "./resources/js/components/search/RoomAvailable.vue")["default"]);
 var BookIndex = (__webpack_require__(/*! ./components/book/BookIndex.vue */ "./resources/js/components/book/BookIndex.vue")["default"]);
@@ -11874,20 +11908,15 @@ $().ready(function () {
     }
   });
 });
-aos__WEBPACK_IMPORTED_MODULE_0___default().init({
-  delay: 50,
-  // values from 0 to 3000, with step 50ms
-  duration: 1000 // values from 0 to 3000, with step 50ms
-});
 
 //console.log(intlTelInput());
 
-vue__WEBPACK_IMPORTED_MODULE_4__["default"].filter("priceFormat", function (value) {
+vue__WEBPACK_IMPORTED_MODULE_2__["default"].filter("priceFormat", function (value) {
   return new Intl.NumberFormat().format(value);
 });
-var app = new vue__WEBPACK_IMPORTED_MODULE_4__["default"]({
+var app = new vue__WEBPACK_IMPORTED_MODULE_2__["default"]({
   el: "#app",
-  store: _store__WEBPACK_IMPORTED_MODULE_3__["default"],
+  store: _store__WEBPACK_IMPORTED_MODULE_1__["default"],
   data: Window.user,
   components: {
     RoomAvailable: RoomAvailable,
@@ -12794,500 +12823,6 @@ __webpack_require__.r(__webpack_exports__);
   bookingPropertyServicesTotal: 0,
   meta: null
 });
-
-/***/ }),
-
-/***/ "./resources/js/waypoints.js":
-/*!***********************************!*\
-  !*** ./resources/js/waypoints.js ***!
-  \***********************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Generated by CoffeeScript 1.6.2
-/*!
-jQuery Waypoints - v2.0.5
-Copyright (c) 2011-2014 Caleb Troughton
-Licensed under the MIT license.
-https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
-*/
-
-(function () {
-  var __indexOf = [].indexOf || function (item) {
-      for (var i = 0, l = this.length; i < l; i++) {
-        if (i in this && this[i] === item) return i;
-      }
-      return -1;
-    },
-    __slice = [].slice;
-  (function (root, factory) {
-    if (true) {
-      return !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function ($) {
-        return factory($, root);
-      }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    } else {}
-  })(window, function ($, window) {
-    var $w, Context, Waypoint, allWaypoints, contextCounter, contextKey, contexts, isTouch, jQMethods, methods, resizeEvent, scrollEvent, waypointCounter, waypointKey, wp, wps;
-    $w = $(window);
-    isTouch = __indexOf.call(window, "ontouchstart") >= 0;
-    allWaypoints = {
-      horizontal: {},
-      vertical: {}
-    };
-    contextCounter = 1;
-    contexts = {};
-    contextKey = "waypoints-context-id";
-    resizeEvent = "resize.waypoints";
-    scrollEvent = "scroll.waypoints";
-    waypointCounter = 1;
-    waypointKey = "waypoints-waypoint-ids";
-    wp = "waypoint";
-    wps = "waypoints";
-    Context = function () {
-      function Context($element) {
-        var _this = this;
-        this.$element = $element;
-        this.element = $element[0];
-        this.didResize = false;
-        this.didScroll = false;
-        this.id = "context" + contextCounter++;
-        this.oldScroll = {
-          x: $element.scrollLeft(),
-          y: $element.scrollTop()
-        };
-        this.waypoints = {
-          horizontal: {},
-          vertical: {}
-        };
-        this.element[contextKey] = this.id;
-        contexts[this.id] = this;
-        $element.bind(scrollEvent, function () {
-          var scrollHandler;
-          if (!(_this.didScroll || isTouch)) {
-            _this.didScroll = true;
-            scrollHandler = function scrollHandler() {
-              _this.doScroll();
-              return _this.didScroll = false;
-            };
-            return window.setTimeout(scrollHandler, $[wps].settings.scrollThrottle);
-          }
-        });
-        $element.bind(resizeEvent, function () {
-          var resizeHandler;
-          if (!_this.didResize) {
-            _this.didResize = true;
-            resizeHandler = function resizeHandler() {
-              $[wps]("refresh");
-              return _this.didResize = false;
-            };
-            return window.setTimeout(resizeHandler, $[wps].settings.resizeThrottle);
-          }
-        });
-      }
-      Context.prototype.doScroll = function () {
-        var axes,
-          _this = this;
-        axes = {
-          horizontal: {
-            newScroll: this.$element.scrollLeft(),
-            oldScroll: this.oldScroll.x,
-            forward: "right",
-            backward: "left"
-          },
-          vertical: {
-            newScroll: this.$element.scrollTop(),
-            oldScroll: this.oldScroll.y,
-            forward: "down",
-            backward: "up"
-          }
-        };
-        if (isTouch && (!axes.vertical.oldScroll || !axes.vertical.newScroll)) {
-          $[wps]("refresh");
-        }
-        $.each(axes, function (aKey, axis) {
-          var direction, isForward, triggered;
-          triggered = [];
-          isForward = axis.newScroll > axis.oldScroll;
-          direction = isForward ? axis.forward : axis.backward;
-          $.each(_this.waypoints[aKey], function (wKey, waypoint) {
-            var _ref, _ref1;
-            if (axis.oldScroll < (_ref = waypoint.offset) && _ref <= axis.newScroll) {
-              return triggered.push(waypoint);
-            } else if (axis.newScroll < (_ref1 = waypoint.offset) && _ref1 <= axis.oldScroll) {
-              return triggered.push(waypoint);
-            }
-          });
-          triggered.sort(function (a, b) {
-            return a.offset - b.offset;
-          });
-          if (!isForward) {
-            triggered.reverse();
-          }
-          return $.each(triggered, function (i, waypoint) {
-            if (waypoint.options.continuous || i === triggered.length - 1) {
-              return waypoint.trigger([direction]);
-            }
-          });
-        });
-        return this.oldScroll = {
-          x: axes.horizontal.newScroll,
-          y: axes.vertical.newScroll
-        };
-      };
-      Context.prototype.refresh = function () {
-        var axes,
-          cOffset,
-          isWin,
-          _this = this;
-        isWin = $.isWindow(this.element);
-        cOffset = this.$element.offset();
-        this.doScroll();
-        axes = {
-          horizontal: {
-            contextOffset: isWin ? 0 : cOffset.left,
-            contextScroll: isWin ? 0 : this.oldScroll.x,
-            contextDimension: this.$element.width(),
-            oldScroll: this.oldScroll.x,
-            forward: "right",
-            backward: "left",
-            offsetProp: "left"
-          },
-          vertical: {
-            contextOffset: isWin ? 0 : cOffset.top,
-            contextScroll: isWin ? 0 : this.oldScroll.y,
-            contextDimension: isWin ? $[wps]("viewportHeight") : this.$element.height(),
-            oldScroll: this.oldScroll.y,
-            forward: "down",
-            backward: "up",
-            offsetProp: "top"
-          }
-        };
-        return $.each(axes, function (aKey, axis) {
-          return $.each(_this.waypoints[aKey], function (i, waypoint) {
-            var adjustment, elementOffset, oldOffset, _ref, _ref1;
-            adjustment = waypoint.options.offset;
-            oldOffset = waypoint.offset;
-            elementOffset = $.isWindow(waypoint.element) ? 0 : waypoint.$element.offset()[axis.offsetProp];
-            if ($.isFunction(adjustment)) {
-              adjustment = adjustment.apply(waypoint.element);
-            } else if (typeof adjustment === "string") {
-              adjustment = parseFloat(adjustment);
-              if (waypoint.options.offset.indexOf("%") > -1) {
-                adjustment = Math.ceil(axis.contextDimension * adjustment / 100);
-              }
-            }
-            waypoint.offset = elementOffset - axis.contextOffset + axis.contextScroll - adjustment;
-            if (waypoint.options.onlyOnScroll && oldOffset != null || !waypoint.enabled) {
-              return;
-            }
-            if (oldOffset !== null && oldOffset < (_ref = axis.oldScroll) && _ref <= waypoint.offset) {
-              return waypoint.trigger([axis.backward]);
-            } else if (oldOffset !== null && oldOffset > (_ref1 = axis.oldScroll) && _ref1 >= waypoint.offset) {
-              return waypoint.trigger([axis.forward]);
-            } else if (oldOffset === null && axis.oldScroll >= waypoint.offset) {
-              return waypoint.trigger([axis.forward]);
-            }
-          });
-        });
-      };
-      Context.prototype.checkEmpty = function () {
-        if ($.isEmptyObject(this.waypoints.horizontal) && $.isEmptyObject(this.waypoints.vertical)) {
-          this.$element.unbind([resizeEvent, scrollEvent].join(" "));
-          return delete contexts[this.id];
-        }
-      };
-      return Context;
-    }();
-    Waypoint = function () {
-      function Waypoint($element, context, options) {
-        var idList, _ref;
-        if (options.offset === "bottom-in-view") {
-          options.offset = function () {
-            var contextHeight;
-            contextHeight = $[wps]("viewportHeight");
-            if (!$.isWindow(context.element)) {
-              contextHeight = context.$element.height();
-            }
-            return contextHeight - $(this).outerHeight();
-          };
-        }
-        this.$element = $element;
-        this.element = $element[0];
-        this.axis = options.horizontal ? "horizontal" : "vertical";
-        this.callback = options.handler;
-        this.context = context;
-        this.enabled = options.enabled;
-        this.id = "waypoints" + waypointCounter++;
-        this.offset = null;
-        this.options = options;
-        context.waypoints[this.axis][this.id] = this;
-        allWaypoints[this.axis][this.id] = this;
-        idList = (_ref = this.element[waypointKey]) != null ? _ref : [];
-        idList.push(this.id);
-        this.element[waypointKey] = idList;
-      }
-      Waypoint.prototype.trigger = function (args) {
-        if (!this.enabled) {
-          return;
-        }
-        if (this.callback != null) {
-          this.callback.apply(this.element, args);
-        }
-        if (this.options.triggerOnce) {
-          return this.destroy();
-        }
-      };
-      Waypoint.prototype.disable = function () {
-        return this.enabled = false;
-      };
-      Waypoint.prototype.enable = function () {
-        this.context.refresh();
-        return this.enabled = true;
-      };
-      Waypoint.prototype.destroy = function () {
-        delete allWaypoints[this.axis][this.id];
-        delete this.context.waypoints[this.axis][this.id];
-        return this.context.checkEmpty();
-      };
-      Waypoint.getWaypointsByElement = function (element) {
-        var all, ids;
-        ids = element[waypointKey];
-        if (!ids) {
-          return [];
-        }
-        all = $.extend({}, allWaypoints.horizontal, allWaypoints.vertical);
-        return $.map(ids, function (id) {
-          return all[id];
-        });
-      };
-      return Waypoint;
-    }();
-    methods = {
-      init: function init(f, options) {
-        var _ref;
-        options = $.extend({}, $.fn[wp].defaults, options);
-        if ((_ref = options.handler) == null) {
-          options.handler = f;
-        }
-        this.each(function () {
-          var $this, context, contextElement, _ref1;
-          $this = $(this);
-          contextElement = (_ref1 = options.context) != null ? _ref1 : $.fn[wp].defaults.context;
-          if (!$.isWindow(contextElement)) {
-            contextElement = $this.closest(contextElement);
-          }
-          contextElement = $(contextElement);
-          context = contexts[contextElement[0][contextKey]];
-          if (!context) {
-            context = new Context(contextElement);
-          }
-          return new Waypoint($this, context, options);
-        });
-        $[wps]("refresh");
-        return this;
-      },
-      disable: function disable() {
-        return methods._invoke.call(this, "disable");
-      },
-      enable: function enable() {
-        return methods._invoke.call(this, "enable");
-      },
-      destroy: function destroy() {
-        return methods._invoke.call(this, "destroy");
-      },
-      prev: function prev(axis, selector) {
-        return methods._traverse.call(this, axis, selector, function (stack, index, waypoints) {
-          if (index > 0) {
-            return stack.push(waypoints[index - 1]);
-          }
-        });
-      },
-      next: function next(axis, selector) {
-        return methods._traverse.call(this, axis, selector, function (stack, index, waypoints) {
-          if (index < waypoints.length - 1) {
-            return stack.push(waypoints[index + 1]);
-          }
-        });
-      },
-      _traverse: function _traverse(axis, selector, push) {
-        var stack, waypoints;
-        if (axis == null) {
-          axis = "vertical";
-        }
-        if (selector == null) {
-          selector = window;
-        }
-        waypoints = jQMethods.aggregate(selector);
-        stack = [];
-        this.each(function () {
-          var index;
-          index = $.inArray(this, waypoints[axis]);
-          return push(stack, index, waypoints[axis]);
-        });
-        return this.pushStack(stack);
-      },
-      _invoke: function _invoke(method) {
-        this.each(function () {
-          var waypoints;
-          waypoints = Waypoint.getWaypointsByElement(this);
-          return $.each(waypoints, function (i, waypoint) {
-            waypoint[method]();
-            return true;
-          });
-        });
-        return this;
-      }
-    };
-    $.fn[wp] = function () {
-      var args, method;
-      method = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-      if (methods[method]) {
-        return methods[method].apply(this, args);
-      } else if ($.isFunction(method)) {
-        return methods.init.apply(this, arguments);
-      } else if ($.isPlainObject(method)) {
-        return methods.init.apply(this, [null, method]);
-      } else if (!method) {
-        return $.error("jQuery Waypoints needs a callback function or handler option.");
-      } else {
-        return $.error("The " + method + " method does not exist in jQuery Waypoints.");
-      }
-    };
-    $.fn[wp].defaults = {
-      context: window,
-      continuous: true,
-      enabled: true,
-      horizontal: false,
-      offset: 0,
-      triggerOnce: false
-    };
-    jQMethods = {
-      refresh: function refresh() {
-        return $.each(contexts, function (i, context) {
-          return context.refresh();
-        });
-      },
-      viewportHeight: function viewportHeight() {
-        var _ref;
-        return (_ref = window.innerHeight) != null ? _ref : $w.height();
-      },
-      aggregate: function aggregate(contextSelector) {
-        var collection, waypoints, _ref;
-        collection = allWaypoints;
-        if (contextSelector) {
-          collection = (_ref = contexts[$(contextSelector)[0][contextKey]]) != null ? _ref.waypoints : void 0;
-        }
-        if (!collection) {
-          return [];
-        }
-        waypoints = {
-          horizontal: [],
-          vertical: []
-        };
-        $.each(waypoints, function (axis, arr) {
-          $.each(collection[axis], function (key, waypoint) {
-            return arr.push(waypoint);
-          });
-          arr.sort(function (a, b) {
-            return a.offset - b.offset;
-          });
-          waypoints[axis] = $.map(arr, function (waypoint) {
-            return waypoint.element;
-          });
-          return waypoints[axis] = $.unique(waypoints[axis]);
-        });
-        return waypoints;
-      },
-      above: function above(contextSelector) {
-        if (contextSelector == null) {
-          contextSelector = window;
-        }
-        return jQMethods._filter(contextSelector, "vertical", function (context, waypoint) {
-          return waypoint.offset <= context.oldScroll.y;
-        });
-      },
-      below: function below(contextSelector) {
-        if (contextSelector == null) {
-          contextSelector = window;
-        }
-        return jQMethods._filter(contextSelector, "vertical", function (context, waypoint) {
-          return waypoint.offset > context.oldScroll.y;
-        });
-      },
-      left: function left(contextSelector) {
-        if (contextSelector == null) {
-          contextSelector = window;
-        }
-        return jQMethods._filter(contextSelector, "horizontal", function (context, waypoint) {
-          return waypoint.offset <= context.oldScroll.x;
-        });
-      },
-      right: function right(contextSelector) {
-        if (contextSelector == null) {
-          contextSelector = window;
-        }
-        return jQMethods._filter(contextSelector, "horizontal", function (context, waypoint) {
-          return waypoint.offset > context.oldScroll.x;
-        });
-      },
-      enable: function enable() {
-        return jQMethods._invoke("enable");
-      },
-      disable: function disable() {
-        return jQMethods._invoke("disable");
-      },
-      destroy: function destroy() {
-        return jQMethods._invoke("destroy");
-      },
-      extendFn: function extendFn(methodName, f) {
-        return methods[methodName] = f;
-      },
-      _invoke: function _invoke(method) {
-        var waypoints;
-        waypoints = $.extend({}, allWaypoints.vertical, allWaypoints.horizontal);
-        return $.each(waypoints, function (key, waypoint) {
-          waypoint[method]();
-          return true;
-        });
-      },
-      _filter: function _filter(selector, axis, test) {
-        var context, waypoints;
-        context = contexts[$(selector)[0][contextKey]];
-        if (!context) {
-          return [];
-        }
-        waypoints = [];
-        $.each(context.waypoints[axis], function (i, waypoint) {
-          if (test(context, waypoint)) {
-            return waypoints.push(waypoint);
-          }
-        });
-        waypoints.sort(function (a, b) {
-          return a.offset - b.offset;
-        });
-        return $.map(waypoints, function (waypoint) {
-          return waypoint.element;
-        });
-      }
-    };
-    $[wps] = function () {
-      var args, method;
-      method = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-      if (jQMethods[method]) {
-        return jQMethods[method].apply(null, args);
-      } else {
-        return jQMethods.aggregate.call(null, method);
-      }
-    };
-    $[wps].settings = {
-      resizeThrottle: 100,
-      scrollThrottle: 30
-    };
-    return $w.on("load.waypoints", function () {
-      return $[wps]("refresh");
-    });
-  });
-}).call(this);
 
 /***/ }),
 

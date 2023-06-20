@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="bg-white ">
-      <div class="card-title border-bottom p-3 text-size-1-big">
+      <div class="card-title border-bottom p-3 text-size-1-big bold">
         Your Booking Details
       </div>
       <div>

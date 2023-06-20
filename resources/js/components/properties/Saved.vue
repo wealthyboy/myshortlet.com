@@ -1,4 +1,4 @@
-<template>
+Guests<template>
   <a
     href="#"
     :data-id="property.id"

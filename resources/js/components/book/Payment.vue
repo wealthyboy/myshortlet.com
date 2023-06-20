@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-5">
     <div class="bg-white">
-      <h4 class="card-title p-3 border-bottom">Your Booking Details</h4>
+      <h4 class="card-title p-3 border-bottom bold">Your Booking Details</h4>
       <div>
         <ul class="list-unstyled mb-0 p-2">
           <li class="d-flex justify-content-between lh-22">

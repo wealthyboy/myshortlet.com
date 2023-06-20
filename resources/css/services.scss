@@ -1016,4 +1016,27 @@ button.owl-next {
         margin-top: 1rem !important;
     }
 
+    .category-search label.pl-2.ml-4.bmd-label-static {
+      left: 6px;
+    }
+
+
+  .category-search .form-group.ml-1.mr-sm-1.form-border.cursor-pointer.search.col-md-4.bmd-form-grup {
+      height: 55px;
+  }
+
+  .category-search input.form-control.date-range.cursor-pointer.location-search.form-control.input {
+    height: 29px;
+}
+
+.category-search .checkin{
+  padding-left: 2.4rem !important;
+}
+
+.category-search svg#date-outline {
+  position: absolute;
+  left: 4.5px;
+  top: -7px;
+}
+
   

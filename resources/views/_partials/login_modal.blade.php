@@ -21,13 +21,13 @@
             <label id="box50" class="checkbox-label">
                <input for="box50" name="remember_me" value="1" class="" type="checkbox">
                <span class="checkbox-custom rectangular"></span>
-               <span class="checkbox-label-text">Remember </span>
+               <span class="checkbox-label-text mt-1">Remember </span>
             </label>
          </div>
       </div>
 
       <div class="text-right mt-2">
-         <a class="bold" href="/password/reset">Forget your password?</a>
+         <!-- <a class="bold" href="/password/reset">Forget your password?</a> -->
       </div>
    </div>
    <div class="clearfix"></div>

@@ -2,7 +2,7 @@
   <div class="bg-white mt-2">
     <div class="d-flex justify-content-between align-items-center">
       <div>
-        <h4 class="card-title p-3 mb-0">
+        <h4 class="card-title p-3 mb-0 bold">
           {{ booking.apartment.name || property.name }}
         </h4>
       </div>
@@ -211,7 +211,6 @@ export default {
     },
     removeFromBooking(evt, booking_id, ap_id) {
       let attributes = document.querySelectorAll(".extra_services_" + ap_id);
-
       let c = [],
         services = {},
         checkboxesChecked = [],

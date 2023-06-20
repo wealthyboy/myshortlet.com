@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="people-number  d-flex  form-border  ">
-      <div class="align-self-center ml-2">
-        <i class="fas fa-user-friends"></i>
+      <div class="align-self-center ml-3">
+        <i class="fas fa-user-friends  text-black"></i>
       </div>
       <div class="ml-2">
         <label class="bmd-label-static  pl-1">Rooms and Guests</label>
-        <div class="people-dropdown-info ml-1 pb-1">
+        <div class="people-dropdown-info ml-1 pb-1 ">
           <span class="adults">{{ adults }}</span> adults
           <span class="children">{{ children }}</span> children -
           <span class="rooms">{{ rooms }}</span> rooms

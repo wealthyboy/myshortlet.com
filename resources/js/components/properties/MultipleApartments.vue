@@ -250,6 +250,7 @@ export default {
       return arr.reduce((a, b) => parseInt(a) + parseInt(b), 0);
     },
     getApartmentQuantity({ total, aps }) {
+      console.log(total, aps )
       this.total = total;
       this.aps = aps;
       this.apTotal = total;
@@ -283,12 +284,11 @@ export default {
       };
 
       this.propertyLoading = true;
+     
       axios
         .post("/book/store", form)
         .then((response) => {
           this.propertyLoading = false;
-          console.log(response.data);
-
           if (response.data) {
             document.querySelector("#multiple-form").submit();
           } else {

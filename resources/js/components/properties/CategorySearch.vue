@@ -1,10 +1,12 @@
 <template>
+  
   <form
     method="GET"
     action="/property/search"
+    class="form-row"
   >
     <div class="d-flex justify-content-between ">
-      <div class="form-group form-border w-100 cursor-pointer search  bmd-form-group">
+      <div class="form-group ml-1 mr-sm-1 form-border cursor-pointer search col-md-4 bmd-form-group">
         <label
           class="pl-2 ml-4"
           for="flatpickr-input-f"
@@ -14,11 +16,11 @@
 
       <div
         id="people-number"
-        class="w-100 ml-2 cursor-pointer p-0"
+        class="w-100 ml-2 col-md-4 cursor-pointer p-0"
       >
         <guests />
       </div>
-      <div class="w-25 ml-2 check-availablility">
+      <div class="w-25 ml-2 col- check-availablility">
         <button
           type="button"
           @click.prevent="search()"

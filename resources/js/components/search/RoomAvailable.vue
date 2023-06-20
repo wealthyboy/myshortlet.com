@@ -108,7 +108,7 @@
       </div>
 
       <div class="col-md-6   d-none d-lg-block">
-        <h1>Your booking details</h1>
+        <h1 class="bold">Your booking details</h1>
         <cart-index
           :apartments="apartments"
           :booking_details="booking_details"

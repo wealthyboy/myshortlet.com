@@ -1,10 +1,7 @@
-
-
-
 @extends('layouts.listing')
 @section('content')
 <div class="clearfix"></div>
-<section  id="content" style="background-color: #f8f5f4;">
+<section id="content" style="background-color: #f8f5f4;">
    <div class="container">
       <div class="row no-gutters bg-white">
          <div class="col-lg-10 col-10">
@@ -26,10 +23,10 @@
          <div class="col-md-4 d-none d-lg-block ">
             <div class="row no-gutters">
                <div class="col-6 pl-1  pb-1 pr-1">
-                  <a  href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ optional($property_type->images[0])->image }}')"></a>
+                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ optional($property_type->images[0])->image }}')"></a>
                </div>
                <div class="col-6 pl-1  pb-1 pr-1">
-                  <a  href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ optional($property_type->images[0])->image }}')"></a>
+                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ optional($property_type->images[0])->image }}')"></a>
                </div>
                <!-- <div class="col-6 ">
                   <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $property_type->images[1]->image }}')"></a>
@@ -70,11 +67,11 @@
    </div>
    <div class="">
       <div class="container">
-         <div  class="row   align-items-start">
+         <div class="row   align-items-start">
             <div class=" {{ $property->type == 'single' ? 'col-md-7' : 'col-md-12' }} rounded  mt-1">
                <div id="Overview" class="name rounded bg-white">
                   <div class="card-body">
-                     <h3 class="card-title">{{ $property->name }}</h3>
+                     <h3 class="card-title bold">{{ $property->name }}</h3>
                      <div class="row">
                         @if($property->type == 'single')
                         <div class="col-12 entire-apartment mb-3">
@@ -88,7 +85,7 @@
                               @foreach($property->facilities->take(3) as $facility)
                               <div class="col-6 d-flex mb-2 align-items-center">
                                  <span class="position-absolute svg-icon-section">
-                                 <?php echo  html_entity_decode($facility->svg) ?>
+                                    <?php echo  html_entity_decode($facility->svg) ?>
                                  </span>
                                  <span class="svg-icon-text">{{ $facility->name }}</span>
                               </div>
@@ -102,7 +99,7 @@
                            <div class="">
                               <ul class="list-unstyled ">
                                  @foreach($safety_practices as $key => $safety_practice)
-                                 <li  class="">{{ $safety_practice->name }}</li>
+                                 <li class="">{{ $safety_practice->name }}</li>
                                  @endforeach
                               </ul>
                            </div>
@@ -114,7 +111,7 @@
                            <div class="">
                               <ul class="list-unstyled ">
                                  @foreach($areas as $key => $area)
-                                 <li  class="">{{ $area->name }}</li>
+                                 <li class="">{{ $area->name }}</li>
                                  @endforeach
                               </ul>
                            </div>
@@ -125,44 +122,44 @@
                </div>
                <div>
                   @if ($property->type != 'single')
-                  <multiple-apartments  :apartments="{{ $apartments }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple"/>
+                  <multiple-apartments :apartments="{{ $apartments }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple" />
                   @endif
                </div>
                <div class="name bg-white rounded">
-                  <h3 class="card-title  pb-3 p-3 border-bottom">About this property</h3>
+                  <h3 class="card-title  pb-3 p-3 border-bottom bold">About this property</h3>
                   <div class="card-body">
                      <div>{{ $property->name }}</div>
                      <p><?php echo  html_entity_decode($property->description);  ?></p>
                   </div>
                </div>
                <div class="name bg-white rounded">
-                  <h3 class="card-title  pb-3 p-3 border-bottom">About the area</h3>
+                  <h3 class="card-title  pb-3 p-3 border-bottom bold">About the area</h3>
                   <div class="card-body">
-                     <div  class="row   align-items-start">
+                     <div class="row   align-items-start">
                         <div class="col-md-4">
-                           <h3 class="card-title"> {{ $property->state }}</h3>
+                           <h3 class="card-title bold"> {{ $property->state }}</h3>
                            {{ $property->state_description }}
                         </div>
                         <div class="col-md-7">
-                           <div style="" id="map"></div>
+                           <div id="map"></div>
                            <div class="row">
-                             @if ($areas->count())
+                              @if ($areas->count())
 
                               <div class="col-md-6">
-                                 <h5 class="card-title">What's near by</h5>
+                                 <h5 class="card-title bold">What's near by</h5>
                                  <ul class="list-unstyled">
                                     @foreach($areas as $key => $area)
-                                    <li  class="">{{ $area->name }}</li>
+                                    <li class="">{{ $area->name }}</li>
                                     @endforeach
                                  </ul>
                               </div>
                               @endif
                               <div class="col-md-6">
-                                 <h5 class="card-title">Restuarants</h5>
+                                 <h5 class="card-title bold">Restuarants</h5>
                                  <ul class="list-unstyled ">
                                     @foreach($restaurants as $key => $restaurant)
-                                    <li  class=""><span class="position-absolute svg-icon-section">
-                                       <?php echo  html_entity_decode($facility->svg) ?>
+                                    <li class=""><span class="position-absolute svg-icon-section">
+                                          <?php echo  html_entity_decode($facility->svg) ?>
                                        </span>{{ $restaurant->name }}
                                     </li>
                                     @endforeach
@@ -176,12 +173,12 @@
             </div>
             @if ($property->type == 'single')
             <div class="col-12 pl-1 single-apartment rounded col-md-5">
-               <single-apartment   :apartment="{{ $apartments[0]->load('property') }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple"/>
+               <single-apartment :apartment="{{ $apartments[0]->load('property') }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple" />
             </div>
             @endif
             <div class="col-12  mt-1 col-md-12">
                <div id="Amenities" class="name mt-2 bg-white">
-                  <h3 class="card-title  p-3 border-bottom">Amenities</h3>
+                  <h3 class="card-title  p-3 border-bottom bold">Amenities</h3>
                   <div class="card-body">
                      <div class="row">
                         @foreach($amenities as $key => $apartment_facilities)
@@ -201,14 +198,14 @@
                </div>
 
                <div class="name house-rules mt-1 bg-white mb-3">
-                  <h3 class="card-title  p-3 border-bottom">House Rules</h3>
+                  <h3 class="card-title  p-3 border-bottom bold">House Rules</h3>
                   <div class="card-body">
                      <ul class="list-unstyled">
                         <li>
-                           Check in  -   {{ $property->check_in_time }}  
+                           Check in - {{ $property->check_in_time }}
                         </li>
                         <li>
-                           Check out -  {{ $property->check_out_time }} 
+                           Check out - {{ $property->check_out_time }}
                         </li>
                         @foreach($property->rules as $rule)
                         <li>
@@ -221,7 +218,7 @@
                      </ul>
                   </div>
                </div>
-               
+
             </div>
          </div>
       </div>

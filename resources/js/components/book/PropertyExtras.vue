@@ -1,6 +1,6 @@
 <template>
   <div class=" bg-white mt-2">
-    <h4 class="card-title  p-3 border-bottom mb-0">
+    <h4 class="card-title  p-3 border-bottom mb-0 bold">
       You may be intrested in
     </h4>
     <div class="card-body pt-0">

@@ -1,7 +1,38 @@
 <template>
   <div>
+
+
     
     <div v-if="!propertyLoading && properties.length">
+      <div class="col-md-12 category-search ml-auto mr-auto mt-4">
+
+      </div>
+
+      <div class="form-row">
+          <div
+            class="form-group category-search ml-1 mr-sm-1  form-border cursor-pointer search col-md-4 bmd-form-grup"
+          >
+            <label class="pl-2  bmd-label-static  checkin mb-0 pl-1" for="flatpickr-input-f"
+              >Check-in - Check-out</label
+            >
+            <date-picker />
+          </div>
+          <div id="people-number" class="col-md-4 cursor-pointer ">
+            <guests />
+          </div>
+          <div
+            class="col-md-3  mb-lg-0 mt-lg-0 mt-sm-3 mb-sm-3  ml-1 mr-1 check-availablility"
+          >
+            <button
+              type="button"
+              @click.prevent="checkAvailabity()"
+              class="btn btn-primary btn-block m-auto bold check-availablility-button"
+            >
+              <i class="material-icons"></i> Check availablity
+            </button>
+          </div>
+        </div>
+
       <div
         v-for="property in properties"
         :key="property.id"
@@ -87,7 +118,7 @@
             </div>
             <div class="d-flex position-absolute apartment-review justify-content-between mt-1 align-items-end">
               <div class="reviews-section"></div>
-              <div class="text-right mr-2">
+              <div class="text-right mr-4">
                 <div class="d-inline-flex">
                   <template v-if="property.default_discounted_price">
                     <div class="sale-price bold mr-3 text-gold">
@@ -110,7 +141,7 @@
                   {{ property.price_mode }} per night
                 </div>
                 <div
-                  class="text-size-1 text-gray"
+                  class="text-size-1 text-success"
                   v-if="property.is_refundable"
                 >
                   Fully Refundable
@@ -165,6 +196,12 @@ import { mapActions, mapGetters } from "vuex";
 import Pagination from "../pagination/Pagination.vue";
 import Loaders from "./Loaders.vue";
 import Saved from "./Saved.vue";
+import Guests from "./Guests.vue";
+import DatePicker from "./Date";
+
+
+import CategorySearch from "./CategorySearch.vue";
+
 
 export default {
   name: "Index",
@@ -178,6 +215,9 @@ export default {
     Pagination,
     Loaders,
     Saved,
+    CategorySearch,
+    Guests,
+    DatePicker
   },
   data() {
     return {
@@ -199,12 +239,18 @@ export default {
   },
 
   mounted() {
+    this.$store.commit("setPropertyLoading", true);
     let time = new Date().getTime();
     setTimeout(() => {
+      document.getElementById("ap-loaders").classList.add('d-none')
+      document.getElementById("category-loader").classList.add('d-none')
       this.$store.commit("setProperties", this.propertys);
       this.$store.commit("setMeta", this.total);
       this.$store.commit("setPropertyLoading", false);
     }, 1000);
+
+
+
     this.$store.commit("setNextPageUrl", this.next_page[0]);
   },
   methods: {

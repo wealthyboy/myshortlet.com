@@ -1,11 +1,11 @@
 <template>
   <div class=" bg-white">
-    <h3 class="card-title  p-3 border-bottom mb-0">
+    <h3 class="card-title  p-3 border-bottom mb-0 bold">
       Important Trip Information
     </h3>
     <div class="card-body pt-0">
       <div>
-        <h5>House Rules</h5>
+        <h5 class="bold">House Rules</h5>
         <ul class="list-unstyled">
           <li class="">
             <p class=" text-heading mb-0">

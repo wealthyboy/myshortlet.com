@@ -4,7 +4,7 @@
       <booking-complete />
     </div>
     <div v-if="!paymentIsComplete" class="col-md-7 mb-3">
-      <h3>Review and book</h3>
+      <h3 class="bold">Review and book</h3>
     </div>
     <div v-if="!paymentIsComplete" class="col-md-7">
       <form action="" method="get">
@@ -13,7 +13,7 @@
         <booking-login />
 
         <div class=" bg-white ">
-          <h3 class="card-title p-3 border-bottom">Who's checking in?</h3>
+          <h3 class="card-title p-3 border-bottom bold">Who's checking in?</h3>
           <div class="card-body pt-0">
             <div class="form-row">
               <div class="form-group bmd-form-group col-6">
@@ -144,7 +144,7 @@
           <div class="card-body pt-0">
             <div class="border-bottom">
               <div class="d-flex  justify-content-between align-items-center ">
-                <h3 class="card-title mt-2 pb-3 mb-0">
+                <h3 class="card-title mt-2 pb-3 mb-0 bold">
                   Payment
                 </h3>
                 <div
