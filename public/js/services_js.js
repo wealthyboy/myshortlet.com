@@ -5433,13 +5433,7 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("section", {
-    staticClass: "bg-white"
-  }, [_c("div", {
-    staticClass: "container"
-  }, [_c("div", {
-    staticClass: "row"
-  }, [_c("div", {
+  return _c("div", {
     staticClass: "col-md-8 offset-md-2"
   }, [_c("div", {
     staticClass: "error-page text-center"
@@ -5447,14 +5441,14 @@ var staticRenderFns = [function () {
     staticClass: "bold"
   }, [_vm._v("CONFIRMED")]), _vm._v(" "), _c("p", {
     staticClass: "large"
-  }, [_vm._v("\n            Thank you for choosing  Avenue montaigne for your stay. We are\n            pleased to inform you that your reservation request is CONFIRMED\n            \n          ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n      Thank you for choosing Avenue montaigne for your stay. We are\n      pleased to inform you that your reservation request is CONFIRMED\n\n    ")]), _vm._v(" "), _c("p", {
     staticClass: "large"
   }), _vm._v(" "), _c("a", {
     staticClass: "btn btn--primary space-t--2",
     attrs: {
       href: "/"
     }
-  }, [_vm._v("Continue")])])])])])]);
+  }, [_vm._v("Continue")])])]);
 }];
 render._withStripped = true;
 
@@ -5686,7 +5680,7 @@ var render = function render() {
     staticClass: "bg-white"
   }, [_c("div", {
     staticClass: "card-title border-bottom p-3 text-size-1-big bold"
-  }, [_vm._v("\n      Your Booking Details\n    ")]), _vm._v(" "), _c("div", [_c("ul", {
+  }, [_vm._v("\n        Your Booking Details\n      ")]), _vm._v(" "), _c("div", [_c("ul", {
     staticClass: "list-unstyled mb-2 p-3"
   }, [_c("li", {
     staticClass: "d-flex justify-content-between mb-3 lh-22"
@@ -5694,50 +5688,50 @@ var render = function render() {
     staticClass: "text-gray-light mb-0"
   }, [_vm._v("Check in")]), _vm._v(" "), _c("p", {
     staticClass: "font-weight-500 text-heading mb-0"
-  }, [_vm._v("\n            " + _vm._s(_vm.booking_details.from) + "\n          ")])]), _vm._v(" "), _c("li", {
+  }, [_vm._v("\n              " + _vm._s(_vm.booking_details.from) + "\n            ")])]), _vm._v(" "), _c("li", {
     staticClass: "d-flex justify-content-between mb-3 lh-22"
   }, [_c("p", {
     staticClass: "text-gray-light mb-0"
   }, [_vm._v("Check out")]), _vm._v(" "), _c("p", {
     staticClass: "font-weight-500 text-heading mb-0"
-  }, [_vm._v("\n            " + _vm._s(_vm.booking_details.to) + "\n          ")])]), _vm._v(" "), _c("li", {
+  }, [_vm._v("\n              " + _vm._s(_vm.booking_details.to) + "\n            ")])]), _vm._v(" "), _c("li", {
     staticClass: "d-flex justify-content-between lh-22"
   }, [_c("p", {
     staticClass: "text-gray-light mb-0"
   }, [_vm._v("Total length of stay")]), _vm._v(" "), _c("p", {
     staticClass: "font-weight-500 text-heading mb-0"
-  }, [_vm._v("\n            " + _vm._s(_vm.booking_details.days) + " " + _vm._s(_vm.booking_details.nights[1]) + "\n          ")])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n              " + _vm._s(_vm.booking_details.days) + " " + _vm._s(_vm.booking_details.nights[1]) + "\n            ")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "bg-white mt-2"
   }, [_c("div", {
-    staticClass: "card-title border-bottom p-3 text-size-1-big"
-  }, [_vm._v("\n      Price Details\n    ")]), _vm._v(" "), _vm._l(_vm.bookings, function (booking) {
+    staticClass: "card-title bold border-bottom p-3 text-size-1-big"
+  }, [_vm._v("\n        Price Details\n      ")]), _vm._v(" "), _vm._l(_vm.bookings, function (booking) {
     return _c("div", {
       key: booking.id,
       staticClass: "p-3 bg-transparent d-flex justify-content-between p-0 align-items-center"
-    }, [booking.sale_price ? [_c("div", [_c("div", [_vm._v("\n            " + _vm._s(booking.quantity) + " X\n            " + _vm._s(booking.apartment.name || _vm.property.name) + "\n          ")]), _vm._v(" "), _c("span", {
+    }, [booking.sale_price ? [_c("div", [_c("div", [_vm._v("\n              " + _vm._s(booking.quantity) + " X\n              " + _vm._s(booking.apartment.name || _vm.property.name) + "\n            ")]), _vm._v(" "), _c("span", {
       staticClass: "bold"
-    }, [_c("del", [_vm._v(_vm._s(booking.currency) + _vm._s(_vm._f("priceFormat")(booking.price)))]), _vm._v("\n            " + _vm._s(booking.currency) + _vm._s(_vm._f("priceFormat")(booking.sale_price)) + "\n          ")])]), _vm._v(" "), _c("span", {
+    }, [_c("del", [_vm._v(_vm._s(booking.currency) + _vm._s(_vm._f("priceFormat")(booking.price)))]), _vm._v("\n              " + _vm._s(booking.currency) + _vm._s(_vm._f("priceFormat")(booking.sale_price)) + "\n            ")])]), _vm._v(" "), _c("span", {
       staticClass: "text-size-2"
     }, [_vm._v(" per night")]), _vm._v(" "), _c("div", {
       staticClass: "bold"
-    }, [_vm._v("\n          " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(booking.total)) + "\n        ")])] : [_c("div", [_c("div", [_vm._v("\n            " + _vm._s(booking.quantity) + " X\n            " + _vm._s(booking.apartment.name || _vm.property.name) + "\n          ")]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n            " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(booking.total)) + "\n          ")])] : [_c("div", [_c("div", [_vm._v("\n              " + _vm._s(booking.quantity) + " X\n              " + _vm._s(booking.apartment.name || _vm.property.name) + "\n            ")]), _vm._v(" "), _c("div", {
       staticClass: "bold"
-    }, [_vm._v("\n            " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(booking.price)) + "\n            "), _c("div", {
+    }, [_vm._v("\n              " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(booking.price)) + "\n              "), _c("div", {
       staticClass: "text-size-2"
     }, [_vm._v("per night")])])]), _vm._v(" "), _c("div", {
       staticClass: "bold"
-    }, [_vm._v("\n          " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(booking.total)) + "\n        ")])]], 2);
+    }, [_vm._v("\n            " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(booking.total)) + "\n          ")])]], 2);
   }), _vm._v(" "), _c("div", {
     staticClass: "card-footer p-3 bg-transparent d-flex justify-content-between p-0 align-items-center"
   }, [_c("p", {
     staticClass: "text-heading mb-0"
-  }, [_vm._v("\n        Sub Total\n      ")]), _vm._v(" "), _c("span", {
+  }, [_vm._v("\n          Sub Total\n        ")]), _vm._v(" "), _c("span", {
     staticClass: "text-heading total-price bold"
   }, [_vm._v(_vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(parseInt(_vm.sub_total))))])]), _vm._v(" "), _c("div", {
     staticClass: "card-footer p-3 bg-transparent d-flex justify-content-between p-0 align-items-center"
   }, [_c("p", {
     staticClass: "text-heading bold mb-0"
-  }, [_vm._v("\n        Total Price:\n      ")]), _vm._v(" "), _c("span", {
+  }, [_vm._v("\n          Total Price:\n        ")]), _vm._v(" "), _c("span", {
     staticClass: "bold text-heading total-price price",
     attrs: {
       "data-total": _vm.bookingTotal + _vm.bookingPropertyServicesTotal + _vm.bookingServicesTotal

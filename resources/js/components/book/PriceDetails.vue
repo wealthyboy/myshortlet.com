@@ -28,15 +28,12 @@
       </div>
     </div>
     <div class="bg-white mt-2">
-      <div class="card-title border-bottom p-3 text-size-1-big">
+      <div class="card-title bold border-bottom p-3 text-size-1-big">
         Price Details
       </div>
 
-      <div
-        v-for="booking in bookings"
-        :key="booking.id"
-        class=" p-3  bg-transparent d-flex justify-content-between p-0 align-items-center"
-      >
+      <div v-for="booking in bookings" :key="booking.id"
+        class=" p-3  bg-transparent d-flex justify-content-between p-0 align-items-center">
         <template v-if="booking.sale_price">
           <div>
             <div>
@@ -69,36 +66,25 @@
           </div>
         </template>
       </div>
-      <div
-        class="card-footer p-3  bg-transparent d-flex justify-content-between p-0 align-items-center"
-      >
+      <div class="card-footer p-3  bg-transparent d-flex justify-content-between p-0 align-items-center">
         <p class="text-heading mb-0">
           Sub Total
         </p>
-        <span class=" text-heading total-price bold"
-          >{{ property.currency }}{{ parseInt(sub_total) | priceFormat }}</span
-        >
+        <span class=" text-heading total-price bold">{{ property.currency }}{{ parseInt(sub_total) | priceFormat }}</span>
       </div>
 
-      <div
-        class="card-footer p-3  bg-transparent d-flex justify-content-between p-0 align-items-center"
-      >
+      <div class="card-footer p-3  bg-transparent d-flex justify-content-between p-0 align-items-center">
         <p class="text-heading bold mb-0">
           Total Price:
         </p>
-        <span
-          :data-total="
-            bookingTotal + bookingPropertyServicesTotal + bookingServicesTotal
-          "
-          class=" bold text-heading total-price price"
-          >{{ property.currency
-          }}{{
-            (bookingTotal +
-              bookingPropertyServicesTotal +
-              bookingServicesTotal)
-              | priceFormat
-          }}</span
-        >
+        <span :data-total="bookingTotal + bookingPropertyServicesTotal + bookingServicesTotal
+          " class=" bold text-heading total-price price">{{ property.currency
+  }}{{
+  (bookingTotal +
+    bookingPropertyServicesTotal +
+    bookingServicesTotal)
+  | priceFormat
+}}</span>
       </div>
     </div>
   </div>
