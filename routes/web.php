@@ -161,7 +161,7 @@ Route::get('listings', 'Listings\ListingsController@index');
 Route::post('webhook/payment',     'WebHook\WebHookController@payment');
 Route::post('webhook/github',      'WebHook\WebHookController@gitHub');
 
-Route::get('/neighborhood',        'Pages\PageController@index');
+Route::get('/experience',        'Pages\PageController@index');
 Route::get('/about-us',            'Pages\PageController@index');
 
 Route::get('/contact-us',          'Pages\PageController@index');
