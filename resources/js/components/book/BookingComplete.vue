@@ -12,7 +12,7 @@
 
 
       <p class="large"></p>
-      <a href="/" class="btn btn-primary btn-round d-none bold d-lg-block d-xl-block">Continue</a>
+      <a href="/" class="btn btn-primary btn-round  ">Continue</a>
     </div>
   </div>
 

@@ -5448,7 +5448,7 @@ var staticRenderFns = [function () {
   }, [_vm._v("\n      Thank you for choosing Avenue montaigne for your stay. We are\n      pleased to inform you that your reservation request is CONFIRMED\n\n    ")]), _vm._v(" "), _c("p", {
     staticClass: "large"
   }), _vm._v(" "), _c("a", {
-    staticClass: "btn btn-primary btn-round d-none bold d-lg-block d-xl-block",
+    staticClass: "btn btn-primary btn-round",
     attrs: {
       href: "/"
     }
