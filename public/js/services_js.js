@@ -5111,7 +5111,11 @@ var render = function render() {
   return _c("div", {
     staticClass: "row"
   }, [_vm.paymentIsComplete ? _c("div", {
-    staticClass: "d-flex col-md-12 aligh"
+    staticClass: "d-flex col-md-12 align-items-center",
+    staticStyle: {
+      height: "65vh",
+      overflow: "hidden"
+    }
   }, [_c("booking-complete")], 1) : _vm._e(), _vm._v(" "), !_vm.paymentIsComplete ? _c("div", {
     staticClass: "col-md-7 mb-3"
   }, [_c("h3", {
@@ -5440,11 +5444,11 @@ var staticRenderFns = [function () {
   }, [_c("h1", {
     staticClass: "bold"
   }, [_vm._v("CONFIRMED")]), _vm._v(" "), _c("p", {
-    staticClass: "large"
+    staticClass: "large text-black"
   }, [_vm._v("\n      Thank you for choosing Avenue montaigne for your stay. We are\n      pleased to inform you that your reservation request is CONFIRMED\n\n    ")]), _vm._v(" "), _c("p", {
     staticClass: "large"
   }), _vm._v(" "), _c("a", {
-    staticClass: "btn btn--primary space-t--2",
+    staticClass: "btn btn-primary btn-round d-none bold d-lg-block d-xl-block",
     attrs: {
       href: "/"
     }

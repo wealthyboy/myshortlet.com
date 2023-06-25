@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div v-if="paymentIsComplete" class="d-flex col-md-12 aligh">
+    <div v-if="paymentIsComplete" class="d-flex col-md-12 align-items-center" style="height:65vh; overflow:hidden;">
       <booking-complete />
     </div>
     <div v-if="!paymentIsComplete" class="col-md-7 mb-3">
@@ -18,16 +18,9 @@
             <div class="form-row">
               <div class="form-group bmd-form-group col-6">
                 <label class="bmd-label-floating">First name</label>
-                <input
-                  id="first_name"
-                  type="text"
-                  class="form-control required"
-                  name="first_name"
-                  v-model="form.first_name"
-                  @input="removeError($event)"
-                  @blur="vInput($event)"
-                  :class="{ 'has-danger': errors.first_name }"
-                />
+                <input id="first_name" type="text" class="form-control required" name="first_name"
+                  v-model="form.first_name" @input="removeError($event)" @blur="vInput($event)"
+                  :class="{ 'has-danger': errors.first_name }" />
                 <span v-if="errors.first_name">
                   <strong class="text-danger text-size-2">{{
                     formatError(errors.first_name)
@@ -36,16 +29,8 @@
               </div>
               <div class="form-group bmd-form-group col-6">
                 <label class="bmd-label-floating">Last name</label>
-                <input
-                  id="last_name"
-                  type="text"
-                  class="form-control required"
-                  name="last_name"
-                  v-model="form.last_name"
-                  @input="removeError($event)"
-                  @blur="vInput($event)"
-                  :class="{ 'has-danger': errors.last_name }"
-                />
+                <input id="last_name" type="text" class="form-control required" name="last_name" v-model="form.last_name"
+                  @input="removeError($event)" @blur="vInput($event)" :class="{ 'has-danger': errors.last_name }" />
                 <span v-if="errors.last_name">
                   <strong class="text-danger text-size-2">{{
                     formatError(errors.last_name)
@@ -57,11 +42,7 @@
               <div class="form-group pt-4 col-3 ">
                 <select name="phone_code" class="form-control required" id="">
                   <template v-for="(map, k) in codes">
-                    <option
-                      v-for="(code, index) in map"
-                      :key="index"
-                      :value="code"
-                    >
+                    <option v-for="(code, index) in map" :key="index" :value="code">
                       {{ index }} (+{{ code }})
                     </option>
                   </template>
@@ -69,15 +50,8 @@
               </div>
               <div class="form-group bmd-form-group col-4">
                 <label class="bmd-label-floating">Phone number</label>
-                <input
-                  type="text"
-                  class="form-control  required"
-                  name="phone_number"
-                  v-model="form.phone_number"
-                  @input="removeError($event)"
-                  @blur="vInput($event)"
-                  :class="{ 'has-danger': errors.phone_number }"
-                />
+                <input type="text" class="form-control  required" name="phone_number" v-model="form.phone_number"
+                  @input="removeError($event)" @blur="vInput($event)" :class="{ 'has-danger': errors.phone_number }" />
 
                 <span v-if="errors.phone_number">
                   <strong class="text-danger text-size-2">{{
@@ -87,16 +61,8 @@
               </div>
               <div class="form-group bmd-form-group col-5">
                 <label class="bmd-label-floating">Email address</label>
-                <input
-                  id="email"
-                  type="email"
-                  class="form-control  required"
-                  name="email"
-                  v-model="form.email"
-                  @input="removeError($event)"
-                  @blur="vInput($event)"
-                  :class="{ 'has-danger': errors.email }"
-                />
+                <input id="email" type="email" class="form-control  required" name="email" v-model="form.email"
+                  @input="removeError($event)" @blur="vInput($event)" :class="{ 'has-danger': errors.email }" />
 
                 <span v-if="errors.email">
                   <strong class="text-danger text-size-2">{{
@@ -108,34 +74,17 @@
           </div>
         </div>
 
-        <bookings
-          v-for="booking in bookings"
-          :key="booking.id"
-          :booking="booking"
-          :booking_details="booking_details"
-          :property="property"
-          @addExtraService="addExtraService"
-          :bookings="bookings"
-        />
+        <bookings v-for="booking in bookings" :key="booking.id" :booking="booking" :booking_details="booking_details"
+          :property="property" @addExtraService="addExtraService" :bookings="bookings" />
 
         <template v-if="property.extra_services.length">
-          <property-extras
-            :extra_service="extra_service"
-            v-for="extra_service in property.extra_services"
-            :key="extra_service.id"
-            :property="property"
-            @addExtraPropertyService="addExtraPropertyService"
-          />
+          <property-extras :extra_service="extra_service" v-for="extra_service in property.extra_services"
+            :key="extra_service.id" :property="property" @addExtraPropertyService="addExtraPropertyService" />
         </template>
 
         <div class="d-block d-sm-none">
-          <price-details
-            :bookings="bookings"
-            :property="property"
-            :booking_details="booking_details"
-            :amount="bookingTotal"
-            :sub_total="bookingSubTotal"
-          />
+          <price-details :bookings="bookings" :property="property" :booking_details="booking_details"
+            :amount="bookingTotal" :sub_total="bookingSubTotal" />
         </div>
 
         <rules :property="property" />
@@ -147,29 +96,15 @@
                 <h3 class="card-title mt-2 pb-3 mb-0 bold">
                   Payment
                 </h3>
-                <div
-                  class="payment-icons d-flex justify-content-center align-items-center"
-                >
+                <div class="payment-icons d-flex justify-content-center align-items-center">
                   <div class="payment-image mr-3">
-                    <img
-                      src="/img/business.png"
-                      class="img-fluid"
-                      alt="make payment with mastercard"
-                    />
+                    <img src="/img/business.png" class="img-fluid" alt="make payment with mastercard" />
                   </div>
                   <div class="payment-image mr-3">
-                    <img
-                      class="img-fluid"
-                      src="/img/visa-card-ohram.png"
-                      alt="make payment with mastercard"
-                    />
+                    <img class="img-fluid" src="/img/visa-card-ohram.png" alt="make payment with mastercard" />
                   </div>
                   <div class="payment-image">
-                    <img
-                      src="/img/Verve.png"
-                      class="img-fluid"
-                      alt="make payment with mastercard"
-                    />
+                    <img src="/img/Verve.png" class="img-fluid" alt="make payment with mastercard" />
                   </div>
                 </div>
               </div>
@@ -182,12 +117,8 @@
               and understand the rules and regulations of this property
             </div>
             <p class="form-group mt-3">
-              <button
-                type="buttom"
-                @click.prevent="makePayment()"
-                data-total=""
-                class=" ml-1 btn btn-primary btn-round  btn-block  auth-form-button"
-              >
+              <button type="buttom" @click.prevent="makePayment()" data-total=""
+                class=" ml-1 btn btn-primary btn-round  btn-block  auth-form-button">
                 <div class="auth-spinner d-none">
                   spinner
                 </div>
@@ -199,13 +130,8 @@
       </form>
     </div>
     <div v-if="!paymentIsComplete" class="col-md-5 d-none d-lg-block">
-      <price-details
-        :bookings="bookings"
-        :property="property"
-        :booking_details="booking_details"
-        :amount="amount"
-        :sub_total="bookingSubTotal"
-      />
+      <price-details :bookings="bookings" :property="property" :booking_details="booking_details" :amount="amount"
+        :sub_total="bookingSubTotal" />
     </div>
   </div>
 </template>
@@ -565,7 +491,7 @@ export default {
         };
       }
     },
-    applyCoupon: function() {
+    applyCoupon: function () {
       if (!this.coupon) {
         this.coupon_error = "Enter a coupon code";
         setTimeout(() => {
@@ -595,7 +521,7 @@ export default {
           }
         });
     },
-    makePayment: function() {
+    makePayment: function () {
       let input = document.querySelectorAll(".required");
       this.validateForm({ context: this, input: input });
       if (Object.keys(this.errors).length !== 0) {
