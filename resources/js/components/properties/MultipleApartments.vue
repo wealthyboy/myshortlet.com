@@ -1,49 +1,27 @@
 <template>
-  
   <div class="">
-    <form
-      id="multiple-form"
-      :action="'/book/' + property.slug"
-      method="GET"
-      class="form-group"
-    >
+    <form id="multiple-form" :action="'/book/' + property.slug" method="GET" class="form-group">
       <input type="hidden" name="_token" :value="$root.token" />
       <input type="hidden" name="property_id" :value="property.id" />
       <div>
         <h3 class="bold">Choose your unit</h3>
         <div class="form-row">
-          <div
-            class="form-group ml-1 mr-sm-1  form-border cursor-pointer search col-md-4 bmd-form-group"
-          >
-            <label class="pl-2 " for="flatpickr-input-f"
-              >Check-in - Check-out</label
-            >
-            <date
-              :isDateNeedsToToOpen="isDateNeedsToToOpen"
-              @dateSelected="dateSelected"
-            />
+          <div class="form-group ml-1 mr-sm-1  form-border cursor-pointer search col-md-4 bmd-form-group">
+            <label class="pl-2 " for="flatpickr-input-f">Check-in - Check-out</label>
+            <date :isDateNeedsToToOpen="isDateNeedsToToOpen" @dateSelected="dateSelected" />
           </div>
           <div id="people-number" class="col-md-4 cursor-pointer ">
             <guests />
           </div>
-          <div
-            class="col-md-3  mb-lg-0 mt-lg-0 mt-sm-3 mb-sm-3  ml-1 mr-1 check-availablility"
-          >
-            <button
-              type="button"
-              @click.prevent="checkAvailabity()"
-              class="btn btn-primary btn-block m-auto bold check-availablility-button"
-            >
+          <div class="col-md-3  mb-lg-0 mt-lg-0 mt-sm-3 mb-sm-3  ml-1 mr-1 check-availablility">
+            <button type="button" @click.prevent="checkAvailabity()"
+              class="btn btn-primary btn-block m-auto bold check-availablility-button">
               <i class="material-icons"></i> Check availablity
             </button>
           </div>
         </div>
       </div>
-      <div
-        id=""
-        v-if="!propertyLoading && !roomsAv.length"
-        class="name mt-1 rounded bg-white p-2"
-      >
+      <div id="" v-if="!propertyLoading && !roomsAv.length" class="name mt-1 rounded bg-white p-2">
         <div class="text-muted text-danger">
           {{
             error_msg || "There are not available apartments for your search."
@@ -51,29 +29,19 @@
         </div>
       </div>
 
-      <div
-        :class="{ 'header-filter': propertyLoading }"
-        id=""
-        class="name mt-1 rounded bg-white p-2"
-      >
+      <div :class="{ 'header-filter': propertyLoading }" id="" class="name mt-1 rounded bg-white p-2">
         <div class="position-relative">
           <input type="hidden" name="property_id" value="217" />
 
           <template v-if="roomsAv.length">
-            <apartments
-              @qtyChange="getApartmentQuantity"
-              v-for="room in roomsAv"
-              :key="room.id"
-              :room="room"
-              :stays="stays"
-              :qty="qty"
-            />
+            <apartments @qtyChange="getApartmentQuantity" v-for="room in roomsAv" :key="room.id" :room="room"
+              :stays="stays" :qty="qty" />
           </template>
 
           <div>
             <ul class="list-unstyled mb-0 p-2">
               <li class="d-flex justify-content-between mb-2 lh-22">
-                <p v-if="stays" class="text-gray-light mb-0">
+                <p v-if="stays" class="text-gray-light mb-0 bold">
                   {{ stays[0] || 0 }} {{ stays[1] || "night" }}
                 </p>
                 <p v-if="!stays">Choose dates</p>
@@ -82,27 +50,19 @@
                 </p>
               </li>
               <li class="d-flex justify-content-between mb-2 lh-22">
-                <p class="text-gray-light mb-0">{{ aps }} Apartment(s)</p>
+                <p class="text-gray-light mb-0 bold">{{ aps }} Apartment(s)</p>
                 <p class="bold text-heading mb-0">
                   {{ property.currency }}{{ apTotal | priceFormat }}
                 </p>
               </li>
             </ul>
           </div>
-          <div
-            class="card-footer p-2  bg-transparent d-flex justify-content-between p-0 align-items-center"
-          >
-            <p class="text-heading mb-0">Total Price:</p>
-            <span class="fs-32 bold text-heading total-price"
-              >{{ property.currency }}{{ amount | priceFormat }}</span
-            >
+          <div class="card-footer p-2  bg-transparent d-flex justify-content-between p-0 align-items-center">
+            <p class="text-heading mb-0 bold">Total Price:</p>
+            <span class="fs-32 bold text-heading total-price">{{ property.currency }}{{ amount | priceFormat }}</span>
           </div>
-          <button
-            v-if="stays && stays[1] != null"
-            type="button"
-            @click.prevent="reserve()"
-            class="ml-1 btn btn-primary btn-round  mr-1 btn-block"
-          >
+          <button v-if="stays && stays[1] != null" type="button" @click.prevent="reserve()"
+            class="ml-1 btn btn-primary btn-round  mr-1 btn-block">
             <div class="auth-spinner d-none">
               <div class="lds-ellipsis">
                 <div style="background: rgb(255, 255, 255);"></div>
@@ -164,7 +124,7 @@ export default {
     this.roomsAv = this.apartments;
   },
   mounted() {
-    jQuery(function() {
+    jQuery(function () {
       $(".owl-carousel").owlCarousel({
         margin: 10,
         nav: true,
@@ -211,7 +171,7 @@ export default {
           this.roomsAv = response.data.data;
           this.stays = response.data.nights;
           this.propertyLoading = false;
-          jQuery(function() {
+          jQuery(function () {
             $(".room-carousel").owlCarousel({
               margin: 10,
               nav: true,
@@ -230,7 +190,7 @@ export default {
             });
           });
         })
-        .catch((error) => {});
+        .catch((error) => { });
     },
 
     check(e) {
@@ -250,7 +210,7 @@ export default {
       return arr.reduce((a, b) => parseInt(a) + parseInt(b), 0);
     },
     getApartmentQuantity({ total, aps }) {
-      console.log(total, aps )
+      console.log(total, aps)
       this.total = total;
       this.aps = aps;
       this.apTotal = total;
@@ -284,7 +244,7 @@ export default {
       };
 
       this.propertyLoading = true;
-     
+
       axios
         .post("/book/store", form)
         .then((response) => {

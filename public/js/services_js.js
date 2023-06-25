@@ -8381,19 +8381,19 @@ var render = function render() {
   }, [_c("li", {
     staticClass: "d-flex justify-content-between mb-2 lh-22"
   }, [_vm.stays ? _c("p", {
-    staticClass: "text-gray-light mb-0"
+    staticClass: "text-gray-light mb-0 bold"
   }, [_vm._v("\n                " + _vm._s(_vm.stays[0] || 0) + " " + _vm._s(_vm.stays[1] || "night") + "\n              ")]) : _vm._e(), _vm._v(" "), !_vm.stays ? _c("p", [_vm._v("Choose dates")]) : _vm._e(), _vm._v(" "), _c("p", {
     staticClass: "bold text-heading mb-0"
   }, [_vm._v("\n                " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(_vm.total)) + "\n              ")])]), _vm._v(" "), _c("li", {
     staticClass: "d-flex justify-content-between mb-2 lh-22"
   }, [_c("p", {
-    staticClass: "text-gray-light mb-0"
+    staticClass: "text-gray-light mb-0 bold"
   }, [_vm._v(_vm._s(_vm.aps) + " Apartment(s)")]), _vm._v(" "), _c("p", {
     staticClass: "bold text-heading mb-0"
   }, [_vm._v("\n                " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(_vm.apTotal)) + "\n              ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "card-footer p-2 bg-transparent d-flex justify-content-between p-0 align-items-center"
   }, [_c("p", {
-    staticClass: "text-heading mb-0"
+    staticClass: "text-heading mb-0 bold"
   }, [_vm._v("Total Price:")]), _vm._v(" "), _c("span", {
     staticClass: "fs-32 bold text-heading total-price"
   }, [_vm._v(_vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(_vm.amount)))])]), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("button", {
