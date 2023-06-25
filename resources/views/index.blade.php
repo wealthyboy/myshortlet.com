@@ -3,7 +3,7 @@
 
 <div class="video-section">
    <div class="intro-image">
-      <img src="/images/logo/front_banner.png" alt="">
+      <img src="/images/logo/front_logo.png" alt="">
    </div>
    <video class=" vidoeo-intro" src="/video/avem.mp4" autoplay muted loop></video>
 </div>
