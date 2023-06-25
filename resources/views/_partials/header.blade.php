@@ -3,8 +3,14 @@
     <div class="navbar-translate d-flex justify-content-between w-100 fixed-top">
         <a href="/" class="navbar-brand">
             <div class="logo-small">
+
+                @if(isset($show_logo) && $show_logo)
                 <img src="{{ $system_settings->logo_path() }}" class="img-fluid">
+                @else
+                <img src="/images/logo/avm_residences_logo.png" class="img-fluid">
+                @endif
             </div>
+
         </a>
 
         <div class="d-flex">
