@@ -3948,7 +3948,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var url = window.history.pushState({}, "", "?" + locationSearch.join("&"));
       this.$store.commit("setLocationSearch", locationSearch);
     },
-    search: function search() {
+    checkAvailabity: function checkAvailabity() {
       // this.build();
 
       this.getProperties(window.location);
@@ -7978,7 +7978,7 @@ var render = function render() {
     on: {
       click: function click($event) {
         $event.preventDefault();
-        return _vm.search();
+        return _vm.checkAvailabity();
       }
     }
   }, [_c("i", {

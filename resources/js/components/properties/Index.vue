@@ -17,7 +17,7 @@
           <guests />
         </div>
         <div class="col-md-3  mb-lg-0 mt-lg-0 mt-sm-3 mb-sm-3  ml-1 mr-1 check-availablility">
-          <button type="button" @click.prevent="search()"
+          <button type="button" @click.prevent="checkAvailabity()"
             class="btn btn-primary btn-block m-auto bold check-availablility-button">
             <i class="material-icons"></i> Check availablity
           </button>
@@ -233,7 +233,7 @@ export default {
 
       this.$store.commit("setLocationSearch", locationSearch);
     },
-    search: function () {
+    checkAvailabity: function () {
       // this.build();
 
       this.getProperties(window.location);
