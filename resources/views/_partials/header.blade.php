@@ -8,7 +8,7 @@
         </a>
 
         <div class="d-flex">
-            @if($show_logo)
+            @if(isset($show_logo) && $show_logo)
             <a href="/property/{{ optional($global_property)->slug }}" class="align-self-center text-white  bg-dark px-3 py-1">
                 <i class="fal fa-sign-in"></i>
                 Book Now
