@@ -5,7 +5,7 @@
             <div class="logo-small">
 
                 @if(isset($show_logo) && $show_logo)
-                <img src="{{ $system_settings->logo_path() }}" class="img-fluid">
+                <img src="https://avenuemontaigne.ng/images/logo/1687695502avm%20residences-23%20(1).png" class="img-fluid">
                 @else
                 <img src="/images/logo/avm_residences_logo.png" class="img-fluid">
                 @endif
