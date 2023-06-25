@@ -17682,7 +17682,7 @@ video.vidoeo-intro {
 }
 
 .intro-image img {
-  width: 40%;
+  width: 50%;
 }
 
 .bg-panel {
@@ -18229,7 +18229,10 @@ button.owl-next {
   margin: 5px 15px;
 }
 
-.navbar-collapse .navbar-nav .nav-item.active .nav-link, .navbar-collapse .navbar-nav .nav-item.active .nav-link:hover, .navbar-collapse .navbar-nav .nav-item.active .nav-link:focus, .navbar-collapse .navbar-nav .nav-item.active .nav-link:active {
+.navbar-collapse .navbar-nav .nav-item.active .nav-link,
+.navbar-collapse .navbar-nav .nav-item.active .nav-link:hover,
+.navbar-collapse .navbar-nav .nav-item.active .nav-link:focus,
+.navbar-collapse .navbar-nav .nav-item.active .nav-link:active {
   background-color: rgb(236, 237, 239);
   color: #000000;
 }
