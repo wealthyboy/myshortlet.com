@@ -3897,15 +3897,20 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       full_width: false,
       loading: false,
       search: false,
-      propes: []
+      propes: [],
+      guests: 0,
+      form: {
+        room_quantity: [],
+        selectedRooms: [],
+        location: this.$root.request.going_to
+      }
     };
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)({
     properties: "properties",
     propertyLoading: "propertyLoading",
     links: "links",
-    next_page_url: "next_page_url",
-    getProperties: "getProperties"
+    next_page_url: "next_page_url"
   })),
   mounted: function mounted() {
     var _this = this;
@@ -3944,7 +3949,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.$store.commit("setLocationSearch", locationSearch);
     },
     search: function search() {
-      this.build();
+      // this.build();
+
       this.getProperties(window.location);
     }
   })

@@ -167,6 +167,12 @@ export default {
       loading: false,
       search: false,
       propes: [],
+      guests: 0,
+      form: {
+        room_quantity: [],
+        selectedRooms: [],
+        location: this.$root.request.going_to,
+      },
     };
   },
   computed: {
@@ -175,7 +181,6 @@ export default {
       propertyLoading: "propertyLoading",
       links: "links",
       next_page_url: "next_page_url",
-      getProperties: "getProperties",
 
     }),
   },
@@ -229,7 +234,7 @@ export default {
       this.$store.commit("setLocationSearch", locationSearch);
     },
     search: function () {
-      this.build();
+      // this.build();
 
       this.getProperties(window.location);
     },
