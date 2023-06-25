@@ -3949,8 +3949,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.$store.commit("setLocationSearch", locationSearch);
     },
     checkAvailabity: function checkAvailabity() {
-      // this.build();
-
+      this.build();
       this.getProperties(window.location);
     }
   })

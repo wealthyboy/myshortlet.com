@@ -234,7 +234,7 @@ export default {
       this.$store.commit("setLocationSearch", locationSearch);
     },
     checkAvailabity: function () {
-      // this.build();
+      this.build();
 
       this.getProperties(window.location);
     },
