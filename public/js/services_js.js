@@ -3904,7 +3904,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     properties: "properties",
     propertyLoading: "propertyLoading",
     links: "links",
-    next_page_url: "next_page_url"
+    next_page_url: "next_page_url",
+    getProperties: "getProperties"
   })),
   mounted: function mounted() {
     var _this = this;
@@ -3932,6 +3933,19 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var t = new Date().getTime();
       var href = e.target.getAttribute("href");
       this.getProperties(href + "&timestamp=${new Date().getTime()}").then(function (r) {});
+    },
+    build: function build() {
+      var locationSearch = [];
+      document.querySelectorAll(".location-search").forEach(function (e, i) {
+        locationSearch.push(e.name + "=" + e.value);
+      });
+      window.history.pushState("", "Title", "/property/search");
+      var url = window.history.pushState({}, "", "?" + locationSearch.join("&"));
+      this.$store.commit("setLocationSearch", locationSearch);
+    },
+    search: function search() {
+      this.build();
+      this.getProperties(window.location);
     }
   })
 });
@@ -7958,12 +7972,12 @@ var render = function render() {
     on: {
       click: function click($event) {
         $event.preventDefault();
-        return _vm.checkAvailabity();
+        return _vm.search();
       }
     }
   }, [_c("i", {
     staticClass: "material-icons"
-  }), _vm._v(" Check availablity\n          ")])])]), _vm._v(" "), _vm._l(_vm.properties, function (property) {
+  }), _vm._v(" Check availablity\n        ")])])]), _vm._v(" "), _vm._l(_vm.properties, function (property) {
     return _c("div", {
       key: property.id,
       staticClass: "bg-white mb-2 rounded position-relative border-radius loaded-apartments"
