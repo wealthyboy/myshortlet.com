@@ -1,7 +1,7 @@
 @extends('layouts.listing')
 @section('content')
 <div class="clearfix"></div>
-<section  id="content"  style="background-color: #f8f5f4;">
+<section id="content" style="background-color: #f8f5f4;">
    <div class="container ">
       <div class="row  no-gutters bg-white">
          <div class="col-lg-8 col-8">
@@ -22,7 +22,7 @@
          <div class="col-md-4 d-none d-lg-block ">
             <div class="row no-gutters">
                <div class="col-6 pl-1  pb-1 pr-1">
-                  <a  href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ optional($property->images[0])->image }}')"></a>
+                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ optional($property->images[0])->image }}')"></a>
                </div>
                <!-- <div class="col-6 ">
                   <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $property->images[1]->image }}')"></a>
@@ -65,47 +65,43 @@
    </div>
    <div class="">
       <div class="container">
-         <div  class="row   align-items-start">
+         <div class="row   align-items-start">
             <div class="col-md-8 rounded  mt-1">
-               <div id="Overview" class="name rounded bg-white">
+               <div id="Overview" class="name scroll-to-div rounded bg-white">
                   <div class="card-body">
                      <h3 class="card-title">{{ $property->name }}</h3>
                      <p class="text-gold text-size-1">Size: {{ $property->size }} sqm</p>
 
                      <div class="d-flex pb-3 border-bottom mb-3 justify-content-between">
-                       @if($property->discounted_price)
-                          
-                           <div class="price">
-                              <del
-                                 >{{ $property->currency
-                              }}{{ number_format($property->converted_price) }}</del
-                                 >
-                           </div>
-                           <span
-                              >{{ $property->currency
-                           }}{{ number_format($property->discounted_price) }}</span
-                              ><span> per night</span>
-                           
-                           <div>{{ number_format($property->percentage_off) }}% off</div>
-                       @else
-                          <div class="bold price">
-                              {{ $property->currency }}{{ number_format($property->converted_price)  }} 
-                              <div class="text-size-2">
-                                 {{ $property->price_mode }}
-                              </div>
-                           </div>
+                        @if($property->discounted_price)
 
-                       @endif
+                        <div class="price">
+                           <del>{{ $property->currency
+                              }}{{ number_format($property->converted_price) }}</del>
+                        </div>
+                        <span>{{ $property->currency
+                           }}{{ number_format($property->discounted_price) }}</span><span> per night</span>
 
-                       
+                        <div>{{ number_format($property->percentage_off) }}% off</div>
+                        @else
+                        <div class="bold price">
+                           {{ $property->currency }}{{ number_format($property->converted_price)  }}
+                           <div class="text-size-2">
+                              {{ $property->price_mode }}
+                           </div>
+                        </div>
+
+                        @endif
+
+
 
                      </div>
 
                      <div class="text-gold text-size-2 ">
                         <i class="fal fa-phone"></i> Call us at {{ $system_settings->store_phone }} for more info.
                      </div>
-                     
-                     
+
+
                      <div class="row">
                         @if($property->type == 'single')
                         <div class="col-12 entire-apartment">
@@ -116,14 +112,14 @@
                            <h5>Facilities</h5>
                            <div class="row">
                               @if($property->facilities->count())
-                                 @foreach($property->facilities->take(3) as $facility)
-                                    <div class="col-6 d-flex mb-2 align-items-center">
-                                       <span class="position-absolute svg-icon-section">
-                                       <?php echo  html_entity_decode($facility->svg) ?>
-                                       </span>
-                                       <span class="svg-icon-text">{{ $facility->name }}</span>
-                                    </div>
-                                 @endforeach
+                              @foreach($property->facilities->take(3) as $facility)
+                              <div class="col-6 d-flex mb-2 align-items-center">
+                                 <span class="position-absolute svg-icon-section">
+                                    <?php echo  html_entity_decode($facility->svg) ?>
+                                 </span>
+                                 <span class="svg-icon-text">{{ $facility->name }}</span>
+                              </div>
+                              @endforeach
                               @endif
                            </div>
                         </div>
@@ -134,7 +130,7 @@
                            <div class="">
                               <ul class="list-unstyled ">
                                  @foreach($areas as $key => $area)
-                                 <li  class="">{{ $area->name }}</li>
+                                 <li class="">{{ $area->name }}</li>
                                  @endforeach
                               </ul>
                            </div>
@@ -143,8 +139,8 @@
                      </div>
                   </div>
                </div>
-               
-               
+
+
                <div id="Location" class="name bg-white rounded">
                   <h3 class="card-title  pb-3 p-3 border-bottom">About this property</h3>
                   <div class="card-body">
@@ -155,7 +151,7 @@
                <div class="name bg-white rounded mb-5">
                   <h3 class="card-title  pb-3 p-3 border-bottom">About the area</h3>
                   <div class="card-body">
-                     <div  class="">
+                     <div class="">
                         <div class="mb-3">
                            <h3> {{ $property->state }}</h3>
                            {{ $property->state_description }}
@@ -168,7 +164,7 @@
                                  <h3>What's near by</h3>
                                  <ul class="list-unstyled">
                                     @foreach($areas as $key => $area)
-                                    <li  class="">{{ $area->name }}</li>
+                                    <li class="">{{ $area->name }}</li>
                                     @endforeach
                                  </ul>
                                  @endif
@@ -180,56 +176,47 @@
                </div>
             </div>
             <div class="single-apartment rounded col-md-4  d-none d-lg-block ">
-               <div
-                  class="name  rounded mt-1 bg-white"
-                  >
+               <div class="name  rounded mt-1 bg-white">
                   <div class="card-body">
                      <form id="single-form" action="" method="GET">
-                        <input
-                           type="hidden"
-                           id="qty"
-                           />
+                        <input type="hidden" id="qty" />
                         <div class="d-flex pb-3 border-bottom mb-3 justify-content-between">
                            @if($property->discounted_price)
-                           <div >
+                           <div>
                               <div>
                                  <div>
-                                    <del
-                                       >{{ $property->currency
-                                    }}{{ number_format($property->converted_price) }}</del
-                                       >
+                                    <del>{{ $property->currency
+                                    }}{{ number_format($property->converted_price) }}</del>
                                  </div>
-                                 <span
-                                    >{{ $property->currency
-                                 }}{{ number_format($property->discounted_price) }}</span
-                                    ><span> per night</span>
+                                 <span>{{ $property->currency
+                                 }}{{ number_format($property->discounted_price) }}</span><span> per night</span>
                               </div>
                               <div>{{ number_format($property->percentage_off) }}% off</div>
                            </div>
                            <div>
                               @else
                               <div class="bold price">
-                                 {{ $property->currency }}{{ number_format($property->converted_price)  }} 
+                                 {{ $property->currency }}{{ number_format($property->converted_price)  }}
                                  <div class="text-size-2">
                                     {{ $property->price_mode }}
                                  </div>
                               </div>
-                              
+
                            </div>
                            <div class="text-gold text-size-1">
                               <i class="fal fa-phone"></i> Call us at {{ $system_settings->store_phone }} for more info.
                            </div>
-                           
+
                         </div>
                         @endif
                      </form>
-                     
+
                   </div>
                </div>
             </div>
-            
+
          </div>
-         
+
       </div>
    </div>
 </section>
@@ -240,32 +227,40 @@
 @endsection
 @section('inline-scripts')
 jQuery(function() {
-   $(".full-image").on('click',function(e){
-      e.preventDefault()
-      $('.gallery-images').removeClass('d-none')
-      console.log(true)
-      })
-      $('.close-icon').on('click',function(){
-      $('.gallery-images').addClass('d-none')
-   })
+$(".scroll-to-div").click(function() {
 
-   $('.owl-carousel').owlCarousel({
-      loop:true,
-      margin:10,
-      nav:true,
+$('html,body').animate({
+scrollTop: $(".second").offset().top},
+'slow');
+});
 
-      responsive:{
-         0:{
-               items:1
-         },
-         600:{
-               items:1
-         },
-         1000:{
-               items:1
-         }
-      }
-   })
+$(".full-image").on('click',function(e){
+e.preventDefault()
+$('.gallery-images').removeClass('d-none')
+console.log(true)
+})
+$('.close-icon').on('click',function(){
+$('.gallery-images').addClass('d-none')
+})
+
+$('.owl-carousel').owlCarousel({
+loop:true,
+margin:10,
+nav:true,
+
+responsive:{
+0:{
+items:1
+},
+600:{
+items:1
+},
+1000:{
+items:1
+}
+
+}
+})
 
 })
 var geocoder;

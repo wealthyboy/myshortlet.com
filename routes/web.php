@@ -162,6 +162,8 @@ Route::post('webhook/payment',     'WebHook\WebHookController@payment');
 Route::post('webhook/github',      'WebHook\WebHookController@gitHub');
 
 Route::get('/neighborhood',        'Pages\PageController@index');
+Route::get('/about-us',            'Pages\PageController@index');
+
 Route::get('/contact-us',          'Pages\PageController@index');
 
 Route::get('/virtual-tour',        'Pages\PageController@index');

@@ -33,16 +33,14 @@
                 <a href="/apartments">Residences</a>
             </li>
             <li class="w-100 ">
-                <a href="/about">About Us</a>
+                <a href="/about-us">About Us</a>
             </li>
             <li class="w-100 py-3">
                 <a href="/experience">Experience</a>
             </li>
-            <li class="w-100 ">
-                <a href="/events">Events</a>
-            </li>
+
             <li class="w-100 py-3">
-                <a href="https://theluxurysale.com">Shop @avm</a>
+                <a target="_blank" href="https://theluxurysale.com">Shop @avm</a>
             </li>
         </ul>
     </div>
