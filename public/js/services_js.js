@@ -5333,9 +5333,13 @@ var render = function render() {
         addExtraService: _vm.addExtraService
       }
     });
-  }), _vm._v(" "), _vm.property.extra_services.length ? [_c("h4", {
+  }), _vm._v(" "), _vm.property.extra_services.length ? [_c("div", {
+    staticClass: "bg-white mt-2"
+  }, [_c("h4", {
     staticClass: "card-title p-3 border-bottom mb-0 bold"
-  }, [_vm._v("\n          You may be intrested in\n        ")]), _vm._v(" "), _vm._l(_vm.property.extra_services, function (extra_service) {
+  }, [_vm._v("\n            You may be intrested in\n          ")]), _vm._v(" "), _c("div", {
+    staticClass: "card-body pt-0"
+  }, _vm._l(_vm.property.extra_services, function (extra_service) {
     return _c("property-extras", {
       key: extra_service.id,
       attrs: {
@@ -5346,7 +5350,7 @@ var render = function render() {
         addExtraPropertyService: _vm.addExtraPropertyService
       }
     });
-  })] : _vm._e(), _vm._v(" "), _c("div", {
+  }), 1)])] : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "d-block d-sm-none"
   }, [_c("price-details", {
     attrs: {
@@ -5883,12 +5887,6 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "bg-white mt-2"
-  }, [_c("h4", {
-    staticClass: "card-title p-3 border-bottom mb-0 bold"
-  }, [_vm._v("\n    You may be intrested in\n  ")]), _vm._v(" "), _c("div", {
-    staticClass: "card-body pt-0"
-  }, [_c("div", {
     staticClass: "bg-transparent d-flex justify-content-between p-0 align-items-center"
   }, [_c("div", {
     staticClass: "checkbox"
@@ -5919,7 +5917,7 @@ var render = function render() {
     staticClass: "checkbox-label-text mt-1"
   }, [_vm._v(_vm._s(_vm.extra_service.name))])])]), _vm._v(" "), _c("span", {
     staticClass: "fs-32 mt-4 bold text-heading total-price"
-  }, [_vm._v(_vm._s(_vm.property.currency) + "\n        " + _vm._s(_vm._f("priceFormat")(_vm.extra_service.pivot.price)))])])])]);
+  }, [_vm._v(_vm._s(_vm.property.currency) + "\n    " + _vm._s(_vm._f("priceFormat")(_vm.extra_service.pivot.price)))])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

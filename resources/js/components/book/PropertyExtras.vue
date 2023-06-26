@@ -1,35 +1,17 @@
 <template>
-  <div class=" bg-white mt-2">
-    <h4 class="card-title  p-3 border-bottom mb-0 bold">
-      You may be intrested in
-    </h4>
-    <div class="card-body pt-0">
-      <div
-        class="  bg-transparent d-flex justify-content-between p-0 align-items-center"
-      >
-        <div class="checkbox">
-          <label id="box50" class="checkbox-label">
-            <input
-              for="box50"
-              name="prices[]"
-              :value="extra_service.id"
-              class="property-filter-attribute"
-              type="checkbox"
-              @change="addServices()"
-              :data-price="extra_service.pivot.price"
-            />
-            <span class="checkbox-custom rectangular"></span>
-            <span class="checkbox-label-text mt-1">{{
-              extra_service.name
-            }}</span>
-          </label>
-        </div>
-        <span class="fs-32 mt-4 bold text-heading total-price"
-          >{{ property.currency }}
-          {{ extra_service.pivot.price | priceFormat }}</span
-        >
-      </div>
+  <div class="  bg-transparent d-flex justify-content-between p-0 align-items-center">
+    <div class="checkbox">
+      <label id="box50" class="checkbox-label">
+        <input for="box50" name="prices[]" :value="extra_service.id" class="property-filter-attribute" type="checkbox"
+          @change="addServices()" :data-price="extra_service.pivot.price" />
+        <span class="checkbox-custom rectangular"></span>
+        <span class="checkbox-label-text mt-1">{{
+          extra_service.name
+        }}</span>
+      </label>
     </div>
+    <span class="fs-32 mt-4 bold text-heading total-price">{{ property.currency }}
+      {{ extra_service.pivot.price | priceFormat }}</span>
   </div>
 </template>
 <script>
