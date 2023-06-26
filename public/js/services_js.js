@@ -5724,19 +5724,19 @@ var render = function render() {
   }, [_c("li", {
     staticClass: "d-flex justify-content-between mb-3 lh-22"
   }, [_c("p", {
-    staticClass: "text-gray-light mb-0"
+    staticClass: "text-gray-light mb-0 bold"
   }, [_vm._v("Check in")]), _vm._v(" "), _c("p", {
     staticClass: "font-weight-500 text-heading mb-0"
   }, [_vm._v("\n              " + _vm._s(_vm.booking_details.from) + "\n            ")])]), _vm._v(" "), _c("li", {
     staticClass: "d-flex justify-content-between mb-3 lh-22"
   }, [_c("p", {
-    staticClass: "text-gray-light mb-0"
+    staticClass: "text-gray-light mb-0 bold"
   }, [_vm._v("Check out")]), _vm._v(" "), _c("p", {
     staticClass: "font-weight-500 text-heading mb-0"
   }, [_vm._v("\n              " + _vm._s(_vm.booking_details.to) + "\n            ")])]), _vm._v(" "), _c("li", {
     staticClass: "d-flex justify-content-between lh-22"
   }, [_c("p", {
-    staticClass: "text-gray-light mb-0"
+    staticClass: "text-gray-light mb-0 bold"
   }, [_vm._v("Total length of stay")]), _vm._v(" "), _c("p", {
     staticClass: "font-weight-500 text-heading mb-0"
   }, [_vm._v("\n              " + _vm._s(_vm.booking_details.days) + " " + _vm._s(_vm.booking_details.nights[1]) + "\n            ")])])])])]), _vm._v(" "), _c("div", {

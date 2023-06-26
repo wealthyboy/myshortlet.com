@@ -7,19 +7,19 @@
       <div>
         <ul class="list-unstyled mb-2 p-3">
           <li class="d-flex justify-content-between  mb-3 lh-22">
-            <p class="text-gray-light mb-0">Check in</p>
+            <p class="text-gray-light mb-0 bold">Check in</p>
             <p class="font-weight-500 text-heading mb-0">
               {{ booking_details.from }}
             </p>
           </li>
           <li class="d-flex justify-content-between mb-3 lh-22">
-            <p class="text-gray-light mb-0">Check out</p>
+            <p class="text-gray-light mb-0 bold">Check out</p>
             <p class="font-weight-500 text-heading mb-0">
               {{ booking_details.to }}
             </p>
           </li>
           <li class="d-flex justify-content-between lh-22">
-            <p class="text-gray-light mb-0">Total length of stay</p>
+            <p class="text-gray-light mb-0 bold">Total length of stay</p>
             <p class="font-weight-500 text-heading mb-0">
               {{ booking_details.days }} {{ booking_details.nights[1] }}
             </p>
