@@ -13,14 +13,14 @@
                <div class="text-right">
                </div>
             </div>
-            
+
             <div class="material-datatables">
-            <form action="" method="post" enctype="multipart/form-data" id="form-reservations">
-                
-                <table id="datatables" class="table table-striped table-shopping table-no-breservationed table-hover" cellspacing="0" width="100%" style="width:100%">
+               <form action="" method="post" enctype="multipart/form-data" id="form-reservations">
+
+                  <table id="datatables" class="table table-striped table-shopping table-no-breservationed table-hover" cellspacing="0" width="100%" style="width:100%">
                      <thead>
                         <tr>
-                           
+
                            <th>Invoice</th>
                            <th>Customer</th>
                            <th>Check-in</th>
@@ -31,27 +31,31 @@
                         </tr>
                      </thead>
                      <tbody>
-                       @foreach ($reservations as $reservation )
-                            <tr>
-                            
-                            <td class="text-left">{{ $reservation->invoice }}</td>
-                            <td>{{ $reservation->user->fullname() }}</td>
-                            <td>{{ $reservation->checkin->isoFormat('dddd, MMMM Do YYYY') }}</td>
-                            <td>{{ $reservation->checkout->isoFormat('dddd, MMMM Do YYYY') }}</td>
-                            <td>{{ $reservation->created_at }}</td>
-                            <td class="text-left">{{ $reservation->currency  ?? '₦'}}{{ $reservation->total }}</td>
-                            <td class="td-actions text-center">
+                        @foreach ($reservations as $reservation )
+                        <tr>
+
+                           <td class="text-left">{{ $reservation->invoice }}</td>
+                           <td>{{ $reservation->user->fullname() }}</td>
+                           <td>{{ $reservation->checkin->isoFormat('dddd, MMMM Do YYYY') }}</td>
+                           <td>{{ $reservation->checkout->isoFormat('dddd, MMMM Do YYYY') }}</td>
+                           <td>{{ $reservation->created_at }}</td>
+                           <td class="text-left">{{ $reservation->currency  ?? '₦'}}{{ $reservation->total }}</td>
+                           <td class="td-actions text-center">
                               <span><a href="{{ route('admin.reservations.show',['reservation'=>$reservation->id]) }}" rel="tooltip" class="btn btn-success btn-simple" data-original-title="" title="View">
-                                 <i class="fa fa-eye"></i>
-                              </a></span>
+                                    <i class="fa fa-eye"></i>
+                                 </a></span>
+
+                              <span><a href="/admin/reservation/cancelled" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel">
+                                    <i class="fa fa-refresh"></i>
+                                 </a></span>
                            </td>
-                        @endforeach   
-                        
+                           @endforeach
+
                      </tbody>
                   </table>
-                  </form>
+               </form>
 
-               
+
             </div>
          </div>
          <!-- end content-->
@@ -68,19 +72,19 @@
 
 $(document).ready(function() {
 $('#datatables').DataTable({
-    "pagingType": "full_numbers",
-    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-    responsive: true,
-    language: {
-    search: "_INPUT_",
-    searchPlaceholder: "Search records",
-    }
-    });
+"pagingType": "full_numbers",
+"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+responsive: true,
+language: {
+search: "_INPUT_",
+searchPlaceholder: "Search records",
+}
+});
 
-    $('#cat_sub_cat_id').on('change',function(){
-       $name = $(this).find(':selected').data('name');
-       $(this).attr('name', $name);
-    });
-    s.initFormExtendedDatetimepickers();
+$('#cat_sub_cat_id').on('change',function(){
+$name = $(this).find(':selected').data('name');
+$(this).attr('name', $name);
+});
+s.initFormExtendedDatetimepickers();
 });
 @stop
