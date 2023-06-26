@@ -49,10 +49,10 @@ class WebHookController extends Controller
             $input    =  $request->all();
             $user_reservation = new UserReservation;
             $guest = new GuestUser;
-            $guest->name   =  $input['booking']['first_name'];
-            $guest->last_name        =  $input['booking']['last_name'];
-            $guest->email   =  $input['booking']['email'];
-            $guest->phone_number    = $input['booking']['phone_number'];
+            $guest->name = $input['booking']['first_name'];
+            $guest->last_name = $input['booking']['last_name'];
+            $guest->email = $input['booking']['email'];
+            $guest->phone_number = $input['booking']['phone_number'];
             $guest->save();
         } catch (\Throwable $th) {
             //throw $th;
@@ -60,17 +60,17 @@ class WebHookController extends Controller
 
 
         $bookings = BookingDetail::find($request->booking['booking_ids']);
-        $user_reservation->user_id        =  optional($request->user())->id;
-        $user_reservation->guest_user_id  =  $guest->id;
-        $user_reservation->currency       =  $request->booking['currency'];
-        $user_reservation->invoice        =  "INV-" . date('Y') . "-" . rand(10000, time());
-        $user_reservation->payment_type   =  'online';
-        $user_reservation->property_id    =  $request->booking['property_id'];
-        $user_reservation->coupon         =  $request->booking['coupon'];
-        $user_reservation->total          =  $request->booking['total'];
-        $user_reservation->checkin        =  optional($bookings->first())->checkin;
-        $user_reservation->checkout       =  optional($bookings->first())->checkout;
-        $user_reservation->ip             =  $request->ip();
+        $user_reservation->user_id = optional($request->user())->id;
+        $user_reservation->guest_user_id = $guest->id;
+        $user_reservation->currency = $request->booking['currency'];
+        $user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
+        $user_reservation->payment_type = 'online';
+        $user_reservation->property_id = $request->booking['property_id'];
+        $user_reservation->coupon = $request->booking['coupon'];
+        $user_reservation->total = $request->booking['total'];
+        $user_reservation->checkin = optional($bookings->first())->checkin;
+        $user_reservation->checkout = optional($bookings->first())->checkout;
+        $user_reservation->ip =  $request->ip();
         $user_reservation->save();
 
         $e_services = [];
