@@ -123,7 +123,10 @@
           </div>
 
           <div class="card-body pt-0">
-            <div>
+
+            <price-details :bookings="bookings" :property="property" :booking_details="booking_details" :amount="amount"
+              :sub_total="bookingSubTotal" />
+            <div class="text-info">
               By clicking on the button below, I acknowledge that I have read
               and understand the rules and regulations of this property
             </div>

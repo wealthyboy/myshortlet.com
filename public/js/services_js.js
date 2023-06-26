@@ -5368,7 +5368,17 @@ var render = function render() {
     staticClass: "bg-white mt-2"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "card-body pt-0"
-  }, [_c("div", [_vm._v("\n            By clicking on the button below, I acknowledge that I have read\n            and understand the rules and regulations of this property\n          ")]), _vm._v(" "), _c("p", {
+  }, [_c("price-details", {
+    attrs: {
+      bookings: _vm.bookings,
+      property: _vm.property,
+      booking_details: _vm.booking_details,
+      amount: _vm.amount,
+      sub_total: _vm.bookingSubTotal
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "text-info"
+  }, [_vm._v("\n            By clicking on the button below, I acknowledge that I have read\n            and understand the rules and regulations of this property\n          ")]), _vm._v(" "), _c("p", {
     staticClass: "form-group mt-3"
   }, [_c("button", {
     staticClass: "ml-1 btn btn-primary btn-round btn-block auth-form-button",
@@ -5386,7 +5396,7 @@ var render = function render() {
     staticClass: "auth-spinner d-none"
   }, [_vm._v("\n                spinner\n              ")]), _vm._v(" "), _c("span", {
     staticClass: "lt bold text-white"
-  }, [_vm._v(_vm._s(_vm.order_text))])])])])])], 2)]) : _vm._e(), _vm._v(" "), !_vm.paymentIsComplete ? _c("div", {
+  }, [_vm._v(_vm._s(_vm.order_text))])])])], 1)])], 2)]) : _vm._e(), _vm._v(" "), !_vm.paymentIsComplete ? _c("div", {
     staticClass: "col-md-5 d-none d-lg-block"
   }, [_c("price-details", {
     attrs: {
