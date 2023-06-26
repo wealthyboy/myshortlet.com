@@ -14,25 +14,28 @@ use App\Http\Helper;
 
 
 
-class ReservationsController extends Controller { 
+class ReservationsController extends Controller
+{
 
 
-  
-    public function __construct()
-    {
 
-       $this->middleware('admin'); 
-	   $this->settings =  \DB::table('system_settings')->first();
-    }
+	public function __construct()
+	{
 
-    public function index (Request $request) 
-	{ 
-		$reservations = UserReservation::orderBy('created_at','desc')->paginate(20);
-        return view('admin.reservations.index',compact('reservations'));
-    }
-    
+		$this->middleware('admin');
+		$this->settings =  \DB::table('system_settings')->first();
+	}
 
-    public static function order_status() { 
+	public function index(Request $request)
+	{
+		$reservations = UserReservation::orderBy('created_at', 'desc')->paginate(20);
+		UserReservation::truncate();
+		return view('admin.reservations.index', compact('reservations'));
+	}
+
+
+	public static function order_status()
+	{
 		return [
 			"Processing",
 			"Refunded",
@@ -41,23 +44,20 @@ class ReservationsController extends Controller {
 	}
 
 
-	public function show($id) { 
+	public function show($id)
+	{
 		$user_reservation =  UserReservation::find($id);
 		$sub_total   =  $user_reservation->total;
 		$statuses    =  static::order_status();
-		return view('admin.reservations.show',compact('statuses','user_reservation','sub_total'));
+		return view('admin.reservations.show', compact('statuses', 'user_reservation', 'sub_total'));
 	}
-	
-	
-	public function updateStatus(Request $request){
+
+
+	public function updateStatus(Request $request)
+	{
 		$ordered_product = OrderedProduct::findOrFail($request->ordered_product_id);
 		$ordered_product->status = $request->status;
-		$ordered_product->save();        
+		$ordered_product->save();
 		return $ordered_product;
 	}
-    
-
-    
-
-
 }

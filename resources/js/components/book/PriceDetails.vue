@@ -67,7 +67,7 @@
         </template>
       </div>
       <div class="card-footer p-3  bg-transparent d-flex justify-content-between p-0 align-items-center">
-        <p class="text-heading mb-0">
+        <p class="text-heading mb-0 bold">
           Sub Total
         </p>
         <span class=" text-heading total-price bold">{{ property.currency }}{{ parseInt(sub_total) | priceFormat }}</span>

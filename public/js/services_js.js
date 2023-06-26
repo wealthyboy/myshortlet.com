@@ -5763,7 +5763,7 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "card-footer p-3 bg-transparent d-flex justify-content-between p-0 align-items-center"
   }, [_c("p", {
-    staticClass: "text-heading mb-0"
+    staticClass: "text-heading mb-0 bold"
   }, [_vm._v("\n          Sub Total\n        ")]), _vm._v(" "), _c("span", {
     staticClass: "text-heading total-price bold"
   }, [_vm._v(_vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(parseInt(_vm.sub_total))))])]), _vm._v(" "), _c("div", {
