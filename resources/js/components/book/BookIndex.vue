@@ -78,6 +78,9 @@
           :property="property" @addExtraService="addExtraService" :bookings="bookings" />
 
         <template v-if="property.extra_services.length">
+          <h4 class="card-title  p-3 border-bottom mb-0 bold">
+            You may be intrested in
+          </h4>
           <property-extras :extra_service="extra_service" v-for="extra_service in property.extra_services"
             :key="extra_service.id" :property="property" @addExtraPropertyService="addExtraPropertyService" />
         </template>

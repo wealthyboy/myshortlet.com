@@ -5333,7 +5333,9 @@ var render = function render() {
         addExtraService: _vm.addExtraService
       }
     });
-  }), _vm._v(" "), _vm.property.extra_services.length ? _vm._l(_vm.property.extra_services, function (extra_service) {
+  }), _vm._v(" "), _vm.property.extra_services.length ? [_c("h4", {
+    staticClass: "card-title p-3 border-bottom mb-0 bold"
+  }, [_vm._v("\n          You may be intrested in\n        ")]), _vm._v(" "), _vm._l(_vm.property.extra_services, function (extra_service) {
     return _c("property-extras", {
       key: extra_service.id,
       attrs: {
@@ -5344,7 +5346,7 @@ var render = function render() {
         addExtraPropertyService: _vm.addExtraPropertyService
       }
     });
-  }) : _vm._e(), _vm._v(" "), _c("div", {
+  })] : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "d-block d-sm-none"
   }, [_c("price-details", {
     attrs: {
