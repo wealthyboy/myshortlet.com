@@ -5917,7 +5917,7 @@ var render = function render() {
     staticClass: "checkbox-label-text mt-1"
   }, [_vm._v(_vm._s(_vm.extra_service.name))])])]), _vm._v(" "), _c("span", {
     staticClass: "fs-32 mt-4 bold text-heading total-price"
-  }, [_vm._v(_vm._s(_vm.property.currency) + "\n    " + _vm._s(_vm._f("priceFormat")(_vm.extra_service.pivot.price)))])]);
+  }, [_vm._v(_vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(_vm.extra_service.pivot.price)) + "\n  ")])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

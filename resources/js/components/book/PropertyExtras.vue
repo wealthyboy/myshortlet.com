@@ -10,8 +10,9 @@
         }}</span>
       </label>
     </div>
-    <span class="fs-32 mt-4 bold text-heading total-price">{{ property.currency }}
-      {{ extra_service.pivot.price | priceFormat }}</span>
+    <span class="fs-32 mt-4 bold text-heading total-price">{{ property.currency }}{{ extra_service.pivot.price |
+      priceFormat }}
+    </span>
   </div>
 </template>
 <script>
