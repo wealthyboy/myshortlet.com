@@ -29,7 +29,7 @@ class ReservationsController extends Controller
 	public function index(Request $request)
 	{
 		$reservations = UserReservation::orderBy('created_at', 'desc')->paginate(20);
-		UserReservation::truncate();
+		//UserReservation::truncate();
 		return view('admin.reservations.index', compact('reservations'));
 	}
 
