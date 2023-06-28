@@ -70,7 +70,7 @@
             <div class="about-panel  bg-panel-white  bg-panel p-5">
                <h2 class="mb-4 ">Luxury & Convenience</h2>
 
-               <p class="mt-4 text-black"">
+               <p class="mt-4 text-black">
                   Our apartment is truly a cut above the rest, with spacious walk-in closets, private balcony or patio, central air conditioning, and high-speed internet. We are ideally located in Lagos, making any commute or relaxing day trip a breeze.
                </p>
 
@@ -78,58 +78,58 @@
                   <a href="/apartments" class="btn btn-outline-secondary">
                      Explore the Residences
                   </a>
+               </div>
             </div>
          </div>
       </div>
-</div>
-</section>
+   </section>
 
 
-<section class=" mb-1">
-   <div class="row bg-grey position-relative  pb-5 pt-5">
-      <div class="col-md-5  re-order text-center d-flex justify-content-center align-items-center">
-         <div class="bg-panel-white bg-left-panel p-5">
-            <h2 class="mb-4 ">Shop</h2>
-            <p class="mt-4 text-black"">
+   <section class=" mb-1">
+      <div class="row bg-grey position-relative  pb-5 pt-5">
+         <div class="col-md-5  re-order text-center d-flex justify-content-center align-items-center">
+            <div class="bg-panel-white bg-left-panel p-5">
+               <h2 class="mb-4 ">Shop</h2>
+               <p class="mt-4 text-black">
                   Like to shop while you stay? Visit our online store to buy from the best brands prada, gucci e.t.c.
                <div class=" buttons">
-               <a href="https://theluxurysale.com" class="btn btn-outline-secondary">
-                  Shop now
-               </a>
-         </div>
-         </p>
-      </div>
-   </div>
-   <div style="background-image: url('https://cdn.shopify.com/s/files/1/0732/8464/9266/files/SALE_WEBSITE_3.png?v=1681599129&width=1780');" class="col-md-7  rounded  card-background-image"></div>
-   </div>
-</section>
-
-
-<div class="clearfix"></div>
-@if ($posts->count())
-<div class="row">
-   <div class="col-md-12">
-      <h2>Get inspiration for your next trip</h2>
-   </div>
-   @foreach($posts as $post)
-   <div class="col-md-4">
-      <div class="card mb-4 shadow-sm">
-         <img src="{{ $post->image }}" class="card-img" alt="...">
-         <div class="card-body">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <div class="d-flex justify-content-between align-items-center">
-               <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  <a href="https://theluxurysale.com" class="btn btn-outline-secondary">
+                     Shop now
+                  </a>
                </div>
-               <small class="text-muted">9 mins</small>
+               </p>
+            </div>
+         </div>
+         <div style="background-image: url('https://cdn.shopify.com/s/files/1/0732/8464/9266/files/SALE_WEBSITE_3.png?v=1681599129&width=1780');" class="col-md-7  rounded  card-background-image"></div>
+      </div>
+   </section>
+
+
+   <div class="clearfix"></div>
+   @if ($posts->count())
+   <div class="row">
+      <div class="col-md-12">
+         <h2>Get inspiration for your next trip</h2>
+      </div>
+      @foreach($posts as $post)
+      <div class="col-md-4">
+         <div class="card mb-4 shadow-sm">
+            <img src="{{ $post->image }}" class="card-img" alt="...">
+            <div class="card-body">
+               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+               <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                     <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  </div>
+                  <small class="text-muted">9 mins</small>
+               </div>
             </div>
          </div>
       </div>
+      @endforeach
    </div>
-   @endforeach
-</div>
-@endif
+   @endif
 </div>
 @endsection
 @section('inline-scripts')
