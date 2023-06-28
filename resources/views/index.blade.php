@@ -5,6 +5,9 @@
    <div class="intro-image">
       <img src="/images/logo/avm_residences.png" alt="">
    </div>
+   <div>
+      <i class="bi bi-chevron-double-down text-white "></i>
+   </div>
    <video class=" vidoeo-intro" src="/video/avem.mp4" autoplay muted loop></video>
 </div>
 
