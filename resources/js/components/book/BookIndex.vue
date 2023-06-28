@@ -566,18 +566,42 @@ export default {
         property_services: this.form.property_services,
       };
 
-      axios
-        .post("/webhook/payment", {
-          booking: payload,
-        })
-        .then((response) => {
+      var handler = PaystackPop.setup({
+        key: "pk_test_2659f44a347260823efb597be7b846264d5cb393", //'pk_live_c4f922bc8d4448065ad7bd3b0a545627fb2a084f',//'pk_test_844112398c9a22ef5ca147e85860de0b55a14e7c',
+        email: payload.email,
+        amount: payload.total * 100,
+        currency: "NGN",
+        first_name: payload.first_name,
+        metadata: {
+          custom_fields: [
+            {
+
+            },
+          ],
+        },
+        callback: function (response) {
+          axios
+            .post("/webhook/payment", {
+              booking: payload,
+            })
+            .then((response) => {
+              context.payment_is_processing = false;
+              context.paymentIsComplete = true;
+            })
+            .catch((error) => {
+              context.order_text = "Make Payment";
+              context.payment_is_processing = false;
+            });
+        },
+        onClose: function () {
+          context.order_text = "Place Order";
+          context.checkingout = false;
           context.payment_is_processing = false;
-          context.paymentIsComplete = true;
-        })
-        .catch((error) => {
-          context.order_text = "Make Payment";
-          context.payment_is_processing = false;
-        });
+        },
+      });
+      handler.openIframe();
+
+
     },
   },
 };
