@@ -5,11 +5,21 @@
    <div class="intro-image">
       <img src="/images/logo/avm_residences.png" alt="">
    </div>
-   <div>
-      <i class="bi bi-chevron-double-down text-white "></i>
+
+   <div role="button" class="down-icon">
+      <a href="#">
+         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+            <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+         </svg>
+      </a>
+
    </div>
+
    <video class=" vidoeo-intro" src="/video/avem.mp4" autoplay muted loop></video>
+
 </div>
+
 
 
 
@@ -19,8 +29,10 @@
          <p class="pt-3 mt-5">AvenueMontiagne Residences
          </p>
 
-         <h1 class="large-heading">A Fresh Take<br>
-            on your <em>dream home</em></h1>
+         <h1 class="large-heading">A Fresh Take <i class="bi bi-chevron-double-down text-white "></i>
+            <br>
+            on your <em>dream home</em>
+         </h1>
       </div>
       <div class="row  pb-5 pt-3 position-relative">
          <div id="operator" style="background-image: url('/images/banners/avm_image_1.jpeg');" class="col-md-7 rounded  card-background-image"></div>
