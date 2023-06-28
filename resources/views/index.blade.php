@@ -57,7 +57,7 @@
                </p>
             </div>
          </div>
-         <div style="background-image: url('/uploads/M0oTm4VwHit8yGVeA6gRTL2gVwu47ioaMU6V1YyM.jpg');" class="col-md-7  rounded  card-background-image"></div>
+         <div style="background-image: url('https://pendryresidencesweho.com/wp-content/uploads/2023/04/PRWH_08_ResidentsPool_B_3055-min.jpg');" class="col-md-7  rounded  card-background-image"></div>
       </div>
    </section>
 
