@@ -79,6 +79,7 @@ class UsersController extends Controller
 		$user->last_name = $request->last_name;
 		$user->email = $request->email;
 		$user->phone_number = $request->phone_number;
+		$user->type =  $request->is_agent ? "agent" : null;
 
 		$user->password = $request->has('password') ? bcrypt($request->password) : $user->password;
 		$user->save();
