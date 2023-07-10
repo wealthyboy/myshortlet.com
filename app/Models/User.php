@@ -123,7 +123,7 @@ class User extends Authenticatable
 
 	public function scopeAgents(Builder $builder)
 	{
-		return $builder->where('type', 'agents');
+		return $builder->where('type', 'agent');
 	}
 
 	public function scopeAdmin(Builder $builder)
