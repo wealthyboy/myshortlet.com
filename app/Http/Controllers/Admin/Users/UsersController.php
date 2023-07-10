@@ -28,6 +28,8 @@ class UsersController extends Controller
 	public function index(Request $request)
 	{
 		$users = User::admin()->get();
+
+		dd($users);
 		return view('admin.users.index', compact('users'));
 	}
 
@@ -77,6 +79,8 @@ class UsersController extends Controller
 		$user->name = $request->first_name;
 		$user->last_name = $request->last_name;
 		$user->email = $request->email;
+		$user->email = $request->phone_number;
+
 		$user->password = $request->has('password') ? bcrypt($request->password) : $user->password;
 		$user->save();
 
