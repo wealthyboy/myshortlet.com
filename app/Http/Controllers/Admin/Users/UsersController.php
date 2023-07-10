@@ -58,9 +58,8 @@ class UsersController extends Controller
 	public function create(Request $request)
 	{
 		//User::canTakeAction(2);
-		$states = Location::all();
 		$permissions = Permission::get();
-		return view('admin.auth.register', compact('permissions', 'states'));
+		return view('admin.auth.register', compact('permissions'));
 	}
 
 
@@ -85,13 +84,13 @@ class UsersController extends Controller
 			'permission_id' => $request->permission_id
 		]);
 
-		$user->addresses()->create([
-			'first_name' => $request->first_name,
-			'last_name' => $request->last_name,
-			'address' => $request->address,
-			'city' => $request->city,
-			'state_id' => 1,
-		]);
+		// $user->addresses()->create([
+		// 	'first_name' => $request->first_name,
+		// 	'last_name' => $request->last_name,
+		// 	'address' => $request->address,
+		// 	'city' => $request->city,
+		// 	'state_id' => 1,
+		// ]);
 
 		return redirect('/admin/users');
 	}
