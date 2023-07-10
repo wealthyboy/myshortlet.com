@@ -74,6 +74,8 @@ class UsersController extends Controller
 			'email'        => 'required|email|max:255',
 		]);
 
+		dd($request->all());
+
 		$user  = new User;
 		$user->name = $request->first_name;
 		$user->last_name = $request->last_name;
