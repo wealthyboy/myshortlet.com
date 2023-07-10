@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\SubLets;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Property;
+use App\Models\User;
 
 class SubLetsController extends Controller
 {
