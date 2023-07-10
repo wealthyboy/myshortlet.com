@@ -11,7 +11,7 @@
                   <h4 class="card-title">Register</h4>
                </div>
                <p class="category text-center"></p>
-               <div class="card-content">
+               <div class="card-content px-4">
 
                   <div class="row mt-4">
                      <div class="col-md-6">
