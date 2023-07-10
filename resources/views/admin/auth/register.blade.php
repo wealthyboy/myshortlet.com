@@ -53,6 +53,13 @@
                         </div>
                      </div>
 
+                     <div class="checkbox">
+                        <label>
+                           <input type="checkbox" value="1" name="is_agent">
+                           <strong>Is Agent</strong>
+                        </label>
+                     </div>
+
                      <div class="col-md-6">
                         <select name="permission_id" required="true" class="form-control">
                            <option value="" selected>Choose Permission</option>
