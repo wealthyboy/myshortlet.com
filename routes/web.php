@@ -15,6 +15,8 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('live', 'Live\LiveController@activate');
 
     Route::resource('permissions', 'Admin\Permission\PermissionsController', ['names' => 'permissions']);
+    Route::resource('sublets', 'Admin\SubLets\SubLetsController', ['names' => 'sublets']);
+
 
     Route::resource('reservations', 'Admin\Reservations\ReservationsController', ['names' => 'admin.reservations']);
     Route::post('upload', 'Admin\Uploads\UploadsController@store');
@@ -157,7 +159,6 @@ Route::get('properties/{category}', 'Properties\PropertiesController@index');
 
 
 Route::get('listings', 'Listings\ListingsController@index');
-
 Route::post('webhook/payment',     'WebHook\WebHookController@payment');
 Route::post('webhook/github',      'WebHook\WebHookController@gitHub');
 
