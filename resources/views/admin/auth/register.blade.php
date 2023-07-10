@@ -17,13 +17,13 @@
                      <div class="col-md-6">
                         <div class="form-group label-floating">
                            <label class="control-label">First Name</label>
-                           <input id="name" required="true" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('name') }}" autofocus>
+                           <input id="first_name" required="true" type="text" class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('first_name') }}" autofocus>
                         </div>
                      </div>
                      <div class="col-md-6">
                         <div class="form-group label-floating">
                            <label class="control-label">Last Name</label>
-                           <input id="name" required="true" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('name') }}" autofocus>
+                           <input id="last_name" required="true" type="text" class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" name="last_name" value="{{ old('last_name') }}" autofocus>
                         </div>
                      </div>
 
@@ -33,13 +33,13 @@
                      <div class="col-md-6">
                         <div class="form-group label-floating">
                            <label class="control-label">Email</label>
-                           <input id="name" required="true" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('name') }}" autofocus>
+                           <input id="email" required="true" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" autofocus>
                         </div>
                      </div>
                      <div class="col-md-6">
                         <div class="form-group label-floating">
                            <label class="control-label">Phone</label>
-                           <input id="name" required="true" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('name') }}" autofocus>
+                           <input id="Phone" required="true" type="text" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" value="{{ old('phone_number') }}" autofocus>
                         </div>
                      </div>
 
@@ -49,7 +49,7 @@
                      <div class="col-md-6">
                         <div class="form-group label-floating">
                            <label class="control-label">Password</label>
-                           <input id="name" required="true" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('name') }}" autofocus>
+                           <input id="Password" required="true" type="text" class="form-control{{ $errors->has('Password') ? ' is-invalid' : '' }}" name="password" value="{{ old('Password') }}" autofocus>
                         </div>
                      </div>
 

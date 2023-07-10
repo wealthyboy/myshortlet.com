@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <label class="control-label"></label>
                             <select name="parent_id" class="form-control">
-                                <option value="" selected="">--Choose Parent--</option>
+                                <option value="" selected="">--Choose Agent--</option>
                                 @foreach($agents as $agent)
                                 <option class="" value="{{ $agent->id }}">{{ $agent->name }} </option>
                                 @endforeach
@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <label class="control-label"></label>
                             <select name="type" required class="form-control">
-                                <option value="" selected>Choose Type</option>
+                                <option value="" selected>Choose Property</option>
                                 @foreach($properties as $property)
                                 <option value="{{ $property->id }}">{{ $property->name }}</option>
                                 @endforeach
