@@ -7,7 +7,7 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-content">
-                <h4 class="card-title">Add Attributes</h4>
+                <h4 class="card-title">Add SubLet</h4>
                 <div class="toolbar">
                     <!--Here you can write extra buttons/actions for the toolbar  -->
                 </div>
