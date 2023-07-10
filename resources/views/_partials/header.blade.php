@@ -13,6 +13,8 @@
 
         </a>
 
+
+
         <div class="d-flex">
             @if(isset($show_logo) && $show_logo)
             <a href="/apartments" class="align-self-center text-white  bg-dark px-3 py-1">
