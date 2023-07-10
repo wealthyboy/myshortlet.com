@@ -13,71 +13,53 @@
                <p class="category text-center"></p>
                <div class="card-content">
 
+                  <div class="row mt-4">
+                     <div class="col-md-6">
+                        <div class="form-group label-floating">
+                           <label class="control-label">First Name</label>
+                           <input id="name" required="true" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('name') }}" autofocus>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group label-floating">
+                           <label class="control-label">Last Name</label>
+                           <input id="name" required="true" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('name') }}" autofocus>
+                        </div>
+                     </div>
+
+                  </div>
+
                   <div class="row">
                      <div class="col-md-6">
                         <div class="form-group label-floating">
-                           <label class="control-label">First Name</label>
+                           <label class="control-label">Email</label>
                            <input id="name" required="true" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('name') }}" autofocus>
                         </div>
                      </div>
                      <div class="col-md-6">
                         <div class="form-group label-floating">
-                           <label class="control-label">First Name</label>
+                           <label class="control-label">Phone</label>
                            <input id="name" required="true" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('name') }}" autofocus>
                         </div>
                      </div>
 
                   </div>
 
-
-
-                  <div class="input-group">
-
-                     <div class="form-group label-floating">
-                        <label class="control-label">Last Name</label>
-                        <input id="last_name" required="true" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="last_name" value="{{ old('last_name') }}" autofocus>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group label-floating">
+                           <label class="control-label">Password</label>
+                           <input id="name" required="true" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('name') }}" autofocus>
+                        </div>
                      </div>
                   </div>
-                  <div class="input-group">
 
-                     <div class="form-group label-floating">
-                        <label class="control-label">Email address</label>
-                        <input id="email" required="true" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}">
-                     </div>
-                  </div>
-                  <div class="input-group">
-                     <span class="input-group-addon">
-                        <i class="material-icons">lock_outline</i>
-                     </span>
-                     <div class="form-group label-floating">
-                        <label class="control-label">Password</label>
-                        <input id="password" required="true" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-                     </div>
-                  </div>
-                  <div class="input-group">
-                     <span class="input-group-addon">
-                        <i class="fa fa-address-card" aria-hidden="true"></i>
-                     </span>
-                     <div class="form-group label-floating">
-                        <label class="control-label">Address</label>
-                        <input id="address" required="true" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" required>
-                     </div>
-                  </div>
-                  <div class="input-group">
-                     <span class="input-group-addon">
-                        <i class="fa fa-address-card" aria-hidden="true"></i>
-                     </span>
-                     <div class="form-group label-floating">
-                        <label class="control-label">City</label>
-                        <input id="city" required="true" type="text" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" required>
-                     </div>
-                  </div>
-                  <div class="input-group">
-                     <span class="input-group-addon">
-                        <i class="fa fa-address-card" aria-hidden="true"></i>
-                     </span>
 
-                  </div>
+
+
+
+
+
                   <div class="input-group">
                      <span class="input-group-addon">
                         <i class="material-icons">
