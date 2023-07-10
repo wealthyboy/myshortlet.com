@@ -15,7 +15,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('live', 'Live\LiveController@activate');
 
     Route::resource('permissions', 'Admin\Permission\PermissionsController', ['names' => 'permissions']);
-    Route::resource('sublets', 'Admin\SubLets\SubLetsController', ['names' => 'sublets']);
+    Route::resource('sublets', 'Admin\SubLets\SubLetsController', ['names' => 'admin.sublets']);
 
 
     Route::resource('reservations', 'Admin\Reservations\ReservationsController', ['names' => 'admin.reservations']);
