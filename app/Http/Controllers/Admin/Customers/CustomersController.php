@@ -11,7 +11,7 @@ class CustomersController extends Controller
 
     public function __construct()
     {
-        $this->middleware('admin'); 
+        $this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
@@ -21,8 +21,9 @@ class CustomersController extends Controller
     public function index()
     {
         $users = (new User())->customers()->latest()->get();
-        return   view('admin.customers.index', compact('users'));  
+        dd($users);
 
+        return   view('admin.customers.index', compact('users'));
     }
 
     /**
@@ -55,7 +56,7 @@ class CustomersController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('admin.customers.show',compact('user'));
+        return view('admin.customers.show', compact('user'));
     }
 
     /**
@@ -87,26 +88,26 @@ class CustomersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
 
-   
-    
-    public function destroy(Request $request) 
-	{ 
-		$rules = array(
-			'_token' => 'required',
-		);
-		// dd(get_class(\new Validator));
-		$validator = \Validator::make($request->all(),$rules);
-		
-		if ( empty ( $request->selected)) {
-			$validator->getMessageBag()->add('Selected', 'Nothing to Delete');    
-			return \Redirect::back()
-						->withErrors($validator)
-						->withInput();
-		}
-				
-		User::destroy($request->selected);
-		return redirect()->back();
-	}
+
+
+
+    public function destroy(Request $request)
+    {
+        $rules = array(
+            '_token' => 'required',
+        );
+        // dd(get_class(\new Validator));
+        $validator = \Validator::make($request->all(), $rules);
+
+        if (empty($request->selected)) {
+            $validator->getMessageBag()->add('Selected', 'Nothing to Delete');
+            return \Redirect::back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        User::destroy($request->selected);
+        return redirect()->back();
+    }
 }
