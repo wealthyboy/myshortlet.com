@@ -52,21 +52,8 @@
                            <input id="name" required="true" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('name') }}" autofocus>
                         </div>
                      </div>
-                  </div>
 
-
-
-
-
-
-
-                  <div class="input-group">
-                     <span class="input-group-addon">
-                        <i class="material-icons">
-                           accessibility
-                        </i>
-                     </span>
-                     <div class="form-group label-floating">
+                     <div class="col-md-6">
                         <select name="permission_id" required="true" class="form-control">
                            <option value="" selected>Choose Permission</option>
                            @foreach($permissions as $permission )
