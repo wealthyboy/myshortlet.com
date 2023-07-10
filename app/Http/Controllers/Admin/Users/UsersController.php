@@ -78,7 +78,7 @@ class UsersController extends Controller
 		$user->name = $request->first_name;
 		$user->last_name = $request->last_name;
 		$user->email = $request->email;
-		$user->email = $request->phone_number;
+		$user->phone_number = $request->phone_number;
 
 		$user->password = $request->has('password') ? bcrypt($request->password) : $user->password;
 		$user->save();
@@ -108,9 +108,11 @@ class UsersController extends Controller
 		]);
 
 		$user  = User::find($id);
+
 		$user->name = $request->first_name;
 		$user->last_name = $request->last_name;
 		$user->email = $request->email;
+		$user->phone_number = $request->phone_number;
 		$user->password = $request->has('password') ? bcrypt($request->password) : $user->password;
 		$user->save();
 
@@ -120,13 +122,13 @@ class UsersController extends Controller
 			'permission_id' => $request->permission_id
 		]);
 
-		$user->addresses()->create([
-			'first_name' => $request->first_name,
-			'last_name' => $request->last_name,
-			'address' => $request->address,
-			'city' => $request->city,
-			'state_id' => 1,
-		]);
+		// $user->addresses()->create([
+		// 	'first_name' => $request->first_name,
+		// 	'last_name' => $request->last_name,
+		// 	'address' => $request->address,
+		// 	'city' => $request->city,
+		// 	'state_id' => 1,
+		// ]);
 
 		return redirect('/admin/users');
 	}

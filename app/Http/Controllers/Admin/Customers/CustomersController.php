@@ -21,8 +21,6 @@ class CustomersController extends Controller
     public function index()
     {
         $users = (new User())->customers()->latest()->get();
-        dd($users);
-
         return   view('admin.customers.index', compact('users'));
     }
 
