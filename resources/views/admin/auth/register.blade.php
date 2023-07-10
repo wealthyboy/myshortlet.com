@@ -63,8 +63,8 @@
                      </div>
                   </div>
                </div>
-               <div class="footer text-center">
-                  <button type="submit" name="admin" value="submit" class="btn btn-rose btn-simple btn-wd btn-lg">Submit</button>
+               <div class="footer  float-right">
+                  <button type="submit" name="admin" value="submit" class="btn btn-rose  btn-wd btn-lg">Submit</button>
                </div>
             </div>
          </form>
