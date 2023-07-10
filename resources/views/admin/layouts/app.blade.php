@@ -126,7 +126,7 @@
                                 <li class="{{ $helper->active_link(['agents']) }} ">
                                     <a href="{{ route('admin.properties.index') }}">
                                         <span class="sidebar-mini"> A </span>
-                                        <span class="sidebar-normal"> Agents </span>
+                                        <span class="sidebar-normal"> Sub-Lets </span>
                                     </a>
                                 </li>
 
