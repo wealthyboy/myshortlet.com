@@ -16,9 +16,10 @@
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
 
-
    <link href="/css/services_style.css?version={{ str_random(6) }}" rel="stylesheet">
    <link href="/css/banner.css?version={{ str_random(6) }}" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
    @yield('page-css')
    <meta property="og:site_name" content="avenuemontaigne.com">
@@ -37,19 +38,7 @@
 
    <script>
       Window.user = {
-         user: {
-            !!auth() - > check() ? auth() - > user() : 0000!!
-         },
-         loggedIn: {
-            !!auth() - > check() ? 1 : 0!!
-         },
-         settings: {
-            !!isset($system_settings) ? $system_settings : ''!!
-         },
-         token: '{!! csrf_token() !!}',
-         request: {
-            !!collect(request() - > all()) ? collect(request() - > all()) : null!!
-         }
+
       }
    </script>
 </head>
