@@ -44,6 +44,7 @@
                         <ul class="treeview" data-role="treeview">
                             <li data-icon="" data-caption="">
                                 <ul>
+                                    {{ $properties }}
                                     @foreach($properties as $property)
                                     <li data-caption="Documents">
                                         <div class="checkbox">
