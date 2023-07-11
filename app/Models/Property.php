@@ -46,11 +46,6 @@ class Property extends Model
         return $this->hasOne(Apartment::class);
     }
 
-    // public function imgs()
-    // {
-    //     return $this->morphMany(Image::class, 'imageable')->orderBy('id','asc');
-    // }
-
 
     public function images()
     {
@@ -73,6 +68,11 @@ class Property extends Model
     {
         $saved = auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];
         return in_array($this->id, $saved) ? true : false;
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Apartment::class);
     }
 
     public function apartments()
