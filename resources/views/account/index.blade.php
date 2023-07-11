@@ -1,4 +1,4 @@
-@extends('layouts.listing')
+@extends('layouts.listings')
 @section('content')
 <div class="container-fluid">
    <div class="row">
@@ -18,22 +18,14 @@
                <a href="javascript:;">
                   <i class="material-icons">apartment</i>
 
-                  Listings
+                  Apartments
                </a>
             </div>
          </div>
       </div>
 
-      <div class="col-lg-3 col-md-6 col-sm-6">
-         <div class="card card-stats">
-            <div class="stats p-2 text-center">
-               <a href="javascript:;">
-                  <i class="material-icons">person_outline</i>
-                  Profile
-               </a>
-            </div>
-         </div>
-      </div>
+
+
 
       <div class="col-lg-3 col-md-6 col-sm-6">
          <div class="card card-stats">
@@ -46,16 +38,7 @@
          </div>
       </div>
 
-      <div class="col-lg-3 col-md-6 col-sm-6">
-         <div class="card card-stats">
-            <div class="stats p-2 text-center">
-               <a href="javascript:;">
-                  <i class="material-icons">favorite</i>
-                  Saved
-               </a>
-            </div>
-         </div>
-      </div>
+
    </div>
 
 </div>
