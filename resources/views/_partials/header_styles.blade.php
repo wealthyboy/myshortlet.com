@@ -38,19 +38,7 @@
 
    <script>
       Window.user = {
-         user: {
-            !!auth()->check() ? auth()->user() : 0000!!
-         },
-         loggedIn: {
-            !!auth()->check() ? 1 : 0!!
-         },
-         settings: {
-            !!isset($system_settings) ? $system_settings : ''!!
-         },
-         token: '{!! csrf_token() !!}',
-         request: {
-            !!collect(request()->all()) ? collect(request()->all()) : null!!
-         }
+
       }
    </script>
 </head>
