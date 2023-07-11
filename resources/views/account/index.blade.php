@@ -1,4 +1,4 @@
-@extends('layouts.listings')
+@extends('layouts.listing')
 @section('content')
 <div class="container-fluid">
    <div class="row">
