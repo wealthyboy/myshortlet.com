@@ -48,7 +48,7 @@
                                     <li data-caption="Documents">
                                         <div class="checkbox">
                                             <label>
-                                                <input name="attribute_id[]" value="{{ $property->id }}
+                                                <input name="property_id[]" value="{{ $property->id }}
                                                     " type="checkbox">
                                                 {{ $property->name }}
                                         </div>
@@ -60,7 +60,7 @@
                                             <li data-caption="Web">
                                                 <div class="checkbox">
                                                     <label>
-                                                        <input name="attribute_child_id[{{$property->id}}][]" value="{{  $children->id }}" type="checkbox">
+                                                        <input name="property_child_id[{{$property->id}}][]" value="{{  $children->id }}" type="checkbox">
                                                         {{$children->name}}
                                                 </div>
                                             </li>
