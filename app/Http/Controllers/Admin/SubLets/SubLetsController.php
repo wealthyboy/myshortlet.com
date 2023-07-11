@@ -17,8 +17,7 @@ class SubLetsController extends Controller
     public function index()
     {
         $agents = (new User())->agents()->latest()->get();
-        $properties = Property::all();
-        dd($properties);
+        $properties = Property::with('children')->get();
 
         return  view('admin.sublets.index', compact('agents', 'properties'));
     }
