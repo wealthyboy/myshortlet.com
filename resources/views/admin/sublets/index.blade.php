@@ -57,13 +57,12 @@
                     <!-- Here you can write extra buttons/actions for the toolbar              -->
                 </div>
                 <div class="material-datatables">
-                    <form action="{{ route('admin.properties.destroy',['property'=>1]) }}" method="post" enctype="multipart/form-data" id="form-apartments">
+                    <form action="{{ route('admin.sublets.destroy',['sublet'=>1]) }}" method="post" enctype="multipart/form-data" id="form-apartments">
                         @method('DELETE')
                         @csrf
 
                         <table id="datatables" class="table table-striped table-shopping table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                             <thead>
-
                                 <tr>
                                     <th>
                                         <div class="checkbox">
@@ -73,7 +72,6 @@
                                         </div>
                                     </th>
                                     <th>Agent</th>
-
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -92,7 +90,7 @@
                                     <td><a target="_blank">{{ $sublet->user->fullname()}}</a></td>
 
                                     <td class="td-actions ">
-                                        <a href="{{ route('admin.properties.edit',['property'=>$property->id,'mode' => $property->mode ] ) }}" rel="tooltip" title="Edit" class="btn btn-primary btn-simple btn-xs">
+                                        <a href="{{ route('admin.sublets.edit',['sublet'=>$sublet->id ] ) }}" rel="tooltip" title="Edit" class="btn btn-primary btn-simple btn-xs">
                                             <i class="material-icons">edit</i>
                                             Edit
                                         </a>

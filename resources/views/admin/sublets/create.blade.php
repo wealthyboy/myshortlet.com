@@ -10,7 +10,7 @@
                     <!--Here you can write extra buttons/actions for the toolbar  -->
                 </div>
                 <div class="material-datatables">
-                    <form action="{{ route('attributes.store',['type'=> $type ?? '']) }}" method="post" enctype="multipart/form-data" id="form--attribute">
+                    <form action="{{ route('admin.sublets.store') }}" method="post" enctype="multipart/form-data" id="form-attribute">
                         @csrf
 
                         <div class="form-group">
