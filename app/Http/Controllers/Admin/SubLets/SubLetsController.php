@@ -43,8 +43,9 @@ class SubLetsController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::find($request->user_id);
 
+
+        $user = User::find($request->user_id);
         $user->user_apartments()->sync($request->apartment_id);
         $user->properties()->sync($request->property_id);
         $sublet = new SubLet;
@@ -73,7 +74,9 @@ class SubLetsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $agents = (new User())->agents()->latest()->get();
+        $properties = Property::with('children')->get();
+        return  view('admin.sublets.index', compact('agents', 'properties'));
     }
 
     /**
@@ -92,6 +95,8 @@ class SubLetsController extends Controller
         $sublet = SubLet::find($id);
         $sublet->user_id = $request->user_id;
         $sublet->save();
+
+        return redirect()->route('admin.sublets.index');
     }
 
     /**
@@ -102,6 +107,19 @@ class SubLetsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $rules = array(
+            '_token' => 'required'
+        );
+        $validator = \Validator::make($request->all(), $rules);
+        if (empty($request->selected)) {
+            $validator->getMessageBag()->add('Selected', 'Nothing to Delete');
+            return \Redirect::back()->withErrors($validator)->withInput();
+        }
+        $count = count($request->selected);
+        // (new Activity)->Log("Deleted  {$count} Products");
+
+        SubLet::deleting($request->selected);
+
+        return redirect()->back();
     }
 }
