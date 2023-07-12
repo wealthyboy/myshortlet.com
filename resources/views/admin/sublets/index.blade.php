@@ -57,7 +57,7 @@
                     <!-- Here you can write extra buttons/actions for the toolbar              -->
                 </div>
                 <div class="material-datatables">
-                    <form action="{{ route('admin.sublets.destroy',['sublet'=>1]) }}" method="post" enctype="multipart/form-data" id="form-apartments">
+                    <form action="{{ route('admin.sublets.destroy',['sublet'=>1]) }}" method="post" enctype="multipart/form-data" id="form-sublets">
                         @method('DELETE')
                         @csrf
 
