@@ -23,8 +23,8 @@
                             </select>
                         </div>
 
-                        <div class="card">
-                            <div class="card-content">
+                        <div class="">
+                            <div class="">
                                 <h4 class="card-title">Properties</h4>
                                 <div class="">
                                     <div class="well well-sm" style="height: 350px; background-color: #fff; color: black; overflow: auto;">
