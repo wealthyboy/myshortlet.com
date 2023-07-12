@@ -27,11 +27,10 @@
                             <div class="card-content">
                                 <h4 class="card-title">Properties</h4>
                                 <div class="">
-                                    <h3 class="info-text">Filters</h3>
                                     <div class="well well-sm" style="height: 350px; background-color: #fff; color: black; overflow: auto;">
                                         <ul class="treeview p-0" data-role="treeview">
                                             <li data-icon="" data-caption="">
-                                                <ul>
+                                                <ul class="p-0">
                                                     @foreach($properties as $property)
                                                     <li data-caption="Documents">
                                                         <div class="checkbox">
