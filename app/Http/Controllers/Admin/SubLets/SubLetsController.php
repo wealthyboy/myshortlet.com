@@ -77,7 +77,7 @@ class SubLetsController extends Controller
         $sublet = SubLet::find($id);
         $agents = (new User())->agents()->latest()->get();
         $properties = Property::with('children')->get();
-        return  view('admin.sublets.index', compact('sublet', 'agents', 'properties'));
+        return  view('admin.sublets.edit', compact('sublet', 'agents', 'properties'));
     }
 
     /**
