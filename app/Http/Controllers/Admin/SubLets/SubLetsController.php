@@ -112,7 +112,6 @@ class SubLetsController extends Controller
             '_token' => 'required'
         );
 
-        dd($request->selected);
         $validator = \Validator::make($request->all(), $rules);
         if (empty($request->selected)) {
             $validator->getMessageBag()->add('Selected', 'Nothing to Delete');
@@ -121,7 +120,7 @@ class SubLetsController extends Controller
         $count = count($request->selected);
         // (new Activity)->Log("Deleted  {$count} Products");
 
-        SubLet::deleting($request->selected);
+        SubLet::destroy($request->selected);
 
         return redirect()->back();
     }
