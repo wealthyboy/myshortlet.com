@@ -15,7 +15,7 @@
 
                         <div class="form-group">
                             <label class="control-label"></label>
-                            <select name="parent_id" class="form-control">
+                            <select name="user_id" class="form-control">
                                 <option value="" selected="">--Choose Agent--</option>
                                 @foreach($agents as $agent)
                                 <option class="" value="{{ $agent->id }}">{{ $agent->name }} </option>
@@ -47,7 +47,7 @@
                                                             <li data-caption="Web">
                                                                 <div class="checkbox">
                                                                     <label>
-                                                                        <input name="property_child_id[{{$property->id}}][]" value="{{  $children->id }}" type="checkbox">
+                                                                        <input name="apartment_id[]" value="{{  $children->id }}" type="checkbox">
                                                                         {{$children->name}}
                                                                 </div>
                                                             </li>
