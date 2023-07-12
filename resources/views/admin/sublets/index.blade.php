@@ -88,7 +88,7 @@
                                     </td>
 
                                     <td>
-                                        <a href="{{ route('admin.sublets.edit',['sublet'=> $sublet->id ] ) }}" rel="tooltip" title="Edit" class="btn btn-primary btn-simple btn-xs">
+                                        <a href="{{ route('admin.sublets.edit',['sublet'=> $sublet->id ] ) }}" rel="tooltip" class="">
                                             {{ optional($sublet->user)->fullname()}}
                                         </a>
                                     </td>
