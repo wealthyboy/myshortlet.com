@@ -18,7 +18,7 @@
                             <select name="user_id" class="form-control">
                                 <option value="" selected="">--Choose Agent--</option>
                                 @foreach($agents as $agent)
-                                <option class="" value="{{ $agent->id }}">{{ $agent->user->fullname() }} </option>
+                                <option class="" value="{{ $agent->id }}">{{ $agent->fullname() }} </option>
                                 @endforeach
                             </select>
                         </div>

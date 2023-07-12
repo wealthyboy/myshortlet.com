@@ -18,7 +18,7 @@
                             <select name="user_id" required="selected" class="form-control">
                                 <option value="" selected="">--Choose Agent--</option>
                                 @foreach($agents as $agent)
-                                <option class="" value="{{ $agent->id }}" {{ $sublet->user_id ==  $agent->id ?  'selected' : null  }}>{{ $agent->name }} </option>
+                                <option class="" value="{{ $agent->id }}" {{ $sublet->user_id ==  $agent->id ?  'selected' : null  }}>{{ $agent->fullname() }} </option>
                                 @endforeach
                             </select>
                         </div>
