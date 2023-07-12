@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\SubLets;
 
 use App\Http\Controllers\Controller;
+use App\Http\Helper;
 use Illuminate\Http\Request;
 use App\Models\Property;
 use App\Models\User;
@@ -77,7 +78,8 @@ class SubLetsController extends Controller
         $sublet = SubLet::find($id);
         $agents = (new User())->agents()->latest()->get();
         $properties = Property::with('children')->get();
-        return  view('admin.sublets.edit', compact('sublet', 'agents', 'properties'));
+        $helper = new Helper;
+        return  view('admin.sublets.edit', compact('helper', 'sublet', 'agents', 'properties'));
     }
 
     /**
