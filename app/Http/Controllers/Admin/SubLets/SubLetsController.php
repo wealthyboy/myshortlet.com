@@ -50,6 +50,8 @@ class SubLetsController extends Controller
         $sublet = new SubLet;
         $sublet->user_id = $request->user_id;
         $sublet->save();
+
+        return redirect()->route('admin.sublets.index');
     }
 
     /**
