@@ -14,4 +14,15 @@ class SubLet extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function properties()
+    {
+        return $this->belongsToMany(Property::class);
+    }
+
+
+    public function apartments()
+    {
+        return $this->belongsToMany(Apartment::class);
+    }
 }
