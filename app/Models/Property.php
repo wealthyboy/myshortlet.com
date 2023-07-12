@@ -41,6 +41,7 @@ class Property extends Model
         return (new PropertiesFilter($request))->add($filters)->filter($builder);
     }
 
+
     public function variant()
     {
         return $this->hasOne(Apartment::class);

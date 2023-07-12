@@ -1,104 +1,115 @@
 @extends('admin.layouts.app')
+
 @section('content')
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
+        <div class="text-right">
+            <a href="{{ route('admin.sublets.index') }}" rel="tooltip" title="Refresh" class="btn btn-primary btn-simple btn-xs">
+                <i class="material-icons">refresh</i>
+                Refresh
+            </a>
+
+            <a href="{{ route('admin.sublets.create', ['mode'=>'sublet']) }}" rel="tooltip" title="Add New" class="btn btn-primary btn-simple btn-xs">
+                <i class="material-icons">add</i>
+                Add Apartment
+            </a>
+            <a href="javascript:void(0)" onclick="confirm('Are you sure?') ? $('#form-sublets').submit() : false;" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                <i class="material-icons">close</i>
+                Remove
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-12">
         <div class="card">
+            <div class="card-header card-header-icon" data-background-color="rose">
+                <i class="material-icons">Filter</i>
+            </div>
             <div class="card-content">
-                <h4 class="card-title">Add Sublet</h4>
+                <h4 class="card-title">Filter - <small class="category"></small></h4>
+
+                <form action="{{-- route('search_apartments') --}}" method="get">
+                    <div class="row">
+
+                        <div class="col-md-10">
+                            <div class="form-group label-floating ">
+                                <label class="control-label">Search Agents</label>
+                                <input required type="text" value="" name="q" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+                    <input name="search" type="submit" value="search" class="btn btn-rose  btn-round pull-right">
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="card">
+
+            <div class="card-content">
+
+                <h4 class="card-title">Properties</h4>
                 <div class="toolbar">
-                    <!--Here you can write extra buttons/actions for the toolbar  -->
+                    <!-- Here you can write extra buttons/actions for the toolbar              -->
                 </div>
                 <div class="material-datatables">
-                    <form action="{{ route('attributes.store',['type'=> $type ?? '']) }}" method="post" enctype="multipart/form-data" id="form--attribute">
+                    <form action="{{ route('admin.properties.destroy',['property'=>1]) }}" method="post" enctype="multipart/form-data" id="form-apartments">
+                        @method('DELETE')
                         @csrf
 
-                        <div class="form-group">
-                            <label class="control-label"></label>
-                            <select name="parent_id" class="form-control">
-                                <option value="" selected="">--Choose Agent--</option>
-                                @foreach($agents as $agent)
-                                <option class="" value="{{ $agent->id }}">{{ $agent->name }} </option>
+                        <table id="datatables" class="table table-striped table-shopping table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <thead>
+
+                                <tr>
+                                    <th>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" type="checkbox" name="optionsCheckboxes">
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <th>Agent</th>
+
+                                    <th class="disabled-sorting text-right">Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach($sublets as $sublet)
+                                <tr>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value="{{ $sublet->id }}" name="selected[]">
+                                            </label>
+                                        </div>
+                                    </td>
+
+                                    <td><a target="_blank">{{ $sublet->user->fullname()}}</a></td>
+
+                                    <td class="td-actions ">
+                                        <a href="{{ route('admin.properties.edit',['property'=>$property->id,'mode' => $property->mode ] ) }}" rel="tooltip" title="Edit" class="btn btn-primary btn-simple btn-xs">
+                                            <i class="material-icons">edit</i>
+                                            Edit
+                                        </a>
+                                    </td>
+                                </tr>
                                 @endforeach
-                            </select>
-                        </div>
-
-                        <div class="">
-                            <div class="">
-                                <h4 class="card-title">Properties</h4>
-                                <div class="">
-                                    <div class="well well-sm" style="height: 200px; background-color: #fff; color: black; overflow: auto;">
-                                        <ul class="treeview p-0" data-role="treeview">
-                                            <li data-icon="" data-caption="">
-                                                <ul class="p-0">
-                                                    @foreach($properties as $property)
-                                                    <li data-caption="Documents">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                <input name="property_id[]" value="{{ $property->id }}
-                                                    " type="checkbox">
-                                                                {{ $property->name }}
-                                                        </div>
-                                                    </li>
-                                                    @if($property->children->count())
-                                                    @foreach($property->children as $children)
-                                                    <li data-caption="Projects">
-                                                        <ul>
-                                                            <li data-caption="Web">
-                                                                <div class="checkbox">
-                                                                    <label>
-                                                                        <input name="property_child_id[{{$property->id}}][]" value="{{  $children->id }}" type="checkbox">
-                                                                        {{$children->name}}
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                    @endforeach
-                                                    @endif
-                                                    @endforeach
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div><!-- end content-->
-                        </div><!--  end card  -->
-
-
-
-                        <div class="form-footer text-right">
-                            <button type="submit" class="btn btn-rose btn-round  btn-fill">Submit</button>
-                        </div>
+                            </tbody>
+                        </table>
                     </form>
                 </div>
             </div><!-- end content-->
         </div><!--  end card  -->
-    </div> <!-- end col-md-6 -->
-
-
+    </div> <!-- end col-md-12 -->
 </div> <!-- end row -->
 @endsection
-@section('page-scripts')
-@stop
-
 @section('inline-scripts')
 $(document).ready(function() {
-
-let activateFileExplorer = 'a.activate-file';
-let delete_image = 'a.delete_image';
-var main_file = $("input#file_upload_input");
-Img.initUploadImage({
-url:'/admin/upload/image?folder=attributes',
-activator: activateFileExplorer,
-inputFile: main_file,
-});
-Img.deleteImage({
-url:'/admin/category/delete/image',
-activator: delete_image,
-inputFile: main_file,
-});
-$('.colorpicker').colorpicker()
-
 
 });
 @stop

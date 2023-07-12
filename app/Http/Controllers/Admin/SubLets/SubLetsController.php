@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Property;
 use App\Models\User;
+use App\Models\SubLet;
+
 
 class SubLetsController extends Controller
 {
@@ -16,9 +18,8 @@ class SubLetsController extends Controller
      */
     public function index()
     {
-        $agents = (new User())->agents()->latest()->get();
-        $properties = Property::with('children')->get();
-        return  view('admin.sublets.index', compact('agents', 'properties'));
+        $sublets = SubLet::get();
+        return  view('admin.sublets.index', compact('sublets'));
     }
 
     /**
@@ -28,7 +29,10 @@ class SubLetsController extends Controller
      */
     public function create()
     {
-        //
+        $agents = (new User())->agents()->latest()->get();
+        $properties = Property::with('children')->get();
+
+        return  view('admin.sublets.create', compact('agents', 'properties'));
     }
 
     /**
@@ -39,7 +43,13 @@ class SubLetsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::find($request->user_id);
+
+        $user->user_apartments()->sync($request->apartment_id);
+        $user->properties()->sync($request->property_id);
+        $sublet = new SubLet;
+        $sublet->user_id = $request->user_id;
+        $sublet->save();
     }
 
     /**
@@ -73,7 +83,13 @@ class SubLetsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($request->user_id);
+
+        $user->user_apartments()->sync($request->apartment_id);
+        $user->properties()->sync($request->property_id);
+        $sublet = SubLet::find($id);
+        $sublet->user_id = $request->user_id;
+        $sublet->save();
     }
 
     /**

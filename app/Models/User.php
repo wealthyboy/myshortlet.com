@@ -44,11 +44,12 @@ class User extends Authenticatable
 		return $this->hasMany(Address::class);
 	}
 
-
-	public function apartments()
+	public function user_apartments()
 	{
-		return $this->hasMany(Apartment::class);
+		return $this->belongsToMany(Apartment::class, 'apartment_user');
 	}
+
+
 
 
 	public function products()
@@ -56,12 +57,10 @@ class User extends Authenticatable
 		return $this->hasMany(Product::class);
 	}
 
-
 	public function active_address()
 	{
 		return $this->hasOne(Address::class)->where('is_active', 1);
 	}
-
 
 	public function orders()
 	{
@@ -115,6 +114,17 @@ class User extends Authenticatable
 		return $this->hasOne(UserPermission::class);
 	}
 
+
+	public function properties()
+	{
+		return $this->belongsToMany(Property::class);
+	}
+
+
+	public function apartments()
+	{
+		return $this->belongsToMany(Apartment::class);
+	}
 
 	public function scopeCustomers(Builder $builder)
 	{
