@@ -11,18 +11,21 @@ use App\Models\Location;
 
 
 
-class Helper{
+class Helper
+{
 
 
 
-    function active_link (array $url)  { 
+    function active_link(array $url)
+    {
         $path =   $_SERVER['REQUEST_URI'];
-        $link = explode("/",$path);
+        $link = explode("/", $path);
         return array_intersect($link, $url) ? 'active' : '';
     }
-    
 
-    function getShippingPrice($id){
+
+    function getShippingPrice($id)
+    {
         $price =  Shipping::findOfail($id);
         return $price->price;
     }
@@ -34,9 +37,9 @@ class Helper{
          * This function returns a format for month day year
          */
         if ($date) {
-            $date =  explode(' ',$date);
-            $date =  explode('-',$date[0]);
-            $date =  $date[1] .'/'. $date[2] .'/'. $date[0];
+            $date =  explode(' ', $date);
+            $date =  explode('-', $date[0]);
+            $date =  $date[1] . '/' . $date[2] . '/' . $date[0];
             return $date;
         }
         return null;
@@ -45,56 +48,57 @@ class Helper{
 
     public  static function getFDate($date)
     {
-        if($date) {
+        if ($date) {
             $exp_date = explode('-', $date);
-            $expiry_date = Carbon::createFromDate($exp_date[0], $exp_date[1], $exp_date[2]);//
-        }else{
+            $expiry_date = Carbon::createFromDate($exp_date[0], $exp_date[1], $exp_date[2]); //
+        } else {
             $expiry_date = null;
         }
         return $expiry_date;
     }
 
 
-    public  static function getFormatedDate($date,$changeFormat = true)
-    {   
+    public  static function getFormatedDate($date, $changeFormat = true)
+    {
         //createFromDate  $year ,$month , $day
         if ($date !== null || $date !== 1) {
 
             $exp_date = explode('/', $date);
 
-            if ( count($exp_date) > 1) {
-                if ($changeFormat){
+            if (count($exp_date) > 1) {
+                if ($changeFormat) {
                     $exp_date = explode('/', $date);
-                    $month  = $exp_date[0];//Month
-                    $day    = $exp_date[1];//Day
-                    $year   = $exp_date[2];//YEar
-                    $formarted_date =Carbon::createFromDate($year, $month, $day);
+                    $month  = $exp_date[0]; //Month
+                    $day    = $exp_date[1]; //Day
+                    $year   = $exp_date[2]; //YEar
+                    $formarted_date = Carbon::createFromDate($year, $month, $day);
                 } else {
                     $exp_date = explode('-', $date);
-                    $formarted_date = Carbon::createFromDate($exp_date[0], $exp_date[1], $exp_date[2]);//
+                    $formarted_date = Carbon::createFromDate($exp_date[0], $exp_date[1], $exp_date[2]); //
                 }
                 return $formarted_date;
             }
-
         }
         return null;
     }
 
 
-    function make_active ($link) { 
-        foreach ( $this->my_link () as $pages) { 
-            if ( strtolower($pages) == strtolower($link)) { 
+    function make_active($link)
+    {
+        foreach ($this->my_link() as $pages) {
+            if (strtolower($pages) == strtolower($link)) {
                 return 'active';
             }
         }
     }
 
 
-    public   static function getDate($date){
-        if ($date){
+    public   static function getDate($date)
+    {
+        if ($date) {
             $exp_date = explode(' ', $date);
             $exp_date = $date[0];
-        // $expiry_date = Carbon::createFromDate($exp_date[2], $exp_date[1], $exp_date[0]);
+            // $expiry_date = Carbon::createFromDate($exp_date[2], $exp_date[1], $exp_date[0]);
         } else {
             $expiry_date = null;
         }
@@ -109,93 +113,99 @@ class Helper{
     }
 
 
-    public function makeSlug($parent_id,$name,$model){
+    public function makeSlug($parent_id, $name, $model)
+    {
         //Tempral solution
         $cat = $parent_id ? $model::find($parent_id) : null;
-        if ( null !== $cat ){
-            if ($cat->parent_id){
+        if (null !== $cat) {
+            if ($cat->parent_id) {
                 $parent = $model::find($cat->parent_id);
-                if ($parent->parent_id){
+                if ($parent->parent_id) {
                     $parent = $model::find($parent->parent_id);
-                    return  str_slug($parent->name.' '.$cat->name.' '.$name);
+                    return  str_slug($parent->name . ' ' . $cat->name . ' ' . $name);
                 }
-                return  str_slug($parent->name.' '.$cat->name.' '.$name);
+                return  str_slug($parent->name . ' ' . $cat->name . ' ' . $name);
             }
-            return $slug = null !== $cat ? str_slug($cat->name.' '.$name) : str_slug($name);
+            return $slug = null !== $cat ? str_slug($cat->name . ' ' . $name) : str_slug($name);
         }
         return str_slug($name);
     }
 
 
-    public static function sanitizeTags ( $string ) { 
-        $tag=strtolower( $string );
+    public static function sanitizeTags($string)
+    {
+        $tag = strtolower($string);
         $tag = preg_replace('/[^A-Za-z0-9-]+/', ',', $tag);
-        return ltrim(rtrim($tag, ','));   
+        return ltrim(rtrim($tag, ','));
     }
 
-    public static function rate(){
-        $rate=session('rate');;
+    public static function rate()
+    {
+        $rate = session('rate');;
         $rate = json_decode($rate);
         return $rate;
     }
 
-    public static function getCurrency(){
+    public static function getCurrency()
+    {
         return Helper::rate()->symbol ?? optional(optional(SystemSetting::first())->currency)->symbol;
-    } 
+    }
 
-    public  static function getIsoCode(){
+    public  static function getIsoCode()
+    {
         return Helper::rate()->iso_code3 ?? optional(optional(SystemSetting::first())->currency)->iso_code3;
     }
 
 
-    public static function check($collections,$id, $col=null)
-    {   
-        if (null !== $collections) {
-            foreach($collections as $collection){
-                if(null !== $collection->id && $collection->id === $id ){
-                    return $col ? $collection->pivot->$col: $collection->id;
+    public function check($collections, $id, $pivot = false, $eid = null)
+    {
+        if ($pivot) {
+            foreach ($collections as $collection) {
+                if (null !== $collection->pivot->attribute_id && $collection->pivot->attribute_id == $id  && $collection->pivot->engine_id == $eid) {
+                    return 'checked';
                 }
             }
+            return false;
         }
-        
-        return false;
+        return $collections->contains('id', $id) ? 'checked' : '';
     }
 
 
 
-    public static function EU(){
-       
+    public static function EU()
+    {
+
         return [
-        "AT" => "Austria",
-        "BE" => "Belgium",
-        "BG" => "Bulgaria",
-        "CY" => "Cyprus",
-        "CZ" => "Czech Republic",
-        "DK" => "Denmark",
-        "EE" => "Estonia",
-        "FI" => "Finland",
-        "FR" => "France",
-        "DE" => "Germany",
-        "GR" => "Greece",
-        "HU" => "Hungary",
-        "IE" => "Ireland",
-        "IT" => "Italy",
-        "LV" => "Latvia",
-        "LT" => "Lithuania",
-        "LU" => "Luxembourg",
-        "MT" => "Malta",
-        "NL" => "Netherlands",
-        "PL" => "Poland",
-        "PT" => "Portugal",
-        "RO" => "Romania",
-        "SK" => "Slovakia (Slovak Republic)",
-        "SI" => "Slovenia",
-        "ES" => "Spain",
+            "AT" => "Austria",
+            "BE" => "Belgium",
+            "BG" => "Bulgaria",
+            "CY" => "Cyprus",
+            "CZ" => "Czech Republic",
+            "DK" => "Denmark",
+            "EE" => "Estonia",
+            "FI" => "Finland",
+            "FR" => "France",
+            "DE" => "Germany",
+            "GR" => "Greece",
+            "HU" => "Hungary",
+            "IE" => "Ireland",
+            "IT" => "Italy",
+            "LV" => "Latvia",
+            "LT" => "Lithuania",
+            "LU" => "Luxembourg",
+            "MT" => "Malta",
+            "NL" => "Netherlands",
+            "PL" => "Poland",
+            "PT" => "Portugal",
+            "RO" => "Romania",
+            "SK" => "Slovakia (Slovak Republic)",
+            "SI" => "Slovenia",
+            "ES" => "Spain",
         ];
-         
     }
 
-    public static function sm_col_width(){
+    public static function sm_col_width()
+    {
         return [
             'col-12',
             'col-10',
@@ -211,7 +221,8 @@ class Helper{
         ];
     }
 
-    public static function col_width(){
+    public static function col_width()
+    {
         return [
             'col-lg-12',
             'col-lg-10',
@@ -228,7 +239,8 @@ class Helper{
     }
 
 
-    public static function attribute_types(){
+    public static function attribute_types()
+    {
         return [
             'bedrooms' => 'Bedrooms',
             'extra services' => 'Extra Services',
@@ -243,24 +255,26 @@ class Helper{
     }
 
 
-    public static function toAndFromDate($date){
-        $date  = $date ?  explode("to",$date)  : explode("to", "2012-10-21 to 2012-10-23");
+    public static function toAndFromDate($date)
+    {
+        $date  = $date ?  explode("to", $date)  : explode("to", "2012-10-21 to 2012-10-23");
         if ($date) {
             $date1 = trim($date[0]);
             $date2 = trim($date[1]);
             $start_date = Carbon::createFromDate($date1);
-            $end_date = Carbon::createFromDate($date2); 
+            $end_date = Carbon::createFromDate($date2);
             return ['start_date' => $start_date, 'end_date' => $end_date];
         }
         return [];
     }
 
 
-    public static function nights($date = []){
+    public static function nights($date = [])
+    {
         if (count($date) > 1) {
 
             $nights = [];
-            if ($date['start_date'] == Carbon::createFromDate('2012-10-21')){
+            if ($date['start_date'] == Carbon::createFromDate('2012-10-21')) {
                 return $nights;
             }
 
@@ -277,22 +291,25 @@ class Helper{
     }
 
 
-    public static function getPercentageDiscount($percentage_value,$fee){
-        $var =($percentage_value/100) * $fee;
+    public static function getPercentageDiscount($percentage_value, $fee)
+    {
+        $var = ($percentage_value / 100) * $fee;
         $new_fee = $fee - $var;
         return $new_fee;
     }
 
-    function display_html($link,$html) { 
-        
-        if ( $pages) { 
+    function display_html($link, $html)
+    {
+
+        if ($pages) {
             return $html;
-        } else  { 
+        } else {
             return '';
         }
     }
 
-    public static function phoneCodes(){
+    public static function phoneCodes()
+    {
 
         $array = [
             '44' => 'UK (+44)',
@@ -514,41 +531,36 @@ class Helper{
         return $array;
     }
 
-    public static function Countries(){
+    public static function Countries()
+    {
 
-        return  $countries = array("Afghanistan", 
-                "Albania",
-                "Algeria", 
-                "American Samoa", 
-                "Andorra", 
-                "Angola", 
-                "Anguilla", 
-                "Antarctica",
-                "Antigua and Barbuda", 
-                "Argentina", "Armenia", 
-                "Aruba", "Australia", 
-                "Austria", "Azerbaijan", 
-                "Bahamas", "Bahrain",
-                "Bangladesh",
-                "Barbados", 
-                "Belarus", "Belgium",
-                "Belize", 
-                "Benin", "Bermuda", 
-                "Bhutan", "Bolivia", 
-                "Bosnia and Herzegowina", 
-                "Botswana", "Bouvet Island", 
-                "Brazil", "British Indian Ocean Territory",
-                "Brunei Darussalam", "Bulgaria",
-                "Burkina Faso", "Burundi", "Cambodia",
-                "Cameroon", "Canada",
-                "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Cote d'Ivoire", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, Democratic People's Republic of", "Korea, Republic of", "Kuwait", "Kyrgyzstan", "Lao, People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia, The Former Yugoslav Republic of", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovakia (Slovak Republic)", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia and the South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan, Province of China", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zambia", "Zimbabwe");
-            
+        return  $countries = array(
+            "Afghanistan",
+            "Albania",
+            "Algeria",
+            "American Samoa",
+            "Andorra",
+            "Angola",
+            "Anguilla",
+            "Antarctica",
+            "Antigua and Barbuda",
+            "Argentina", "Armenia",
+            "Aruba", "Australia",
+            "Austria", "Azerbaijan",
+            "Bahamas", "Bahrain",
+            "Bangladesh",
+            "Barbados",
+            "Belarus", "Belgium",
+            "Belize",
+            "Benin", "Bermuda",
+            "Bhutan", "Bolivia",
+            "Bosnia and Herzegowina",
+            "Botswana", "Bouvet Island",
+            "Brazil", "British Indian Ocean Territory",
+            "Brunei Darussalam", "Bulgaria",
+            "Burkina Faso", "Burundi", "Cambodia",
+            "Cameroon", "Canada",
+            "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Cote d'Ivoire", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, Democratic People's Republic of", "Korea, Republic of", "Kuwait", "Kyrgyzstan", "Lao, People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia, The Former Yugoslav Republic of", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovakia (Slovak Republic)", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia and the South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan, Province of China", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zambia", "Zimbabwe"
+        );
     }
-
-
-
-
 }
-
-
-
