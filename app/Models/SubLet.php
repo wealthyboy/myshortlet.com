@@ -10,7 +10,7 @@ class SubLet extends Model
     use HasFactory;
 
 
-    public function sublet()
+    public function user()
     {
         return $this->hasOne(User::class);
     }

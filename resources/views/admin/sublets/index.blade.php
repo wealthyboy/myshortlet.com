@@ -87,7 +87,7 @@
                                         </div>
                                     </td>
 
-                                    <td><a target="_blank">{{ $sublet->user }}</a></td>
+                                    <td><a target="_blank">{{ optional($sublet->user)->fullname()}}</a></td>
 
                                     <td class="td-actions ">
                                         <a href="{{ route('admin.sublets.edit',['sublet'=>$sublet->id ] ) }}" rel="tooltip" title="Edit" class="btn btn-primary btn-simple btn-xs">
