@@ -111,6 +111,8 @@ class SubLetsController extends Controller
         $rules = array(
             '_token' => 'required'
         );
+
+        dd($request->selected);
         $validator = \Validator::make($request->all(), $rules);
         if (empty($request->selected)) {
             $validator->getMessageBag()->add('Selected', 'Nothing to Delete');
