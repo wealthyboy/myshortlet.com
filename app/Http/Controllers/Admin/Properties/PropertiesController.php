@@ -255,19 +255,19 @@ class PropertiesController extends Controller
             $room_images = !empty($request->images[$key]) ? $request->images[$key] : [];
             $apartment->name = $request->room_name[$key];
             $apartment->price = $request->room_price[$key];
-            $apartment->sale_price          = $request->room_sale_price[$key];
-            $apartment->slug                    = str_slug($request->room_name[$key]);
-            $apartment->max_adults              = $request->room_max_adults[$key];
-            $apartment->quantity                = $request->room_quantity[$key];
-            $apartment->type                    = $request->type;
-            $apartment->price_mode           = $request->price_mode[$key];
+            $apartment->sale_price = $request->room_sale_price[$key];
+            $apartment->slug = str_slug($request->room_name[$key]);
+            $apartment->max_adults = $request->room_max_adults[$key];
+            $apartment->quantity = $request->room_quantity[$key];
+            $apartment->type = $request->type;
+            $apartment->price_mode = $request->price_mode[$key];
 
-            $apartment->max_children            = $request->room_max_children[$key];
-            $apartment->no_of_rooms             = $request->room_number[$key];
-            $apartment->sale_price_expires      = Helper::getFormatedDate($request->room_sale_price_expires[$key], true);
-            $apartment->property_id             = $property->id;
-            $apartment->uuid                    =  time();
-            $apartment->toilets                 = $request->room_toilets[$key];
+            $apartment->max_children = $request->room_max_children[$key];
+            $apartment->no_of_rooms = $request->room_number[$key];
+            $apartment->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires[$key], true);
+            $apartment->property_id = $property->id;
+            $apartment->uuid = time();
+            $apartment->toilets = $request->room_toilets[$key];
             $apartment->save();
             if (isset($request->apartment_facilities_id[$key])) {
                 $apartment->attributes()->sync(array_filter($request->apartment_facilities_id[$key]));
@@ -287,24 +287,25 @@ class PropertiesController extends Controller
 
     public function propertyWithSingleApartments($request, $apartment, $property)
     {
-        $room_images           = !empty($request->images) ? $request->images : [];
-        $apartment->price      = $request->single_room_price;
-        $apartment->sale_price           = $request->single_room_sale_price;
-        $apartment->slug                 = str_slug($request->single_room_name);
-        $apartment->max_adults           = $request->single_room_max_adults;
-        $apartment->quantity             = 1;
-        $apartment->price_mode           = $request->sinble_price_mode;
 
-        $apartment->type                 = $request->type;
-        $apartment->max_children         = $request->single_room_max_children;
-        $apartment->no_of_rooms          = $request->single_room_number;
-        $apartment->size                 = $request->size;
-        $apartment->sale_price_expires   = Helper::getFormatedDate($request->single_room_sale_price_expires, true);
-        $apartment->property_id          = $property->id;
-        $apartment->uuid                 = time();
-        $apartment->toilets              = $request->single_room_toilets;
+        $room_images = !empty($request->images) ? $request->images : [];
+        $apartment->price = $request->single_room_price;
+        $apartment->sale_price = $request->single_room_sale_price;
+        $apartment->slug = str_slug($request->single_room_name);
+        $apartment->max_adults = $request->single_room_max_adults;
+        $apartment->quantity = 1;
+        $apartment->price_mode = $request->sinble_price_mode;
+
+        $apartment->type = $request->type;
+        $apartment->max_children = $request->single_room_max_children;
+        $apartment->no_of_rooms = $request->single_room_number;
+        $apartment->size = $request->size;
+        $apartment->sale_price_expires = Helper::getFormatedDate($request->single_room_sale_price_expires, true);
+        $apartment->property_id = $property->id;
+        $apartment->uuid = time();
+        $apartment->toilets = $request->single_room_toilets;
         $apartment->save();
-        $property->price  =  $request->single_room_price;
+        $property->price = $request->single_room_price;
         $property->save();
         $apartment->attributes()->sync(array_filter($request->attribute_id));
 

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Property;
 use App\Models\User;
 use App\Models\SubLet;
-
+use Illuminate\Validation\Rule;
 
 class SubLetsController extends Controller
 {
@@ -44,7 +44,12 @@ class SubLetsController extends Controller
      */
     public function store(Request $request)
     {
-
+        $request->validate([
+            'user_id' => [
+                'required',
+                Rule::unique('sub_lets'),
+            ],
+        ]);
 
         $user = User::find($request->user_id);
         $user->user_apartments()->sync($request->apartment_id);
@@ -91,8 +96,16 @@ class SubLetsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($request->user_id);
 
+        $request->validate([
+            'user_id' => [
+                'required',
+                Rule::unique('sub_lets')->ignore($id),
+            ],
+        ]);
+
+
+        $user = User::find($request->user_id);
         $user->user_apartments()->sync($request->apartment_id);
         $user->properties()->sync($request->property_id);
         $sublet = SubLet::find($id);
