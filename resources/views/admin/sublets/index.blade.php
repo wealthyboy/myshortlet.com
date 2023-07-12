@@ -27,7 +27,7 @@
                             <div class="">
                                 <h4 class="card-title">Properties</h4>
                                 <div class="">
-                                    <div class="well well-sm" style="height: 350px; background-color: #fff; color: black; overflow: auto;">
+                                    <div class="well well-sm" style="height: 200px; background-color: #fff; color: black; overflow: auto;">
                                         <ul class="treeview p-0" data-role="treeview">
                                             <li data-icon="" data-caption="">
                                                 <ul class="p-0">
@@ -75,49 +75,7 @@
         </div><!--  end card  -->
     </div> <!-- end col-md-6 -->
 
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-content">
-                <h4 class="card-title">Properties</h4>
-                <div class="">
-                    <h3 class="info-text">Filters</h3>
-                    <div class="well well-sm" style="height: 350px; background-color: #fff; color: black; overflow: auto;">
-                        <ul class="treeview p-0" data-role="treeview">
-                            <li data-icon="" data-caption="">
-                                <ul>
-                                    @foreach($properties as $property)
-                                    <li data-caption="Documents">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input name="property_id[]" value="{{ $property->id }}
-                                                    " type="checkbox">
-                                                {{ $property->name }}
-                                        </div>
-                                    </li>
-                                    @if($property->children->count())
-                                    @foreach($property->children as $children)
-                                    <li data-caption="Projects">
-                                        <ul>
-                                            <li data-caption="Web">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input name="property_child_id[{{$property->id}}][]" value="{{  $children->id }}" type="checkbox">
-                                                        {{$children->name}}
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    @endforeach
-                                    @endif
-                                    @endforeach
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div><!-- end content-->
-        </div><!--  end card  -->
-    </div> <!-- end col-md-6 -->
+
 </div> <!-- end row -->
 @endsection
 @section('page-scripts')
