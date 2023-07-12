@@ -47,7 +47,7 @@
                                                             <li data-caption="Web">
                                                                 <div class="checkbox">
                                                                     <label>
-                                                                        <input name="apartment_id[]" {{ $helper->check($sublet->user_apartments, $children->id) }} value="{{  $children->id }}" type="checkbox">
+                                                                        <input name="apartment_id[]" {{ $helper->check($sublet->apartments, $children->id) }} value="{{  $children->id }}" type="checkbox">
                                                                         {{$children->name}}
                                                                 </div>
                                                             </li>
