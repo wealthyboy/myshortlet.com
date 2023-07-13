@@ -2261,8 +2261,8 @@ label.error {
 
 .table-shopping>thead>tr>th {
   font-size: 0.9em;
-  text-transform: uppercase;
-  font-weight: 700;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
 }
 
 h1,
@@ -2271,6 +2271,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 700;
-  color: #000;
+  font-weight: 700 !important;
+  color: #000 !important;
+
 }
