@@ -14,6 +14,7 @@
 
                     <form action="{{ route('admin.sublets.update', ['sublet' => $sublet->id]) }}" method="post" enctype="multipart/form-data" id="form-attribute">
                         @csrf
+                        @method('PATCH')
 
                         <div class="form-group">
                             <label class="control-label"></label>
