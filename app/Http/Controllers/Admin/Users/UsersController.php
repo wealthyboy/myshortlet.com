@@ -101,7 +101,6 @@ class UsersController extends Controller
 		]);
 
 		$user  = User::find($id);
-
 		$user->name = $request->first_name;
 		$user->last_name = $request->last_name;
 		$user->email = $request->email;
@@ -122,7 +121,7 @@ class UsersController extends Controller
 		$rules = array(
 			'_token' => 'required',
 		);
-		// dd(get_class(\new Validator));
+
 		$validator = \Validator::make($request->all(), $rules);
 
 		if (empty($request->selected)) {

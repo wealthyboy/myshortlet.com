@@ -131,8 +131,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'user-id' => [
+            'unique' => 'Agent already exisits',
         ],
     ],
 
