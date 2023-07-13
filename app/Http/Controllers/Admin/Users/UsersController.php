@@ -38,7 +38,7 @@ class UsersController extends Controller
 		$user = User::find($id);
 
 		$permissions = Permission::get();
-		return view('admin.users.edit', compact('permissions', 'user'));
+		return view('admin.auth.edit', compact('permissions', 'user'));
 	}
 
 
