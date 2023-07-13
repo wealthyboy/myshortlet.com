@@ -6,6 +6,7 @@
         <div class="card">
             <form id="register" method="POST" action="{{ route('admin.users.update', ['user' => $user->id ]) }}">
                 @csrf
+                @method('PATCH')
                 <div class="card card-login card-hidden">
                     <div class="card-header text-center" data-background-color="rose">
                         <h4 class="card-title">Edit</h4>
