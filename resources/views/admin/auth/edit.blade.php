@@ -49,7 +49,7 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Password</label>
-                                    <input id="Password" required="true" type="text" class="form-control{{ $errors->has('Password') ? ' is-invalid' : '' }}" name="password" value="{{ old('Password') }}" autofocus>
+                                    <input id="Password" type="text" class="form-control{{ $errors->has('Password') ? ' is-invalid' : '' }}" name="password" value="{{ old('Password') }}" autofocus>
                                 </div>
                             </div>
 
