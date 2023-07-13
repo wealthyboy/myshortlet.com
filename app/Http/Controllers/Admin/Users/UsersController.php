@@ -36,9 +36,9 @@ class UsersController extends Controller
 	public function edit(Request $request, $id)
 	{
 		$user = User::find($id);
-		$states = State::all();
-		$permissions = \DB::table('permissions')->get();
-		return view('admin.users.edit', compact('states', 'permissions', 'user'));
+
+		$permissions = Permission::get();
+		return view('admin.users.edit', compact('permissions', 'user'));
 	}
 
 
