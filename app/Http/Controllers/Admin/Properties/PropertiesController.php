@@ -250,7 +250,6 @@ class PropertiesController extends Controller
         //  dd($request->all());
         foreach ($request->room_price  as $key => $room) {
 
-            //dd($request->apartment_facilities_id[$key]);
             $apartment = new Apartment;
             $room_images = !empty($request->images[$key]) ? $request->images[$key] : [];
             $apartment->name = $request->room_name[$key];

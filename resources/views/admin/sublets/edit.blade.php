@@ -10,6 +10,8 @@
                     <!--Here you can write extra buttons/actions for the toolbar  -->
                 </div>
                 <div class="material-datatables">
+                    @include('admin.errors.errors')
+
                     <form action="{{ route('admin.sublets.update', ['sublet' => $sublet->id]) }}" method="post" enctype="multipart/form-data" id="form-attribute">
                         @csrf
 

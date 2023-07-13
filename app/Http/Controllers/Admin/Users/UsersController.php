@@ -71,32 +71,22 @@ class UsersController extends Controller
 
 		$this->validate($request, [
 			'first_name' => 'required|max:255',
-			'email'        => 'required|email|max:255',
+			'email' => 'required|email|max:255',
 		]);
 
-		dd($request->all());
 
 		$user  = new User;
 		$user->name = $request->first_name;
 		$user->last_name = $request->last_name;
 		$user->email = $request->email;
 		$user->phone_number = $request->phone_number;
-		$user->type =  $request->has('is_agent') ? "agent" : null;
-
+		$user->type = $request->has('is_agent') ? "agent" : null;
 		$user->password = $request->has('password') ? bcrypt($request->password) : $user->password;
 		$user->save();
 
 		$user->users_permission()->update([
 			'permission_id' => $request->permission_id
 		]);
-
-		// $user->addresses()->create([
-		// 	'first_name' => $request->first_name,
-		// 	'last_name' => $request->last_name,
-		// 	'address' => $request->address,
-		// 	'city' => $request->city,
-		// 	'state_id' => 1,
-		// ]);
 
 		return redirect('/admin/users');
 	}
@@ -107,7 +97,7 @@ class UsersController extends Controller
 
 		$this->validate($request, [
 			'first_name' => 'required|max:255',
-			'email'        => 'required|email|max:255',
+			'email' => 'required|email|max:255',
 		]);
 
 		$user  = User::find($id);
@@ -116,22 +106,13 @@ class UsersController extends Controller
 		$user->last_name = $request->last_name;
 		$user->email = $request->email;
 		$user->phone_number = $request->phone_number;
+		$user->type = $request->has('is_agent') ? "agent" : null;
 		$user->password = $request->has('password') ? bcrypt($request->password) : $user->password;
 		$user->save();
-
-		//dd($request->permission_id);
 
 		$user->users_permission()->update([
 			'permission_id' => $request->permission_id
 		]);
-
-		// $user->addresses()->create([
-		// 	'first_name' => $request->first_name,
-		// 	'last_name' => $request->last_name,
-		// 	'address' => $request->address,
-		// 	'city' => $request->city,
-		// 	'state_id' => 1,
-		// ]);
 
 		return redirect('/admin/users');
 	}
