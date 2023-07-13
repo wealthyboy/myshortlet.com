@@ -167,7 +167,7 @@ class Helper
             }
             return false;
         }
-        return $collections->contains('id', $id) ? 'checked' : '';
+        return optional($collections)->contains('id', $id) ? 'checked' : '';
     }
 
 
