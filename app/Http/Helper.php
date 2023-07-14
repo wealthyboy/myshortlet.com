@@ -159,7 +159,7 @@ class Helper
 
     public static function check($collections, $id, $col = null)
     {
-        if (null !== $collections) {
+        if (null !== $collections && $col) {
             foreach ($collections as $collection) {
                 if (null !== $collection->id && $collection->id === $id) {
                     return $col ? $collection->pivot->$col : $collection->id;
@@ -167,7 +167,7 @@ class Helper
             }
         }
 
-        return false;
+        return optional($collections)->contains('id', $id) ? 'checked' : '';
     }
 
 
