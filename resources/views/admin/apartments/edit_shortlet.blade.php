@@ -253,10 +253,10 @@
                      <label for="bedroom-{{ $bedroom->id }}" class="radio-inline">
                         <input value="{{ $bedroom->id }}" value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}" name="{{ $parent->slug }}_{{ $property->id }}" type="radio">{{ $bedroom->name }}
                         <div class="bed-count">
-                           <input name="bed_count[{{ $property->id }}]" placeholder="Number of beds" class="form-control bed-qty" value="" type="number">
+                           <input name="bed_count[{{ $property->id }}]" placeholder="Number of beds" class="form-control bed-qty" value="222" type="number">
                         </div>
                         <div class="bed-count">
-                           <input name="bed_count[{{ 212 }}][{{ $bedroom->id }}]" placeholder="Number of beds" class="form-control bed-qty" value="333{{ $helper->check(optional($property->single_room)->bedrooms, $bedroom->id,'bed_count')   }}" type="number">
+                           <input name="bed_count[{{ 212 }}][{{ $bedroom->id }}]" placeholder="Number of beds" class="form-control bed-qty" value="{{ $helper->check(optional($property->single_room)->bedrooms, $bedroom->id,'bed_count')   }}" type="number">
                         </div>
                      </label>
                      @endforeach
