@@ -348,6 +348,8 @@ class PropertiesController extends Controller
                 }
             }
 
+            dd($request->bed_count);
+
             if ($beds[$key]) {
                 $apartment->attributes()->syncWithoutDetaching($beds[$key]);
             }
