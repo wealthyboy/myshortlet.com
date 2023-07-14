@@ -11,10 +11,10 @@ use App\Traits\ImageFiles;
 
 class Apartment extends Model
 {
-    use HasFactory,FormatPrice,ImageFiles;//,SoftDeletes,CascadeSoftDeletes;
+    use HasFactory, FormatPrice, ImageFiles; //,SoftDeletes,CascadeSoftDeletes;
 
 
-    protected $dates = ['available_from','sale_price_expires'];
+    protected $dates = ['available_from', 'sale_price_expires'];
 
 
     public $folder = 'apartments';
@@ -22,23 +22,23 @@ class Apartment extends Model
 
     public $appends = [
         'discounted_price',
-		'currency',
-		'converted_price',
-		'percentage_off',
-		'image_m',
+        'currency',
+        'converted_price',
+        'percentage_off',
+        'image_m',
         'image_tn',
         'guests',
         'display_price',
         'percentage_off',
-        
-	];
+
+    ];
 
 
     protected $fillable = [
         'name',
         'price',
         'sale_price',
-        'image', 
+        'image',
         'sale_price_expires',
         'slug',
         'available_from',
@@ -54,7 +54,7 @@ class Apartment extends Model
 
     public function attribute_prices()
     {
-        return $this->hasMany(AttributePrice::class,'room_id');
+        return $this->hasMany(AttributePrice::class, 'room_id');
     }
 
 
@@ -66,64 +66,67 @@ class Apartment extends Model
 
     public function images()
     {
-        return $this->morphMany(Image::class, 'imageable')->orderBy('id','asc');
+        return $this->morphMany(Image::class, 'imageable')->orderBy('id', 'asc');
     }
 
 
-    public function reservations(){
+    public function reservations()
+    {
         return $this->hasMany(Reservation::class);
     }
 
 
-    public function attributes(){
-        return $this->belongsToMany(Attribute::class);
+    public function attributes()
+    {
+        return $this->belongsToMany(Attribute::class)->withPivot('bed_count');;
     }
 
 
-    public function free_services(){
+    public function free_services()
+    {
         return $this->belongsToMany(Attribute::class)
-        ->where('type','extra services')                
-        ->wherePivotNull('price');
+            ->where('type', 'extra services')
+            ->wherePivotNull('price');
     }
 
 
-    public function extra_services(){
-        return $this->belongsToMany(Attribute::class)->where('type','extra services')->wherePivotNotNull('price')->withPivot('price');
+    public function extra_services()
+    {
+        return $this->belongsToMany(Attribute::class)->where('type', 'extra services')->wherePivotNotNull('price')->withPivot('price');
     }
 
 
-    public function facilities(){
-        return $this->belongsToMany(Attribute::class)->where('type','facilities');
+    public function facilities()
+    {
+        return $this->belongsToMany(Attribute::class)->where('type', 'facilities');
     }
 
-    public function apartment_facilities(){
-        return $this->belongsToMany(Attribute::class)->where('type','apartment facilities');
+    public function apartment_facilities()
+    {
+        return $this->belongsToMany(Attribute::class)->where('type', 'apartment facilities');
     }
 
 
     public function getRouteKeyName()
     {
-		return 'slug';
+        return 'slug';
     }
 
 
-    public function bedrooms(){
+    public function bedrooms()
+    {
         return $this->belongsToMany(Attribute::class)->where('type', 'bedrooms')->withPivot('bed_count');
     }
 
 
-    public function getGuestsAttribute(){
-       return $this->max_children + $this->max_adults;
+    public function getGuestsAttribute()
+    {
+        return $this->max_children + $this->max_adults;
     }
 
-    public function getImageMAttribute(){
+    public function getImageMAttribute()
+    {
         $image = basename(optional(optional($this->images)->first())->image);
-        return asset('images/'.$this->folder.'/'. 'm' .'/'.$image);
+        return asset('images/' . $this->folder . '/' . 'm' . '/' . $image);
     }
-    
-
-
-    
-
-
 }
