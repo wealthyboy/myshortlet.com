@@ -58,6 +58,7 @@ class PropertiesController extends Controller
      */
     public function index(Request $request)
     {
+        dd(ApartmentAttribute::truncate());
         $properties = Property::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.apartments.index', compact('properties'));
     }
@@ -351,7 +352,7 @@ class PropertiesController extends Controller
             // dd($beds);
 
             if (in_array($key, array_keys($beds))) {
-                $apartment->attributes()->sync($beds[$key]);
+                $apartment->attributes()->syncWithoutDetaching($beds[$key]);
             }
 
 
