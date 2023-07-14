@@ -347,7 +347,10 @@ class PropertiesController extends Controller
                     }
                 }
             }
-            $apartment->attributes()->syncWithoutDetaching($beds[$key]);
+
+            if ($beds[$key]) {
+                $apartment->attributes()->syncWithoutDetaching($beds[$key]);
+            }
         }
     }
 
