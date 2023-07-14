@@ -357,7 +357,7 @@ class PropertiesController extends Controller
 
 
 
-            dd($apartment->attributes, $beds[$key], ApartmentAttribute::all());
+            // dd($apartment->attributes, $beds[$key], ApartmentAttribute::all());
         }
     }
 

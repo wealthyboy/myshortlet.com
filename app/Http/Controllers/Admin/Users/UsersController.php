@@ -36,7 +36,6 @@ class UsersController extends Controller
 	public function edit(Request $request, $id)
 	{
 		$user = User::find($id);
-
 		$permissions = Permission::get();
 		return view('admin.auth.edit', compact('permissions', 'user'));
 	}
