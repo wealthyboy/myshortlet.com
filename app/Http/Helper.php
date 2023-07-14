@@ -157,20 +157,17 @@ class Helper
     }
 
 
-    public function check($collections, $id, $pivot = false, $eid = null)
+    public static function check($collections, $id, $col = null)
     {
-        if ($pivot) {
-            if (null !== $collections) {
-                foreach ($collections as $collection) {
-                    if (null !== $collection->pivot->attribute_id && $collection->pivot->attribute_id == $id  && $collection->pivot->engine_id == $eid) {
-                        return 'checked';
-                    }
+        if (null !== $collections) {
+            foreach ($collections as $collection) {
+                if (null !== $collection->id && $collection->id === $id) {
+                    return $col ? $collection->pivot->$col : $collection->id;
                 }
             }
-
-            return false;
         }
-        return optional($collections)->contains('id', $id) ? 'checked' : '';
+
+        return false;
     }
 
 
