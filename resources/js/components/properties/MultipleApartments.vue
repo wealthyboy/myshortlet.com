@@ -33,6 +33,8 @@
         <div class="position-relative">
           <input type="hidden" name="property_id" value="217" />
 
+          {{ roomsAv }}
+
           <template v-if="roomsAv.length">
             <div class="row border-bottom  mb-1 mt-1 pl-1 pb-1">
               <apartments @qtyChange="getApartmentQuantity" v-for="room in roomsAv" :key="room.id" :room="room"

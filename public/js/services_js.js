@@ -8131,7 +8131,7 @@ var render = function render() {
       name: "property_id",
       value: "217"
     }
-  }), _vm._v(" "), _vm.roomsAv.length ? [_c("div", {
+  }), _vm._v("\n\n        " + _vm._s(_vm.roomsAv) + "\n\n        "), _vm.roomsAv.length ? [_c("div", {
     staticClass: "row border-bottom mb-1 mt-1 pl-1 pb-1"
   }, _vm._l(_vm.roomsAv, function (room) {
     return _c("apartments", {
