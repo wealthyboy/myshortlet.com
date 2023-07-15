@@ -7072,7 +7072,7 @@ var render = function render() {
   }, [_vm._v("Entire apartment")]), _vm._v(" "), _c("div", {
     staticClass: "d-flex justify-content-between flex-wrap flex-column"
   }, [_c("div", {
-    staticClass: "position-relative mb-2"
+    staticClass: "position-relative mb-1"
   }, [_c("span", {
     staticClass: "position-absolute svg-icon-section"
   }, [_c("svg", [_c("use", {
@@ -7082,7 +7082,7 @@ var render = function render() {
   })])]), _vm._v(" "), _c("span", {
     staticClass: "svg-icon-text"
   }, [_vm._v(_vm._s(_vm.room.no_of_rooms) + " Bedrooms")])]), _vm._v(" "), _c("div", {
-    staticClass: "position-relative"
+    staticClass: "position-relative mb-1"
   }, [_c("span", {
     staticClass: "position-absolute svg-icon-section"
   }, [_c("svg", [_c("use", {
@@ -7092,7 +7092,7 @@ var render = function render() {
   })])]), _vm._v(" "), _c("span", {
     staticClass: "svg-icon-text"
   }, [_vm._v(_vm._s(_vm.room.toilets) + " bathrooms")])]), _vm._v(" "), _c("div", {
-    staticClass: "position-relative"
+    staticClass: "position-relative mb-1"
   }, [_c("span", {
     staticClass: "position-absolute svg-icon-section"
   }, [_c("svg", [_c("use", {

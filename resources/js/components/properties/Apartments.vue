@@ -17,7 +17,7 @@
       <div class="entire-apartment">
         <div class="bold mb-2">Entire apartment</div>
         <div class="d-flex justify-content-between flex-wrap flex-column">
-          <div class="position-relative mb-2">
+          <div class="position-relative mb-1">
             <span class="position-absolute svg-icon-section">
               <svg>
                 <use xlink:href="#bedrooms-icon"></use>
@@ -25,7 +25,7 @@
             </span>
             <span class="svg-icon-text">{{ room.no_of_rooms }} Bedrooms</span>
           </div>
-          <div class="position-relative">
+          <div class="position-relative mb-1">
             <span class="position-absolute svg-icon-section">
               <svg>
                 <use xlink:href="#bathroom-icon"></use>
@@ -33,7 +33,7 @@
             </span>
             <span class="svg-icon-text">{{ room.toilets }} bathrooms</span>
           </div>
-          <div class="position-relative">
+          <div class="position-relative mb-1">
             <span class="position-absolute svg-icon-section">
               <svg>
                 <use xlink:href="#sleeps-icon"></use>
