@@ -63,6 +63,13 @@ svg {
   height: 18px;
 }
 
+span.svg-icon-text {
+  margin-left: 1.7rem;
+  font-size: 0.875rem;
+  color: #191E3B;
+  font-weight: 400;
+}
+
 
 
 svg#date-outline {
@@ -71,9 +78,7 @@ svg#date-outline {
   top: -2px;
 }
 
-span.svg-icon-text {
-  margin-left: 1.7rem;
-}
+
 
 .wprt-icon-box {
   width: 80px;
