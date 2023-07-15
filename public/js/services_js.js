@@ -7051,7 +7051,7 @@ var render = function render() {
         src: image.image
       }
     }), _vm._v(" "), _c("div", {
-      staticClass: "uitk-action-buttons"
+      staticClass: "images-count"
     }, [_c("button", {
       staticClass: "uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button",
       attrs: {

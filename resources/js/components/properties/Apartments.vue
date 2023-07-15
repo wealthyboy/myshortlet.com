@@ -4,7 +4,7 @@
       <div class="owl-carousel owl-theme">
         <div class="item" :key="image.id" v-for="image in room.images">
           <img :src="image.image" class="img  img-fluid" />
-          <div class="uitk-action-buttons"><button type="button"
+          <div class="images-count"><button type="button"
               class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
               <svg class="uitk-icon uitk-icon-leading uitk-icon-medium"
                 aria-label="Show all 7 images for Classic Twin Room" role="img" viewBox="0 0 24 24"
