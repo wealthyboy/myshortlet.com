@@ -69,7 +69,7 @@
       </template>
 
       <div>
-        <div class="d-flex">
+        <div class="d-flex d-flex justify-content-between">
 
           <div class="price-box pb-4">
             <div class="d-inline-flex  mt-sm-3">
@@ -92,7 +92,7 @@
           <div v-if="room.property.is_refundable">Fully Refundable</div>
 
           <a target="_blank" href="/property/avenu-montaigne-42210936"
-            class="btn btn-primary btn-round d-none bold d-lg-block d-xl-block">
+            class="btn btn-primary btn-round d-none bold d-lg-block d-xl-block align-self-end">
             Reserve
           </a>
         </div>
