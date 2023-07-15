@@ -7151,7 +7151,7 @@ var render = function render() {
   }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n              ")])]], 2), _vm._v(" "), _c("div", {
     staticClass: "text-size-2"
   }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _vm.room.property.is_refundable ? _c("div", [_vm._v("Fully Refundable")]) : _vm._e(), _vm._v(" "), _c("a", {
-    staticClass: "btn btn-blue btn-round d-none d-lg-block d-xl-block align-self-end",
+    staticClass: "btn btn-round btn-blue d-none d-lg-block d-xl-block align-self-end",
     attrs: {
       target: "_blank",
       href: "/property/avenu-montaigne-42210936"
