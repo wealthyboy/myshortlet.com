@@ -7156,7 +7156,7 @@ var render = function render() {
       target: "_blank",
       href: "/property/avenu-montaigne-42210936"
     }
-  }, [_vm._v("\n          Reserve #1668E3\n        ")])])])], 2), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
+  }, [_vm._v("\n          Reserve\n        ")])])])], 2), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
     staticClass: "col-md-12 position-relative bg-white"
   }, [_c("div", {
     staticClass: "form-group"

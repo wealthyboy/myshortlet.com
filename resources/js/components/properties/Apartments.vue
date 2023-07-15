@@ -93,7 +93,7 @@
 
           <a target="_blank" href="/property/avenu-montaigne-42210936"
             class="btn btn-blue btn-round d-none bold d-lg-block d-xl-block align-self-end">
-            Reserve #1668E3
+            Reserve
           </a>
         </div>
 
