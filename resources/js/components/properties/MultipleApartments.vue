@@ -59,6 +59,8 @@
               </li>
             </ul>
           </div>
+
+          {{ $root }}
           <div class="card-footer p-2  bg-transparent d-flex justify-content-between p-0 align-items-center">
             <p class="text-heading mb-0 bold">Total Price:</p>
             <span class="fs-32 bold text-heading total-price">{{ property.currency }}{{ amount | priceFormat }}</span>
@@ -116,7 +118,7 @@ export default {
         children: null,
         adults: null,
         rooms: null,
-        check_in_checkout: this.$root.request.check_in_checkout,
+        check_in_checkout: null,
         property_id: this.property.id,
       },
     };
