@@ -7137,18 +7137,26 @@ var render = function render() {
       staticClass: "svg-icon-text"
     }, [_vm._v("\n          " + _vm._s(bed.pivot.bed_count) + " " + _vm._s(bed.name) + "\n        ")])]);
   }) : _vm._e(), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "d-flex"
+  }, [_c("div", {
     staticClass: "price-box pb-4"
   }, [_c("div", {
     staticClass: "d-inline-flex mt-sm-3"
   }, [_vm.room.discounted_price ? [_c("div", {
     staticClass: "sale-price mr-3"
-  }, [_vm._v("\n              " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n            ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n              ")]), _vm._v(" "), _c("div", {
     staticClass: "price bold"
-  }, [_vm._v("\n              " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.discounted_price)) + "\n            ")])] : [_c("div", {
+  }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.discounted_price)) + "\n              ")])] : [_c("div", {
     staticClass: "price bold mt-2"
-  }, [_vm._v("\n              " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n            ")])]], 2), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n              ")])]], 2), _vm._v(" "), _c("div", {
     staticClass: "text-size-2"
-  }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _vm.room.property.is_refundable ? _c("div", [_vm._v("Fully Refundable")]) : _vm._e()])], 2), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
+  }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _vm.room.property.is_refundable ? _c("div", [_vm._v("Fully Refundable")]) : _vm._e(), _vm._v(" "), _c("a", {
+    staticClass: "btn btn-primary btn-round d-none bold d-lg-block d-xl-block",
+    attrs: {
+      target: "_blank",
+      href: "/property/avenu-montaigne-42210936"
+    }
+  }, [_vm._v("\n          Reserve\n        ")])])])], 2), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
     staticClass: "col-md-12 position-relative bg-white"
   }, [_c("div", {
     staticClass: "form-group"

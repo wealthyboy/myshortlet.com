@@ -69,25 +69,36 @@
       </template>
 
       <div>
-        <div class="price-box pb-4">
-          <div class="d-inline-flex  mt-sm-3">
-            <template v-if="room.discounted_price">
-              <div class="sale-price mr-3">
-                {{ room.currency }}{{ room.converted_price | priceFormat }}
-              </div>
-              <div class="price bold">
-                {{ room.currency }}{{ room.discounted_price | priceFormat }}
-              </div>
-            </template>
-            <template v-else>
-              <div class="price bold mt-2">
-                {{ room.currency }}{{ room.converted_price | priceFormat }}
-              </div>
-            </template>
+        <div class="d-flex">
+
+          <div class="price-box pb-4">
+            <div class="d-inline-flex  mt-sm-3">
+              <template v-if="room.discounted_price">
+                <div class="sale-price mr-3">
+                  {{ room.currency }}{{ room.converted_price | priceFormat }}
+                </div>
+                <div class="price bold">
+                  {{ room.currency }}{{ room.discounted_price | priceFormat }}
+                </div>
+              </template>
+              <template v-else>
+                <div class="price bold mt-2">
+                  {{ room.currency }}{{ room.converted_price | priceFormat }}
+                </div>
+              </template>
+            </div>
+            <div class="text-size-2">{{ room.price_mode }}</div>
           </div>
-          <div class="text-size-2">{{ room.price_mode }}</div>
+          <div v-if="room.property.is_refundable">Fully Refundable</div>
+
+          <a target="_blank" href="/property/avenu-montaigne-42210936"
+            class="btn btn-primary btn-round d-none bold d-lg-block d-xl-block">
+            Reserve
+          </a>
         </div>
-        <div v-if="room.property.is_refundable">Fully Refundable</div>
+
+
+
       </div>
     </div>
 
