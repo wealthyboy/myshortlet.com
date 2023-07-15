@@ -53,7 +53,7 @@
       </div>
 
       <template v-if="room.bedrooms.length">
-        <div v-for="bed in room.bedrooms" :key="bed.id" class="position-relative">
+        <div v-for="bed in room.bedrooms" :key="bed.id" class="position-relative mb-1">
           <span class="position-absolute svg-icon-section">
             <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink">

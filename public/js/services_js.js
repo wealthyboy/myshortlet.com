@@ -7115,7 +7115,7 @@ var render = function render() {
   }), 0) : _vm._e(), _vm._v(" "), _vm.room.bedrooms.length ? _vm._l(_vm.room.bedrooms, function (bed) {
     return _c("div", {
       key: bed.id,
-      staticClass: "position-relative"
+      staticClass: "position-relative mb-1"
     }, [_c("span", {
       staticClass: "position-absolute svg-icon-section"
     }, [_c("svg", {
