@@ -7070,7 +7070,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "bold mb-2"
   }, [_vm._v("Entire apartment")]), _vm._v(" "), _c("div", {
-    staticClass: "d-flex justify-content-between flex-wrap"
+    staticClass: "d-flex justify-content-between flex-wrap flex-column"
   }, [_c("div", {
     staticClass: "position-relative"
   }, [_c("span", {
