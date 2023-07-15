@@ -7038,7 +7038,7 @@ var render = function render() {
   return _c("div", {
     staticClass: "col-4 border-bottom mb-1 mt-1 pl-1 pb-1"
   }, [_c("div", {
-    staticClass: "col-md-12 position-relative"
+    staticClass: "col-md-12 position-relative p-0"
   }, [_c("div", {
     staticClass: "owl-carousel owl-theme"
   }, _vm._l(_vm.room.images, function (image) {

@@ -1,6 +1,6 @@
 <template>
   <div class="col-4 border-bottom  mb-1 mt-1 pl-1 pb-1">
-    <div class="col-md-12 position-relative">
+    <div class="col-md-12 position-relative p-0">
       <div class="owl-carousel owl-theme">
         <div class="item" :key="image.id" v-for="image in room.images">
           <img :src="image.image_m" class="img  img-fluid" />
