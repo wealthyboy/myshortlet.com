@@ -35,11 +35,8 @@
 
 
           <template v-if="roomsAv.length">
-            <div class="row border-bottom  mb-1 mt-1 pl-1 pb-1">
-              kkkkk
-              <apartments @qtyChange="getApartmentQuantity" v-for="room in roomsAv" :key="room.id" :room="room"
-                :stays="stays" :qty="qty" />
-            </div>
+            <apartments @qtyChange="getApartmentQuantity" v-for="room in roomsAv" :key="room.id" :room="room"
+              :stays="stays" :qty="qty" />
           </template>
 
           <div>

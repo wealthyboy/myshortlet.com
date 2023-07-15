@@ -1,13 +1,13 @@
 <template>
-  <div class="col-md-4">
-    <div class="col-md-12 position-relative">
+  <div class="row border-bottom  mb-1 mt-1 pl-1 pb-1">
+    <div class="col-md-3 position-relative">
       <div class="owl-carousel owl-theme">
         <div class="item" :key="image.id" v-for="image in room.images">
           <img :src="image.image_m" class="img  img-fluid" />
         </div>
       </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-7">
       <div class="card-title bold text-size-1-big  mt-lg-0 mt-sm-3 ">
         <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
       </div>
@@ -112,10 +112,8 @@
         </template>
       </div>
     </div>
-  </div>
 
-
-  <div v-if="lunchModal" class=" gallery-images" style="
+    <div v-if="lunchModal" class=" gallery-images" style="
         position: fixed; 
         display: block;
         width: 100%; 
@@ -127,61 +125,62 @@
         z-index: 2090; 
         background-color: #fff;
         cursor: pointer;">
-    <div class="container">
-      <div class="">
-        <div class="p-2 border-bottom">
-          <h3 class="bold">Apartment Information</h3>
+      <div class="container">
+        <div class="">
+          <div class="p-2 border-bottom">
+            <h3 class="bold">Apartment Information</h3>
 
-          <button @click="lunchModal = !lunchModal" style="z-index: 1; right:10px; top: 15px"
-            class="close-icon  cursor-pointer fa-1x position-absolute raised">
-            <i class="fal fa-times"></i>
-          </button>
-        </div>
-      </div>
-      <div class="row mt-2">
-        <div class="col-md-4">
-          <div class="card-title  bold text-size-1-big">
-            <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
-          </div>
-          <div class="d-flex  flex-column">
-            <div class="position-relative mb-2">
-              <span class="position-absolute svg-icon-section">
-                <svg>
-                  <use xlink:href="#bedrooms-icon"></use>
-                </svg>
-              </span>
-              <span class="svg-icon-text">{{ room.no_of_rooms }} Bedrooms</span>
-            </div>
-            <div class="position-relative mb-2">
-              <span class="position-absolute svg-icon-section">
-                <svg>
-                  <use xlink:href="#bathroom-icon"></use>
-                </svg>
-              </span>
-              <span class="svg-icon-text">{{ room.toilets }} bathrooms</span>
-            </div>
-            <div class="position-relative mb-2">
-              <span class="position-absolute svg-icon-section">
-                <svg>
-                  <use xlink:href="#sleeps-icon"></use>
-                </svg>
-              </span>
-              <span class="svg-icon-text">{{ room.guests }} Guests</span>
-            </div>
-          </div>
-          <div class="facilities">
-            <h4 class="card-title bold text-size-1-big">
-              Amenities
-            </h4>
-            <div :key="apartment_facility.id" v-for="apartment_facility in room.apartment_facilities">
-              <div>{{ apartment_facility.parent.name }}</div>
-            </div>
+            <button @click="lunchModal = !lunchModal" style="z-index: 1; right:10px; top: 15px"
+              class="close-icon  cursor-pointer fa-1x position-absolute raised">
+              <i class="fal fa-times"></i>
+            </button>
           </div>
         </div>
-        <div class="col-md-8">
-          <div class="room-carousel owl-carousel owl-theme">
-            <div class="item" :key="image.id" v-for="image in room.images">
-              <img :src="image.image" class="img  img-fluid" />
+        <div class="row mt-2">
+          <div class="col-md-4">
+            <div class="card-title  bold text-size-1-big">
+              <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
+            </div>
+            <div class="d-flex  flex-column">
+              <div class="position-relative mb-2">
+                <span class="position-absolute svg-icon-section">
+                  <svg>
+                    <use xlink:href="#bedrooms-icon"></use>
+                  </svg>
+                </span>
+                <span class="svg-icon-text">{{ room.no_of_rooms }} Bedrooms</span>
+              </div>
+              <div class="position-relative mb-2">
+                <span class="position-absolute svg-icon-section">
+                  <svg>
+                    <use xlink:href="#bathroom-icon"></use>
+                  </svg>
+                </span>
+                <span class="svg-icon-text">{{ room.toilets }} bathrooms</span>
+              </div>
+              <div class="position-relative mb-2">
+                <span class="position-absolute svg-icon-section">
+                  <svg>
+                    <use xlink:href="#sleeps-icon"></use>
+                  </svg>
+                </span>
+                <span class="svg-icon-text">{{ room.guests }} Guests</span>
+              </div>
+            </div>
+            <div class="facilities">
+              <h4 class="card-title bold text-size-1-big">
+                Amenities
+              </h4>
+              <div :key="apartment_facility.id" v-for="apartment_facility in room.apartment_facilities">
+                <div>{{ apartment_facility.parent.name }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="room-carousel owl-carousel owl-theme">
+              <div class="item" :key="image.id" v-for="image in room.images">
+                <img :src="image.image" class="img  img-fluid" />
+              </div>
             </div>
           </div>
         </div>
