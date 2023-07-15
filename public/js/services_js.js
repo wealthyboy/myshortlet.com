@@ -8131,9 +8131,9 @@ var render = function render() {
       name: "property_id",
       value: "217"
     }
-  }), _vm._v("\n\n        " + _vm._s(_vm.roomsAv) + "\n\n        "), _vm.roomsAv.length ? [_c("div", {
+  }), _vm._v(" "), _vm.roomsAv.length ? [_c("div", {
     staticClass: "row border-bottom mb-1 mt-1 pl-1 pb-1"
-  }, _vm._l(_vm.roomsAv, function (room) {
+  }, [_vm._v("\n            kkkkk\n            "), _vm._l(_vm.roomsAv, function (room) {
     return _c("apartments", {
       key: room.id,
       attrs: {
@@ -8145,7 +8145,7 @@ var render = function render() {
         qtyChange: _vm.getApartmentQuantity
       }
     });
-  }), 1)] : _vm._e(), _vm._v(" "), _c("div", [_c("ul", {
+  })], 2)] : _vm._e(), _vm._v(" "), _c("div", [_c("ul", {
     staticClass: "list-unstyled mb-0 p-2"
   }, [_c("li", {
     staticClass: "d-flex justify-content-between mb-2 lh-22"
