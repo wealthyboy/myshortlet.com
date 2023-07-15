@@ -69,7 +69,7 @@
       </template>
 
       <div>
-        <div class="price-box">
+        <div class="price-box pb-4">
           <div class="d-inline-flex  mt-sm-3">
             <template v-if="room.discounted_price">
               <div class="sale-price mr-3">

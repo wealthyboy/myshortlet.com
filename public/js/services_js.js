@@ -7137,7 +7137,7 @@ var render = function render() {
       staticClass: "svg-icon-text"
     }, [_vm._v("\n          " + _vm._s(bed.pivot.bed_count) + " " + _vm._s(bed.name) + "\n        ")])]);
   }) : _vm._e(), _vm._v(" "), _c("div", [_c("div", {
-    staticClass: "price-box"
+    staticClass: "price-box pb-4"
   }, [_c("div", {
     staticClass: "d-inline-flex mt-sm-3"
   }, [_vm.room.discounted_price ? [_c("div", {
