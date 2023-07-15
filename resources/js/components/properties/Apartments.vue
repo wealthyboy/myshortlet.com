@@ -3,7 +3,7 @@
     <div class="col-md-12 position-relative p-0">
       <div class="owl-carousel owl-theme">
         <div class="item" :key="image.id" v-for="image in room.images">
-          <img :src="image.image_m" class="img  img-fluid" />
+          <img :src="image.image" class="img  img-fluid" />
         </div>
       </div>
     </div>

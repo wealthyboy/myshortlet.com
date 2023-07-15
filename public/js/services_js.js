@@ -7048,7 +7048,7 @@ var render = function render() {
     }, [_c("img", {
       staticClass: "img img-fluid",
       attrs: {
-        src: image.image_m
+        src: image.image
       }
     })]);
   }), 0)]), _vm._v(" "), _c("div", {
