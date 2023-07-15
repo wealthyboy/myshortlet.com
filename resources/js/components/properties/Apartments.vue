@@ -17,7 +17,7 @@
       <div class="entire-apartment">
         <div class="bold mb-2">Entire apartment</div>
         <div class="d-flex justify-content-between flex-wrap flex-column">
-          <div class="position-relative">
+          <div class="position-relative mb-2">
             <span class="position-absolute svg-icon-section">
               <svg>
                 <use xlink:href="#bedrooms-icon"></use>

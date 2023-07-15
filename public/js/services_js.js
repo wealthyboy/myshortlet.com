@@ -7072,7 +7072,7 @@ var render = function render() {
   }, [_vm._v("Entire apartment")]), _vm._v(" "), _c("div", {
     staticClass: "d-flex justify-content-between flex-wrap flex-column"
   }, [_c("div", {
-    staticClass: "position-relative"
+    staticClass: "position-relative mb-2"
   }, [_c("span", {
     staticClass: "position-absolute svg-icon-section"
   }, [_c("svg", [_c("use", {
