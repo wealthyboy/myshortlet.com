@@ -43,10 +43,7 @@
           </div>
         </div>
       </div>
-      <div class="position-relative">
-        <span class="position-absolute svg-icon-section"></span>
-        <span class="svg-icon-text">Air condition</span>
-      </div>
+
 
       <div v-if="room.free_services.length" class="d-inline-flex flex-wrap">
         <div v-for="free_service in room.free_services" :key="free_service.id" class="position-relative">
@@ -93,6 +90,8 @@
         <div v-if="room.property.is_refundable">Fully Refundable</div>
       </div>
     </div>
+
+
     <div v-if="stays && stays[1] != null" class="col-md-2 position-relative">
       <div class="form-group ">
         <label for="qty">Qty</label>

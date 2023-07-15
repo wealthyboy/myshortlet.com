@@ -7101,7 +7101,7 @@ var render = function render() {
     }
   })])]), _vm._v(" "), _c("span", {
     staticClass: "svg-icon-text"
-  }, [_vm._v(_vm._s(_vm.room.guests) + " Guests")])])])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm.room.free_services.length ? _c("div", {
+  }, [_vm._v(_vm._s(_vm.room.guests) + " Guests")])])])]), _vm._v(" "), _vm.room.free_services.length ? _c("div", {
     staticClass: "d-inline-flex flex-wrap"
   }, _vm._l(_vm.room.free_services, function (free_service) {
     return _c("div", {
@@ -7301,16 +7301,6 @@ var staticRenderFns = [function () {
   }, [_c("i", {
     staticClass: "fas fa-info-circle mr-2"
   }), _vm._v("Instant Confirmation\n    ")]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "position-relative"
-  }, [_c("span", {
-    staticClass: "position-absolute svg-icon-section"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "svg-icon-text"
-  }, [_vm._v("Air condition")])]);
 }];
 render._withStripped = true;
 
