@@ -7036,7 +7036,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "row border-bottom mb-1 mt-1 pl-1 pb-1"
+    staticClass: "col-4 border-bottom mb-1 mt-1 pl-1 pb-1"
   }, [_c("div", {
     staticClass: "col-md-3 position-relative"
   }, [_c("div", {
@@ -8400,7 +8400,9 @@ var render = function render() {
       name: "property_id",
       value: "217"
     }
-  }), _vm._v(" "), _vm.roomsAv.length ? _vm._l(_vm.roomsAv, function (room) {
+  }), _vm._v(" "), _vm.roomsAv.length ? [_c("div", {
+    staticClass: "row"
+  }, _vm._l(_vm.roomsAv, function (room) {
     return _c("apartments", {
       key: room.id,
       attrs: {
@@ -8412,7 +8414,7 @@ var render = function render() {
         qtyChange: _vm.getApartmentQuantity
       }
     });
-  }) : _vm._e(), _vm._v(" "), _c("div", [_c("ul", {
+  }), 1)] : _vm._e(), _vm._v(" "), _c("div", [_c("ul", {
     staticClass: "list-unstyled mb-0 p-2"
   }, [_c("li", {
     staticClass: "d-flex justify-content-between mb-2 lh-22"

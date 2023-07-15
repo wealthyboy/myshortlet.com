@@ -1,5 +1,5 @@
 <template>
-  <div class="row border-bottom  mb-1 mt-1 pl-1 pb-1">
+  <div class="col-4 border-bottom  mb-1 mt-1 pl-1 pb-1">
     <div class="col-md-3 position-relative">
       <div class="owl-carousel owl-theme">
         <div class="item" :key="image.id" v-for="image in room.images">
