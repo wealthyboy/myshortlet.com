@@ -92,7 +92,7 @@
           <div v-if="room.property.is_refundable">Fully Refundable</div>
 
           <a target="_blank" href="/property/avenu-montaigne-42210936"
-            class="btn btn-blue btn-round d-none bold d-lg-block d-xl-block align-self-end">
+            class="btn btn-blue btn-round d-none  d-lg-block d-xl-block align-self-end">
             Reserve
           </a>
         </div>
