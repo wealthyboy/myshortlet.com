@@ -7,7 +7,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-12 bg-white">
+    <div class="col-md-12 bg-white  pt-3">
       <div class="card-title bold text-size-1-big  mt-lg-0 mt-sm-3 ">
         <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
       </div>

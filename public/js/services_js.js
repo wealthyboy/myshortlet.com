@@ -7052,7 +7052,7 @@ var render = function render() {
       }
     })]);
   }), 0)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-12 bg-white"
+    staticClass: "col-md-12 bg-white pt-3"
   }, [_c("div", {
     staticClass: "card-title bold text-size-1-big mt-lg-0 mt-sm-3"
   }, [_c("a", {
