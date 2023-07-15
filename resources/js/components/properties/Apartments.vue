@@ -1,13 +1,13 @@
 <template>
   <div class="col-4 border-bottom  mb-1 mt-1 pl-1 pb-1">
-    <div class="col-md-3 position-relative">
+    <div class="col-md-12 position-relative">
       <div class="owl-carousel owl-theme">
         <div class="item" :key="image.id" v-for="image in room.images">
           <img :src="image.image_m" class="img  img-fluid" />
         </div>
       </div>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-12">
       <div class="card-title bold text-size-1-big  mt-lg-0 mt-sm-3 ">
         <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
       </div>
@@ -92,7 +92,7 @@
     </div>
 
 
-    <div v-if="stays && stays[1] != null" class="col-md-2 position-relative">
+    <div v-if="stays && stays[1] != null" class="col-md-12 position-relative">
       <div class="form-group ">
         <label for="qty">Qty</label>
         <template v-if="room.reservation_qty && room.quantity == room.reservation_qty">
@@ -112,7 +112,7 @@
       </div>
     </div>
 
-    <div v-if="lunchModal" class=" gallery-images" style="
+    <!-- <div v-if="lunchModal" class=" gallery-images" style="
         position: fixed; 
         display: block;
         width: 100%; 
@@ -184,7 +184,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

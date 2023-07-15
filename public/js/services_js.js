@@ -7038,7 +7038,7 @@ var render = function render() {
   return _c("div", {
     staticClass: "col-4 border-bottom mb-1 mt-1 pl-1 pb-1"
   }, [_c("div", {
-    staticClass: "col-md-3 position-relative"
+    staticClass: "col-md-12 position-relative"
   }, [_c("div", {
     staticClass: "owl-carousel owl-theme"
   }, _vm._l(_vm.room.images, function (image) {
@@ -7052,7 +7052,7 @@ var render = function render() {
       }
     })]);
   }), 0)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-7"
+    staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "card-title bold text-size-1-big mt-lg-0 mt-sm-3"
   }, [_c("a", {
@@ -7149,7 +7149,7 @@ var render = function render() {
   }, [_vm._v("\n              " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n            ")])]], 2), _vm._v(" "), _c("div", {
     staticClass: "text-size-2"
   }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _vm.room.property.is_refundable ? _c("div", [_vm._v("Fully Refundable")]) : _vm._e()])], 2), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
-    staticClass: "col-md-2 position-relative"
+    staticClass: "col-md-12 position-relative"
   }, [_c("div", {
     staticClass: "form-group"
   }, [_c("label", {
@@ -7186,112 +7186,7 @@ var render = function render() {
     }, [_vm._v(_vm._s(a))]);
   })], 2), _vm._v(" "), _vm.qty ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("Please select one or more option you want to book")]) : _vm._e()]], 2)]) : _vm._e(), _vm._v(" "), _vm.lunchModal ? _c("div", {
-    staticClass: "gallery-images",
-    staticStyle: {
-      position: "fixed",
-      display: "block",
-      width: "100%",
-      height: "100vh",
-      top: "0",
-      left: "0",
-      right: "0",
-      bottom: "0",
-      "z-index": "2090",
-      "background-color": "#fff",
-      cursor: "pointer"
-    }
-  }, [_c("div", {
-    staticClass: "container"
-  }, [_c("div", {}, [_c("div", {
-    staticClass: "p-2 border-bottom"
-  }, [_c("h3", {
-    staticClass: "bold"
-  }, [_vm._v("Apartment Information")]), _vm._v(" "), _c("button", {
-    staticClass: "close-icon cursor-pointer fa-1x position-absolute raised",
-    staticStyle: {
-      "z-index": "1",
-      right: "10px",
-      top: "15px"
-    },
-    on: {
-      click: function click($event) {
-        _vm.lunchModal = !_vm.lunchModal;
-      }
-    }
-  }, [_c("i", {
-    staticClass: "fal fa-times"
-  })])])]), _vm._v(" "), _c("div", {
-    staticClass: "row mt-2"
-  }, [_c("div", {
-    staticClass: "col-md-4"
-  }, [_c("div", {
-    staticClass: "card-title bold text-size-1-big"
-  }, [_c("a", {
-    attrs: {
-      href: "#"
-    },
-    on: {
-      click: function click($event) {
-        $event.preventDefault();
-        return _vm.showRoom(_vm.room);
-      }
-    }
-  }, [_vm._v(_vm._s(_vm.room.name))])]), _vm._v(" "), _c("div", {
-    staticClass: "d-flex flex-column"
-  }, [_c("div", {
-    staticClass: "position-relative mb-2"
-  }, [_c("span", {
-    staticClass: "position-absolute svg-icon-section"
-  }, [_c("svg", [_c("use", {
-    attrs: {
-      "xlink:href": "#bedrooms-icon"
-    }
-  })])]), _vm._v(" "), _c("span", {
-    staticClass: "svg-icon-text"
-  }, [_vm._v(_vm._s(_vm.room.no_of_rooms) + " Bedrooms")])]), _vm._v(" "), _c("div", {
-    staticClass: "position-relative mb-2"
-  }, [_c("span", {
-    staticClass: "position-absolute svg-icon-section"
-  }, [_c("svg", [_c("use", {
-    attrs: {
-      "xlink:href": "#bathroom-icon"
-    }
-  })])]), _vm._v(" "), _c("span", {
-    staticClass: "svg-icon-text"
-  }, [_vm._v(_vm._s(_vm.room.toilets) + " bathrooms")])]), _vm._v(" "), _c("div", {
-    staticClass: "position-relative mb-2"
-  }, [_c("span", {
-    staticClass: "position-absolute svg-icon-section"
-  }, [_c("svg", [_c("use", {
-    attrs: {
-      "xlink:href": "#sleeps-icon"
-    }
-  })])]), _vm._v(" "), _c("span", {
-    staticClass: "svg-icon-text"
-  }, [_vm._v(_vm._s(_vm.room.guests) + " Guests")])])]), _vm._v(" "), _c("div", {
-    staticClass: "facilities"
-  }, [_c("h4", {
-    staticClass: "card-title bold text-size-1-big"
-  }, [_vm._v("\n              Amenities\n            ")]), _vm._v(" "), _vm._l(_vm.room.apartment_facilities, function (apartment_facility) {
-    return _c("div", {
-      key: apartment_facility.id
-    }, [_c("div", [_vm._v(_vm._s(apartment_facility.parent.name))])]);
-  })], 2)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-8"
-  }, [_c("div", {
-    staticClass: "room-carousel owl-carousel owl-theme"
-  }, _vm._l(_vm.room.images, function (image) {
-    return _c("div", {
-      key: image.id,
-      staticClass: "item"
-    }, [_c("img", {
-      staticClass: "img img-fluid",
-      attrs: {
-        src: image.image
-      }
-    })]);
-  }), 0)])])])]) : _vm._e()]);
+  }, [_vm._v("Please select one or more option you want to book")]) : _vm._e()]], 2)]) : _vm._e()]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
