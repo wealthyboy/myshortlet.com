@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <div :class="{ 'header-filter': propertyLoading }" id="" class="name mt-1 rounded bg-white p-2">
+      <div :class="{ 'header-filter': propertyLoading }" id="" class="name mt-1 rounded p-2">
         <div class="position-relative">
           <input type="hidden" name="property_id" value="217" />
 

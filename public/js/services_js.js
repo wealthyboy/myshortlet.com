@@ -7036,7 +7036,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "col-4 border-bottom mb-1 mt-1 pl-1 pb-1"
+    staticClass: "col-4 border-bottom bg-white mb-1 mt-1 pl-1 pb-1"
   }, [_c("div", {
     staticClass: "col-md-12 position-relative"
   }, [_c("div", {
@@ -8280,7 +8280,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "text-muted text-danger"
   }, [_vm._v("\n        " + _vm._s(_vm.error_msg || "There are not available apartments for your search.") + "\n      ")])]) : _vm._e(), _vm._v(" "), _c("div", {
-    staticClass: "name mt-1 rounded bg-white p-2",
+    staticClass: "name mt-1 rounded p-2",
     "class": {
       "header-filter": _vm.propertyLoading
     },
