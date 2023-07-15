@@ -7,16 +7,8 @@
         </svg>
       </span>
     </div>
-    <pickr
-      v-model="check_in_checkout"
-      :config="config"
-      class="form-control date-range cursor-pointer  location-search"
-      placeholder="Check in - Check out"
-      name="check_in_checkout"
-      ref="datePicker"
-      @on-change="dateSelected"
-      style=""
-    />
+    <pickr v-model="check_in_checkout" :config="config" class="form-control date-range cursor-pointer  location-search"
+      placeholder="Check in - Check out" name="check_in_checkout" ref="datePicker" @on-change="dateSelected" style="" />
   </div>
 </template>
 <script>
@@ -30,7 +22,7 @@ export default {
     return {
       guests: 0,
 
-      check_in_checkout: this.$root.request.check_in_checkout,
+      check_in_checkout: null,
       config: {
         wrap: true, // set wrap to true only when using 'input-group'
         altFormat: "M j, Y",

@@ -3718,7 +3718,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       guests: 0,
-      check_in_checkout: this.$root.request.check_in_checkout,
+      check_in_checkout: null,
       config: {
         wrap: true,
         // set wrap to true only when using 'input-group'
