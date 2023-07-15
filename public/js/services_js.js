@@ -7038,7 +7038,9 @@ var render = function render() {
   return _c("div", {
     staticClass: "row border-bottom mb-1 mt-1 pl-1 pb-1"
   }, [_c("div", {
-    staticClass: "col-md-3 position-relative"
+    staticClass: "col-md-4"
+  }, [_c("div", {
+    staticClass: "col-md-12 position-relative"
   }, [_c("div", {
     staticClass: "owl-carousel owl-theme"
   }, _vm._l(_vm.room.images, function (image) {
@@ -7052,7 +7054,7 @@ var render = function render() {
       }
     })]);
   }), 0)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-7"
+    staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "card-title bold text-size-1-big mt-lg-0 mt-sm-3"
   }, [_c("a", {
@@ -7135,18 +7137,18 @@ var render = function render() {
       staticClass: "svg-icon-text"
     }, [_vm._v(_vm._s(bed.parent.name))]), _vm._v(" "), _c("span", {
       staticClass: "svg-icon-text"
-    }, [_vm._v("\n          " + _vm._s(bed.pivot.bed_count) + " " + _vm._s(bed.name) + "\n        ")])]);
+    }, [_vm._v("\n            " + _vm._s(bed.pivot.bed_count) + " " + _vm._s(bed.name) + "\n          ")])]);
   }) : _vm._e(), _vm._v(" "), _c("div", [_c("div", {
     staticClass: "price-box"
   }, [_c("div", {
     staticClass: "d-inline-flex mt-sm-3"
   }, [_vm.room.discounted_price ? [_c("div", {
     staticClass: "sale-price mr-3"
-  }, [_vm._v("\n              " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n            ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n              ")]), _vm._v(" "), _c("div", {
     staticClass: "price bold"
-  }, [_vm._v("\n              " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.discounted_price)) + "\n            ")])] : [_c("div", {
+  }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.discounted_price)) + "\n              ")])] : [_c("div", {
     staticClass: "price bold mt-2"
-  }, [_vm._v("\n              " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n            ")])]], 2), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n              ")])]], 2), _vm._v(" "), _c("div", {
     staticClass: "text-size-2"
   }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _vm.room.property.is_refundable ? _c("div", [_vm._v("Fully Refundable")]) : _vm._e()])], 2), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
     staticClass: "col-md-2 position-relative"
@@ -7158,7 +7160,7 @@ var render = function render() {
     }
   }, [_vm._v("Qty")]), _vm._v(" "), _vm.room.reservation_qty && _vm.room.quantity == _vm.room.reservation_qty ? [_c("div", {
     staticClass: "text-muted"
-  }, [_vm._v("\n          This apartment is not available for your seclected date\n        ")])] : [_c("select", {
+  }, [_vm._v("\n            This apartment is not available for your seclected date\n          ")])] : [_c("select", {
     staticClass: "form-control room-q",
     attrs: {
       name: "apartment_quantity[" + _vm.room.uuid + "]"
@@ -7186,7 +7188,7 @@ var render = function render() {
     }, [_vm._v(_vm._s(a))]);
   })], 2), _vm._v(" "), _vm.qty ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("Please select one or more option you want to book")]) : _vm._e()]], 2)]) : _vm._e(), _vm._v(" "), _vm.lunchModal ? _c("div", {
+  }, [_vm._v("Please select one or more option you want to book")]) : _vm._e()]], 2)]) : _vm._e()]), _vm._v(" "), _vm.lunchModal ? _c("div", {
     staticClass: "gallery-images",
     staticStyle: {
       position: "fixed",
@@ -7300,7 +7302,7 @@ var staticRenderFns = [function () {
     staticClass: "text-size-2 text-gold"
   }, [_c("i", {
     staticClass: "fas fa-info-circle mr-2"
-  }), _vm._v("Instant Confirmation\n    ")]);
+  }), _vm._v("Instant Confirmation\n      ")]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
