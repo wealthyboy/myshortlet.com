@@ -8159,7 +8159,7 @@ var render = function render() {
     staticClass: "text-gray-light mb-0 bold"
   }, [_vm._v(_vm._s(_vm.aps) + " Apartment(s)")]), _vm._v(" "), _c("p", {
     staticClass: "bold text-heading mb-0"
-  }, [_vm._v("\n                " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(_vm.apTotal)) + "\n              ")])])])]), _vm._v("\n\n        " + _vm._s(_vm.$root) + "\n        "), _c("div", {
+  }, [_vm._v("\n                " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(_vm.apTotal)) + "\n              ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "card-footer p-2 bg-transparent d-flex justify-content-between p-0 align-items-center"
   }, [_c("p", {
     staticClass: "text-heading mb-0 bold"
