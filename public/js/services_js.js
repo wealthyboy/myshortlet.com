@@ -7151,12 +7151,12 @@ var render = function render() {
   }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n              ")])]], 2), _vm._v(" "), _c("div", {
     staticClass: "text-size-2"
   }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _vm.room.property.is_refundable ? _c("div", [_vm._v("Fully Refundable")]) : _vm._e(), _vm._v(" "), _c("a", {
-    staticClass: "btn btn-primary btn-round d-none bold d-lg-block d-xl-block align-self-end",
+    staticClass: "btn btn-blue btn-round d-none bold d-lg-block d-xl-block align-self-end",
     attrs: {
       target: "_blank",
       href: "/property/avenu-montaigne-42210936"
     }
-  }, [_vm._v("\n          Reserve\n        ")])])])], 2), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
+  }, [_vm._v("\n          Reserve #1668E3\n        ")])])])], 2), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
     staticClass: "col-md-12 position-relative bg-white"
   }, [_c("div", {
     staticClass: "form-group"
