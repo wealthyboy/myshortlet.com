@@ -7036,7 +7036,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "col-4 border-bottom bg-white mb-1 mt-1 pl-1 pb-1"
+    staticClass: "col-4 border-bottom mb-1 mt-1 pl-1 pb-1"
   }, [_c("div", {
     staticClass: "col-md-12 position-relative"
   }, [_c("div", {
@@ -7052,7 +7052,7 @@ var render = function render() {
       }
     })]);
   }), 0)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-12"
+    staticClass: "col-md-12 bg-white"
   }, [_c("div", {
     staticClass: "card-title bold text-size-1-big mt-lg-0 mt-sm-3"
   }, [_c("a", {
@@ -7149,7 +7149,7 @@ var render = function render() {
   }, [_vm._v("\n              " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n            ")])]], 2), _vm._v(" "), _c("div", {
     staticClass: "text-size-2"
   }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _vm.room.property.is_refundable ? _c("div", [_vm._v("Fully Refundable")]) : _vm._e()])], 2), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
-    staticClass: "col-md-12 position-relative"
+    staticClass: "col-md-12 position-relative bg-white"
   }, [_c("div", {
     staticClass: "form-group"
   }, [_c("label", {
