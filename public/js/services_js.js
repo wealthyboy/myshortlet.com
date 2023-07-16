@@ -7168,11 +7168,16 @@ var render = function render() {
     }, [_vm._v("\n          " + _vm._s(bed.pivot.bed_count) + " " + _vm._s(bed.name) + "\n        ")])]);
   }) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "position-relative mb-1"
-  }, [_c("button", {
+  }, [_c("a", {
     staticClass: "d-flex justify-content-between",
     attrs: {
-      type: "button",
-      role: "button"
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.showRoom(_vm.room);
+      }
     }
   }, [_c("span", {
     attrs: {
