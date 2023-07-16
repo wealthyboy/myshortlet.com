@@ -111,7 +111,7 @@
                         </div>
                         <div class="col-md-6">
                            <div style="height: 200px;" id="map2"></div>
-                           <div>{{ $property_type->address }}</div>
+                           <div>{{ $property->address }}</div>
                            @if ($areas->count())
                            <h5 class="bold">Explore the area</h5>
                            <div class="">
