@@ -67,7 +67,6 @@
          <div class="col-12 ">
             <div class="d-flex">
                <nav class="nav text-capitalize bg-white">
-
                   <a class="nav-link text-capitalize active" href="#Overview">Overview</a>
                   <a class="nav-link text-capitalize" href="#Amenities">Amenities</a>
                   <a class="nav-link text-capitalize pb-1" href="#Location">Location</a>
