@@ -7169,16 +7169,16 @@ var render = function render() {
   }) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "position-relative mb-1"
   }, [_c("button", {
-    staticClass: "uitk-link uitk-link-align-left uitk-link-layout-default uitk-link-medium",
+    staticClass: "d-flex justify-content-between",
     attrs: {
-      type: "button"
+      type: "button",
+      role: "button"
     }
   }, [_c("span", {
     attrs: {
       "aria-hidden": "true"
     }
   }, [_vm._v("More details")]), _vm._v(" "), _c("svg", {
-    staticClass: "uitk-icon uitk-link-icon-medium uitk-icon-directional uitk-icon-small",
     attrs: {
       "aria-hidden": "true",
       viewBox: "0 0 24 24",
