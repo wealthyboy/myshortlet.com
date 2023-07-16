@@ -135,7 +135,7 @@
       </div>
     </div>
 
-    <!-- <div v-if="lunchModal" class=" gallery-images" style="
+    <div v-if="lunchModal" class=" gallery-images" style="
         position: fixed; 
         display: block;
         width: 100%; 
@@ -207,7 +207,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 <script>
