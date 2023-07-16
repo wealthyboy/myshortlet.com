@@ -83,7 +83,7 @@
       </template>
 
       <div class="position-relative mb-1">
-        <a @click.prevent="showRoom(room)" class="d-flex justify-content-between" href="#">
+        <a @click.prevent="showRoom(room)" class="d-flex" href="#">
           <span aria-hidden="true">More details</span>
           <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink">

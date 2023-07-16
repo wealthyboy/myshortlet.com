@@ -7169,7 +7169,7 @@ var render = function render() {
   }) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "position-relative mb-1"
   }, [_c("a", {
-    staticClass: "d-flex justify-content-between",
+    staticClass: "d-flex",
     attrs: {
       href: "#"
     },
