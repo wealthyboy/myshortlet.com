@@ -7316,9 +7316,13 @@ var render = function render() {
   }, [_vm._v("\n              Amenities\n            ")]), _vm._v(" "), _vm._l(_vm.amenities, function (amenity, index) {
     return _c("div", {
       key: amenity.id
-    }, [_c("div", {
-      staticClass: "svg-icon-text"
-    }, [_vm._v(_vm._s(index) + " ")])]);
+    }, [_c("div", {}, [_c("div", {
+      staticClass: "bold"
+    }, [_vm._v("\n                  " + _vm._s(index) + "\n                ")]), _vm._v(" "), _vm._l(amenity, function (facility) {
+      return _c("div", {
+        staticClass: "svg-icon-text"
+      }, [_vm._v(_vm._s(facility) + " ")]);
+    })], 2)]);
   })], 2)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8"
   }, [_c("div", {
