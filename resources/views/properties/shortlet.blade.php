@@ -128,7 +128,7 @@
                </div>
                <div>
                   @if ($property->type != 'single')
-                  <multiple-apartments :apartments="{{ $apartments }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple" />
+                  <multiple-apartments :apartments="{{ $apartments }}" :amenities="{{ $amenities }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple" />
                   @endif
                </div>
                <div class="name bg-white rounded">
@@ -185,7 +185,6 @@
             <div class="col-12  mt-1 col-md-12">
                <div id="Amenities" class="name mt-2 bg-white">
                   <h3 class="card-title  p-3 border-bottom bold">Amenities</h3>
-                  {{$amenities}}
                   <div class="card-body">
                      <div class="row">
                         @foreach($amenities as $key => $apartment_facilities)
