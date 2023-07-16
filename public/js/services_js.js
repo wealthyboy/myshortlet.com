@@ -7177,9 +7177,7 @@ var render = function render() {
     attrs: {
       "aria-hidden": "true"
     }
-  }, [_vm._v("More details")]), _c("span", {
-    staticClass: "is-visually-hidden"
-  }, [_vm._v("More details for Business Double\n          Room, 1 Double Bed")]), _c("svg", {
+  }, [_vm._v("More details")]), _vm._v(" "), _c("svg", {
     staticClass: "uitk-icon uitk-link-icon-medium uitk-icon-directional uitk-icon-small",
     attrs: {
       "aria-hidden": "true",

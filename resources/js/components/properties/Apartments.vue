@@ -84,10 +84,9 @@
 
       <div class="position-relative mb-1">
         <button type="button" class="uitk-link uitk-link-align-left uitk-link-layout-default uitk-link-medium"><span
-            aria-hidden="true">More details</span><span class="is-visually-hidden">More details for Business Double
-            Room, 1 Double Bed</span><svg class="uitk-icon uitk-link-icon-medium uitk-icon-directional uitk-icon-small"
-            aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink">
+            aria-hidden="true">More details</span>
+          <svg class="uitk-icon uitk-link-icon-medium uitk-icon-directional uitk-icon-small" aria-hidden="true"
+            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>
           </svg></button>
       </div>
