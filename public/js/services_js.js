@@ -7321,7 +7321,7 @@ var render = function render() {
     }, [_vm._v("\n                  " + _vm._s(index) + "\n                ")]), _vm._v(" "), _vm._l(amenity, function (facility) {
       return _c("div", {
         staticClass: "svg-icon-text"
-      }, [_vm._v(_vm._s(facility) + " ")]);
+      }, [_vm._v(_vm._s(facility.name) + " ")]);
     })], 2)]);
   })], 2)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8"

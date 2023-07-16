@@ -200,7 +200,7 @@
                   <div class="bold">
                     {{ index }}
                   </div>
-                  <div v-for="facility in  amenity" class="svg-icon-text">{{ facility }} </div>
+                  <div v-for="facility in  amenity" class="svg-icon-text">{{ facility.name }} </div>
                 </div>
 
               </div>
