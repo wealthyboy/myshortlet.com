@@ -7243,7 +7243,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "container"
   }, [_c("div", {}, [_c("div", {
-    staticClass: "p-2 border-bottom"
+    staticClass: "py-2 border-bottom"
   }, [_c("h3", {
     staticClass: "bold"
   }, [_vm._v("Apartment Information")]), _vm._v(" "), _c("button", {
@@ -7315,7 +7315,7 @@ var render = function render() {
   }, [_vm._v("\n              Amenities\n            ")]), _vm._v(" "), _vm._l(_vm.amenities, function (amenity, index) {
     return _c("div", {
       key: amenity.id
-    }, [_c("div", [_vm._v(_vm._s(index))])]);
+    }, [_c("div", [_vm._v(_vm._s(index) + " " + _vm._s(amenity))])]);
   })], 2)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8"
   }, [_c("div", {

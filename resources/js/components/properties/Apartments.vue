@@ -125,7 +125,6 @@
       </div>
     </div>
 
-
     <div v-if="stays && stays[1] != null" class="col-md-12 position-relative bg-white">
       <div class="form-group ">
         <label for="qty">Qty</label>
@@ -152,7 +151,7 @@
         cursor: pointer;">
       <div class="container">
         <div class="">
-          <div class="p-2 border-bottom">
+          <div class="py-2  border-bottom">
             <h3 class="bold">Apartment Information</h3>
 
             <button @click="lunchModal = !lunchModal" style="z-index: 1; right:10px; top: 15px"
@@ -197,7 +196,7 @@
                 Amenities
               </h4>
               <div :key="amenity.id" v-for="(amenity, index) in amenities">
-                <div>{{ index }}</div>
+                <div>{{ index }} {{ amenity }}</div>
               </div>
             </div>
           </div>
