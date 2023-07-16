@@ -23,7 +23,7 @@
 
 
 
-<div class="container-fluid ">
+<!-- <div class="container-fluid ">
    <section class="">
       <div class="text-center  mb-5">
          <p class="pt-3 mt-5">AvenueMontiagne Residences
@@ -145,7 +145,7 @@
       @endforeach
    </div>
    @endif
-</div>
+</div> -->
 @endsection
 @section('inline-scripts')
 
