@@ -196,8 +196,8 @@
               <h4 class="card-title bold text-size-1-big">
                 Amenities
               </h4>
-              <div :key="apartment_facility.id" v-for="apartment_facility in room.apartment_facilities">
-                <div>{{ apartment_facility.parent.name }}</div>
+              <div :key="amenity.id" v-for="(amenity, index) in amenities">
+                <div>{{ index }}</div>
               </div>
             </div>
           </div>

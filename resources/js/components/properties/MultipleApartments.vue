@@ -37,8 +37,8 @@
           <template v-if="roomsAv.length">
             <div class="row">
 
-              <apartments @qtyChange="getApartmentQuantity" v-for="room in roomsAv" :key="room.id" :room="room"
-                :stays="stays" :qty="qty" />
+              <apartments :amenities="amenities" @qtyChange="getApartmentQuantity" v-for="room in roomsAv" :key="room.id"
+                :room="room" :stays="stays" :qty="qty" />
             </div>
           </template>
 
@@ -96,6 +96,7 @@ export default {
     property: Object,
     propertys_not_available: Array,
     nights: Array,
+    amenities: Array
   },
   data() {
     return {

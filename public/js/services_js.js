@@ -4035,7 +4035,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     apartments: Array,
     property: Object,
     propertys_not_available: Array,
-    nights: Array
+    nights: Array,
+    amenities: Array
   },
   data: function data() {
     return {
@@ -7311,10 +7312,10 @@ var render = function render() {
     staticClass: "facilities"
   }, [_c("h4", {
     staticClass: "card-title bold text-size-1-big"
-  }, [_vm._v("\n              Amenities\n            ")]), _vm._v(" "), _vm._l(_vm.room.apartment_facilities, function (apartment_facility) {
+  }, [_vm._v("\n              Amenities\n            ")]), _vm._v(" "), _vm._l(_vm.amenities, function (amenity, index) {
     return _c("div", {
-      key: apartment_facility.id
-    }, [_c("div", [_vm._v(_vm._s(apartment_facility.parent.name))])]);
+      key: amenity.id
+    }, [_c("div", [_vm._v(_vm._s(index))])]);
   })], 2)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8"
   }, [_c("div", {
@@ -8444,6 +8445,7 @@ var render = function render() {
     return _c("apartments", {
       key: room.id,
       attrs: {
+        amenities: _vm.amenities,
         room: room,
         stays: _vm.stays,
         qty: _vm.qty

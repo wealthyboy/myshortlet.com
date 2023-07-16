@@ -135,7 +135,7 @@
                </div>
                <div>
                   @if ($property->type != 'single')
-                  <multiple-apartments :apartments="{{ $apartments }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple" />
+                  <multiple-apartments :apartments="{{ $apartments }}" :amenities="{{ $amenities }}" :property="{{ $property }}" :days="{{ $days }}" :nights="{{ collect($nights) }}" type="multiple" />
                   @endif
                </div>
                <div class="name bg-white rounded">
