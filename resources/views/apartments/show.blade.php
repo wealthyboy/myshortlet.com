@@ -72,7 +72,7 @@
                   <a class="nav-link text-capitalize pb-1" href="#Location">Location</a>
                   <a class="nav-link text-capitalize pb-1" href="#Reviews">Reviews </a>
                </nav>
-               <a target="_blank" href="/property/avenu-montaigne-42210936" class="btn btn-round  btn-blue  d-none   d-lg-block d-xl-block align-self-end">
+               <a target="_blank" href="/property/avenu-montaigne-42210936" class="btn btn-round  btn-blue     d-lg-block d-xl-block align-self-end">
                   Make Reservation
                </a>
             </div>
