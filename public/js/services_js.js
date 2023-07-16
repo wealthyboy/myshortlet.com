@@ -7316,7 +7316,7 @@ var render = function render() {
   }, [_vm._v("\n              Amenities\n            ")]), _vm._v(" "), _vm._l(_vm.amenities, function (amenity, index) {
     return _c("div", {
       key: amenity.id
-    }, [_c("div", [_vm._v(_vm._s(index) + " " + _vm._s(amenity))])]);
+    }, [_c("div", [_vm._v(_vm._s(index) + " ")])]);
   })], 2)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8"
   }, [_c("div", {
