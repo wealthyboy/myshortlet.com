@@ -196,7 +196,7 @@
                 Amenities
               </h4>
               <div :key="amenity.id" v-for="(amenity, index) in amenities">
-                <div>{{ index }} </div>
+                <div class="svg-icon-text">{{ index }} </div>
               </div>
             </div>
           </div>
