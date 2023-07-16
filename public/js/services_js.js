@@ -8442,7 +8442,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _vm.roomsAv.length ? [_c("div", {
     staticClass: "row"
-  }, _vm._l(_vm.roomsAv, function (room) {
+  }, [_vm._v("\n            " + _vm._s(_vm.amenities) + "\n            "), _vm._l(_vm.roomsAv, function (room) {
     return _c("apartments", {
       key: room.id,
       attrs: {
@@ -8455,7 +8455,7 @@ var render = function render() {
         qtyChange: _vm.getApartmentQuantity
       }
     });
-  }), 1)] : _vm._e(), _vm._v(" "), _c("div", [_c("ul", {
+  })], 2)] : _vm._e(), _vm._v(" "), _c("div", [_c("ul", {
     staticClass: "list-unstyled mb-0 p-2"
   }, [_c("li", {
     staticClass: "d-flex justify-content-between mb-2 lh-22"
