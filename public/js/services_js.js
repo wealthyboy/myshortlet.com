@@ -7131,7 +7131,32 @@ var render = function render() {
     }
   })])]), _vm._v(" "), _c("span", {
     staticClass: "svg-icon-text"
-  }, [_vm._v(_vm._s(_vm.room.guests) + " Guests")])])])]), _vm._v(" "), _vm.room.free_services.length ? _c("div", {
+  }, [_vm._v(_vm._s(_vm.room.guests) + " Guests")])]), _vm._v(" "), _c("div", {
+    staticClass: "position-relative mb-1"
+  }, [_c("button", {
+    staticClass: "uitk-link uitk-link-align-left uitk-link-layout-default uitk-link-medium",
+    attrs: {
+      type: "button"
+    }
+  }, [_c("span", {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("More details")]), _c("span", {
+    staticClass: "is-visually-hidden"
+  }, [_vm._v("More details for Business Double\n              Room, 1 Double Bed")]), _c("svg", {
+    staticClass: "uitk-icon uitk-link-icon-medium uitk-icon-directional uitk-icon-small",
+    attrs: {
+      "aria-hidden": "true",
+      viewBox: "0 0 24 24",
+      xmlns: "http://www.w3.org/2000/svg",
+      "xmlns:xlink": "http://www.w3.org/1999/xlink"
+    }
+  }, [_c("path", {
+    attrs: {
+      d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"
+    }
+  })])])])])]), _vm._v(" "), _vm.room.free_services.length ? _c("div", {
     staticClass: "d-inline-flex flex-wrap"
   }, _vm._l(_vm.room.free_services, function (free_service) {
     return _c("div", {
@@ -7196,35 +7221,7 @@ var render = function render() {
     }
   }, [_vm._v("Qty")]), _vm._v(" "), _vm.room.reservation_qty && _vm.room.quantity == _vm.room.reservation_qty ? [_c("div", {
     staticClass: "text-muted"
-  }, [_vm._v("\n          This apartment is not available for your seclected date\n        ")])] : [_c("select", {
-    staticClass: "form-control room-q",
-    attrs: {
-      name: "apartment_quantity[" + _vm.room.uuid + "]"
-    },
-    on: {
-      change: function change($event) {
-        return _vm.getApartmentQuantity($event, _vm.room);
-      }
-    }
-  }, [_c("option", {
-    attrs: {
-      value: ""
-    }
-  }, [_vm._v("0")]), _vm._v(" "), _vm._l(parseInt(_vm.room.quantity), function (a) {
-    return _c("option", {
-      key: a,
-      attrs: {
-        "data-sale": 2,
-        "data-price": a * _vm.room.display_price,
-        "data-id": _vm.room.id
-      },
-      domProps: {
-        value: a
-      }
-    }, [_vm._v(_vm._s(a))]);
-  })], 2), _vm._v(" "), _vm.qty ? _c("small", {
-    staticClass: "text-danger"
-  }, [_vm._v("Please select one or more option you want to book")]) : _vm._e()]], 2)]) : _vm._e(), _vm._v(" "), _vm.lunchModal ? _c("div", {
+  }, [_vm._v("\n          This apartment is not available for your seclected date\n        ")])] : _vm._e()], 2)]) : _vm._e(), _vm._v(" "), _vm.lunchModal ? _c("div", {
     staticClass: "gallery-images",
     staticStyle: {
       position: "fixed",
