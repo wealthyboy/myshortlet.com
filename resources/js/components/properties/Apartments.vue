@@ -222,6 +222,7 @@ export default {
     propertyLoading: Boolean,
     stays: Array,
     qty: Boolean,
+    amenities: Array
   },
   data() {
     return {

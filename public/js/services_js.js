@@ -3506,7 +3506,8 @@ __webpack_require__.r(__webpack_exports__);
     room: Object,
     propertyLoading: Boolean,
     stays: Array,
-    qty: Boolean
+    qty: Boolean,
+    amenities: Array
   },
   data: function data() {
     return {
