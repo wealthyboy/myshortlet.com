@@ -8461,66 +8461,9 @@ var render = function render() {
         qtyChange: _vm.getApartmentQuantity
       }
     });
-  }), 1)] : _vm._e(), _vm._v(" "), _c("div", [_c("ul", {
-    staticClass: "list-unstyled mb-0 p-2"
-  }, [_c("li", {
-    staticClass: "d-flex justify-content-between mb-2 lh-22"
-  }, [_vm.stays ? _c("p", {
-    staticClass: "text-gray-light mb-0 bold"
-  }, [_vm._v("\n                " + _vm._s(_vm.stays[0] || 0) + " " + _vm._s(_vm.stays[1] || "night") + "\n              ")]) : _vm._e(), _vm._v(" "), !_vm.stays ? _c("p", [_vm._v("Choose dates")]) : _vm._e(), _vm._v(" "), _c("p", {
-    staticClass: "bold text-heading mb-0"
-  }, [_vm._v("\n                " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(_vm.total)) + "\n              ")])]), _vm._v(" "), _c("li", {
-    staticClass: "d-flex justify-content-between mb-2 lh-22"
-  }, [_c("p", {
-    staticClass: "text-gray-light mb-0 bold"
-  }, [_vm._v(_vm._s(_vm.aps) + " Apartment(s)")]), _vm._v(" "), _c("p", {
-    staticClass: "bold text-heading mb-0"
-  }, [_vm._v("\n                " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(_vm.apTotal)) + "\n              ")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "card-footer p-2 bg-transparent d-flex justify-content-between p-0 align-items-center"
-  }, [_c("p", {
-    staticClass: "text-heading mb-0 bold"
-  }, [_vm._v("Total Price:")]), _vm._v(" "), _c("span", {
-    staticClass: "fs-32 bold text-heading total-price"
-  }, [_vm._v(_vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(_vm.amount)))])]), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("button", {
-    staticClass: "ml-1 btn btn-primary btn-round mr-1 btn-block",
-    attrs: {
-      type: "button"
-    },
-    on: {
-      click: function click($event) {
-        $event.preventDefault();
-        return _vm.reserve();
-      }
-    }
-  }, [_vm._m(0), _vm._v(" "), _c("span", {
-    staticClass: "lt"
-  }, [_vm._v("Reserve")])]) : _vm._e()], 2)])])]);
+  }), 1)] : _vm._e()], 2)])])]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "auth-spinner d-none"
-  }, [_c("div", {
-    staticClass: "lds-ellipsis"
-  }, [_c("div", {
-    staticStyle: {
-      background: "rgb(255, 255, 255)"
-    }
-  }), _vm._v(" "), _c("div", {
-    staticStyle: {
-      background: "rgb(255, 255, 255)"
-    }
-  }), _vm._v(" "), _c("div", {
-    staticStyle: {
-      background: "rgb(255, 255, 255)"
-    }
-  }), _vm._v(" "), _c("div", {
-    staticStyle: {
-      background: "rgb(255, 255, 255)"
-    }
-  })])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 

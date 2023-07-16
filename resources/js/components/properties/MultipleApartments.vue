@@ -41,7 +41,7 @@
             </div>
           </template>
 
-          <div>
+          <!-- <div>
             <ul class="list-unstyled mb-0 p-2">
               <li class="d-flex justify-content-between mb-2 lh-22">
                 <p v-if="stays" class="text-gray-light mb-0 bold">
@@ -59,13 +59,13 @@
                 </p>
               </li>
             </ul>
-          </div>
+          </div> -->
 
-          <div class="card-footer p-2  bg-transparent d-flex justify-content-between p-0 align-items-center">
+          <!-- <div class="card-footer p-2  bg-transparent d-flex justify-content-between p-0 align-items-center">
             <p class="text-heading mb-0 bold">Total Price:</p>
             <span class="fs-32 bold text-heading total-price">{{ property.currency }}{{ amount | priceFormat }}</span>
-          </div>
-          <button v-if="stays && stays[1] != null" type="button" @click.prevent="reserve()"
+          </div> -->
+          <!-- <button v-if="stays && stays[1] != null" type="button" @click.prevent="reserve()"
             class="ml-1 btn btn-primary btn-round  mr-1 btn-block">
             <div class="auth-spinner d-none">
               <div class="lds-ellipsis">
@@ -76,7 +76,7 @@
               </div>
             </div>
             <span class="lt">Reserve</span>
-          </button>
+          </button> -->
         </div>
       </div>
     </form>
