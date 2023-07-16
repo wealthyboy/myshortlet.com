@@ -57,11 +57,17 @@
       </div>
       <div class="row">
          <div class="col-12 ">
-            <nav class="nav text-capitalize bg-white">
-               <a class="nav-link text-capitalize active  text-gold text-size-1 pb-3" href="#Overview">Overview</a>
-               <a class="nav-link text-capitalize  text-gold text-size-1" href="#Amenities">Amenities</a>
-               <a class="nav-link text-capitalize pb-1  text-gold text-size-1" href="#Location">Location</a>
-            </nav>
+            <div class="d-flex">
+               <nav class="nav text-capitalize bg-white">
+                  <a class="nav-link text-capitalize active" href="#Overview">Overview</a>
+                  <a class="nav-link text-capitalize" href="#Amenities">Amenities</a>
+                  <a class="nav-link text-capitalize pb-1" href="#Location">Location</a>
+                  <a class="nav-link text-capitalize pb-1" href="#Reviews">Reviews </a>
+               </nav>
+               <a target="_blank" href="/property/avenu-montaigne-42210936" class="btn btn-round  btn-blue     d-lg-block d-xl-block align-self-end">
+                  Make Reservation
+               </a>
+            </div>
          </div>
       </div>
    </div>
