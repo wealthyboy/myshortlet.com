@@ -62,7 +62,6 @@
                   <a class="nav-link text-capitalize active" href="#Overview">Overview</a>
                   <a class="nav-link text-capitalize" href="#Amenities">Amenities</a>
                   <a class="nav-link text-capitalize pb-1" href="#Location">Location</a>
-                  <a class="nav-link text-capitalize pb-1" href="#Reviews">Reviews </a>
                </nav>
                <a target="_blank" href="/property/avenu-montaigne-42210936" class="btn btn-round  btn-blue     d-lg-block d-xl-block align-self-end">
                   Make Reservation
@@ -112,6 +111,7 @@
                         </div>
                         <div class="col-md-6">
                            <div style="height: 200px;" id="map2"></div>
+                           <div>{{ $property_type->address }}</div>
                            @if ($areas->count())
                            <h5 class="bold">Explore the area</h5>
                            <div class="">
