@@ -422,13 +422,13 @@ class PropertiesController extends Controller
         }
 
         $attributes = Attribute::parents()->whereIn('type', $this->types)->get()->groupBy('type');
-        $apartment_facilities = Attribute::parents()->where('type', 'apartment facilities')->orderBy('sort_order', 'asc')->get();
+        $apartment_facilities  = Attribute::parents()->where('type', 'apartment facilities')->orderBy('sort_order', 'asc')->get();
         $counter = rand(1, 500);
         $str  = new Str;
         $others  = Attribute::where('type', 'other')->orderBy('sort_order', 'asc')->get()->groupBy('parent.name');
         $bedrooms = Attribute::parents()->where('type', 'bedrooms')->orderBy('sort_order', 'asc')->get();
-        $extras = Attribute::parents()->where('type', 'extra services')->orderBy('sort_order', 'asc')->get();
-        $property_types = Attribute::parents()->where('type', 'property type')->orderBy('sort_order', 'asc')->get();
+        $extras =  Attribute::parents()->where('type', 'extra services')->orderBy('sort_order', 'asc')->get();
+        $property_types =  Attribute::parents()->where('type', 'property type')->orderBy('sort_order', 'asc')->get();
         $categories = Category::parents()->get();
 
         return view('admin.apartments.edit', compact('house_attributes', 'categories', 'others', 'property_types', 'extras', 'str', 'bedrooms', 'counter', 'attributes', 'locations', 'property', 'helper', 'apartment_facilities'));

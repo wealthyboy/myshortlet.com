@@ -59,6 +59,7 @@ class ApartmentsController extends Controller
             ->latest()->paginate(3);
         $properties->appends(request()->all());
 
+
         if ($request->ajax()) {
             return PropertyLists::collection(
                 $properties

@@ -74,6 +74,7 @@
                 </div>
               </div>
             </div>
+
             <div class="d-flex position-absolute apartment-review justify-content-between mt-1 align-items-end">
               <div class="reviews-section"></div>
               <div class="text-right mr-4">
