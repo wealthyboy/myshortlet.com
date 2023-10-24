@@ -40,8 +40,8 @@ export default {
   watch: {
     isDateNeedsToToOpen: {
       handler(val, oldVal) {
+        console.log(val, oldVal)
         if (val) {
-          console.log(val);
           this.$refs.datePicker.fp.open();
         }
       },
@@ -49,7 +49,6 @@ export default {
   },
   methods: {
     dateSelected() {
-      console.log(this.check_in_checkout);
       this.$emit("dateSelected", this.check_in_checkout);
     },
   },

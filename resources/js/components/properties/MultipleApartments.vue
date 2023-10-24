@@ -237,7 +237,7 @@ export default {
       let filters = {};
 
       filters = {
-        [this.property.id]: 1,
+        [this.property.id]: room.id,
       };
       checked.push(filters);
 

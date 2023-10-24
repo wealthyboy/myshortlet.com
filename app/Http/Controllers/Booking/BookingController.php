@@ -96,6 +96,7 @@ class BookingController extends Controller
 			foreach ($apartments as $apartment_id => $quantity) {
 				$booking = new BookingDetail;
 				$ap = Apartment::find($apartment_id);
+
 				$price = optional($ap)->converted_price;
 				$sale_price = optional($ap)->discounted_price;
 				$sp = $sale_price ?? $price;

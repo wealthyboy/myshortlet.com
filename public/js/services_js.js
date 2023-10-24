@@ -3743,8 +3743,8 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     isDateNeedsToToOpen: {
       handler: function handler(val, oldVal) {
+        console.log(val, oldVal);
         if (val) {
-          console.log(val);
           this.$refs.datePicker.fp.open();
         }
       }
@@ -3752,7 +3752,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     dateSelected: function dateSelected() {
-      console.log(this.check_in_checkout);
       this.$emit("dateSelected", this.check_in_checkout);
     }
   }
@@ -4173,7 +4172,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var selectApartmentQty = document.querySelectorAll(".room-q");
       var checked = [];
       var filters = {};
-      filters = _defineProperty({}, this.property.id, 1);
+      filters = _defineProperty({}, this.property.id, room.id);
       checked.push(filters);
       var form = {
         apartment_quantity: checked,
