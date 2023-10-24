@@ -75,7 +75,7 @@ class BookingController extends Controller
 	public function store(Request $request)
 	{
 		$booking = new BookingDetail;
-		//dd($request->all());
+		dd($request->all());
 		$apartment_quantity = $request->apartment_quantity;
 		$date  = explode("to", $request->check_in_checkout);
 		$date1 = trim($date[0]);
@@ -102,6 +102,7 @@ class BookingController extends Controller
 				$sale_price = optional($ap)->discounted_price;
 				$sp = $sale_price ?? $price;
 				if (\Cookie::get('booking') !== null) {
+					dd()
 					$token  = \Cookie::get('booking');
 					$booking = $booking->updateOrCreate(
 						['apartment_id' => $apartment_id, 'token' => $token],
