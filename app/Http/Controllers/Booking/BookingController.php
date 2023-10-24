@@ -39,6 +39,7 @@ class BookingController extends Controller
 
 		$referer = request()->headers->get('referer');
 		$bookings = BookingDetail::all_items_in_cart($property->id);
+		dd($bookings);
 		if (null == $bookings) {
 			return back();
 		}
@@ -106,14 +107,14 @@ class BookingController extends Controller
 						['apartment_id' => $apartment_id, 'token' => $token],
 						[
 							'apartment_id' => $apartment_id,
-							'property_id'  => $request->property_id,
-							'user_id'      => optional($request->user())->id,
-							'quantity'     => $quantity,
-							'price'        => $price,
-							'sale_price'   => optional($ap)->discounted_price,
-							'total'        => $sp * $quantity,
-							'checkin'      => $start_date,
-							'checkout'     => $end_date,
+							'property_id' => $request->property_id,
+							'user_id' => optional($request->user())->id,
+							'quantity' => $quantity,
+							'price' => $price,
+							'sale_price' => optional($ap)->discounted_price,
+							'total' => $sp * $quantity,
+							'checkin' => $start_date,
+							'checkout' => $end_date,
 						]
 					);
 				} else {
