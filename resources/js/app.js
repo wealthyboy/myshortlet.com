@@ -20,11 +20,10 @@ const ForgotPassword = require("./components/auth/ForgotPassword.vue").default;
 const ResetPassword = require("./components/auth/ResetPassword.vue").default;
 const ChangePassword = require("./components/auth/ChangePassword.vue").default;
 const Comments = require("./components/blog/Comments.vue").default;
-
 let token = document.head.querySelector('meta[name="csrf-token"]');
 Window.token = token.content;
 
-Vue.filter("priceFormat", function(value) {
+Vue.filter("priceFormat", function (value) {
   return new Intl.NumberFormat().format(value);
 });
 

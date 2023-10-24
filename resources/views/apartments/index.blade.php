@@ -85,11 +85,13 @@
 
    <div class="col-md-2 pl-2">
       <a href="https://theluxurysale.com" class="h">
-         <img class="img-fluid" src="https://avenuemontaigne.ng/uploads/Lfr25dG9jV42zCJ3iDQLymqDYOhzYYfCQi0ddaYn.gif" alt="">
+         <img class="img-fluid" src="/images/banners/ads-07.jpg" alt="">
       </a>
    </div>
 </div>
 </div>
+
+<div style="height: 200px;"></div>
 
 @endsection
 @section('page-scripts')

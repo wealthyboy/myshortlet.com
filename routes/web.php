@@ -131,7 +131,9 @@ Route::post('login',                    'Auth\LoginController@login');
 Route::get('pages/{information}',       'Information\InformationController@show');
 
 
-Route::get('apartments',     'Apartments\ApartmentsController@index');
+Route::get('apartments',     'Apartments\ApartmentsController@apartments');
+Route::get('apartments/{location}', 'Apartments\ApartmentsController@location');
+
 Route::get('apartment/{property}',       'Apartments\ApartmentsController@show');
 Route::get('add/apartment',             'Properties\PropertiesController@addApartment');
 Route::post('check/apartment/availablility',     'Apartments\ApartmentsController@checkAvailability');
@@ -151,7 +153,6 @@ Route::resource('reservations',   'Reservation\ReservationController', ['names' 
 Route::get('get/location/{id}', 'Properties\PropertiesController@getLocation');
 Route::get('property/search',         'Properties\PropertiesController@search');
 
-Route::get('properties/location/{location}', 'Properties\PropertiesController@location');
 Route::get('auto-complete', 'Properties\PropertiesController@autoComplete');
 Route::get('property/{property}', 'Properties\PropertiesController@show');
 Route::get('properties/{category}', 'Properties\PropertiesController@index');
@@ -162,7 +163,7 @@ Route::get('listings', 'Listings\ListingsController@index');
 Route::post('webhook/payment',     'WebHook\WebHookController@payment');
 Route::post('webhook/github',      'WebHook\WebHookController@gitHub');
 
-Route::get('/experience',        'Pages\PageController@index');
+Route::get('/experience',   'Pages\PageController@index');
 Route::get('/about-us',            'Pages\PageController@index');
 
 Route::get('/contact-us',          'Pages\PageController@index');

@@ -1,28 +1,17 @@
 <template>
-  <div
-    :class="{ 'header-filter': propertyLoading }"
-    class="name  rounded mt-1 bg-white"
-  >
+  <div :class="{ 'header-filter': propertyLoading }" class="name  rounded mt-1 bg-white">
     <div class="card-body">
       <form id="single-form" :action="'/book/' + property.slug" method="GET">
-        <input
-          type="hidden"
-          :name="'apartment_quantity[' + room.uuid + ']'"
-          id="qty"
-        />
+        <input type="hidden" :name="'apartment_quantity[' + room.uuid + ']'" id="qty" />
         <div class="d-flex pb-3 border-bottom mb-3 justify-content-between">
           <template v-if="room.discounted_price">
             <div class="d-none d-lg-block ">
               <div>
-                <del
-                  >{{ room.currency
-                  }}{{ room.converted_price | priceFormat }}</del
-                >
+                <del>{{ room.currency
+                }}{{ room.converted_price | priceFormat }}</del>
               </div>
-              <span
-                >{{ room.currency
-                }}{{ room.discounted_price | priceFormat }}</span
-              ><span> per night</span>
+              <span>{{ room.currency
+              }}{{ room.discounted_price | priceFormat }}</span><span> per night</span>
             </div>
             <div>{{ room.percentage_off }}% off</div>
           </template>
@@ -32,10 +21,7 @@
             </div>
           </template>
         </div>
-        <div
-          v-if="room.property.is_refundable"
-          class="mb-3  text-size-1 text-danger"
-        >
+        <div v-if="room.property.is_refundable" class="mb-3  text-size-1 text-danger">
           <i class="fas fa-info-circle text-danger mr-2"></i>Non - refundable
         </div>
 
@@ -45,24 +31,14 @@
         </div>
 
         <div class="form-row mt-2">
-          <div
-            v-if="!propertyLoading && room.reservation_id"
-            class="text-danger mb-2"
-          >
+          <div v-if="!propertyLoading && room.reservation_id" class="text-danger mb-2">
             This property is not available for your selected date. Try changing
             your dates
           </div>
 
-          <div
-            class="form-group ml-1 form-border cursor-pointer search col-md-12 bmd-form-group"
-          >
-            <label class="pl-2 " for="flatpickr-input-f"
-              >Check-in - Check-out</label
-            >
-            <date
-              :isDateNeedsToToOpen="isDateNeedsToToOpen"
-              @dateSelected="dateSelected"
-            />
+          <div class="form-group ml-1 form-border cursor-pointer search col-md-12 bmd-form-group">
+            <label class="pl-2 " for="flatpickr-input-f">Check-in - Check-out</label>
+            <date :isDateNeedsToToOpen="isDateNeedsToToOpen" @dateSelected="dateSelected" />
           </div>
         </div>
         <div>
@@ -83,20 +59,12 @@
             </li>
           </ul>
         </div>
-        <div
-          class="card-footer pt-4 bg-transparent d-flex justify-content-between p-0 align-items-center"
-        >
+        <div class="card-footer pt-4 bg-transparent d-flex justify-content-between p-0 align-items-center">
           <p class="text-heading mb-0">Total Price:</p>
-          <span class="fs-32 bold price  text-heading total-price"
-            >{{ room.currency
-            }}{{ room.display_price * parseInt(stays[0] || 0) }}</span
-          >
+          <span class="fs-32 bold price  text-heading total-price">{{ room.currency
+          }}{{ room.display_price * parseInt(stays[0] || 0) }}</span>
         </div>
-        <button
-          type="submit"
-          @click.prevent="checkAvailabity()"
-          class=" btn btn-primary btn-round  mt-3  btn-block"
-        >
+        <button type="submit" @click.prevent="checkAvailabity()" class=" btn btn-primary btn-round  mt-3  btn-block">
           <div v-if="propertyLoading" class="auth-spinner ">
             <div class="lds-ellipsis">
               <div style="background: rgb(255, 255, 255);"></div>
@@ -159,7 +127,7 @@ export default {
   created() {
     this.stays = this.nights;
     this.room = this.apartment;
-    this.text = this.stays[1] ? "Reserve" : "Check availability";
+    this.text = this.stays[1] ? "Reserving..." : "Check availability";
   },
   components: {
     Pickr,
@@ -212,7 +180,7 @@ export default {
           this.propertyLoading = false;
           this.text = "Reserve";
         })
-        .catch((error) => {});
+        .catch((error) => { });
     },
   },
 };

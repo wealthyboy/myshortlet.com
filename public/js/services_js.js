@@ -3587,6 +3587,11 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     },
+    reserve: function reserve(room) {
+      this.$emit("reserve", {
+        room: room
+      });
+    },
     getApartmentQuantity: function getApartmentQuantity(e, ap) {
       var _this = this;
       this.guests = ap.max_adults + ap.max_children;
@@ -3936,6 +3941,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     var _this = this;
     this.$store.commit("setPropertyLoading", true);
     var time = new Date().getTime();
+    console.log(true);
     setTimeout(function () {
       document.getElementById("ap-loaders").classList.add('d-none');
       document.getElementById("category-loader").classList.add('d-none');
@@ -4158,25 +4164,17 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.apTotal = total;
       this.amount = this.apTotal;
     },
-    reserve: function reserve(e) {
+    reserve: function reserve(room) {
       var _this2 = this;
-      if (!this.form.check_in_checkout) {
-        this.$refs.datePicker.fp.open();
-        return false;
-      }
-      if (this.total < 1) {
-        this.qty = true;
-        return false;
+      if (!this.form.check_in_checkout || this.form.check_in_checkout.split(" ").length < 2) {
+        this.isDateNeedsToToOpen = true;
+        return;
       }
       var selectApartmentQty = document.querySelectorAll(".room-q");
       var checked = [];
       var filters = {};
-      selectApartmentQty.forEach(function (e, i) {
-        if (e.value != "") {
-          filters = _defineProperty({}, e.selectedOptions[0].dataset.id, e.value);
-          checked.push(filters);
-        }
-      });
+      filters = _defineProperty({}, this.property.id, 1);
+      checked.push(filters);
       var form = {
         apartment_quantity: checked,
         property_id: this.property.id,
@@ -4337,7 +4335,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   created: function created() {
     this.stays = this.nights;
     this.room = this.apartment;
-    this.text = this.stays[1] ? "Reserve" : "Check availability";
+    this.text = this.stays[1] ? "Reserving..." : "Check availability";
   },
   components: {
     Pickr: (vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0___default()),
@@ -7213,18 +7211,19 @@ var render = function render() {
   }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _vm.room.property.is_refundable ? _c("div", [_vm._v("Fully Refundable")]) : _vm._e(), _vm._v(" "), _c("a", {
     staticClass: "btn btn-round btn-blue d-none d-lg-block d-xl-block align-self-end",
     attrs: {
-      target: "_blank",
-      href: "/property/avenu-montaigne-42210936"
+      target: "_blank"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.reserve(_vm.room);
+      }
     }
   }, [_vm._v("\n          Reserve\n        ")])])])], 2), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
     staticClass: "col-md-12 position-relative bg-white"
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "qty"
-    }
-  }, [_vm._v("Qty")]), _vm._v(" "), _vm.room.reservation_qty && _vm.room.quantity == _vm.room.reservation_qty ? [_c("div", {
+  }, [_vm.room.reservation_qty && _vm.room.quantity == _vm.room.reservation_qty ? [_c("div", {
     staticClass: "text-muted"
   }, [_vm._v("\n          This apartment is not available for your seclected date\n        ")])] : _vm._e()], 2)]) : _vm._e(), _vm._v(" "), _vm.lunchModal ? _c("div", {
     staticClass: "gallery-images",
@@ -8016,7 +8015,7 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [!_vm.propertyLoading && _vm.properties.length ? _c("div", [_c("div", {
+  return _c("div", [_vm._v("\n\n\n  sdsdd\n  "), !_vm.propertyLoading && _vm.properties.length ? _c("div", [_c("div", {
     staticClass: "col-md-12 category-search ml-auto mr-auto mt-4"
   }), _vm._v(" "), _c("div", {
     staticClass: "form-row"
@@ -8458,6 +8457,7 @@ var render = function render() {
         qty: _vm.qty
       },
       on: {
+        reserve: _vm.reserve,
         qtyChange: _vm.getApartmentQuantity
       }
     });

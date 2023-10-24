@@ -36,8 +36,8 @@
 
           <template v-if="roomsAv.length">
             <div class="row">
-              <apartments :amenities="amenities" @qtyChange="getApartmentQuantity" v-for="room in roomsAv" :key="room.id"
-                :room="room" :stays="stays" :qty="qty" />
+              <apartments @reserve="reserve" :amenities="amenities" @qtyChange="getApartmentQuantity"
+                v-for="room in roomsAv" :key="room.id" :room="room" :stays="stays" :qty="qty" />
             </div>
           </template>
 
@@ -221,27 +221,26 @@ export default {
       this.apTotal = total;
       this.amount = this.apTotal;
     },
-    reserve(e) {
-      if (!this.form.check_in_checkout) {
-        this.$refs.datePicker.fp.open();
-        return false;
+    reserve(room) {
+
+      if (
+        !this.form.check_in_checkout ||
+        this.form.check_in_checkout.split(" ").length < 2
+      ) {
+        this.isDateNeedsToToOpen = true;
+        return;
       }
-      if (this.total < 1) {
-        this.qty = true;
-        return false;
-      }
+
 
       let selectApartmentQty = document.querySelectorAll(".room-q");
       var checked = [];
       let filters = {};
-      selectApartmentQty.forEach((e, i) => {
-        if (e.value != "") {
-          filters = {
-            [e.selectedOptions[0].dataset.id]: e.value,
-          };
-          checked.push(filters);
-        }
-      });
+
+      filters = {
+        [this.property.id]: 1,
+      };
+      checked.push(filters);
+
       let form = {
         apartment_quantity: checked,
         property_id: this.property.id,

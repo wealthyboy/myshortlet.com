@@ -2,7 +2,7 @@
   <div>
 
 
-
+    sdsdd
     <div v-if="!propertyLoading && properties.length">
       <div class="col-md-12 category-search ml-auto mr-auto mt-4">
 
@@ -189,6 +189,7 @@ export default {
   mounted() {
     this.$store.commit("setPropertyLoading", true);
     let time = new Date().getTime();
+    console.log(true);
     setTimeout(() => {
       document.getElementById("ap-loaders").classList.add('d-none')
       document.getElementById("category-loader").classList.add('d-none')

@@ -114,7 +114,7 @@
           </div>
           <div v-if="room.property.is_refundable">Fully Refundable</div>
 
-          <a target="_blank" href="/property/avenu-montaigne-42210936"
+          <a target="_blank" @click.prevent="reserve(room)"
             class="btn btn-round  btn-blue  d-none   d-lg-block d-xl-block align-self-end">
             Reserve
           </a>
@@ -127,7 +127,6 @@
 
     <div v-if="stays && stays[1] != null" class="col-md-12 position-relative bg-white">
       <div class="form-group ">
-        <label for="qty">Qty</label>
         <template v-if="room.reservation_qty && room.quantity == room.reservation_qty">
           <div class="text-muted ">
             This apartment is not available for your seclected date
@@ -306,6 +305,9 @@ export default {
           },
         });
       });
+    },
+    reserve(room) {
+      this.$emit("reserve", { room });
     },
     getApartmentQuantity(e, ap) {
       this.guests = ap.max_adults + ap.max_children;

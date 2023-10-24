@@ -1,5 +1,5 @@
 # Change to the project directory
-cd /home/forge/myshortlet.com
+cd /home/forge/avenuemontaigne.ng/.com
 
 # Turn on maintenance mode
 php artisan down || true
