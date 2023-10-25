@@ -222,7 +222,7 @@ export default {
       this.amount = this.apTotal;
     },
     reserve(room) {
-      console.log(room)
+      let ap = room.room
       if (
         !this.form.check_in_checkout ||
         this.form.check_in_checkout.split(" ").length < 2
@@ -237,7 +237,7 @@ export default {
       let filters = {};
 
       filters = {
-        [this.property.id]: room.id,
+        [this.property.id]: ap.id,
       };
 
       console.log(filters);

@@ -4165,7 +4165,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     reserve: function reserve(room) {
       var _this2 = this;
-      console.log(room);
+      var ap = room.room;
       if (!this.form.check_in_checkout || this.form.check_in_checkout.split(" ").length < 2) {
         this.isDateNeedsToToOpen = true;
         return;
@@ -4173,7 +4173,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var selectApartmentQty = document.querySelectorAll(".room-q");
       var checked = [];
       var filters = {};
-      filters = _defineProperty({}, this.property.id, room.id);
+      filters = _defineProperty({}, this.property.id, ap.id);
       console.log(filters);
       checked.push(filters);
       var form = {
