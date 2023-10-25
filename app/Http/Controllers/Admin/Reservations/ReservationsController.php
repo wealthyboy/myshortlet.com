@@ -30,6 +30,7 @@ class ReservationsController extends Controller
 	{
 		$reservations = UserReservation::latest()->get();
 		//UserReservation::truncate();
+		dd(true);
 		return view('admin.reservations.index', compact('reservations'));
 	}
 
