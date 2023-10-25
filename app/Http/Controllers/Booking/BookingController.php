@@ -95,7 +95,7 @@ class BookingController extends Controller
 		dd($apartment_quantity);
 
 		foreach ($apartment_quantity as $key => $apartments) {
-			foreach ($apartments as $apartment_id => $quantity) {
+			foreach ($apartments as $property_id => $apartment_id) {
 				$booking = new BookingDetail;
 				$ap = Apartment::find($apartment_id);
 
@@ -113,10 +113,10 @@ class BookingController extends Controller
 							'apartment_id' => $apartment_id,
 							'property_id' => $request->property_id,
 							'user_id' => optional($request->user())->id,
-							'quantity' => $quantity,
+							'quantity' => 1,
 							'price' => $price,
 							'sale_price' => optional($ap)->discounted_price,
-							'total' => $sp * $quantity,
+							'total' => $sp * 1,
 							'checkin' => $start_date,
 							'checkout' => $end_date,
 						]
@@ -126,11 +126,11 @@ class BookingController extends Controller
 					session()->put('booking', $value);
 					$cookie = cookie('booking', session()->get('booking'), time() + 86400);
 					$booking->apartment_id = $ap->id;
-					$booking->quantity = $quantity;
+					$booking->quantity = 1;
 					$booking->property_id = $request->property_id;
 					$booking->price = $price;
 					$booking->sale_price = optional($ap)->discounted_price;
-					$booking->total = $sp * $quantity;
+					$booking->total = $sp * 1;
 					$booking->user_id = optional($request->user())->id;
 					$booking->checkin = $start_date;
 					$booking->checkout = $end_date;
