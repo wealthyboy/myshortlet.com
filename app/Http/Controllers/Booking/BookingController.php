@@ -94,7 +94,7 @@ class BookingController extends Controller
 
 		$booking = new BookingDetail;
 		$ap = Apartment::find($request->apId);
-		dd($ap);
+		dd($apartment_quantity);
 		$price = optional($ap)->converted_price;
 		$sale_price = optional($ap)->discounted_price;
 		$sp = $sale_price ?? $price;
