@@ -158,7 +158,7 @@ class WebHookController extends Controller
 
     public function gitHub()
     {
-        $output =  shell_exec('sh /home/forge/myshortlet.com/deploy.sh');
+        $output =  shell_exec('sh /home/forge/avenuemontaigne.ng/deploy.sh');
         echo "Successfull";
         Log::info($output);
     }
