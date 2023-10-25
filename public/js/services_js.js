@@ -4165,7 +4165,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     reserve: function reserve(room) {
       var _this2 = this;
-      console.log(room.id);
+      console.log(room);
       if (!this.form.check_in_checkout || this.form.check_in_checkout.split(" ").length < 2) {
         this.isDateNeedsToToOpen = true;
         return;
