@@ -75,7 +75,6 @@ class BookingController extends Controller
 	public function store(Request $request)
 	{
 		$booking = new BookingDetail;
-		dd($request->all());
 		$apartment_quantity = $request->apartment_quantity;
 		$date  = explode("to", $request->check_in_checkout);
 		$date1 = trim($date[0]);
