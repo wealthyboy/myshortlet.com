@@ -4042,7 +4042,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     property: Object,
     propertys_not_available: Array,
     nights: Array,
-    amenities: Array
+    amenities: Object
   },
   data: function data() {
     return {

@@ -95,7 +95,7 @@ export default {
     property: Object,
     propertys_not_available: Array,
     nights: Array,
-    amenities: Array
+    amenities: Object
   },
   data() {
     return {
