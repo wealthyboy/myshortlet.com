@@ -44,13 +44,12 @@ class BookingController extends Controller
 		}
 
 		$ids = $bookings->pluck('id')->toArray();
-
-
+		$ids = !empty($ids) ? 	$ids[0] : $ids;
 		$booking = $bookings[0];
 		$nights = [];
 		$phone_codes = Helper::phoneCodes();
-		$days   = $booking->checkin->diffInDays($booking->checkout);
-		$stays   = $days == 1 ? "night" : " nights";
+		$days = $booking->checkin->diffInDays($booking->checkout);
+		$stays = $days == 1 ? "night" : " nights";
 		$nights[] = $days;
 		$nights[] = $stays;
 		$property->load('free_services', 'facilities', 'extra_services');

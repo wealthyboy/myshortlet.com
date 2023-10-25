@@ -46,7 +46,7 @@ class WebHookController extends Controller
 
 
         try {
-            $input    =  $request->all();
+            $input = $request->all();
             $user_reservation = new UserReservation;
             $guest = new GuestUser;
             $guest->name = $input['booking']['first_name'];
@@ -59,7 +59,7 @@ class WebHookController extends Controller
         }
 
 
-        $bookings = BookingDetail::find($request->booking['booking_ids']);
+        $booking = BookingDetail::find($request->booking['booking_ids']);
         $user_reservation->user_id = optional($request->user())->id;
         $user_reservation->guest_user_id = $guest->id;
         $user_reservation->currency = $request->booking['currency'];
@@ -82,6 +82,7 @@ class WebHookController extends Controller
         $services = $request->booking['services'];
         $property_extras = $request->booking['property_services'];
 
+
         foreach ($services as $key => $room_serices) {
             foreach ($room_serices as $key => $room_serice) {
                 foreach ($room_serice as $attribute_id => $qty) {
@@ -91,35 +92,34 @@ class WebHookController extends Controller
             }
         }
 
-        foreach ($bookings   as  $booking) {
-            $reservation = new Reservation;
-            $reservation->quantity       =  $booking->quantity;
-            $reservation->apartment_id   =  $booking->apartment_id;
-            $reservation->price   =  $booking->price;
-            $reservation->sale_price   =  $booking->sale_price;
-            $reservation->user_reservation_id   =  $user_reservation->id;
-            $reservation->property_id    =  $booking->property_id;
-            $reservation->checkin        =  $booking->checkin;
-            $reservation->checkout       =  $booking->checkout;
-            $reservation->save();
-            foreach ($e_services as $key => $attributes) {
-                foreach ($attributes as $attribute_id => $qty) {
-                    $extras = new Extra;
-                    if ($booking->apartment_id == $key) {
-                        $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
-                        $extras->apartment_id  = $key;
-                        $extras->property_id   = $request->property_id;
-                        $extras->quantity      = $qty;
-                        $extras->user_id       = optional($request->user())->id;
-                        $extras->reservation_id  = $reservation->id;
-                        $extras->price           = $attribute->converted_price;
-                        $extras->guest_user_id   = $guest->id;
-                        $extras->attribute_id    = $attribute_id;
-                        $extras->save();
-                    }
+        $reservation = new Reservation;
+        $reservation->quantity = $booking->quantity;
+        $reservation->apartment_id = $booking->apartment_id;
+        $reservation->price = $booking->price;
+        $reservation->sale_price = $booking->sale_price;
+        $reservation->user_reservation_id = $user_reservation->id;
+        $reservation->property_id = $booking->property_id;
+        $reservation->checkin = $booking->checkin;
+        $reservation->checkout = $booking->checkout;
+        $reservation->save();
+        foreach ($e_services as $key => $attributes) {
+            foreach ($attributes as $attribute_id => $qty) {
+                $extras = new Extra;
+                if ($booking->apartment_id == $key) {
+                    $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
+                    $extras->apartment_id  = $key;
+                    $extras->property_id = $request->property_id;
+                    $extras->quantity = $qty;
+                    $extras->user_id  = optional($request->user())->id;
+                    $extras->reservation_id  = $reservation->id;
+                    $extras->price = $attribute->converted_price;
+                    $extras->guest_user_id = $guest->id;
+                    $extras->attribute_id = $attribute_id;
+                    $extras->save();
                 }
             }
         }
+
 
         foreach ($property_extras as $attribute_id) {
             $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
