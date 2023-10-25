@@ -102,7 +102,7 @@ class BookingController extends Controller
 				$sale_price = optional($ap)->discounted_price;
 				$sp = $sale_price ?? $price;
 				if (\Cookie::get('booking') !== null) {
-					dd()
+
 					$token  = \Cookie::get('booking');
 					$booking = $booking->updateOrCreate(
 						['apartment_id' => $apartment_id, 'token' => $token],
