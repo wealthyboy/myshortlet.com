@@ -61,7 +61,11 @@ class WebHookController extends Controller
 
         $booking = BookingDetail::find($request->booking['booking_ids']);
 
-        \Log::info($booking);
+        Log::info($booking);
+
+        Log::info($request->booking);
+
+        return;
 
 
         $user_reservation->user_id = optional($request->user())->id;
@@ -76,7 +80,6 @@ class WebHookController extends Controller
         $user_reservation->checkout = optional($booking)->checkout;
         $user_reservation->ip = $request->ip();
         $user_reservation->save();
-
         $e_services = [];
 
         $services = $request->booking['services'];
