@@ -27,8 +27,8 @@ class ReservationsController extends Controller
 	public function index(Request $request)
 	{
 		$reservations = UserReservation::latest()->get();
-		UserReservation::truncate();
-		Reservation::truncate();
+		//UserReservation::truncate();
+		//Reservation::truncate();
 
 		return view('admin.reservations.index', compact('reservations'));
 	}
