@@ -51,29 +51,28 @@ class WebHookController extends Controller
             $guest->email = $input['booking']['email'];
             $guest->phone_number = $input['booking']['phone_number'];
             $guest->save();
-
-            $booking = BookingDetail::find($request->booking['booking_ids']);
+            $bookg = $request->booking['booking_ids'];
+            $booking = BookingDetail::find($bookg['booking_ids']);
 
             $user_reservation->user_id = optional($request->user())->id;
             $user_reservation->guest_user_id = $guest->id;
-            $user_reservation->currency = $request->booking['currency'];
+            $user_reservation->currency = $bookg['currency'];
             $user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
             $user_reservation->payment_type = 'online';
-            $user_reservation->property_id = $request->booking['property_id'];
-            $user_reservation->coupon = $request->booking['coupon'];
-            $user_reservation->total = $request->booking['total'];
+            $user_reservation->property_id = $bookg['property_id'];
+            $user_reservation->coupon = $bookg['coupon'];
+            $user_reservation->total = $bookg['total'];
             $user_reservation->checkin = optional($booking)->checkin;
             $user_reservation->checkout = optional($booking)->checkout;
             $user_reservation->ip = $request->ip();
             $user_reservation->save();
             $e_services = [];
-
-            $services = $request->booking['services'];
-            $property_extras = $request->booking['property_services'];
+            $services = $bookg['services'];
+            $property_extras = $bookg['property_services'];
             $e_services = [];
             $aq = [];
-            $services = $request->booking['services'];
-            $property_extras = $request->booking['property_services'];
+            $services = $bookg['services'];
+            $property_extras = $bookg['property_services'];
 
 
             foreach ($services as $key => $room_serices) {
@@ -117,16 +116,18 @@ class WebHookController extends Controller
             foreach ($property_extras as $attribute_id) {
                 $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
                 $extras = new Extra;
-                $extras->property_id     = $request->property_id;
-                $extras->user_id         = optional($request->user())->id;
-                $extras->guest_user_id   = $guest->id;
-                $extras->attribute_id    = $attribute_id;
+                $extras->property_id = $request->property_id;
+                $extras->user_id = optional($request->user())->id;
+                $extras->guest_user_id = $guest->id;
+                $extras->attribute_id = $attribute_id;
                 $extras->user_reservation_id  = $user_reservation->id;
                 $extras->price = optional($attribute)->converted_price;
                 $extras->save();
             }
 
             $admin_emails = explode(',', $this->settings->alert_email);
+
+            Log::info($admin_emails);
 
             try {
                 //$when = now()->addMinutes(5); 
