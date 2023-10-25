@@ -10,9 +10,7 @@ use App\Models\SystemSetting;
 use App\Models\OrderedProduct;
 use App\Http\Controllers\Controller;
 use App\Http\Helper;
-
-
-
+use App\Models\Reservation;
 
 class ReservationsController extends Controller
 {
@@ -29,7 +27,9 @@ class ReservationsController extends Controller
 	public function index(Request $request)
 	{
 		$reservations = UserReservation::latest()->get();
-		//UserReservation::truncate();
+		UserReservation::truncate();
+		Reservation::truncate();
+
 		return view('admin.reservations.index', compact('reservations'));
 	}
 
@@ -46,9 +46,9 @@ class ReservationsController extends Controller
 
 	public function show($id)
 	{
-		$user_reservation =  UserReservation::find($id);
-		$sub_total   =  $user_reservation->total;
-		$statuses    =  static::order_status();
+		$user_reservation = UserReservation::find($id);
+		$sub_total = $user_reservation->total;
+		$statuses = static::order_status();
 		return view('admin.reservations.show', compact('statuses', 'user_reservation', 'sub_total'));
 	}
 
