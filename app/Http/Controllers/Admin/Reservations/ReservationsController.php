@@ -27,6 +27,7 @@ class ReservationsController extends Controller
 	public function index(Request $request)
 	{
 		$reservations = UserReservation::latest()->get();
+		dd($reservations);
 		//UserReservation::truncate();
 		//Reservation::truncate();
 
