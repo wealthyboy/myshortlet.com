@@ -4173,6 +4173,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var checked = [];
       var filters = {};
       filters = _defineProperty({}, this.property.id, room.id);
+      console.log(filters);
       checked.push(filters);
       var form = {
         apartment_quantity: checked,

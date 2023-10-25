@@ -239,6 +239,8 @@ export default {
       filters = {
         [this.property.id]: room.id,
       };
+
+      console.log(filters);
       checked.push(filters);
 
       let form = {
