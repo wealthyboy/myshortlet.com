@@ -92,6 +92,8 @@ class BookingController extends Controller
 		session()->put('booking', $value);
 		$cookie = null;
 
+		dd($apartment_quantity);
+
 		foreach ($apartment_quantity as $key => $apartments) {
 			foreach ($apartments as $apartment_id => $quantity) {
 				$booking = new BookingDetail;
