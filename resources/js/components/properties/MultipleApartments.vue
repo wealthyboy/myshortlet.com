@@ -245,7 +245,8 @@ export default {
 
       let form = {
         apartment_quantity: checked,
-        property_id: this.property.id,
+        propertyId: this.property.id,
+        apID: ap.id,
         check_in_checkout: this.form.check_in_checkout,
       };
 
