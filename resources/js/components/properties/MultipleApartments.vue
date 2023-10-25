@@ -222,7 +222,7 @@ export default {
       this.amount = this.apTotal;
     },
     reserve(room) {
-
+      console.log(room)
       if (
         !this.form.check_in_checkout ||
         this.form.check_in_checkout.split(" ").length < 2
