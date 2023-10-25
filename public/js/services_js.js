@@ -3507,7 +3507,7 @@ __webpack_require__.r(__webpack_exports__);
     propertyLoading: Boolean,
     stays: Array,
     qty: Boolean,
-    amenities: Array
+    amenities: Object
   },
   data: function data() {
     return {
