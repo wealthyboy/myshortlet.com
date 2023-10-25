@@ -3588,7 +3588,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     reserve: function reserve(room) {
-      console.log(room);
       this.$emit("reserve", {
         room: room
       });
@@ -4166,7 +4165,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     reserve: function reserve(room) {
       var _this2 = this;
-      console.log(room);
+      console.log(room.id);
       if (!this.form.check_in_checkout || this.form.check_in_checkout.split(" ").length < 2) {
         this.isDateNeedsToToOpen = true;
         return;

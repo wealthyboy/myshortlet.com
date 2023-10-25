@@ -307,8 +307,6 @@ export default {
       });
     },
     reserve(room) {
-      console.log(room)
-
       this.$emit("reserve", { room });
     },
     getApartmentQuantity(e, ap) {
