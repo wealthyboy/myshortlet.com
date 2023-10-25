@@ -68,8 +68,8 @@ class WebHookController extends Controller
         $user_reservation->property_id = $request->booking['property_id'];
         $user_reservation->coupon = $request->booking['coupon'];
         $user_reservation->total = $request->booking['total'];
-        $user_reservation->checkin = optional($bookings->first())->checkin;
-        $user_reservation->checkout = optional($bookings->first())->checkout;
+        $user_reservation->checkin = optional($booking)->checkin;
+        $user_reservation->checkout = optional($booking)->checkout;
         $user_reservation->ip =  $request->ip();
         $user_reservation->save();
 
