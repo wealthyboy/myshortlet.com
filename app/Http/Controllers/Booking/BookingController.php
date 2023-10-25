@@ -76,7 +76,7 @@ class BookingController extends Controller
 	{
 		$booking = new BookingDetail;
 		$apartment_quantity = $request->apartment_quantity;
-		$apId = $request->apId;
+		$apId = $request->apID;
 		$date  = explode("to", $request->check_in_checkout);
 		$date1 = trim($date[0]);
 		$date2 = trim($date[1]);
@@ -105,7 +105,7 @@ class BookingController extends Controller
 				['apartment_id' => $apId, 'token' => $token],
 				[
 					'apartment_id' => $apId,
-					'property_id' => $request->property_id,
+					'property_id' => $request->propertyId,
 					'user_id' => optional($request->user())->id,
 					'quantity' => 1,
 					'price' => $price,
@@ -121,7 +121,7 @@ class BookingController extends Controller
 			$cookie = cookie('booking', session()->get('booking'), time() + 86400);
 			$booking->apartment_id = $apId;
 			$booking->quantity = 1;
-			$booking->property_id = $request->property_id;
+			$booking->property_id = $request->propertyId;
 			$booking->price = $price;
 			$booking->sale_price = optional($ap)->discounted_price;
 			$booking->total = $sp * 1;
