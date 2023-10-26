@@ -36,7 +36,7 @@ class ApartmentsController extends Controller
      */
     public function apartments(Request $request)
     {
-        $locations  =  Location::has('properties')->all();
+        $locations  =  Location::has('properties')->get();
         return  view('category.index', compact('locations'));
     }
 
