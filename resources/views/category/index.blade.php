@@ -5,8 +5,9 @@
     @if(null !== $locations)
 
     @foreach($locations as $cities)
+    @if ($cities->children->count())
+
     <div class="row ">
-        @if ($cities->children->count())
         @foreach($cities->children as $city)
 
         <div class="col-md-6 my-4">
@@ -15,9 +16,10 @@
             </a>
         </div>
         @endforeach
-        @endif
 
     </div>
+    @endif
+
     @endforeach
     @endif
 
