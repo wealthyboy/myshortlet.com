@@ -88,7 +88,61 @@ class ApartmentsController extends Controller
         ));
     }
 
+    public function location(Request $request, Location $location)
+    {
+        $types =  [
+            'extra_services',
+            'facilities',
+            'rules',
+            'room_facilities',
+            'other' => 'other'
+        ];
+        $str = new  Str;
+        $date = $request->check_in_checkout;
+        $property_is_not_available = null;
+        $cites = [];
 
+
+        $attributes = $location->attributes->groupBy('type');
+        $page_title = implode(" ", explode('-', $location->slug));
+        $breadcrumb = $location->name;
+        $saved =  $this->saved();
+        $locations = $location->children;
+        $properties = Property::where('allow', true)->whereHas('locations', function (Builder  $builder) use ($location) {
+            $builder->where('locations.slug', $location->slug);
+        })
+            ->filter($request,  $this->getFilters($attributes))
+            ->latest()->paginate(20);
+        $properties->appends(request()->all());
+        $total = $properties->total();
+
+
+
+        if ($request->ajax()) {
+            return PropertyLists::collection(
+                $properties
+            )->additional(['attributes' => $attributes, 'search' => false]);
+        }
+        $next_page = [];
+
+        $next_page[] = $properties->nextPageUrl();
+        $properties->load('categories');
+
+
+        return  view('apartments.index', compact(
+            'location',
+            'page_title',
+            'breadcrumb',
+            'attributes',
+            'str',
+            'saved',
+            'properties',
+            'next_page',
+            'locations',
+            'total'
+
+        ));
+    }
 
     public function getFilters($attributes)
     {
