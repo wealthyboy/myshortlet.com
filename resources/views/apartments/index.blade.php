@@ -30,6 +30,9 @@
       @else
       <div class="col-md-2 pr-2 mobile-sidebar">
          <div class=" bg-white  sidebar-section">
+            <a href="https://theluxurysale.com" class="h">
+               <img class="img-fluid" src="/images/banners/ads-07.jpg" alt="">
+            </a>
          </div>
       </div>
       <div id="load-products" class="col-md-8 pl-1">
