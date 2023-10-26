@@ -8018,23 +8018,21 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", [!_vm.propertyLoading && _vm.properties.length ? _c("div", [_c("div", {
-    staticClass: "col-md-12 category-search ml-auto mr-auto mt-4"
-  }), _vm._v(" "), _c("div", {
     staticClass: "form-row"
   }, [_c("div", {
-    staticClass: "form-group category-search ml-1 mr-sm-1 form-border cursor-pointer search col-md-4 bmd-form-grup"
+    staticClass: "form-group category-search form-border cursor-pointer search col-md-5 bmd-form-grup"
   }, [_c("label", {
     staticClass: "pl-2 bmd-label-static checkin mb-0 pl-1",
     attrs: {
       "for": "flatpickr-input-f"
     }
   }, [_vm._v("Check-in - Check-out")]), _vm._v(" "), _c("date-picker")], 1), _vm._v(" "), _c("div", {
-    staticClass: "col-md-4 cursor-pointer",
+    staticClass: "col-md-5 cursor-pointer",
     attrs: {
       id: "people-number"
     }
   }, [_c("guests")], 1), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3 mb-lg-0 mt-lg-0 mt-sm-3 mb-sm-3 ml-1 mr-1 check-availablility"
+    staticClass: "col-md-2 check-availablility"
   }, [_c("button", {
     staticClass: "btn btn-primary btn-block m-auto bold check-availablility-button",
     attrs: {
@@ -8074,9 +8072,7 @@ var render = function render() {
       }
     })], 1)])]), _vm._v(" "), _c("div", {
       staticClass: "col-md-9 position-relative pl-3"
-    }, [_c("h6", {
-      staticClass: "card-category text-gold"
-    }, [_vm._v("\n            " + _vm._s(property.categories) + "\n          ")]), _vm._v(" "), _c("div", {
+    }, [_c("div", {
       staticClass: "d-flex justify-content-between"
     }, [_c("div", [_c("a", {
       staticClass: "bold text-size-1-big",
@@ -8391,7 +8387,7 @@ var render = function render() {
   }, [_vm._v("Choose your unit")]), _vm._v(" "), _c("div", {
     staticClass: "form-row"
   }, [_c("div", {
-    staticClass: "form-group ml-1 mr-sm-1 form-border cursor-pointer search col-md-4 bmd-form-group"
+    staticClass: "form-group form-border cursor-pointer search col-md-5 bmd-form-group"
   }, [_c("label", {
     staticClass: "pl-2",
     attrs: {
@@ -8405,12 +8401,12 @@ var render = function render() {
       dateSelected: _vm.dateSelected
     }
   })], 1), _vm._v(" "), _c("div", {
-    staticClass: "col-md-4 cursor-pointer",
+    staticClass: "col-md-5 cursor-pointer",
     attrs: {
       id: "people-number"
     }
   }, [_c("guests")], 1), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3 mb-lg-0 mt-lg-0 mt-sm-3 mb-sm-3 ml-1 mr-1 check-availablility"
+    staticClass: "col-md-2 check-availablility"
   }, [_c("button", {
     staticClass: "btn btn-primary btn-block m-auto bold check-availablility-button",
     attrs: {

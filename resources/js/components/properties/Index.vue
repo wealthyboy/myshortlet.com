@@ -2,19 +2,17 @@
   <div>
 
     <div v-if="!propertyLoading && properties.length">
-      <div class="col-md-12 category-search ml-auto mr-auto mt-4">
 
-      </div>
 
       <div class="form-row">
-        <div class="form-group category-search ml-1 mr-sm-1  form-border cursor-pointer search col-md-4 bmd-form-grup">
+        <div class="form-group category-search  form-border cursor-pointer search col-md-5 bmd-form-grup">
           <label class="pl-2  bmd-label-static  checkin mb-0 pl-1" for="flatpickr-input-f">Check-in - Check-out</label>
           <date-picker />
         </div>
-        <div id="people-number" class="col-md-4 cursor-pointer ">
+        <div id="people-number" class="col-md-5 cursor-pointer ">
           <guests />
         </div>
-        <div class="col-md-3  mb-lg-0 mt-lg-0 mt-sm-3 mb-sm-3  ml-1 mr-1 check-availablility">
+        <div class="col-md-2  check-availablility">
           <button type="button" @click.prevent="checkAvailabity()"
             class="btn btn-primary btn-block m-auto bold check-availablility-button">
             <i class="material-icons"></i> Check availablity
@@ -36,9 +34,7 @@
             </div>
           </div>
           <div class="col-md-9 position-relative  pl-3">
-            <h6 class="card-category text-gold">
-              {{ property.categories }}
-            </h6>
+
             <div class="d-flex  justify-content-between">
               <div>
                 <a target="_blank" class="bold text-size-1-big" :href="property.link">{{ property.name }}</a>
