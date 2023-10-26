@@ -7225,7 +7225,7 @@ var render = function render() {
     staticClass: "col-md-12 position-relative bg-white"
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_vm.room.reservation_qty && _vm.room.quantity == _vm.room.reservation_qty ? [_c("div", {
+  }, [_vm._v("\n      test\n      "), _vm.room.reservation_qty && _vm.room.quantity == _vm.room.reservation_qty ? [_c("div", {
     staticClass: "text-muted"
   }, [_vm._v("\n          This apartment is not available for your seclected date\n        ")])] : _vm._e()], 2)]) : _vm._e(), _vm._v(" "), _vm.lunchModal ? _c("div", {
     staticClass: "gallery-images",
@@ -8017,7 +8017,7 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_vm._v("\n\n\n  sdsdd\n  "), !_vm.propertyLoading && _vm.properties.length ? _c("div", [_c("div", {
+  return _c("div", [!_vm.propertyLoading && _vm.properties.length ? _c("div", [_c("div", {
     staticClass: "col-md-12 category-search ml-auto mr-auto mt-4"
   }), _vm._v(" "), _c("div", {
     staticClass: "form-row"

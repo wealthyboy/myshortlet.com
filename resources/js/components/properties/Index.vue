@@ -1,8 +1,6 @@
 <template>
   <div>
 
-
-    sdsdd
     <div v-if="!propertyLoading && properties.length">
       <div class="col-md-12 category-search ml-auto mr-auto mt-4">
 
