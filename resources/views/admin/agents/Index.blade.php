@@ -24,11 +24,9 @@
                 <div class="material-datatables">
                     <form action="{{ route('admin.agents.destroy',['agent' => 1]) }}" method="post" enctype="multipart/form-data" id="form-users">
                         @csrf
-
                         @method('DELETE')
                         <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                             <thead>
-
                                 <tr>
                                     <th>
                                         <div class="checkbox">
@@ -36,7 +34,6 @@
                                                 <input onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" type="checkbox" name="optionsCheckboxes">
                                             </label>
                                         </div>
-
                                     </th>
 
                                     <th>Full Name</th>
