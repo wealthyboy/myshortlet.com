@@ -57,14 +57,14 @@ class WebHookController extends Controller
             $user_reservation->payment_type = 'online';
             $user_reservation->property_id =  $input['property_id'];
             $user_reservation->coupon =  $input['coupon'];
-            $user_reservation->total = $input['booking']['total'];
+            $user_reservation->total = $input['total'];
             $user_reservation->checkin = optional($booking)->checkin;
             $user_reservation->checkout = optional($booking)->checkout;
             $user_reservation->ip = $request->ip();
             $user_reservation->save();
             $e_services = [];
-            $services =  $input['services'];
-            $property_extras =  $input['property_services'];
+            $services = $input['services'];
+            $property_extras = $input['property_services'];
             $e_services = [];
             $aq = [];
             $services =  $input['services'];
