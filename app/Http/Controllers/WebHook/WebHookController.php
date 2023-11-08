@@ -41,34 +41,34 @@ class WebHookController extends Controller
         try {
 
             $input = $request->all();
+            $input = $input['booking'];
             $user_reservation = new UserReservation;
             $guest = new GuestUser;
-            $guest->name = $input['booking']['first_name'];
-            $guest->last_name = $input['booking']['last_name'];
-            $guest->email = $input['booking']['email'];
-            $guest->phone_number = $input['booking']['phone_number'];
+            $guest->name = $input['first_name'];
+            $guest->last_name = $input['last_name'];
+            $guest->email = $input['email'];
+            $guest->phone_number = $input['phone_number'];
             $guest->save();
-            $bookg = $request->booking['booking_ids'];
-            $booking = BookingDetail::find($bookg['booking_ids']);
+            $booking = BookingDetail::find($input['booking_ids']);
             $user_reservation->user_id = optional($request->user())->id;
             $user_reservation->guest_user_id = $guest->id;
-            $user_reservation->currency = $bookg['currency'];
+            $user_reservation->currency =  $input['currency'];
             $user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
             $user_reservation->payment_type = 'online';
-            $user_reservation->property_id = $bookg['property_id'];
-            $user_reservation->coupon = $bookg['coupon'];
+            $user_reservation->property_id =  $input['property_id'];
+            $user_reservation->coupon =  $input['coupon'];
             $user_reservation->total = $input['booking']['total'];
             $user_reservation->checkin = optional($booking)->checkin;
             $user_reservation->checkout = optional($booking)->checkout;
             $user_reservation->ip = $request->ip();
             $user_reservation->save();
             $e_services = [];
-            $services = $bookg['services'];
-            $property_extras = $bookg['property_services'];
+            $services =  $input['services'];
+            $property_extras =  $input['property_services'];
             $e_services = [];
             $aq = [];
-            $services = $bookg['services'];
-            $property_extras = $bookg['property_services'];
+            $services =  $input['services'];
+            $property_extras =  $input['property_services'];
 
 
             foreach ($services as $key => $room_serices) {
