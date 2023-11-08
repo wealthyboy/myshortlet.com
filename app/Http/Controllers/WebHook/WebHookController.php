@@ -36,13 +36,10 @@ class WebHookController extends Controller
     public function payment(Request $request)
     {
 
-
-
         \Log::info($request->all());
 
-
-
         try {
+
             $input = $request->all();
             $user_reservation = new UserReservation;
             $guest = new GuestUser;
@@ -53,7 +50,6 @@ class WebHookController extends Controller
             $guest->save();
             $bookg = $request->booking['booking_ids'];
             $booking = BookingDetail::find($bookg['booking_ids']);
-
             $user_reservation->user_id = optional($request->user())->id;
             $user_reservation->guest_user_id = $guest->id;
             $user_reservation->currency = $bookg['currency'];
@@ -61,7 +57,7 @@ class WebHookController extends Controller
             $user_reservation->payment_type = 'online';
             $user_reservation->property_id = $bookg['property_id'];
             $user_reservation->coupon = $bookg['coupon'];
-            $user_reservation->total = $bookg['total'];
+            $user_reservation->total = $input['booking']['total'];
             $user_reservation->checkin = optional($booking)->checkin;
             $user_reservation->checkout = optional($booking)->checkout;
             $user_reservation->ip = $request->ip();

@@ -49,9 +49,14 @@
                      <div class="col-md-6">
                         <div class="form-group label-floating">
                            <label class="control-label">Password</label>
-                           <input id="Password" required="true" type="text" class="form-control{{ $errors->has('Password') ? ' is-invalid' : '' }}" name="password" value="{{ old('Password') }}" autofocus>
+                           <input id="password" required="true" type="text" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" value="{{ old('password') }}" autofocus>
                         </div>
                      </div>
+
+                  </div>
+
+                  <div class="row">
+
 
                      <div class="checkbox">
                         <label>
@@ -61,7 +66,7 @@
                      </div>
 
                      <div class="col-md-6">
-                        <select name="permission_id" required="true" class="form-control">
+                        <select name="permission_id" class="form-control">
                            <option value="" selected>Choose Permission</option>
                            @foreach($permissions as $permission )
                            <option value="{{ $permission->id }}">{{ $permission->name }}</option>

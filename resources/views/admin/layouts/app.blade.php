@@ -233,6 +233,14 @@
                                         <span class="sidebar-normal"> Admin </span>
                                     </a>
                                 </li>
+
+                                <li class="{{ $helper->active_link(['agents']) }} ">
+                                    <a href="{{ route('admin.agents.index') }}">
+                                        <span class="sidebar-mini"><i class="fa fa-circle"></i></span>
+                                        <span class="sidebar-normal"> Agents</span>
+                                    </a>
+                                </li>
+
                                 <li class="{{ $helper->active_link(['customers']) }} ">
                                     <a href="{{ route('customers.index') }}">
                                         <span class="sidebar-mini"><i class="fa fa-circle"></i></span>

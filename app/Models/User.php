@@ -163,6 +163,12 @@ class User extends Authenticatable
 	}
 
 
+	public function isAgent()
+	{
+		return $this->type  == 'agent' ? true : false;
+	}
+
+
 	public function isAdmin()
 	{
 		return $this->users_permission  !== null ? true : false;

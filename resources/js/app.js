@@ -20,6 +20,12 @@ const ForgotPassword = require("./components/auth/ForgotPassword.vue").default;
 const ResetPassword = require("./components/auth/ResetPassword.vue").default;
 const ChangePassword = require("./components/auth/ChangePassword.vue").default;
 const Comments = require("./components/blog/Comments.vue").default;
+const Table = require("./components/table/Table").default;
+const Account = require("./components/account/Account").default;
+
+
+
+
 let token = document.head.querySelector('meta[name="csrf-token"]');
 Window.token = token.content;
 
@@ -42,5 +48,7 @@ const app = new Vue({
     Comments,
     SignUp,
     Login,
+    Account,
+    Table
   },
 });

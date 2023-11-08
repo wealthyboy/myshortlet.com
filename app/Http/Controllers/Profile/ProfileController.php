@@ -3,25 +3,28 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
+use App\Utils\AccountSettingsNav;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-     
+
     public function __construct()
-    {	  
-	    $this->middleware('auth'); 
+    {
+        $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $user = \Auth::user();
-        return view('profile.index',compact('user'));
+
+        $nav = (new AccountSettingsNav())->nav();
+        return view('profiles.create', compact('user', 'nav'));
     }
 
     /**
@@ -42,7 +45,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
 
@@ -58,23 +61,19 @@ class ProfileController extends Controller
     {
         $user = \Auth::user();
 
-        $this->validate($request, [
-            'first_name'     => 'required|max:30',
-            'last_name'      => 'required|max:30',
-            'phone_number'   => 'required|numeric|min:11|unique:users,phone_number,'.$user->id,
-            'email'          => 'required|email|unique:users,email,'.$user->id,
-        ]); 
 
-        $user->name                          = $request->first_name;
-        $user->last_name                     = $request->last_name;
-        $user->phone_number                  = $request->phone_number;
-        $user->email                         = $request->email;
-        $user->company_title                 = $request->phone_number;
-        $user->image                         = $request->image;
-        $user->bio                           = $request->bio;
+        $this->validate($request, [
+            'first_name' => 'required|max:30',
+            'last_name' => 'required|max:30',
+        ]);
+
+        $user->name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->phone_number = $request->phone_number;
+
         $user->save();
 
-        if ($request->ajax()){
+        if ($request->ajax()) {
             return response()->json([
                 'msg' => 'success',
                 'user' => $user
@@ -82,7 +81,7 @@ class ProfileController extends Controller
         }
 
 
-        return redirect()->back()->with('success','Your profile has been updated.');
+        return redirect()->back()->with('success', 'Your profile has been updated.');
     }
 
     /**

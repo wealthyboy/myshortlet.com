@@ -3,21 +3,24 @@
 @section('content')
 
 <div class="bg-light">
+
     @include('_partials.mobile_nav')
+
     <div class="container">
         <div class="row">
             @include('_partials.nav')
-            <div class="col-md-5  mt-5">
-                <h3 class="page-title ">Change Password</h3>
+            <div class="col-md-5 mt-5">
+                <h2 class="page-title ">Account</h2>
                 @include('includes.success')
 
-                <form class="login_form pl-4 pr-4" method="POST" action="/change/password" aria-label="">
+                <form class="login_form pl-4 pr-4" method="POST" action="{{ route('profiles.update', ['profile' => $user->id ]) }}" aria-label="">
                     @csrf
+                    @method('PATCH')
 
                     <!--<p class="large">Great to have you back!</p>-->
                     <div class="form-group bmd-form-group">
-                        <label class="bmd-label-floating">Old Password</label>
-                        <input id="old_password" type="password" class="form-control" name="old_password" value="" required autofocus>
+                        <label class="bmd-label-floating">First Name</label>
+                        <input id="first_name" type="text" class="form-control" name="first_name" value="{{ $user->name }}" required autofocus>
                         @if ($errors->all() )
                         @foreach($errors->all() as $error)
                         <span class="error">
@@ -29,13 +32,13 @@
 
 
                     <div class="form-group bmd-form-group">
-                        <label class="bmd-label-floating">Password</label>
-                        <input id="password" type="password" class="form-control" name="password" required>
+                        <label class="bmd-label-floating">Last Name</label>
+                        <input id="last_name" type="text" class="form-control" name="last_name" value="{{  $user->last_name }}" required>
                     </div>
 
                     <div class="form-group bmd-form-group mb-5">
-                        <label class="bmd-label-floating">Confirm Password</label>
-                        <input id="phone_number" type="password" class="form-control" name="password_confirmation" required>
+                        <label class="bmd-label-floating">Phone Number</label>
+                        <input id="phone_number" type="text" class="form-control" name="phone_number" value="{{  $user->phone_number }}" required>
                     </div>
 
 
@@ -43,14 +46,16 @@
 
                     <div class="clearfix"></div>
                     <p class="form-group ">
-                        <button type="submit" data-loading="Loading" class=" ml-1 btn bold btn--primary btn-round "> Submit</button>
+                        <button type="submit" id="login_form_button" data-loading="Loading" class=" ml-1 btn bold btn--primary btn-round " name="login"> Submit</button>
                     </p>
 
 
                 </form>
+
             </div>
         </div>
     </div>
+
 </div>
 <!--End Contact Form & Info-->
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-   // protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -41,31 +42,36 @@ class LoginController extends Controller
     }
 
 
-    
-	/**
+
+    /**
      * Show the application's login form.
      *
      * @return \Illuminate\Http\Response
      */
     public function showLoginForm(Request $request)
-    {    
-        if (  $request->is('admin/*') ) { 
-	       return view('admin.auth.login');
-	    }
+    {
+
+        // $user = User::where('email', 'jacob.atam@gmail.com')->first();
+        // $user->password = bcrypt(11223344);
+        // $user->save();
+
+        if ($request->is('admin/*')) {
+            return view('admin.auth.login');
+        }
         return view('auth.login');
     }
 
-	
-	  /**
+
+    /**
      * Handle a login request to the application.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function login(Request $request)
-    {  
+    {
         $this->validateLogin($request);
-        
+
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
@@ -73,9 +79,9 @@ class LoginController extends Controller
             $this->fireLockoutEvent($request);
             return $this->sendLockoutResponse($request);
         }
-        
+
         if ($this->attemptLogin($request)) {
-            if ($request->ajax()){
+            if ($request->ajax()) {
                 return response()->json([
                     'loggenIn' => true,
                     'user' => auth()->user(),
@@ -96,13 +102,14 @@ class LoginController extends Controller
 
 
 
-    public function redirectTo() {
-        if ( !empty(request()->segments()[0]) ){
+    public function redirectTo()
+    {
+        if (!empty(request()->segments()[0])) {
             return '/';
         }
     }
-	
-	/**
+
+    /**
      * Get the needed authorization credentials from the request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -112,8 +119,8 @@ class LoginController extends Controller
     {
         return $request->only($this->username(), 'password');
     }
-	
-	/**
+
+    /**
      * Log the user out of the application.
      *
      * @param \Illuminate\Http\Request  $request
@@ -126,17 +133,17 @@ class LoginController extends Controller
         $request->session()->flush();
 
         $request->session()->regenerate();
-	   
-	    if ($request->is('admin/*')) {
-		    return redirect('/admin/login');
-	    }
+
+        if ($request->is('admin/*')) {
+            return redirect('/admin/login');
+        }
 
 
-       return redirect('/');
+        return redirect('/');
     }
 
-	
-	 /**
+
+    /**
      * The user has been authenticated.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -146,14 +153,14 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         //
-		if ($request->is('admin/*')) { 
-	        return \Redirect::to('/admin');
-	    }
+        if ($request->is('admin/*')) {
+            return \Redirect::to('/admin');
+        }
     }
 
-    
-	 
-	protected function sendFailedLoginResponse(Request $request)
+
+
+    protected function sendFailedLoginResponse(Request $request)
     {
         if ($request->ajax()) {
             return response()->json([

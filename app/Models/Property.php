@@ -81,6 +81,12 @@ class Property extends Model
         return $this->hasMany(Apartment::class);
     }
 
+
+    public function agentsApartments()
+    {
+        return $this->hasMany(ApartmentUser::class)->where('user_id', optional(auth()->user())->id);
+    }
+
     public function extra_services()
     {
         return $this->belongsToMany(Attribute::class)

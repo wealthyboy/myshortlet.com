@@ -3,18 +3,22 @@
 namespace App\Http\Controllers\Admin\Agents;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AgentsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('admin');
+    }
+
+
+    /* display all users in the database */
+    public function index(Request $request)
+    {
+        $users = User::agents()->get();
+        return view('admin.agents.index', compact('users'));
     }
 
     /**
@@ -24,7 +28,7 @@ class AgentsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.agents.create');
     }
 
     /**
@@ -35,7 +39,23 @@ class AgentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'first_name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+        ]);
+
+        $user  = new User;
+        $user->name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone_number;
+        $user->type = "agent";
+        $user->password = $request->has('password') ? bcrypt($request->password) : $user->password;
+        $user->save();
+
+        //Sedn email
+
+        return redirect('/admin/agents');
     }
 
     /**
@@ -57,19 +77,29 @@ class AgentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('admin.agents.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    protected function update($id, Request $request)
     {
-        //
+
+        $this->validate($request, [
+            'first_name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+        ]);
+
+        $user  = User::find($id);
+        $user->name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone_number;
+        $user->password = $request->has('password') ? bcrypt($request->password) : $user->password;
+        $user->save();
+
+
+
+        return redirect('/admin/agents');
     }
 
     /**

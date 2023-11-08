@@ -1,43 +1,42 @@
 @extends('layouts.listing')
 @section('content')
 <div class="container-fluid">
-   <div class="row">
-      <div class="col-lg-4 col-md-6 col-sm-6">
-         <div class="card card-stats">
-            <div class="stats p-2 text-center">
-               <a href="javascript:;">
-                  <i class="material-icons">holiday_village</i>
-                  Bookings
-               </a>
-            </div>
-         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+   <h2 class="elements">Account</h2>
+   <div class="row justify-content-center">
+
+      @foreach($nav as $key => $n)
+      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+         <a href="{{ $n['link'] }}" class="icon-box nounderline">
+            <i class="{{ $n['icon'] }}">{{ $n['iconText'] }}</i>
+            <h5 class="porto-sicon-title mx-2">{{ $key }}</h5>
+         </a>
       </div>
-      <div class="col-lg-4 col-md-6 col-sm-6">
-         <div class="card card-stats">
-            <div class="stats p-2 text-center">
-               <a href="javascript:;">
-                  <i class="material-icons">apartment</i>
+      @endforeach
 
-                  Apartments
-               </a>
-            </div>
-         </div>
+      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+         <a href="#" class="icon-box nounderline" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">
+            <i class="fas fa-sign-out-alt left"></i>
+            <h5 class="porto-sicon-title mx-2">Logout</h5>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+               @csrf
+            </form>
+         </a>
       </div>
 
-
-
-
-
-      <div class="col-lg-4 col-md-6 col-sm-6">
-         <div class="card card-stats">
-            <div class="stats p-2 text-center">
-               <a href="javascript:;">
-                  <i class="material-icons">receipt</i>
-                  Rents
-               </a>
-            </div>
-         </div>
-      </div>
 
 
    </div>

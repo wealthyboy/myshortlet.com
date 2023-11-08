@@ -10,13 +10,17 @@ class UserPermission extends Model
 {
     use HasFactory;
 
+    public $table_name  = 'user_permissions';
+
     protected $fillable = [
         'permission_id'
     ];
 
-    
-    public function permission(){
+
+
+
+    public function permission()
+    {
         return $this->belongsTo(Permission::class);
     }
-
 }

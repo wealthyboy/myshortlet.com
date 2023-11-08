@@ -14,6 +14,21 @@
 
 
         <div class="d-flex">
+            @guest
+            <a href="/login" class="align-self-center text-white  bg-dark px-3 py-1 mr-2">
+                <i class="fal fa-sign-in"></i>
+                Login
+            </a>
+            @endguest
+
+            @auth
+            <a href="/account" class="align-self-center text-white  bg-dark px-3 py-1 mr-2">
+                <i class="fal fa-sign-in"></i>
+                Account
+            </a>
+            @endauth
+
+
             @if(isset($show_logo) && $show_logo)
             <a href="/apartments" class="align-self-center text-white  bg-dark px-3 py-1">
                 <i class="fal fa-sign-in"></i>

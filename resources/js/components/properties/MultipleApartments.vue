@@ -95,7 +95,8 @@ export default {
     property: Object,
     propertys_not_available: Array,
     nights: Array,
-    amenities: Object
+    amenities: Object,
+    isAgent: Boolean
   },
   data() {
     return {
@@ -248,6 +249,7 @@ export default {
         propertyId: this.property.id,
         apID: ap.id,
         check_in_checkout: this.form.check_in_checkout,
+
       };
 
       this.propertyLoading = true;
