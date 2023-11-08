@@ -11,7 +11,6 @@
             <a href="javascript:void(0)" onclick="confirm('Are you sure?') ? $('#form-users').submit() : false;" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
                 <i class="material-icons">close</i>Delete
             </a>
-
         </div>
     </div>
 
@@ -24,7 +23,7 @@
                 </div>
                 <div class="material-datatables">
                     <form action="{{ route('admin.agents.destroy',['agent' => 1]) }}" method="post" enctype="multipart/form-data" id="form-users">
-                        {{ csrf_field() }}
+                        @csrf
 
                         @method('DELETE')
                         <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
