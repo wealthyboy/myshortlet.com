@@ -18,7 +18,7 @@ class AgentsController extends Controller
     public function index(Request $request)
     {
         $users = User::agents()->get();
-        return view('admin.agents.index', compact('users'));
+        return view('admin.agents.Index', compact('users'));
     }
 
     /**
