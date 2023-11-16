@@ -49,7 +49,7 @@ class AgentsNotification extends Notification
             ->line('An account has been created for you.')
             ->line('Username: ' . $this->user['email'])
             ->line('Password: ' . $this->user['password'])
-            ->action('Click here to login', url('https://avenuemontaigne.ng/login'))
+            ->action('Click here to login', url('https://avenuemontaigne.ng/login'));
     }
 
     /**
