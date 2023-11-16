@@ -45,7 +45,7 @@ class AgentsController extends Controller
     {
         $request->validate([
             'first_name' => 'required|max:255',
-            'email' => 'required|unique:email|max:255',
+            'email' => 'required|unique:users|max:255',
         ]);
 
 
