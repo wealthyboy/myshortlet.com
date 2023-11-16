@@ -122,8 +122,13 @@ class AgentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        User::canTakeAction(5);
+
+        User::destroy($request->selected);
+        $flash = app('App\Http\Flash');
+        $flash->success("Success", "Users Deleted");
+        return redirect()->back();
     }
 }
