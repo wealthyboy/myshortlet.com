@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Notifications\AgentsNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Validation\Rule;
+
 
 class AgentsController extends Controller
 {
@@ -43,8 +45,11 @@ class AgentsController extends Controller
     {
         $this->validate($request, [
             'first_name' => 'required|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'required|unique:email|max:255',
         ]);
+
+
+
 
         $input  = $request->all();
 
