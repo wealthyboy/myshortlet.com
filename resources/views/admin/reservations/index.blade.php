@@ -27,7 +27,7 @@
                            <th>Check-out</th>
                            <th>Date Added</th>
                            <th>Total</th>
-                           <th class="text-right">Action</th>
+                           <th class="text-right"></th>
                         </tr>
                      </thead>
                      <tbody>
@@ -41,13 +41,20 @@
                            <td>{{ $reservation->created_at }}</td>
                            <td class="text-left">{{ $reservation->currency  ?? '₦'}}{{ $reservation->total }}</td>
                            <td class="td-actions text-center">
+
+                              @if(!$reservation->is_cancelled)
                               <span><a href="{{ route('admin.reservations.show',['reservation'=>$reservation->id]) }}" rel="tooltip" class="btn btn-success btn-simple" data-original-title="" title="View">
                                     <i class="fa fa-eye"></i>
                                  </a></span>
 
-                              <span><a href="/admin/reservation/cancelled" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel">
+                              <span><a href="/admin/reservations?cancel=1&id={{ $reservation->id }}" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel">
                                     <i class="fa fa-refresh"></i>
                                  </a></span>
+                              @else
+                              <span class="btn btn-danger btn-simple">
+                                 Cancelled
+                              </span>
+                              @endif
                            </td>
                            @endforeach
 

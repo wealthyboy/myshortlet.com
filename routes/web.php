@@ -19,6 +19,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
 
 
     Route::resource('reservations', 'Admin\Reservations\ReservationsController', ['names' => 'admin.reservations']);
+
     Route::resource('agents', 'Admin\Agents\AgentsController', ['names' => 'admin.agents']);
 
     Route::post('upload', 'Admin\Uploads\UploadsController@store');

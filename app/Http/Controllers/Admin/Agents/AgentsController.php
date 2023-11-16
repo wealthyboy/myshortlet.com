@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin\Agents;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\AgentsNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class AgentsController extends Controller
 {
@@ -44,6 +46,8 @@ class AgentsController extends Controller
             'email' => 'required|email|max:255',
         ]);
 
+        $input  = $request->all();
+
         $user  = new User;
         $user->name = $request->first_name;
         $user->last_name = $request->last_name;
@@ -53,7 +57,12 @@ class AgentsController extends Controller
         $user->password = $request->has('password') ? bcrypt($request->password) : $user->password;
         $user->save();
 
+
+
         //Sedn email
+
+        $user->notify(new AgentsNotification($input));
+
 
         return redirect('/admin/agents');
     }

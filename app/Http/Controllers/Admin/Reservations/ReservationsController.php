@@ -11,6 +11,7 @@ use App\Models\OrderedProduct;
 use App\Http\Controllers\Controller;
 use App\Http\Helper;
 use App\Models\Reservation;
+use Illuminate\Notifications\Notification;
 
 class ReservationsController extends Controller
 {
@@ -26,11 +27,15 @@ class ReservationsController extends Controller
 
 	public function index(Request $request)
 	{
-		$reservations = UserReservation::latest()->get();
-		//dd($reservations);
-		//UserReservation::truncate();
-		//Reservation::truncate();
 
+		if ($request->filled('cancel')) {
+			$UserReservation = UserReservation::find($request->id);
+			$UserReservation->is_cancelled = 1;
+			$UserReservation->save();
+		}
+
+
+		$reservations = UserReservation::latest()->get();
 		return view('admin.reservations.index', compact('reservations'));
 	}
 
