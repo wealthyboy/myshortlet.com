@@ -4,6 +4,8 @@
         <a href="/" class="navbar-brand">
             <div class="logo-small">
 
+                <img src="/images/logo/avem-logo.png" alt="" srcset="">
+
                 @if(isset($show_logo) && $show_logo)
                 @else
                 @endif
