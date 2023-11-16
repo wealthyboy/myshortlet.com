@@ -45,7 +45,7 @@ class AgentsNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting('Hello ' . $this->user['name'])
+            ->greeting('Hello ' . $this->user['first_name'])
             ->line('An account has been created for you.')
             ->line('Username: ' . $this->user['email'])
             ->line('Password: ' . $this->user['password'])
