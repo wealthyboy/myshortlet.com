@@ -43,7 +43,7 @@ class AgentsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'first_name' => 'required|max:255',
             'email' => 'required|unique:email|max:255',
         ]);
