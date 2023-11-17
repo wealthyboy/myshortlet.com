@@ -328,7 +328,7 @@
                                                 <table class="centerize" data-border-bottom-color="LogoDivider-OnMobile" style="border-bottom-color:#67bffd; margin-left:0;" cellspacing="0" cellpadding="0" border="0">
                                                    <tr>
                                                       <td class="esFrMb" width="30"></td>
-                                                      <td style="line-height:1px;" align="center"><a href="/" target="_blank" style="text-decoration: none;"><img src="https://avenuemontaigne.ng/images/logo/1687693973avm%20residences-23.png" style=" max-width:100px; height: 30px; margin-top: 37px;display: block;text-decoration: none;border: none;" alt="Avm Logo " vspace="0" hspace="0" border="0" align="top"></a></td>
+                                                      <td style="line-height:1px;" align="center"><a href="/" target="_blank" style="text-decoration: none;"><img src="https://avenuemontaigne.ng/images/logo/avem-logo.png" style=" max-width:100px; height: 30px; margin-top: 37px;display: block;text-decoration: none;border: none;" alt="Avm Logo " vspace="0" hspace="0" border="0" align="top"></a></td>
                                                       <td class="esFrMb" width="30"></td>
                                                    </tr>
                                                 </table>
