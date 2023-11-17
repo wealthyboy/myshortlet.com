@@ -11,7 +11,7 @@
         @foreach($cities->children as $city)
 
         <div class="col-md-6 my-4">
-            <a href="/apartments/{{ $city->slug }}">
+            <a href="/apartments/in/{{ $city->slug }}">
                 <img src="{{ $city->image }}" class="img-fluid" alt="">
             </a>
         </div>

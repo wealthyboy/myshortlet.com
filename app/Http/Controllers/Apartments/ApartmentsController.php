@@ -129,6 +129,7 @@ class ApartmentsController extends Controller
         $properties->load('categories');
 
 
+
         return  view('apartments.index', compact(
             'location',
             'page_title',

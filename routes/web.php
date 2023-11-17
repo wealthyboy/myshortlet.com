@@ -133,7 +133,9 @@ Route::get('pages/{information}', 'Information\InformationController@show');
 
 Route::get('apartments', 'Apartments\ApartmentsController@apartments');
 
-Route::get('apartments/{location}', 'Apartments\ApartmentsController@location');
+Route::get('apartments/in/{location}', 'Apartments\ApartmentsController@location');
+
+
 Route::resource('profile/bookings', 'ProfileBookings\\ProfileBookingsController');
 
 Route::get('profile/apartments', 'ProfileApartments\\ProfileApartmentsController@index');
