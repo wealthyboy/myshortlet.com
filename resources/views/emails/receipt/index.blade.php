@@ -649,7 +649,7 @@
                                                                      <table width="100%" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
                                                                         <tbody>
                                                                            <tr>
-                                                                              <td align="right" class="container-image"><img class="p-img" src="{{ $reservation->apartment->image_m }}" width="100%" height="auto" alt="locl" style="width: 100%; max-width: 150px; display: block; border: 0px;"></td>
+                                                                              <td align="right" class="container-image"><img class="p-img" src="{{ $reservation->property->image_m }}" width="100%" height="auto" alt="locl" style="width: 100%; max-width: 150px; display: block; border: 0px;"></td>
                                                                            </tr>
                                                                         </tbody>
                                                                      </table>
