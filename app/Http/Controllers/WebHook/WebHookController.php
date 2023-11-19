@@ -121,6 +121,8 @@ class WebHookController extends Controller
 
                 $attr = AttributeProperty::where('attribute_id', $attribute_id)->first();
 
+                dd($attr);
+
 
                 $extras = new Extra;
                 $extras->property_id = $request->property_id;
