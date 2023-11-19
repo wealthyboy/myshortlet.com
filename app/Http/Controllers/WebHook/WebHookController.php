@@ -120,10 +120,6 @@ class WebHookController extends Controller
                 $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
 
                 $attr = AttributeProperty::where('attribute_id', $attribute_id)->first();
-
-                dd($attr);
-
-
                 $extras = new Extra;
                 $extras->property_id = $request->property_id;
                 $extras->user_id = optional($request->user())->id;
