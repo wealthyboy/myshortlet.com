@@ -3,11 +3,11 @@
 
 <div class="container-fluid">
     @if(null !== $locations)
-
-    @foreach($locations as $cities)
-    @if ($cities->children->count())
-
     <div class="row ">
+
+        @foreach($locations as $cities)
+        @if ($cities->children->count())
+
         @foreach($cities->children as $city)
 
         <div class="col-md-6 my-4">
@@ -17,11 +17,13 @@
         </div>
         @endforeach
 
-    </div>
-    @endif
+        @endif
 
-    @endforeach
-    @endif
+        @endforeach
+        @endif
+
+    </div>
+
 
 </div>
 @endsection
