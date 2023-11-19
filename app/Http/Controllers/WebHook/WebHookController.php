@@ -20,6 +20,7 @@ use App\Models\SystemSetting;
 use App\Models\BookingDetail;
 use App\Models\Extra;
 use App\Models\ApartmentAttribute;
+use App\Models\Attribute;
 use Illuminate\Support\Facades\Mail;
 
 class WebHookController extends Controller
@@ -116,13 +117,17 @@ class WebHookController extends Controller
 
             foreach ($property_extras as $attribute_id) {
                 $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
+
+                $attr = Attribute::find($attribute_id);
+
+
                 $extras = new Extra;
                 $extras->property_id = $request->property_id;
                 $extras->user_id = optional($request->user())->id;
                 $extras->guest_user_id = $guest->id;
                 $extras->attribute_id = $attribute_id;
                 $extras->user_reservation_id  = $user_reservation->id;
-                $extras->price = optional($attribute)->converted_price;
+                $extras->price = optional($attr)->converted_price;
                 $extras->save();
             }
 
