@@ -93,26 +93,27 @@ class WebHookController extends Controller
             $reservation->checkout = $booking->checkout;
             $reservation->save();
 
-            dd($e_services);
 
-
-            foreach ($e_services as $key => $attributes) {
-                foreach ($attributes as $attribute_id => $qty) {
-                    $extras = new Extra;
-                    if ($booking->apartment_id == $key) {
-                        $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
-                        $extras->apartment_id  = $key;
-                        $extras->property_id = $request->property_id;
-                        $extras->quantity = $qty;
-                        $extras->user_id  = optional($request->user())->id;
-                        $extras->reservation_id  = $reservation->id;
-                        $extras->price = $attribute->converted_price;
-                        $extras->guest_user_id = $guest->id;
-                        $extras->attribute_id = $attribute_id;
-                        $extras->save();
+            if (!empty($e_services)) {
+                foreach ($e_services as $key => $attributes) {
+                    foreach ($attributes as $attribute_id => $qty) {
+                        $extras = new Extra;
+                        if ($booking->apartment_id == $key) {
+                            $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
+                            $extras->apartment_id  = $key;
+                            $extras->property_id = $request->property_id;
+                            $extras->quantity = $qty;
+                            $extras->user_id  = optional($request->user())->id;
+                            $extras->reservation_id  = $reservation->id;
+                            $extras->price = $attribute->converted_price;
+                            $extras->guest_user_id = $guest->id;
+                            $extras->attribute_id = $attribute_id;
+                            $extras->save();
+                        }
                     }
                 }
             }
+
 
 
             foreach ($property_extras as $attribute_id) {
