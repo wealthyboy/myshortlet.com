@@ -120,6 +120,8 @@ class WebHookController extends Controller
 
                 $attr = Attribute::find($attribute_id);
 
+                dd($attr);
+
 
                 $extras = new Extra;
                 $extras->property_id = $request->property_id;
@@ -138,7 +140,6 @@ class WebHookController extends Controller
 
             try {
                 //$when = now()->addMinutes(5); 
-
                 Mail::to($guest->email)
                     ->bcc($admin_emails[0])
                     ->send(new ReservationReceipt($user_reservation, $this->settings));
