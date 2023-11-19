@@ -130,7 +130,7 @@ class WebHookController extends Controller
 
             Log::info($admin_emails);
 
-            dd($user_reservation->extras->load('attributes'));
+            dd($user_reservation->extras);
 
             try {
                 //$when = now()->addMinutes(5); 
