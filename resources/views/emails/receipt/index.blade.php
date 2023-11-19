@@ -443,9 +443,7 @@
                                                                   <div style="font-size: 18px;font-weight: bold;  margin-bottom: 6px;">Check-in Time: <span style="font-size: 13px;font-weight: normal;"> {{ optional($user_reservation->property)->check_in_time }}</span></div>
                                                                   <div style="font-size: 18px;font-weight: bold;  margin-bottom: 6px;">Check-out Time: <span style="font-size: 13px;font-weight: normal;"> {{ optional($user_reservation->property)->check_out_time }}</span></div>
 
-                                                                  <div style="font-size: 18px;font-weight: bold;">Property Contact:</div>
-                                                                  Email: {{ optional(optional($user_reservation->property)->user)->email }}
-                                                                  <br /> Phone number: {{ optional(optional($user_reservation->property)->user)->phone_number }}
+
                                                                </td>
                                                             </tr>
                                                             <tr>
