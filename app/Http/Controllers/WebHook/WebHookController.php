@@ -64,11 +64,10 @@ class WebHookController extends Controller
             $user_reservation->save();
             $e_services = [];
             $services = $input['services'];
-            $property_extras = $input['property_services'];
             $e_services = [];
             $aq = [];
             $services =  $input['services'];
-            $property_extras =  $input['property_services'];
+            $property_extras = $input['property_services'];
 
             if (!empty($services)) {
                 foreach ($services as $key => $room_serices) {
