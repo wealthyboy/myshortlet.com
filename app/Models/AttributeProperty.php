@@ -9,5 +9,5 @@ class AttributeProperty extends Model
 {
     use HasFactory;
 
-    public $table_name = 'attribute_property'
+    public $table_name = 'attribute_property';
 }
