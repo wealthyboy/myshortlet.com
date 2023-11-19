@@ -115,7 +115,6 @@ class ApartmentsController extends Controller
             ->filter($request,  $this->getFilters($attributes))
             ->latest()->paginate(20);
 
-        dd($properties);
         $properties->appends(request()->all());
         $total = $properties->total();
 
