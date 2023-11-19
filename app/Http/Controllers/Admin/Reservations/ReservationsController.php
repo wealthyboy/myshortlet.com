@@ -11,6 +11,7 @@ use App\Models\OrderedProduct;
 use App\Http\Controllers\Controller;
 use App\Http\Helper;
 use App\Models\Reservation;
+use App\Notifications\CancelledNotification;
 use Illuminate\Notifications\Notification;
 
 class ReservationsController extends Controller
@@ -29,9 +30,13 @@ class ReservationsController extends Controller
 	{
 
 		if ($request->filled('cancel')) {
-			$UserReservation = UserReservation::find($request->id);
-			$UserReservation->is_cancelled = 1;
-			$UserReservation->save();
+			$userReservation = UserReservation::find($request->id);
+			$userReservation->is_cancelled = 1;
+			$userReservation->save();
+			CancelledNotification::not
+
+			Notification::notify();
+			
 		}
 
 
