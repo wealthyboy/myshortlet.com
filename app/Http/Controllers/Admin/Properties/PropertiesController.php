@@ -295,7 +295,6 @@ class PropertiesController extends Controller
         $apartment->max_adults = $request->single_room_max_adults;
         $apartment->quantity = 1;
         $apartment->price_mode = $request->sinble_price_mode;
-
         $apartment->type = $request->type;
         $apartment->max_children = $request->single_room_max_children;
         $apartment->no_of_rooms = $request->single_room_number;
