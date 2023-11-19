@@ -36,7 +36,7 @@ class WebHookController extends Controller
     public function payment(Request $request)
     {
 
-        \Log::info($request->all());
+        // dd($request->all());
 
         try {
 
@@ -70,15 +70,17 @@ class WebHookController extends Controller
             $services =  $input['services'];
             $property_extras =  $input['property_services'];
 
-
-            foreach ($services as $key => $room_serices) {
-                foreach ($room_serices as $key => $room_serice) {
-                    foreach ($room_serice as $attribute_id => $qty) {
-                        $aq[$attribute_id] = $qty;
-                        $e_services[$key] = $aq;
+            if (!empty($services)) {
+                foreach ($services as $key => $room_serices) {
+                    foreach ($room_serices as $key => $room_serice) {
+                        foreach ($room_serice as $attribute_id => $qty) {
+                            $aq[$attribute_id] = $qty;
+                            $e_services[$key] = $aq;
+                        }
                     }
                 }
             }
+
 
             $reservation = new Reservation;
             $reservation->quantity = $booking->quantity;
@@ -90,6 +92,10 @@ class WebHookController extends Controller
             $reservation->checkin = $booking->checkin;
             $reservation->checkout = $booking->checkout;
             $reservation->save();
+
+            dd($e_services);
+
+
             foreach ($e_services as $key => $attributes) {
                 foreach ($attributes as $attribute_id => $qty) {
                     $extras = new Extra;

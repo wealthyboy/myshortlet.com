@@ -3014,7 +3014,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       return;
       //}
 
-      return;
       var handler = PaystackPop.setup({
         key: "pk_test_2659f44a347260823efb597be7b846264d5cb393",
         //'pk_live_c4f922bc8d4448065ad7bd3b0a545627fb2a084f',//'pk_test_844112398c9a22ef5ca147e85860de0b55a14e7c',
