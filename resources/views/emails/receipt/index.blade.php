@@ -678,7 +678,7 @@
                                                                                        <tr>
                                                                                           <td height="9"></td>
                                                                                        </tr>
-                                                                                       @if(null !== $reservation->extras)
+                                                                                       @if(null !== $reservation->extras && $reservation->extras->count() )
 
                                                                                        <tr>
                                                                                           <td class="text" style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em">
