@@ -127,7 +127,7 @@ class WebHookController extends Controller
                 $extras->guest_user_id = $guest->id;
                 $extras->attribute_id = $attribute_id;
                 $extras->user_reservation_id  = $user_reservation->id;
-                $extras->price = optional($attr)->converted_price;
+                $extras->price = optional($attr)->price;
                 $extras->save();
             }
 
