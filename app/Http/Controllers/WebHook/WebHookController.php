@@ -120,7 +120,7 @@ class WebHookController extends Controller
 
                 $attr = Attribute::find($attribute_id);
 
-                dd($attr);
+                dd($attribute);
 
 
                 $extras = new Extra;
