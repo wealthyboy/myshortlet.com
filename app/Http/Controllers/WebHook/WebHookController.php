@@ -55,7 +55,7 @@ class WebHookController extends Controller
             $user_reservation->currency =  $input['currency'];
             $user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
             $user_reservation->payment_type = 'online';
-            $user_reservation->property_id =  $input['property_id'];
+            $user_reservation->property_id = $input['property_id'];
             $user_reservation->coupon =  $input['coupon'];
             $user_reservation->total = $input['total'];
             $user_reservation->checkin = optional($booking)->checkin;

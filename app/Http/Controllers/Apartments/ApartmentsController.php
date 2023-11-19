@@ -102,6 +102,8 @@ class ApartmentsController extends Controller
         $property_is_not_available = null;
         $cites = [];
 
+        dd(Property::all());
+
 
         $attributes = $location->attributes->groupBy('type');
         $page_title = implode(" ", explode('-', $location->slug));

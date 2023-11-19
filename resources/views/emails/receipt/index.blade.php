@@ -746,8 +746,6 @@
                                     <td align="left">
                                        <table cellspacing="0" cellpadding="0" border="0" align="center">
                                           <tr>
-
-
                                              <th class="stack2" style="margin: 0px; padding: 0px; border-bottom: 1px solid rgb(200, 198, 198);" data-border-bottom-color="borderColor" width="1000">
 
                                                 <table class="action" align="center" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; margin: 30px auto; padding: 0; text-align: center; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%;">
@@ -763,11 +761,6 @@
                                                                            <td align="left" class="pn" style="padding-left:10px;">
                                                                               <table width="260" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:260px;">
                                                                                  <tbody>
-
-
-
-
-
                                                                                     <tr>
                                                                                        <td class="text" style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em">
                                                                                           Extras
@@ -783,8 +776,6 @@
                                                                                        </td>
                                                                                     </tr>
                                                                                     @endforeach
-
-
                                                                                  </tbody>
                                                                               </table>
                                                                            </td>
