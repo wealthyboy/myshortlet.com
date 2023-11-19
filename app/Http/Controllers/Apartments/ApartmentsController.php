@@ -102,7 +102,6 @@ class ApartmentsController extends Controller
         $property_is_not_available = null;
         $cites = [];
 
-        dd(Property::all());
 
 
         $attributes = $location->attributes->groupBy('type');
@@ -115,6 +114,8 @@ class ApartmentsController extends Controller
         })
             ->filter($request,  $this->getFilters($attributes))
             ->latest()->paginate(20);
+
+        dd($properties);
         $properties->appends(request()->all());
         $total = $properties->total();
 
