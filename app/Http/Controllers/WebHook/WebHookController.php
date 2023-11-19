@@ -21,6 +21,7 @@ use App\Models\BookingDetail;
 use App\Models\Extra;
 use App\Models\ApartmentAttribute;
 use App\Models\Attribute;
+use App\Models\AttributeProperty;
 use Illuminate\Support\Facades\Mail;
 
 class WebHookController extends Controller
@@ -118,9 +119,7 @@ class WebHookController extends Controller
             foreach ($property_extras as $attribute_id) {
                 $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
 
-                $attr = Attribute::find($attribute_id);
-
-                dd($attribute);
+                $attr = AttributeProperty::where('attribute_id', $attribute_id)->first();
 
 
                 $extras = new Extra;
