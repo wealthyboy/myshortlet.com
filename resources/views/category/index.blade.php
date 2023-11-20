@@ -14,9 +14,9 @@
             <a href="/apartments/in/{{ $city->slug }}">
                 <img src="{{ $city->image }}" class="img-fluid" alt="">
 
-                <p>
+                <h2>
                     {{ $city->name }}
-                </p>
+                </h2>
 
                 <p>
                     {{ $city->description }}
