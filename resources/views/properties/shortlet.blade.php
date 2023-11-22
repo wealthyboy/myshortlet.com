@@ -16,7 +16,7 @@
          </div>
          <div class="clearfix"></div>
          <div class=" {{ $property_type->images->count() >= 4 ? 'col-md-8' : 'col-md-12' }} position-relative bg-white  d-none d-lg-block ">
-            <a href="#" data-src="{{  optional($property_type->images[0])->image }}" class="img card-img galleries" style="background-image: url('/images/utilities/placeholder.png')"></a>
+            <a href="#" data-src="{{  optional($property_type->images[0])->image }}" class="img lazy card-img galleries" style="background-image: url('/images/utilities/placeholder.png')"></a>
          </div>
          @if ($property_type->images->count() >= 4)
 
@@ -26,7 +26,7 @@
                   <a href="#" class="img lazy card-img-tn img-fluid galleries" data-src="{{  optional($property_type->images[0])->image }}" style="background-image: url('/images/utilities/placeholder.png')"></a>
                </div>
                <div class="col-6 pl-1  pb-1 pr-1">
-                  <a href="#" class="img lazy  card-img-tn img-fluid galleries" data-src="{{  optional($property_type->images[0])->image  }}" style="background-image: url('/images/utilities/placeholder.png')"></a>
+                  <a href="#" class="img lazy  card-img-tn img-fluid galleries" data-src="{{  optional($property_type->images[1])->image  }}" style="background-image: url('/images/utilities/placeholder.png')"></a>
                </div>
                <!-- <div class="col-6 ">
                   <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $property_type->images[1]->image }}')"></a>
