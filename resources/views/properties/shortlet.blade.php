@@ -63,16 +63,14 @@
                   <a class="nav-link text-capitalize" href="#Amenities">Amenities</a>
                   <a class="nav-link text-capitalize pb-1" href="#Location">Location</a>
                </nav>
-               <a target="_blank" href="/property/avenu-montaigne-42210936" class="btn btn-round  btn-blue     d-lg-block d-xl-block align-self-end">
-                  Make Reservation
-               </a>
+
             </div>
          </div>
       </div>
    </div>
    <div class="">
       <div class="container">
-         <div class="row   align-items-start">
+         <div class="row align-items-start">
             <div class=" {{ $property->type == 'single' ? 'col-md-7' : 'col-md-12' }} rounded  mt-1">
                <div id="Overview" class="name rounded bg-white">
                   <div class="card-body">
