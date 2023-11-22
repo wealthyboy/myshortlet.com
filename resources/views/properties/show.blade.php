@@ -3,8 +3,6 @@
 <div class=""></div>
 @include('properties.shortlet')
 
-
-
 <div class="d-none gallery-images" style="
       position: fixed; 
       display: block;
@@ -16,21 +14,20 @@
       bottom: 0;
       z-index: 2090; 
       background-color: rgba(0,0,0,.5);
-      cursor: pointer;" 
-   >
+      cursor: pointer;">
    <div style="" class="">
       <button style="z-index: 1; right: 3px;" class="close-icon cursor-pointer fa-2x position-absolute"><i class="fal fa-times"></i></button>
       <div id="gallery-images" class="carousel slide carousel-fade" data-ride="carousel">
          <ol class="carousel-indicators">
-           @foreach($property->images  as $key => $image)
+            @foreach($property->images as $key => $image)
             <li data-target="#gallery-images" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : ''}}"></li>
             @endforeach
 
          </ol>
          <div class="carousel-inner">
-            @foreach($property->images  as $key => $image)
+            @foreach($property->images as $key => $image)
             <div class="carousel-item {{ $key == 0 ? 'active' : ''}}">
-               <div  class="full-background" style="background-image: url('{{ $image->image }}');">
+               <div class="full-background" style="background-image: url('{{ $image->image }}');">
                   <div class="container">
                      <div class="row">
                      </div>
@@ -55,15 +52,15 @@
 @endsection
 @section('inline-scripts')
 jQuery(function() {
-   $("#full-image").on('click',function(e){
-      e.preventDefault()
-      $("#content").addClass('d-')
-      $('.gallery-images').removeClass('d-none')
-   })
+$("#full-image").on('click',function(e){
+e.preventDefault()
+$("#content").addClass('d-')
+$('.gallery-images').removeClass('d-none')
+})
 
-   $('.close-icon').on('click',function(){
-      $('.gallery-images').addClass('d-none')
-   })
+$('.close-icon').on('click',function(){
+$('.gallery-images').addClass('d-none')
+})
 
   $('.sm-flexslider').flexslider({
     animation: "slide",
@@ -74,37 +71,37 @@ jQuery(function() {
 var geocoder;
 var map, big_map;
 function initialize() {
-   geocoder = new google.maps.Geocoder();
-   var latlng = new google.maps.LatLng(-34.397, 150.644);
-   var mapOptions = {
-   zoom: 17,
-   center: latlng,
-   mapTypeControl: false,
-      streetViewControl: false
-   };
-   big_map = new google.maps.Map(document.getElementById("map"), mapOptions);
-      map = new google.maps.Map(document.getElementById("map2"), mapOptions);
-   }
+geocoder = new google.maps.Geocoder();
+var latlng = new google.maps.LatLng(-34.397, 150.644);
+var mapOptions = {
+zoom: 17,
+center: latlng,
+mapTypeControl: false,
+streetViewControl: false
+};
+big_map = new google.maps.Map(document.getElementById("map"), mapOptions);
+map = new google.maps.Map(document.getElementById("map2"), mapOptions);
+}
 function codeAddress(address = "{{ $property->city }}, {{ $property->state }}") {
-   geocoder.geocode({ address: address }, function(results, status) {
-   if (status == "OK") {
-      map.setCenter(results[0].geometry.location);
-      var marker = new google.maps.Marker({
-      map: map,
-         position: results[0].geometry.location,
-      });
-      big_map.setCenter(results[0].geometry.location);
-      var marker = new google.maps.Marker({
-      map: big_map,
-         position: results[0].geometry.location,
-      });
-      } else {
-         alert("Geocode was not successful for the following reason: " + status);
-      }
-   });
+geocoder.geocode({ address: address }, function(results, status) {
+if (status == "OK") {
+map.setCenter(results[0].geometry.location);
+var marker = new google.maps.Marker({
+map: map,
+position: results[0].geometry.location,
+});
+big_map.setCenter(results[0].geometry.location);
+var marker = new google.maps.Marker({
+map: big_map,
+position: results[0].geometry.location,
+});
+} else {
+alert("Geocode was not successful for the following reason: " + status);
+}
+});
 }
 window.onload = function() {
-   initialize();
-   codeAddress();
+initialize();
+codeAddress();
 };
 @stop

@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'google_map' => ['key' => env('GOOGLE_MAP') ],
+    'google_map' => ['map' => env('GOOGLE_MAP')],
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
@@ -32,7 +32,7 @@ return [
     ],
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
-        'client_secret' =>env('FACEBOOK_CLIENT_SECRET'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
         'redirect' => env('FACEBOOK_URL'),
     ],
     'sparkpost' => [
