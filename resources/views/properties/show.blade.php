@@ -104,4 +104,33 @@ window.onload = function() {
 initialize();
 codeAddress();
 };
+
+
+document.addEventListener("DOMContentLoaded", function() {
+var lazyImages = [].slice.call(document.querySelectorAll("a.lazy"));
+
+
+if ("IntersectionObserver" in window) {
+console.log(lazyImages)
+
+let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+entries.forEach(function(entry) {
+if (entry.isIntersecting) {
+let lazyImage = entry.target;
+lazyImage.style.backgroundImage = `url(${lazyImage.dataset.src})`;
+lazyImage.classList.remove("lazy");
+console.log(lazyImage)
+lazyImageObserver.unobserve(lazyImage);
+}
+});
+});
+
+lazyImages.forEach(function(lazyImage) {
+lazyImageObserver.observe(lazyImage);
+});
+} else {
+// Possibly fall back to event handlers here
+console.log("error")
+}
+});
 @stop
