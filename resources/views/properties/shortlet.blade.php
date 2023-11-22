@@ -23,10 +23,10 @@
          <div class="col-md-4 d-none d-lg-block ">
             <div class="row no-gutters">
                <div class="col-6 pl-1  pb-1 pr-1">
-                  <a href="#" class="img  card-img-tn img-fluid galleries" data-src="{{ {{ optional($property_type->images[0])->image }} }}" style="background-image: url('/images/utilities/placeholder.png')"></a>
+                  <a href="#" class="img  card-img-tn img-fluid galleries" data-src="{{  optional($property_type->images[0])->image }}" style="background-image: url('/images/utilities/placeholder.png')"></a>
                </div>
                <div class="col-6 pl-1  pb-1 pr-1">
-                  <a href="#" class="img  card-img-tn img-fluid galleries" data-src="{{ {{ optional($property_type->images[0])->image }} }}" style="background-image: url('/images/utilities/placeholder.png')"></a>
+                  <a href="#" class="img  card-img-tn img-fluid galleries" data-src="{{  optional($property_type->images[0])->image  }}" style="background-image: url('/images/utilities/placeholder.png')"></a>
                </div>
                <!-- <div class="col-6 ">
                   <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $property_type->images[1]->image }}')"></a>
@@ -40,10 +40,10 @@
                   </a>
                </div> -->
                <div class="col-6 pl-1  pr-1">
-                  <a href="#" class="img  card-img-tn img-fluid galleries" data-src="{{ {{ optional($property_type->images[2])->image }} }}" style="background-image: url('/images/utilities/placeholder.png')"></a>
+                  <a href="#" class="img  card-img-tn img-fluid galleries" data-src="{{  optional($property_type->images[2])->image }} " style="background-image: url('/images/utilities/placeholder.png')"></a>
                </div>
                <div class="col-6 pb-2 position-relative">
-                  <a class="img  card-img-tn header-filter img-fluid galleries" data-src="{{ {{ optional($property_type->images[3])->image }} }}" style="background-image: url('/images/utilities/placeholder.png')"></a>
+                  <a class="img  card-img-tn header-filter img-fluid galleries" data-src="{{  optional($property_type->images[3])->image }} " style="background-image: url('/images/utilities/placeholder.png')"></a>
                   <a href="#" id="full-image" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image ">
                      <p class="fs-48 font-weight-600 text-white lh-1 mb-1 bold">+{{ $property->images->count() }}</p>
                      <p class="fs-16 font-weight-bold text-white lh-1625 text-uppercase bold">View Gallery</p>
