@@ -4,7 +4,8 @@
       <div class="owl-carousel owl-theme">
         <div class="item" :key="image.id" v-for="image in room.images">
           <img :data-src="image.image" src="/images/utilities/placeholder.png" class="img  lazy img-fluid" />
-          <div class="images-count"><button type="button"
+          <div class="images-count">
+            <button type="button"
               class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
               <svg class="uitk-icon uitk-icon-leading uitk-icon-medium"
                 aria-label="Show all 7 images for Classic Twin Room" role="img" viewBox="0 0 24 24"
@@ -14,7 +15,8 @@
                 <path fill-rule="evenodd"
                   d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z"
                   clip-rule="evenodd"></path>
-              </svg><span aria-hidden="true">7</span></button>
+              </svg><span aria-hidden="true">7</span>
+            </button>
           </div>
         </div>
       </div>
