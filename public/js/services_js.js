@@ -7062,8 +7062,9 @@ var render = function render() {
       key: image.id,
       staticClass: "item"
     }, [_c("img", {
-      staticClass: "img img-fluid",
+      staticClass: "img lazy img-fluid",
       attrs: {
+        "data-src": image.image,
         src: "/images/utilities/placeholder.png"
       }
     }), _vm._v(" "), _c("div", {
@@ -7224,7 +7225,7 @@ var render = function render() {
     staticClass: "price bold mt-2"
   }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n              ")])]], 2), _vm._v(" "), _c("div", {
     staticClass: "text-size-2"
-  }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _vm.room.property.is_refundable ? _c("div", [_c("div", [_vm._v("\n            Fully Refundable\n          ")]), _vm._v(" "), _c("a", {
+  }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _c("div", [_vm.room.property.is_refundable ? _c("div", [_vm._v("\n            Fully Refundable\n          ")]) : _vm._e(), _vm._v(" "), _c("a", {
     staticClass: "btn btn-round btn-blue d-none d-lg-block d-xl-block align-self-end",
     attrs: {
       target: "_blank"
@@ -7235,7 +7236,7 @@ var render = function render() {
         return _vm.reserve(_vm.room);
       }
     }
-  }, [_vm._v("\n            Reserve\n          ")])]) : _vm._e()])])]), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
+  }, [_vm._v("\n            Reserve\n          ")])])])])]), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
     staticClass: "col-md-12 position-relative bg-white"
   }, [_c("div", {
     staticClass: "form-group"

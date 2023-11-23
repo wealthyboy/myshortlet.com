@@ -3,7 +3,7 @@
     <div class="col-md-12 position-relative p-0">
       <div class="owl-carousel owl-theme">
         <div class="item" :key="image.id" v-for="image in room.images">
-          <img src="/images/utilities/placeholder.png" class="img  img-fluid" />
+          <img :data-src="image.image" src="/images/utilities/placeholder.png" class="img  lazy img-fluid" />
           <div class="images-count"><button type="button"
               class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
               <svg class="uitk-icon uitk-icon-leading uitk-icon-medium"
@@ -116,8 +116,8 @@
             </div>
             <div class="text-size-2">{{ room.price_mode }}</div>
           </div>
-          <div v-if="room.property.is_refundable">
-            <div>
+          <div>
+            <div v-if="room.property.is_refundable">
               Fully Refundable
             </div>
             <a target="_blank" @click.prevent="reserve(room)"
@@ -125,8 +125,6 @@
               Reserve
             </a>
           </div>
-
-
         </div>
       </div>
     </div>
