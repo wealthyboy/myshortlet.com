@@ -3513,7 +3513,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // optional style for arrows & dots
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     property: Object,
@@ -7148,7 +7147,7 @@ var render = function render() {
     }
   })])]), _vm._v(" "), _c("span", {
     staticClass: "svg-icon-text"
-  }, [_vm._v(_vm._s(_vm.room.guests) + " Guests")])])])]), _vm._v(" "), _vm.room.free_services.length ? _c("div", {
+  }, [_vm._v(_vm._s(_vm.room.guests) + " Guests")])])]), _vm._v(" "), _vm.room.free_services.length ? _c("div", {
     staticClass: "d-inline-flex flex-wrap"
   }, _vm._l(_vm.room.free_services, function (free_service) {
     return _c("div", {
@@ -7182,7 +7181,7 @@ var render = function render() {
       staticClass: "svg-icon-text"
     }, [_vm._v(_vm._s(bed.parent.name))]), _vm._v(" "), _c("span", {
       staticClass: "svg-icon-text"
-    }, [_vm._v("\n          " + _vm._s(bed.pivot.bed_count) + " " + _vm._s(bed.name) + "\n        ")])]);
+    }, [_vm._v("\n            " + _vm._s(bed.pivot.bed_count) + " " + _vm._s(bed.name) + "\n          ")])]);
   }) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "position-relative mb-1"
   }, [_c("a", {
@@ -7211,10 +7210,10 @@ var render = function render() {
     attrs: {
       d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"
     }
-  })])])]), _vm._v(" "), _c("div", [_c("div", {
+  })])])])], 2), _vm._v(" "), _c("div", [_c("div", {
     staticClass: "d-flex d-flex justify-content-between"
   }, [_c("div", {
-    staticClass: "price-box pb-4"
+    staticClass: "price-box"
   }, [_c("div", {
     staticClass: "d-inline-flex mt-sm-3"
   }, [_vm.room.discounted_price ? [_c("div", {
@@ -7225,7 +7224,7 @@ var render = function render() {
     staticClass: "price bold mt-2"
   }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n              ")])]], 2), _vm._v(" "), _c("div", {
     staticClass: "text-size-2"
-  }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _vm.room.property.is_refundable ? _c("div", [_vm._v("Fully Refundable")]) : _vm._e(), _vm._v(" "), _c("a", {
+  }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _vm.room.property.is_refundable ? _c("div", [_c("div", [_vm._v("\n            Fully Refundable\n          ")]), _vm._v(" "), _c("a", {
     staticClass: "btn btn-round btn-blue d-none d-lg-block d-xl-block align-self-end",
     attrs: {
       target: "_blank"
@@ -7236,11 +7235,11 @@ var render = function render() {
         return _vm.reserve(_vm.room);
       }
     }
-  }, [_vm._v("\n          Reserve\n        ")])])])], 2), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
+  }, [_vm._v("\n            Reserve\n          ")])]) : _vm._e()])])]), _vm._v(" "), _vm.stays && _vm.stays[1] != null ? _c("div", {
     staticClass: "col-md-12 position-relative bg-white"
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\n      test\n      "), _vm.room.reservation_qty && _vm.room.quantity == _vm.room.reservation_qty ? [_c("div", {
+  }, [_vm.room.reservation_qty && _vm.room.quantity == _vm.room.reservation_qty ? [_c("div", {
     staticClass: "text-muted"
   }, [_vm._v("\n          This apartment is not available for your seclected date\n        ")])] : _vm._e()], 2)]) : _vm._e(), _vm._v(" "), _vm.lunchModal ? _c("div", {
     staticClass: "gallery-images",

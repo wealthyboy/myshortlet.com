@@ -29,14 +29,14 @@
             <div class="carousel-item {{ $key == 0 ? 'active' : ''}}">
                <div class="full-background" style="background-image: url('{{ $image->image }}');">
                   <div class="container">
-                     <div class="row">
+                     <div class="row ">
                      </div>
                   </div>
                </div>
             </div>
             @endforeach
-
          </div>
+
          <a class="carousel-control-prev" href="#gallery-images" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>

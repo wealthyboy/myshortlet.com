@@ -56,45 +56,49 @@
 
 
         </div>
-      </div>
 
-
-      <div v-if="room.free_services.length" class="d-inline-flex flex-wrap">
-        <div v-for="free_service in room.free_services" :key="free_service.id" class="position-relative">
-          <span class="position-absolute svg-icon-section "></span>
-          <span class="svg-icon-text text-gray">{{ free_service.name }}</span>
+        <div v-if="room.free_services.length" class="d-inline-flex flex-wrap">
+          <div v-for="free_service in room.free_services" :key="free_service.id" class="position-relative">
+            <span class="position-absolute svg-icon-section "></span>
+            <span class="svg-icon-text text-gray">{{ free_service.name }}</span>
+          </div>
         </div>
-      </div>
 
-      <template v-if="room.bedrooms.length">
-        <div v-for="bed in room.bedrooms" :key="bed.id" class="position-relative mb-1">
-          <span class="position-absolute svg-icon-section">
+        <template v-if="room.bedrooms.length">
+          <div v-for="bed in room.bedrooms" :key="bed.id" class="position-relative mb-1">
+            <span class="position-absolute svg-icon-section">
+              <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+                <path fill-rule="evenodd" d="M11 7h8a4 4 0 014 4v9h-2v-3H3v3H1V5h2v9h8V7zm-1 3a3 3 0 11-6 0 3 3 0 016 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </span>
+            <span class="svg-icon-text">{{ bed.parent.name }}</span>
+            <span class="svg-icon-text">
+              {{ bed.pivot.bed_count }} {{ bed.name }}
+            </span>
+          </div>
+        </template>
+
+        <div class="position-relative mb-1">
+          <a @click.prevent="showRoom(room)" class="d-flex text-highlight" href="#">
+            <span aria-hidden="true">More details</span>
             <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink">
-              <path fill-rule="evenodd" d="M11 7h8a4 4 0 014 4v9h-2v-3H3v3H1V5h2v9h8V7zm-1 3a3 3 0 11-6 0 3 3 0 016 0z"
-                clip-rule="evenodd"></path>
+              <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>
             </svg>
-          </span>
-          <span class="svg-icon-text">{{ bed.parent.name }}</span>
-          <span class="svg-icon-text">
-            {{ bed.pivot.bed_count }} {{ bed.name }}
-          </span>
+          </a>
         </div>
-      </template>
-
-      <div class="position-relative mb-1">
-        <a @click.prevent="showRoom(room)" class="d-flex text-highlight" href="#">
-          <span aria-hidden="true">More details</span>
-          <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink">
-            <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>
-          </svg>
-        </a>
       </div>
+
+
+
+
+
 
       <div>
         <div class="d-flex d-flex justify-content-between">
-          <div class="price-box pb-4">
+          <div class="price-box ">
             <div class="d-inline-flex  mt-sm-3">
               <template v-if="room.discounted_price">
                 <div class="sale-price mr-3">
@@ -112,28 +116,28 @@
             </div>
             <div class="text-size-2">{{ room.price_mode }}</div>
           </div>
-          <div v-if="room.property.is_refundable">Fully Refundable</div>
+          <div v-if="room.property.is_refundable">
+            <div>
+              Fully Refundable
+            </div>
+            <a target="_blank" @click.prevent="reserve(room)"
+              class="btn btn-round  btn-blue  d-none   d-lg-block d-xl-block align-self-end">
+              Reserve
+            </a>
+          </div>
 
-          <a target="_blank" @click.prevent="reserve(room)"
-            class="btn btn-round  btn-blue  d-none   d-lg-block d-xl-block align-self-end">
-            Reserve
-          </a>
+
         </div>
-
-
-
       </div>
     </div>
 
     <div v-if="stays && stays[1] != null" class="col-md-12 position-relative bg-white">
       <div class="form-group ">
-        test
         <template v-if="room.reservation_qty && room.quantity == room.reservation_qty">
           <div class="text-muted ">
             This apartment is not available for your seclected date
           </div>
         </template>
-
       </div>
     </div>
 
@@ -220,7 +224,6 @@
 </template>
 <script>
 // optional style for arrows & dots
-
 export default {
   props: {
     property: Object,

@@ -133,6 +133,11 @@ svg#date-outline {
   z-index: 3;
 }
 
+
+.entire-apartment {
+  height: 299px;
+}
+
 .sidebar-toggle {
   position: fixed;
   transition: left 0.2s ease-in-out 0s;
@@ -220,8 +225,6 @@ svg#date-outline {
 }
 
 
-
-
 video.vidoeo-intro {
   width: 100%;
   height: 100%;
@@ -231,7 +234,6 @@ video.vidoeo-intro {
   position: relative;
   /* display: none; */
 }
-
 
 
 .intro-image {
