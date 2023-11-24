@@ -107,7 +107,7 @@ codeAddress();
 
 
 document.addEventListener("DOMContentLoaded", function() {
-var lazyImages = [].slice.call(document.querySelectorAll("a.lazy"));
+var lazyImages = [].slice.call(document.querySelectorAll(".lazy"));
 
 
 if ("IntersectionObserver" in window) {

@@ -7052,7 +7052,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "col-4 border-bottom mb-1 mt-1 pl-1 pb-1"
+    staticClass: "col-12 col-md-12 border-bottom mb-1 mt-1 pl-1 pb-1"
   }, [_c("div", {
     staticClass: "col-md-12 position-relative p-0"
   }, [_c("div", {
