@@ -59,9 +59,9 @@
          <div class="col-12 ">
             <div class="d-flex justify-content-between bg-white">
                <nav class="nav text-capitalize bg-white">
-                  <a class="nav-link text-capitalize active" href="#Overview">Overview</a>
-                  <a class="nav-link text-capitalize" href="#Amenities">Amenities</a>
-                  <a class="nav-link text-capitalize pb-1" href="#Location">Location</a>
+                  <a class="nav-link text-capitalize active font-weight-bold" href="#Overview">Overview</a>
+                  <a class="nav-link text-capitalize font-weight-bold" href="#Amenities">Amenities</a>
+                  <a class="nav-link text-capitalize pb-1 font-weight-bold" href="#Location">Location</a>
                </nav>
 
             </div>
@@ -109,7 +109,7 @@
                         </div>
                         <div class="col-md-6">
                            <div style="height: 200px;" id="map2"></div>
-                           <div>{{ $property->address }}</div>
+                           <div class="svg-icon-text">{{ $property->address }}</div>
                            @if ($areas->count())
                            <h5 class="bold">Explore the area</h5>
                            <div class="">
@@ -130,8 +130,8 @@
                   @endif
                </div>
                <div class="name bg-white rounded">
-                  <h3 class="card-title  pb-3 p-3 border-bottom bold">About this property</h3>
-                  <div class="card-body">
+                  <h3 class="  pb-3 p-3 border-bottom bold">About this property</h3>
+                  <div class="card-body svg-icon-text">
                      <div>{{ $property->name }}</div>
                      <p><?php echo  html_entity_decode($property->description);  ?></p>
                   </div>
@@ -140,7 +140,7 @@
                   <h3 class="card-title  pb-3 p-3 border-bottom bold">About the area</h3>
                   <div class="card-body">
                      <div class="row   align-items-start">
-                        <div class="col-md-4">
+                        <div class="col-md-4 svg-icon-text">
                            <h3 class="card-title bold"> {{ $property->state }}</h3>
                            {{ $property->state_description }}
                         </div>
