@@ -124,7 +124,7 @@
               Fully Refundable
             </div>
             <a target="_blank" @click.prevent="reserve(room)"
-              class="btn btn-round  btn-blue  d-none   d-lg-block d-xl-block align-self-end font-weight-bold">
+              class="btn btn-round  btn-blue  d-none py-2   d-lg-block d-xl-block align-self-end font-weight-bold">
               Reserve
             </a>
           </div>

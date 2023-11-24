@@ -7227,7 +7227,7 @@ var render = function render() {
   }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _c("div", [_vm.room.property.is_refundable ? _c("div", {
     staticClass: "font-weight-bold text-success"
   }, [_vm._v("\n            Fully Refundable\n          ")]) : _vm._e(), _vm._v(" "), _c("a", {
-    staticClass: "btn btn-round btn-blue d-none d-lg-block d-xl-block align-self-end font-weight-bold",
+    staticClass: "btn btn-round btn-blue d-none py-2 d-lg-block d-xl-block align-self-end font-weight-bold",
     attrs: {
       target: "_blank"
     },
