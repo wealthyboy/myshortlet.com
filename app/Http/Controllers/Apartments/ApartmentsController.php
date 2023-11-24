@@ -165,30 +165,30 @@ class ApartmentsController extends Controller
         $date = Helper::toAndFromDate($request->check_in_checkout);
 
         if (count($date) == 2) {
-            $ids = $property->apartments->pluck('id')->toArray();
+            $apartmentIds = $property->apartments->pluck('id')->toArray();
             $property_is_not_available = null;
             $days = 0;
             $stays = null;
             $data['max_children'] = $request->children ?? 0;
             $data['max_adults']   = $request->adults ?? 1;
             $data['rooms'] = $request->rooms ?? 1;
-            $start_date = $date['start_date'];
-            $end_date = $date['end_date'];
+            $startDate = $date['start_date'];
+            $endDate = $date['end_date'];
             $nights = Helper::nights($date);
-            $apartments = Apartment::where('apartments.property_id', $property->id)
+            $availableApartments = Apartment::whereIn('id', $apartmentIds)
+                ->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
+                    $query->where(function ($q) use ($startDate, $endDate) {
+                        $q->where('checkin', '<', $endDate)
+                            ->where('checkout', '>', $startDate);
+                    });
+                })
                 ->where('apartments.max_adults', '>=',  $data['max_adults'])
                 ->where('apartments.max_children', '>=', $data['max_children'])
                 ->where('apartments.no_of_rooms', '>=', $data['rooms'])
-                ->select('reservations.id as reservation_id', 'reservations.quantity as reservation_qty', 'apartments.*')
-                ->leftJoin('reservations', function ($join) use ($start_date, $end_date) {
-                    $join->on('apartments.id', '=', 'reservations.apartment_id')
-                        ->whereDate('reservations.checkin', '<=', $start_date)
-                        ->whereDate('reservations.checkout', '>=', $end_date);
-                })
-                ->groupBy('apartments.id')->get();
+                ->get();
             if ($request->ajax()) {
                 return response()->json([
-                    "data" => $apartments->load('images', 'free_services', 'bedrooms', 'bedrooms.parent', 'property'),
+                    "data" => $availableApartments->load('images', 'free_services', 'bedrooms', 'bedrooms.parent', 'property'),
                     "nights" => $nights,
                 ], 200);
             }

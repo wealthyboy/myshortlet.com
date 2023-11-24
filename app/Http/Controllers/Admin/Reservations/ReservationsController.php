@@ -10,6 +10,7 @@ use App\Models\SystemSetting;
 use App\Models\OrderedProduct;
 use App\Http\Controllers\Controller;
 use App\Http\Helper;
+use App\Models\Apartment;
 use App\Models\Reservation;
 use App\Notifications\CancelledNotification;
 use Illuminate\Notifications\Notification;
@@ -33,11 +34,13 @@ class ReservationsController extends Controller
 			$userReservation = UserReservation::find($request->id);
 			$userReservation->is_cancelled = 1;
 			$userReservation->save();
-			CancelledNotification::not
+			//CancelledNotification::not
+			//Notification::notify();
 
-			Notification::notify();
-			
 		}
+
+
+
 
 
 		$reservations = UserReservation::latest()->get();

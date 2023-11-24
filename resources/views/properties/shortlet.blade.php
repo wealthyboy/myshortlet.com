@@ -55,7 +55,7 @@
 
          @include('properties.mobile_slides')
       </div>
-      <div class="row">
+      <div class="row nav-links">
          <div class="col-12 ">
             <div class="d-flex justify-content-between bg-white">
                <nav class="nav text-capitalize bg-white">
