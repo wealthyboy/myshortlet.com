@@ -7052,7 +7052,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "col-12 col-md-4 border-bottom mb-1 mt-1 pl-1 pb-1"
+    staticClass: "col-12 col-md-4 border-bottom mb-1 mt-1 pl-1 pb-1 px-0"
   }, [_c("div", {
     staticClass: "col-md-12 position-relative p-0"
   }, [_c("div", {
@@ -8042,7 +8042,7 @@ var render = function render() {
       "for": "flatpickr-input-f"
     }
   }, [_vm._v("Check-in - Check-out")]), _vm._v(" "), _c("date-picker")], 1), _vm._v(" "), _c("div", {
-    staticClass: "col-md-5 cursor-pointer",
+    staticClass: "p col-md-5 cursor-pointer",
     attrs: {
       id: "people-number"
     }
@@ -8061,7 +8061,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "material-icons"
-  }), _vm._v(" Check availablity\n        ")])])]), _vm._v(" "), _vm._l(_vm.properties, function (property) {
+  }), _vm._v(" Check availablityl\n        ")])])]), _vm._v(" "), _vm._l(_vm.properties, function (property) {
     return _c("div", {
       key: property.id,
       staticClass: "bg-white mb-2 rounded position-relative border-radius loaded-apartments"
@@ -8402,7 +8402,7 @@ var render = function render() {
   }, [_vm._v("Choose your unit")]), _vm._v(" "), _c("div", {
     staticClass: "form-row"
   }, [_c("div", {
-    staticClass: "form-group form-border cursor-pointer search col-md-5 bmd-form-group"
+    staticClass: "form-group form-border cursor-pointer search col-md-5 bmd-form-group mb-sm-2 mb-md-0"
   }, [_c("label", {
     staticClass: "pl-2",
     attrs: {
@@ -8416,14 +8416,14 @@ var render = function render() {
       dateSelected: _vm.dateSelected
     }
   })], 1), _vm._v(" "), _c("div", {
-    staticClass: "col-md-5 cursor-pointer",
+    staticClass: "col-md-5 cursor-pointer px-sm-0 px-md-1",
     attrs: {
       id: "people-number"
     }
   }, [_c("guests")], 1), _vm._v(" "), _c("div", {
-    staticClass: "col-md-2 check-availablility"
+    staticClass: "col-md-2 check-availablility mt-sm-2 mt-md-0"
   }, [_c("button", {
-    staticClass: "btn btn-primary btn-block m-auto bold check-availablility-button",
+    staticClass: "btn btn-primary btn-block m-auto bold check-availablility-button rounded",
     attrs: {
       type: "button"
     },

@@ -6,16 +6,16 @@
       <div>
         <h3 class="bold">Choose your unit</h3>
         <div class="form-row">
-          <div class="form-group   form-border cursor-pointer search col-md-5 bmd-form-group">
+          <div class="form-group   form-border cursor-pointer search col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
             <label class="pl-2 " for="flatpickr-input-f">Check-in - Check-out</label>
             <date :isDateNeedsToToOpen="isDateNeedsToToOpen" @dateSelected="dateSelected" />
           </div>
-          <div id="people-number" class="col-md-5 cursor-pointer ">
+          <div id="people-number" class="col-md-5 cursor-pointer px-sm-0 px-md-1">
             <guests />
           </div>
-          <div class="col-md-2 check-availablility">
+          <div class="col-md-2 check-availablility  mt-sm-2 mt-md-0">
             <button type="button" @click.prevent="checkAvailabity()"
-              class="btn btn-primary btn-block m-auto bold check-availablility-button">
+              class="btn btn-primary btn-block m-auto bold check-availablility-button rounded">
               <i class="material-icons"></i> Check availablity
             </button>
           </div>
@@ -32,8 +32,6 @@
       <div :class="{ 'header-filter': propertyLoading }" id="" class="name mt-1 rounded p-2">
         <div class="position-relative">
           <input type="hidden" name="property_id" value="217" />
-
-
           <template v-if="roomsAv.length">
             <div class="row">
               <apartments @reserve="reserve" :amenities="amenities" @qtyChange="getApartmentQuantity"

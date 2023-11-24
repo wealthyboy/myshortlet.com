@@ -9,13 +9,13 @@
           <label class="pl-2  bmd-label-static  checkin mb-0 pl-1" for="flatpickr-input-f">Check-in - Check-out</label>
           <date-picker />
         </div>
-        <div id="people-number" class="col-md-5 cursor-pointer ">
+        <div id="people-number" class="p col-md-5 cursor-pointer ">
           <guests />
         </div>
         <div class="col-md-2  check-availablility">
           <button type="button" @click.prevent="checkAvailabity()"
             class="btn btn-primary btn-block m-auto bold check-availablility-button">
-            <i class="material-icons"></i> Check availablity
+            <i class="material-icons"></i> Check availablityl
           </button>
         </div>
       </div>
