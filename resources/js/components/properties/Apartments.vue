@@ -84,7 +84,7 @@
         </template>
 
         <div class="position-relative mb-1">
-          <a @click.prevent="showRoom(room)" class="d-flex text-highlight" href="#">
+          <a @click.prevent="showRoom(room)" class="d-flex text-highlight font-weight-bold" href="#">
             <span aria-hidden="true">More details</span>
             <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -120,11 +120,11 @@
             <div class="text-size-2">{{ room.price_mode }}</div>
           </div>
           <div>
-            <div v-if="room.property.is_refundable">
+            <div class="font-weight-bold text-success" v-if="room.property.is_refundable">
               Fully Refundable
             </div>
             <a target="_blank" @click.prevent="reserve(room)"
-              class="btn btn-round  btn-blue  d-none   d-lg-block d-xl-block align-self-end">
+              class="btn btn-round  btn-blue  d-none   d-lg-block d-xl-block align-self-end font-weight-bold">
               Reserve
             </a>
           </div>
