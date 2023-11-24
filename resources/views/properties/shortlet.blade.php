@@ -22,7 +22,7 @@
 
          <div class="col-md-4 d-none d-lg-block ">
             <div class="row no-gutters">
-               <div class="col-6 pl-1  pb-1 pr-1">
+               <div class="col-6 pl-1 pb-1 pr-1">
                   <a href="#" class="img lazy card-img-tn img-fluid galleries" data-src="{{  optional($property_type->images[0])->image }}" style="background-image: url('/images/utilities/placeholder.png')"></a>
                </div>
                <div class="col-6 ">

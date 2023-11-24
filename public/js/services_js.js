@@ -7062,10 +7062,10 @@ var render = function render() {
       key: image.id,
       staticClass: "item"
     }, [_c("img", {
-      staticClass: "img lazy img-fluid",
+      staticClass: "img img-fluid",
       attrs: {
         "data-src": image.image,
-        src: "/images/utilities/placeholder.png"
+        src: image.image
       }
     }), _vm._v(" "), _c("div", {
       staticClass: "images-count"
@@ -7087,7 +7087,7 @@ var render = function render() {
       attrs: {
         id: "photo_library-property-offers-media-carousel-1-title"
       }
-    }, [_vm._v("Show all 7 images for Classic Twin Room\n              ")]), _vm._v(" "), _c("path", {
+    }, [_vm._v("Show all " + _vm._s(_vm.room.images.length) + " images\n\n              ")]), _vm._v(" "), _c("path", {
       attrs: {
         "fill-rule": "evenodd",
         d: "M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z",
@@ -7097,7 +7097,7 @@ var render = function render() {
       attrs: {
         "aria-hidden": "true"
       }
-    }, [_vm._v("7")])])])]);
+    }, [_vm._v(_vm._s(_vm.room.images.length))])])])]);
   }), 0)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12 bg-white pt-3"
   }, [_c("div", {
@@ -7113,7 +7113,7 @@ var render = function render() {
       }
     }
   }, [_vm._v(_vm._s(_vm.room.name))])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "entire-apartment"
+    staticClass: "entire-apartments"
   }, [_c("div", {
     staticClass: "bold mb-2"
   }, [_vm._v("Entire apartment")]), _vm._v(" "), _c("div", {
