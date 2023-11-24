@@ -187,7 +187,7 @@
                      <div class="row">
                         @foreach($amenities as $key => $apartment_facilities)
                         <div class="col-md-3">
-                           <h5 class="card-title">{{ $key }}</h5>
+                           <h5 class="card-title bold">{{ $key }}</h5>
                            <ul class="list-unstyled">
                               @foreach($apartment_facilities as $key => $apartment_facility)
                               <li>
