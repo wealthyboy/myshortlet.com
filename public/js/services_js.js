@@ -7398,23 +7398,23 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex justify-content-between"
   }, [_c("div", {
-    staticClass: "form-group ml-1 mr-sm-1 form-border cursor-pointer search col-md-4 bmd-form-group"
+    staticClass: "form-group ml-1 mr-sm-1 form-border cursor-pointer search col-md-4 bmd-form-group mb-sm-2 mb-md-0"
   }, [_c("label", {
     staticClass: "pl-2 ml-4",
     attrs: {
       "for": "flatpickr-input-f"
     }
   }, [_vm._v("Check-in - Check-out")]), _vm._v(" "), _c("date-range")], 1), _vm._v(" "), _c("div", {
-    staticClass: "w-100 ml-2 col-md-4 cursor-pointer p-0",
+    staticClass: "w-100 ml-2 col-md-4 cursor-pointer p-0 px-sm-0 px-md-1",
     attrs: {
       id: "people-number"
     }
   }, [_c("guests")], 1), _vm._v(" "), _c("div", {
-    staticClass: "w-25 ml-2 col- check-availablility"
+    staticClass: "w-25 ml-2 col- check-availablility mb-sm-3 mb-md-0 mt-sm-2 mt-md-0"
   }, [_c("button", {
-    staticClass: "btn btn-primary btn-block m-auto bold check-availablility-button",
+    staticClass: "btn btn-primary btn-block m-auto rounded bold check-availablility-button",
     attrs: {
-      type: "button"
+      type: " button"
     },
     on: {
       click: function click($event) {
