@@ -119,12 +119,12 @@
             </div>
             <div class="text-size-2">{{ room.price_mode }}</div>
           </div>
-          <div>
+          <div class="align-self-end">
             <div class="font-weight-bold text-success" v-if="room.property.is_refundable">
               Fully Refundable
             </div>
             <a target="_blank" @click.prevent="reserve(room)"
-              class="btn btn-round  btn-blue  d-none py-2   d-lg-block d-xl-block align-self-end font-weight-bold">
+              class="btn btn-round  btn-blue   py-2    align-self-end font-weight-bold">
               Reserve
             </a>
           </div>
