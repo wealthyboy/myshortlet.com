@@ -49,6 +49,11 @@
 @import "./styles/cards/card-plain";
 @import "./styles/responsive";
 
+
+body {
+  color: #191e3b;
+}
+
 label.error {
   color: red;
   font-size: 12px;

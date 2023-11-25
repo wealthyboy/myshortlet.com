@@ -17514,6 +17514,10 @@ footer .pull-center {
     width: 245px;
   }
 }
+body {
+  color: #191e3b;
+}
+
 label.error {
   color: red;
   font-size: 12px;

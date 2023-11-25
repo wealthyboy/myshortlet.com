@@ -7185,7 +7185,7 @@ var render = function render() {
   }) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "position-relative mb-1"
   }, [_c("a", {
-    staticClass: "d-flex text-highlight font-weight-bold",
+    staticClass: "d-flex active-link text-highlight font-weight-bold",
     attrs: {
       href: "#"
     },
@@ -7200,8 +7200,10 @@ var render = function render() {
       "aria-hidden": "true"
     }
   }, [_vm._v("More details")]), _vm._v(" "), _c("svg", {
+    staticClass: "align-self-center",
     attrs: {
       "aria-hidden": "true",
+      "class": "align-self-center",
       viewBox: "0 0 24 24",
       xmlns: "http://www.w3.org/2000/svg",
       "xmlns:xlink": "http://www.w3.org/1999/xlink"

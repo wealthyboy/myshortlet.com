@@ -186,6 +186,7 @@ class ApartmentsController extends Controller
                 ->where('apartments.max_children', '>=', $data['max_children'])
                 ->where('apartments.no_of_rooms', '>=', $data['rooms'])
                 ->get();
+
             if ($request->ajax()) {
                 return response()->json([
                     "data" => $availableApartments->load('images', 'free_services', 'bedrooms', 'bedrooms.parent', 'property'),
