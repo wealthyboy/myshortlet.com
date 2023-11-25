@@ -8040,21 +8040,21 @@ var render = function render() {
   return _c("div", [!_vm.propertyLoading && _vm.properties.length ? _c("div", [_c("div", {
     staticClass: "form-row"
   }, [_c("div", {
-    staticClass: "form-group category-search form-border cursor-pointer search col-md-5 bmd-form-grup"
+    staticClass: "form-group category-search form-border cursor-pointer search col-md-5 bmd-form-grup mb-sm-2 mb-md-0"
   }, [_c("label", {
     staticClass: "pl-2 bmd-label-static checkin mb-0 pl-1",
     attrs: {
       "for": "flatpickr-input-f"
     }
   }, [_vm._v("Check-in - Check-out")]), _vm._v(" "), _c("date-picker")], 1), _vm._v(" "), _c("div", {
-    staticClass: "p col-md-5 cursor-pointer",
+    staticClass: "p col-md-5 cursor-pointer px-sm-0 px-md-1",
     attrs: {
       id: "people-number"
     }
   }, [_c("guests")], 1), _vm._v(" "), _c("div", {
-    staticClass: "col-md-2 check-availablility"
+    staticClass: "col-md-2 check-availablility mb-sm-3 mb-md-0 mt-sm-2 mt-md-0"
   }, [_c("button", {
-    staticClass: "btn btn-primary btn-block m-auto bold check-availablility-button",
+    staticClass: "btn btn-primary btn-block m-auto bold check-availablility-button rounded",
     attrs: {
       type: "button"
     },
@@ -8066,7 +8066,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "material-icons"
-  }), _vm._v(" Check availablityl\n        ")])])]), _vm._v(" "), _vm._l(_vm.properties, function (property) {
+  }), _vm._v(" Check availablity\n        ")])])]), _vm._v(" "), _vm._l(_vm.properties, function (property) {
     return _c("div", {
       key: property.id,
       staticClass: "bg-white mb-2 rounded position-relative border-radius loaded-apartments"
@@ -8094,8 +8094,10 @@ var render = function render() {
       staticClass: "col-md-9 position-relative pl-3"
     }, [_c("div", {
       staticClass: "d-flex justify-content-between"
-    }, [_c("div", [_c("a", {
-      staticClass: "bold text-size-1-big",
+    }, [_c("div", {
+      staticClass: "mt-sm-2"
+    }, [_c("a", {
+      staticClass: "bold text-size-1-big mt-sm-2",
       attrs: {
         target: "_blank",
         href: property.link

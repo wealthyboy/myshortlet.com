@@ -1,8 +1,8 @@
 <template>
   <form method="GET" action="/property/search" class="form-row">
     <div class="d-flex justify-content-between ">
-      <div class="form-group ml-1 mr-sm-1 form-border cursor-pointer search col-md-4 bmd-form-group mb-sm-2 mb-md-0"">
-                <label class=" pl-2 ml-4" for="flatpickr-input-f">Check-in - Check-out</label>
+      <div class="form-group ml-1 mr-sm-1 form-border cursor-pointer search col-md-4 bmd-form-group mb-sm-2 mb-md-0">
+        <label class=" pl-2 ml-4" for="flatpickr-input-f">Check-in - Check-out</label>
         <date-range />
       </div>
 

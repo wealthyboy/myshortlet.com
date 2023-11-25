@@ -5,17 +5,17 @@
 
 
       <div class="form-row">
-        <div class="form-group category-search  form-border cursor-pointer search col-md-5 bmd-form-grup">
+        <div class="form-group category-search  form-border cursor-pointer search col-md-5 bmd-form-grup mb-sm-2 mb-md-0">
           <label class="pl-2  bmd-label-static  checkin mb-0 pl-1" for="flatpickr-input-f">Check-in - Check-out</label>
           <date-picker />
         </div>
-        <div id="people-number" class="p col-md-5 cursor-pointer ">
+        <div id="people-number" class="p col-md-5 cursor-pointer  px-sm-0 px-md-1">
           <guests />
         </div>
-        <div class="col-md-2  check-availablility">
+        <div class="col-md-2  check-availablility mb-sm-3 mb-md-0   mt-sm-2 mt-md-0">
           <button type="button" @click.prevent="checkAvailabity()"
-            class="btn btn-primary btn-block m-auto bold check-availablility-button">
-            <i class="material-icons"></i> Check availablityl
+            class="btn btn-primary btn-block m-auto bold check-availablility-button rounded">
+            <i class="material-icons"></i> Check availablity
           </button>
         </div>
       </div>
@@ -36,8 +36,8 @@
           <div class="col-md-9 position-relative  pl-3">
 
             <div class="d-flex  justify-content-between">
-              <div>
-                <a target="_blank" class="bold text-size-1-big" :href="property.link">{{ property.name }}</a>
+              <div class=" mt-sm-2 ">
+                <a target="_blank" class="bold text-size-1-big  mt-sm-2 " :href="property.link">{{ property.name }}</a>
                 <div class="d">
                   <small><a :href="property.link" class="p-0">{{ property.city }}</a>, <a href="">{{ property.state
                   }}</a></small>
