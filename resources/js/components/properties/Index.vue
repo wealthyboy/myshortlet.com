@@ -26,7 +26,7 @@
           <div class="col-md-3 col-12 position-relative">
             <div>
               <a target="_blank" :href="property.link">
-                <img :src="property.image_m" class="img  img-fluid" />
+                <img :src="property.image_m" class="img  img-fluid rounded-top" />
               </a>
               <div class="fav-icon position-absolute">
                 <saved :property="property" />

@@ -8080,7 +8080,7 @@ var render = function render() {
         href: property.link
       }
     }, [_c("img", {
-      staticClass: "img img-fluid",
+      staticClass: "img img-fluid rounded-top",
       attrs: {
         src: property.image_m
       }
