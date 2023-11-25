@@ -130,7 +130,7 @@
                   @endif
                </div>
                <div class="name bg-white rounded">
-                  <h3 class="  pb-3 p-3 border-bottom bold">About this property</h3>
+                  <h3 class="pb-3 p-3 border-bottom bold">About this property</h3>
                   <div class="card-body ">
                      <div>{{ $property->name }}</div>
                      <p><?php echo  html_entity_decode($property->description);  ?></p>
@@ -140,7 +140,7 @@
                   <h3 class="card-title  pb-3 p-3 border-bottom bold">About the area</h3>
                   <div class="card-body">
                      <div class="row   align-items-start">
-                        <div class="col-md-4">
+                        <div class="col-md-4 mb-sm-3 mb-md-0">
                            <h3 class="card-title bold"> {{ $property->state }}</h3>
                            {{ $property->state_description }}
                         </div>
