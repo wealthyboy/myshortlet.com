@@ -21,8 +21,7 @@
 
    <div class="container-fluid {{ $properties->count() < 1 ? 'full-bg' : '' }} position-relative mt-3">
 
-      <div class="sidebar-toggle d-block d-sm-none "> <i class="fas fa-sort-amount-up   filter adjust"></i> filter</div>
-      <div class="sidebar-overlay d-none"></div>
+
       <div class="row no-gutters ">
          <div class="col-12">
             <properties-count />
@@ -37,7 +36,11 @@
             </div>
       </div>
       @else
-
+      <div class="col-md-3 pr-2 mobile-sidebar">
+         <div class=" bg-white  sidebar-section">
+            <filter-search :category="{{ isset($category) ? $category : '{}' }}" :locations="{{ $locations }}" :attrs="{{ $attributes }}" />
+         </div>
+      </div>
       <div id="load-products" class="col-md-9 col-12 pl-1 mb-5">
          <products-index :total="{{ collect(['total' => $total]) }}" :next_page="{{ collect($next_page) }}" :propertys="{{ $properties->load('facilities','free_services') }}" />
       </div>
