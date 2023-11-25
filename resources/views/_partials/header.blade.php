@@ -17,14 +17,14 @@
 
         <div class="d-flex">
             @guest
-            <a href="/login" class="align-self-center text-white  bg-dark px-3 py-1 mr-2">
+            <a href="/login" class="align-self-center font-weight-bold text-white  bg-dark px-3 py-1 mr-2">
                 <i class="fal fa-sign-in"></i>
                 Login
             </a>
             @endguest
 
             @auth
-            <a href="/account" class="align-self-center text-white  bg-dark px-3 py-1 mr-2">
+            <a href="/account" class="align-self-center font-weight-bold text-white  bg-dark px-3 py-1 mr-2">
                 <i class="fal fa-sign-in"></i>
                 Account
             </a>
@@ -32,7 +32,7 @@
 
 
             @if(isset($show_logo) && $show_logo)
-            <a href="/apartments" class="align-self-center text-white  bg-dark px-3 py-1">
+            <a href="/apartments" class="align-self-center font-weight-bold text-white  bg-dark px-3 py-1">
                 <i class="fal fa-sign-in"></i>
                 Book Now
             </a>
@@ -53,17 +53,17 @@
     <div class="collapse navbar-collapse ">
 
         <ul class="nav navbar-nav navbar-center w-100 mt-5">
-            <li class="w-100 py-3">
+            <li class="w-100 py-3 font-weight-bold">
                 <a href="/apartments">Residences</a>
             </li>
-            <li class="w-100 ">
+            <li class="w-100 font-weight-bold">
                 <a href="/about-us">About Us</a>
             </li>
-            <li class="w-100 py-3">
+            <li class="w-100 py-3 font-weight-bold">
                 <a href="/experience">Experience</a>
             </li>
 
-            <li class="w-100 py-3">
+            <li class="w-100 py-3 font-weight-bold">
                 <a target="_blank" href="https://theluxurysale.com">Shop @avm</a>
             </li>
         </ul>
