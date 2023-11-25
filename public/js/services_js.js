@@ -8131,10 +8131,8 @@ var render = function render() {
       attrs: {
         "aria-hidden": "true"
       }
-    }, [_vm._v(" · ")]), _vm._v(" "), _c("span", [_vm._v(_vm._s(property.baths) + " baths")])]) : _vm._e(), _vm._v(" "), property.is_refundable ? _c("div", {
-      staticClass: "text-size-1 text-gray"
-    }, [_vm._v("\n                  Fully Refundable\n                ")]) : _vm._e(), _vm._v(" "), property.free_services.length ? _c("div", {
-      staticClass: "d-inline-flex mr-2 text-size-1"
+    }, [_vm._v(" · ")]), _vm._v(" "), _c("span", [_vm._v(_vm._s(property.baths) + " baths")])]) : _vm._e(), _vm._v(" "), property.free_services.length ? _c("div", {
+      staticClass: "d-inline-flex mr-2 text-size-1 mb-sm-5 mb-md-0"
     }, _vm._l(property.free_services, function (free_service) {
       return _c("div", {
         key: free_service.id,

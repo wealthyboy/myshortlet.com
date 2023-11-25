@@ -56,10 +56,8 @@
                     <span>{{ property.baths }} baths</span>
                   </div>
 
-                  <div class="text-size-1 text-gray" v-if="property.is_refundable">
-                    Fully Refundable
-                  </div>
-                  <div v-if="property.free_services.length" class="d-inline-flex mr-2 text-size-1 ">
+
+                  <div v-if="property.free_services.length" class="d-inline-flex mr-2 text-size-1  mb-sm-5 mb-md-0">
                     <div v-for="free_service in property.free_services" :key="free_service.id"
                       class="free-services mr-2 text-size-1">
                       {{ free_service.name }} included
