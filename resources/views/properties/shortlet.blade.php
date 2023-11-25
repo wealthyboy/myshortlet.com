@@ -57,7 +57,7 @@
       </div>
       <div class="row nav-links">
          <div class="col-12 ">
-            <div class="d-flex justify-content-between bg-white">
+            <div class="d-flex mt-sm-3 mt-md-0 justify-content-between bg-white mt-">
                <nav class="nav text-capitalize bg-white">
                   <a class="nav-link text-capitalize active font-weight-bold" href="#Overview">Overview</a>
                   <a class="nav-link text-capitalize font-weight-bold" href="#Amenities">Amenities</a>
