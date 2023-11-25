@@ -109,7 +109,7 @@
                         </div>
                         <div class="col-md-6">
                            <div style="height: 200px;" id="map2"></div>
-                           <div class="svg-icon-text">{{ $property->address }}</div>
+                           <div class="">{{ $property->address }}</div>
                            @if ($areas->count())
                            <h5 class="bold">Explore the area</h5>
                            <div class="">
