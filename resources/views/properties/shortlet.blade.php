@@ -59,9 +59,9 @@
          <div class="col-12 ">
             <div class="d-flex mt-sm-3 mt-md-0 justify-content-between bg-white mt-">
                <nav class="nav text-capitalize bg-white">
-                  <a class="nav-link text-capitalize active font-weight-bold-2" href="#Overview">Overview</a>
-                  <a class="nav-link text-capitalize font-weight-bold-2" href="#Amenities">Amenities</a>
-                  <a class="nav-link text-capitalize pb-1 font-weight-bold-2" href="#Location">Location</a>
+                  <a class="nav-link text-capitalize active font-weight-bold" href="#Overview">Overview</a>
+                  <a class="nav-link text-capitalize font-weight-bold" href="#Amenities">Amenities</a>
+                  <a class="nav-link text-capitalize pb-1 font-weight-bold" href="#Location">Location</a>
                </nav>
 
             </div>
@@ -109,7 +109,7 @@
                         </div>
                         <div class="col-md-6">
                            <div style="height: 200px;" id="map2"></div>
-                           <div class="">{{ $property->address }}</div>
+                           <div class="bold-2">{{ ucfirst($property->address) }}</div>
                            @if ($areas->count())
                            <h5 class="bold-2">Explore the area</h5>
                            <div class="">
