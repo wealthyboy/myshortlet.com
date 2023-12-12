@@ -99,5 +99,25 @@ export default {
       adults: null || 1,
     };
   },
+  mounted() {
+    this.romms = this.checkForGuests() ? this.checkForGuests().rooms : 1
+    this.children = this.checkForGuests() ? this.checkForGuests().children : 0
+    this.adults = this.checkForGuests() ? this.checkForGuests().adults : 0
+  },
+  methods: {
+
+    checkForGuests(e) {
+      const retrievedJsonString = localStorage.getItem('searchParams');
+      // Check if the retrieved JSON string is not null
+      if (retrievedJsonString !== null) {
+        // Convert the JSON string back to an object
+        const retrievedObject = JSON.parse(retrievedJsonString);
+
+        return retrievedObject
+      } else {
+        return null
+      }
+    }
+  }
 };
 </script>

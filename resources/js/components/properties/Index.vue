@@ -7,7 +7,7 @@
       <div class="form-row">
         <div class="form-group category-search  form-border cursor-pointer search col-md-5 bmd-form-grup mb-sm-2 mb-md-0">
           <label class="pl-2  bmd-label-static  checkin mb-0 pl-1" for="flatpickr-input-f">Check-in - Check-out</label>
-          <date-picker />
+          <date-picker @dateSelected="dateSelected" />
         </div>
         <div id="people-number" class="p col-md-5 cursor-pointer  px-sm-0 px-md-1">
           <guests />
@@ -21,7 +21,7 @@
       </div>
 
       <div v-for="property in properties" :key="property.id"
-        class="bg-white mb-2 rounded position-relative border-radius loaded-apartments">
+        class="bg-white mb-2 rounded position-relative border-radius loaded-apartments mt-sm-0 mt-md-2">
         <div class="row no-gutters">
           <div class="col-md-3 col-12 position-relative">
             <div>
@@ -161,10 +161,15 @@ export default {
       search: false,
       propes: [],
       guests: 0,
+      locationSearch: [],
       form: {
         room_quantity: [],
         selectedRooms: [],
-        location: this.$root.request.going_to,
+        children: null,
+        adults: null,
+        rooms: null,
+        check_in_checkout: null,
+        property_id: null,
       },
     };
   },
@@ -179,9 +184,9 @@ export default {
   },
 
   mounted() {
+    console.log(new URL(window.location))
     this.$store.commit("setPropertyLoading", true);
     let time = new Date().getTime();
-    console.log(true);
     setTimeout(() => {
       document.getElementById("ap-loaders").classList.add('d-none')
       document.getElementById("category-loader").classList.add('d-none')
@@ -189,8 +194,6 @@ export default {
       this.$store.commit("setMeta", this.total);
       this.$store.commit("setPropertyLoading", false);
     }, 1000);
-
-
 
     this.$store.commit("setNextPageUrl", this.next_page[0]);
   },
@@ -204,6 +207,9 @@ export default {
         property_id: property_id,
       }).then((res) => { });
     },
+    dateSelected(value) {
+      this.form.check_in_checkout = value;
+    },
     loadMore(e) {
       let t = new Date().getTime();
       let href = e.target.getAttribute("href");
@@ -212,23 +218,67 @@ export default {
       );
     },
     build() {
-      let locationSearch = [];
+      this.locationSearch = [];
       document.querySelectorAll(".location-search").forEach((e, i) => {
-        locationSearch.push(e.name + "=" + e.value);
+        this.locationSearch.push(e.name + "=" + e.value);
       });
 
-      window.history.pushState("", "Title", "/property/search");
+      const location_search = this.locationSearch.slice(0, 1).concat(this.locationSearch.slice(2));
+
+      const urlString = location.href;
+
+      // Create a URL object
+      const uri = new URL(urlString);
+
+      // Get the path from the URL
+      const path = uri.pathname;
+
+      window.history.pushState("", "Title", path);
 
       let url = window.history.pushState(
         {},
         "",
-        "?" + locationSearch.join("&")
+        "?" + location_search.join("&")
       );
 
-      this.$store.commit("setLocationSearch", locationSearch);
+      this.$store.commit("setLocationSearch", location_search);
     },
     checkAvailabity: function () {
-      this.build();
+      this.build()
+      this.form.children = document.querySelector("#children").value;
+      this.form.adults = document.querySelector("#adults").value;
+      this.form.rooms = document.querySelector("#rooms").value;
+      if (
+        !this.form.check_in_checkout ||
+        this.form.check_in_checkout.split(" ").length < 2
+      ) {
+        this.isDateNeedsToToOpen = true;
+        return;
+      }
+
+      // Sample object to be saved
+      const myObject = {
+        rooms: this.form.rooms,
+        check_in_checkout: this.form.check_in_checkout,
+        children: this.form.children,
+        adults: this.form.adults,
+      };
+
+      // Convert the object to a JSON string
+      const jsonString = JSON.stringify(myObject);
+
+      // Save the JSON string in localStorage with a specific key
+      const storageKey = 'searchParams';
+      localStorage.setItem(storageKey, jsonString);
+
+      // Retrieve the object from localStorage
+      const retrievedJsonString = localStorage.getItem(storageKey);
+
+      // Convert the JSON string back to an object
+      const retrievedObject = JSON.parse(retrievedJsonString);
+
+      // Now 'retrievedObject' contains the object retrieved from localStorage
+      console.log(retrievedObject);
 
       this.getProperties(window.location);
     },

@@ -3520,7 +3520,7 @@ __webpack_require__.r(__webpack_exports__);
     propertyLoading: Boolean,
     stays: Array,
     qty: Boolean,
-    amenities: Object
+    amenities: Array
   },
   data: function data() {
     return {
@@ -3750,13 +3750,15 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  mounted: function mounted() {
+    this.check_in_checkout = this.checkForDate();
+  },
   components: {
     Pickr: (vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0___default())
   },
   watch: {
     isDateNeedsToToOpen: {
       handler: function handler(val, oldVal) {
-        console.log(val, oldVal);
         if (val) {
           this.$refs.datePicker.fp.open();
         }
@@ -3766,6 +3768,18 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     dateSelected: function dateSelected() {
       this.$emit("dateSelected", this.check_in_checkout);
+    },
+    checkForDate: function checkForDate(e) {
+      var retrievedJsonString = localStorage.getItem('searchParams');
+      // Check if the retrieved JSON string is not null
+      if (retrievedJsonString !== null) {
+        // Convert the JSON string back to an object
+        var retrievedObject = JSON.parse(retrievedJsonString);
+        console.log(retrievedObject);
+        return retrievedObject.check_in_checkout;
+      } else {
+        return null;
+      }
     }
   }
 });
@@ -3875,6 +3889,24 @@ __webpack_require__.r(__webpack_exports__);
       children:  false || 0,
       adults:  false || 1
     };
+  },
+  mounted: function mounted() {
+    this.romms = this.checkForGuests() ? this.checkForGuests().rooms : 1;
+    this.children = this.checkForGuests() ? this.checkForGuests().children : 0;
+    this.adults = this.checkForGuests() ? this.checkForGuests().adults : 0;
+  },
+  methods: {
+    checkForGuests: function checkForGuests(e) {
+      var retrievedJsonString = localStorage.getItem('searchParams');
+      // Check if the retrieved JSON string is not null
+      if (retrievedJsonString !== null) {
+        // Convert the JSON string back to an object
+        var retrievedObject = JSON.parse(retrievedJsonString);
+        return retrievedObject;
+      } else {
+        return null;
+      }
+    }
   }
 });
 
@@ -3936,10 +3968,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       search: false,
       propes: [],
       guests: 0,
+      locationSearch: [],
       form: {
         room_quantity: [],
         selectedRooms: [],
-        location: this.$root.request.going_to
+        children: null,
+        adults: null,
+        rooms: null,
+        check_in_checkout: null,
+        property_id: null
       }
     };
   },
@@ -3951,9 +3988,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   })),
   mounted: function mounted() {
     var _this = this;
+    console.log(new URL(window.location));
     this.$store.commit("setPropertyLoading", true);
     var time = new Date().getTime();
-    console.log(true);
     setTimeout(function () {
       document.getElementById("ap-loaders").classList.add('d-none');
       document.getElementById("category-loader").classList.add('d-none');
@@ -3972,22 +4009,65 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         property_id: property_id
       }).then(function (res) {});
     },
+    dateSelected: function dateSelected(value) {
+      this.form.check_in_checkout = value;
+    },
     loadMore: function loadMore(e) {
       var t = new Date().getTime();
       var href = e.target.getAttribute("href");
       this.getProperties(href + "&timestamp=${new Date().getTime()}").then(function (r) {});
     },
     build: function build() {
-      var locationSearch = [];
+      var _this2 = this;
+      this.locationSearch = [];
       document.querySelectorAll(".location-search").forEach(function (e, i) {
-        locationSearch.push(e.name + "=" + e.value);
+        _this2.locationSearch.push(e.name + "=" + e.value);
       });
-      window.history.pushState("", "Title", "/property/search");
-      var url = window.history.pushState({}, "", "?" + locationSearch.join("&"));
-      this.$store.commit("setLocationSearch", locationSearch);
+      var location_search = this.locationSearch.slice(0, 1).concat(this.locationSearch.slice(2));
+      var urlString = location.href;
+
+      // Create a URL object
+      var uri = new URL(urlString);
+
+      // Get the path from the URL
+      var path = uri.pathname;
+      window.history.pushState("", "Title", path);
+      var url = window.history.pushState({}, "", "?" + location_search.join("&"));
+      this.$store.commit("setLocationSearch", location_search);
     },
     checkAvailabity: function checkAvailabity() {
       this.build();
+      this.form.children = document.querySelector("#children").value;
+      this.form.adults = document.querySelector("#adults").value;
+      this.form.rooms = document.querySelector("#rooms").value;
+      if (!this.form.check_in_checkout || this.form.check_in_checkout.split(" ").length < 2) {
+        this.isDateNeedsToToOpen = true;
+        return;
+      }
+
+      // Sample object to be saved
+      var myObject = {
+        rooms: this.form.rooms,
+        check_in_checkout: this.form.check_in_checkout,
+        children: this.form.children,
+        adults: this.form.adults
+      };
+
+      // Convert the object to a JSON string
+      var jsonString = JSON.stringify(myObject);
+
+      // Save the JSON string in localStorage with a specific key
+      var storageKey = 'searchParams';
+      localStorage.setItem(storageKey, jsonString);
+
+      // Retrieve the object from localStorage
+      var retrievedJsonString = localStorage.getItem(storageKey);
+
+      // Convert the JSON string back to an object
+      var retrievedObject = JSON.parse(retrievedJsonString);
+
+      // Now 'retrievedObject' contains the object retrieved from localStorage
+      console.log(retrievedObject);
       this.getProperties(window.location);
     }
   })
@@ -4055,7 +4135,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     property: Object,
     propertys_not_available: Array,
     nights: Array,
-    amenities: Object,
+    amenities: Array,
     isAgent: Boolean
   },
   data: function data() {
@@ -4090,6 +4170,12 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     this.roomsAv = this.apartments;
   },
   mounted: function mounted() {
+    var retrievedJsonString = localStorage.getItem('searchParams');
+    // Check if the retrieved JSON string is not null
+    if (retrievedJsonString !== null) {
+      // this.form.check_in_checkout = retrievedObject.check_in_checkout
+      //this.checkAvailabity()
+    }
     jQuery(function () {
       $(".owl-carousel").owlCarousel({
         margin: 10,
@@ -4121,6 +4207,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     checkAvailabity: function checkAvailabity() {
       var _this = this;
+      console.log(true);
       this.form.children = document.querySelector("#children").value;
       this.form.adults = document.querySelector("#adults").value;
       this.form.rooms = document.querySelector("#rooms").value;
@@ -8046,7 +8133,11 @@ var render = function render() {
     attrs: {
       "for": "flatpickr-input-f"
     }
-  }, [_vm._v("Check-in - Check-out")]), _vm._v(" "), _c("date-picker")], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("Check-in - Check-out")]), _vm._v(" "), _c("date-picker", {
+    on: {
+      dateSelected: _vm.dateSelected
+    }
+  })], 1), _vm._v(" "), _c("div", {
     staticClass: "p col-md-5 cursor-pointer px-sm-0 px-md-1",
     attrs: {
       id: "people-number"
@@ -8069,7 +8160,7 @@ var render = function render() {
   }), _vm._v(" Check availablity\n        ")])])]), _vm._v(" "), _vm._l(_vm.properties, function (property) {
     return _c("div", {
       key: property.id,
-      staticClass: "bg-white mb-2 rounded position-relative border-radius loaded-apartments"
+      staticClass: "bg-white mb-2 rounded position-relative border-radius loaded-apartments mt-sm-0 mt-md-2"
     }, [_c("div", {
       staticClass: "row no-gutters"
     }, [_c("div", {
@@ -11960,6 +12051,7 @@ $().ready(function () {
 vue__WEBPACK_IMPORTED_MODULE_2__["default"].filter("priceFormat", function (value) {
   return new Intl.NumberFormat().format(value);
 });
+console.log(Window.user);
 var app = new vue__WEBPACK_IMPORTED_MODULE_2__["default"]({
   el: "#app",
   store: _store__WEBPACK_IMPORTED_MODULE_1__["default"],

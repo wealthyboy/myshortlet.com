@@ -102,6 +102,16 @@ class ApartmentsController extends Controller
         $property_is_not_available = null;
         $cites = [];
 
+        $date = explode("to", $request->check_in_checkout);
+        $date = Helper::toAndFromDate($request->check_in_checkout);
+
+        $property_is_not_available = null;
+        $data = [];
+        $attributes = null;
+        $data['max_children'] = $request->children ?? 1;
+        $data['max_adults'] = $request->adults ?? 1;
+        $data['rooms'] = $request->rooms ?? 1;
+        $properties = null;
 
 
         $attributes = $location->attributes->groupBy('type');
@@ -109,13 +119,34 @@ class ApartmentsController extends Controller
         $breadcrumb = $location->name;
         $saved =  $this->saved();
         $locations = $location->children;
-        $properties = Property::where('allow', true)->whereHas('locations', function (Builder  $builder) use ($location) {
+        $query = Property::where('allow', true)->whereHas('locations', function (Builder  $builder) use ($location, $date) {
             $builder->where('locations.slug', $location->slug);
-        })
-            ->filter($request,  $this->getFilters($attributes))
+        });
+
+
+        if ($request->check_in_checkout) {
+            $query->whereHas('apartments', function ($query) use ($data, $date) {
+                $query->where('apartments.max_adults', '>=',  $data['max_adults']);
+                $query->where('apartments.max_children', '>=', $data['max_children']);
+                $query->where('apartments.no_of_rooms', '>=', $data['rooms']);
+            })
+                ->select('reservations.id as reservation_id', 'reservations.quantity as reservation_qty', 'properties.*')
+                ->leftJoin('reservations', function ($join) use ($date) {
+                    $join->on('properties.id', '=', 'reservations.property_id')
+                        ->whereDate('reservations.checkin', '<=', $date['start_date'])
+                        ->whereDate('reservations.checkout', '>=', $date['end_date']);
+                })
+
+                ->filter($request,  $this->getFilters($attributes))
+                ->groupBy('properties.id')
+                ->latest()->paginate(5);
+        }
+
+
+        $properties = $query->filter($request,  $this->getFilters($attributes))
             ->latest()->paginate(20);
 
-        $properties->appends(request()->all());
+        $properties  = $properties->appends(request()->all());
         $total = $properties->total();
 
 

@@ -21,7 +21,8 @@
 
    <div class="container-fluid {{ $properties->count() < 1 ? 'full-bg' : '' }} position-relative mt-3">
 
-
+      <div class="sidebar-toggle d-block d-sm-none "> <i class="fas fa-sort-amount-up   filter adjust"></i> filter</div>
+      <div class="sidebar-overlay d-none"></div>
       <div class="row no-gutters ">
          <div class="col-12">
             <properties-count />

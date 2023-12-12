@@ -93,7 +93,7 @@ export default {
     property: Object,
     propertys_not_available: Array,
     nights: Array,
-    amenities: Object,
+    amenities: Array,
     isAgent: Boolean
   },
   data() {
@@ -128,6 +128,17 @@ export default {
     this.roomsAv = this.apartments;
   },
   mounted() {
+
+    const retrievedJsonString = localStorage.getItem('searchParams');
+    // Check if the retrieved JSON string is not null
+    if (retrievedJsonString !== null) {
+      // this.form.check_in_checkout = retrievedObject.check_in_checkout
+      //this.checkAvailabity()
+
+
+    }
+
+
     jQuery(function () {
       $(".owl-carousel").owlCarousel({
         margin: 10,
@@ -158,6 +169,7 @@ export default {
       this.form.check_in_checkout = value;
     },
     checkAvailabity() {
+      console.log(true)
       this.form.children = document.querySelector("#children").value;
       this.form.adults = document.querySelector("#adults").value;
       this.form.rooms = document.querySelector("#rooms").value;

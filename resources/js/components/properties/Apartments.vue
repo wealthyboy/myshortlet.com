@@ -232,7 +232,7 @@ export default {
     propertyLoading: Boolean,
     stays: Array,
     qty: Boolean,
-    amenities: Object
+    amenities: Array,
   },
   data() {
     return {

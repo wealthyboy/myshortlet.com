@@ -34,7 +34,7 @@ const Saved = require("./components/properties/Saved.vue").default;
 
 const Location = require("./components/search/Location.vue").default;
 
-$().ready(function() {
+$().ready(function () {
   $.ajaxSetup({
     headers: {
       "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -46,9 +46,11 @@ $().ready(function() {
 
 //console.log(intlTelInput());
 
-Vue.filter("priceFormat", function(value) {
+Vue.filter("priceFormat", function (value) {
   return new Intl.NumberFormat().format(value);
 });
+
+console.log(Window.user)
 
 const app = new Vue({
   el: "#app",
@@ -70,10 +72,10 @@ const app = new Vue({
   },
 });
 
-(function($) {
+(function ($) {
   "use strict";
 
-  jQuery(function() {
+  jQuery(function () {
     $(".flexslider").flexslider({
       animation: "slide",
     });

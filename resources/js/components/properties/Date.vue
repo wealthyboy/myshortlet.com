@@ -21,7 +21,6 @@ export default {
   data() {
     return {
       guests: 0,
-
       check_in_checkout: null,
       config: {
         wrap: true, // set wrap to true only when using 'input-group'
@@ -34,13 +33,15 @@ export default {
       },
     };
   },
+  mounted() {
+    this.check_in_checkout = this.checkForDate()
+  },
   components: {
     Pickr,
   },
   watch: {
     isDateNeedsToToOpen: {
       handler(val, oldVal) {
-        console.log(val, oldVal)
         if (val) {
           this.$refs.datePicker.fp.open();
         }
@@ -51,6 +52,20 @@ export default {
     dateSelected() {
       this.$emit("dateSelected", this.check_in_checkout);
     },
+
+    checkForDate(e) {
+      const retrievedJsonString = localStorage.getItem('searchParams');
+      // Check if the retrieved JSON string is not null
+      if (retrievedJsonString !== null) {
+        // Convert the JSON string back to an object
+        const retrievedObject = JSON.parse(retrievedJsonString);
+
+        console.log(retrievedObject)
+        return retrievedObject.check_in_checkout
+      } else {
+        return null
+      }
+    }
   },
 };
 </script>
