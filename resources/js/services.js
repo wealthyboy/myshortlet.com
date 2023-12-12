@@ -42,6 +42,27 @@ $().ready(function () {
   });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+  const animatedBox = document.getElementById('animatedBox');
+
+  // Set up the Intersection Observer
+  const observer = new IntersectionObserver((entries, observer) => {
+    console.log(true)
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Add a CSS class to trigger the animation
+        entry.target.classList.add('animate');
+        // Unobserve the target to stop further observations
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 }); // Adjust the threshold based on your needs
+
+  // Start observing the target element
+  observer.observe(animatedBox);
+});
+
+
 
 
 //console.log(intlTelInput());

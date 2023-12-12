@@ -29,7 +29,7 @@
          <p class="pt-3 mt-5">AvenueMontiagne Residences
          </p>
 
-         <h1 class="large-heading">A Fresh Take <i class="bi bi-chevron-double-down text-white "></i>
+         <h1 class="large-heading bold">A Fresh Take <i class="bi bi-chevron-double-down text-white "></i>
             <br>
             on your <em>dream home</em>
          </h1>
@@ -38,7 +38,7 @@
          <div id="operator" style="background-image: url('/images/banners/avm_image_1.jpeg');" class="col-md-7 rounded  card-background-image"></div>
          <div style="z-index: 2;" class="col-md-5 text-center d-flex justify-content-center align-items-center">
             <div class="bg-panel bg-panel-white p-5">
-               <h2 class=" ">Welcome to Avenue Montiagne</h2>
+               <h2 class=" bold">Welcome to Avenue Montiagne</h2>
                <p class="mt-4 text-left text-black">
                   Our apartments offer amazing amenities, stylish design, and a perfect location for living the lagos dream. With your choice of spacious, meticulously-designed 1-, 2-, or 3-bedroom apartments, youll be sure to find the ideal fit for your needs and lifestyle. Get ready for apartment living on a whole new level, with two resort-style pools, a luxurious spa, and a state-of-the-art fitness center for your convenience and enjoyment. Get excited about everything that awaits you at Avm, Lagos!
                </p>
@@ -61,7 +61,7 @@
       <div class="row bg-grey position-relative  pb-5 pt-5">
          <div class="col-md-5  re-order text-center d-flex justify-content-center align-items-center">
             <div class="bg-panel-white bg-left-panel p-5">
-               <h2 class="mb-4 ">Relax and enjoy</h2>
+               <h2 class="mb-4 bold">Relax and enjoy</h2>
                <p class="mt-4 text-black">
                   Throughout your stay, you’ll enjoy a residents-only bar and lounge, a spectacular pool deck with panoramic views, a private screening room, a 24-hour Technogym® fitness center , and indoor parking. The open-air retail plaza features Fred S boutique, lifestyle brand KITH, Tesse restaurant, and Boutellier wine shop.
                <div class="buttons">
@@ -76,6 +76,7 @@
       </div>
    </section>
 
+   <div class="box" id="animatedBox">kj;khlkhlkhlkh;lhk</div>
 
    <section class="">
       <div class="row   pb-5 pt-5 position-relative">
@@ -83,7 +84,7 @@
          </div>
          <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
             <div class="about-panel  bg-panel-white  bg-panel p-5">
-               <h2 class="mb-4 ">Luxury & Convenience</h2>
+               <h2 class="mb-4 bold">Luxury & Convenience</h2>
 
                <p class="mt-4 text-black">
                   Our apartment is truly a cut above the rest, with spacious walk-in closets, private balcony or patio, central air conditioning, and high-speed internet. We are ideally located in Lagos, making any commute or relaxing day trip a breeze.
@@ -92,6 +93,7 @@
                <div class=" buttons">
                   <a href="/apartments" class="btn btn-outline-secondary">
                      Explore the Residences
+
                   </a>
                </div>
             </div>
@@ -104,7 +106,7 @@
       <div class="row bg-grey position-relative  pb-5 pt-5">
          <div class="col-md-5  re-order text-center d-flex justify-content-center align-items-center">
             <div class="bg-panel-white bg-left-panel p-5">
-               <h2 class="mb-4 ">Shop</h2>
+               <h2 class="mb-4 bold">Shop</h2>
                <p class="mt-4 text-black">
                   Like to shop while you stay? Visit our online store to buy from the best brands prada, gucci e.t.c.
                <div class=" buttons">

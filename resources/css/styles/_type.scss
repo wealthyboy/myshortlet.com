@@ -5,16 +5,40 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: Heading2;
-  src: url(../../../public/fonts/AmBasis-Bold.woff);
-  font-weight: bold;
-  font-display: swap;
-}
+// @font-face {
+//   font-family: Heading2;
+//   src: url(../../../public/fonts/AmBasis-Bold.woff);
+//   font-weight: bold;
+//   font-display: swap;
+// }
 
 @font-face {
   font-family: Heading3;
   src: url(../../../public/fonts/GalaxiePolaris-Bold.otf);
+  font-weight: bold;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: Heading4;
+  src: url(../../../public/fonts/CentraNo2-Book.otf);
+  font-weight: bold;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: Heading5;
+  src: url(../../../public/fonts/CentraNo2-Medium.otf);
+  font-weight: bold;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: Heading6;
+  src: url(../../../public/fonts/CentraNo2-Bold.otf);
   font-weight: bold;
   font-display: swap;
 }
@@ -37,7 +61,7 @@ h6,
 .h2,
 .h3,
 .h4 {
-  font-family: 'Nanum Myeongjo', serif;  
+  font-family: 'Nanum Myeongjo', serif;
   font-weight: 400;
   line-height: 1.5em;
   color: #000;
@@ -73,33 +97,39 @@ h1,
   font-size: $h1-font-size;
   line-height: 1.15em;
 }
+
 h2,
 .h2 {
   font-size: $h2-font-size;
   line-height: 1.5em;
 }
+
 h3,
 .h3 {
   font-size: $h3-font-size;
   line-height: 1.4em;
 }
+
 h4,
 .h4 {
   font-size: $h4-font-size;
   line-height: 1.5em;
 }
+
 h5,
 .h5 {
   font-size: $h5-font-size;
   line-height: 1.55em;
   margin-bottom: 15px;
 }
+
 h6,
 .h6 {
   font-size: $h6-font-size;
   text-transform: uppercase;
   font-weight: $font-weight-bold;
 }
+
 p {
   font-size: $font-paragraph;
   margin: 0 0 10px;
@@ -124,6 +154,7 @@ small,
 .media .media-heading {
   font-weight: $font-weight-extra-bold;
   font-family: 'Nanum Myeongjo', serif;
+
   &,
   a {
     color: $black-color;
@@ -137,7 +168,20 @@ h2.title {
 
 .bold {
   font-weight: $font-weight-extra-bold;
-  font-family: "Heading1", "Times New Roman", serif;
+  font-family: "Heading4", "Times New Roman", serif;
+  color: $black-color;
+}
+
+.bold-2 {
+  font-weight: $font-weight-extra-bold;
+  font-family: "Heading5", "Times New Roman", serif;
+  color: $black-color;
+}
+
+
+.bold-3 {
+  font-weight: $font-weight-extra-bold;
+  font-family: "Heading6", "Times New Roman", serif;
   color: $black-color;
 }
 
@@ -150,12 +194,15 @@ h2.title {
 .text-warning {
   color: $warning !important;
 }
+
 .text-primary {
   color: $primary !important;
 }
+
 .text-danger {
   color: $danger !important;
 }
+
 .text-success {
   color: $success !important;
 }
@@ -171,9 +218,11 @@ h2.title {
 .text-info {
   color: $info !important;
 }
+
 .text-rose {
   color: $rose !important;
 }
+
 .text-gray {
   color: $gray-color !important;
 }
@@ -208,10 +257,12 @@ h2.title {
   height: 130px;
   display: block;
 }
+
 .space-110 {
   height: 110px;
   display: block;
 }
+
 .space-50 {
   height: 50px;
   display: block;

@@ -4,7 +4,7 @@
       <input type="hidden" name="_token" :value="$root.token" />
       <input type="hidden" name="property_id" :value="property.id" />
       <div>
-        <h3 class="bold">Choose your unit</h3>
+        <h3 class="bold-2">Choose your unit</h3>
         <div class="form-row">
           <div class="form-group   form-border cursor-pointer search col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
             <label class="pl-2 " for="flatpickr-input-f">Check-in - Check-out</label>
@@ -15,7 +15,7 @@
           </div>
           <div class="col-md-2 check-availablility  mt-sm-2 mt-md-0">
             <button type="button" @click.prevent="checkAvailabity()"
-              class="btn btn-primary btn-block m-auto bold check-availablility-button rounded">
+              class="btn btn-primary btn-block m-auto bold-2 check-availablility-button rounded">
               <i class="material-icons"></i> Check availablity
             </button>
           </div>
@@ -42,17 +42,17 @@
           <!-- <div>
             <ul class="list-unstyled mb-0 p-2">
               <li class="d-flex justify-content-between mb-2 lh-22">
-                <p v-if="stays" class="text-gray-light mb-0 bold">
+                <p v-if="stays" class="text-gray-light mb-0 bold-2">
                   {{ stays[0] || 0 }} {{ stays[1] || "night" }}
                 </p>
                 <p v-if="!stays">Choose dates</p>
-                <p class="bold text-heading mb-0">
+                <p class="bold-2 text-heading mb-0">
                   {{ property.currency }}{{ total | priceFormat }}
                 </p>
               </li>
               <li class="d-flex justify-content-between mb-2 lh-22">
-                <p class="text-gray-light mb-0 bold">{{ aps }} Apartment(s)</p>
-                <p class="bold text-heading mb-0">
+                <p class="text-gray-light mb-0 bold-2">{{ aps }} Apartment(s)</p>
+                <p class="bold-2 text-heading mb-0">
                   {{ property.currency }}{{ apTotal | priceFormat }}
                 </p>
               </li>
@@ -60,8 +60,8 @@
           </div> -->
 
           <!-- <div class="card-footer p-2  bg-transparent d-flex justify-content-between p-0 align-items-center">
-            <p class="text-heading mb-0 bold">Total Price:</p>
-            <span class="fs-32 bold text-heading total-price">{{ property.currency }}{{ amount | priceFormat }}</span>
+            <p class="text-heading mb-0 bold-2">Total Price:</p>
+            <span class="fs-32 bold-2 text-heading total-price">{{ property.currency }}{{ amount | priceFormat }}</span>
           </div> -->
           <!-- <button v-if="stays && stays[1] != null" type="button" @click.prevent="reserve()"
             class="ml-1 btn btn-primary btn-round  mr-1 btn-block">
@@ -132,8 +132,8 @@ export default {
     const retrievedJsonString = localStorage.getItem('searchParams');
     // Check if the retrieved JSON string is not null
     if (retrievedJsonString !== null) {
-      // this.form.check_in_checkout = retrievedObject.check_in_checkout
-      //this.checkAvailabity()
+      this.form.check_in_checkout = retrievedObject.check_in_checkout
+      this.checkAvailabity()
 
 
     }

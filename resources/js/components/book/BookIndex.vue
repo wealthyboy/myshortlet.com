@@ -576,6 +576,7 @@ export default {
         .then((response) => {
           context.payment_is_processing = false;
           context.paymentIsComplete = true;
+          localStorage.removeItem('searchParams');
         })
         .catch((error) => {
           context.order_text = "Make Payment";

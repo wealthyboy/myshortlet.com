@@ -54,6 +54,15 @@ body {
   color: #191e3b;
 }
 
+
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: coral;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
 label.error {
   color: red;
   font-size: 12px;

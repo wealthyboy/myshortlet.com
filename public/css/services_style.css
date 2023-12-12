@@ -15446,14 +15446,26 @@ input {
   font-display: swap;
 }
 @font-face {
-  font-family: Heading2;
-  src: url(/fonts/AmBasis-Bold.woff?1dd0e3c07f26910051207b790c4cdd57);
+  font-family: Heading3;
+  src: url(/fonts/GalaxiePolaris-Bold.otf?7c15b7c83a3f9d9c7b31b4c8238ca99b);
   font-weight: bold;
   font-display: swap;
 }
 @font-face {
-  font-family: Heading3;
-  src: url(/fonts/GalaxiePolaris-Bold.otf?7c15b7c83a3f9d9c7b31b4c8238ca99b);
+  font-family: Heading4;
+  src: url(/fonts/CentraNo2-Book.otf?5ffb3cbbd539e7f99ca7684681c16817);
+  font-weight: bold;
+  font-display: swap;
+}
+@font-face {
+  font-family: Heading5;
+  src: url(/fonts/CentraNo2-Medium.otf?88bb14757a6d4c1918adeb253a35879e);
+  font-weight: bold;
+  font-display: swap;
+}
+@font-face {
+  font-family: Heading6;
+  src: url(/fonts/CentraNo2-Bold.otf?7727af32f3e910bb4e4e23908447895c);
   font-weight: bold;
   font-display: swap;
 }
@@ -15593,7 +15605,19 @@ h2.title {
 
 .bold {
   font-weight: 700;
-  font-family: "Heading1", "Times New Roman", serif;
+  font-family: "Heading4", "Times New Roman", serif;
+  color: #000000;
+}
+
+.bold-2 {
+  font-weight: 700;
+  font-family: "Heading5", "Times New Roman", serif;
+  color: #000000;
+}
+
+.bold-3 {
+  font-weight: 700;
+  font-family: "Heading6", "Times New Roman", serif;
   color: #000000;
 }
 
@@ -17516,6 +17540,14 @@ footer .pull-center {
 }
 body {
   color: #191e3b;
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: coral;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
 }
 
 label.error {

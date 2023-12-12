@@ -3007,6 +3007,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }).then(function (response) {
         context.payment_is_processing = false;
         context.paymentIsComplete = true;
+        localStorage.removeItem('searchParams');
       })["catch"](function (error) {
         context.order_text = "Make Payment";
         context.payment_is_processing = false;
@@ -4173,8 +4174,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     var retrievedJsonString = localStorage.getItem('searchParams');
     // Check if the retrieved JSON string is not null
     if (retrievedJsonString !== null) {
-      // this.form.check_in_checkout = retrievedObject.check_in_checkout
-      //this.checkAvailabity()
+      this.form.check_in_checkout = retrievedObject.check_in_checkout;
+      this.checkAvailabity();
     }
     jQuery(function () {
       $(".owl-carousel").owlCarousel({
@@ -7187,7 +7188,7 @@ var render = function render() {
   }), 0)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12 bg-white pt-3"
   }, [_c("div", {
-    staticClass: "card-title bold text-size-1-big mt-lg-0 mt-sm-3"
+    staticClass: "card-title bold-2 text-size-1-big mt-lg-0 mt-sm-3"
   }, [_c("a", {
     attrs: {
       href: "#"
@@ -7201,7 +7202,7 @@ var render = function render() {
   }, [_vm._v(_vm._s(_vm.room.name))])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "entire-apartments"
   }, [_c("div", {
-    staticClass: "bold mb-2"
+    staticClass: "bold-2 mb-2"
   }, [_vm._v("Entire apartment")]), _vm._v(" "), _c("div", {
     staticClass: "d-flex justify-content-between flex-wrap flex-column"
   }, [_c("div", {
@@ -7272,7 +7273,7 @@ var render = function render() {
   }) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "position-relative mb-1"
   }, [_c("a", {
-    staticClass: "d-flex active-link text-highlight font-weight-bold",
+    staticClass: "d-flex active-link text-highlight font-weight-bold-2",
     attrs: {
       href: "#"
     },
@@ -7308,17 +7309,17 @@ var render = function render() {
   }, [_vm.room.discounted_price ? [_c("div", {
     staticClass: "sale-price mr-3"
   }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n              ")]), _vm._v(" "), _c("div", {
-    staticClass: "price bold"
+    staticClass: "price bold-2"
   }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.discounted_price)) + "\n              ")])] : [_c("div", {
-    staticClass: "price bold mt-2"
+    staticClass: "price bold-2 mt-2"
   }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n              ")])]], 2), _vm._v(" "), _c("div", {
     staticClass: "text-size-2"
   }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _c("div", {
     staticClass: "align-self-end"
   }, [_vm.room.property.is_refundable ? _c("div", {
-    staticClass: "font-weight-bold text-success"
+    staticClass: "font-weight-bold-2 text-success"
   }, [_vm._v("\n            Fully Refundable\n          ")]) : _vm._e(), _vm._v(" "), _c("a", {
-    staticClass: "btn btn-round btn-blue py-2 align-self-end font-weight-bold",
+    staticClass: "btn btn-round btn-blue py-2 align-self-end font-weight-bold-2",
     attrs: {
       target: "_blank"
     },
@@ -7354,7 +7355,7 @@ var render = function render() {
   }, [_c("div", {}, [_c("div", {
     staticClass: "py-2 border-bottom"
   }, [_c("h3", {
-    staticClass: "bold"
+    staticClass: "bold-2"
   }, [_vm._v("Apartment Information")]), _vm._v(" "), _c("button", {
     staticClass: "close-icon cursor-pointer fa-1x position-absolute raised",
     staticStyle: {
@@ -7374,7 +7375,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "col-md-4"
   }, [_c("div", {
-    staticClass: "card-title bold text-size-1-big"
+    staticClass: "card-title bold-2 text-size-1-big"
   }, [_c("a", {
     attrs: {
       href: "#"
@@ -7420,12 +7421,12 @@ var render = function render() {
   }, [_vm._v(_vm._s(_vm.room.guests) + " Guests")])])]), _vm._v(" "), _c("div", {
     staticClass: "facilities"
   }, [_c("h4", {
-    staticClass: "card-title bold text-size-1-big"
+    staticClass: "card-title bold-2 text-size-1-big"
   }, [_vm._v("\n              Amenities\n            ")]), _vm._v(" "), _vm._l(_vm.amenities, function (amenity, index) {
     return _c("div", {
       key: amenity.id
     }, [_c("div", {}, [_c("div", {
-      staticClass: "bold"
+      staticClass: "bold-2"
     }, [_vm._v("\n                  " + _vm._s(index) + "\n                ")]), _vm._v(" "), _vm._l(amenity, function (facility) {
       return _c("div", {
         staticClass: "svg-icon-text"
@@ -8145,7 +8146,7 @@ var render = function render() {
   }, [_c("guests")], 1), _vm._v(" "), _c("div", {
     staticClass: "col-md-2 check-availablility mb-sm-3 mb-md-0 mt-sm-2 mt-md-0"
   }, [_c("button", {
-    staticClass: "btn btn-primary btn-block m-auto bold check-availablility-button rounded",
+    staticClass: "btn btn-primary btn-block m-auto bold-2 check-availablility-button rounded",
     attrs: {
       type: "button"
     },
@@ -8188,7 +8189,7 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "mt-sm-2"
     }, [_c("a", {
-      staticClass: "bold text-size-1-big mt-sm-2",
+      staticClass: "bold-2 text-size-1-big mt-sm-2",
       attrs: {
         target: "_blank",
         href: property.link
@@ -8238,17 +8239,17 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "d-inline-flex"
     }, [property.default_discounted_price ? [_c("div", {
-      staticClass: "sale-price bold mr-3 text-gold"
+      staticClass: "sale-price bold-2 mr-3 text-gold"
     }, [_vm._v("\n                    " + _vm._s(property.currency) + _vm._s(_vm._f("priceFormat")(property.converted_price)) + "\n                  ")]), _vm._v(" "), _c("div", {
-      staticClass: "price bold"
+      staticClass: "price bold-2"
     }, [_vm._v("\n                    " + _vm._s(property.currency) + "\n                    " + _vm._s(_vm._f("priceFormat")(property.default_discounted_price)) + "\n                  ")])] : [_c("div", {
-      staticClass: "price bold"
+      staticClass: "price bold-2"
     }, [_vm._v("\n                    " + _vm._s(property.currency) + _vm._s(_vm._f("priceFormat")(property.converted_price)) + "\n                  ")])]], 2), _vm._v(" "), _c("div", {
       staticClass: "text-size-2"
     }, [_vm._v("\n                " + _vm._s(property.price_mode) + " per night\n              ")]), _vm._v(" "), property.is_refundable ? _c("div", {
       staticClass: "text-size-1 text-success"
     }, [_vm._v("\n                Fully Refundable\n              ")]) : _vm._e(), _vm._v(" "), property.mode == "shortlet" ? _c("a", {
-      staticClass: "btn btn-primary btn-round d-none bold d-lg-block d-xl-block",
+      staticClass: "btn btn-primary btn-round d-none bold-2 d-lg-block d-xl-block",
       attrs: {
         target: "_blank",
         href: property.link
@@ -8494,7 +8495,7 @@ var render = function render() {
       value: _vm.property.id
     }
   }), _vm._v(" "), _c("div", [_c("h3", {
-    staticClass: "bold"
+    staticClass: "bold-2"
   }, [_vm._v("Choose your unit")]), _vm._v(" "), _c("div", {
     staticClass: "form-row"
   }, [_c("div", {
@@ -8519,7 +8520,7 @@ var render = function render() {
   }, [_c("guests")], 1), _vm._v(" "), _c("div", {
     staticClass: "col-md-2 check-availablility mt-sm-2 mt-md-0"
   }, [_c("button", {
-    staticClass: "btn btn-primary btn-block m-auto bold check-availablility-button rounded",
+    staticClass: "btn btn-primary btn-block m-auto bold-2 check-availablility-button rounded",
     attrs: {
       type: "button"
     },
@@ -12044,6 +12045,27 @@ $().ready(function () {
       "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
     }
   });
+});
+document.addEventListener('DOMContentLoaded', function () {
+  var animatedBox = document.getElementById('animatedBox');
+
+  // Set up the Intersection Observer
+  var observer = new IntersectionObserver(function (entries, observer) {
+    console.log(true);
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        // Add a CSS class to trigger the animation
+        entry.target.classList.add('animate');
+        // Unobserve the target to stop further observations
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.5
+  }); // Adjust the threshold based on your needs
+
+  // Start observing the target element
+  observer.observe(animatedBox);
 });
 
 //console.log(intlTelInput());

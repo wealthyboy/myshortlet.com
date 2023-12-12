@@ -5,7 +5,7 @@
    <div class="container">
       <div class="row no-gutters bg-white">
          <div class="col-lg-10 col-10">
-            <div class="bg-white p-3 bold text-size-1-big">
+            <div class="bg-white p-3 bold-2 text-size-1-big">
                <div>{{ $property->name }}</div>
             </div>
          </div>
@@ -36,7 +36,7 @@
                            <use xlink:href="#virtual-tour"></use>
                         </svg>
                      </p>
-                     <p class="fs-16 font-weight-bold text-white lh-1625 text-uppercase bold">Virtual Tour</p>
+                     <p class="fs-16 font-weight-bold-2 text-white lh-1625 text-uppercase bold-2">Virtual Tour</p>
                   </a>
                </div> -->
                <div class="col-6 pl-1  pr-1">
@@ -45,8 +45,8 @@
                <div class="col-6 pb-2 position-relative">
                   <a class="img lazy  card-img-tn header-filter img-fluid galleries" data-src="{{  optional($property_type->images[3])->image }}" style="background-image: url('/images/utilities/placeholder.png')"></a>
                   <a href="#" id="full-image" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image ">
-                     <p class="fs-48 font-weight-600 text-white lh-1 mb-1 bold">+{{ $property->images->count() }}</p>
-                     <p class="fs-16 font-weight-bold text-white lh-1625 text-uppercase bold">View Gallery</p>
+                     <p class="fs-48 font-weight-600 text-white lh-1 mb-1 bold-2">+{{ $property->images->count() }}</p>
+                     <p class="fs-16 font-weight-bold-2 text-white lh-1625 text-uppercase bold-2">View Gallery</p>
                   </a>
                </div>
             </div>
@@ -59,9 +59,9 @@
          <div class="col-12 ">
             <div class="d-flex mt-sm-3 mt-md-0 justify-content-between bg-white mt-">
                <nav class="nav text-capitalize bg-white">
-                  <a class="nav-link text-capitalize active font-weight-bold" href="#Overview">Overview</a>
-                  <a class="nav-link text-capitalize font-weight-bold" href="#Amenities">Amenities</a>
-                  <a class="nav-link text-capitalize pb-1 font-weight-bold" href="#Location">Location</a>
+                  <a class="nav-link text-capitalize active font-weight-bold-2" href="#Overview">Overview</a>
+                  <a class="nav-link text-capitalize font-weight-bold-2" href="#Amenities">Amenities</a>
+                  <a class="nav-link text-capitalize pb-1 font-weight-bold-2" href="#Location">Location</a>
                </nav>
 
             </div>
@@ -74,7 +74,7 @@
             <div class=" {{ $property->type == 'single' ? 'col-md-7' : 'col-md-12' }} rounded  mt-1">
                <div id="Overview" class="name rounded bg-white">
                   <div class="card-body">
-                     <h3 class="card-title bold">{{ $property->name }}</h3>
+                     <h3 class="card-title bold-2">{{ $property->name }}</h3>
                      <div class="row">
                         @if($property->type == 'single')
                         <div class="col-12 entire-apartment mb-3">
@@ -82,7 +82,7 @@
                         </div>
                         @endif
                         <div class="col-md-6">
-                           <h5 class="bold">Popular amenities</h5>
+                           <h5 class="bold-2">Popular amenities</h5>
                            <div class="row">
                               @if($property->facilities->count())
                               @foreach($property->facilities->take(3) as $facility)
@@ -98,7 +98,7 @@
                                  <a class="text-size-2 text-gold" href="#">See all >></a>
                               </div>
                            </div>
-                           <h5 class="bold">Safety practices</h5>
+                           <h5 class="bold-2">Safety practices</h5>
                            <div class="">
                               <ul class="list-unstyled ">
                                  @foreach($safety_practices as $key => $safety_practice)
@@ -111,7 +111,7 @@
                            <div style="height: 200px;" id="map2"></div>
                            <div class="">{{ $property->address }}</div>
                            @if ($areas->count())
-                           <h5 class="bold">Explore the area</h5>
+                           <h5 class="bold-2">Explore the area</h5>
                            <div class="">
                               <ul class="list-unstyled ">
                                  @foreach($areas as $key => $area)
@@ -130,18 +130,18 @@
                   @endif
                </div>
                <div class="name bg-white rounded">
-                  <h3 class="pb-3 p-3 border-bottom bold">About this property</h3>
+                  <h3 class="pb-3 p-3 border-bottom bold-2">About this property</h3>
                   <div class="card-body ">
                      <div>{{ $property->name }}</div>
                      <p><?php echo  html_entity_decode($property->description);  ?></p>
                   </div>
                </div>
                <div class="name bg-white rounded">
-                  <h3 class="card-title  pb-3 p-3 border-bottom bold">About the area</h3>
+                  <h3 class="card-title  pb-3 p-3 border-bottom bold-2">About the area</h3>
                   <div class="card-body">
                      <div class="row   align-items-start">
                         <div class="col-md-4 mb-sm-3 mb-md-0">
-                           <h3 class="card-title bold"> {{ $property->state }}</h3>
+                           <h3 class="card-title bold-2"> {{ $property->state }}</h3>
                            {{ $property->state_description }}
                         </div>
                         <div class="col-md-8">
@@ -150,7 +150,7 @@
                               @if ($areas->count())
 
                               <div class="col-md-6">
-                                 <h5 class="card-title bold">What's near by</h5>
+                                 <h5 class="card-title bold-2">What's near by</h5>
                                  <ul class="list-unstyled">
                                     @foreach($areas as $key => $area)
                                     <li class="">{{ $area->name }}</li>
@@ -159,7 +159,7 @@
                               </div>
                               @endif
                               <div class="col-md-6">
-                                 <h5 class="card-title bold">Restuarants</h5>
+                                 <h5 class="card-title bold-2">Restuarants</h5>
                                  <ul class="list-unstyled ">
                                     @foreach($restaurants as $key => $restaurant)
                                     <li class=""><span class="position-absolute svg-icon-section">
@@ -182,12 +182,12 @@
             @endif
             <div class="col-12  mt-1 col-md-12">
                <div id="Amenities" class="name mt-2 bg-white">
-                  <h3 class="card-title  p-3 border-bottom bold">Amenities</h3>
+                  <h3 class="card-title  p-3 border-bottom bold-2">Amenities</h3>
                   <div class="card-body">
                      <div class="row">
                         @foreach($amenities as $key => $apartment_facilities)
                         <div class="col-md-3">
-                           <h5 class="card-title bold">{{ $key }}</h5>
+                           <h5 class="card-title bold-2">{{ $key }}</h5>
                            <ul class="list-unstyled">
                               @foreach($apartment_facilities as $key => $apartment_facility)
                               <li>
@@ -202,7 +202,7 @@
                </div>
 
                <div class="name house-rules mt-1 bg-white mb-3">
-                  <h3 class="card-title  p-3 border-bottom bold">House Rules</h3>
+                  <h3 class="card-title  p-3 border-bottom bold-2">House Rules</h3>
                   <div class="card-body">
                      <ul class="list-unstyled">
                         <li>

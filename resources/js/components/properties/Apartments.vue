@@ -23,14 +23,14 @@
       </div>
     </div>
     <div class="col-md-12 bg-white  pt-3">
-      <div class="card-title bold text-size-1-big  mt-lg-0 mt-sm-3 ">
+      <div class="card-title bold-2 text-size-1-big  mt-lg-0 mt-sm-3 ">
         <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
       </div>
       <div class="text-size-2 text-gold">
         <i class="fas fa-info-circle mr-2 "></i>Instant Confirmation
       </div>
       <div class="entire-apartments">
-        <div class="bold mb-2">Entire apartment</div>
+        <div class="bold-2 mb-2">Entire apartment</div>
         <div class="d-flex justify-content-between flex-wrap flex-column">
           <div class="position-relative mb-1">
             <span class="position-absolute svg-icon-section">
@@ -84,7 +84,7 @@
         </template>
 
         <div class="position-relative mb-1">
-          <a @click.prevent="showRoom(room)" class="d-flex active-link text-highlight font-weight-bold" href="#">
+          <a @click.prevent="showRoom(room)" class="d-flex active-link text-highlight font-weight-bold-2" href="#">
             <span aria-hidden="true">More details</span>
             <svg class="" aria-hidden="true" class="align-self-center" viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -107,12 +107,12 @@
                 <div class="sale-price mr-3">
                   {{ room.currency }}{{ room.converted_price | priceFormat }}
                 </div>
-                <div class="price bold">
+                <div class="price bold-2">
                   {{ room.currency }}{{ room.discounted_price | priceFormat }}
                 </div>
               </template>
               <template v-else>
-                <div class="price bold mt-2">
+                <div class="price bold-2 mt-2">
                   {{ room.currency }}{{ room.converted_price | priceFormat }}
                 </div>
               </template>
@@ -120,11 +120,11 @@
             <div class="text-size-2">{{ room.price_mode }}</div>
           </div>
           <div class="align-self-end">
-            <div class="font-weight-bold text-success" v-if="room.property.is_refundable">
+            <div class="font-weight-bold-2 text-success" v-if="room.property.is_refundable">
               Fully Refundable
             </div>
             <a target="_blank" @click.prevent="reserve(room)"
-              class="btn btn-round  btn-blue   py-2    align-self-end font-weight-bold">
+              class="btn btn-round  btn-blue   py-2    align-self-end font-weight-bold-2">
               Reserve
             </a>
           </div>
@@ -157,7 +157,7 @@
       <div class="container">
         <div class="">
           <div class="py-2  border-bottom">
-            <h3 class="bold">Apartment Information</h3>
+            <h3 class="bold-2">Apartment Information</h3>
 
             <button @click="lunchModal = !lunchModal" style="z-index: 1; right:10px; top: 15px"
               class="close-icon  cursor-pointer fa-1x position-absolute raised">
@@ -167,7 +167,7 @@
         </div>
         <div class="row mt-2">
           <div class="col-md-4">
-            <div class="card-title  bold text-size-1-big">
+            <div class="card-title  bold-2 text-size-1-big">
               <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
             </div>
             <div class="d-flex  flex-column">
@@ -197,12 +197,12 @@
               </div>
             </div>
             <div class="facilities">
-              <h4 class="card-title bold text-size-1-big">
+              <h4 class="card-title bold-2 text-size-1-big">
                 Amenities
               </h4>
               <div :key="amenity.id" v-for="(amenity, index) in amenities">
                 <div class="">
-                  <div class="bold">
+                  <div class="bold-2">
                     {{ index }}
                   </div>
                   <div v-for="facility in  amenity" class="svg-icon-text">{{ facility.name }} </div>

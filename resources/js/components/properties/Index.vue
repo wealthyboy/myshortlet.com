@@ -2,8 +2,6 @@
   <div>
 
     <div v-if="!propertyLoading && properties.length">
-
-
       <div class="form-row">
         <div class="form-group category-search  form-border cursor-pointer search col-md-5 bmd-form-grup mb-sm-2 mb-md-0">
           <label class="pl-2  bmd-label-static  checkin mb-0 pl-1" for="flatpickr-input-f">Check-in - Check-out</label>
@@ -14,7 +12,7 @@
         </div>
         <div class="col-md-2  check-availablility mb-sm-3 mb-md-0   mt-sm-2 mt-md-0">
           <button type="button" @click.prevent="checkAvailabity()"
-            class="btn btn-primary btn-block m-auto bold check-availablility-button rounded">
+            class="btn btn-primary btn-block m-auto bold-2 check-availablility-button rounded">
             <i class="material-icons"></i> Check availablity
           </button>
         </div>
@@ -37,7 +35,7 @@
 
             <div class="d-flex  justify-content-between">
               <div class=" mt-sm-2 ">
-                <a target="_blank" class="bold text-size-1-big  mt-sm-2 " :href="property.link">{{ property.name }}</a>
+                <a target="_blank" class="bold-2 text-size-1-big  mt-sm-2 " :href="property.link">{{ property.name }}</a>
                 <div class="d">
                   <small><a :href="property.link" class="p-0">{{ property.city }}</a>, <a href="">{{ property.state
                   }}</a></small>
@@ -72,17 +70,17 @@
               <div class="text-right mr-4">
                 <div class="d-inline-flex">
                   <template v-if="property.default_discounted_price">
-                    <div class="sale-price bold mr-3 text-gold">
+                    <div class="sale-price bold-2 mr-3 text-gold">
                       {{ property.currency
                       }}{{ property.converted_price | priceFormat }}
                     </div>
-                    <div class="price bold">
+                    <div class="price bold-2">
                       {{ property.currency }}
                       {{ property.default_discounted_price | priceFormat }}
                     </div>
                   </template>
                   <template v-else>
-                    <div class="price bold">
+                    <div class="price bold-2">
                       {{ property.currency
                       }}{{ property.converted_price | priceFormat }}
                     </div>
@@ -95,7 +93,7 @@
                   Fully Refundable
                 </div>
                 <a v-if="property.mode == 'shortlet'" target="_blank" :href="property.link"
-                  class="btn btn-primary btn-round d-none bold d-lg-block d-xl-block">
+                  class="btn btn-primary btn-round d-none bold-2 d-lg-block d-xl-block">
                   Check Availability
                 </a>
               </div>
