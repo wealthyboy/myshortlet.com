@@ -58,10 +58,10 @@
       <div class="row nav-links">
          <div class="col-12 ">
             <div class="d-flex mt-sm-3 mt-md-0 justify-content-between bg-white mt-">
-               <nav class="nav text-capitalize bg-white">
-                  <a class="nav-link text-capitalize active font-weight-bold" href="#Overview">Overview</a>
-                  <a class="nav-link text-capitalize font-weight-bold" href="#Amenities">Amenities</a>
-                  <a class="nav-link text-capitalize pb-1 font-weight-bold" href="#Location">Location</a>
+               <nav id="stickyNav" class="nav text-capitalize bg-white">
+                  <a class="nav-link scrollLink text-capitalize active font-weight-bold bold-2" aria-current="page" href="#Overview">Overview</a>
+                  <a class="nav-link scrollLink text-capitalize font-weight-bold  bold-2" href="#Amenities">Amenities</a>
+                  <a class="nav-link scrollLink text-capitalize pb-1 font-weight-bold  bold-2" href="#Location">Location</a>
                </nav>
 
             </div>
@@ -86,8 +86,8 @@
                            <div class="row">
                               @if($property->facilities->count())
                               @foreach($property->facilities->take(3) as $facility)
-                              <div class="col-6 d-flex mb-2 align-items-center">
-                                 <span class="position-absolute svg-icon-section">
+                              <div class="col-md-3 col-5 d-flex mb-2 align-items-center">
+                                 <span class="position-absolute content-icon svg-icon-section">
                                     <?php echo  html_entity_decode($facility->svg) ?>
                                  </span>
                                  <span class="svg-icon-text">{{ $facility->name }}</span>
@@ -136,7 +136,7 @@
                      <p><?php echo  html_entity_decode($property->description);  ?></p>
                   </div>
                </div>
-               <div class="name bg-white rounded">
+               <div id="Location" class="name bg-white rounded">
                   <h3 class="card-title  pb-3 p-3 border-bottom bold-2">About the area</h3>
                   <div class="card-body">
                      <div class="row   align-items-start">

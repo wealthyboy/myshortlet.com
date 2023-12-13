@@ -56,8 +56,6 @@
             </span>
             <span class="svg-icon-text">{{ room.guests }} Guests</span>
           </div>
-
-
         </div>
 
         <div v-if="room.free_services.length" class="d-inline-flex flex-wrap">

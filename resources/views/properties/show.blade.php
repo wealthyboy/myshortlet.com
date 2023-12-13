@@ -133,4 +133,40 @@ lazyImageObserver.observe(lazyImage);
 console.log("error")
 }
 });
+
+
+$(document).ready(function() {
+// Use on('click') to handle the click event
+$('.scrollLink').on('click', function(e) {
+e.preventDefault(); // Prevent the default behavior of the link
+// Remove 'active' class from all links
+$('.scrollLink').removeClass('bold-3');
+
+// Add 'active' class to the clicked link
+$(this).addClass('bold-3');
+var targetId = $(this).attr('href'); // Get the target ID from the link's href
+var targetElement = $(targetId);
+
+if (targetElement.length) {
+// Scroll to the target element with a smooth animation
+$('html, body').animate({
+scrollTop: targetElement.offset().top
+}, 1000); // Adjust the duration as needed
+}
+});
+
+
+var nav = $('#stickyNav');
+var navOffset = nav.offset().top;
+
+// Use scroll event to add or remove the 'sticky' class based on scroll position
+$(window).on('scroll', function() {
+if ($(window).scrollTop() > navOffset) {
+nav.addClass('sticky');
+} else {
+nav.removeClass('sticky');
+}
+});
+});
+
 @stop

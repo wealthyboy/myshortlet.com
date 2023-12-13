@@ -55,4 +55,5 @@
 
 @endsection
 @section('page-scripts')
+
 @stop

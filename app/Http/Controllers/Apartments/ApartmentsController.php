@@ -67,9 +67,12 @@ class ApartmentsController extends Controller
         $properties->appends(request()->all());
 
 
+
+
         if ($request->ajax()) {
             return PropertyLists::collection(
                 $properties
+
             )->additional(['attributes' => $attributes, 'search' => false]);
         }
         $next_page = [];
@@ -149,7 +152,7 @@ class ApartmentsController extends Controller
         $properties  = $properties->appends(request()->all());
         $total = $properties->total();
 
-
+        $properties->load('images');
 
         if ($request->ajax()) {
             return PropertyLists::collection(

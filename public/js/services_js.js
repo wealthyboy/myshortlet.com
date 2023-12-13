@@ -3987,6 +3987,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     links: "links",
     next_page_url: "next_page_url"
   })),
+  created: function created() {},
   mounted: function mounted() {
     var _this = this;
     console.log(new URL(window.location));
@@ -8167,17 +8168,49 @@ var render = function render() {
       staticClass: "row no-gutters"
     }, [_c("div", {
       staticClass: "col-md-3 col-12 position-relative"
-    }, [_c("div", [_c("a", {
-      attrs: {
-        target: "_blank",
-        href: property.link
-      }
-    }, [_c("img", {
-      staticClass: "img img-fluid rounded-top",
-      attrs: {
-        src: property.image_m
-      }
-    })]), _vm._v(" "), _c("div", {
+    }, [_c("div", [_c("div", {
+      staticClass: "cities-carousel owl-theme"
+    }, _vm._l(property.images, function (image) {
+      return _c("div", {
+        key: image.id,
+        staticClass: "item rounded-top"
+      }, [_c("img", {
+        staticClass: "img img-fluid",
+        attrs: {
+          src: image.image
+        }
+      }), _vm._v(" "), _c("div", {
+        staticClass: "images-count"
+      }, [_c("button", {
+        staticClass: "uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button",
+        attrs: {
+          type: "button"
+        }
+      }, [_c("svg", {
+        staticClass: "uitk-icon uitk-icon-leading uitk-icon-medium",
+        attrs: {
+          "aria-label": "Show all 7 images for Classic Twin Room",
+          role: "img",
+          viewBox: "0 0 24 24",
+          xmlns: "http://www.w3.org/2000/svg",
+          "xmlns:xlink": "http://www.w3.org/1999/xlink"
+        }
+      }, [_c("title", {
+        attrs: {
+          id: "photo_library-property-offers-media-carousel-1-title"
+        }
+      }, [_vm._v("Show all " + _vm._s(property.images.length) + "\n                        images\n\n                      ")]), _vm._v(" "), _c("path", {
+        attrs: {
+          "fill-rule": "evenodd",
+          d: "M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z",
+          "clip-rule": "evenodd"
+        }
+      })]), _c("span", {
+        attrs: {
+          "aria-hidden": "true"
+        }
+      }, [_vm._v(_vm._s(property.images.length))])])])]);
+    }), 0), _vm._v(" "), _c("div", {
       staticClass: "fav-icon position-absolute"
     }, [_c("saved", {
       attrs: {
@@ -8213,7 +8246,14 @@ var render = function render() {
     }, _vm._l(property.facilities, function (facility) {
       return _c("span", {
         key: facility.id
-      }, [_vm._v(_vm._s(facility.name) + ".\n                  ")]);
+      }, [_c("span", {
+        staticClass: "position-absolute content-icon svg-icon-section",
+        domProps: {
+          innerHTML: _vm._s(facility.svg)
+        }
+      }), _vm._v(" "), _c("span", {
+        staticClass: "ml-4"
+      }, [_vm._v("\n                      " + _vm._s(facility.name) + "\n                    ")])]);
     }), 0) : _vm._e(), _vm._v(" "), property.type == "single" ? _c("div", {
       staticClass: "guests-section text-size-1"
     }, [_c("span", [_vm._v(_vm._s(property.guests) + " guests")]), _vm._v(" "), _c("span", {
@@ -12047,44 +12087,41 @@ $().ready(function () {
     }
   });
 });
-document.addEventListener('DOMContentLoaded', function () {
-  var leftBox = document.getElementById('leftBox');
-  var rightBox = document.getElementById('rightBox');
 
-  // Set up the Intersection Observer for the left box
-  var leftObserver = new IntersectionObserver(function (entries, observer) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        // Add a CSS class to trigger the animation
-        entry.target.classList.add('animate-left');
-        // Unobserve the target to stop further observations
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.5
-  }); // Adjust the threshold based on your needs
+// document.addEventListener('DOMContentLoaded', () => {
+//   const leftBox = document.getElementById('leftBox');
+//   const rightBox = document.getElementById('rightBox');
 
-  // Start observing the left box
-  leftObserver.observe(leftBox);
+//   // Set up the Intersection Observer for the left box
+//   const leftObserver = new IntersectionObserver((entries, observer) => {
+//     entries.forEach(entry => {
+//       if (entry.isIntersecting) {
+//         // Add a CSS class to trigger the animation
+//         entry.target.classList.add('animate-left');
+//         // Unobserve the target to stop further observations
+//         observer.unobserve(entry.target);
+//       }
+//     });
+//   }, { threshold: 0.5 }); // Adjust the threshold based on your needs
 
-  // Set up the Intersection Observer for the right box
-  var rightObserver = new IntersectionObserver(function (entries, observer) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        // Add a CSS class to trigger the animation
-        entry.target.classList.add('animate-right');
-        // Unobserve the target to stop further observations
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.5
-  }); // Adjust the threshold based on your needs
+//   // Start observing the left box
+//   leftObserver.observe(leftBox);
 
-  // Start observing the right box
-  rightObserver.observe(rightBox);
-});
+//   // Set up the Intersection Observer for the right box
+//   const rightObserver = new IntersectionObserver((entries, observer) => {
+//     entries.forEach(entry => {
+//       if (entry.isIntersecting) {
+//         // Add a CSS class to trigger the animation
+//         entry.target.classList.add('animate-right');
+//         // Unobserve the target to stop further observations
+//         observer.unobserve(entry.target);
+//       }
+//     });
+//   }, { threshold: 0.5 }); // Adjust the threshold based on your needs
+
+//   // Start observing the right box
+//   rightObserver.observe(rightBox);
+// });
 
 //console.log(intlTelInput());
 
@@ -12120,6 +12157,24 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_2__["default"]({
     });
     $(".home-flexslider").flexslider({
       animation: "slide"
+    });
+    jQuery(function () {
+      $(".test-carousel").owlCarousel({
+        margin: 10,
+        nav: true,
+        dots: false,
+        responsive: {
+          0: {
+            items: 1
+          },
+          600: {
+            items: 1
+          },
+          1000: {
+            items: 1
+          }
+        }
+      });
     });
     $(".cities-carousel").owlCarousel({
       loop: true,

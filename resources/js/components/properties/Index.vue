@@ -23,9 +23,29 @@
         <div class="row no-gutters">
           <div class="col-md-3 col-12 position-relative">
             <div>
-              <a target="_blank" :href="property.link">
-                <img :src="property.image_m" class="img  img-fluid rounded-top" />
-              </a>
+
+              <div class="cities-carousel  owl-theme">
+                <div class="item rounded-top" :key="image.id" v-for="image in property.images">
+                  <img :src="image.image" class="img  img-fluid" />
+                  <div class="images-count">
+                    <button type="button"
+                      class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
+                      <svg class="uitk-icon uitk-icon-leading uitk-icon-medium"
+                        aria-label="Show all 7 images for Classic Twin Room" role="img" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <title id="photo_library-property-offers-media-carousel-1-title">Show all {{
+                          property.images.length }}
+                          images
+
+                        </title>
+                        <path fill-rule="evenodd"
+                          d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z"
+                          clip-rule="evenodd"></path>
+                      </svg><span aria-hidden="true">{{ property.images.length }}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
               <div class="fav-icon position-absolute">
                 <saved :property="property" />
               </div>
@@ -42,8 +62,15 @@
                 </div>
                 <div class="mb-5">
                   <div v-if="property.facilities.length" class="facilities text-gold text-size-1">
-                    <span :key="facility.id" v-for="facility in property.facilities">{{ facility.name }}.
+                    <span :key="facility.id" v-for="facility in property.facilities">
+                      <span v-html="facility.svg" class="position-absolute content-icon svg-icon-section">
+                      </span>
+                      <span class="ml-4">
+                        {{ facility.name }}
+                      </span>
                     </span>
+
+
                   </div>
 
                   <div v-if="property.type == 'single'" class="guests-section text-size-1 ">
@@ -181,7 +208,13 @@ export default {
     }),
   },
 
+  created() {
+
+  },
+
   mounted() {
+
+
     console.log(new URL(window.location))
     this.$store.commit("setPropertyLoading", true);
     let time = new Date().getTime();
@@ -194,6 +227,9 @@ export default {
     }, 1000);
 
     this.$store.commit("setNextPageUrl", this.next_page[0]);
+
+
+
   },
   methods: {
     ...mapActions({
