@@ -10,7 +10,7 @@
             <div class=" mt-4 mb-4">
                <form method="POST" class=" pl-4 pr-4" action="/register">
                   <div class="text-center">
-                     <h1 class="bold-3">Register</h1>
+                     <h2 class="bold-3">Register</h2>
                      <p class=""> Have access to your bookings history , .e.t.c</p>
                   </div>
                   @csrf

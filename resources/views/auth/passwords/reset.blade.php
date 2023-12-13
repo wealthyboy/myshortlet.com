@@ -15,6 +15,9 @@
                         </div>
                         @csrf
 
+                        <input type="hidden" name="token" value="{{ $token }}">
+
+
                         @if ($errors->all() )
                         @foreach($errors->all() as $error)
                         <span class="error d-block">
@@ -26,7 +29,12 @@
                         <div class="form-row">
 
                             <div class="form-group bmd-form-group col-md-12 col-12">
-                                <label class="bmd-label-floating">New Password</label>
+                                <label for="email" class="bmd-label-floating">Email</label>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                            </div>
+
+                            <div class="form-group bmd-form-group col-md-12 col-12">
+                                <label for="password" class="bmd-label-floating">New Password</label>
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                             </div>
 
