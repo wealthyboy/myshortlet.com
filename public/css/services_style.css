@@ -18176,6 +18176,16 @@ button.owl-next {
     right: 0px;
     margin-top: -28px;
   }
+  .down-icon {
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    justify-content: space-around;
+    bottom: 3px;
+    animation: 3.4s ease-in-out infinite fadeInDown;
+    -webkit-animation: 3.4s ease-in-out infinite fadeInDown;
+  }
   .bg-left-panel {
     position: relative;
     right: 0px;

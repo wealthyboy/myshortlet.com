@@ -7,7 +7,7 @@
 <body>
    <div id="app" class="appp">
       <nav class="navbar   navbar-expand-lg " id="sectionsNav">
-         @include('_partials.header')
+         @include('_partials.header2')
       </nav>
 
       <div style="background-color: #f8f5f4;" class="main  index-page">

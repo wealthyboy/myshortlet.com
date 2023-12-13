@@ -4174,6 +4174,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     var retrievedJsonString = localStorage.getItem('searchParams');
     // Check if the retrieved JSON string is not null
     if (retrievedJsonString !== null) {
+      var retrievedObject = JSON.parse(retrievedJsonString);
       this.form.check_in_checkout = retrievedObject.check_in_checkout;
       this.checkAvailabity();
     }
@@ -7319,7 +7320,7 @@ var render = function render() {
   }, [_vm.room.property.is_refundable ? _c("div", {
     staticClass: "font-weight-bold-2 text-success"
   }, [_vm._v("\n            Fully Refundable\n          ")]) : _vm._e(), _vm._v(" "), _c("a", {
-    staticClass: "btn btn-round btn-blue py-2 align-self-end font-weight-bold-2",
+    staticClass: "btn btn-round btn-blue py-2 bold-2 align-self-end font-weight-bold-2",
     attrs: {
       target: "_blank"
     },
@@ -8249,7 +8250,7 @@ var render = function render() {
     }, [_vm._v("\n                " + _vm._s(property.price_mode) + " per night\n              ")]), _vm._v(" "), property.is_refundable ? _c("div", {
       staticClass: "text-size-1 text-success"
     }, [_vm._v("\n                Fully Refundable\n              ")]) : _vm._e(), _vm._v(" "), property.mode == "shortlet" ? _c("a", {
-      staticClass: "btn btn-primary btn-round d-none bold-2 d-lg-block d-xl-block",
+      staticClass: "btn btn-primary btn-round d-none bold-3 d-lg-block d-xl-block py-2 px-4",
       attrs: {
         target: "_blank",
         href: property.link
@@ -12047,15 +12048,15 @@ $().ready(function () {
   });
 });
 document.addEventListener('DOMContentLoaded', function () {
-  var animatedBox = document.getElementById('animatedBox');
+  var leftBox = document.getElementById('leftBox');
+  var rightBox = document.getElementById('rightBox');
 
-  // Set up the Intersection Observer
-  var observer = new IntersectionObserver(function (entries, observer) {
-    console.log(true);
+  // Set up the Intersection Observer for the left box
+  var leftObserver = new IntersectionObserver(function (entries, observer) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
         // Add a CSS class to trigger the animation
-        entry.target.classList.add('animate');
+        entry.target.classList.add('animate-left');
         // Unobserve the target to stop further observations
         observer.unobserve(entry.target);
       }
@@ -12064,8 +12065,25 @@ document.addEventListener('DOMContentLoaded', function () {
     threshold: 0.5
   }); // Adjust the threshold based on your needs
 
-  // Start observing the target element
-  observer.observe(animatedBox);
+  // Start observing the left box
+  leftObserver.observe(leftBox);
+
+  // Set up the Intersection Observer for the right box
+  var rightObserver = new IntersectionObserver(function (entries, observer) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        // Add a CSS class to trigger the animation
+        entry.target.classList.add('animate-right');
+        // Unobserve the target to stop further observations
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.5
+  }); // Adjust the threshold based on your needs
+
+  // Start observing the right box
+  rightObserver.observe(rightBox);
 });
 
 //console.log(intlTelInput());

@@ -93,7 +93,7 @@
                   Fully Refundable
                 </div>
                 <a v-if="property.mode == 'shortlet'" target="_blank" :href="property.link"
-                  class="btn btn-primary btn-round d-none bold-2 d-lg-block d-xl-block">
+                  class="btn btn-primary btn-round d-none bold-3 d-lg-block d-xl-block py-2 px-4">
                   Check Availability
                 </a>
               </div>

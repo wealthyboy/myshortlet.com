@@ -4,7 +4,9 @@
         <a href="/" class="navbar-brand">
             <div class="logo-small">
 
-                <img src="/images/logo/avnmont-white-04.png" alt="" srcset="">
+
+                <img src="/images/logo/avem-logo.png" alt="" srcset="">
+
 
                 @if(isset($show_logo) && $show_logo)
                 @else
@@ -17,19 +19,26 @@
 
         <div class="d-flex">
             @guest
-            <a href="/login" class="align-self-center font-weight-bold btn-primary bold-3 btn text-white px-3 py-1 rounded ">
+            <a href="/login" class="align-self-center bold-3 font-weight-bold  px-3 py-1 mr-2">
                 <i class="fal fa-sign-in"></i>
                 Login
             </a>
             @endguest
 
             @auth
-            <a href="/account" class="align-self-center font-weight-bold btn-primary bold-3 btn text-white px-3 py-1 rounded ">
+            <a href="/account" class="align-self-center bold-3 font-weight-bold  px-3 py-1 mr-2">
                 <i class="fal fa-sign-in"></i>
                 Account
             </a>
             @endauth
 
+
+            @if(isset($show_logo) && $show_logo)
+            <a href="/apartments" class="align-self-center font-weight-bold px-3 py-1">
+                <i class="fal fa-sign-in"></i>
+                Book Now
+            </a>
+            @endif
 
 
             <button class="navbar-toggler d-block text-white" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">

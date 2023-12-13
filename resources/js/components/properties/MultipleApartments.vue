@@ -132,10 +132,9 @@ export default {
     const retrievedJsonString = localStorage.getItem('searchParams');
     // Check if the retrieved JSON string is not null
     if (retrievedJsonString !== null) {
+      const retrievedObject = JSON.parse(retrievedJsonString);
       this.form.check_in_checkout = retrievedObject.check_in_checkout
       this.checkAvailabity()
-
-
     }
 
 
