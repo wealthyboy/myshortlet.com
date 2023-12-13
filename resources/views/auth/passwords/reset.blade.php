@@ -8,7 +8,7 @@
         <div class="row justify-content-center">
             <div class="ml-1 col-md-7   mr-1">
                 <div class=" mt-4 mb-4">
-                    <form method="POST" class=" pl-4 pr-4" action="{{ route('password.email') }}">
+                    <form method="POST" class=" pl-4 pr-4" action="{{ route('password.update') }}">
                         <div class=" text-center">
                             <h1 class="bold-3">Forgot Password</h1>
                             <p class=""> Having trouble accessing your password</p>
@@ -26,11 +26,14 @@
                         <div class="form-row">
 
                             <div class="form-group bmd-form-group col-md-12 col-12">
-                                <label class="bmd-label-floating">Email</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required>
-
+                                <label class="bmd-label-floating">New Password</label>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                             </div>
 
+                            <div class="form-group bmd-form-group col-md-12 col-12">
+                                <label for="password-confirm" class="bmd-label-floating">Confirm Password</label>
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            </div>
 
                         </div>
 
