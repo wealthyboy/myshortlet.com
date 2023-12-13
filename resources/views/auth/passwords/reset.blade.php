@@ -10,7 +10,7 @@
                 <div class=" mt-4 mb-4">
                     <form method="POST" class=" pl-4 pr-4" action="{{ route('password.update') }}">
                         <div class=" text-center">
-                            <h1 class="bold-3">Forgot Password</h1>
+                            <h2 class="bold-3">Reset Password</h2>
                             <p class=""> Having trouble accessing your password</p>
                         </div>
                         @csrf
