@@ -67,7 +67,7 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {   
+    {
 
         $user = User::create([
             'name' => $data['first_name'],
@@ -75,18 +75,17 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'phone_number' => $data['phone_number'],
             'type' => 'subscriber',
-            'code' => $data['code'],
+            'code' => data_get($data, 'code'),
             'password' => Hash::make($data['password']),
         ]);
 
         return $user;
-
     }
 
 
 
-    
-	/**
+
+    /**
      * The user has been registered.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -94,25 +93,23 @@ class RegisterController extends Controller
      * @return mixed
      */
     protected function registered(Request $request, $user)
-    {   
+    {
 
-        
 
-        if ($request->ajax()){
+
+        if ($request->ajax()) {
             return response()->json([
                 'loggenIn' => true,
                 'user_type' => 'registered',
                 'user' => $user
-            ],200);
+            ], 200);
         }
-		return redirect()->intended($this->redirectPath());
+        return redirect()->intended($this->redirectPath());
     }
 
 
-    public function verify(Request $request){
-       return view('auth.verify');
+    public function verify(Request $request)
+    {
+        return view('auth.verify');
     }
-
-
-    
 }

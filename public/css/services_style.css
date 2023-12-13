@@ -18610,3 +18610,18 @@ button.owl-next {
   border-color: #007bff;
   /* Change this color to the desired active color */
 }
+
+input:focus,
+textarea:focus {
+  box-shadow: none !important;
+}
+
+.form-control:focus {
+  border-color: #fff !important;
+  box-shadow: none !important;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}

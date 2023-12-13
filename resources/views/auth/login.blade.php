@@ -1,9 +1,9 @@
-@extends('layouts.listing')
+@extends('layouts.auth')
 
 @section('content')
 
 <!--Content-->
-<section class="sec-padding bg--gray mt-5">
+<section class="sec-padding bg--gray ">
     <div class="container">
         <div class="row justify-content-center">
             <div class="ml-1 col-md-6  bg--light mr-1">
