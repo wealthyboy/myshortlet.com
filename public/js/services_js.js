@@ -8270,7 +8270,7 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "mt-sm-2"
     }, [_c("a", {
-      staticClass: "bold-3 text-size-1-big mt-sm-2",
+      staticClass: "bold-2 text-size-1-big mt-sm-2",
       attrs: {
         target: "_blank",
         href: property.link
@@ -8293,7 +8293,7 @@ var render = function render() {
     }, _vm._l(property.facilities, function (facility) {
       return _c("span", {
         key: facility.id,
-        staticClass: "mb-1 mb-lg-0"
+        staticClass: "mb-1 mb-lg-0 mr-2"
       }, [_c("span", {
         staticClass: "position-absolute content-icon svg-icon-section",
         domProps: {
@@ -8303,11 +8303,11 @@ var render = function render() {
         staticClass: "ml-4"
       }, [_vm._v("\n                      " + _vm._s(facility.name) + "\n                    ")])]);
     }), 0) : _vm._e(), _vm._v(" "), property.free_services.length ? _c("div", {
-      staticClass: "d-inline-flex mr-2 text-size-1 mb-sm-5 mb-md-0"
+      staticClass: "d-inline-flex d-flex flex-lg-row flex-column mr-2 text-size-1 mb-sm-5 mb-md-0"
     }, _vm._l(property.free_services, function (free_service) {
       return _c("div", {
         key: free_service.id,
-        staticClass: "free-services mr-2 text-size-1"
+        staticClass: "free-services mr-2 text-size-1 mb-1 mb-lg-0"
       }, [_vm._v("\n                    " + _vm._s(free_service.name) + " included\n                  ")]);
     }), 0) : _vm._e()])])]), _vm._v(" "), _c("div", {
       staticClass: "d-flex position-absolute apartment-review justify-content-between mt-1 align-items-end"
@@ -8318,9 +8318,9 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "d-inline-flex"
     }, [property.default_discounted_price ? [_c("div", {
-      staticClass: "sale-price bold-2 mr-3 text-gold"
+      staticClass: "sale-price bold-3 mr-3 text-gold"
     }, [_vm._v("\n                    " + _vm._s(property.currency) + _vm._s(_vm._f("priceFormat")(property.converted_price)) + "\n                  ")]), _vm._v(" "), _c("div", {
-      staticClass: "price bold-2"
+      staticClass: "price bold-3"
     }, [_vm._v("\n                    " + _vm._s(property.currency) + "\n                    " + _vm._s(_vm._f("priceFormat")(property.default_discounted_price)) + "\n                  ")])] : [_c("div", {
       staticClass: "price bold-3"
     }, [_vm._v("\n                    " + _vm._s(property.currency) + _vm._s(_vm._f("priceFormat")(property.converted_price)) + "\n                  ")])]], 2), _vm._v(" "), _c("div", {

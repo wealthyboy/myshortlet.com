@@ -56,7 +56,7 @@
 
             <div class="d-flex  justify-content-between">
               <div class=" mt-sm-2 ">
-                <a target="_blank" class="bold-3 text-size-1-big  mt-sm-2 " :href="property.link">{{ property.name }}</a>
+                <a target="_blank" class="bold-2 text-size-1-big  mt-sm-2 " :href="property.link">{{ property.name }}</a>
                 <div class="d">
                   <small><a :href="property.link" class="p-0">{{ property.city }}</a>, <a href="">{{ property.state
                   }}</a></small>
@@ -64,7 +64,7 @@
                 <div class="mb-5">
                   <div v-if="property.facilities.length"
                     class="facilities d-flex flex-lg-row flex-column text-gold text-size-1">
-                    <span class="mb-1 mb-lg-0" :key="facility.id" v-for="facility in property.facilities">
+                    <span class="mb-1 mb-lg-0 mr-2" :key="facility.id" v-for="facility in property.facilities">
                       <span v-html="facility.svg" class="position-absolute content-icon svg-icon-section">
                       </span>
                       <span class="ml-4">
@@ -78,9 +78,10 @@
 
 
 
-                  <div v-if="property.free_services.length" class="d-inline-flex mr-2 text-size-1  mb-sm-5 mb-md-0">
+                  <div v-if="property.free_services.length"
+                    class="d-inline-flex d-flex flex-lg-row flex-column mr-2 text-size-1  mb-sm-5 mb-md-0">
                     <div v-for="free_service in property.free_services" :key="free_service.id"
-                      class="free-services mr-2 text-size-1">
+                      class="free-services mr-2 text-size-1 mb-1 mb-lg-0">
                       {{ free_service.name }} included
                     </div>
                   </div>
@@ -93,11 +94,11 @@
               <div class="text-right mr-4">
                 <div class="d-inline-flex">
                   <template v-if="property.default_discounted_price">
-                    <div class="sale-price bold-2 mr-3 text-gold">
+                    <div class="sale-price bold-3 mr-3 text-gold">
                       {{ property.currency
                       }}{{ property.converted_price | priceFormat }}
                     </div>
-                    <div class="price bold-2">
+                    <div class="price bold-3">
                       {{ property.currency }}
                       {{ property.default_discounted_price | priceFormat }}
                     </div>
