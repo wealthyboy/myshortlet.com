@@ -24,7 +24,7 @@
           <div class="col-md-3 col-12 position-relative">
             <div>
 
-              <div class="cities-carousel  owl-theme">
+              <div class="owl-carousel  owl-theme">
                 <div class="item rounded-top" :key="image.id" v-for="image in property.images">
                   <img :src="image.image" class="img  img-fluid" />
                   <div class="images-count">
@@ -214,16 +214,36 @@ export default {
 
   mounted() {
 
+    jQuery(function () {
+      $(".owl-carousel").owlCarousel({
+        margin: 10,
+        nav: true,
+        dots: false,
+        responsive: {
+          0: {
+            items: 1,
+          },
+          600: {
+            items: 1,
+          },
+          1000: {
+            items: 1,
+          },
+        },
+      });
+    });
+
 
     console.log(new URL(window.location))
     this.$store.commit("setPropertyLoading", true);
     let time = new Date().getTime();
+    document.getElementById("ap-loaders").classList.add('d-none')
+    document.getElementById("category-loader").classList.add('d-none')
+    this.$store.commit("setProperties", this.propertys);
+    this.$store.commit("setMeta", this.total);
+    this.$store.commit("setPropertyLoading", false);
     setTimeout(() => {
-      document.getElementById("ap-loaders").classList.add('d-none')
-      document.getElementById("category-loader").classList.add('d-none')
-      this.$store.commit("setProperties", this.propertys);
-      this.$store.commit("setMeta", this.total);
-      this.$store.commit("setPropertyLoading", false);
+
     }, 1000);
 
     this.$store.commit("setNextPageUrl", this.next_page[0]);

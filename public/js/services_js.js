@@ -3989,17 +3989,33 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   })),
   created: function created() {},
   mounted: function mounted() {
-    var _this = this;
+    jQuery(function () {
+      $(".owl-carousel").owlCarousel({
+        margin: 10,
+        nav: true,
+        dots: false,
+        responsive: {
+          0: {
+            items: 1
+          },
+          600: {
+            items: 1
+          },
+          1000: {
+            items: 1
+          }
+        }
+      });
+    });
     console.log(new URL(window.location));
     this.$store.commit("setPropertyLoading", true);
     var time = new Date().getTime();
-    setTimeout(function () {
-      document.getElementById("ap-loaders").classList.add('d-none');
-      document.getElementById("category-loader").classList.add('d-none');
-      _this.$store.commit("setProperties", _this.propertys);
-      _this.$store.commit("setMeta", _this.total);
-      _this.$store.commit("setPropertyLoading", false);
-    }, 1000);
+    document.getElementById("ap-loaders").classList.add('d-none');
+    document.getElementById("category-loader").classList.add('d-none');
+    this.$store.commit("setProperties", this.propertys);
+    this.$store.commit("setMeta", this.total);
+    this.$store.commit("setPropertyLoading", false);
+    setTimeout(function () {}, 1000);
     this.$store.commit("setNextPageUrl", this.next_page[0]);
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)({
@@ -4020,10 +4036,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.getProperties(href + "&timestamp=${new Date().getTime()}").then(function (r) {});
     },
     build: function build() {
-      var _this2 = this;
+      var _this = this;
       this.locationSearch = [];
       document.querySelectorAll(".location-search").forEach(function (e, i) {
-        _this2.locationSearch.push(e.name + "=" + e.value);
+        _this.locationSearch.push(e.name + "=" + e.value);
       });
       var location_search = this.locationSearch.slice(0, 1).concat(this.locationSearch.slice(2));
       var urlString = location.href;
@@ -8169,7 +8185,7 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "col-md-3 col-12 position-relative"
     }, [_c("div", [_c("div", {
-      staticClass: "cities-carousel owl-theme"
+      staticClass: "owl-carousel owl-theme"
     }, _vm._l(property.images, function (image) {
       return _c("div", {
         key: image.id,

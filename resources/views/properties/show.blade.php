@@ -15,7 +15,7 @@
       z-index: 2090; 
       background-color: rgba(0,0,0,.5);
       cursor: pointer;">
-   <div style="" class="">
+   <div class="">
       <button style="z-index: 1; right: 3px;" class="close-icon cursor-pointer fa-2x position-absolute"><i class="fal fa-times"></i></button>
       <div id="gallery-images" class="carousel slide carousel-fade" data-ride="carousel">
          <ol class="carousel-indicators">
