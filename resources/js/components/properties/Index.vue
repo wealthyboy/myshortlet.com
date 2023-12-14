@@ -11,9 +11,8 @@
           <guests />
         </div>
         <div class="col-md-2  check-availablility mb-sm-3 mb-md-0   mt-sm-2 mt-md-0">
-          <button type="button" @click.prevent="checkAvailabity()"
-            class="btn btn-primary btn-block m-auto bold-2 check-availablility-button rounded">
-            Check availablity
+          <button type="button" @click.prevent="checkAvailabity()" class="btn btn-primary btn-round btn-block bold-3 ">
+            Search
           </button>
         </div>
       </div>

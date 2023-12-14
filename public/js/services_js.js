@@ -8195,7 +8195,7 @@ var render = function render() {
   }, [_c("guests")], 1), _vm._v(" "), _c("div", {
     staticClass: "col-md-2 check-availablility mb-sm-3 mb-md-0 mt-sm-2 mt-md-0"
   }, [_c("button", {
-    staticClass: "btn btn-primary btn-block m-auto bold-2 check-availablility-button rounded",
+    staticClass: "btn btn-primary btn-round btn-block bold-3",
     attrs: {
       type: "button"
     },
@@ -8205,7 +8205,7 @@ var render = function render() {
         return _vm.checkAvailabity();
       }
     }
-  }, [_vm._v("\n          Check availablity\n        ")])])]), _vm._v(" "), _vm._l(_vm.properties, function (property) {
+  }, [_vm._v("\n          Search\n        ")])])]), _vm._v(" "), _vm._l(_vm.properties, function (property) {
     return _c("div", {
       key: property.id,
       staticClass: "bg-white mb-2 rounded position-relative border-radius loaded-apartments mt-sm-0 mt-md-2"
