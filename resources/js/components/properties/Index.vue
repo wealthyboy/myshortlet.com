@@ -64,7 +64,7 @@
                 <div class="mb-5">
                   <div v-if="property.facilities.length"
                     class="facilities d-flex flex-lg-row flex-column text-gold text-size-1">
-                    <span class="mb-3 mb-lg-0" :key="facility.id" v-for="facility in property.facilities">
+                    <span class="mb-1 mb-lg-0" :key="facility.id" v-for="facility in property.facilities">
                       <span v-html="facility.svg" class="position-absolute content-icon svg-icon-section">
                       </span>
                       <span class="ml-4">

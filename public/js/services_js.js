@@ -8293,7 +8293,7 @@ var render = function render() {
     }, _vm._l(property.facilities, function (facility) {
       return _c("span", {
         key: facility.id,
-        staticClass: "mb-3 mb-lg-0"
+        staticClass: "mb-1 mb-lg-0"
       }, [_c("span", {
         staticClass: "position-absolute content-icon svg-icon-section",
         domProps: {
