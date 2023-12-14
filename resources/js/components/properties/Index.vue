@@ -26,7 +26,7 @@
 
               <div class="owl-carousel  owl-theme">
                 <div class="item rounded-top" :key="image.id" v-for="image in property.images">
-                  <img :src="image.image" class="img  img-fluid" />
+                  <img :src="image.image_m" class="img  img-fluid" />
                   <div class="images-count">
                     <button type="button"
                       class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
