@@ -7,10 +7,12 @@
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    <link rel="canonical" href="{{ Config('app.url') }}">
    <!-- Favicone Icon -->
-   <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
-   <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-   <link rel="icon" type="image/png" href="/img/favicon-96x96.png">
-   <link rel="apple-touch-icon" href="/img/favicon-96x96.png">
+   <!-- Favicon -->
+   <link rel="icon" type="image/x-icon" href="/images/favicon_io/favicon-32x32.png">
+   <link rel="shortcut icon" type="image/x-icon" href="/images/favicon_io/favicon.ico">
+   <link rel="icon" href="/images/favicon_io/favicon.ico" type="image/x-icon">
+   <link rel="apple-touch-icon" href="/images/favicon_io/apple-touch-icon.png">
+   <!-- Main CSS File -->
    <!-- CSS -->
    <!-- Main CSS File -->
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
