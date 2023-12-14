@@ -105,12 +105,12 @@
                 <div class="sale-price mr-3">
                   {{ room.currency }}{{ room.converted_price | priceFormat }}
                 </div>
-                <div class="price bold-2">
+                <div class="price bold-3">
                   {{ room.currency }}{{ room.discounted_price | priceFormat }}
                 </div>
               </template>
               <template v-else>
-                <div class="price bold-2 mt-2">
+                <div class="price bold-3 mt-2">
                   {{ room.currency }}{{ room.converted_price | priceFormat }}
                 </div>
               </template>

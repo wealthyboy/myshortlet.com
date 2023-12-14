@@ -7358,9 +7358,9 @@ var render = function render() {
   }, [_vm.room.discounted_price ? [_c("div", {
     staticClass: "sale-price mr-3"
   }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n              ")]), _vm._v(" "), _c("div", {
-    staticClass: "price bold-2"
+    staticClass: "price bold-3"
   }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.discounted_price)) + "\n              ")])] : [_c("div", {
-    staticClass: "price bold-2 mt-2"
+    staticClass: "price bold-3 mt-2"
   }, [_vm._v("\n                " + _vm._s(_vm.room.currency) + _vm._s(_vm._f("priceFormat")(_vm.room.converted_price)) + "\n              ")])]], 2), _vm._v(" "), _c("div", {
     staticClass: "text-size-2"
   }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _c("div", {

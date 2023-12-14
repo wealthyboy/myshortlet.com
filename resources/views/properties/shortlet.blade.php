@@ -86,7 +86,7 @@
                            <div class="row">
                               @if($property->facilities->count())
                               @foreach($property->facilities->take(3) as $facility)
-                              <div class="col-md-3 col-5 d-flex mb-2 align-items-center">
+                              <div class="col-md-4 col-6 d-flex mb-2 align-items-center">
                                  <span class="position-absolute content-icon svg-icon-section">
                                     <?php echo  html_entity_decode($facility->svg) ?>
                                  </span>
