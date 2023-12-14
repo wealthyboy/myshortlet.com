@@ -18,6 +18,7 @@
         </div>
       </div>
 
+
       <div v-for="property in properties" :key="property.id"
         class="bg-white mb-2 rounded position-relative border-radius loaded-apartments mt-sm-0 mt-md-2">
         <div class="row no-gutters">
@@ -55,14 +56,15 @@
 
             <div class="d-flex  justify-content-between">
               <div class=" mt-sm-2 ">
-                <a target="_blank" class="bold-2 text-size-1-big  mt-sm-2 " :href="property.link">{{ property.name }}</a>
+                <a target="_blank" class="bold-3 text-size-1-big  mt-sm-2 " :href="property.link">{{ property.name }}</a>
                 <div class="d">
                   <small><a :href="property.link" class="p-0">{{ property.city }}</a>, <a href="">{{ property.state
                   }}</a></small>
                 </div>
                 <div class="mb-5">
-                  <div v-if="property.facilities.length" class="facilities text-gold text-size-1">
-                    <span :key="facility.id" v-for="facility in property.facilities">
+                  <div v-if="property.facilities.length"
+                    class="facilities d-flex flex-lg-row flex-column text-gold text-size-1">
+                    <span class="mb-3 mb-lg-0" :key="facility.id" v-for="facility in property.facilities">
                       <span v-html="facility.svg" class="position-absolute content-icon svg-icon-section">
                       </span>
                       <span class="ml-4">
@@ -73,13 +75,7 @@
 
                   </div>
 
-                  <div v-if="property.type == 'single'" class="guests-section text-size-1 ">
-                    <span>{{ property.guests }} guests</span>
-                    <span aria-hidden="true"> · </span>
-                    <span>{{ property.rooms }} bedroom</span>
-                    <span aria-hidden="true"> · </span>
-                    <span>{{ property.baths }} baths</span>
-                  </div>
+
 
 
                   <div v-if="property.free_services.length" class="d-inline-flex mr-2 text-size-1  mb-sm-5 mb-md-0">
@@ -107,7 +103,7 @@
                     </div>
                   </template>
                   <template v-else>
-                    <div class="price bold-2">
+                    <div class="price bold-3">
                       {{ property.currency
                       }}{{ property.converted_price | priceFormat }}
                     </div>
@@ -334,7 +330,43 @@ export default {
       // Now 'retrievedObject' contains the object retrieved from localStorage
       console.log(retrievedObject);
 
-      this.getProperties(window.location);
+      axios
+        .get(window.location)
+        .then((response) => {
+          commit("setProperties", response.data.data);
+          commit("setMeta", response.data.meta);
+          commit("setAttributes", response.data.attributes);
+          commit("setLinks", response.data.links);
+          commit("setNextPageUrl", response.data.links.next);
+          commit("setPropertyLoading", false);
+
+
+          jQuery(function () {
+            $(".owl-carousel").owlCarousel({
+              margin: 10,
+              nav: true,
+              dots: false,
+              responsive: {
+                0: {
+                  items: 1,
+                },
+                600: {
+                  items: 1,
+                },
+                1000: {
+                  items: 1,
+                },
+              },
+            });
+          });
+          return Promise.resolve();
+        })
+        .catch((error) => {
+          commit("setPropertyLoading", false);
+          commit("setProperties", []);
+        });
+
+      // this.getProperties(window.location);
     },
   },
 };

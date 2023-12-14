@@ -4086,7 +4086,38 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
       // Now 'retrievedObject' contains the object retrieved from localStorage
       console.log(retrievedObject);
-      this.getProperties(window.location);
+      axios.get(window.location).then(function (response) {
+        commit("setProperties", response.data.data);
+        commit("setMeta", response.data.meta);
+        commit("setAttributes", response.data.attributes);
+        commit("setLinks", response.data.links);
+        commit("setNextPageUrl", response.data.links.next);
+        commit("setPropertyLoading", false);
+        jQuery(function () {
+          $(".owl-carousel").owlCarousel({
+            margin: 10,
+            nav: true,
+            dots: false,
+            responsive: {
+              0: {
+                items: 1
+              },
+              600: {
+                items: 1
+              },
+              1000: {
+                items: 1
+              }
+            }
+          });
+        });
+        return Promise.resolve();
+      })["catch"](function (error) {
+        commit("setPropertyLoading", false);
+        commit("setProperties", []);
+      });
+
+      // this.getProperties(window.location);
     }
   })
 });
@@ -8239,7 +8270,7 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "mt-sm-2"
     }, [_c("a", {
-      staticClass: "bold-2 text-size-1-big mt-sm-2",
+      staticClass: "bold-3 text-size-1-big mt-sm-2",
       attrs: {
         target: "_blank",
         href: property.link
@@ -8258,10 +8289,11 @@ var render = function render() {
     }, [_vm._v(_vm._s(property.state))])])]), _vm._v(" "), _c("div", {
       staticClass: "mb-5"
     }, [property.facilities.length ? _c("div", {
-      staticClass: "facilities text-gold text-size-1"
+      staticClass: "facilities d-flex flex-lg-row flex-column text-gold text-size-1"
     }, _vm._l(property.facilities, function (facility) {
       return _c("span", {
-        key: facility.id
+        key: facility.id,
+        staticClass: "mb-3 mb-lg-0"
       }, [_c("span", {
         staticClass: "position-absolute content-icon svg-icon-section",
         domProps: {
@@ -8270,17 +8302,7 @@ var render = function render() {
       }), _vm._v(" "), _c("span", {
         staticClass: "ml-4"
       }, [_vm._v("\n                      " + _vm._s(facility.name) + "\n                    ")])]);
-    }), 0) : _vm._e(), _vm._v(" "), property.type == "single" ? _c("div", {
-      staticClass: "guests-section text-size-1"
-    }, [_c("span", [_vm._v(_vm._s(property.guests) + " guests")]), _vm._v(" "), _c("span", {
-      attrs: {
-        "aria-hidden": "true"
-      }
-    }, [_vm._v(" · ")]), _vm._v(" "), _c("span", [_vm._v(_vm._s(property.rooms) + " bedroom")]), _vm._v(" "), _c("span", {
-      attrs: {
-        "aria-hidden": "true"
-      }
-    }, [_vm._v(" · ")]), _vm._v(" "), _c("span", [_vm._v(_vm._s(property.baths) + " baths")])]) : _vm._e(), _vm._v(" "), property.free_services.length ? _c("div", {
+    }), 0) : _vm._e(), _vm._v(" "), property.free_services.length ? _c("div", {
       staticClass: "d-inline-flex mr-2 text-size-1 mb-sm-5 mb-md-0"
     }, _vm._l(property.free_services, function (free_service) {
       return _c("div", {
@@ -8300,7 +8322,7 @@ var render = function render() {
     }, [_vm._v("\n                    " + _vm._s(property.currency) + _vm._s(_vm._f("priceFormat")(property.converted_price)) + "\n                  ")]), _vm._v(" "), _c("div", {
       staticClass: "price bold-2"
     }, [_vm._v("\n                    " + _vm._s(property.currency) + "\n                    " + _vm._s(_vm._f("priceFormat")(property.default_discounted_price)) + "\n                  ")])] : [_c("div", {
-      staticClass: "price bold-2"
+      staticClass: "price bold-3"
     }, [_vm._v("\n                    " + _vm._s(property.currency) + _vm._s(_vm._f("priceFormat")(property.converted_price)) + "\n                  ")])]], 2), _vm._v(" "), _c("div", {
       staticClass: "text-size-2"
     }, [_vm._v("\n                " + _vm._s(property.price_mode) + " per night\n              ")]), _vm._v(" "), property.is_refundable ? _c("div", {
@@ -12330,6 +12352,24 @@ var getProperties = function getProperties(_ref5, url) {
     commit("setLinks", response.data.links);
     commit("setNextPageUrl", response.data.links.next);
     commit("setPropertyLoading", false);
+    jQuery(function () {
+      $(".owl-carousel").owlCarousel({
+        margin: 10,
+        nav: true,
+        dots: false,
+        responsive: {
+          0: {
+            items: 1
+          },
+          600: {
+            items: 1
+          },
+          1000: {
+            items: 1
+          }
+        }
+      });
+    });
     return Promise.resolve();
   })["catch"](function (error) {
     commit("setPropertyLoading", false);

@@ -50,8 +50,8 @@
    @endif
 
 
-   <div class="col-md-2 pl-2 d-">
-      <a href="https://theluxurysale.com" class="h">
+   <div class="col-md-2 pl-2 d-none d-lg-block">
+      <a href=" https://theluxurysale.com" class="h">
          <img class="img-fluid" src="/images/banners/ads-07.jpg" alt="">
       </a>
    </div>
