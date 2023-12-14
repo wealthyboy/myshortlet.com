@@ -5310,7 +5310,7 @@ var render = function render() {
   }, [_c("booking-complete")], 1) : _vm._e(), _vm._v(" "), !_vm.paymentIsComplete ? _c("div", {
     staticClass: "col-md-7 mb-3"
   }, [_c("h3", {
-    staticClass: "bold"
+    staticClass: "bold-2-2"
   }, [_vm._v("Review and book")])]) : _vm._e(), _vm._v(" "), !_vm.paymentIsComplete ? _c("div", {
     staticClass: "col-md-7"
   }, [_c("form", {
@@ -5325,7 +5325,7 @@ var render = function render() {
   }), _vm._v(" "), _c("booking-login"), _vm._v(" "), _c("div", {
     staticClass: "bg-white"
   }, [_c("h3", {
-    staticClass: "card-title p-3 border-bottom bold"
+    staticClass: "card-title p-3 border-bottom bold-2"
   }, [_vm._v("Who's checking in?")]), _vm._v(" "), _c("div", {
     staticClass: "card-body pt-0"
   }, [_c("div", {
@@ -5508,7 +5508,7 @@ var render = function render() {
   }), _vm._v(" "), _vm.property.extra_services.length ? [_c("div", {
     staticClass: "bg-white mt-2"
   }, [_c("h4", {
-    staticClass: "card-title p-3 border-bottom mb-0 bold"
+    staticClass: "card-title p-3 border-bottom mb-0 bold-2"
   }, [_vm._v("\n            You may be intrested in\n          ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body pt-0"
   }, _vm._l(_vm.property.extra_services, function (extra_service) {
@@ -5567,7 +5567,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "auth-spinner d-none"
   }, [_vm._v("\n                spinner\n              ")]), _vm._v(" "), _c("span", {
-    staticClass: "lt bold text-white"
+    staticClass: "lt bold-2 text-white"
   }, [_vm._v(_vm._s(_vm.order_text))])])])], 1)])], 2)]) : _vm._e(), _vm._v(" "), !_vm.paymentIsComplete ? _c("div", {
     staticClass: "col-md-5 d-none d-lg-block"
   }, [_c("price-details", {
@@ -5590,7 +5590,7 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "d-flex justify-content-between align-items-center"
   }, [_c("h3", {
-    staticClass: "card-title mt-2 pb-3 mb-0 bold"
+    staticClass: "card-title mt-2 pb-3 mb-0 bold-2"
   }, [_vm._v("\n                Payment\n              ")]), _vm._v(" "), _c("div", {
     staticClass: "payment-icons d-flex justify-content-center align-items-center"
   }, [_c("div", {
@@ -5649,7 +5649,7 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "error-page text-center"
   }, [_c("h1", {
-    staticClass: "bold"
+    staticClass: "bold-2"
   }, [_vm._v("CONFIRMED")]), _vm._v(" "), _c("p", {
     staticClass: "large text-black"
   }, [_vm._v("\n      Thank you for choosing Avenue montaigne for your stay. We are\n      pleased to inform you that your reservation request is CONFIRMED\n\n    ")]), _vm._v(" "), _c("p", {
@@ -5723,8 +5723,8 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex justify-content-between align-items-center"
   }, [_c("div", [_c("h4", {
-    staticClass: "card-title p-3 mb-0 bold"
-  }, [_vm._v("\n        " + _vm._s(_vm.booking.apartment.name || _vm.property.name) + "\n      ")])]), _vm._v(" "), _vm.bookings.length > 1 ? _c("div", {
+    staticClass: "card-title p-3 mb-0 bold-2"
+  }, [_vm._v("\n          " + _vm._s(_vm.booking.apartment.name || _vm.property.name) + "\n        ")])]), _vm._v(" "), _vm.bookings.length > 1 ? _c("div", {
     staticClass: "mr-2"
   }, [_c("a", {
     attrs: {
@@ -5756,7 +5756,7 @@ var render = function render() {
     }
   })])]), _vm._v(" "), _c("span", {
     staticClass: "svg-icon-text"
-  }, [_vm._v(_vm._s(_vm.booking.apartment.no_of_rooms) + " Bedrooms\n            " + _vm._s(_vm.booking.apartment.id))])]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.booking.apartment.no_of_rooms) + " Bedrooms\n              " + _vm._s(_vm.booking.apartment.id))])]), _vm._v(" "), _c("div", {
     staticClass: "position-relative"
   }, [_c("span", {
     staticClass: "position-absolute svg-icon-section"
@@ -5797,7 +5797,7 @@ var render = function render() {
       staticClass: "svg-icon-text"
     }, [_vm._v(_vm._s(bed.parent.name))]), _vm._v(" "), _c("span", {
       staticClass: "svg-icon-text"
-    }, [_vm._v("\n          " + _vm._s(bed.pivot.bed_count) + " " + _vm._s(bed.name))])]);
+    }, [_vm._v("\n            " + _vm._s(bed.pivot.bed_count) + " " + _vm._s(bed.name))])]);
   }) : _vm._e(), _vm._v(" "), _vm.booking.apartment.extra_services.length ? [_c("div", {
     staticClass: "card-title"
   }, [_vm._v("Extras")]), _vm._v(" "), _c("p", [_vm._v("We offer")]), _vm._v(" "), _c("div", {
@@ -5842,9 +5842,9 @@ var render = function render() {
         staticClass: "checkbox-custom rectangular"
       }), _vm._v(" "), _c("span", {
         staticClass: "checkbox-label-text mt-1"
-      }, [_vm._v(_vm._s(extra_service.name) + "\n                ")])]), _vm._v(" "), _c("p", [_vm._v(_vm._s(x) + " " + _vm._s(x > 1 ? "nights" : "night"))]), _vm._v(" "), _c("p", [_vm._v("\n                " + _vm._s(extra_service.description) + "\n              ")])]), _vm._v(" "), _c("span", {
-        staticClass: "fs-32 mt-4 font-weight-bold text-heading total-price"
-      }, [_vm._v("\n              " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(parseInt(x) * extra_service.pivot.price)))])]);
+      }, [_vm._v(_vm._s(extra_service.name) + "\n                  ")])]), _vm._v(" "), _c("p", [_vm._v(_vm._s(x) + " " + _vm._s(x > 1 ? "nights" : "night"))]), _vm._v(" "), _c("p", [_vm._v("\n                  " + _vm._s(extra_service.description) + "\n                ")])]), _vm._v(" "), _c("span", {
+        staticClass: "fs-32 mt-4 font-weight-bold-2 text-heading total-price"
+      }, [_vm._v("\n                " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(parseInt(x) * extra_service.pivot.price)))])]);
     }), 0);
   }), 0)] : _vm._e()], 2)]);
 };
@@ -5855,7 +5855,7 @@ var staticRenderFns = [function () {
     staticClass: "text-gold"
   }, [_c("i", {
     staticClass: "fas fa-info-circle mr-2 text-gold text-size-2"
-  }), _vm._v("Instant\n      Confirmation\n    ")]);
+  }), _vm._v("Instant\n        Confirmation\n      ")]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -5890,60 +5890,60 @@ var render = function render() {
   return _c("div", [_c("div", {
     staticClass: "bg-white"
   }, [_c("div", {
-    staticClass: "card-title border-bottom p-3 text-size-1-big bold"
+    staticClass: "card-title border-bottom p-3 text-size-1-big bold-2"
   }, [_vm._v("\n        Your Booking Details\n      ")]), _vm._v(" "), _c("div", [_c("ul", {
     staticClass: "list-unstyled mb-2 p-3"
   }, [_c("li", {
     staticClass: "d-flex justify-content-between mb-3 lh-22"
   }, [_c("p", {
-    staticClass: "text-gray-light mb-0 bold"
+    staticClass: "text-gray-light mb-0 bold-2"
   }, [_vm._v("Check in")]), _vm._v(" "), _c("p", {
     staticClass: "font-weight-500 text-heading mb-0"
   }, [_vm._v("\n              " + _vm._s(_vm.booking_details.from) + "\n            ")])]), _vm._v(" "), _c("li", {
     staticClass: "d-flex justify-content-between mb-3 lh-22"
   }, [_c("p", {
-    staticClass: "text-gray-light mb-0 bold"
+    staticClass: "text-gray-light mb-0 bold-2"
   }, [_vm._v("Check out")]), _vm._v(" "), _c("p", {
     staticClass: "font-weight-500 text-heading mb-0"
   }, [_vm._v("\n              " + _vm._s(_vm.booking_details.to) + "\n            ")])]), _vm._v(" "), _c("li", {
     staticClass: "d-flex justify-content-between lh-22"
   }, [_c("p", {
-    staticClass: "text-gray-light mb-0 bold"
+    staticClass: "text-gray-light mb-0 bold-2"
   }, [_vm._v("Total length of stay")]), _vm._v(" "), _c("p", {
     staticClass: "font-weight-500 text-heading mb-0"
   }, [_vm._v("\n              " + _vm._s(_vm.booking_details.days) + " " + _vm._s(_vm.booking_details.nights[1]) + "\n            ")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "bg-white mt-2"
   }, [_c("div", {
-    staticClass: "card-title bold border-bottom p-3 text-size-1-big"
+    staticClass: "card-title bold-2 border-bottom p-3 text-size-1-big"
   }, [_vm._v("\n        Price Details\n      ")]), _vm._v(" "), _vm._l(_vm.bookings, function (booking) {
     return _c("div", {
       key: booking.id,
       staticClass: "p-3 bg-transparent d-flex justify-content-between p-0 align-items-center"
     }, [booking.sale_price ? [_c("div", [_c("div", [_vm._v("\n              " + _vm._s(booking.quantity) + " X\n              " + _vm._s(booking.apartment.name || _vm.property.name) + "\n            ")]), _vm._v(" "), _c("span", {
-      staticClass: "bold"
+      staticClass: "bold-2"
     }, [_c("del", [_vm._v(_vm._s(booking.currency) + _vm._s(_vm._f("priceFormat")(booking.price)))]), _vm._v("\n              " + _vm._s(booking.currency) + _vm._s(_vm._f("priceFormat")(booking.sale_price)) + "\n            ")])]), _vm._v(" "), _c("span", {
       staticClass: "text-size-2"
     }, [_vm._v(" per night")]), _vm._v(" "), _c("div", {
-      staticClass: "bold"
+      staticClass: "bold-2"
     }, [_vm._v("\n            " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(booking.total)) + "\n          ")])] : [_c("div", [_c("div", [_vm._v("\n              " + _vm._s(booking.quantity) + " X\n              " + _vm._s(booking.apartment.name || _vm.property.name) + "\n            ")]), _vm._v(" "), _c("div", {
-      staticClass: "bold"
+      staticClass: "bold-2"
     }, [_vm._v("\n              " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(booking.price)) + "\n              "), _c("div", {
       staticClass: "text-size-2"
     }, [_vm._v("per night")])])]), _vm._v(" "), _c("div", {
-      staticClass: "bold"
+      staticClass: "bold-2"
     }, [_vm._v("\n            " + _vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(booking.total)) + "\n          ")])]], 2);
   }), _vm._v(" "), _c("div", {
     staticClass: "card-footer p-3 bg-transparent d-flex justify-content-between p-0 align-items-center"
   }, [_c("p", {
-    staticClass: "text-heading mb-0 bold"
+    staticClass: "text-heading mb-0 bold-2"
   }, [_vm._v("\n          Sub Total\n        ")]), _vm._v(" "), _c("span", {
-    staticClass: "text-heading total-price bold"
+    staticClass: "text-heading total-price bold-3"
   }, [_vm._v(_vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(parseInt(_vm.sub_total))))])]), _vm._v(" "), _c("div", {
     staticClass: "card-footer p-3 bg-transparent d-flex justify-content-between p-0 align-items-center"
   }, [_c("p", {
-    staticClass: "text-heading bold mb-0"
+    staticClass: "text-heading bold-3 mb-0"
   }, [_vm._v("\n          Total Price:\n        ")]), _vm._v(" "), _c("span", {
-    staticClass: "bold text-heading total-price price",
+    staticClass: "bold-3 text-heading total-price price",
     attrs: {
       "data-total": _vm.bookingTotal + _vm.bookingPropertyServicesTotal + _vm.bookingServicesTotal
     }
@@ -5993,7 +5993,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex justify-content-between"
   }, [_c("div", [_c("a", {
-    staticClass: "bold",
+    staticClass: "bold-2",
     attrs: {
       href: _vm.property.link
     }
@@ -6098,7 +6098,7 @@ var render = function render() {
   }), _vm._v(" "), _c("span", {
     staticClass: "checkbox-label-text mt-1"
   }, [_vm._v(_vm._s(_vm.extra_service.name))])])]), _vm._v(" "), _c("span", {
-    staticClass: "fs-32 mt-4 bold text-heading total-price"
+    staticClass: "fs-32 mt-4 bold-2 text-heading total-price"
   }, [_vm._v(_vm._s(_vm.property.currency) + _vm._s(_vm._f("priceFormat")(_vm.extra_service.pivot.price)) + "\n  ")])]);
 };
 var staticRenderFns = [];
@@ -6125,11 +6125,11 @@ var render = function render() {
   return _c("div", {
     staticClass: "bg-white"
   }, [_c("h3", {
-    staticClass: "card-title p-3 border-bottom mb-0 bold"
+    staticClass: "card-title p-3 border-bottom mb-0 bold-2"
   }, [_vm._v("\n    Important Trip Information\n  ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body pt-0"
   }, [_c("div", [_c("h5", {
-    staticClass: "bold"
+    staticClass: "bold-2"
   }, [_vm._v("House Rules")]), _vm._v(" "), _c("ul", {
     staticClass: "list-unstyled"
   }, [_c("li", {}, [_c("p", {
@@ -8208,53 +8208,30 @@ var render = function render() {
   }, [_vm._v("\n          Search\n        ")])])]), _vm._v(" "), _vm._l(_vm.properties, function (property) {
     return _c("div", {
       key: property.id,
-      staticClass: "bg-white mb-2 rounded position-relative border-radius loaded-apartments mt-sm-0 mt-md-2"
+      staticClass: "bg-white mb-2 border rounded position-relative border-radius loaded-apartments mt-sm-0 mt-md-2"
     }, [_c("div", {
       staticClass: "row no-gutters"
     }, [_c("div", {
       staticClass: "col-md-3 col-12 position-relative"
-    }, [_c("div", [_c("div", {
+    }, [_c("div", {
+      staticClass: "apr"
+    }, [_c("div", {
       staticClass: "owl-carousel owl-theme"
     }, _vm._l(property.images, function (image) {
       return _c("div", {
         key: image.id,
-        staticClass: "item rounded-top"
+        staticClass: "item"
       }, [_c("img", {
-        staticClass: "img img-fluid",
+        staticClass: "img d-none d-lg-block img-fluid rounded-top-left",
         attrs: {
-          src: image.image_m
+          src: image.image
         }
-      }), _vm._v(" "), _c("div", {
-        staticClass: "images-count"
-      }, [_c("button", {
-        staticClass: "uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button",
+      }), _vm._v(" "), _c("img", {
+        staticClass: "img d-block d-sm-none img-fluid rounded-top-left",
         attrs: {
-          type: "button"
+          src: image.image
         }
-      }, [_c("svg", {
-        staticClass: "uitk-icon uitk-icon-leading uitk-icon-medium",
-        attrs: {
-          "aria-label": "Show all 7 images for Classic Twin Room",
-          role: "img",
-          viewBox: "0 0 24 24",
-          xmlns: "http://www.w3.org/2000/svg",
-          "xmlns:xlink": "http://www.w3.org/1999/xlink"
-        }
-      }, [_c("title", {
-        attrs: {
-          id: "photo_library-property-offers-media-carousel-1-title"
-        }
-      }, [_vm._v("Show all " + _vm._s(property.images.length) + "\n                        images\n\n                      ")]), _vm._v(" "), _c("path", {
-        attrs: {
-          "fill-rule": "evenodd",
-          d: "M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z",
-          "clip-rule": "evenodd"
-        }
-      })]), _c("span", {
-        attrs: {
-          "aria-hidden": "true"
-        }
-      }, [_vm._v(_vm._s(property.images.length))])])])]);
+      })]);
     }), 0), _vm._v(" "), _c("div", {
       staticClass: "fav-icon position-absolute"
     }, [_c("saved", {

@@ -19,31 +19,15 @@
 
 
       <div v-for="property in properties" :key="property.id"
-        class="bg-white mb-2 rounded position-relative border-radius loaded-apartments mt-sm-0 mt-md-2">
+        class="bg-white mb-2 border rounded position-relative border-radius loaded-apartments mt-sm-0 mt-md-2">
         <div class="row no-gutters">
           <div class="col-md-3 col-12 position-relative">
-            <div>
+            <div class="apr">
 
               <div class="owl-carousel  owl-theme">
-                <div class="item rounded-top" :key="image.id" v-for="image in property.images">
-                  <img :src="image.image_m" class="img  img-fluid" />
-                  <div class="images-count">
-                    <button type="button"
-                      class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
-                      <svg class="uitk-icon uitk-icon-leading uitk-icon-medium"
-                        aria-label="Show all 7 images for Classic Twin Room" role="img" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <title id="photo_library-property-offers-media-carousel-1-title">Show all {{
-                          property.images.length }}
-                          images
-
-                        </title>
-                        <path fill-rule="evenodd"
-                          d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z"
-                          clip-rule="evenodd"></path>
-                      </svg><span aria-hidden="true">{{ property.images.length }}</span>
-                    </button>
-                  </div>
+                <div class="item" :key="image.id" v-for="image in property.images">
+                  <img :src="image.image" class="img  d-none d-lg-block img-fluid rounded-top-left" />
+                  <img :src="image.image" class="img  d-block d-sm-none   img-fluid rounded-top-left" />
                 </div>
               </div>
               <div class="fav-icon position-absolute">

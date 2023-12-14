@@ -604,6 +604,14 @@ svg.bi.bi-chevron-double-down {
   border-top-right-radius: 1rem !important;
 }
 
+.rounded-top-left {
+  border-top-left-radius: 12px !important;
+}
+
+.rounded {
+  border-radius: 12px !important;
+}
+
 
 /*
   Flat Pickr
@@ -860,6 +868,12 @@ button.owl-next {
   font-size: 0.7rem;
   top: 0.3rem;
   left: 35px;
+}
+
+.bmd-form-group:not(.has-success):not(.has-danger) [class^=bmd-label].bmd-label-floating,
+.bmd-form-group:not(.has-success):not(.has-danger) [class*=" bmd-label"].bmd-label-floating {
+  color: #000;
+  font-family: 'Heading5';
 }
 
 

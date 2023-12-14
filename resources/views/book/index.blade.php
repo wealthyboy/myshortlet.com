@@ -1,26 +1,21 @@
 @inject('helper', 'App\Http\Helper')
-@extends('layouts.checkout')
+@extends('layouts.listing')
 @section('content')
 <div class="container vh-100">
 
    <div class="row">
-       <div class="col-12"> <a href="{{ $referer }}?check_in_checkout={{ $qs['check_in_checkout'] }}&property_id={{ isset( $qs['property_id'] ) ? $qs['property_id'] : null }}"> <i class=""></i> Back to selection</a> </div>
+      <div class="col-12"> <a href="{{ $referer }}?check_in_checkout={{ $qs['check_in_checkout'] }}&property_id={{ isset( $qs['property_id'] ) ? $qs['property_id'] : null }}"> <i class=""></i> Back to selection</a> </div>
    </div>
 
-   <div id="full-bg"  class="full-bg position-relative">
+   <div id="full-bg" class="full-bg position-relative">
       <div class="signup--middle">
          <div class="loading">
-               <div class="loader"></div>
+            <div class="loader"></div>
          </div>
-      </div>  
+      </div>
    </div>
-    
-    <book-index 
-      :booking_details="{{ collect($booking_details) }}" 
-      :property="{{ $property }}"  
-      :apartments="{{ $bookings }}"
-      :phone_codes="{{ collect($phone_codes) }}"
-   />
+
+   <book-index :booking_details="{{ collect($booking_details) }}" :property="{{ $property }}" :apartments="{{ $bookings }}" :phone_codes="{{ collect($phone_codes) }}" />
 </div>
 
 

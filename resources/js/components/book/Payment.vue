@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-5">
     <div class="bg-white">
-      <h4 class="card-title p-3 border-bottom bold">Your Booking Details</h4>
+      <h4 class="card-title p-3 border-bottom bold-2">Your Booking Details</h4>
       <div>
         <ul class="list-unstyled mb-0 p-2">
           <li class="d-flex justify-content-between lh-22">
@@ -18,19 +18,13 @@
           </li>
         </ul>
       </div>
-      <div
-        class=" p-2  bg-transparent d-flex justify-content-between p-0 align-items-center"
-      >
+      <div class=" p-2  bg-transparent d-flex justify-content-between p-0 align-items-center">
         <p class="text-heading mb-0">1 X Superior King Room</p>
-        <span class="fs-32 font-weight-bold text-heading total-price"
-          >5000</span
-        >
+        <span class="fs-32 font-weight-bold-2 text-heading total-price">5000</span>
       </div>
-      <div
-        class="card-footer p-2  bg-transparent d-flex justify-content-between p-0 align-items-center"
-      >
+      <div class="card-footer p-2  bg-transparent d-flex justify-content-between p-0 align-items-center">
         <p class="text-heading mb-0">Total Price:</p>
-        <span class="fs-32 font-weight-bold text-heading total-price">0</span>
+        <span class="fs-32 font-weight-bold-2 text-heading total-price">0</span>
       </div>
     </div>
   </div>

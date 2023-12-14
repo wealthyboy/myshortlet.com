@@ -2,20 +2,16 @@
   <div class="bg-white mt-2">
     <div class="d-flex justify-content-between align-items-center">
       <div>
-        <h4 class="card-title p-3 mb-0 bold">
+        <h4 class="card-title p-3 mb-0 bold-2">
           {{ booking.apartment.name || property.name }}
         </h4>
       </div>
 
       <div v-if="bookings.length > 1" class="mr-2 ">
-        <a
-          @click.prevent="
-            removeFromBooking($event, booking.id, booking.apartment.id)
-          "
-          href=""
-        >
-          <i class="fas fa-trash"></i> Remove</a
-        >
+        <a @click.prevent="
+          removeFromBooking($event, booking.id, booking.apartment.id)
+          " href="">
+          <i class="fas fa-trash"></i> Remove</a>
       </div>
     </div>
 
@@ -33,10 +29,8 @@
                 <use xlink:href="#bedrooms-icon"></use>
               </svg>
             </span>
-            <span class="svg-icon-text"
-              >{{ booking.apartment.no_of_rooms }} Bedrooms
-              {{ booking.apartment.id }}</span
-            >
+            <span class="svg-icon-text">{{ booking.apartment.no_of_rooms }} Bedrooms
+              {{ booking.apartment.id }}</span>
           </div>
           <div class="position-relative">
             <span class="position-absolute svg-icon-section">
@@ -44,9 +38,7 @@
                 <use xlink:href="#bathroom-icon"></use>
               </svg>
             </span>
-            <span class="svg-icon-text"
-              >{{ booking.apartment.toilets }} bathrooms</span
-            >
+            <span class="svg-icon-text">{{ booking.apartment.toilets }} bathrooms</span>
           </div>
           <div class="position-relative">
             <span class="position-absolute svg-icon-section">
@@ -54,9 +46,7 @@
                 <use xlink:href="#sleeps-icon"></use>
               </svg>
             </span>
-            <span class="svg-icon-text"
-              >{{ booking.apartment.guests }} Guests</span
-            >
+            <span class="svg-icon-text">{{ booking.apartment.guests }} Guests</span>
           </div>
         </div>
       </div>
@@ -66,31 +56,19 @@
         <span class="svg-icon-text">Air condition</span>
       </div>
 
-      <div
-        v-if="booking.apartment.free_services.length"
-        class="d-inline-flex flex-wrap"
-      >
-        <div
-          v-for="free_service in booking.free_services"
-          :key="free_service.id"
-          class="position-relative"
-        >
+      <div v-if="booking.apartment.free_services.length" class="d-inline-flex flex-wrap">
+        <div v-for="free_service in booking.free_services" :key="free_service.id" class="position-relative">
           <span class="position-absolute svg-icon-section"></span>
           <span class="svg-icon-text">{{ free_service.name }} included</span>
         </div>
       </div>
 
       <template v-if="booking.apartment.bedrooms.length">
-        <div
-          v-for="bed in booking.apartment.bedrooms"
-          :key="bed.id"
-          class="position-relative"
-        >
+        <div v-for="bed in booking.apartment.bedrooms" :key="bed.id" class="position-relative">
           <span class="position-absolute svg-icon-section"></span>
           <span class="svg-icon-text">{{ bed.parent.name }}</span>
           <span class="svg-icon-text">
-            {{ bed.pivot.bed_count }} {{ bed.name }}</span
-          >
+            {{ bed.pivot.bed_count }} {{ bed.name }}</span>
         </div>
       </template>
 
@@ -99,33 +77,19 @@
         <p>We offer</p>
         <div style="height: 150px; overflow: scroll;">
           <div :key="x" v-for="x in parseInt(booking_details.days)">
-            <div
-              v-for="extra_service in booking.apartment.extra_services"
-              :key="extra_service.id"
-              class="card-footer    bg-transparent d-flex justify-content-between p-0 align-items-center"
-            >
+            <div v-for="extra_service in booking.apartment.extra_services" :key="extra_service.id"
+              class="card-footer    bg-transparent d-flex justify-content-between p-0 align-items-center">
               <div class="checkbox mt-3">
                 <label id="box50" class="checkbox-label">
-                  <input
-                    for="box50"
-                    :name="
-                      'extra_services_' +
-                        booking.apartment.id +
-                        '_' +
-                        extra_service.id
-                    "
-                    :class="'extra_services_' + booking.apartment.id"
-                    :value="extra_service.id"
-                    class="filter-attribute"
-                    type="radio"
-                    @click="addServices($event)"
-                    :data-quantity="parseInt(x)"
-                    :data-price="extra_service.pivot.price * parseInt(x)"
-                    :data-apartment="booking.apartment.id"
-                  />
+                  <input for="box50" :name="'extra_services_' +
+                    booking.apartment.id +
+                    '_' +
+                    extra_service.id
+                    " :class="'extra_services_' + booking.apartment.id" :value="extra_service.id"
+                    class="filter-attribute" type="radio" @click="addServices($event)" :data-quantity="parseInt(x)"
+                    :data-price="extra_service.pivot.price * parseInt(x)" :data-apartment="booking.apartment.id" />
                   <span class="checkbox-custom rectangular"></span>
-                  <span class="checkbox-label-text mt-1"
-                    >{{ extra_service.name }}
+                  <span class="checkbox-label-text mt-1">{{ extra_service.name }}
                   </span>
                 </label>
                 <p>{{ x }} {{ x > 1 ? "nights" : "night" }}</p>
@@ -133,14 +97,11 @@
                   {{ extra_service.description }}
                 </p>
               </div>
-              <span
-                class="fs-32 mt-4 font-weight-bold text-heading total-price"
-              >
+              <span class="fs-32 mt-4 font-weight-bold-2 text-heading total-price">
                 {{ property.currency
                 }}{{
-                  (parseInt(x) * extra_service.pivot.price) | priceFormat
-                }}</span
-              >
+  (parseInt(x) * extra_service.pivot.price) | priceFormat
+}}</span>
             </div>
           </div>
         </div>

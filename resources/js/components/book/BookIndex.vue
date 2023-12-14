@@ -4,7 +4,7 @@
       <booking-complete />
     </div>
     <div v-if="!paymentIsComplete" class="col-md-7 mb-3">
-      <h3 class="bold">Review and book</h3>
+      <h3 class="bold-2-2">Review and book</h3>
     </div>
     <div v-if="!paymentIsComplete" class="col-md-7">
       <form action="" method="get">
@@ -13,7 +13,7 @@
         <booking-login />
 
         <div class=" bg-white ">
-          <h3 class="card-title p-3 border-bottom bold">Who's checking in?</h3>
+          <h3 class="card-title p-3 border-bottom bold-2">Who's checking in?</h3>
           <div class="card-body pt-0">
             <div class="form-row">
               <div class="form-group bmd-form-group col-6">
@@ -82,7 +82,7 @@
 
 
           <div class=" bg-white mt-2">
-            <h4 class="card-title  p-3 border-bottom mb-0 bold">
+            <h4 class="card-title  p-3 border-bottom mb-0 bold-2">
               You may be intrested in
             </h4>
             <div class="card-body pt-0">
@@ -104,7 +104,7 @@
           <div class="card-body pt-0">
             <div class="border-bottom">
               <div class="d-flex  justify-content-between align-items-center ">
-                <h3 class="card-title mt-2 pb-3 mb-0 bold">
+                <h3 class="card-title mt-2 pb-3 mb-0 bold-2">
                   Payment
                 </h3>
                 <div class="payment-icons d-flex justify-content-center align-items-center">
@@ -136,7 +136,7 @@
                 <div class="auth-spinner d-none">
                   spinner
                 </div>
-                <span class="lt bold text-white">{{ order_text }}</span>
+                <span class="lt bold-2 text-white">{{ order_text }}</span>
               </button>
             </p>
           </div>

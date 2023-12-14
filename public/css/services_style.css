@@ -15470,7 +15470,7 @@ input {
   font-display: swap;
 }
 body {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: "Heading4", serif;
   font-weight: 320;
   line-height: 1.5em;
   font-size: 0.95rem;
@@ -15487,7 +15487,7 @@ h6,
 .h2,
 .h3,
 .h4 {
-  font-family: "Nanum Myeongjo", serif;
+  font-family: "Heading5", serif;
   font-weight: 400;
   line-height: 1.5em;
   color: #000;
@@ -15601,6 +15601,11 @@ small,
 
 h2.title {
   margin-bottom: 1rem;
+}
+
+.light-bold {
+  font-weight: 700;
+  font-family: "Heading4", "Times New Roman", serif;
 }
 
 .bold {
@@ -18031,6 +18036,14 @@ svg.bi.bi-chevron-double-down {
   border-top-right-radius: 1rem !important;
 }
 
+.rounded-top-left {
+  border-top-left-radius: 12px !important;
+}
+
+.rounded {
+  border-radius: 12px !important;
+}
+
 /*
   Flat Pickr
 */
@@ -18269,6 +18282,12 @@ button.owl-next {
   font-size: 0.7rem;
   top: 0.3rem;
   left: 35px;
+}
+
+.bmd-form-group:not(.has-success):not(.has-danger) [class^=bmd-label].bmd-label-floating,
+.bmd-form-group:not(.has-success):not(.has-danger) [class*=" bmd-label"].bmd-label-floating {
+  color: #000;
+  font-family: "Heading5";
 }
 
 .large-fonts {

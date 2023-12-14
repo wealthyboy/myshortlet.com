@@ -39,7 +39,7 @@
          <div id="rightBox" style="z-index: 2;" class="col-md-5 text-center d-flex justify-content-center align-items-center">
             <div class="bg-panel bg-panel-white p-sm-3 p-md-5">
                <h2 class=" bold">Welcome to Avenue Montiagne</h2>
-               <p class="mt-4  text-left text-black">
+               <p class="mt-4  text-left text-black light-bold">
                   Our apartments offer amazing amenities, stylish design, and a perfect location for living the lagos dream. With your choice of spacious, meticulously-designed 1-, 2-, or 3-bedroom apartments, youll be sure to find the ideal fit for your needs and lifestyle. Get ready for apartment living on a whole new level, with two resort-style pools, a luxurious spa, and a state-of-the-art fitness center for your convenience and enjoyment. Get excited about everything that awaits you at Avm, Lagos!
                </p>
                <div class=" buttons">
@@ -62,7 +62,7 @@
          <div class="col-md-5  re-order text-center d-flex justify-content-center align-items-center">
             <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
                <h2 class="mb-4 bold">Relax and enjoy</h2>
-               <p class="mt-4  text-left text-black">
+               <p class="mt-4  text-left text-black light-bold">
                   Throughout your stay, you’ll enjoy a residents-only bar and lounge, a spectacular pool deck with panoramic views, a private screening room, a 24-hour Technogym® fitness center , and indoor parking. The open-air retail plaza features Fred S boutique, lifestyle brand KITH, Tesse restaurant, and Boutellier wine shop.
                <div class="buttons">
                   <a href="/apartments" class="btn btn-outline-secondary rounded bold-2">
@@ -85,7 +85,7 @@
             <div class="about-panel  bg-panel-white  bg-panel p-sm-3 p-md-5">
                <h2 class="mb-4 bold">Luxury & Convenience</h2>
 
-               <p class="mt-4  text-left text-black">
+               <p class="mt-4  text-left text-black light-bold">
                   Our apartment is truly a cut above the rest, with spacious walk-in closets, private balcony or patio, central air conditioning, and high-speed internet. We are ideally located in Lagos, making any commute or relaxing day trip a breeze.
                </p>
 
@@ -105,7 +105,7 @@
          <div class="col-md-5  re-order text-center d-flex justify-content-center align-items-center">
             <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
                <h2 class="mb-4 bold">Shop</h2>
-               <p class="mt-4  text-left text-black">
+               <p class="mt-4  text-left text-black light-bold">
                   Like to shop while you stay? Visit our online store to buy from the best brands prada, gucci e.t.c.
                <div class=" buttons">
                   <a href="https://theluxurysale.com" class="btn bold-2 btn-outline-secondary rounded">
