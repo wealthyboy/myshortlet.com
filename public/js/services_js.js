@@ -8205,9 +8205,7 @@ var render = function render() {
         return _vm.checkAvailabity();
       }
     }
-  }, [_c("i", {
-    staticClass: "material-icons"
-  }), _vm._v(" Check availablity\n        ")])])]), _vm._v(" "), _vm._l(_vm.properties, function (property) {
+  }, [_vm._v("\n          Check availablity\n        ")])])]), _vm._v(" "), _vm._l(_vm.properties, function (property) {
     return _c("div", {
       key: property.id,
       staticClass: "bg-white mb-2 rounded position-relative border-radius loaded-apartments mt-sm-0 mt-md-2"
@@ -8609,9 +8607,7 @@ var render = function render() {
         return _vm.checkAvailabity();
       }
     }
-  }, [_c("i", {
-    staticClass: "material-icons"
-  }), _vm._v(" Check availablity\n          ")])])])]), _vm._v(" "), !_vm.propertyLoading && !_vm.roomsAv.length ? _c("div", {
+  }, [_vm._v("\n            Check availablity\n          ")])])])]), _vm._v(" "), !_vm.propertyLoading && !_vm.roomsAv.length ? _c("div", {
     staticClass: "name mt-1 rounded bg-white p-2",
     attrs: {
       id: ""

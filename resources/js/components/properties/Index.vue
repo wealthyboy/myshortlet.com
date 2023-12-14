@@ -13,7 +13,7 @@
         <div class="col-md-2  check-availablility mb-sm-3 mb-md-0   mt-sm-2 mt-md-0">
           <button type="button" @click.prevent="checkAvailabity()"
             class="btn btn-primary btn-block m-auto bold-2 check-availablility-button rounded">
-            <i class="material-icons"></i> Check availablity
+            Check availablity
           </button>
         </div>
       </div>
