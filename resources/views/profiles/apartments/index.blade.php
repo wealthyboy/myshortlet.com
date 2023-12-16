@@ -1,4 +1,4 @@
-@extends('layouts.listing')
+@extends('layouts.auth')
 
 @section('content')
 
@@ -13,19 +13,21 @@
             @include('_partials.nav')
             <div class="col-md-9 mt-3">
                 <section class=" ">
+                    <h2 class="page-title ">Apartments</h2>
+
                     <div class="">
                         <div class=" justify-content-center">
                             <div class="">
-                                <div class="card">
+                                <div class="card shadow-none">
                                     <div class="table-responsive">
                                         <table class="table align-items-center mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"></th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
-                                                    <th class="text-secondary opacity-7"></th>
+                                                    <th class="text-uppercase bold-2">Name</th>
+                                                    <th class="text-uppercase bold-2 ps-2"></th>
+                                                    <th class="text-center text-uppercase bold-2"></th>
+                                                    <th class="text-center text-uppercase bold-2">Date</th>
+                                                    <th class=""></th>
                                                 </tr>
                                             </thead>
 

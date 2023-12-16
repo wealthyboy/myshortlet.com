@@ -1,8 +1,8 @@
-@extends('layouts.listing')
+@extends('layouts.auth')
 
 @section('content')
 
-<div class="bg-light">
+<div class="">
     @include('_partials.mobile_nav')
     <div class="container">
         <div class="row">
@@ -41,9 +41,8 @@
 
 
 
-                    <div class="clearfix"></div>
                     <p class="form-group ">
-                        <button type="submit" data-loading="Loading" class=" ml-1 btn bold btn--primary btn-round "> Submit</button>
+                        <button type="submit" data-loading="Loading" class=" ml-1 btn bold-3 btn-primary btn-round "> Submit</button>
                     </p>
 
 

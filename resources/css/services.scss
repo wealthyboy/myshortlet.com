@@ -876,6 +876,10 @@ button.owl-next {
   font-family: 'Heading5';
 }
 
+.list-group-item :first-child {
+  margin-right: .5rem;
+}
+
 
 .large-fonts {
   font-size: 3.5rem;
@@ -904,6 +908,38 @@ button.owl-next {
   max-width: 340px;
   margin: 0 auto;
   min-height: 400px;
+}
+
+.bg-black {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.opacity-50 {
+  opacity: 0.5 !important;
+}
+
+.bottom-0 {
+  bottom: 0;
+}
+
+.top-0 {
+  top: 0 !important;
+}
+
+.start-0 {
+  left: 0 !important;
+}
+
+.top-50 {
+  top: 50% !important;
+}
+
+.start-50 {
+  left: 50% !important;
+}
+
+.translate-middle {
+  transform: translate(-50%, -50%) !important;
 }
 
 .navbar-collapse {

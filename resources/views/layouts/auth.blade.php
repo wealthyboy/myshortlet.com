@@ -13,7 +13,7 @@
       <div class="main  index-page">
          @yield('content')
 
-         <div style="height: 100px;"></div>
+         <div style="height: 50px;"></div>
 
       </div>
 
