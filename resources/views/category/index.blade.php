@@ -14,8 +14,8 @@
         <div class="col-md-6 position-relative m">
             <a class="d-block position-relative" href="/apartments/in/{{ $city->slug }}">
                 <img src="{{ $city->image }}" class="img-fluid rounded" alt="">
-                <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
-                <div class="position-absolute bottom-0 text-white text-left ml-3">
+                <div class="position-absolute top-0 start-0 w-100 h-100 rounded bg-black opacity-50"></div>
+                <div class="position-absolute bottom-0 text-white text-left ml-3 mb-3">
                     <h2 class="bold-2  text-white fs-5 fs-md-4">
                         {{ $city->name }}
                     </h2>
