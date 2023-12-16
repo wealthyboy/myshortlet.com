@@ -11,7 +11,7 @@
         @foreach($cities->children as $city)
         @if ($city->image === '' || null == $city->image) @continue @endif
 
-        <div class="col-md-6 position-relative m">
+        <div class="col-md-6 position-relative mb-3">
             <a class="d-block position-relative" href="/apartments/in/{{ $city->slug }}">
                 <img src="{{ $city->image }}" class="img-fluid rounded" alt="">
                 <div class="position-absolute top-0 start-0 w-100 h-100 rounded bg-black opacity-50"></div>
