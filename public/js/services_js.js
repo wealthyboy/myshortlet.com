@@ -3586,7 +3586,7 @@ __webpack_require__.r(__webpack_exports__);
         $(".room-carousel").owlCarousel({
           margin: 10,
           nav: true,
-          dots: false,
+          dots: true,
           responsive: {
             0: {
               items: 1
@@ -4097,7 +4097,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           $(".owl-carousel").owlCarousel({
             margin: 10,
             nav: true,
-            dots: false,
+            dots: true,
             responsive: {
               0: {
                 items: 1
@@ -8224,12 +8224,12 @@ var render = function render() {
       }, [_c("img", {
         staticClass: "img d-none d-lg-block img-fluid rounded-top-left",
         attrs: {
-          src: image.image
+          src: image.image_m
         }
       }), _vm._v(" "), _c("img", {
         staticClass: "img d-block d-sm-none img-fluid rounded-top-left",
         attrs: {
-          src: image.image
+          src: image.image_m
         }
       })]);
     }), 0), _vm._v(" "), _c("div", {

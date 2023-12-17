@@ -72,14 +72,79 @@
                </p>
             </div>
          </div>
-         <div style="background-image: url('https://pendryresidencesweho.com/wp-content/uploads/2023/04/PRWH_08_ResidentsPool_B_3055-min.jpg');" class="col-md-7  rounded  card-background-image"></div>
+
+         <div class="col-md-7">
+
+
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+               <ol class="carousel-indicators">
+                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+               </ol>
+               <div class="carousel-inner">
+                  <div class="carousel-item active">
+                     <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" class="d-block w-100" alt="...">
+
+                  </div>
+                  <div class="carousel-item">
+                     <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/04/PRWH_08_ResidentsPool_B_3055-min.jpg" class="d-block w-100" alt="...">
+
+                  </div>
+                  <div class="carousel-item">
+                     <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" class="d-block w-100" alt="...">
+                  </div>
+               </div>
+               <button class="carousel-control-prev" type="button" data-target="#carouselExampleIndicators" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+               </button>
+               <button class="carousel-control-next" type="button" data-target="#carouselExampleIndicators" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+               </button>
+            </div>
+
+
+         </div>
+
+
       </div>
    </section>
 
 
    <section class="">
       <div class="row   pb-5 pt-5 position-relative">
-         <div style="background-image: url('/uploads/4b2fVBQMd3OkPvATKDpuIxFK61PbgdcoEvJ3qI4j.jpg');" class="col-md-7 rounded  card-background-image">
+         <div class="col-md-7 rounded  card-background-image">
+            <div id="c1" class="carousel slide" data-ride="carousel">
+               <ol class="carousel-indicators">
+                  <li data-target="#c1" data-slide-to="0" class="active"></li>
+                  <li data-target="#c1" data-slide-to="1"></li>
+                  <li data-target="#c1" data-slide-to="2"></li>
+               </ol>
+               <div class="carousel-inner">
+                  <div class="carousel-item active">
+                     <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/04/Pendry-March-2023-HR-115.jpg" class="d-block w-100" alt="...">
+
+
+                  </div>
+                  <div class="carousel-item">
+                     <img src="/uploads/4b2fVBQMd3OkPvATKDpuIxFK61PbgdcoEvJ3qI4j.jpg" class="d-block w-100" alt="...">
+
+                  </div>
+                  <div class="carousel-item">
+                     <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" class="d-block w-100" alt="...">
+                  </div>
+               </div>
+               <button class="carousel-control-prev" type="button" data-target="#c1" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+               </button>
+               <button class="carousel-control-next" type="button" data-target="#c1" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+               </button>
+            </div>
          </div>
          <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
             <div class="about-panel  bg-panel-white  bg-panel p-sm-3 p-md-5">
@@ -120,6 +185,33 @@
    </section>
 
 
+   <div class="container">
+      <h2 class="text-center ">Contact Us</h2>
+
+
+      <div class="row justify-content-center">
+
+         <div class="col-md-6 text-center mt-5">
+            <!-- Phone -->
+            <div class="mb-3">
+               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
+                  <path d="M12.488 11.67c-2.187-2.187-2.82-2.82-3.54-3.53-.762-.762-1.487-1.92-2.293-3.568a1.008 1.008 0 0 0-1.422-.422C3.413 4.663 2.65 5.431 2.262 6.85c-.087.293-.223.808-.422 1.422-.258 1.04-.594 2.13-1.323 3.378a14.994 14.994 0 0 1-.849 1.318c-.539.65-1.027 1.156-1.431 1.5a1.5 1.5 0 0 0-.251 1.44l1.194 2.988a1.5 1.5 0 0 0 1.437.997h1.446c.303 0 .626-.12.877-.365.477-.456 1.47-1.577 2.88-2.888 1.309-1.309 2.43-2.403 2.887-2.88.244-.25.365-.574.365-.876V3.5a1.5 1.5 0 0 0-1.5-1.5h-2.996c-.302 0-.626.12-.877.365a28.872 28.872 0 0 0-1.436 1.436 19.347 19.347 0 0 0-1.317 1.318c-.539.65-1.027 1.157-1.43 1.5a1.5 1.5 0 0 0-.251 1.44l1.194 2.988a1.5 1.5 0 0 0 1.437.997h1.443a.5.5 0 0 0 .5-.5v-1.993a.5.5 0 0 0-.146-.354z" />
+               </svg>
+               <p class="mb-0">Phone: +1 (123) 456-7890</p>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                  <path d="M0 3.91V13a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V3.91l-8 4.57-8-4.57zm1-.66L8 8.35 15 3.25V4a1 1 0 0 0 1 1 1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1 1 1 0 0 0 1 1v1a1 1 0 0 0 1 1z" />
+               </svg>
+               <p>Email: info@example.com</p>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
    <div class="clearfix"></div>
    @if ($posts->count())
    <div class="row">
@@ -148,7 +240,6 @@
 </div>
 @endsection
 @section('inline-scripts')
-
 
 
 

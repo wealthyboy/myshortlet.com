@@ -26,8 +26,8 @@
 
               <div class="owl-carousel  owl-theme">
                 <div class="item" :key="image.id" v-for="image in property.images">
-                  <img :src="image.image" class="img  d-none d-lg-block img-fluid rounded-top-left" />
-                  <img :src="image.image" class="img  d-block d-sm-none   img-fluid rounded-top-left" />
+                  <img :src="image.image_m" class="img  d-none d-lg-block img-fluid rounded-top-left" />
+                  <img :src="image.image_m" class="img  d-block d-sm-none   img-fluid rounded-top-left" />
                 </div>
               </div>
               <div class="fav-icon position-absolute">
@@ -329,7 +329,7 @@ export default {
             $(".owl-carousel").owlCarousel({
               margin: 10,
               nav: true,
-              dots: false,
+              dots: true,
               responsive: {
                 0: {
                   items: 1,
