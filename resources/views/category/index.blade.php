@@ -3,7 +3,12 @@
 
 <div class="container-fluid">
     @if(null !== $locations)
-    <div class="row g-1 mt-3">
+    <div class="row">
+
+        <div class=" mt-4 mb-4 ml-2">
+            <h2 class="text-left bold-3 mb">Select Your Ideal Location</h2>
+            <p class="lead text-left">Explore our diverse range of locations to find the perfect apartment that suits your lifestyle. Choose from a list of carefully curated areas, each offering a unique blend of comfort and convenience. Your dream home is just a click away!</p>
+        </div>
 
         @foreach($locations as $cities)
         @if ($cities->children->count())
