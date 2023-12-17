@@ -52,7 +52,7 @@
                 <div class="row bg-grey position-relative  pb-5 pt-5">
                     <div class="col-md-5  re-order text-center d-flex justify-content-center align-items-center">
                         <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
-                            <h2 class="mb-4 bold">Unrivaled Amenities: Elevate Your Living Experience</h2>
+                            <h2 class="mb-4 bold-2">Unrivaled Amenities: Elevate Your Living Experience</h2>
                             <p class="mt-4  text-left text-black light-bold">
                                 Indulge in a lifestyle of unparalleled luxury with our meticulously designed apartments, complemented by a suite of unmatched amenities. From rejuvenating spa retreats to state-of-the-art fitness centers, every detail has been thoughtfully curated to elevate your living experience. Enjoy the convenience of concierge services, savor moments of tranquility in lush landscaped gardens, and host unforgettable gatherings in exclusive event spaces. Our commitment to providing exceptional amenities ensures that every day in your new home is a lavish retreat. Welcome to a world where luxury knows no bounds.
                             <div class="buttons">
