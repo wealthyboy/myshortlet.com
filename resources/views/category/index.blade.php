@@ -126,7 +126,7 @@
                     </div>
                     <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
                         <div class="about-panel  bg-panel-white  bg-panel p-sm-3 p-md-5">
-                            <h2 class="mb-4  bold-3">Seaside Serenity: Discover Tranquility in our Beachfront Apartments</h2>
+                            <h2 class="mb-4">Seaside Serenity: Discover Tranquility in our Beachfront Apartments</h2>
 
                             <p class="mt-4  text-left text-black light-bold">
                                 Nestled along the pristine coastline, our apartments offer a picturesque escape to a world of breathtaking beauty. Wake up to the soothing sounds of waves, as the sun paints the sky in hues of pink and gold during mesmerizing sunsets. Immerse yourself in the beauty of nature, with beachfront living that seamlessly blends the indoors with the vast expanse of the sea. Experience a harmonious blend of luxury and nature, where every moment becomes a postcard-worthy memory in our beautiful coastal haven. Welcome to a life of serenity by the sea.</p>
