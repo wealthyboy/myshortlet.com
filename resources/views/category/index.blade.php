@@ -5,6 +5,8 @@
     @if(null !== $locations)
     <div class="row">
 
+
+
         <div class=" mt-4 mb-4 ml-2">
             <h2 class="text-left bold-3 mb">Select Your Ideal Location</h2>
             <p class="lead text-left">Explore our diverse range of locations to find the perfect apartment that suits your lifestyle. Choose from a list of carefully curated areas, each offering a unique blend of comfort and convenience. Your dream home is just a click away!</p>
@@ -41,7 +43,7 @@
 
         <div class="col-md-12">
             <div class=" mt-4 mb-4 ml-2">
-                <h2>Luxury Redefined: Explore Our Exquisite Collection of Apartments</h2>
+                <h2 class=" bold-3">Luxury Redefined: Explore Our Exquisite Collection of Apartments</h2>
                 <p class="lead text-left">
                     Discover a world of unparalleled luxury with our exquisite collection of apartments. Each residence is meticulously crafted to redefine modern living, blending opulence with contemporary design. Immerse yourself in a lifestyle of sophistication, where every detail is curated to provide the utmost comfort and indulgence. Elevate your living experience with our prestigious collection of luxury apartments, where elegance meets excellence.
                 </p>
@@ -124,7 +126,7 @@
                     </div>
                     <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
                         <div class="about-panel  bg-panel-white  bg-panel p-sm-3 p-md-5">
-                            <h2 class="mb-4 bold">Seaside Serenity: Discover Tranquility in our Beachfront Apartments</h2>
+                            <h2 class="mb-4  bold-3">Seaside Serenity: Discover Tranquility in our Beachfront Apartments</h2>
 
                             <p class="mt-4  text-left text-black light-bold">
                                 Nestled along the pristine coastline, our apartments offer a picturesque escape to a world of breathtaking beauty. Wake up to the soothing sounds of waves, as the sun paints the sky in hues of pink and gold during mesmerizing sunsets. Immerse yourself in the beauty of nature, with beachfront living that seamlessly blends the indoors with the vast expanse of the sea. Experience a harmonious blend of luxury and nature, where every moment becomes a postcard-worthy memory in our beautiful coastal haven. Welcome to a life of serenity by the sea.</p>
