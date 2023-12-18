@@ -12,9 +12,6 @@
 
       <div style="background-color: #f8f5f4;" class="main  index-page">
          @yield('content')
-
-         <div style="height: 200px;"></div>
-
       </div>
 
 
