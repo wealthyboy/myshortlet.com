@@ -58,7 +58,7 @@
                 <a href="/about-us">About Us</a>
             </li>
 
-            <li class="w-100   py-3  font-weight-bold">
+            <li class="w-100   font-weight-bold">
                 <a target="_blank" href="https://theluxurysale.com">Shop @avm</a>
             </li>
         </ul>
