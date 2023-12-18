@@ -9,7 +9,7 @@
 
         <div class=" mt-4 mb-4 ml-2">
             <h2 class="text-left bold-3 mb">Select Your Ideal Location</h2>
-            <p class="lead text-left">Explore our diverse range of locations to find the perfect apartment that suits your lifestyle. Choose from a list of carefully curated areas, each offering a unique blend of comfort and convenience. Your dream home is just a click away!</p>
+            <p class=" text-left">Explore our diverse range of locations to find the perfect apartment that suits your lifestyle. Choose from a list of carefully curated areas, each offering a unique blend of comfort and convenience. Your dream home is just a click away!</p>
         </div>
 
         @foreach($locations as $cities)
@@ -43,48 +43,12 @@
 
         <div class="col-md-12">
 
-            <!-- -------- START HEADER 5 w/ text and illustration ------- -->
-            <header>
-                <div class="page-header min-vh-80">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-4 my-auto">
-                                <h1 class="mb-4">Desired Experiences</h1>
-                                <p class="">The time is now for it to be okay to be great. For being a bright color. For standing out.</p>
-                                <div class="buttons">
-                                    <button type="button" class="btn bg-gradient-warning mt-4">Discover</button>
-                                    <button type="button" class="btn text-warning shadow-none mt-4">Read more</button>
-                                </div>
-                            </div>
-                            <div class="col-lg-8 ps-5 pe-0">
-                                <div class="row mt-3">
-                                    <div class="col-lg-3 col-6">
-                                        <img class="w-100 border-radius-lg shadow mt-0 mt-lg-7" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-1" loading="lazy">
-                                    </div>
-                                    <div class="col-lg-3 col-6">
-                                        <img class="w-100 border-radius-lg shadow" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-2" loading="lazy">
-                                        <img class="w-100 border-radius-lg shadow mt-4" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-3" loading="lazy">
-                                    </div>
-                                    <div class="col-lg-3 col-6 mb-3">
-                                        <img class="w-100 border-radius-lg shadow mt-0 mt-lg-5" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-4" loading="lazy">
-                                        <img class="w-100 border-radius-lg shadow mt-4" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-5" loading="lazy">
-                                    </div>
-                                    <div class="col-lg-3 col-6">
-                                        <img class="w-100 border-radius-lg shadow mt-3" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-6" loading="lazy">
-                                        <img class="w-100 border-radius-lg shadow mt-4" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-7" loading="lazy">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <!-- -------- END HEADER 5 w/ text and illustration ------- -->
-            <div class=" mt-4 mb-4 ml-2">
-                <h2 class=" bold-3 text-center">Luxury Redefined</h2>
-                <div class="lead text-secondary  text-center mt-2"> Explore Our Exquisite Collection of Apartments</div>
 
-                <p class="lead text-left mt-3">
+            <div class=" mt-4 mb-4 ml-2">
+                <h2 class=" bold-3 text-left">Luxury Redefined</h2>
+                <div class=" text-secondary  lead  text-left mt-2"> Explore Our Exquisite Collection of Apartments</div>
+
+                <p class=" text-left mt-3">
                     Discover a world of unparalleled luxury with our exquisite collection of apartments. Each residence is meticulously crafted to redefine modern living, blending opulence with contemporary design.
                 </p>
             </div>
@@ -182,6 +146,41 @@
                     </div>
                 </div>
             </section>
+
+            <!-- -------- START HEADER 5 w/ text and illustration ------- -->
+            <header>
+                <div class="page-header min-vh-80">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4 my-auto">
+                                <h1 class="mb-4">Desired Experiences</h1>
+                                <p class=""></p>
+
+                            </div>
+                            <div class="col-lg-8 ps-5 pe-0">
+                                <div class="row mt-3">
+                                    <div class="col-lg-3 col-6">
+                                        <img class="w-100 border-radius-lg shadow mt-0 mt-lg-7" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-1" loading="lazy">
+                                    </div>
+                                    <div class="col-lg-3 col-6">
+                                        <img class="w-100 border-radius-lg shadow" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-2" loading="lazy">
+                                        <img class="w-100 border-radius-lg shadow mt-4" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-3" loading="lazy">
+                                    </div>
+                                    <div class="col-lg-3 col-6 mb-3">
+                                        <img class="w-100 border-radius-lg shadow mt-0 mt-lg-5" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-4" loading="lazy">
+                                        <img class="w-100 border-radius-lg shadow mt-4" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-5" loading="lazy">
+                                    </div>
+                                    <div class="col-lg-3 col-6">
+                                        <img class="w-100 border-radius-lg shadow mt-3" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-6" loading="lazy">
+                                        <img class="w-100 border-radius-lg shadow mt-4" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-7" loading="lazy">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- -------- END HEADER 5 w/ text and illustration ------- -->
 
             <!-- -------- START HEADER 4 w/ search book a ticket form ------- -->
             <header>
