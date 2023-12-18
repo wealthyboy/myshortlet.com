@@ -119,11 +119,11 @@
 
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="/uploads/4b2fVBQMd3OkPvATKDpuIxFK61PbgdcoEvJ3qI4j.jpg" class="d-block w-100" alt="...">
+                                    <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/04/Pendry-March-2023-HR-115.jpg" class="d-block w-100" alt="...">
 
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" class="d-block w-100" alt="...">
+                                    <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/04/Pendry-March-2023-HR-115.jpg" class="d-block w-100" alt="...">
                                 </div>
                             </div>
 
@@ -131,13 +131,14 @@
                     </div>
                     <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
                         <div class="about-panel  bg-right-panel bg-panel-white  bg-panel p-sm-3 p-md-5">
-                            <h2 class="mb-4">Seaside Serenity</h2>
+                            <h2 class="mb-4">Seamless Indoor-Outdoor Harmony</h2>
                             <div class="lead text-secondary"> Discover Tranquility in our Beachfront Apartments</div>
 
 
 
                             <p class="mt-4  text-left text-black light-bold">
-                                Nestled along the pristine coastline, our apartments offer a picturesque escape to a world of breathtaking beauty. Wake up to the soothing sounds of waves, as the sun paints the sky in hues of pink and gold during mesmerizing sunsets.</p>
+                                Step into a world where the boundaries between indoor and outdoor living dissolve. Expansive windows frame breathtaking vistas, while private balconies and terraces invite you to savor the beauty of nature. Our commitment to harmonious design ensures that every residence is a sanctuary in sync with the surrounding environment.
+
 
                             <div class=" buttons">
 
