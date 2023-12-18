@@ -1,11 +1,11 @@
 @extends('layouts.listing')
 @section('content')
 
-<div class="bg-light">
+<div class="bg-light mb-4">
     <div class="container-fluid">
         @if(null !== $locations)
 
-        <div class="row">
+        <div class="row p-4">
             <div class=" mt-4 mb-4 ml-2">
                 <h2 class="text-left bold-3 mb">Select Your Ideal Location</h2>
                 <p class=" text-left">Explore our diverse range of locations to find the perfect apartment that suits your lifestyle. Choose from a list of carefully curated areas, each offering a unique blend of comfort and convenience. Your dream home is just a click away!</p>
