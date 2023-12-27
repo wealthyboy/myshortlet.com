@@ -18194,7 +18194,7 @@ button.owl-next {
     position: relative;
     left: 0px;
     right: 0px;
-    margin-top: -28px;
+    margin-top: 10px;
   }
   .down-icon {
     width: 100%;
@@ -18214,6 +18214,9 @@ button.owl-next {
   }
   .re-order {
     order: 2;
+  }
+  .bg-right-panel {
+    margin-left: 0 !important;
   }
 }
 @media (max-width: 991px) {

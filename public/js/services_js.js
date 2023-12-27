@@ -12098,41 +12098,42 @@ $().ready(function () {
     }
   });
 });
+document.addEventListener('DOMContentLoaded', function () {
+  var leftBox = document.getElementById('intro-box');
+  // const rightBox = document.getElementById('rightBox');
 
-// document.addEventListener('DOMContentLoaded', () => {
-//   const leftBox = document.getElementById('leftBox');
-//   const rightBox = document.getElementById('rightBox');
+  // Set up the Intersection Observer for the left box
+  var leftObserver = new IntersectionObserver(function (entries, observer) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        // Add a CSS class to trigger the animation
+        entry.target.classList.add('animate__animated animate__bounc');
+        // Unobserve the target to stop further observations
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.5
+  }); // Adjust the threshold based on your needs
 
-//   // Set up the Intersection Observer for the left box
-//   const leftObserver = new IntersectionObserver((entries, observer) => {
-//     entries.forEach(entry => {
-//       if (entry.isIntersecting) {
-//         // Add a CSS class to trigger the animation
-//         entry.target.classList.add('animate-left');
-//         // Unobserve the target to stop further observations
-//         observer.unobserve(entry.target);
-//       }
-//     });
-//   }, { threshold: 0.5 }); // Adjust the threshold based on your needs
+  // Start observing the left box
+  leftObserver.observe(leftBox);
 
-//   // Start observing the left box
-//   leftObserver.observe(leftBox);
+  // // Set up the Intersection Observer for the right box
+  // const rightObserver = new IntersectionObserver((entries, observer) => {
+  //   entries.forEach(entry => {
+  //     if (entry.isIntersecting) {
+  //       // Add a CSS class to trigger the animation
+  //       entry.target.classList.add('animate-right');
+  //       // Unobserve the target to stop further observations
+  //       observer.unobserve(entry.target);
+  //     }
+  //   });
+  // }, { threshold: 0.5 }); // Adjust the threshold based on your needs
 
-//   // Set up the Intersection Observer for the right box
-//   const rightObserver = new IntersectionObserver((entries, observer) => {
-//     entries.forEach(entry => {
-//       if (entry.isIntersecting) {
-//         // Add a CSS class to trigger the animation
-//         entry.target.classList.add('animate-right');
-//         // Unobserve the target to stop further observations
-//         observer.unobserve(entry.target);
-//       }
-//     });
-//   }, { threshold: 0.5 }); // Adjust the threshold based on your needs
-
-//   // Start observing the right box
-//   rightObserver.observe(rightBox);
-// });
+  // // Start observing the right box
+  // rightObserver.observe(rightBox);
+});
 
 //console.log(intlTelInput());
 

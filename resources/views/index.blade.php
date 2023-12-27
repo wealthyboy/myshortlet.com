@@ -25,9 +25,9 @@
 
 
 <div class="container-fluid ">
-   <section class="">
+   <section id="intro-box" class="intro-box">
       <div class="text-center  mb-5">
-         <p class="pt-3 mt-5 animate__animated animate__bounce">AvenueMontiagne Residences
+         <p class="pt-3 mt-5 ">AvenueMontiagne Residences
          </p>
 
          <h1 class="large-heading bold">A Fresh Take <i class="bi bi-chevron-double-down text-white "></i>
