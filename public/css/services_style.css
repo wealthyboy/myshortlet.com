@@ -18196,6 +18196,9 @@ button.owl-next {
     right: 0px;
     margin-top: 10px;
   }
+  .item {
+    height: 200px !important;
+  }
   .down-icon {
     width: 100%;
     position: absolute;
