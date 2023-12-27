@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 <div class="video-section">
    <div class="intro-image">
@@ -26,7 +27,7 @@
 <div class="container-fluid ">
    <section class="">
       <div class="text-center  mb-5">
-         <p class="pt-3 mt-5">AvenueMontiagne Residences
+         <p class="pt-3 mt-5 animate__animated animate__bounce">AvenueMontiagne Residences
          </p>
 
          <h1 class="large-heading bold">A Fresh Take <i class="bi bi-chevron-double-down text-white "></i>
@@ -185,37 +186,7 @@
    </section>
 
 
-   <!-- -------- START HEADER 4 w/ search book a ticket form ------- -->
-   <header>
 
-      <div class="page-header min-vh-75 position-relative" style="background-image: url(https://avenuemontaigne.ng/images/locations/kA0lndRkg4kYoEcmaq62HPQSoW77AmGiQDHLDmU0.jpg)" loading="lazy">
-         <span class="position-absolute top-0 start-0 w-100 h-100 rounded bg-black opacity-50"></span>
-
-         <div class="container">
-            <div class="row">
-               <div class="col-lg-8 mx-auto text-white text-center">
-                  <h1 class="text-white">Contact Us </h1>
-                  <div class="mb-3">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
-                        <path d="M12.488 11.67c-2.187-2.187-2.82-2.82-3.54-3.53-.762-.762-1.487-1.92-2.293-3.568a1.008 1.008 0 0 0-1.422-.422C3.413 4.663 2.65 5.431 2.262 6.85c-.087.293-.223.808-.422 1.422-.258 1.04-.594 2.13-1.323 3.378a14.994 14.994 0 0 1-.849 1.318c-.539.65-1.027 1.156-1.431 1.5a1.5 1.5 0 0 0-.251 1.44l1.194 2.988a1.5 1.5 0 0 0 1.437.997h1.446c.303 0 .626-.12.877-.365.477-.456 1.47-1.577 2.88-2.888 1.309-1.309 2.43-2.403 2.887-2.88.244-.25.365-.574.365-.876V3.5a1.5 1.5 0 0 0-1.5-1.5h-2.996c-.302 0-.626.12-.877.365a28.872 28.872 0 0 0-1.436 1.436 19.347 19.347 0 0 0-1.317 1.318c-.539.65-1.027 1.157-1.43 1.5a1.5 1.5 0 0 0-.251 1.44l1.194 2.988a1.5 1.5 0 0 0 1.437.997h1.443a.5.5 0 0 0 .5-.5v-1.993a.5.5 0 0 0-.146-.354z" />
-                     </svg>
-                     <p class="mb-0 display-4 bold-2 text-white">Phone: +1 (123) 456-7890</p>
-                  </div>
-
-                  <!-- Email -->
-                  <div class="mb-3">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-                        <path d="M0 3.91V13a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V3.91l-8 4.57-8-4.57zm1-.66L8 8.35 15 3.25V4a1 1 0 0 0 1 1 1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1 1 1 0 0 0 1 1v1a1 1 0 0 0 1 1z" />
-                     </svg>
-                     <p class="mb-0 display-4 bold-2 text-white">Email: info@avenuemontaigne.ng</p>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-
-   </header>
-   <!-- -------- END HEADER 4 w/ search book a ticket form ------- -->
 
 
    <div class="clearfix"></div>
@@ -244,6 +215,38 @@
    </div>
    @endif
 </div>
+
+<!-- -------- START HEADER 4 w/ search book a ticket form ------- -->
+<header>
+
+   <div class="page-header min-vh-75 half-hv position-relative" style="background-image: url(https://avenuemontaigne.ng/images/locations/kA0lndRkg4kYoEcmaq62HPQSoW77AmGiQDHLDmU0.jpg)" loading="lazy">
+      <span class="position-absolute top-0 start-0 w-100 h-100  bg-black opacity-50"></span>
+
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-8 mx-auto text-white text-center">
+               <h1 class="text-white bold-1">Contact Us </h1>
+               <div class="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
+                     <path d="M12.488 11.67c-2.187-2.187-2.82-2.82-3.54-3.53-.762-.762-1.487-1.92-2.293-3.568a1.008 1.008 0 0 0-1.422-.422C3.413 4.663 2.65 5.431 2.262 6.85c-.087.293-.223.808-.422 1.422-.258 1.04-.594 2.13-1.323 3.378a14.994 14.994 0 0 1-.849 1.318c-.539.65-1.027 1.156-1.431 1.5a1.5 1.5 0 0 0-.251 1.44l1.194 2.988a1.5 1.5 0 0 0 1.437.997h1.446c.303 0 .626-.12.877-.365.477-.456 1.47-1.577 2.88-2.888 1.309-1.309 2.43-2.403 2.887-2.88.244-.25.365-.574.365-.876V3.5a1.5 1.5 0 0 0-1.5-1.5h-2.996c-.302 0-.626.12-.877.365a28.872 28.872 0 0 0-1.436 1.436 19.347 19.347 0 0 0-1.317 1.318c-.539.65-1.027 1.157-1.43 1.5a1.5 1.5 0 0 0-.251 1.44l1.194 2.988a1.5 1.5 0 0 0 1.437.997h1.443a.5.5 0 0 0 .5-.5v-1.993a.5.5 0 0 0-.146-.354z" />
+                  </svg>
+                  <p class="mb-0 display-4 bold-1 text-white">Phone: +1 (123) 456-7890</p>
+               </div>
+
+               <!-- Email -->
+               <div class="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                     <path d="M0 3.91V13a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V3.91l-8 4.57-8-4.57zm1-.66L8 8.35 15 3.25V4a1 1 0 0 0 1 1 1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1 1 1 0 0 0 1 1v1a1 1 0 0 0 1 1z" />
+                  </svg>
+                  <p class="mb-0 display-4 bold-2 text-white">Email: info@avenuemontaigne.ng</p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+</header>
+<!-- -------- END HEADER 4 w/ search book a ticket form ------- -->
 @endsection
 @section('inline-scripts')
 

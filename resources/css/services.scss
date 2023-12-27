@@ -792,7 +792,7 @@ button.owl-next {
     position: relative;
     right: 0px;
     margin-left: 0px;
-    margin-top: -42px;
+    margin-top: -21px;
   }
 
   .re-order {
@@ -909,6 +909,10 @@ button.owl-next {
 
 .navbar .navbar-collapse .navbar-nav>li.button-container {
   padding: 15px;
+}
+
+.collapse:not(.show) {
+  display: block !important;
 }
 
 .carousel .card .card-body {
@@ -1293,6 +1297,10 @@ textarea:focus {
 textarea:focus,
 input:focus {
   outline: none;
+}
+
+.half-hv {
+  height: 50vh !important;
 }
 
 

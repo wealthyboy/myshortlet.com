@@ -30,9 +30,7 @@
             </a>
             @endauth
 
-
-
-            <button class="navbar-toggler d-block text-white" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler d-block text-white border-none" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="navbar-toggler-icon text-white"></span>
                 <span class="navbar-toggler-icon text-white"></span>
