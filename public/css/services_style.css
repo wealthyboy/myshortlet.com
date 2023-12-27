@@ -18185,6 +18185,12 @@ button.owl-next {
   right: 8px;
 }
 
+.display-4 {
+  font-size: 1.125rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
 @media only screen and (max-width: 600px) {
   .card-background-image {
     height: 210px;
