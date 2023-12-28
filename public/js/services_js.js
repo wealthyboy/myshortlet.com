@@ -12188,9 +12188,20 @@ document.addEventListener('DOMContentLoaded', function () {
       key: "observe",
       value: function observe(targets) {
         var _this2 = this;
+        // targets.forEach(target => {
+        //   this.observer.observe(target.element);
+        //   this.dynamicClassesMap.set(target.element, target.dynamicClasses);
+        // });
+
         targets.forEach(function (target) {
-          _this2.observer.observe(target.element);
-          _this2.dynamicClassesMap.set(target.element, target.dynamicClasses);
+          var element = target.element,
+            dynamicClasses = target.dynamicClasses;
+
+          // Check if the element exists in the DOM before observing
+          if (element && document.body.contains(element)) {
+            _this2.observer.observe(element);
+            _this2.dynamicClassesMap.set(element, dynamicClasses);
+          }
         });
       }
     }, {
@@ -12213,7 +12224,7 @@ document.addEventListener('DOMContentLoaded', function () {
     dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig']
   }, {
     id: 'intro-box',
-    dynamicClasses: ['opacity-1', 'animate__animated', 'animate__rotateInUpLeft']
+    dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInDown']
   }, {
     id: 'leftbox1',
     dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp']

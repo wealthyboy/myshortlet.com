@@ -21,6 +21,8 @@
    <link href="/css/services_style.css?version={{ str_random(6) }}" rel="stylesheet">
    <link href="/css/banner.css?version={{ str_random(6) }}" rel="stylesheet">
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
 
 
    @yield('page-css')

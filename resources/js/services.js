@@ -119,9 +119,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     observe(targets) {
+      // targets.forEach(target => {
+      //   this.observer.observe(target.element);
+      //   this.dynamicClassesMap.set(target.element, target.dynamicClasses);
+      // });
+
       targets.forEach(target => {
-        this.observer.observe(target.element);
-        this.dynamicClassesMap.set(target.element, target.dynamicClasses);
+        const { element, dynamicClasses } = target;
+
+        // Check if the element exists in the DOM before observing
+        if (element && document.body.contains(element)) {
+          this.observer.observe(element);
+          this.dynamicClassesMap.set(element, dynamicClasses);
+        }
       });
     }
 
@@ -137,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const targetConfigs = [
     { id: 'leftBox', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig'] },
     { id: 'rightBox', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
-    { id: 'intro-box', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__rotateInUpLeft'] },
+    { id: 'intro-box', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInDown'] },
     { id: 'leftbox1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
     { id: 'rbox1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
     { id: 'box3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },

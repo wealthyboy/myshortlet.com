@@ -6,7 +6,7 @@
         @if(null !== $locations)
 
         <div class="row p-4">
-            <div class=" mt-4 mb-4 ml-2">
+            <div id="intro-box" class=" opacity-0  mt-4 mb-4 ml-2">
                 <h2 class="text-left bold-3 mb">Select Your Ideal Location</h2>
                 <p class=" text-left">Explore our diverse range of locations to find the perfect apartment that suits your lifestyle. Choose from a list of carefully curated areas, each offering a unique blend of comfort and convenience. Your dream home is just a click away!</p>
             </div>
@@ -54,7 +54,7 @@
         <div class="col-md-12">
 
 
-            <div class=" mt-4 mb-4 ml-2">
+            <div id="intro-box" class=" opacity-0 mt-4 mb-4 ml-2">
                 <h2 class=" bold-3 text-left">Luxury Redefined</h2>
                 <div class=" text-secondary  lead  text-left mt-2"> Explore Our Exquisite Collection of Apartments</div>
 
@@ -64,8 +64,8 @@
             </div>
             <section class=" mb-1">
                 <div class="row bg-grey position-relative  pb-5 pt-5">
-                    <div class="col-md-5  re-order text-center d-flex justify-content-center align-items-center">
-                        <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
+                    <div id="leftBox" class="col-md-5  opacity-0 re-order text-center d-flex justify-content-center align-items-center">
+                        <div style="z-index: 2;" class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
                             <h2 class="mb-4 bold-2">Unrivaled Amenities</h2>
                             <div class="lead text-secondary">Elevate Your Living Experience</div>
                             <p class="mt-4  text-left text-black light-bold">
@@ -77,9 +77,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-7">
-
-
+                    <div id="rightBox" class="col-md-7 opacity-0">
                         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
                                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -89,7 +87,6 @@
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" class="d-block w-100" alt="...">
-
                                 </div>
                                 <div class="carousel-item">
                                     <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/04/PRWH_08_ResidentsPool_B_3055-min.jpg" class="d-block w-100" alt="...">

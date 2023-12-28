@@ -4,6 +4,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 @include('_partials.header_styles')
 
+
 <body>
    <div id="app" class="appp">
       <nav class="navbar   navbar-expand-lg " id="sectionsNav">
