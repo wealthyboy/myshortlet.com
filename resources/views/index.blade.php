@@ -36,8 +36,8 @@
          </h1>
       </div>
       <div class="row  pb-5 pt-3 position-relative">
-         <div id="leftBox" style="background-image: url('/images/banners/avm_image_1.jpeg');" class="col-md-7 rounded  card-background-image"></div>
-         <div id="rightBox" style="z-index: 2;" class="col-md-5 text-center d-flex justify-content-center align-items-center">
+         <div style="background-image: url('/images/banners/avm_image_1.jpeg');" class="col-md-7 rounded  card-background-image"></div>
+         <div style="z-index: 2;" class="col-md-5 text-center d-flex justify-content-center align-items-center">
             <div class="bg-panel bg-panel-white p-sm-3 p-md-5">
                <h2 class=" bold">Welcome to Avenue Montiagne</h2>
                <p class="mt-4  text-left text-black light-bold">
@@ -60,7 +60,7 @@
 
    <section class=" mb-1">
       <div class="row bg-grey position-relative  pb-5 pt-5">
-         <div class="col-md-5  re-order text-center d-flex justify-content-center align-items-center">
+         <div id="leftBox" class="col-md-5 index-1 opacity-0 re-order text-center d-flex justify-content-center align-items-center">
             <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
                <h2 class="mb-4 bold">Relax and enjoy</h2>
                <p class="mt-4  text-left text-black light-bold">
@@ -74,7 +74,7 @@
             </div>
          </div>
 
-         <div class="col-md-7">
+         <div id="rightBox" class="col-md-7">
 
 
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">

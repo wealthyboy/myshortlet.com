@@ -171,14 +171,14 @@
                             <div class="col-lg-8 ps-5 pe-0">
                                 <div class="row mt-3">
                                     <div class="col-lg-3 col-6">
-                                        <img class="w-100 border-radius-lg shadow mt-0 mt-lg-7" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-1" loading="lazy">
+                                        <img class="w-100 border-radius-lg shadow mt-0 mt-lg-7" src="https://cozystay.loftocean.com/apartment/wp-content/uploads/sites/6/2023/04/hayley-kim-design-sRSRuxkOuzI-unsplash.jpg" alt="flower-1" loading="lazy">
                                     </div>
                                     <div class="col-lg-3 col-6">
-                                        <img class="w-100 border-radius-lg shadow" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-2" loading="lazy">
-                                        <img class="w-100 border-radius-lg shadow mt-4" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-3" loading="lazy">
+                                        <img class="w-100 border-radius-lg shadow" src="https://cozystay.loftocean.com/apartment/wp-content/uploads/sites/6/2023/04/sour-moha-_cUZkx0wTyM-unsplash.jpg" alt="flower-2" loading="lazy">
+                                        <img class="w-100 border-radius-lg shadow mt-4" src="https://cozystay.loftocean.com/apartment/wp-content/uploads/sites/6/2023/04/nati-melnychuk-dFBhXJHKNeo-unsplash.jpg" alt="flower-3" loading="lazy">
                                     </div>
                                     <div class="col-lg-3 col-6 mb-3">
-                                        <img class="w-100 border-radius-lg shadow mt-0 mt-lg-5" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-4" loading="lazy">
+                                        <img class="w-100 border-radius-lg shadow mt-0 mt-lg-5" src="https://cozystay.loftocean.com/apartment/wp-content/uploads/sites/6/2023/03/img-39-2.jpg" alt="flower-4" loading="lazy">
                                         <img class="w-100 border-radius-lg shadow mt-4" src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" alt="flower-5" loading="lazy">
                                     </div>
                                     <div class="col-lg-3 col-6">

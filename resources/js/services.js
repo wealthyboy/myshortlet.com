@@ -43,15 +43,18 @@ $().ready(function () {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  const leftBox = document.getElementById('intro-box');
-  // const rightBox = document.getElementById('rightBox');
+  const leftBox = document.getElementById('leftBox');
+  const rightBox = document.getElementById('rightBox');
 
   // Set up the Intersection Observer for the left box
   const leftObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
+
+        entry.target.classList.remove('opacity-0');
+
         // Add a CSS class to trigger the animation
-        entry.target.classList.add('animate__animated animate__bounc');
+        entry.target.classList.add('opacity-1', 'animate__animated', 'animate__fadeInLeftBig');
         // Unobserve the target to stop further observations
         observer.unobserve(entry.target);
       }
@@ -61,20 +64,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // Start observing the left box
   leftObserver.observe(leftBox);
 
-  // // Set up the Intersection Observer for the right box
-  // const rightObserver = new IntersectionObserver((entries, observer) => {
-  //   entries.forEach(entry => {
-  //     if (entry.isIntersecting) {
-  //       // Add a CSS class to trigger the animation
-  //       entry.target.classList.add('animate-right');
-  //       // Unobserve the target to stop further observations
-  //       observer.unobserve(entry.target);
-  //     }
-  //   });
-  // }, { threshold: 0.5 }); // Adjust the threshold based on your needs
+  // Set up the Intersection Observer for the right box
+  const rightObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Add a CSS class to trigger the animation
+        entry.target.classList.add('animate__animated', 'animate__fadeInRight');
+        // Unobserve the target to stop further observations
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 }); // Adjust the threshold based on your needs
 
-  // // Start observing the right box
-  // rightObserver.observe(rightBox);
+  // Start observing the right box
+  rightObserver.observe(rightBox);
 });
 
 
