@@ -12072,6 +12072,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery-validation */ "./node_modules/jquery-validation/dist/jquery.validate.js");
 /* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery_validation__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -12098,45 +12104,150 @@ $().ready(function () {
     }
   });
 });
+
+// document.addEventListener('DOMContentLoaded', () => {
+
+//   const leftBox = document.getElementById('leftBox');
+//   const rightBox = document.getElementById('rightBox');
+
+//   // Set up the Intersection Observer for the left box
+//   const leftObserver = new IntersectionObserver((entries, observer) => {
+//     entries.forEach(entry => {
+//       if (entry.isIntersecting) {
+
+//         entry.target.classList.remove('opacity-0');
+//         // Add a CSS class to trigger the animation
+//         entry.target.classList.add('opacity-1', 'animate__animated', 'animate__fadeInLeftBig');
+//         // Unobserve the target to stop further observations
+//         observer.unobserve(entry.target);
+//       }
+//     });
+//   }, { threshold: 0.5 }); // Adjust the threshold based on your needs
+
+//   // Start observing the left box
+//   leftObserver.observe(leftBox);
+
+//   // Set up the Intersection Observer for the left box
+//   const introObserver = new IntersectionObserver((entries, observer) => {
+//     entries.forEach(entry => {
+//       if (entry.isIntersecting) {
+
+//         entry.target.classList.remove('opacity-0');
+//         // Add a CSS class to trigger the animation
+//         entry.target.classList.add('opacity-1', 'animate__animated', 'animate__fadeInLeftBig', 'animate__delay-2s');
+//         // Unobserve the target to stop further observations
+//         observer.unobserve(entry.target);
+//       }
+//     });
+//   }, { threshold: 0.5 }); // Adjust the threshold based on your needs
+
+//   // Start observing the left box
+//   leftObserver.observe(leftBox);
+
+//   // Set up the Intersection Observer for the right box
+//   const rightObserver = new IntersectionObserver((entries, observer) => {
+//     entries.forEach(entry => {
+//       if (entry.isIntersecting) {
+//         // Add a CSS class to trigger the animation
+//         entry.target.classList.add('animate__animated', 'animate__fadeInRight');
+//         // Unobserve the target to stop further observations
+//         observer.unobserve(entry.target);
+//       }
+//     });
+//   }, { threshold: 0.5 }); // Adjust the threshold based on your needs
+
+//   // Start observing the right box
+//   rightObserver.observe(rightBox);
+// });
+
 document.addEventListener('DOMContentLoaded', function () {
-  var leftBox = document.getElementById('leftBox');
-  var rightBox = document.getElementById('rightBox');
-
-  // Set up the Intersection Observer for the left box
-  var leftObserver = new IntersectionObserver(function (entries, observer) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.remove('opacity-0');
-
-        // Add a CSS class to trigger the animation
-        entry.target.classList.add('opacity-1', 'animate__animated', 'animate__fadeInLeftBig');
-        // Unobserve the target to stop further observations
-        observer.unobserve(entry.target);
+  var IntersectionObserverHandler = /*#__PURE__*/function () {
+    function IntersectionObserverHandler(options) {
+      _classCallCheck(this, IntersectionObserverHandler);
+      this.observer = new IntersectionObserver(this.handleIntersection.bind(this), options);
+      this.dynamicClassesMap = new Map();
+    }
+    _createClass(IntersectionObserverHandler, [{
+      key: "handleIntersection",
+      value: function handleIntersection(entries, observer) {
+        var _this = this;
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var dynamicClasses = _this.dynamicClassesMap.get(entry.target);
+            if (dynamicClasses) {
+              entry.target.classList.remove('opacity-0');
+              dynamicClasses.forEach(function (className) {
+                return entry.target.classList.add(className);
+              });
+              observer.unobserve(entry.target);
+            }
+          }
+        });
       }
-    });
-  }, {
-    threshold: 0.5
-  }); // Adjust the threshold based on your needs
-
-  // Start observing the left box
-  leftObserver.observe(leftBox);
-
-  // Set up the Intersection Observer for the right box
-  var rightObserver = new IntersectionObserver(function (entries, observer) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        // Add a CSS class to trigger the animation
-        entry.target.classList.add('animate__animated', 'animate__fadeInRight');
-        // Unobserve the target to stop further observations
-        observer.unobserve(entry.target);
+    }, {
+      key: "observe",
+      value: function observe(targets) {
+        var _this2 = this;
+        targets.forEach(function (target) {
+          _this2.observer.observe(target.element);
+          _this2.dynamicClassesMap.set(target.element, target.dynamicClasses);
+        });
       }
-    });
+    }, {
+      key: "unobserve",
+      value: function unobserve(targets) {
+        var _this3 = this;
+        targets.forEach(function (target) {
+          _this3.observer.unobserve(target.element);
+          _this3.dynamicClassesMap["delete"](target.element);
+        });
+      }
+    }]);
+    return IntersectionObserverHandler;
+  }(); // Example usage with multiple elements and dynamic classes
+  var targetConfigs = [{
+    id: 'leftBox',
+    dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig']
   }, {
-    threshold: 0.5
-  }); // Adjust the threshold based on your needs
+    id: 'rightBox',
+    dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig']
+  }, {
+    id: 'intro-box',
+    dynamicClasses: ['opacity-1', 'animate__animated', 'animate__rotateInUpLeft']
+  }, {
+    id: 'leftbox1',
+    dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp']
+  }, {
+    id: 'rbox1',
+    dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp']
+  }, {
+    id: 'box3',
+    dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp']
+  }, {
+    id: 'lbox3',
+    dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig', 'index-1']
+  }, {
+    id: 'rbox3',
+    dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig']
+  }
 
-  // Start observing the right box
-  rightObserver.observe(rightBox);
+  // Add more configurations as needed
+  ];
+
+  var observerHandler = new IntersectionObserverHandler({
+    threshold: 0.5
+  });
+
+  // Get the target elements by ID and associated dynamic classes
+  var targets = targetConfigs.map(function (config) {
+    return {
+      element: document.getElementById(config.id),
+      dynamicClasses: config.dynamicClasses
+    };
+  });
+
+  // Start observing the target elements
+  observerHandler.observe(targets);
 });
 
 //console.log(intlTelInput());

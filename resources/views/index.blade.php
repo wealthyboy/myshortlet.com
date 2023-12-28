@@ -25,8 +25,8 @@
 
 
 <div class="container-fluid ">
-   <section id="intro-box" class="intro-box">
-      <div class="text-center  mb-5">
+   <section class="intro-box">
+      <div id="intro-box" class="text-center  opacity-0 mb-5">
          <p class="pt-3 mt-5 ">AvenueMontiagne Residences
          </p>
 
@@ -36,8 +36,8 @@
          </h1>
       </div>
       <div class="row  pb-5 pt-3 position-relative">
-         <div style="background-image: url('/images/banners/avm_image_1.jpeg');" class="col-md-7 rounded  card-background-image"></div>
-         <div style="z-index: 2;" class="col-md-5 text-center d-flex justify-content-center align-items-center">
+         <div id="leftbox1" style="background-image: url('/images/banners/avm_image_1.jpeg');" class="col-md-7  opacity-0  rounded  card-background-image"></div>
+         <div id="rbox1" style="z-index: 2;" class="col-md-5 text-center d-flex opacity-0  justify-content-center align-items-center">
             <div class="bg-panel bg-panel-white p-sm-3 p-md-5">
                <h2 class=" bold">Welcome to Avenue Montiagne</h2>
                <p class="mt-4  text-left text-black light-bold">
@@ -74,7 +74,7 @@
             </div>
          </div>
 
-         <div id="rightBox" class="col-md-7">
+         <div id="rightBox" class="col-md-7 opacity-0">
 
 
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -114,8 +114,8 @@
    </section>
 
 
-   <section class="">
-      <div class="row   pb-5 pt-5 position-relative">
+   <section id="box3" class=" opacity-0">
+      <div class="row  pb-5 pt-5 position-relative">
          <div class="col-md-7 rounded  card-background-image">
             <div id="c1" class="carousel slide" data-ride="carousel">
                <ol class="carousel-indicators">
@@ -126,12 +126,9 @@
                <div class="carousel-inner">
                   <div class="carousel-item active">
                      <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/04/Pendry-March-2023-HR-115.jpg" class="d-block w-100" alt="...">
-
-
                   </div>
                   <div class="carousel-item">
                      <img src="/uploads/4b2fVBQMd3OkPvATKDpuIxFK61PbgdcoEvJ3qI4j.jpg" class="d-block w-100" alt="...">
-
                   </div>
                   <div class="carousel-item">
                      <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" class="d-block w-100" alt="...">
@@ -168,7 +165,7 @@
 
    <section class=" mb-1">
       <div class="row bg-grey position-relative  pb-5 pt-5">
-         <div class="col-md-5  re-order text-center d-flex justify-content-center align-items-center">
+         <div id="lbox3" style="z-index: 3;" class="col-md-5  index-1 opacity-0 re-order text-center d-flex justify-content-center align-items-center">
             <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
                <h2 class="mb-4 bold">Shop</h2>
                <p class="mt-4  text-left text-black light-bold">
@@ -181,7 +178,7 @@
                </p>
             </div>
          </div>
-         <div style="background-image: url('https://cdn.shopify.com/s/files/1/0732/8464/9266/files/SALE_WEBSITE_3.png?v=1681599129&width=1780');" class="col-md-7  rounded  card-background-image"></div>
+         <div id="rbox3" style="background-image: url('https://cdn.shopify.com/s/files/1/0732/8464/9266/files/SALE_WEBSITE_3.png?v=1681599129&width=1780');" class="col-md-7  rounded  opacity-0 card-background-image"></div>
       </div>
    </section>
 

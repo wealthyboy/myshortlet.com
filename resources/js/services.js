@@ -42,43 +42,125 @@ $().ready(function () {
   });
 });
 
+// document.addEventListener('DOMContentLoaded', () => {
+
+
+//   const leftBox = document.getElementById('leftBox');
+//   const rightBox = document.getElementById('rightBox');
+
+//   // Set up the Intersection Observer for the left box
+//   const leftObserver = new IntersectionObserver((entries, observer) => {
+//     entries.forEach(entry => {
+//       if (entry.isIntersecting) {
+
+//         entry.target.classList.remove('opacity-0');
+//         // Add a CSS class to trigger the animation
+//         entry.target.classList.add('opacity-1', 'animate__animated', 'animate__fadeInLeftBig');
+//         // Unobserve the target to stop further observations
+//         observer.unobserve(entry.target);
+//       }
+//     });
+//   }, { threshold: 0.5 }); // Adjust the threshold based on your needs
+
+//   // Start observing the left box
+//   leftObserver.observe(leftBox);
+
+//   // Set up the Intersection Observer for the left box
+//   const introObserver = new IntersectionObserver((entries, observer) => {
+//     entries.forEach(entry => {
+//       if (entry.isIntersecting) {
+
+//         entry.target.classList.remove('opacity-0');
+//         // Add a CSS class to trigger the animation
+//         entry.target.classList.add('opacity-1', 'animate__animated', 'animate__fadeInLeftBig', 'animate__delay-2s');
+//         // Unobserve the target to stop further observations
+//         observer.unobserve(entry.target);
+//       }
+//     });
+//   }, { threshold: 0.5 }); // Adjust the threshold based on your needs
+
+//   // Start observing the left box
+//   leftObserver.observe(leftBox);
+
+//   // Set up the Intersection Observer for the right box
+//   const rightObserver = new IntersectionObserver((entries, observer) => {
+//     entries.forEach(entry => {
+//       if (entry.isIntersecting) {
+//         // Add a CSS class to trigger the animation
+//         entry.target.classList.add('animate__animated', 'animate__fadeInRight');
+//         // Unobserve the target to stop further observations
+//         observer.unobserve(entry.target);
+//       }
+//     });
+//   }, { threshold: 0.5 }); // Adjust the threshold based on your needs
+
+//   // Start observing the right box
+//   rightObserver.observe(rightBox);
+// });
+
 document.addEventListener('DOMContentLoaded', () => {
-  const leftBox = document.getElementById('leftBox');
-  const rightBox = document.getElementById('rightBox');
+  class IntersectionObserverHandler {
+    constructor(options) {
+      this.observer = new IntersectionObserver(this.handleIntersection.bind(this), options);
+      this.dynamicClassesMap = new Map();
+    }
 
-  // Set up the Intersection Observer for the left box
-  const leftObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
+    handleIntersection(entries, observer) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const dynamicClasses = this.dynamicClassesMap.get(entry.target);
+          if (dynamicClasses) {
+            entry.target.classList.remove('opacity-0');
+            dynamicClasses.forEach(className => entry.target.classList.add(className));
+            observer.unobserve(entry.target);
+          }
+        }
+      });
+    }
 
-        entry.target.classList.remove('opacity-0');
+    observe(targets) {
+      targets.forEach(target => {
+        this.observer.observe(target.element);
+        this.dynamicClassesMap.set(target.element, target.dynamicClasses);
+      });
+    }
 
-        // Add a CSS class to trigger the animation
-        entry.target.classList.add('opacity-1', 'animate__animated', 'animate__fadeInLeftBig');
-        // Unobserve the target to stop further observations
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 }); // Adjust the threshold based on your needs
+    unobserve(targets) {
+      targets.forEach(target => {
+        this.observer.unobserve(target.element);
+        this.dynamicClassesMap.delete(target.element);
+      });
+    }
+  }
 
-  // Start observing the left box
-  leftObserver.observe(leftBox);
+  // Example usage with multiple elements and dynamic classes
+  const targetConfigs = [
+    { id: 'leftBox', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig'] },
+    { id: 'rightBox', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
+    { id: 'intro-box', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__rotateInUpLeft'] },
+    { id: 'leftbox1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+    { id: 'rbox1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+    { id: 'box3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+    { id: 'lbox3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig', 'index-1'] },
+    { id: 'rbox3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
 
-  // Set up the Intersection Observer for the right box
-  const rightObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        // Add a CSS class to trigger the animation
-        entry.target.classList.add('animate__animated', 'animate__fadeInRight');
-        // Unobserve the target to stop further observations
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 }); // Adjust the threshold based on your needs
 
-  // Start observing the right box
-  rightObserver.observe(rightBox);
+
+    // Add more configurations as needed
+  ];
+
+  const observerHandler = new IntersectionObserverHandler({ threshold: 0.5 });
+
+  // Get the target elements by ID and associated dynamic classes
+  const targets = targetConfigs.map(config => ({
+    element: document.getElementById(config.id),
+    dynamicClasses: config.dynamicClasses,
+  }));
+
+  // Start observing the target elements
+  observerHandler.observe(targets);
 });
+
 
 
 
