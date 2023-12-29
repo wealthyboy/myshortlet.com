@@ -95,14 +95,14 @@
                      <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" class="d-block w-100" alt="...">
                   </div>
                </div>
-               <button class="carousel-control-prev" type="button" data-target="#carouselExampleIndicators" data-slide="prev">
+               <!-- <button class="carousel-control-prev" type="button" data-target="#carouselExampleIndicators" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="sr-only">Previous</span>
                </button>
                <button class="carousel-control-next" type="button" data-target="#carouselExampleIndicators" data-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
-               </button>
+               </button> -->
             </div>
 
 
@@ -133,14 +133,14 @@
                      <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" class="d-block w-100" alt="...">
                   </div>
                </div>
-               <button class="carousel-control-prev" type="button" data-target="#c1" data-slide="prev">
+               <!-- <button class="carousel-control-prev" type="button" data-target="#c1" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="sr-only">Previous</span>
                </button>
                <button class="carousel-control-next" type="button" data-target="#c1" data-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
-               </button>
+               </button> -->
             </div>
          </div>
          <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
@@ -223,13 +223,11 @@
             <div class="col-lg-8 mx-auto text-white text-center">
                <h1 class="text-white bold-1">Contact Us </h1>
                <div class="mb-3">
-
                   <p class="mb-0 display-4 bold-1 text-white">Phone: +1 (123) 456-7890</p>
                </div>
 
                <!-- Email -->
                <div class="mb-3">
-
                   <p class="mb-0 display-4 bold-1 text-white">Email: info@avenuemontaigne.ng</p>
                </div>
             </div>

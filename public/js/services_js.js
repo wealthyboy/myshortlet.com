@@ -12226,6 +12226,9 @@ document.addEventListener('DOMContentLoaded', function () {
     id: 'intro-box',
     dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInDown']
   }, {
+    id: 'intro-box2',
+    dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInDown']
+  }, {
     id: 'leftbox1',
     dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp']
   }, {
@@ -12240,11 +12243,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }, {
     id: 'rbox3',
     dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig']
-  }
-
-  // Add more configurations as needed
-  ];
-
+  }, {
+    id: 'category-box',
+    dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp']
+  }];
   var observerHandler = new IntersectionObserverHandler({
     threshold: 0.5
   });

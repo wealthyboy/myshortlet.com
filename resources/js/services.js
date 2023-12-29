@@ -148,15 +148,13 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: 'leftBox', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig'] },
     { id: 'rightBox', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
     { id: 'intro-box', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInDown'] },
+    { id: 'intro-box2', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInDown'] },
     { id: 'leftbox1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
     { id: 'rbox1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
     { id: 'box3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
     { id: 'lbox3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig', 'index-1'] },
     { id: 'rbox3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
-
-
-
-    // Add more configurations as needed
+    { id: 'category-box', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] }
   ];
 
   const observerHandler = new IntersectionObserverHandler({ threshold: 0.5 });

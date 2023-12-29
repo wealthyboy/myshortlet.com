@@ -17,7 +17,7 @@
             @foreach($cities->children as $city)
             @if ($city->image === '' || null == $city->image) @continue @endif
 
-            <div class="col-md-6 position-relative mb-3 p-0 p-1">
+            <div id="category-box" class="opacity-0 col-md-6 position-relative mb-3 p-0 p-1">
                 <a class="d-block position-relative" href="/apartments/in/{{ $city->slug }}">
                     <img src="{{ $city->image }}" class="img-fluid rounded" alt="">
                     <div class="position-absolute top-0 start-0 w-100 h-100 rounded bg-black opacity-50"></div>
@@ -54,7 +54,7 @@
         <div class="col-md-12">
 
 
-            <div id="intro-box" class=" opacity-0 mt-4 mb-4 ml-2">
+            <div id="intro-box2" class=" opacity-0 mt-4 mb-4 ml-2">
                 <h2 class=" bold-3 text-left">Luxury Redefined</h2>
                 <div class=" text-secondary  lead  text-left mt-2"> Explore Our Exquisite Collection of Apartments</div>
 
@@ -64,8 +64,8 @@
             </div>
             <section class=" mb-1">
                 <div class="row bg-grey position-relative  pb-5 pt-5">
-                    <div id="leftBox" class="col-md-5  opacity-0 re-order text-center d-flex justify-content-center align-items-center">
-                        <div style="z-index: 2;" class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
+                    <div id="leftBox" style="z-index: 2;" class="col-md-5  opacity-0 re-order text-center d-flex justify-content-center align-items-center">
+                        <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
                             <h2 class="mb-4 bold-2">Unrivaled Amenities</h2>
                             <div class="lead text-secondary">Elevate Your Living Experience</div>
                             <p class="mt-4  text-left text-black light-bold">
@@ -101,7 +101,6 @@
 
 
                     </div>
-
 
                 </div>
             </section>
@@ -140,13 +139,8 @@
                         <div class="about-panel  bg-right-panel bg-panel-white  bg-panel p-sm-3 p-md-5">
                             <h2 class="mb-4">Seamless Indoor-Outdoor Harmony</h2>
                             <div class="lead text-secondary"> Discover Tranquility in our Beachfront Apartments</div>
-
-
-
                             <p class="mt-4  text-left text-black light-bold">
                                 Step into a world where the boundaries between indoor and outdoor living dissolve. Expansive windows frame breathtaking vistas, while private balconies and terraces invite you to savor the beauty of nature. Our commitment to harmonious design ensures that every residence is a sanctuary in sync with the surrounding environment.
-
-
                             <div class=" buttons">
 
                             </div>
