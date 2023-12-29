@@ -109,7 +109,7 @@
 
 
 
-            <section class="">
+            <section id="box3" class=" opacity-0 ">
                 <div class="row   pb-5 pt-5 position-relative">
                     <div class="col-md-7 rounded  card-background-image">
                         <div id="c1" class="carousel slide" data-ride="carousel">
@@ -135,7 +135,7 @@
 
                         </div>
                     </div>
-                    <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
+                    <div class="col-md-5  text-center d-flex justify-content-center align-items-center">
                         <div class="about-panel  bg-right-panel bg-panel-white  bg-panel p-sm-3 p-md-5">
                             <h2 class="mb-4">Seamless Indoor-Outdoor Harmony</h2>
                             <div class="lead text-secondary"> Discover Tranquility in our Beachfront Apartments</div>
