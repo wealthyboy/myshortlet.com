@@ -8245,7 +8245,7 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "mt-sm-2"
     }, [_c("a", {
-      staticClass: "bold-2 text-size-1-big mt-sm-2",
+      staticClass: "bold-3 text-size-1-big mt-sm-2",
       attrs: {
         target: "_blank",
         href: property.link

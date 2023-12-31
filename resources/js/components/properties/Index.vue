@@ -39,7 +39,7 @@
 
             <div class="d-flex  justify-content-between">
               <div class=" mt-sm-2 ">
-                <a target="_blank" class="bold-2 text-size-1-big  mt-sm-2 " :href="property.link">{{ property.name }}</a>
+                <a target="_blank" class="bold-3 text-size-1-big  mt-sm-2 " :href="property.link">{{ property.name }}</a>
                 <div class="d">
                   <small><a :href="property.link" class="p-0">{{ property.city }}</a>, <a href="">{{ property.state
                   }}</a></small>

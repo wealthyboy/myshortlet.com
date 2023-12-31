@@ -74,7 +74,7 @@
             <div class=" {{ $property->type == 'single' ? 'col-md-7' : 'col-md-12' }} rounded  mt-1">
                <div id="Overview" class="name rounded bg-white">
                   <div class="card-body">
-                     <h3 class="card-title bold-2">{{ $property->name }}</h3>
+                     <h3 class="card-title bold-3">{{ $property->name }}</h3>
                      <div class="row">
                         @if($property->type == 'single')
                         <div class="col-12 entire-apartment mb-3">
@@ -82,7 +82,7 @@
                         </div>
                         @endif
                         <div class="col-md-6">
-                           <h5 class="bold-2">Popular amenities</h5>
+                           <h5 class="bold-3">Popular amenities</h5>
                            <div class="row">
                               @if($property->facilities->count())
                               @foreach($property->facilities->take(3) as $facility)
@@ -98,7 +98,7 @@
                                  <a class="text-size-2 text-gold" href="#">See all >></a>
                               </div>
                            </div>
-                           <h5 class="bold-2">Safety practices</h5>
+                           <h5 class="bold-3">Safety practices</h5>
                            <div class="">
                               <ul class="list-unstyled ">
                                  @foreach($safety_practices as $key => $safety_practice)
@@ -130,7 +130,7 @@
                   @endif
                </div>
                <div class="name bg-white rounded">
-                  <h3 class="pb-3 p-3 border-bottom bold-2">About this property</h3>
+                  <h3 class="pb-3 p-3 border-bottom bold-3">About this property</h3>
                   <div class="card-body ">
                      <div>{{ $property->name }}</div>
                      <p><?php echo  html_entity_decode($property->description);  ?></p>
