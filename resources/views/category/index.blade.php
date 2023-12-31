@@ -105,10 +105,6 @@
                 </div>
             </section>
 
-
-
-
-
             <section id="box3" class=" opacity-0 ">
                 <div class="row   pb-5 pt-5 position-relative">
                     <div class="col-md-7 rounded  card-background-image">
@@ -121,12 +117,9 @@
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/04/Pendry-March-2023-HR-115.jpg" class="d-block w-100" alt="...">
-
-
                                 </div>
                                 <div class="carousel-item">
                                     <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/04/Pendry-March-2023-HR-115.jpg" class="d-block w-100" alt="...">
-
                                 </div>
                                 <div class="carousel-item">
                                     <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/04/Pendry-March-2023-HR-115.jpg" class="d-block w-100" alt="...">
