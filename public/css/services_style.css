@@ -17608,6 +17608,10 @@ svg#date-outline {
   height: 60px;
 }
 
+.header-filter:after {
+  background: rgba(0, 0, 0, 0.5);
+}
+
 .wprt-icon-box .icon-wrap {
   position: absolute;
   top: 20%;
@@ -17758,6 +17762,25 @@ video.vidoeo-intro {
   bottom: 180px;
   animation: 3.4s ease-in-out infinite fadeInDown;
   -webkit-animation: 3.4s ease-in-out infinite fadeInDown;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  opacity: 1 !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  z-index: 1;
+}
+
+.carousel-control-prev svg,
+.carousel-control-next svg {
+  width: 37px;
+  height: 37px;
+  cursor: pointer !important;
+}
+
+.carousel-inner {
+  height: 650px;
 }
 
 svg.bi.bi-chevron-double-down {
@@ -18207,6 +18230,9 @@ button.owl-next {
   .card-background-image {
     height: 210px;
     background-size: contain;
+  }
+  .carousel-inner {
+    height: 289px;
   }
   .bg-panel {
     position: relative;

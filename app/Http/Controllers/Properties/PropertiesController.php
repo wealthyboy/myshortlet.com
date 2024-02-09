@@ -64,9 +64,6 @@ class PropertiesController extends Controller
         $saved =  $this->saved();
         $properties->load('categories');
 
-        dd(true);
-
-
         if ($request->ajax()) {
             return PropertyLists::collection(
                 $properties
@@ -77,7 +74,6 @@ class PropertiesController extends Controller
         $next_page[] = $properties->nextPageUrl();
 
         $total = $properties->total();
-
 
         return  view('properties.index', compact(
             'page_title',
@@ -108,6 +104,8 @@ class PropertiesController extends Controller
         $date = $request->check_in_checkout;
         $property_is_not_available = null;
         $cites = [];
+
+
 
 
         $attributes = $location->attributes->groupBy('type');

@@ -22,7 +22,18 @@ const FilterSearch = require("./components/properties/Filter.vue").default;
 const PropertiesCount = require("./components/properties/PropertyCount.vue")
   .default;
 
+const DateRange = require("./components/properties/Date.vue")
+  .default;
+
+
+
 const SingleApartment = require("./components/properties/SingleApartment.vue")
+  .default;
+
+const ApartmentsIndex = require("./components/properties/IndexApartments.vue")
+  .default;
+
+const SearchApartments = require("./components/properties/Search.vue")
   .default;
 
 const MultipleApartments = require("./components/properties/MultipleApartments.vue")
@@ -179,7 +190,6 @@ Vue.filter("priceFormat", function (value) {
   return new Intl.NumberFormat().format(value);
 });
 
-console.log(Window.user)
 
 const app = new Vue({
   el: "#app",
@@ -198,6 +208,9 @@ const app = new Vue({
     MultipleApartments,
     Saved,
     PropertyCreate,
+    DateRange,
+    ApartmentsIndex,
+    SearchApartments
   },
 });
 

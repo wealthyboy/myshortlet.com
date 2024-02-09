@@ -250,7 +250,8 @@ class Helper
             'property type' => 'Property Type',
             'other' => 'other',
             'furnishing' => 'Furnishing',
-            'condition' => 'Condition'
+            'condition' => 'Condition',
+            'room_id' => 'Room id'
         ];
     }
 

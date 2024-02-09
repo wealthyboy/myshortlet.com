@@ -86,8 +86,10 @@ class PropertiesController extends Controller
         $extras = Attribute::parents()->where('type', 'extra services')->orderBy('sort_order', 'asc')->get();
         $bedrooms = Attribute::parents()->where('type', 'bedrooms')->orderBy('sort_order', 'asc')->get();
         $others = Attribute::where('type', 'other')->orderBy('sort_order', 'asc')->get()->groupBy('parent.name');
+        $room_ids =  Attribute::parents()->where('type', 'room_id')->orderBy('sort_order', 'asc')->get();
 
-        $helper               =  new Helper;
+
+        $helper =  new Helper;
         $str = new Str;
         return view(
             'admin.apartments.create',
@@ -103,7 +105,8 @@ class PropertiesController extends Controller
                 'locations',
                 'attributes',
                 'categories',
-                'house_attributes'
+                'house_attributes',
+                'room_ids'
             )
         );
     }
@@ -123,8 +126,6 @@ class PropertiesController extends Controller
         ]);
 
         $property =  $this->property($request);
-
-
 
         /**
          * Rooms
@@ -240,8 +241,6 @@ class PropertiesController extends Controller
         return $property;
     }
 
-
-
     public function propertyWithMultipleApartments($request,  $property)
     {
 
@@ -318,7 +317,6 @@ class PropertiesController extends Controller
         }
     }
 
-
     public function syncExtras($extras, $extra_services_price,  $obj)
     {
         $obj->attributes()->syncWithoutDetaching($extras);
@@ -376,8 +374,6 @@ class PropertiesController extends Controller
         }
     }
 
-
-
     public function beds($request, $key = null)
     {
         $beds = [];
@@ -395,11 +391,13 @@ class PropertiesController extends Controller
         $bedrooms =  Attribute::parents()->where('type', 'bedrooms')->orderBy('sort_order', 'asc')->get();
         $attributes = Attribute::parents()->whereIn('type', $this->types)->get();
         $apartment_facilities =  Attribute::parents()->where('type', 'apartment facilities')->orderBy('sort_order', 'asc')->get();
+        $room_ids =  Attribute::parents()->where('type', 'room_id')->orderBy('sort_order', 'asc')->get();
+
         $extras =  Attribute::parents()->where('type', 'extra services')->orderBy('sort_order', 'asc')->get();
         $helper = new Helper;
         return view(
             'admin.apartments.variation',
-            compact('extras', 'bedrooms', 'apartment_facilities', 'counter', 'attributes', 'helper')
+            compact('extras', 'room_ids', 'bedrooms', 'apartment_facilities', 'counter', 'attributes', 'helper')
         );
     }
 
@@ -428,9 +426,10 @@ class PropertiesController extends Controller
         $bedrooms = Attribute::parents()->where('type', 'bedrooms')->orderBy('sort_order', 'asc')->get();
         $extras =  Attribute::parents()->where('type', 'extra services')->orderBy('sort_order', 'asc')->get();
         $property_types =  Attribute::parents()->where('type', 'property type')->orderBy('sort_order', 'asc')->get();
+        $room_ids =  Attribute::parents()->where('type', 'room_id')->orderBy('sort_order', 'asc')->get();
         $categories = Category::parents()->get();
 
-        return view('admin.apartments.edit', compact('house_attributes', 'categories', 'others', 'property_types', 'extras', 'str', 'bedrooms', 'counter', 'attributes', 'locations', 'property', 'helper', 'apartment_facilities'));
+        return view('admin.apartments.edit', compact('room_ids', 'house_attributes', 'categories', 'others', 'property_types', 'extras', 'str', 'bedrooms', 'counter', 'attributes', 'locations', 'property', 'helper', 'apartment_facilities'));
     }
 
     /**

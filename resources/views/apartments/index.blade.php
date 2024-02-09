@@ -45,13 +45,13 @@
       <!-- <div class=" mb-2">
          <img src="/images/utilities/shopwhileyoustay-02.jpg" class="img-fluid" alt="">
       </div> -->
-      <products-index :next_page="{{ collect($next_page) }}" :propertys="{{ $properties->load('facilities','free_services') }}" />
+      <products-index :next_page="{{ collect($next_page) }}" :propertys="{{ $apartments }}" />
    </div>
    @endif
 
 
    <div class="col-md-2 pl-2 d-none d-lg-block">
-      <a href=" https://theluxurysale.com" class="h">
+      <a href="https://theluxurysale.com" class="h">
          <img class="img-fluid" src="/images/banners/ads-07.jpg" alt="">
       </a>
    </div>
@@ -63,7 +63,21 @@
 @endsection
 @section('inline-scripts')
 jQuery(function () {
-
-
+$(".owl-carousel").owlCarousel({
+margin: 10,
+nav: true,
+dots: false,
+responsive: {
+0: {
+items: 1,
+},
+600: {
+items: 1,
+},
+1000: {
+items: 1,
+},
+},
+});
 });
 @stop

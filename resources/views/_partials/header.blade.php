@@ -30,6 +30,11 @@
             </a>
             @endauth
 
+            <a href="/login" class="align-self-center font-weight-bold btn-primary bold-3 btn text-white px-5 py-1 rounded ">
+                <i class="fal fa-sign-in"></i>
+                Book Now
+            </a>
+
             <button class="navbar-toggler d-block text-white border-none" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="navbar-toggler-icon text-white"></span>

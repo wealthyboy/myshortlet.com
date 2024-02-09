@@ -107,7 +107,7 @@ export default {
   methods: {
 
     checkForGuests(e) {
-      const retrievedJsonString = localStorage.getItem('searchParams');
+      const retrievedJsonString = localStorage.getItem('p');
       // Check if the retrieved JSON string is not null
       if (retrievedJsonString !== null) {
         // Convert the JSON string back to an object

@@ -154,7 +154,7 @@
                            {{ $property->state_description }}
                         </div>
                         <div class="col-md-7">
-                           <div style="" id="map"></div>
+                           <div id="map"></div>
                            <div class="row">
                               <div class="col-md-6">
                                  <h3 class="bold">What's near by</h3>
