@@ -2,7 +2,7 @@
 @section('content')
 
 
-<div class="container-fluid p-5">
+<div class="container-fluid">
     <div class="row  ">
 
         @if (!$apartments)
@@ -16,12 +16,15 @@
         </div>
         @else
 
-
-
-
-
-
-
+        <div id="load-products" class="col-md-12 pl-1">
+            <div id="ap-loaders" class="bg-white mb-2 rounded ap-loaders">
+                @for($i = 0; $i < 5; $i++) <div class="bg-white mb-2 rounded ap-loaders">
+                    <div class=" position-relative">
+                        <div class="row no-gutters"></div>
+                    </div>
+            </div>
+            @endfor
+        </div>
         <!-- <div class=" mb-2">
          <img src="/images/utilities/shopwhileyoustay-02.jpg" class="img-fluid" alt="">
       </div> -->
