@@ -92,6 +92,8 @@ class ImagesController extends Controller
 
         if ($request->hasFile('file')) {
 
+            // dd(true);
+
             //when the user clicks change remove the previuos image
             request()->validate([
                 'file' => 'required|image|mimes:jpeg,png,webp,jpg,gif,webp',
