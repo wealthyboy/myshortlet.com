@@ -10,7 +10,8 @@
         <div class="row justify-content-center">
             <div class="ml-1 col-md-7   mr-1">
                 <div class=" mt-4 mb-4">
-                    <form method="POST" id="submit" class=" pl-4 pr-4 border form-validate" action="/register">
+                    <form method="POST" id="submit" class=" pl-4 pr-4 border form-validate" action="/checkin">
+
                         <div class="text-center">
                             <h2 class="bold-3">Welcome to Avenue Montaigne</h2>
                             <p class="">Checkin</p>
