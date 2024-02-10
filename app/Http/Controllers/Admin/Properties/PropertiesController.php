@@ -260,6 +260,8 @@ class PropertiesController extends Controller
             $apartment->quantity = $request->room_quantity[$key];
             $apartment->type = $request->type;
             $apartment->price_mode = $request->price_mode[$key];
+            $apartment->apartment_id = $request->apartment_id[$key];
+
 
             $apartment->max_children = $request->room_max_children[$key];
             $apartment->no_of_rooms = $request->room_number[$key];
@@ -470,18 +472,19 @@ class PropertiesController extends Controller
                 $apartment       =  Apartment::updateOrCreate(
                     ['id' => $room_id],
                     [
-                        'name'                 => $request->edit_room_name[$room_id],
-                        'price'                => $request->edit_room_price[$room_id],
-                        'sale_price'           => $request->edit_room_sale_price[$room_id],
-                        'price_mode'           => $request->edit_room_price_mode[$room_id],
+                        'name'       => $request->edit_room_name[$room_id],
+                        'price'      => $request->edit_room_price[$room_id],
+                        'sale_price' => $request->edit_room_sale_price[$room_id],
+                        'price_mode' => $request->edit_room_price_mode[$room_id],
                         'sale_price_expires'   => Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]),
-                        'slug'                 => str_slug($request->edit_room_name[$room_id]),
-                        'max_adults'           => $request->edit_room_max_adults[$room_id],
-                        'max_children'         => $request->edit_room_max_children[$room_id],
-                        'property_id'          => $property->id,
-                        'no_of_rooms'          => $request->edit_room_number[$room_id],
-                        'toilets'              => $request->edit_room_toilets[$room_id],
-                        'type'                 => $request->type,
+                        'slug'         => str_slug($request->edit_room_name[$room_id]),
+                        'max_adults'   => $request->edit_room_max_adults[$room_id],
+                        'max_children' => $request->edit_room_max_children[$room_id],
+                        'apartment_id' => $request->apartment_id[$room_id],
+                        'property_id'  => $property->id,
+                        'no_of_rooms'  => $request->edit_room_number[$room_id],
+                        'toilets'      => $request->edit_room_toilets[$room_id],
+                        'type'         => $request->type,
                     ]
                 );
                 /**

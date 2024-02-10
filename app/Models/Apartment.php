@@ -48,7 +48,8 @@ class Apartment extends Model
         'no_of_rooms',
         'toilets',
         'type',
-        'price_mode'
+        'price_mode',
+        'apartment_id'
     ];
 
 
