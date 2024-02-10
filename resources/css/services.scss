@@ -310,7 +310,13 @@ svg.bi.bi-chevron-double-down {
 }
 
 .intro-image img {
-  width: 24%;
+  width: 15%;
+}
+
+.search-header .form-border .bmd-label-static {
+  font-size: 0.7rem;
+  top: 0.3rem;
+  left: 12px;
 }
 
 .bg-panel {
@@ -1301,6 +1307,13 @@ button.owl-next {
   margin-top: 1rem !important;
 }
 
+.navbar .navbar-toggler .navbar-toggler-icon {
+  position: relative;
+  width: 25px;
+  height: 4px;
+
+}
+
 .category-search label.pl-2.ml-4.bmd-label-static {
   left: 6px;
 }
@@ -1387,6 +1400,21 @@ carousel-fade .carousel-item {
 .carousel-fade .active.carousel-item-prev {
   transform: translateX(0);
   transform: translate3d(0, 0, 0);
+}
+
+.search-header.d-block {
+
+  position: relative !important;
+  z-index: 4;
+  margin-top: -20px;
+}
+
+.light-background {
+  background-color: #A58263;
+}
+
+.primary-color {
+  color: #342c27 !important;
 }
 
 

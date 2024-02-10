@@ -1,6 +1,9 @@
 <template>
-    <div class="container">
+    <div class="container container light-background pb-4 pt-1">
+        <h4 class="primary-color">BOOK YOUR STAY</h4>
+
         <div class="form-row">
+
             <div class="orm-group   form-border cursor-pointer search col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
                 <label class=" pl-2 ml-4" for="flatpickr-input-f">Check-in - Check-out</label>
                 <date-range @dateSelected="dateSelected" />

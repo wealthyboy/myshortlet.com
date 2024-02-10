@@ -20,22 +20,20 @@
 
    <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride=" carousel">
       <ol class="carousel-indicators">
-         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+         @foreach($sliders as $key => $slider)
+
+         <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}" class="{{ $key === 0 ? 'active' : ''}}"></li>
+         @endforeach
+
       </ol>
       <div class="carousel-inner">
-         <div class="carousel-item active">
-            <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" class="d-block w-100" alt="...">
+         @foreach($sliders as $key => $slider)
 
+         <div class="carousel-item {{ $key === 0 ? 'active' : ''}}">
+            <img src="{{ $slider->image }}" class="d-block w-100" alt="...">
          </div>
-         <div class="carousel-item">
-            <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/04/PRWH_08_ResidentsPool_B_3055-min.jpg" class="d-block w-100" alt="...">
+         @endforeach
 
-         </div>
-         <div class="carousel-item">
-            <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/05/PRWH_11_705_Terrace_B_4006-min.jpg" class="d-block w-100" alt="...">
-         </div>
       </div>
       <button class="carousel-control-prev" data-target="#carouselExampleIndicators" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
             <path d="M19.9 40L1.3 20 19.9 0" class="carousel-control-prev-icon" aria-hidden="true" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -44,37 +42,25 @@
       <button class="carousel-control-next" data-target="#carouselExampleIndicators" data-slide="next"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg">
             <path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
          </svg><span class="sr-only">Next</span></button>
-
-      <!-- <button class="carousel-control-prev" type="button" data-target="#carouselExampleIndicators" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-               </button>
-               <button class="carousel-control-next" type="button" data-target="#carouselExampleIndicators" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-               </button> -->
    </div>
 
 </div>
 
 
 
-<div class="container">
-   <div class="row">
-   </div>
-</div>
 
-<div class="category-header header-filter">
+
+<div class="search-header d-block">
    <search-apartments />
 </div>
 
 
-<div class="container-fluid  p-5 ">
+<div class="container-fluid p-5">
    <section class="intro-box">
 
       <div class="row  pb-5 pt-3 position-relative">
-         <div id="leftbox1" style="background-image: url('/images/banners/avm_image_1.jpeg');" class="col-md-7  opacity-0  rounded  card-background-image"></div>
-         <div id="rbox1" style="z-index: 1;" class="col-md-5 text-center d-flex opacity-0  justify-content-center align-items-center">
+         <!-- <div id="leftbox1" style="background-image: url('/images/banners/avm_image_1.jpeg');" class="col-md-7  opacity-0  rounded  card-background-image"></div> -->
+         <div id="rbox1" style="z-index: 1;" class="col-md-12 text-center d-flex opacity-0  justify-content-center align-items-center">
             <div class="bg-panel bg-panel-white p-sm-3 p-md-5">
                <h2 class=" bold-2">Welcome to Avenue Montiagne</h2>
                <p class="mt-4  text-left text-black light-bold">
@@ -90,67 +76,173 @@
          </div>
       </div>
    </section>
+</div>
+<div style="background-color: rgba(255, 255, 255, 0.96);" class="ap">
+   <div class="container-fluid p-5">
 
+      <div class="title">
+         <div class="d-flex justify-content-between">
+            <h3 class="large-heading bold">Apartments
+            </h3>
 
-
-
-
-
-
-
-   <!-- 
-
-   <section class=" mb-1">
-      <div class="row bg-grey position-relative  pb-5 pt-5">
-         <div id="lbox3" style="z-index: 3;" class="col-md-5  index-1 opacity-0 re-order text-center d-flex justify-content-center align-items-center">
-            <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
-               <h2 class="mb-4 bold">Shop</h2>
-               <p class="mt-4  text-left text-black light-bold">
-                  Like to shop while you stay? Visit our online store to buy from the best brands prada, gucci e.t.c.
-               <div class=" buttons">
-                  <a href="https://theluxurysale.com" class="btn bold-2 btn-outline-secondary rounded">
-                     Shop now
-                  </a>
-               </div>
-               </p>
-            </div>
+            <a href="/apartments" class="btn btn-round  btn-primary   py-2  bold-2   align-self-end font-weight-bold-2">
+               View All
+            </a>
          </div>
-         <div id="rbox3" style="background-image: url('https://cdn.shopify.com/s/files/1/0732/8464/9266/files/SALE_WEBSITE_3.png?v=1681599129&width=1780');" class="col-md-7  rounded  opacity-0 card-background-image"></div>
+
       </div>
-   </section>
+      <div class="row">
 
-
-
-
-
-   <div class="clearfix"></div>
-   @if ($posts->count())
-   <div class="row">
-      <div class="col-md-12">
-         <h2>Get inspiration for your next trip</h2>
-      </div>
-      @foreach($posts as $post)
-      <div class="col-md-4">
-         <div class="card mb-4 shadow-sm">
-            <img src="{{ $post->image }}" class="card-img" alt="...">
-            <div class="card-body">
-               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-               <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                     <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+         @foreach($apartments as $apartment)
+         <div class="col-12 col-md-3   mb-1 mt-1 pl-1 pb-1 px-0">
+            <div class="col-md-12 aprts position-relative p-0">
+               <div class="owl-carousel owl-theme">
+                  @foreach($apartment->images as $image)
+                  <div class="item rounded-top">
+                     <img src="{{$image->image}}" class="img img-fluid" />
+                     <div class="images-count">
+                        <button type="button" class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
+                           <svg class="uitk-icon uitk-icon-leading uitk-icon-medium" aria-label="Show all 7 images for Classic Twin Room" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                              <title id="photo_library-property-offers-media-carousel-1-title">Show all {{ $apartment->images->count() }} images</title>
+                              <path fill-rule="evenodd" d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z" clip-rule="evenodd"></path>
+                           </svg>
+                           <span aria-hidden="true">{{ $apartment->images->count() }}</span>
+                        </button>
+                     </div>
                   </div>
-                  <small class="text-muted">9 mins</small>
+                  @endforeach
+               </div>
+            </div>
+            <div class="col-md-12 bg-white  pt-3">
+               <div class="card-title bold-2 text-size-1-big  mt-lg-0 mt-sm-3 ">
+                  <a href="/apartments">{{ $apartment->name }}</a>
+               </div>
+               <div class="text-size-2 text-gold">
+                  <i class="fas fa-info-circle mr-2 "></i>Instant Confirmation
+               </div>
+               <div class="entire-apartments">
+                  <div class="bold-2 mb-2">Entire apartment</div>
+                  <div class="d-flex justify-content-between flex-wrap flex-column">
+                     <div class="position-relative mb-1">
+                        <span class="position-absolute svg-icon-section">
+                           <svg>
+                              <use xlink:href="#bedrooms-icon"></use>
+                           </svg>
+                        </span>
+                        <span class="svg-icon-text">{{ $apartment->no_of_rooms }} Bedrooms</span>
+                     </div>
+                     <div class="position-relative mb-1">
+                        <span class="position-absolute svg-icon-section">
+                           <svg>
+                              <use xlink:href="#bathroom-icon"></use>
+                           </svg>
+                        </span>
+                        <span class="svg-icon-text">{{ $apartment->toilets }} bathrooms</span>
+                     </div>
+                     <div class="position-relative mb-1">
+                        <span class="position-absolute svg-icon-section">
+                           <svg>
+                              <use xlink:href="#sleeps-icon"></use>
+                           </svg>
+                        </span>
+                        <span class="svg-icon-text">{{ $apartment->guests }} Guests</span>
+                     </div>
+                  </div>
+
+                  @if($apartment->free_services->count())
+                  <div class="d-inline-flex flex-wrap">
+                     @foreach($apartment->free_services as $free_service)
+                     <div class="position-relative">
+                        <span class="position-absolute svg-icon-section"></span>
+                        <span class="svg-icon-text text-gray">{{ $free_service->name }}</span>
+                     </div>
+                     @endforeach
+                  </div>
+                  @endif
+
+                  @if($apartment->bedrooms->count())
+                  @foreach($apartment->bedrooms as $bed)
+
+                  <div class="position-relative mb-1">
+                     <span class="position-absolute svg-icon-section">
+                        <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                           <path fill-rule="evenodd" d="M11 7h8a4 4 0 014 4v9h-2v-3H3v3H1V5h2v9h8V7zm-1 3a3 3 0 11-6 0 3 3 0 016 0z" clip-rule="evenodd"></path>
+                        </svg>
+                     </span>
+                     <span class="svg-icon-text">{{ $bed->parent->name }}</span>
+                     <span class="svg-icon-text">
+                        {{ $bed->pivot->bed_count }} {{ $bed->name }}
+                     </span>
+                  </div>
+                  @endforeach
+
+                  @endif
+
+                  <div class="position-relative mb-1">
+                     <a class="d-flex active-link text-highlight font-weight-bold-2" href="#">
+                        <span aria-hidden="true">More details</span>
+                        <svg class="" aria-hidden="true" class="align-self-center" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                           <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>
+                        </svg>
+                     </a>
+                  </div>
+               </div>
+
+
+
+
+
+
+               <div>
+                  <div class="d-flex d-flex justify-content-between">
+                     <div class="price-box ">
+                        <div class="d-inline-flex  mt-sm-3">
+                           @if($apartment->discounted_price)
+                           <div class="sale-price mr-3">
+                              {{ $apartment->currency }}{{ $apartment->converted_price }}
+                           </div>
+                           <div class="price bold-3">
+                              {{ $apartment->currency }}{{ $apartment->discounted_price }}
+                           </div>
+                           @else
+                           <div class="price bold-3 mt-2">
+                              {{ $apartment->currency }}{{ $apartment->converted_price }}
+                           </div>
+                           @endif
+
+                        </div>
+                        <div class="text-size-2">{{ $apartment->price_mode }}</div>
+                     </div>
+                     <div class="align-self-end">
+                        @if($apartment->is_refundable)
+                        <div class="font-weight-bold-2 text-success">
+                           Fully Refundable
+                        </div>
+                        @endif
+
+                     </div>
+                  </div>
                </div>
             </div>
          </div>
+         @endforeach
+
+
+
+
       </div>
-      @endforeach
    </div>
-   @endif
-</div> -->
+
+
 
 </div>
+
+
+
+
+
+
+
 
 <!-- -------- START HEADER 4 w/ search book a ticket form ------- -->
 <header>

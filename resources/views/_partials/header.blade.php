@@ -15,22 +15,22 @@
 
 
 
-        <div class="d-flex">
+        <div class="d-flex justify-content-center align-items-center">
             @guest
-            <a href="/login" class="align-self-center font-weight-bold btn-primary bold-3 btn text-white px-3 py-1 rounded ">
+            <a href="/login" class="text-white bold-2 mr-4">
                 <i class="fal fa-sign-in"></i>
                 Login
             </a>
             @endguest
 
             @auth
-            <a href="/account" class="align-self-center font-weight-bold btn-primary bold-3 btn text-white px-3 py-1 rounded ">
+            <a href="/account" class="text-white bold-2 mr-4">
                 <i class="fal fa-sign-in"></i>
                 Account
             </a>
             @endauth
 
-            <a href="/login" class="align-self-center font-weight-bold btn-primary bold-3 btn text-white px-5 py-1 rounded ">
+            <a href="/login" class="align-self-center mr-3 font-weight-bold btn-primary bold-3 btn text-white  ">
                 <i class="fal fa-sign-in"></i>
                 Book Now
             </a>
