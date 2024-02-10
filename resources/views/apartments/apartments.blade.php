@@ -6,7 +6,7 @@
     <div class="row  ">
 
         @if (!$apartments)
-        <div id="load-products" class="col-md-10 pl-1">
+        <div id="load-products" class="col-md-10 ">
             <div class="no-properties-found">
                 <div class="text-center">
                     <i class="fas fa-home fa-5x"></i>
@@ -16,7 +16,7 @@
         </div>
         @else
 
-        <div id="load-products" class="col-md-12 pl-1">
+        <div id="load-products" class="col-md-12">
             <apartments-index :property="{{$property}}" :apartments="{{ $apartments }}" />
         </div>
         @endif
