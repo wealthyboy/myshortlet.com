@@ -126,10 +126,8 @@ class ImagesController extends Controller
 
             $path = $request->file('file')->store('images/' . $request->folder);
 
-
             $file = basename($path);
             $path =  public_path('images/' . $request->folder . '/' . $file);
-
 
             $img  = \Image::make($path)->fit(400, 400)->save(
                 public_path('images/' . $request->folder . '/m/' . $file)
