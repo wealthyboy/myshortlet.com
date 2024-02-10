@@ -167,6 +167,8 @@ Route::get('property/search', 'Properties\PropertiesController@search');
 Route::get('auto-complete', 'Properties\PropertiesController@autoComplete');
 Route::get('property/{property}', 'Properties\PropertiesController@show');
 Route::get('properties/{category}', 'Properties\PropertiesController@index');
+Route::get('checkin', 'SignUp\SignUpController@index');
+
 
 
 
@@ -180,3 +182,4 @@ Route::get('/about-us',  'Pages\PageController@index');
 Route::get('/contact-us', 'Pages\PageController@index');
 
 Route::get('/virtual-tour', 'Pages\PageController@index');
+Route::post('file/uploads', 'Uploads\UploadsController@upload');

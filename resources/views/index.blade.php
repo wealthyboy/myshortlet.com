@@ -96,7 +96,7 @@
 
    <div class="title">
       <div class="d-flex justify-content-between">
-         <h1 class="large-heading bold">Rooms
+         <h1 class="large-heading bold">Apartments
          </h1>
 
          <a href="/apartments" class="btn btn-round  btn-blue   py-2  bold-2   align-self-end font-weight-bold-2">

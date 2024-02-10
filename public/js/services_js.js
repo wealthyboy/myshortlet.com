@@ -4044,6 +4044,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     checkForGuests: function checkForGuests(e) {
       var retrievedJsonString = localStorage.getItem('searchParams');
+      console.log(retrievedJsonString);
       // Check if the retrieved JSON string is not null
       if (retrievedJsonString !== null) {
         // Convert the JSON string back to an object
@@ -4324,9 +4325,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       form: {
         room_quantity: [],
         selectedRooms: [],
-        children: null,
-        adults: null,
-        rooms: null,
+        children: 1,
+        adults: 1,
+        rooms: 1,
         check_in_checkout: null,
         property_id: this.property.id
       }
@@ -4342,8 +4343,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     if (retrievedJsonString !== null) {
       var retrievedObject = JSON.parse(retrievedJsonString);
       this.form.check_in_checkout = retrievedObject.check_in_checkout;
-      this.checkAvailabity();
+      //this.checkAvailabity()
     }
+
     jQuery(function () {
       $(".owl-carousel").owlCarousel({
         margin: 10,
@@ -4375,6 +4377,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     checkAvailabity: function checkAvailabity() {
       var _this = this;
+      // this.build()
       this.form.children = document.querySelector("#children").value;
       this.form.adults = document.querySelector("#adults").value;
       this.form.rooms = document.querySelector("#rooms").value;
@@ -4382,8 +4385,38 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         this.isDateNeedsToToOpen = true;
         return;
       }
-      this.propertyLoading = true;
-      axios__WEBPACK_IMPORTED_MODULE_4___default().get("/apartments", this.form).then(function (response) {
+
+      // Sample object to be saved
+      var myObject = {
+        rooms: this.form.rooms,
+        check_in_checkout: this.form.check_in_checkout,
+        children: this.form.children,
+        adults: this.form.adults
+      };
+
+      // Convert the object to a JSON string
+      var jsonString = JSON.stringify(myObject);
+
+      // Save the JSON string in localStorage with a specific key
+      var storageKey = 'searchParams';
+      localStorage.setItem(storageKey, jsonString);
+
+      // Retrieve the object from localStorage
+      var retrievedJsonString = localStorage.getItem(storageKey);
+
+      // Convert the JSON string back to an object
+      var retrievedObject = JSON.parse(retrievedJsonString);
+
+      // Now 'retrievedObject' contains the object retrieved from localStorage
+      console.log(retrievedObject);
+      axios__WEBPACK_IMPORTED_MODULE_4___default().get('/apartments', {
+        params: {
+          rooms: this.form.rooms,
+          check_in_checkout: this.form.check_in_checkout,
+          children: this.form.children,
+          adults: this.form.adults
+        }
+      }).then(function (response) {
         _this.roomsAv = response.data.data;
         _this.stays = response.data.nights;
         _this.propertyLoading = false;
@@ -4391,7 +4424,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           $(".room-carousel").owlCarousel({
             margin: 10,
             nav: true,
-            dots: false,
+            dots: true,
             responsive: {
               0: {
                 items: 1
@@ -4405,7 +4438,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
             }
           });
         });
-      })["catch"](function (error) {});
+        return Promise.resolve();
+      })["catch"](function (error) {
+        commit("setPropertyLoading", false);
+        commit("setProperties", []);
+      });
+
+      // this.getProperties(window.location);
     },
     check: function check(e) {
       var extra_services = document.querySelectorAll('[name="extra_services[]"]');
@@ -4442,7 +4481,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var checked = [];
       var filters = {};
       filters = _defineProperty({}, this.property.id, ap.id);
-      console.log(filters);
       checked.push(filters);
       var form = {
         apartment_quantity: checked,
@@ -4802,12 +4840,14 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       guests: 0,
       form: {
         room_quantity: [],
-        selectedRooms: []
-        // location: this.$root.request.going_to,
+        selectedRooms: [],
+        children: 1,
+        adults: 1,
+        rooms: 1,
+        check_in_checkout: null
       }
     };
   },
-
   components: {
     Pickr: (vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0___default()),
     Guests: _Guests_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -4822,6 +4862,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)({
     getProperties: "getProperties"
   })), {}, {
+    dateSelected: function dateSelected(value) {
+      this.form.check_in_checkout = value;
+    },
     build: function build() {
       var locationSearch = [];
       document.querySelectorAll(".location-search").forEach(function (e, i) {
@@ -4832,6 +4875,33 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.$store.commit("setLocationSearch", locationSearch);
     },
     search: function search() {
+      this.form.children = document.querySelector("#children").value;
+      this.form.adults = document.querySelector("#adults").value;
+      this.form.rooms = document.querySelector("#rooms").value;
+
+      // Sample object to be saved
+      var myObject = {
+        rooms: this.form.rooms,
+        check_in_checkout: this.form.check_in_checkout,
+        children: this.form.children,
+        adults: this.form.adults
+      };
+
+      // Convert the object to a JSON string
+      var jsonString = JSON.stringify(myObject);
+
+      // Save the JSON string in localStorage with a specific key
+      var storageKey = 'searchParams';
+      localStorage.setItem(storageKey, jsonString);
+
+      // Retrieve the object from localStorage
+      var retrievedJsonString = localStorage.getItem(storageKey);
+
+      // Convert the JSON string back to an object
+      var retrievedObject = JSON.parse(retrievedJsonString);
+
+      // Now 'retrievedObject' contains the object retrieved from localStorage
+      console.log(retrievedObject);
       this.build();
       window.location.reload();
       console.log(window.location);
@@ -7615,9 +7685,15 @@ var render = function render() {
       key: image.id,
       staticClass: "item rounded-top"
     }, [_c("img", {
-      staticClass: "img img-fluid",
+      staticClass: "img cursor-pointer img-fluid",
       attrs: {
         src: image.image
+      },
+      on: {
+        click: function click($event) {
+          $event.preventDefault();
+          return _vm.showRoom(_vm.room);
+        }
       }
     }), _vm._v(" "), _c("div", {
       staticClass: "images-count"
@@ -7639,7 +7715,7 @@ var render = function render() {
       attrs: {
         id: "photo_library-property-offers-media-carousel-1-title"
       }
-    }, [_vm._v("Show all " + _vm._s(_vm.room.images.length) + " images\n                            ")]), _vm._v(" "), _c("path", {
+    }, [_vm._v("Show all\n                                " + _vm._s(_vm.room.images.length) + " images\n                            ")]), _vm._v(" "), _c("path", {
       attrs: {
         "fill-rule": "evenodd",
         d: "M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z",
@@ -7700,42 +7776,7 @@ var render = function render() {
     }
   })])]), _vm._v(" "), _c("span", {
     staticClass: "svg-icon-text"
-  }, [_vm._v(_vm._s(_vm.room.guests) + " Guests")])])]), _vm._v(" "), _vm.room.free_services.length ? _c("div", {
-    staticClass: "d-inline-flex flex-wrap"
-  }, _vm._l(_vm.room.free_services, function (free_service) {
-    return _c("div", {
-      key: free_service.id,
-      staticClass: "position-relative"
-    }, [_c("span", {
-      staticClass: "position-absolute svg-icon-section"
-    }), _vm._v(" "), _c("span", {
-      staticClass: "svg-icon-text text-gray"
-    }, [_vm._v(_vm._s(free_service.name))])]);
-  }), 0) : _vm._e(), _vm._v(" "), _vm.room.bedrooms.length ? _vm._l(_vm.room.bedrooms, function (bed) {
-    return _c("div", {
-      key: bed.id,
-      staticClass: "position-relative mb-1"
-    }, [_c("span", {
-      staticClass: "position-absolute svg-icon-section"
-    }, [_c("svg", {
-      attrs: {
-        "aria-hidden": "true",
-        viewBox: "0 0 24 24",
-        xmlns: "http://www.w3.org/2000/svg",
-        "xmlns:xlink": "http://www.w3.org/1999/xlink"
-      }
-    }, [_c("path", {
-      attrs: {
-        "fill-rule": "evenodd",
-        d: "M11 7h8a4 4 0 014 4v9h-2v-3H3v3H1V5h2v9h8V7zm-1 3a3 3 0 11-6 0 3 3 0 016 0z",
-        "clip-rule": "evenodd"
-      }
-    })])]), _vm._v(" "), _c("span", {
-      staticClass: "svg-icon-text"
-    }, [_vm._v(_vm._s(bed.parent.name))]), _vm._v(" "), _c("span", {
-      staticClass: "svg-icon-text"
-    }, [_vm._v("\n                        " + _vm._s(bed.pivot.bed_count) + " " + _vm._s(bed.name) + "\n                    ")])]);
-  }) : _vm._e(), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.room.guests) + " Guests")])])]), _vm._v(" "), _c("div", {
     staticClass: "position-relative mb-1"
   }, [_c("a", {
     staticClass: "d-flex active-link text-highlight font-weight-bold-2",
@@ -7765,7 +7806,7 @@ var render = function render() {
     attrs: {
       d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"
     }
-  })])])])], 2), _vm._v(" "), _c("div", [_c("div", {
+  })])])])]), _vm._v(" "), _c("div", [_c("div", {
     staticClass: "d-flex d-flex justify-content-between"
   }, [_c("div", {
     staticClass: "price-box"
@@ -7781,7 +7822,7 @@ var render = function render() {
     staticClass: "text-size-2"
   }, [_vm._v(_vm._s(_vm.room.price_mode))])]), _vm._v(" "), _c("div", {
     staticClass: "align-self-end"
-  }, [_vm.room.property.is_refundable ? _c("div", {
+  }, [_vm.room.is_refundable ? _c("div", {
     staticClass: "font-weight-bold-2 text-success"
   }, [_vm._v("\n                        Fully Refundable\n                    ")]) : _vm._e(), _vm._v(" "), _c("a", {
     staticClass: "btn btn-round btn-blue py-2 bold-2 align-self-end font-weight-bold-2",
@@ -7900,6 +7941,19 @@ var render = function render() {
   })], 2)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-8"
   }, [_c("div", {
+    staticClass: "d-flex justify-content-end"
+  }, [_c("a", {
+    staticClass: "btn btn-round btn-blue py-2 bold-2 align-self-end font-weight-bold-2",
+    attrs: {
+      target: "_blank"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.reserve(_vm.room);
+      }
+    }
+  }, [_vm._v("\n                            Reserve\n                        ")])]), _vm._v(" "), _c("div", {
     staticClass: "room-carousel owl-carousel owl-theme"
   }, _vm._l(_vm.room.images, function (image) {
     return _c("div", {
@@ -9140,7 +9194,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("div", [_c("h3", {
     staticClass: "bold-2"
-  }, [_vm._v("Choose your unit")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Choose your apartment")]), _vm._v(" "), _c("div", {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "form-group form-border cursor-pointer search col-md-5 bmd-form-group mb-sm-2 mb-md-0"
@@ -9655,7 +9709,11 @@ var render = function render() {
     attrs: {
       "for": "flatpickr-input-f"
     }
-  }, [_vm._v("Check-in - Check-out")]), _vm._v(" "), _c("date-range")], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("Check-in - Check-out")]), _vm._v(" "), _c("date-range", {
+    on: {
+      dateSelected: _vm.dateSelected
+    }
+  })], 1), _vm._v(" "), _c("div", {
     staticClass: "w-100 ml-2 col-md-4 cursor-pointer p-0 px-sm-0 px-md-1",
     attrs: {
       id: "people-number"
@@ -9673,9 +9731,7 @@ var render = function render() {
         return _vm.search();
       }
     }
-  }, [_c("i", {
-    staticClass: "fas fa-search"
-  })])])])]);
+  }, [_vm._v("\n                Check availablity\n            ")])])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

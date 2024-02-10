@@ -4,7 +4,7 @@
             <input type="hidden" name="_token" :value="$root.token" />
             <input type="hidden" name="property_id" :value="property.id" />
             <div>
-                <h3 class="bold-2">Choose your unit</h3>
+                <h3 class="bold-2">Choose your apartment</h3>
                 <div class="form-row">
                     <div class="form-group   form-border cursor-pointer search col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
                         <label class="pl-2 " for="flatpickr-input-f">Check-in - Check-out</label>
@@ -134,7 +134,7 @@ export default {
         if (retrievedJsonString !== null) {
             const retrievedObject = JSON.parse(retrievedJsonString);
             this.form.check_in_checkout = retrievedObject.check_in_checkout
-            this.checkAvailabity()
+            //this.checkAvailabity()
         }
 
         jQuery(function () {
@@ -167,7 +167,7 @@ export default {
             this.form.check_in_checkout = value;
         },
         checkAvailabity: function () {
-            this.build()
+            // this.build()
             this.form.children = document.querySelector("#children").value;
             this.form.adults = document.querySelector("#adults").value;
             this.form.rooms = document.querySelector("#rooms").value;
@@ -205,7 +205,12 @@ export default {
 
             axios
                 .get('/apartments', {
-                    params: Object
+                    params: {
+                        rooms: this.form.rooms,
+                        check_in_checkout: this.form.check_in_checkout,
+                        children: this.form.children,
+                        adults: this.form.adults,
+                    }
                 })
                 .then((response) => {
 
@@ -291,7 +296,6 @@ export default {
                 propertyId: this.property.id,
                 apID: ap.id,
                 check_in_checkout: this.form.check_in_checkout,
-
             };
 
             this.propertyLoading = true;

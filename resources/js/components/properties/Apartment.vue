@@ -3,15 +3,15 @@
         <div class="col-md-12 aprts position-relative p-0">
             <div class="owl-carousel owl-theme">
                 <div class="item rounded-top" :key="image.id" v-for="image in room.images">
-                    <img :src="image.image" class="img   img-fluid" />
+                    <img @click.prevent="showRoom(room)" :src="image.image" class="img cursor-pointer  img-fluid" />
                     <div class="images-count">
                         <button type="button"
                             class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
                             <svg class="uitk-icon uitk-icon-leading uitk-icon-medium"
                                 aria-label="Show all 7 images for Classic Twin Room" role="img" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <title id="photo_library-property-offers-media-carousel-1-title">Show all {{
-                                    room.images.length }} images
+                                <title id="photo_library-property-offers-media-carousel-1-title">Show all
+                                    {{ room.images.length }} images
                                 </title>
                                 <path fill-rule="evenodd"
                                     d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z"
@@ -58,14 +58,14 @@
                     </div>
                 </div>
 
-                <div v-if="room.free_services.length" class="d-inline-flex flex-wrap">
+                <!-- <div v-if="room.free_services.length" class="d-inline-flex flex-wrap">
                     <div v-for="free_service in room.free_services" :key="free_service.id" class="position-relative">
                         <span class="position-absolute svg-icon-section "></span>
                         <span class="svg-icon-text text-gray">{{ free_service.name }}</span>
-                    </div>
+                    </div>w
                 </div>
 
-                <template v-if="room.bedrooms.length">
+                <template v-if="room.bedrooms && room.bedrooms.length">
                     <div v-for="bed in room.bedrooms" :key="bed.id" class="position-relative mb-1">
                         <span class="position-absolute svg-icon-section">
                             <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +80,7 @@
                             {{ bed.pivot.bed_count }} {{ bed.name }}
                         </span>
                     </div>
-                </template>
+                </template> -->
 
                 <div class="position-relative mb-1">
                     <a @click.prevent="showRoom(room)" class="d-flex active-link text-highlight font-weight-bold-2"
@@ -115,7 +115,7 @@
                         <div class="text-size-2">{{ room.price_mode }}</div>
                     </div>
                     <div class="align-self-end">
-                        <div class="font-weight-bold-2 text-success" v-if="room.property.is_refundable">
+                        <div class="font-weight-bold-2 text-success" v-if="room.is_refundable">
                             Fully Refundable
                         </div>
                         <a target="_blank" @click.prevent="reserve(room)"
@@ -207,11 +207,21 @@
                         </div>
                     </div>
                     <div class="col-md-8">
+                        <div class="d-flex justify-content-end">
+
+                            <a target="_blank" @click.prevent="reserve(room)"
+                                class="btn btn-round  btn-blue   py-2  bold-2   align-self-end font-weight-bold-2">
+                                Reserve
+                            </a>
+                        </div>
                         <div class="room-carousel owl-carousel owl-theme">
                             <div class="item" :key="image.id" v-for="image in room.images">
                                 <img :src="image.image" class="img  img-fluid" />
                             </div>
                         </div>
+
+
+
                     </div>
                 </div>
             </div>

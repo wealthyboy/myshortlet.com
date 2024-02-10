@@ -3,7 +3,7 @@
         <div class="row">
             <div class="form-group ml-1 mr-sm-1 form-border cursor-pointer search col-md-4 bmd-form-group mb-sm-2 mb-md-0">
                 <label class=" pl-2 ml-4" for="flatpickr-input-f">Check-in - Check-out</label>
-                <date-range />
+                <date-range @dateSelected="dateSelected" />
             </div>
 
             <div id="people-number" class="w-100 ml-2 col-md-4 cursor-pointer p-0  px-sm-0 px-md-1">
@@ -13,7 +13,7 @@
             <div class="w-25 ml-2 col- check-availablility mb-sm-3 mb-md-0  mt-sm-2 mt-md-0">
                 <button type=" button" @click.prevent="search()"
                     class="btn btn-primary btn-block m-auto rounded  bold check-availablility-button">
-                    <i class="fas fa-search"></i>
+                    Check availablity
                 </button>
             </div>
         </div>
@@ -34,7 +34,10 @@ export default {
             form: {
                 room_quantity: [],
                 selectedRooms: [],
-                // location: this.$root.request.going_to,
+                children: 1,
+                adults: 1,
+                rooms: 1,
+                check_in_checkout: null,
             },
         };
     },
@@ -55,6 +58,9 @@ export default {
         ...mapActions({
             getProperties: "getProperties",
         }),
+        dateSelected(value) {
+            this.form.check_in_checkout = value;
+        },
         build() {
             let locationSearch = [];
             document.querySelectorAll(".location-search").forEach((e, i) => {
@@ -72,6 +78,37 @@ export default {
             this.$store.commit("setLocationSearch", locationSearch);
         },
         search: function () {
+
+            this.form.children = document.querySelector("#children").value;
+            this.form.adults = document.querySelector("#adults").value;
+            this.form.rooms = document.querySelector("#rooms").value;
+
+
+            // Sample object to be saved
+            const myObject = {
+                rooms: this.form.rooms,
+                check_in_checkout: this.form.check_in_checkout,
+                children: this.form.children,
+                adults: this.form.adults,
+            };
+
+            // Convert the object to a JSON string
+            const jsonString = JSON.stringify(myObject);
+
+            // Save the JSON string in localStorage with a specific key
+            const storageKey = 'searchParams';
+            localStorage.setItem(storageKey, jsonString);
+
+            // Retrieve the object from localStorage
+            const retrievedJsonString = localStorage.getItem(storageKey);
+
+            // Convert the JSON string back to an object
+            const retrievedObject = JSON.parse(retrievedJsonString);
+
+            // Now 'retrievedObject' contains the object retrieved from localStorage
+            console.log(retrievedObject);
+
+
             this.build();
             window.location.reload()
             console.log(
