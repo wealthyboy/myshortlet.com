@@ -238,28 +238,7 @@
 </div>
 
 
-<section class="">
-   <div class="row   pb-5 pt-5 position-relative">
-      <div style="background-image: url('/uploads/4b2fVBQMd3OkPvATKDpuIxFK61PbgdcoEvJ3qI4j.jpg');" class="col-md-7 rounded  card-background-image">
-      </div>
-      <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
-         <div class="about-panel  bg-panel-white  bg-panel p-5">
-            <h2 class="mb-4 bold">Luxury & Convenience</h2>
 
-            <p class="mt-4 text-black">
-               Our apartment is truly a cut above the rest, with spacious walk-in closets, private balcony or patio, central air conditioning, and high-speed internet. We are ideally located in Lagos, making any commute or relaxing day trip a breeze.
-            </p>
-
-            <div class=" buttons">
-               <a href="/apartments" class="btn btn-primary">
-                  Explore the Residences
-
-               </a>
-            </div>
-         </div>
-      </div>
-   </div>
-</section>
 
 
 
