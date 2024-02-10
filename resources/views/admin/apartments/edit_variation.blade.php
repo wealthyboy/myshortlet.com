@@ -47,11 +47,12 @@
 
             <div class="col-md-2">
                 <div class="form-group">
+
                     <select name="edit_apartment_id[{{ $apartment->id }}]" id="" required="true" class="form-control">
                         <option value="">Apartment</option>
                         @foreach($room_ids as $key => $room_id)
 
-                        @if($room_id->id == $apartment->apartment_ID)
+                        @if($room_id->id == $apartment->apartment_id)
                         <option value="{{ $room_id->id }}" selected>{{ $room_id->name }}</option>
 
                         @else
