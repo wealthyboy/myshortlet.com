@@ -7776,7 +7776,31 @@ var render = function render() {
     }
   })])]), _vm._v(" "), _c("span", {
     staticClass: "svg-icon-text"
-  }, [_vm._v(_vm._s(_vm.room.guests) + " Guests")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.room.guests) + " Guests")])])]), _vm._v(" "), _vm.room.bedrooms && _vm.room.bedrooms.length ? _vm._l(_vm.room.bedrooms, function (bed) {
+    return _c("div", {
+      key: bed.id,
+      staticClass: "position-relative mb-1"
+    }, [_c("span", {
+      staticClass: "position-absolute svg-icon-section"
+    }, [_c("svg", {
+      attrs: {
+        "aria-hidden": "true",
+        viewBox: "0 0 24 24",
+        xmlns: "http://www.w3.org/2000/svg",
+        "xmlns:xlink": "http://www.w3.org/1999/xlink"
+      }
+    }, [_c("path", {
+      attrs: {
+        "fill-rule": "evenodd",
+        d: "M11 7h8a4 4 0 014 4v9h-2v-3H3v3H1V5h2v9h8V7zm-1 3a3 3 0 11-6 0 3 3 0 016 0z",
+        "clip-rule": "evenodd"
+      }
+    })])]), _vm._v(" "), _c("span", {
+      staticClass: "svg-icon-text"
+    }, [_vm._v(_vm._s(bed.parent.name))]), _vm._v(" "), _c("span", {
+      staticClass: "svg-icon-text"
+    }, [_vm._v("\n                        " + _vm._s(bed.pivot.bed_count) + " " + _vm._s(bed.name) + "\n                    ")])]);
+  }) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "position-relative mb-1"
   }, [_c("a", {
     staticClass: "d-flex active-link text-highlight font-weight-bold-2",
@@ -7806,7 +7830,7 @@ var render = function render() {
     attrs: {
       d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"
     }
-  })])])])]), _vm._v(" "), _c("div", [_c("div", {
+  })])])])], 2), _vm._v(" "), _c("div", [_c("div", {
     staticClass: "d-flex d-flex justify-content-between"
   }, [_c("div", {
     staticClass: "price-box"

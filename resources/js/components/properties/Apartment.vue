@@ -62,8 +62,9 @@
                     <div v-for="free_service in room.free_services" :key="free_service.id" class="position-relative">
                         <span class="position-absolute svg-icon-section "></span>
                         <span class="svg-icon-text text-gray">{{ free_service.name }}</span>
-                    </div>w
+                    </div>
                 </div>
+                 -->
 
                 <template v-if="room.bedrooms && room.bedrooms.length">
                     <div v-for="bed in room.bedrooms" :key="bed.id" class="position-relative mb-1">
@@ -80,7 +81,7 @@
                             {{ bed.pivot.bed_count }} {{ bed.name }}
                         </span>
                     </div>
-                </template> -->
+                </template>
 
                 <div class="position-relative mb-1">
                     <a @click.prevent="showRoom(room)" class="d-flex active-link text-highlight font-weight-bold-2"
