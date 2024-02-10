@@ -474,19 +474,19 @@ class PropertiesController extends Controller
                 $apartment       =  Apartment::updateOrCreate(
                     ['id' => $room_id],
                     [
-                        'name'       => $request->edit_room_name[$room_id],
-                        'price'      => $request->edit_room_price[$room_id],
+                        'name' => $request->edit_room_name[$room_id],
+                        'price' => $request->edit_room_price[$room_id],
                         'sale_price' => $request->edit_room_sale_price[$room_id],
                         'price_mode' => $request->edit_room_price_mode[$room_id],
-                        'sale_price_expires'   => Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]),
-                        'slug'         => str_slug($request->edit_room_name[$room_id]),
-                        'max_adults'   => $request->edit_room_max_adults[$room_id],
+                        'sale_price_expires' => Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]),
+                        'slug' => str_slug($request->edit_room_name[$room_id]),
+                        'max_adults' => $request->edit_room_max_adults[$room_id],
                         'max_children' => $request->edit_room_max_children[$room_id],
                         'apartment_id' => $request->edit_apartment_id[$room_id],
                         'property_id'  => $property->id,
-                        'no_of_rooms'  => $request->edit_room_number[$room_id],
-                        'toilets'      => $request->edit_room_toilets[$room_id],
-                        'type'         => $request->type,
+                        'no_of_rooms' => $request->edit_room_number[$room_id],
+                        'toilets'  => $request->edit_room_toilets[$room_id],
+                        'type' => $request->type,
                     ]
                 );
                 /**
