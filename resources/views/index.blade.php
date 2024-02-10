@@ -77,7 +77,7 @@
       </div>
    </section>
 </div>
-<div style="background-color: rgba(255, 255, 255, 0.96);" class="ap">
+<div style="background-color: rgb(248, 245, 244);" class="ap">
    <div class="container-fluid p-5">
 
       <div class="title">
