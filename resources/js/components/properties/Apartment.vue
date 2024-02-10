@@ -154,6 +154,7 @@
                 <div class="">
                     <div class="py-2  border-bottom">
                         <h3 class="bold-2">Apartment Information</h3>
+
                         <button @click="lunchModal = !lunchModal" style="z-index: 1; right:10px; top: 15px"
                             class="close-icon  cursor-pointer fa-1x position-absolute raised">
                             <i class="fal fa-times"></i>
