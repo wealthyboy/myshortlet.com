@@ -129,12 +129,12 @@ export default {
     },
     mounted() {
         // Get all elements with class 'p-loader'
-        var loaderElements = document.querySelectorAll('.p-loader');
+        // var loaderElements = document.querySelectorAll('.p-loader');
 
-        // Loop through each element and hide it
-        loaderElements.forEach(function (element) {
-            element.style.display = 'none';
-        });
+        // // Loop through each element and hide it
+        // loaderElements.forEach(function (element) {
+        //     element.style.display = 'none';
+        // });
         const retrievedJsonString = localStorage.getItem('searchParams');
         // Check if the retrieved JSON string is not null
         if (retrievedJsonString !== null) {
