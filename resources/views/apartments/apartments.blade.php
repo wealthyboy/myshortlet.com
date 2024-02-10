@@ -17,28 +17,17 @@
         @else
 
         <div id="load-products" class="col-md-12 pl-1">
-            <div id="ap-loaders" class="bg-white mb-2 rounded ap-loaders">
-                @for($i = 0; $i < 5; $i++) <div class="bg-white mb-2 rounded ap-loaders">
-                    <div class=" position-relative">
-                        <div class="row no-gutters"></div>
-                    </div>
-            </div>
-            @endfor
+            <apartments-index :property="{{$property}}" :apartments="{{ $apartments }}" />
         </div>
-        <!-- <div class=" mb-2">
-         <img src="/images/utilities/shopwhileyoustay-02.jpg" class="img-fluid" alt="">
-      </div> -->
-        <apartments-index :property="{{$property}}" :apartments="{{ $apartments }}" />
-    </div>
-    @endif
+        @endif
 
 
-    <!-- <div class="col-md-2 pl-2 d-none d-lg-block">
+        <!-- <div class="col-md-2 pl-2 d-none d-lg-block">
         <a href="https://theluxurysale.com" class="h">
             <img class="img-fluid" src="/images/banners/ads-07.jpg" alt="">
         </a>
     </div> -->
-</div>
+    </div>
 </div>
 
 <div style="height: 50px;"></div>
