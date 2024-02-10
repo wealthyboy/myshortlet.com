@@ -107,7 +107,145 @@
    </div>
    <div class="row">
 
-      <apartments-index :property="{{$property}}" :apartments="{{ $apartments }}" />
+      @foreach($apartments as $apartment)
+      <div class="col-12 col-md-3 border  mb-1 mt-1 pl-1 pb-1 px-0">
+         <div class="col-md-12 aprts position-relative p-0">
+            <div class="owl-carousel owl-theme">
+               @foreach($apartment->images as $image)
+               <div class="item rounded-top">
+                  <img src="{{$image->image}}" class="img img-fluid" />
+                  <div class="images-count">
+                     <button type="button" class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
+                        <svg class="uitk-icon uitk-icon-leading uitk-icon-medium" aria-label="Show all 7 images for Classic Twin Room" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                           <title id="photo_library-property-offers-media-carousel-1-title">Show all {{ $apartment->images->count() }} images</title>
+                           <path fill-rule="evenodd" d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span aria-hidden="true">{{ $apartment->images->count() }}</span>
+                     </button>
+                  </div>
+               </div>
+               @endforeach
+            </div>
+         </div>
+         <div class="col-md-12 bg-white  pt-3">
+            <div class="card-title bold-2 text-size-1-big  mt-lg-0 mt-sm-3 ">
+               <a href="{{ $apartment->link }}">{{ $apartment->name }}</a>
+            </div>
+            <div class="text-size-2 text-gold">
+               <i class="fas fa-info-circle mr-2 "></i>Instant Confirmation
+            </div>
+            <div class="entire-apartments">
+               <div class="bold-2 mb-2">Entire apartment</div>
+               <div class="d-flex justify-content-between flex-wrap flex-column">
+                  <div class="position-relative mb-1">
+                     <span class="position-absolute svg-icon-section">
+                        <svg>
+                           <use xlink:href="#bedrooms-icon"></use>
+                        </svg>
+                     </span>
+                     <span class="svg-icon-text">{{ $apartment->no_of_rooms }} Bedrooms</span>
+                  </div>
+                  <div class="position-relative mb-1">
+                     <span class="position-absolute svg-icon-section">
+                        <svg>
+                           <use xlink:href="#bathroom-icon"></use>
+                        </svg>
+                     </span>
+                     <span class="svg-icon-text">{{ $apartment->toilets }} bathrooms</span>
+                  </div>
+                  <div class="position-relative mb-1">
+                     <span class="position-absolute svg-icon-section">
+                        <svg>
+                           <use xlink:href="#sleeps-icon"></use>
+                        </svg>
+                     </span>
+                     <span class="svg-icon-text">{{ $apartment->guests }} Guests</span>
+                  </div>
+               </div>
+
+               @if($apartment->free_services->count())
+               <div class="d-inline-flex flex-wrap">
+                  @foreach($apartment->free_services as $free_service)
+                  <div class="position-relative">
+                     <span class="position-absolute svg-icon-section"></span>
+                     <span class="svg-icon-text text-gray">{{ $free_service->name }}</span>
+                  </div>
+                  @endforeach
+               </div>
+               @endif
+
+               @if($apartment->bedrooms->count())
+               @foreach($apartment->bedrooms as $bed)
+
+               <div class="position-relative mb-1">
+                  <span class="position-absolute svg-icon-section">
+                     <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <path fill-rule="evenodd" d="M11 7h8a4 4 0 014 4v9h-2v-3H3v3H1V5h2v9h8V7zm-1 3a3 3 0 11-6 0 3 3 0 016 0z" clip-rule="evenodd"></path>
+                     </svg>
+                  </span>
+                  <span class="svg-icon-text">{{ $bed->parent->name }}</span>
+                  <span class="svg-icon-text">
+                     {{ $bed->pivot->bed_count }} {{ $bed->name }}
+                  </span>
+               </div>
+               @endforeach
+
+               @endif
+
+               <div class="position-relative mb-1">
+                  <a class="d-flex active-link text-highlight font-weight-bold-2" href="#">
+                     <span aria-hidden="true">More details</span>
+                     <svg class="" aria-hidden="true" class="align-self-center" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>
+                     </svg>
+                  </a>
+               </div>
+            </div>
+
+
+
+
+
+
+            <div>
+               <div class="d-flex d-flex justify-content-between">
+                  <div class="price-box ">
+                     <div class="d-inline-flex  mt-sm-3">
+                        @if($apartment->discounted_price)
+                        <div class="sale-price mr-3">
+                           {{ $apartment->currency }}{{ $apartment->converted_price }}
+                        </div>
+                        <div class="price bold-3">
+                           {{ $apartment->currency }}{{ $apartment->discounted_price }}
+                        </div>
+                        @else
+                        <div class="price bold-3 mt-2">
+                           {{ $apartment->currency }}{{ $apartment->converted_price }}
+                        </div>
+                        @endif
+
+                     </div>
+                     <div class="text-size-2">{{ $apartment->price_mode }}</div>
+                  </div>
+                  <div class="align-self-end">
+                     @if($apartment->is_refundable)
+                     <div class="font-weight-bold-2 text-success">
+                        Fully Refundable
+                     </div>
+                     @endif
+                     <a target="_blank" class="btn btn-round  btn-blue   py-2  bold-2   align-self-end font-weight-bold-2">
+                        Reserve
+                     </a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      @endforeach
+
+
+
+
    </div>
 
    <div class="title">

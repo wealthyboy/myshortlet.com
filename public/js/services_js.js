@@ -4338,6 +4338,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     this.roomsAv = this.apartments;
   },
   mounted: function mounted() {
+    // Get all elements with class 'p-loader'
+    var loaderElements = document.querySelectorAll('.p-loader');
+
+    // Loop through each element and hide it
+    loaderElements.forEach(function (element) {
+      element.style.display = 'none';
+    });
     var retrievedJsonString = localStorage.getItem('searchParams');
     // Check if the retrieved JSON string is not null
     if (retrievedJsonString !== null) {
@@ -9221,7 +9228,7 @@ var render = function render() {
   }, [_vm._v("Choose your apartment")]), _vm._v(" "), _c("div", {
     staticClass: "form-row"
   }, [_c("div", {
-    staticClass: "form-group form-border cursor-pointer search col-md-5 bmd-form-group mb-sm-2 mb-md-0"
+    staticClass: "form-group form-border cursor-pointer search col-md-4 bmd-form-group mb-sm-2 mb-md-0"
   }, [_c("label", {
     staticClass: "pl-2",
     attrs: {
@@ -9235,7 +9242,7 @@ var render = function render() {
       dateSelected: _vm.dateSelected
     }
   })], 1), _vm._v(" "), _c("div", {
-    staticClass: "col-md-5 cursor-pointer px-sm-0 px-md-1",
+    staticClass: "col-md-4 cursor-pointer px-sm-0 px-md-1",
     attrs: {
       id: "people-number"
     }

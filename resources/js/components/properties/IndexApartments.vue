@@ -6,11 +6,11 @@
             <div>
                 <h3 class="bold-2">Choose your apartment</h3>
                 <div class="form-row">
-                    <div class="form-group   form-border cursor-pointer search col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
+                    <div class="form-group   form-border cursor-pointer search col-md-4 bmd-form-group  mb-sm-2 mb-md-0">
                         <label class="pl-2 " for="flatpickr-input-f">Check-in - Check-out</label>
                         <date :isDateNeedsToToOpen="isDateNeedsToToOpen" @dateSelected="dateSelected" />
                     </div>
-                    <div id="people-number" class="col-md-5 cursor-pointer px-sm-0 px-md-1">
+                    <div id="people-number" class="col-md-4 cursor-pointer px-sm-0 px-md-1">
                         <guests />
                     </div>
                     <div class="col-md-2 check-availablility  mt-sm-2 mt-md-0">
@@ -128,7 +128,13 @@ export default {
         this.roomsAv = this.apartments;
     },
     mounted() {
+        // Get all elements with class 'p-loader'
+        var loaderElements = document.querySelectorAll('.p-loader');
 
+        // Loop through each element and hide it
+        loaderElements.forEach(function (element) {
+            element.style.display = 'none';
+        });
         const retrievedJsonString = localStorage.getItem('searchParams');
         // Check if the retrieved JSON string is not null
         if (retrievedJsonString !== null) {

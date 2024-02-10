@@ -63,7 +63,7 @@ class HomeController
         $posts = Information::orderBy('created_at', 'DESC')->where('blog', true)->take(3)->get();
         $banners = Banner::where('type', 'banner')->orderBy('sort_order', 'asc')->get();
         $sliders = Banner::where('type', 'slider')->orderBy('sort_order', 'asc')->get();
-        $property = Property::find(1);
+        $property = Property::first();
 
         $date  = explode("to", $request->check_in_checkout);
         $nights = '1 night';
