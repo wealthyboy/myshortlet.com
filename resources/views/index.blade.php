@@ -1,0 +1,316 @@
+@extends('layouts.app')
+@section('content')
+
+<div class="video-section">
+   <div class="intro-image">
+      <img src="/images/logo/avm_residences.png" alt="">
+   </div>
+
+   <div role="button" class="down-icon">
+      <a href="#">
+         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+            <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+         </svg>
+      </a>
+
+   </div>
+
+   <!-- <video class=" vidoeo-intro" src="/video/avem.mp4" autoplay muted loop></video> -->
+
+   <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride=" carousel">
+      <ol class="carousel-indicators">
+         @foreach($sliders as $key => $slider)
+
+         <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}" class="{{ $key === 0 ? 'active' : ''}}"></li>
+         @endforeach
+
+      </ol>
+      <div class="carousel-inner">
+         @foreach($sliders as $key => $slider)
+
+         <div class="carousel-item {{ $key === 0 ? 'active' : ''}}">
+            <img src="{{ $slider->image }}" class="d-block w-100" alt="...">
+         </div>
+         @endforeach
+
+      </div>
+      <button class="carousel-control-prev" data-target="#carouselExampleIndicators" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19.9 40L1.3 20 19.9 0" class="carousel-control-prev-icon" aria-hidden="true" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+         </svg><span class="sr-only">Previous</span></button>
+
+      <button class="carousel-control-next" data-target="#carouselExampleIndicators" data-slide="next"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg">
+            <path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+         </svg><span class="sr-only">Next</span></button>
+   </div>
+
+</div>
+
+
+
+
+
+<div class="search-header d-block">
+   <search-apartments />
+</div>
+
+
+<div class="container-fluid p-5">
+   <section class="intro-box">
+
+      <div class="row  pb-5 pt-3 position-relative">
+         <!-- <div id="leftbox1" style="background-image: url('/images/banners/avm_image_1.jpeg');" class="col-md-7  opacity-0  rounded  card-background-image"></div> -->
+         <div id="rbox1" style="z-index: 1;" class="col-md-12 text-center d-flex opacity-0  justify-content-center align-items-center">
+            <div class="bg-panel bg-panel-white p-sm-3 p-md-5">
+               <h2 class=" bold-2">Welcome to Avenue Montiagne</h2>
+               <p class="mt-4  text-left text-black light-bold">
+                  Our apartments offer amazing amenities, stylish design, and a perfect location for living the lagos dream. With your choice of spacious, meticulously-designed 1-, 2-, or 3-bedroom apartments, youll be sure to find the ideal fit for your needs and lifestyle. Get ready for apartment living on a whole new level, with two resort-style pools, a luxurious spa, and a state-of-the-art fitness center for your convenience and enjoyment. Get excited about everything that awaits you at Avm, Lagos!
+               </p>
+               <div class=" buttons">
+                  <a href="/apartments" class="btn btn-primary rounded bold-2">
+                     Explore the Residences
+                  </a>
+
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</div>
+<div style="background-color: rgb(248, 245, 244);" class="ap">
+   <div class="container-fluid p-5">
+
+      <div class="title">
+         <div class="d-flex justify-content-between">
+            <h3 class="large-heading bold">Apartments
+            </h3>
+
+            <a href="/apartments" class="btn btn-round  btn-primary   py-2  bold-2   align-self-end font-weight-bold-2">
+               View All
+            </a>
+         </div>
+
+      </div>
+      <div class="row">
+
+         @foreach($apartments as $apartment)
+         <div class="col-12 col-md-3   mb-1 mt-1 pl-1 pb-1 px-0">
+            <div class="col-md-12 aprts position-relative p-0">
+               <div class="owl-carousel owl-theme">
+                  @foreach($apartment->images as $image)
+                  <div class="item rounded-top">
+                     <img src="{{$image->image}}" class="img img-fluid" />
+                     <div class="images-count">
+                        <button type="button" class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
+                           <svg class="uitk-icon uitk-icon-leading uitk-icon-medium" aria-label="Show all 7 images for Classic Twin Room" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                              <title id="photo_library-property-offers-media-carousel-1-title">Show all {{ $apartment->images->count() }} images</title>
+                              <path fill-rule="evenodd" d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z" clip-rule="evenodd"></path>
+                           </svg>
+                           <span aria-hidden="true">{{ $apartment->images->count() }}</span>
+                        </button>
+                     </div>
+                  </div>
+                  @endforeach
+               </div>
+            </div>
+            <div class="col-md-12 bg-white  pt-3">
+               <div class="card-title bold-2 text-size-1-big  mt-lg-0 mt-sm-3 ">
+                  <a href="/apartments">{{ $apartment->name }}</a>
+               </div>
+               <div class="text-size-2 text-gold">
+                  <i class="fas fa-info-circle mr-2 "></i>Instant Confirmation
+               </div>
+               <div class="entire-apartments">
+                  <div class="bold-2 mb-2">Entire apartment</div>
+                  <div class="d-flex justify-content-between flex-wrap flex-column">
+                     <div class="position-relative mb-1">
+                        <span class="position-absolute svg-icon-section">
+                           <svg>
+                              <use xlink:href="#bedrooms-icon"></use>
+                           </svg>
+                        </span>
+                        <span class="svg-icon-text">{{ $apartment->no_of_rooms }} Bedrooms</span>
+                     </div>
+                     <div class="position-relative mb-1">
+                        <span class="position-absolute svg-icon-section">
+                           <svg>
+                              <use xlink:href="#bathroom-icon"></use>
+                           </svg>
+                        </span>
+                        <span class="svg-icon-text">{{ $apartment->toilets }} bathrooms</span>
+                     </div>
+                     <div class="position-relative mb-1">
+                        <span class="position-absolute svg-icon-section">
+                           <svg>
+                              <use xlink:href="#sleeps-icon"></use>
+                           </svg>
+                        </span>
+                        <span class="svg-icon-text">{{ $apartment->guests }} Guests</span>
+                     </div>
+                  </div>
+
+                  @if($apartment->free_services->count())
+                  <div class="d-inline-flex flex-wrap">
+                     @foreach($apartment->free_services as $free_service)
+                     <div class="position-relative">
+                        <span class="position-absolute svg-icon-section"></span>
+                        <span class="svg-icon-text text-gray">{{ $free_service->name }}</span>
+                     </div>
+                     @endforeach
+                  </div>
+                  @endif
+
+                  @if($apartment->bedrooms->count())
+                  @foreach($apartment->bedrooms as $bed)
+
+                  <div class="position-relative mb-1">
+                     <span class="position-absolute svg-icon-section">
+                        <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                           <path fill-rule="evenodd" d="M11 7h8a4 4 0 014 4v9h-2v-3H3v3H1V5h2v9h8V7zm-1 3a3 3 0 11-6 0 3 3 0 016 0z" clip-rule="evenodd"></path>
+                        </svg>
+                     </span>
+                     <span class="svg-icon-text">{{ $bed->parent->name }}</span>
+                     <span class="svg-icon-text">
+                        {{ $bed->pivot->bed_count }} {{ $bed->name }}
+                     </span>
+                  </div>
+                  @endforeach
+
+                  @endif
+
+                  <div class="position-relative mb-1">
+                     <a class="d-flex active-link text-highlight font-weight-bold-2" href="#">
+                        <span aria-hidden="true">More details</span>
+                        <svg class="" aria-hidden="true" class="align-self-center" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                           <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>
+                        </svg>
+                     </a>
+                  </div>
+               </div>
+
+
+
+
+
+
+               <div>
+                  <div class="d-flex d-flex justify-content-between">
+                     <div class="price-box ">
+                        <div class="d-inline-flex  mt-sm-3">
+                           @if($apartment->discounted_price)
+                           <div class="sale-price mr-3">
+                              {{ $apartment->currency }}{{ $apartment->converted_price }}
+                           </div>
+                           <div class="price bold-3">
+                              {{ $apartment->currency }}{{ $apartment->discounted_price }}
+                           </div>
+                           @else
+                           <div class="price bold-3 mt-2">
+                              {{ $apartment->currency }}{{ $apartment->converted_price }}
+                           </div>
+                           @endif
+
+                        </div>
+                        <div class="text-size-2">{{ $apartment->price_mode }}</div>
+                     </div>
+                     <div class="align-self-end">
+                        @if($apartment->is_refundable)
+                        <div class="font-weight-bold-2 text-success">
+                           Fully Refundable
+                        </div>
+                        @endif
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         @endforeach
+
+
+
+
+      </div>
+   </div>
+
+
+
+</div>
+
+
+<section class="">
+   <div class="row   pb-5 pt-5 position-relative">
+      <div style="background-image: url('/uploads/4b2fVBQMd3OkPvATKDpuIxFK61PbgdcoEvJ3qI4j.jpg');" class="col-md-7 rounded  card-background-image">
+      </div>
+      <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
+         <div class="about-panel  bg-panel-white  bg-panel p-5">
+            <h2 class="mb-4 bold">Luxury & Convenience</h2>
+
+            <p class="mt-4 text-black">
+               Our apartment is truly a cut above the rest, with spacious walk-in closets, private balcony or patio, central air conditioning, and high-speed internet. We are ideally located in Lagos, making any commute or relaxing day trip a breeze.
+            </p>
+
+            <div class=" buttons">
+               <a href="/apartments" class="btn btn-primary">
+                  Explore the Residences
+
+               </a>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+
+
+
+
+
+
+
+<!-- -------- START HEADER 4 w/ search book a ticket form ------- -->
+<header>
+
+   <div class="page-header min-vh-75 half-hv position-relative" style="background-image: url(https://avenuemontaigne.ng/images/locations/kA0lndRkg4kYoEcmaq62HPQSoW77AmGiQDHLDmU0.jpg)" loading="lazy">
+      <span class="position-absolute top-0 start-0 w-100 h-100  bg-black opacity-50"></span>
+
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-8 mx-auto text-white text-center">
+               <h1 class="text-white bold-1">Contact Us </h1>
+               <div class="mb-3">
+                  <p class="mb-0 display-4 bold-1 text-white">Phone: +1 (123) 456-7890</p>
+               </div>
+
+               <!-- Email -->
+               <div class="mb-3">
+                  <p class="mb-0 display-4 bold-1 text-white">Email: info@avenuemontaigne.ng</p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+</header>
+<!-- -------- END HEADER 4 w/ search book a ticket form ------- -->
+@endsection
+@section('inline-scripts')
+jQuery(function () {
+$(".owl-carousel").owlCarousel({
+margin: 10,
+nav: true,
+dots: false,
+responsive: {
+0: {
+items: 1,
+},
+600: {
+items: 1,
+},
+1000: {
+items: 1,
+},
+},
+});
+});
+@stop
