@@ -129,7 +129,7 @@
          </div>
          <div class="col-md-12 bg-white  pt-3">
             <div class="card-title bold-2 text-size-1-big  mt-lg-0 mt-sm-3 ">
-               <a href="{{ $apartment->link }}">{{ $apartment->name }}</a>
+               <a href="/apartments">{{ $apartment->name }}</a>
             </div>
             <div class="text-size-2 text-gold">
                <i class="fas fa-info-circle mr-2 "></i>Instant Confirmation
@@ -192,14 +192,7 @@
 
                @endif
 
-               <div class="position-relative mb-1">
-                  <a class="d-flex active-link text-highlight font-weight-bold-2" href="#">
-                     <span aria-hidden="true">More details</span>
-                     <svg class="" aria-hidden="true" class="align-self-center" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>
-                     </svg>
-                  </a>
-               </div>
+
             </div>
 
 
@@ -233,8 +226,8 @@
                         Fully Refundable
                      </div>
                      @endif
-                     <a target="_blank" class="btn btn-round  btn-blue   py-2  bold-2   align-self-end font-weight-bold-2">
-                        Reserve
+                     <a href="/apartments" class="btn btn-round  btn-blue   py-2  bold-2   align-self-end font-weight-bold-2">
+                        Check Availability
                      </a>
                   </div>
                </div>
