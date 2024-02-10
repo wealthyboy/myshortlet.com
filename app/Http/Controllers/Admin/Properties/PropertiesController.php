@@ -450,6 +450,8 @@ class PropertiesController extends Controller
         ]);
 
 
+        // dd($request->all());
+
         $property = $this->property($request, $id, true);
 
         /**
