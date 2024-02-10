@@ -47,7 +47,7 @@
 
             <div class="col-md-2">
                 <div class="form-group">
-                    <select name="apartment_id[{{ $counter }}]" id="" required="true" class="form-control">
+                    <select name="edit_apartment_id[{{ $counter }}]" id="" required="true" class="form-control">
                         <option value="">Apartment</option>
                         @foreach($room_ids as $key => $room_id)
 

@@ -480,7 +480,7 @@ class PropertiesController extends Controller
                         'slug'         => str_slug($request->edit_room_name[$room_id]),
                         'max_adults'   => $request->edit_room_max_adults[$room_id],
                         'max_children' => $request->edit_room_max_children[$room_id],
-                        'apartment_id' => $request->apartment_id[$room_id],
+                        'apartment_id' => $request->edit_apartment_id[$room_id],
                         'property_id'  => $property->id,
                         'no_of_rooms'  => $request->edit_room_number[$room_id],
                         'toilets'      => $request->edit_room_toilets[$room_id],
