@@ -63,7 +63,7 @@ class HomeController
         $posts = Information::orderBy('created_at', 'DESC')->where('blog', true)->take(3)->get();
         $banners = Banner::where('type', 'banner')->orderBy('sort_order', 'asc')->get();
         $sliders = Banner::where('type', 'slider')->orderBy('sort_order', 'asc')->get();
-        $property = null;
+        $property = Property::find(1);
 
         $date  = explode("to", $request->check_in_checkout);
         $nights = '1 night';
@@ -92,7 +92,7 @@ class HomeController
             ->select('apartments.*')
             ->groupBy('apartments.id')
             ->get();
-        $apartments->load('images', 'free_services', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
+        $apartments->load('images',  'free_services', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
         $date = $request->check_in_checkout;
         $days = 0;
 
