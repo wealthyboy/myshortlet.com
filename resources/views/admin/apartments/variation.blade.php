@@ -69,7 +69,7 @@
                 <div class="form-group">
                     <select required="required" name="room_toilets[{{ $counter }}]" id="children" class="form-control">
                         <option value="" selected>Choose Toilets</option>
-                        @for ($i = 1; $i< 10; $i++) <option value="{{ $i }}"> {{ $i }}</option>
+                        @for ($i = 1; $i< 10; $i++) @php $value=$i * 0.5; @endphp <option value="{{ $value }}"> {{ $value }}</option>
                             @endfor
                     </select>
                 </div>
