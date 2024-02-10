@@ -83,7 +83,7 @@
                     <label class="control-label">Toilets</label>
                     <select name="edit_room_toilets[{{ $apartment->id }}]" id="children" class="form-control">
                         <option value="">Choose toilets... </option>
-                        @for ($i = 1; $i< 10; $i++) @if($apartment->toilets == $i)
+                        @for ($i = 1; $i< 10; $i++) @php $value=$i * 0.5; @endphp @if($apartment->toilets == $i)
                             <option value="{{ $i }}" selected> {{ $i }}</option>
                             @else
                             <option value="{{ $i }}"> {{ $i }}</option>
