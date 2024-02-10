@@ -126,7 +126,7 @@ class ImagesController extends Controller
 
             $path = $request->file('file')->store('images/' . $request->folder);
 
-            dd(true);
+
             $file = basename($path);
             $path =  public_path('images/' . $request->folder . '/' . $file);
 
