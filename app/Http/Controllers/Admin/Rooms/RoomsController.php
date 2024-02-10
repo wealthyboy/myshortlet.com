@@ -21,6 +21,6 @@ class RoomsController extends Controller
     {
         $delete = Apartment::find($id);
         $delete->delete();
-        return response(200, null);
+        return response()->json([], 200);
     }
 }
