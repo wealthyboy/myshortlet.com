@@ -44,7 +44,6 @@ class ReservationsController extends Controller
 
 
 		$reservations = UserReservation::latest()->get();
-		dd($reservations);
 		return view('admin.reservations.index', compact('reservations'));
 	}
 
