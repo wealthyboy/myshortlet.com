@@ -818,10 +818,26 @@ button.owl-next {
   .card-background-image {
     height: 210px;
     background-size: contain;
+
+
+
+
   }
 
   .carousel-inner {
     height: 274px;
+  }
+
+  button.uitk-button.uitk-button-medium.uitk-button-has-text.uitk-button-overlay.uitk-gallery-button {
+    background-color: rgba(12, 14, 28, .56);
+    color: #fff;
+    border-radius: 20%;
+    width: 51px;
+    height: 36px;
+  }
+
+  svg.uitk-icon.uitk-icon-leading.uitk-icon-medium {
+    fill: #fff;
   }
 
 
