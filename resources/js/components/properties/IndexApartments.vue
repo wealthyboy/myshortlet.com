@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <div id="full-" v-if="propertyLoading" class="full- position-relative">
+            <div id="full-" v-if="propertyLoading" class="full-bg position-relative">
                 <div class="signup--middle">
                     <div class="loading">
                         <div class="loader"></div>
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div :class="{ 'header-filter': propertyLoading }" id="" class="name mt-1 rounded p-2">
+            <div :class="{ 'header-filter': propertyIsLoading }" id="" class="name mt-1 rounded p-2">
                 <div class="position-relative">
                     <input type="hidden" name="property_id" value="217" />
                     <template v-if="roomsAv.length">
@@ -187,7 +187,7 @@ export default {
         },
         checkAvailabity: function () {
             // this.build()
-            this.propertyLoading = true
+            this.propertyIsLoading = true
 
             this.form.children = document.querySelector("#children").value;
             this.form.adults = document.querySelector("#adults").value;
@@ -237,7 +237,7 @@ export default {
 
                     this.roomsAv = response.data.data;
                     this.stays = response.data.nights;
-                    this.propertyLoading = false;
+                    this.propertyIsLoading = false;
 
                     jQuery(function () {
                         $(".owl-carousel").owlCarousel({
@@ -260,6 +260,7 @@ export default {
                     return Promise.resolve();
                 })
                 .catch((error) => {
+                    this.propertyIsLoading = false
                     // commit("setPropertyLoading", false);
                     // commit("setProperties", []);
                 });
@@ -319,7 +320,7 @@ export default {
                 check_in_checkout: this.form.check_in_checkout,
             };
 
-            this.propertyLoading = true;
+            this.propertyIsLoading = true;
 
             axios
                 .post("/book/store", form)
