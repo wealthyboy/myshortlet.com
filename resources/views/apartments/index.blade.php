@@ -3,7 +3,6 @@
 <div class="">
    <div class="container">
       <div class="row">
-
          <div class="col-md-12 category-search ml-auto mr-auto mt-4">
             <div id="category-loader" class="mt-2 mb-3">
                <div class="apart-loading" style="width: 100%; height: 60px; background-color: rgb(204, 204, 204);"></div>

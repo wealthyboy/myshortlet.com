@@ -3,6 +3,14 @@
 
 
 <div class="container">
+
+    <div id="full-bg" class="full-bg position-relative">
+        <div class="signup--middle">
+            <div class="loading">
+                <div class="loader"></div>
+            </div>
+        </div>
+    </div>
     <div class="row  ">
 
         @if (!$apartments)
