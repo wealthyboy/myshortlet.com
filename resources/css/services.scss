@@ -831,17 +831,6 @@ button.owl-next {
 
 
 
-  button.uitk-button {
-    background-color: rgba(12, 14, 28, .56);
-    color: #fff;
-    border-radius: 20%;
-    width: 51px;
-    height: 36px;
-  }
-
-  svg.uitk-icon-medium {
-    fill: #fff;
-  }
 
 
   .bg-panel {
@@ -1448,6 +1437,23 @@ carousel-fade .carousel-item {
 
 .h-28 {
   height: 28vh !important;
+}
+
+
+button.uitk-button {
+  background-color: rgba(12, 14, 28, 0.56);
+  color: #fff;
+  border-radius: 20%;
+  width: 48px;
+  height: 30px;
+  border: none;
+  outline: none
+}
+
+svg.uitk-icon-medium {
+  fill: #fff;
+  width: 15px;
+  height: 15px;
 }
 
 
