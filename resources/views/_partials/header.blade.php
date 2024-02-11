@@ -17,20 +17,20 @@
 
         <div class="d-flex justify-content-center align-items-center">
             @guest
-            <a href="/login" class="text-white bold-2 mr-4">
+            <a href="/login" class="d-none d-lg-block text-white bold-2 mr-4">
                 <i class="fal fa-sign-in"></i>
                 Login
             </a>
             @endguest
 
             @auth
-            <a href="/account" class="text-white bold-2 mr-4">
+            <a href="/account" class="d-none d-lg-block text-white bold-2 mr-4">
                 <i class="fal fa-sign-in"></i>
                 Account
             </a>
             @endauth
 
-            <a href="/login" class="align-self-center mr-3 font-weight-bold btn-primary bold-3 btn text-white  ">
+            <a href="/login" class="align-self-center mr-3  d-none d-lg-block font-weight-bold btn-primary bold-3 btn text-white  ">
                 <i class="fal fa-sign-in"></i>
                 Book Now
             </a>
