@@ -36,8 +36,8 @@
 
                            <td class="text-left">{{ $reservation->invoice }}</td>
                            <td>{{ $reservation->user->fullname() }}</td>
-                           <td>{{ $reservation->checkin->isoFormat('dddd, MMMM Do YYYY') }}</td>
-                           <td>{{ $reservation->checkout->isoFormat('dddd, MMMM Do YYYY') }}</td>
+                           <td>{{ optional($reservation->checkin)->isoFormat('dddd, MMMM Do YYYY') }}</td>
+                           <td>{{ optional($reservation->checkout)->isoFormat('dddd, MMMM Do YYYY') }}</td>
                            <td>{{ $reservation->created_at }}</td>
                            <td class="text-left">{{ $reservation->currency  ?? '₦'}}{{ $reservation->total }}</td>
                            <td class="td-actions text-center">
