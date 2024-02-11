@@ -85,6 +85,7 @@ class ApartmentsController extends Controller
         $apartments->load('images', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
 
         if ($request->ajax()) {
+            // dd(true);
             return PropertyLists::collection(
                 $apartments
             )->additional(['attributes' => $attributes, 'search' => false]);

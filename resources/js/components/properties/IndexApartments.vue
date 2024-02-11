@@ -21,6 +21,14 @@
                     </div>
                 </div>
             </div>
+
+            <div id="full-" v-if="propertyLoading" class="full- position-relative">
+                <div class="signup--middle">
+                    <div class="loading">
+                        <div class="loader"></div>
+                    </div>
+                </div>
+            </div>
             <div id="" v-if="!propertyLoading && !roomsAv.length" class="name mt-1 rounded bg-white p-2">
                 <div class="text-muted text-danger">
                     {{
@@ -34,49 +42,14 @@
                     <input type="hidden" name="property_id" value="217" />
                     <template v-if="roomsAv.length">
                         <div class="row">
-                            <apartment @reserve="reserve" :amenities="amenities" @qtyChange="getApartmentQuantity"
-                                v-for="room in roomsAv" :key="room.id" :room="room" :stays="stays" :qty="qty" />
+                            <apartment @reserve="reserve" :amenities="amenities" v-for="room in roomsAv" :key="room.id"
+                                :room="room" :stays="stays" :qty="qty" />
                         </div>
                     </template>
-
-                    <!-- <div>
-              <ul class="list-unstyled mb-0 p-2">
-                <li class="d-flex justify-content-between mb-2 lh-22">
-                  <p v-if="stays" class="text-gray-light mb-0 bold-2">
-                    {{ stays[0] || 0 }} {{ stays[1] || "night" }}
-                  </p>
-                  <p v-if="!stays">Choose dates</p>
-                  <p class="bold-2 text-heading mb-0">
-                    {{ property.currency }}{{ total | priceFormat }}
-                  </p>
-                </li>
-                <li class="d-flex justify-content-between mb-2 lh-22">
-                  <p class="text-gray-light mb-0 bold-2">{{ aps }} Apartment(s)</p>
-                  <p class="bold-2 text-heading mb-0">
-                    {{ property.currency }}{{ apTotal | priceFormat }}
-                  </p>
-                </li>
-              </ul>
-            </div> -->
-
-                    <!-- <div class="card-footer p-2  bg-transparent d-flex justify-content-between p-0 align-items-center">
-              <p class="text-heading mb-0 bold-2">Total Price:</p>
-              <span class="fs-32 bold-2 text-heading total-price">{{ property.currency }}{{ amount | priceFormat }}</span>
-            </div> -->
-                    <!-- <button v-if="stays && stays[1] != null" type="button" @click.prevent="reserve()"
-              class="ml-1 btn btn-primary btn-round  mr-1 btn-block">
-              <div class="auth-spinner d-none">
-                <div class="lds-ellipsis">
-                  <div style="background: rgb(255, 255, 255);"></div>
-                  <div style="background: rgb(255, 255, 255);"></div>
-                  <div style="background: rgb(255, 255, 255);"></div>
-                  <div style="background: rgb(255, 255, 255);"></div>
-                </div>
-              </div>
-              <span class="lt">Reserve</span>
-            </button> -->
                 </div>
             </div>
+
+
         </form>
     </div>
 </template>
@@ -124,8 +97,8 @@ export default {
         };
     },
     created() {
-        this.stays = this.nights;
-        this.roomsAv = this.apartments;
+        // this.stays = this.nights;
+        //this.roomsAv = this.apartments;
     },
     mounted() {
         // Get all elements with class 'p-loader'
@@ -161,6 +134,9 @@ export default {
                 },
             });
         });
+
+
+        this.getApartments()
     },
     components: {
         Pickr,
@@ -168,15 +144,51 @@ export default {
         Apartment,
         Date,
     },
-    mounted() {
-        document.getElementById("full-bg").remove();
-    },
+
     methods: {
         dateSelected(value) {
             this.form.check_in_checkout = value;
         },
+        getApartments() {
+            this.propertyLoading = true
+            axios
+                .get(window.location)
+                .then((response) => {
+                    this.roomsAv = response.data.data;
+                    this.stays = response.data.nights;
+                    this.propertyLoading = false;
+
+                    //document.getElementById("full-bg").remove();
+                    jQuery(function () {
+                        $(".owl-carousel").owlCarousel({
+                            margin: 10,
+                            nav: true,
+                            dots: false,
+                            responsive: {
+                                0: {
+                                    items: 1,
+                                },
+                                600: {
+                                    items: 1,
+                                },
+                                1000: {
+                                    items: 1,
+                                },
+                            },
+                        });
+                    });
+                    return Promise.resolve();
+                })
+                .catch((error) => {
+                    // commit("setPropertyLoading", false);
+                    // commit("setProperties", []);
+                    console.log(error)
+                });
+        },
         checkAvailabity: function () {
             // this.build()
+            this.propertyLoading = true
+
             this.form.children = document.querySelector("#children").value;
             this.form.adults = document.querySelector("#adults").value;
             this.form.rooms = document.querySelector("#rooms").value;
@@ -228,7 +240,7 @@ export default {
                     this.propertyLoading = false;
 
                     jQuery(function () {
-                        $(".room-carousel").owlCarousel({
+                        $(".owl-carousel").owlCarousel({
                             margin: 10,
                             nav: true,
                             dots: true,
@@ -248,8 +260,8 @@ export default {
                     return Promise.resolve();
                 })
                 .catch((error) => {
-                    commit("setPropertyLoading", false);
-                    commit("setProperties", []);
+                    // commit("setPropertyLoading", false);
+                    // commit("setProperties", []);
                 });
 
             // this.getProperties(window.location);

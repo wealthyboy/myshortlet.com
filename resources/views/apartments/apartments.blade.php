@@ -21,10 +21,10 @@
 </header>
 
 
+
 <div class="container">
 
     <div class="row  ">
-
         @if (!$apartments)
         <div id="load-products" class="col-md-10 ">
             <div class="no-properties-found">
