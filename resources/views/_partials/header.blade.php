@@ -30,10 +30,14 @@
             </a>
             @endauth
 
+            @if(isset($show_book) && $show_book)
             <a href="/apartments" class="align-self-center mr-3  d-none d-lg-block font-weight-bold btn-primary bold-3 btn text-white  ">
                 <i class="fal fa-sign-in"></i>
                 Book Now
             </a>
+            @endif
+
+
 
             <button class="navbar-toggler d-block text-white border-none" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>

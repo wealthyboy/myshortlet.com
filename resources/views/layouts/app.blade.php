@@ -9,11 +9,10 @@
 <body>
    <div id="app" class="app">
       <nav class="navbar  navbar-fixed-top navbar-expand-lg  navbar-transparent navbar-absolute" color-on-scroll="100" id="sectionsNav">
-         @include('_partials.header', ['show_logo' => true])
+         @include('_partials.header', ['show_logo' => true, 'show_book' => true])
       </nav>
       <div id="content" class="main  index-page">
          @yield('content')
-
       </div>
       @include('_partials.footer')
       </footer>

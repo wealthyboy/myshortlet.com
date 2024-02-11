@@ -7,8 +7,8 @@
 
 <body>
    <div id="app" class="appp">
-      <nav class="navbar   navbar-expand-lg " id="sectionsNav">
-         @include('_partials.header2')
+      <nav class="navbar  navbar-fixed-top navbar-expand-lg  navbar-transparent navbar-absolute" color-on-scroll="100" id="sectionsNav">
+         @include('_partials.header', ['show_logo' => true, 'show_book' => false])
       </nav>
 
       <div style="background-color: #f8f5f4;" class="main  index-page">

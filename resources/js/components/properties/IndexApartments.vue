@@ -168,6 +168,9 @@ export default {
         Apartment,
         Date,
     },
+    mounted() {
+        document.getElementById("full-bg").remove();
+    },
     methods: {
         dateSelected(value) {
             this.form.check_in_checkout = value;

@@ -62,6 +62,12 @@
          <!-- <div id="leftbox1" style="background-image: url('/images/banners/avm_image_1.jpeg');" class="col-md-7  opacity-0  rounded  card-background-image"></div> -->
          <div id="rbox1" style="z-index: 1;" class="col-md-12 text-center d-flex opacity-0  justify-content-center align-items-center">
             <div class="bg-panel bg-panel-white p-sm-3 p-md-5">
+               <div class="primary-color ">STAY IN THE HEART OF LAGOS
+               </div>
+               <!-- <div class="d-flex justify-content-center mt-2 ">
+                  <div class="underline mr-2"></div>
+               </div> -->
+
                <h2 class=" bold-2">Welcome to Avenue Montiagne</h2>
                <p class="mt-4  text-left text-black light-bold">
                   Our apartments offer amazing amenities, stylish design, and a perfect location for living the lagos dream. With your choice of spacious, meticulously-designed 1-, 2-, or 3-bedroom apartments, youll be sure to find the ideal fit for your needs and lifestyle. Get ready for apartment living on a whole new level, with two resort-style pools, a luxurious spa, and a state-of-the-art fitness center for your convenience and enjoyment. Get excited about everything that awaits you at Avm, Lagos!

@@ -1,16 +1,28 @@
 @extends('layouts.listing')
 @section('content')
 
+<header>
 
-<div class="container">
+    <div class="page-header min-vh-75 h-28 position-relative" style="background-image: url(https://avenuemontaigne.ng/images/locations/kA0lndRkg4kYoEcmaq62HPQSoW77AmGiQDHLDmU0.jpg)" loading="lazy">
+        <span class="position-absolute top-0 start-0 w-100 h-100  bg-black opacity-50"></span>
 
-    <div id="full-bg" class="full-bg position-relative">
-        <div class="signup--middle">
-            <div class="loading">
-                <div class="loader"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-white text-center">
+                    <h1 class="text-white bold-1">Book your stay </h1>
+                    <div class="mb-3">
+                        <p class="mb-0 display-4 bold-1 text-white">A stay infused with creativity and culture.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+</header>
+
+
+<div class="container">
+
     <div class="row  ">
 
         @if (!$apartments)

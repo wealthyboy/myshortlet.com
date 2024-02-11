@@ -828,7 +828,9 @@ button.owl-next {
     height: 274px;
   }
 
-  button.uitk-button.uitk-button-medium.uitk-button-has-text.uitk-button-overlay.uitk-gallery-button {
+
+
+  button.uitk-button {
     background-color: rgba(12, 14, 28, .56);
     color: #fff;
     border-radius: 20%;
@@ -836,7 +838,7 @@ button.owl-next {
     height: 36px;
   }
 
-  svg.uitk-icon.uitk-icon-leading.uitk-icon-medium {
+  svg.uitk-icon-medium {
     fill: #fff;
   }
 
@@ -1428,8 +1430,23 @@ carousel-fade .carousel-item {
   background-color: #A58263;
 }
 
+.main-background {
+  background-color: #342c27;
+}
+
 .primary-color {
   color: #342c27 !important;
+}
+
+.underline {
+  background-color: #342c27;
+  height: 4px;
+  transform: skewX(-30deg);
+  width: 84px;
+}
+
+.h-28 {
+  height: 28vh !important;
 }
 
 
