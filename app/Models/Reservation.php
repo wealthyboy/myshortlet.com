@@ -11,6 +11,11 @@ class Reservation extends Model
 
     protected $dates = ['checkin', 'checkout'];
 
+    protected $casts = [
+        'checkin' => 'datetime:Y-m-d',
+        'checkout' => 'datetime:Y-m-d',
+    ];
+
 
     public function user_reservation()
     {
