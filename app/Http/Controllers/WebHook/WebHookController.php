@@ -117,6 +117,8 @@ class WebHookController extends Controller
                 $booking->delete();
             }
 
+            dd($bookings, Reservation::all());
+
 
 
 
