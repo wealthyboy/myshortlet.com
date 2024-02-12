@@ -45,6 +45,7 @@ class ReservationsController extends Controller
 		//Reservation::truncate();
 		$reservations = UserReservation::latest()->get();
 
+
 		//dd($reservations);
 		return view('admin.reservations.index', compact('reservations'));
 	}
@@ -65,6 +66,8 @@ class ReservationsController extends Controller
 		$user_reservation = UserReservation::find($id);
 		$sub_total = $user_reservation->total;
 		$statuses = static::order_status();
+		dd($user_reservation->reservations);
+
 		return view('admin.reservations.show', compact('statuses', 'user_reservation', 'sub_total'));
 	}
 
