@@ -124,7 +124,28 @@ class HomeController
         } else {
             //Show site if admin is logged in
             if (auth()->check()  && auth()->user()->isAdmin()) {
-                return view('index', compact('sliders', 'banners', 'states', 'posts', 'featureds', 'cities', 'saved'));
+                return view('index', compact(
+                    'sliders',
+                    'banners',
+                    'states',
+                    'posts',
+                    'featureds',
+                    'cities',
+                    'saved',
+                    'apartments',
+                    'property_type',
+                    'date',
+                    'saved',
+                    'sub_total',
+                    'property',
+                    'days',
+                    'nights',
+                    'areas',
+                    'safety_practices',
+                    'amenities',
+                    'bedrooms',
+                    'restaurants',
+                ));
             }
             return view('underconstruction.index');
         }
