@@ -264,7 +264,7 @@
             <div class="col-lg-8 mx-auto text-white text-center">
                <h1 class="text-white bold-1">Contact Us </h1>
                <div class="mb-3">
-                  <p class="mb-0 display-4 bold-1 text-white">Phone: +1 (123) 456-7890</p>
+                  <p class="mb-0 display-4 bold-1 text-white">Phone: +234 701 897 1322</p>
                </div>
 
                <!-- Email -->
