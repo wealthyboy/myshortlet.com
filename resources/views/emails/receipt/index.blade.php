@@ -552,7 +552,7 @@
                                                                <td class="header2TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="scl" data-color="SectionCaptionTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;text-align: left;line-height: 19px;font-weight: lighter;" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="scl"></a>Invoice Total</td>
                                                             </tr>
                                                             <tr>
-                                                               <td class="RegularText4TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="sil" data-color="SectionInfoTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: bold;text-align: left;line-height: 23px;" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="sil"></a>{{ $user_reservation->property->currency }}{{ number_format($user_reservation->total) }}</td>
+                                                               <td class="RegularText4TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="sil" data-color="SectionInfoTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: bold;text-align: left;line-height: 23px;" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="sil"></a>{{ $user_reservation->property->currency ?? '₦'}}{{ number_format($user_reservation->total) }}</td>
                                                             </tr>
                                                             <tr>
                                                                <td colspan="3" style="font-size:0;line-height:0;" height="25">&nbsp;</td>
@@ -660,7 +660,7 @@
 
                                                                                        <tr>
                                                                                           <td class="text" style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em">
-                                                                                             {{ optional(($reservation->apartment)->name ?? optional($reservation->property)->name }}
+                                                                                             {{ optional($reservation->apartment)->name ?? optional($reservation->property)->name }}
                                                                                           </td>
                                                                                        </tr>
                                                                                        <tr>
@@ -687,14 +687,13 @@
 
                                                                                        <tr>
                                                                                           <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
-                                                                                             {{ $user_reservation->currency }}{{ $reservation->price }} per night X {{ $reservation->quantity }} - {{ $user_reservation->currency }}{{ $reservation->price *  $reservation->quantity }}
+                                                                                             {{ $user_reservation->currency ?? '₦' }}{{ $reservation->price }} per night X {{ $reservation->quantity }} - {{ $user_reservation->currency }}{{ $reservation->price *  $reservation->quantity }}
                                                                                           </td>
                                                                                        </tr>
                                                                                        <tr>
                                                                                           <td height="9"></td>
                                                                                        </tr>
                                                                                        @if(null !== $reservation->extras && $reservation->extras->count() )
-
                                                                                        <tr>
                                                                                           <td class="text" style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em">
                                                                                              Room Services
@@ -706,7 +705,7 @@
                                                                                        @foreach($reservation->extras as $extra)
                                                                                        <tr>
                                                                                           <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
-                                                                                             {{ optional($extra->attribute)->name }} {{ $user_reservation->currency }}{{ $extra->price }} X {{ $extra->quantity }} night(s) - {{ $user_reservation->currency }}{{ $extra->quantity * $extra->price}}
+                                                                                             {{ optional($extra->attribute)->name }} {{ $user_reservation->currency ?? '₦'}}{{ $extra->price }} X {{ $extra->quantity }} night(s) - {{ $user_reservation->currency ?? '₦' }}{{ $extra->quantity * $extra->price}}
                                                                                           </td>
                                                                                        </tr>
                                                                                        @endforeach
@@ -874,7 +873,7 @@
                                           </tr>
                                           <tr>
                                              <td class="wz2" width="30"><br></td>
-                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>{{ $user_reservation->currency }}{{ number_format($user_reservation->total)   }}</td>
+                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>{{ $user_reservation->currency ?? '₦'}}{{ number_format($user_reservation->total)   }}</td>
                                              <td class="wz2" width="30"><br></td>
                                           </tr>
                                           <tr>
@@ -940,7 +939,7 @@
                                           </tr>
                                           <tr>
                                              <td class="wz2" width="30"><br></td>
-                                             <td data-bgcolor="ThemeColorBG" class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="color: rgb(255, 255, 255); font-family: sans-serif; font-size: 15px; text-align: center; line-height: 27px; font-weight: bold; background-color:#342c27;" bgcolor="#67bffd"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>{{ $user_reservation->currency }}{{ number_format($user_reservation->total) }}</td>
+                                             <td data-bgcolor="ThemeColorBG" class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="color: rgb(255, 255, 255); font-family: sans-serif; font-size: 15px; text-align: center; line-height: 27px; font-weight: bold; background-color:#342c27;" bgcolor="#67bffd"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>{{ $user_reservation->currency ?? '₦' }}{{ number_format($user_reservation->total) }}</td>
                                              <td class="wz2" width="30"><br></td>
                                           </tr>
                                           <tr>
