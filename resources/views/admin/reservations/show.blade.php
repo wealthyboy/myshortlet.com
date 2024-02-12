@@ -40,7 +40,7 @@
          <div class="card-content">
             <div class="panel panel-default">
                <div class="panel-heading">
-                  <h3 class="panel-title"><i class="fa fa-user"></i> Customer Details</h3>
+                  <h3 class="panel-title"><i class="fa fa-user"></i> Agent Details</h3>
                </div>
                <table class="table">
                   <tbody>
@@ -90,7 +90,7 @@
          </div>
 
          <div class="card-content">
-            <h4 class="card-title">Address</h4>
+            <h4 class="card-title">Booking Details</h4>
             <div class="table-responsive">
                <table class="table table-bordered">
 
@@ -98,7 +98,21 @@
                      <td valign="top" align="center">
                         <table class="tableTxt" width="252" cellspacing="0" cellpadding="0" border="0" align="left">
 
+                           <tr>
+                              <td>
+                                 <h4>Guests</h4>
+                                 <div>
+                                    <b>Name:</b> {{$user_reservation->guest_user->name }}{{ $user_reservation->guest_user->last_name}}
+                                 </div>
+                                 <div>
+                                    <b>Email:</b> {{$user_reservation->guest_user->email }}
+                                 </div>
+                                 <div>
+                                    <b>Phone Number:</b> {{$user_reservation->guest_user->phone_number }}
+                                 </div>
+                              </td>
 
+                           </tr>
 
 
                            <tr>

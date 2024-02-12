@@ -15,7 +15,7 @@ class UserReservation extends Model
 
     public function registered_user()
     {
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function extras()
@@ -29,10 +29,10 @@ class UserReservation extends Model
         return $this->hasMany(Reservation::class);
     }
 
- 
+
     public function guest_user()
     {
-        return $this->belongsTo(User::class,'guest_user_id');
+        return $this->belongsTo(GuestUser::class);
     }
 
 
@@ -43,28 +43,30 @@ class UserReservation extends Model
 
 
     public function user()
-    {  
-        if ($this->user_id){
-            return $this->belongsTo(User::class,'user_id');
+    {
+        if ($this->user_id) {
+            return $this->belongsTo(User::class, 'user_id');
         } else {
-            return $this->belongsTo(GuestUser::class,'guest_user_id');
+            return $this->belongsTo(GuestUser::class, 'guest_user_id');
         }
     }
 
 
-    public function get_total(){
-		// if ($this->order_type == 'admin'){
-		// 	return number_format(optional($this->shipping)->price + $this->total);
-		// }
-		return number_format($this->total);
-	}
+    public function get_total()
+    {
+        // if ($this->order_type == 'admin'){
+        // 	return number_format(optional($this->shipping)->price + $this->total);
+        // }
+        return number_format($this->total);
+    }
 
 
-    public  function voucher(){
-		$voucher = Voucher::where('code',$this->coupon)->first();
-		if(null !== $voucher ){
-			return $voucher;
-		}
-		return null;
-	}
+    public  function voucher()
+    {
+        $voucher = Voucher::where('code', $this->coupon)->first();
+        if (null !== $voucher) {
+            return $voucher;
+        }
+        return null;
+    }
 }
