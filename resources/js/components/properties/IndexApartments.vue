@@ -83,6 +83,7 @@ export default {
             stays: null,
             loading: false,
             propertyLoading: false,
+            propertyIsLoading: false,
             isDateNeedsToToOpen: false,
             error_msg: null,
             form: {
@@ -102,7 +103,7 @@ export default {
     },
     mounted() {
         // Get all elements with class 'p-loader'
-        // var loaderElements = document.querySelectorAll('.p-loader');
+        document.getElementById("full-bg").remove();
 
         // // Loop through each element and hide it
         // loaderElements.forEach(function (element) {
@@ -293,6 +294,8 @@ export default {
             this.amount = this.apTotal;
         },
         reserve(room) {
+            this.propertyIsLoading = true;
+
             let ap = room.room
             if (
                 !this.form.check_in_checkout ||
@@ -320,7 +323,6 @@ export default {
                 check_in_checkout: this.form.check_in_checkout,
             };
 
-            this.propertyIsLoading = true;
 
             axios
                 .post("/book/store", form)

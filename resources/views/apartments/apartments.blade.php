@@ -23,6 +23,15 @@
 
 <div class="container">
 
+
+    <div id="full-bg" class="full-bg position-relative">
+        <div class="signup--middle">
+            <div class="loading">
+                <div class="loader"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="row  ">
         @if (!$apartments)
         <div id="load-products" class="col-md-10 ">
@@ -34,6 +43,8 @@
             </div>
         </div>
         @else
+
+
 
         <div id="load-products" class="col-md-12">
             <apartments-index :property="{{$property}}" :apartments="{{ $apartments }}" />
