@@ -41,8 +41,8 @@ class ReservationsController extends Controller
 
 
 
-		UserReservation::truncate();
-		Reservation::truncate();
+		//UserReservation::truncate();
+		//Reservation::truncate();
 		$reservations = UserReservation::latest()->get();
 
 
