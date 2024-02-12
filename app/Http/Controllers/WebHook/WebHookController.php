@@ -145,6 +145,7 @@ class WebHookController extends Controller
                     ->bcc($admin_emails[0])
                     ->send(new ReservationReceipt($user_reservation, $this->settings));
             } catch (\Throwable $th) {
+                dd($th);
                 Log::error("Mail error :" . $th);
             }
 

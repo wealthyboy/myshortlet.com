@@ -104,11 +104,7 @@ Route::group(['middleware' => 'currencyByIp'], function () {
 });
 
 
-// Route::get('/mailable', function () {
-//     $user_reservation = App\Models\UserReservation::find(68);
-//     $settings =  App\Models\SystemSetting::first();
-//     return new App\Mail\ReservationReceipt($user_reservation, $settings);
-// });
+
 
 
 
@@ -183,3 +179,9 @@ Route::get('/contact-us', 'Pages\PageController@index');
 
 Route::get('/virtual-tour', 'Pages\PageController@index');
 Route::post('file/uploads', 'Uploads\UploadsController@upload');
+
+Route::get('/mailable', function () {
+    $user_reservation = App\Models\UserReservation::find(11);
+    $settings =  App\Models\SystemSetting::first();
+    return new App\Mail\ReservationReceipt($user_reservation, $settings);
+});
