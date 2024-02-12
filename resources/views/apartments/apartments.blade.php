@@ -44,8 +44,6 @@
         </div>
         @else
 
-
-
         <div id="load-products" class="col-md-12">
             <apartments-index :property="{{$property}}" :apartments="{{ $apartments }}" />
         </div>
