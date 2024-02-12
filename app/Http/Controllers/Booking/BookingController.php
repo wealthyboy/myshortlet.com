@@ -44,7 +44,7 @@ class BookingController extends Controller
 		}
 
 		$ids = $bookings->pluck('id')->toArray();
-		$ids = !empty($ids) ? 	$ids[0] : $ids;
+		$ids = $ids;
 		$booking = $bookings[0];
 		$nights = [];
 		$phone_codes = Helper::phoneCodes();
@@ -72,6 +72,8 @@ class BookingController extends Controller
 	 */
 	public function store(Request $request)
 	{
+
+		//dd($request->all());
 		$booking = new BookingDetail;
 		$apartment_quantity = $request->apartment_quantity;
 		$apId = $request->apID;

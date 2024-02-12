@@ -1,5 +1,5 @@
 @inject('helper', 'App\Http\Helper')
-@extends('layouts.listing')
+@extends('layouts.checkout')
 @section('content')
 <div class="container vh-100">
 

@@ -438,11 +438,9 @@
 
                                                             <tr>
                                                                <td colspan="3" class="RegularTextTD" data-color="RegularTXT" style="margin-left: 3px;color: #000;font-family: sans-serif;font-size: 13px;font-weight: lighter;line-height: 23px; margin-bottom: 6px;"> {{ $user_reservation->property->address }} <br />
-                                                                  <div style="font-size: 18px;font-weight: bold; margin-bottom: 6px;">Arrival Date: <span style="font-size: 13px;font-weight: normal;"> {{ optional($user_reservation->checkin)->isoFormat('dddd, MMMM Do YYYY') }}</span></div>
-                                                                  <div style="font-size: 18px;font-weight: bold;  margin-bottom: 6px;">Departure Date: <span style="font-size: 13px;font-weight: normal;"> {{ optional($user_reservation->checkout)->isoFormat('dddd, MMMM Do YYYY') }}</span></div>
+
                                                                   <div style="font-size: 18px;font-weight: bold;  margin-bottom: 6px;">Check-in Time: <span style="font-size: 13px;font-weight: normal;"> {{ optional($user_reservation->property)->check_in_time }}</span></div>
                                                                   <div style="font-size: 18px;font-weight: bold;  margin-bottom: 6px;">Check-out Time: <span style="font-size: 13px;font-weight: normal;"> {{ optional($user_reservation->property)->check_out_time }}</span></div>
-
 
                                                                </td>
                                                             </tr>
@@ -647,7 +645,7 @@
                                                                      <table width="100%" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
                                                                         <tbody>
                                                                            <tr>
-                                                                              <td align="right" class="container-image"><img class="p-img" src="{{ $reservation->property->image_m }}" width="100%" height="auto" alt="locl" style="width: 100%; max-width: 150px; display: block; border: 0px;"></td>
+                                                                              <td align="right" class="container-image"><img class="p-img" src="{{ optional($reservation->apartment)->image_m }}" width="100%" height="auto" alt="locl" style="width: 100%; max-width: 150px; display: block; border: 0px;"></td>
                                                                            </tr>
                                                                         </tbody>
                                                                      </table>
@@ -668,6 +666,25 @@
                                                                                        <tr>
                                                                                           <td height="9"></td>
                                                                                        </tr>
+                                                                                       <tr>
+                                                                                          <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
+                                                                                             <b>Check-in</b> : {{ optional($reservation->checkin)->isoFormat('dddd, MMMM Do YYYY') }}
+                                                                                          </td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                          <td height="9"></td>
+                                                                                       </tr>
+
+                                                                                       <tr>
+                                                                                          <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
+                                                                                             <b>Check-out</b>: {{ optional($reservation->checkout)->isoFormat('dddd, MMMM Do YYYY') }}
+                                                                                          </td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                          <td height="9"></td>
+                                                                                       </tr>
+
+
                                                                                        <tr>
                                                                                           <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
                                                                                              {{ $user_reservation->currency }}{{ $reservation->price }} per night X {{ $reservation->quantity }} - {{ $user_reservation->currency }}{{ $reservation->price *  $reservation->quantity }}

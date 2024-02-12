@@ -51,7 +51,7 @@ class WebHookController extends Controller
             $guest->email = $input['email'];
             $guest->phone_number = $input['phone_number'];
             $guest->save();
-            $booking = BookingDetail::find($input['booking_ids']);
+            $bookings = BookingDetail::find($input['booking_ids']);
             $user_reservation->user_id = optional($request->user())->id;
             $user_reservation->guest_user_id = $guest->id;
             $user_reservation->currency =  $input['currency'];
@@ -60,8 +60,8 @@ class WebHookController extends Controller
             $user_reservation->property_id = $input['property_id'];
             $user_reservation->coupon =  $input['coupon'];
             $user_reservation->total = $input['total'];
-            $user_reservation->checkin = optional($booking)->checkin;
-            $user_reservation->checkout = optional($booking)->checkout;
+            // $user_reservation->checkin = optional($booking)->checkin;
+            // $user_reservation->checkout = optional($booking)->checkout;
             $user_reservation->ip = $request->ip();
             $user_reservation->save();
             $e_services = [];
@@ -82,37 +82,41 @@ class WebHookController extends Controller
                 }
             }
 
+            foreach ($bookings as $booking) {
+                $reservation = new Reservation;
+                $reservation->quantity = $booking->quantity;
+                $reservation->apartment_id = $booking->apartment_id;
+                $reservation->price = $booking->price;
+                $reservation->sale_price = $booking->sale_price;
+                $reservation->user_reservation_id = $user_reservation->id;
+                $reservation->property_id = $booking->property_id;
+                $reservation->checkin = $booking->checkin;
+                $reservation->checkout = $booking->checkout;
+                $reservation->save();
 
-            $reservation = new Reservation;
-            $reservation->quantity = $booking->quantity;
-            $reservation->apartment_id = $booking->apartment_id;
-            $reservation->price = $booking->price;
-            $reservation->sale_price = $booking->sale_price;
-            $reservation->user_reservation_id = $user_reservation->id;
-            $reservation->property_id = $booking->property_id;
-            $reservation->checkin = $booking->checkin;
-            $reservation->checkout = $booking->checkout;
-            $reservation->save();
-
-            if (!empty($e_services)) {
-                foreach ($e_services as $key => $attributes) {
-                    foreach ($attributes as $attribute_id => $qty) {
-                        $extras = new Extra;
-                        if ($booking->apartment_id == $key) {
-                            $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
-                            $extras->apartment_id  = $key;
-                            $extras->property_id = $request->property_id;
-                            $extras->quantity = $qty;
-                            $extras->user_id = optional($request->user())->id;
-                            $extras->reservation_id = $reservation->id;
-                            $extras->price = $attribute->converted_price;
-                            $extras->guest_user_id = $guest->id;
-                            $extras->attribute_id = $attribute_id;
-                            $extras->save();
+                if (!empty($e_services)) {
+                    foreach ($e_services as $key => $attributes) {
+                        foreach ($attributes as $attribute_id => $qty) {
+                            $extras = new Extra;
+                            if ($booking->apartment_id == $key) {
+                                $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
+                                $extras->apartment_id  = $key;
+                                $extras->property_id = $request->property_id;
+                                $extras->quantity = $qty;
+                                $extras->user_id = optional($request->user())->id;
+                                $extras->reservation_id = $reservation->id;
+                                $extras->price = $attribute->converted_price;
+                                $extras->guest_user_id = $guest->id;
+                                $extras->attribute_id = $attribute_id;
+                                $extras->save();
+                            }
                         }
                     }
                 }
             }
+
+
+
 
 
 
