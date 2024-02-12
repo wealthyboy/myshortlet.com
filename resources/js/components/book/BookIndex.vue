@@ -82,9 +82,9 @@
 
 
           <div class=" bg-white mt-3">
-            <h4 class="card-title  p-3 border-bottom mb-0 bold-3">
+            <h3 class="card-title  p-3 custom-border-bottom mb-0 bold-3">
               You may be intrested in
-            </h4>
+            </h3>
             <div class="card-body pt-0">
 
               <property-extras :extra_service="extra_service" v-for="extra_service in property.extra_services"
