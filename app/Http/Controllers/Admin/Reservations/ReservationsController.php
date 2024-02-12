@@ -66,7 +66,7 @@ class ReservationsController extends Controller
 		$user_reservation = UserReservation::find($id);
 		$sub_total = $user_reservation->total;
 		$statuses = static::order_status();
-		dd($user_reservation->reservations);
+		//dd($user_reservation->reservations);
 
 		return view('admin.reservations.show', compact('statuses', 'user_reservation', 'sub_total'));
 	}

@@ -124,7 +124,6 @@ class WebHookController extends Controller
 
             foreach ($property_extras as $attribute_id) {
                 $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
-
                 $attr = AttributeProperty::where('attribute_id', $attribute_id)->first();
                 $extras = new Extra;
                 $extras->property_id = $request->property_id;
@@ -147,7 +146,7 @@ class WebHookController extends Controller
                     ->bcc($admin_emails[0])
                     ->send(new ReservationReceipt($user_reservation, $this->settings));
             } catch (\Throwable $th) {
-                dd($th);
+                //                dd($th);
                 Log::error("Mail error :" . $th);
             }
 
