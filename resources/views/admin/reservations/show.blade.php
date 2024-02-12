@@ -170,7 +170,7 @@
 
 
                            <td class="td-number text-right">
-                              {{ $reservation->currency  ?? '₦' }}{{ optional($reservation->apartment)->converted_price   }}
+                              {{ $reservation->currency  ?? '₦' }}{{ number_format(optional($reservation->apartment)->converted_price)   }}
                            </td>
                            <td class="td-number">
                               {{ $reservation->checkin->diffInDays($reservation->checkout); }}
