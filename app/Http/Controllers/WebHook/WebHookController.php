@@ -68,7 +68,7 @@ class WebHookController extends Controller
             $services = $input['services'];
             $e_services = [];
             $aq = [];
-            $services =  $input['services'];
+            $services = $input['services'];
             $property_extras = $input['property_services'];
 
             if (!empty($services)) {
@@ -117,8 +117,6 @@ class WebHookController extends Controller
                 $booking->delete();
             }
 
-            dd($bookings, Reservation::all());
-
 
 
 
@@ -138,8 +136,6 @@ class WebHookController extends Controller
             }
 
             $admin_emails = explode(',', $this->settings->alert_email);
-
-            Log::info($admin_emails);
 
 
             try {
