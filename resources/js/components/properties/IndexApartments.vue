@@ -188,7 +188,6 @@ export default {
         },
         checkAvailabity: function () {
             // this.build()
-            this.propertyIsLoading = true
 
             this.form.children = document.querySelector("#children").value;
             this.form.adults = document.querySelector("#adults").value;
@@ -223,7 +222,7 @@ export default {
             const retrievedObject = JSON.parse(retrievedJsonString);
 
             // Now 'retrievedObject' contains the object retrieved from localStorage
-            console.log(retrievedObject);
+            this.propertyIsLoading = true
 
             axios
                 .get('/apartments', {

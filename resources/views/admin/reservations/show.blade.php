@@ -98,9 +98,7 @@
                      <td valign="top" align="center">
                         <table class="tableTxt" width="252" cellspacing="0" cellpadding="0" border="0" align="left">
 
-                           <tr>
-                              <td class="RegularText4TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="SectionInfoLink" data-color="SectionInfoTXT" style="color: #425065;font-family: sans-serif;font-size: 18px;font-weight: bold;text-align: left;line-height: 23px;" width="179" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="SectionInfoLink"></a>Property Address</td>
-                           </tr>
+
 
 
                            <tr>
@@ -122,7 +120,7 @@
                            <th class="text-left">Check-in</th>
                            <th class="text-left">Check-out</th>
                            <th class="text-right">Price</th>
-                           <th class="text-right">Qty</th>
+                           <th class="text-right">Nights</th>
                            <th class="text-right">Amount</th>
                         </tr>
                      </thead>
@@ -158,13 +156,13 @@
 
 
                            <td class="td-number text-right">
-                              {{ $reservation->currency }}{{ optional($reservation->apartment)->converted_price   }}
+                              {{ $reservation->currency  ?? '₦' }}{{ optional($reservation->apartment)->converted_price   }}
                            </td>
                            <td class="td-number">
-                              {{ $reservation->quantity }}
+                              {{ $reservation->checkin->diffInDays($reservation->checkout); }}
                            </td>
                            <td class="td-number">
-                              <small>{{ $reservation->currency }}</small>{{ optional($reservation->apartment)->converted_price }}
+                              <small>{{ $reservation->currency  ?? '₦' }}</small>{{ optional($reservation->apartment)->converted_price }}
                            </td>
                         </tr>
                         @endforeach
@@ -174,7 +172,7 @@
                      <tfoot>
                         <tr>
                            <td colspan="6" class="text-right">Sub-Total</td>
-                           <td class="text-right"><small>{{ $user_reservation->currency }}</small>{{ number_format($sub_total)  }}</td>
+                           <td class="text-right"><small>{{ $reservation->currency  ?? '₦' }}</small>{{ number_format($sub_total)  }}</td>
                         </tr>
                         <tr>
                            <td colspan="6" class="text-right">Coupon</td>
@@ -183,7 +181,7 @@
 
                         <tr>
                            <td colspan="6" class="text-right">Total</td>
-                           <td class="text-right">{{ $user_reservation->currency }}{{ $user_reservation->total }}</td>
+                           <td class="text-right">{{ $reservation->currency  ?? '₦'  }}{{ number_format($user_reservation->total) }}</td>
                         </tr>
                      </tfoot>
                   </table>

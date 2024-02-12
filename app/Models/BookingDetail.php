@@ -47,8 +47,8 @@ class BookingDetail extends Model
       ->where(['token' => $cookie, 'property_id' => $property_id])
       ->where('quantity', '>=', 1)
       ->whereDate('checkin', '>=', now())
-      ->get();
-    return   $total = $total[0]->items_total;
+      ->latest()->first();
+    return   $total = $total->items_total;
   }
 
 

@@ -23,7 +23,6 @@
 
                            <th>Invoice</th>
                            <th>Customer</th>
-
                            <th>Date Added</th>
                            <th>Total</th>
                            <th class="text-right"></th>
@@ -36,7 +35,7 @@
                            <td class="text-left">{{ $reservation->invoice }}</td>
                            <td>{{ $reservation->user->fullname() }}</td>
                            <td>{{ $reservation->created_at }}</td>
-                           <td class="text-left">{{ $reservation->currency  ?? '₦'}}{{ $reservation->total }}</td>
+                           <td class="text-left">{{ $reservation->currency  ?? '₦'}}{{ number_format($reservation->total) }}</td>
                            <td class="td-actions text-center">
 
                               @if(!$reservation->is_cancelled)
