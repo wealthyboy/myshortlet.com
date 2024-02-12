@@ -39,9 +39,10 @@ class BookingController extends Controller
 		$referer = request()->headers->get('referer');
 		$bookings = BookingDetail::all_items_in_cart($property->id);
 		$user = auth()->user();
-		if (null == $bookings) {
-			return back();
+		if (!$bookings->count()) {
+			return redirect()->to('/');
 		}
+
 
 		$ids = $bookings->pluck('id')->toArray();
 		$ids = $ids;
@@ -57,7 +58,7 @@ class BookingController extends Controller
 		$total = $total * $days;
 		$from = $booking->checkin->format('l') . ' ' . $booking->checkin->format('d') . ' ' . $booking->checkin->format('F') . ' ' . $booking->checkin->isoFormat('Y');
 		$to = $booking->checkout->format('l') . ' ' . $booking->checkout->format('d') . ' ' . $booking->checkout->format('F') . ' ' . $booking->checkout->isoFormat('Y');
-		$booking_details = ['days' => $days, 'from' => $from, 'to' => $to, 'nights' => $nights, 'total' => $total, 'booking_ids' => $ids, 'is_agent' => optional($user)->isAgent()];
+		$booking_details = ['loggedIn' => auth()->check(), 'user' => auth()->user(), 'days' => $days, 'from' => $from, 'to' => $to, 'nights' => $nights, 'total' => $total, 'booking_ids' => $ids, 'is_agent' => optional($user)->isAgent()];
 		$qs = request()->all();
 		return view('book.index', compact('qs', 'referer', 'phone_codes', 'property', 'bookings', 'booking_details'));
 	}

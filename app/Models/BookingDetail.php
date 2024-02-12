@@ -32,7 +32,9 @@ class BookingDetail extends Model
     $booking = BookingDetail::with(["apartment", 'apartment.free_services', 'apartment.bedrooms', 'apartment.bedrooms.parent', 'apartment.property', 'apartment.extra_services'])
       ->where(['token' => $cookie, 'property_id' => $property_id])
       ->whereDate('checkin', '>=', now())
-      ->get();
+      ->latest()->first();
+
+    $booking = collect([$booking]);
     static::sync($booking);
     return $booking;
   }

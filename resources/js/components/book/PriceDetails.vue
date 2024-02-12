@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="bg-white ">
-      <div class="card-title border-bottom p-3 text-size-1-big bold-2">
+      <div class="card-title custom-border-bottom p-3 text-size-1-big bold-3">
         Your Booking Details
       </div>
       <div>
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="bg-white mt-2">
-      <div class="card-title bold-2 border-bottom p-3 text-size-1-big">
+      <div class="card-title bold-3 custom-border-bottom p-3 text-size-1-big">
         Price Details
       </div>
 

@@ -4,16 +4,16 @@
       <booking-complete />
     </div>
     <div v-if="!paymentIsComplete" class="col-md-7 mb-3">
-      <h3 class="bold-2-2">Review and book</h3>
+      <h3 class="bold-3">Review and book</h3>
     </div>
     <div v-if="!paymentIsComplete" class="col-md-7">
       <form action="" method="get">
-        <booking-property :property="property" />
+        <!-- <booking-property :property="property" /> -->
 
-        <booking-login />
+        <booking-login :booking_details="booking_details" />
 
-        <div class=" bg-white ">
-          <h3 class="card-title p-3 border-bottom bold-2">Who's checking in?</h3>
+        <div class=" bg-white mt-3">
+          <h3 class="card-title p-3 custom-border-bottom bold-3">Who's checking in?</h3>
           <div class="card-body pt-0">
             <div class="form-row">
               <div class="form-group bmd-form-group col-6">
@@ -74,15 +74,15 @@
           </div>
         </div>
 
-        <bookings v-for="booking in bookings" :key="booking.id" :booking="booking" :booking_details="booking_details"
-          :property="property" @addExtraService="addExtraService" :bookings="bookings" />
+        <!-- <bookings v-for="booking in bookings" :key="booking.id" :booking="booking" :booking_details="booking_details"
+          :property="property" @addExtraService="addExtraService" :bookings="bookings" /> -->
 
         <template v-if="property.extra_services.length">
 
 
 
-          <div class=" bg-white mt-2">
-            <h4 class="card-title  p-3 border-bottom mb-0 bold-2">
+          <div class=" bg-white mt-3">
+            <h4 class="card-title  p-3 border-bottom mb-0 bold-3">
               You may be intrested in
             </h4>
             <div class="card-body pt-0">
@@ -100,11 +100,11 @@
 
         <rules :property="property" />
 
-        <div class=" bg-white  mt-2">
-          <div class="card-body pt-0">
-            <div class="border-bottom">
-              <div class="d-flex  justify-content-between align-items-center ">
-                <h3 class="card-title mt-2 pb-3 mb-0 bold-2">
+        <div class=" bg-white  mt-3">
+          <div class="card-">
+            <div class="custom-border-bottom ">
+              <div class="d-flex justify-content-between align-items-center p-2 px-3 pb-3 ">
+                <h3 class="card-title   mb-0 bold-3">
                   Payment
                 </h3>
                 <div class="payment-icons d-flex justify-content-center align-items-center">
@@ -126,7 +126,7 @@
 
             <price-details :bookings="bookings" :property="property" :booking_details="booking_details" :amount="amount"
               :sub_total="bookingSubTotal" />
-            <div class="text-info">
+            <div class="primary-color">
               By clicking on the button below, I acknowledge that I have read
               and understand the rules and regulations of this property
             </div>

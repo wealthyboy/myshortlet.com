@@ -102,12 +102,7 @@
                               <td class="RegularText4TD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="SectionInfoLink" data-color="SectionInfoTXT" style="color: #425065;font-family: sans-serif;font-size: 18px;font-weight: bold;text-align: left;line-height: 23px;" width="179" valign="top" align="left"><a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="SectionInfoLink"></a>Property Address</td>
                            </tr>
 
-                           <tr>
-                              <td colspan="3" class="RegularTextTD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="margin-left: 3px;color: #000;font-family: sans-serif;font-size: 13px;font-weight: lighter;line-height: 23px;"> {{ optional($user_reservation->property)->address }} <br />
-                                 <div style="font-size: 18px;font-weight: bold;">Check-in - Check-out:</div> {{-- $user_reservation->checkin->isoFormat('dddd, MMMM Do YYYY') --}} - {{-- $user_reservation->checkout->isoFormat('dddd, MMMM Do YYYY') --}}
-                                 <div style="font-size: 18px;font-weight: bold;">Property Contact:</div> Email: {{ optional(optional($user_reservation->property)->user)->email }} <br /> Phone number: {{ optional(optional($user_reservation->property)->user)->phone_number }}
-                              </td>
-                           </tr>
+
                            <tr>
                               <td colspan="3" style="font-size:0;line-height:0;" height="25"></td>
                            </tr>

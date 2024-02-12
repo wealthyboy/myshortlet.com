@@ -1,6 +1,6 @@
 <template>
-  <div class=" bg-white">
-    <h3 class="card-title  p-3 border-bottom mb-0 bold-2">
+  <div class=" bg-white mt-3">
+    <h3 class="card-title  p-3 custom-border-bottom mb-0 bold-3">
       Important Trip Information
     </h3>
     <div class="card-body pt-0">
