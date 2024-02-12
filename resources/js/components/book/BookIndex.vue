@@ -577,6 +577,7 @@ export default {
           context.payment_is_processing = false;
           context.paymentIsComplete = true;
           localStorage.removeItem('searchParams');
+          document.getElementById("back-to-selection").remove()
         })
         .catch((error) => {
           context.order_text = "Make Payment";

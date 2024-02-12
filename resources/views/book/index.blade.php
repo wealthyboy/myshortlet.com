@@ -3,7 +3,7 @@
 @section('content')
 <div class="container vh-100">
 
-   <div class="row">
+   <div id="back-to-selection" class="row">
       <div class="col-12"> <a href="{{ $referer }}?check_in_checkout={{ $qs['check_in_checkout'] }}&property_id={{ isset( $qs['property_id'] ) ? $qs['property_id'] : null }}"> <i class=""></i> Back to selection</a> </div>
    </div>
 
