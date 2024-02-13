@@ -21,9 +21,9 @@ class QrCodeController extends Controller
             new ImagickImageBackEnd()
         );
         $writer = new Writer($renderer);
-        $qrCode =  $writer->writeFile('https://avenuemontaigne.ng/checkin', 'checkin.png');
+        $writer->writeFile('https://avenuemontaigne.ng/checkin', 'checkin.png');
 
-        dd($qrCode);
+        dd($writer);
 
         // Generate QR code
         // $qrCode = $writer->writeString('https://avenuemontaigne.ng/checkin');
