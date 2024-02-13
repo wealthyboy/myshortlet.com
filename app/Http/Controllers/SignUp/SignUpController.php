@@ -127,7 +127,7 @@ class SignUpController extends Controller
                 Notification::route('mail', $guest->email)
                     ->notify(new  NewGuest($guest));
 
-                Notification::route('mail', 'oluwa.tosin@avenuemontaigne.ng')
+                Notification::route('mail', 'oluwatb@hotmail.com')
                     ->notify(new CheckinNotification($guest));
             } catch (\Throwable $th) {
                 dd($th);
