@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\QrCode\QrCodeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -181,6 +182,8 @@ Route::get('/contact-us', 'Pages\PageController@index');
 
 Route::get('/virtual-tour', 'Pages\PageController@index');
 Route::post('file/uploads', 'Uploads\UploadsController@upload');
+Route::get('qr-checkin', 'QrCode\\QrCodeController@generateQRCode');
+
 
 Route::get('/mailable', function () {
     $user_reservation = App\Models\UserReservation::find(11);
