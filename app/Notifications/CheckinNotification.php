@@ -43,6 +43,8 @@ class CheckinNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->subject('New Reservation')
+
             ->greeting('Hello! Admin')
             ->line('You have a reservation')
 
