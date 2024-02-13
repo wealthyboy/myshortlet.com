@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 
 
@@ -108,14 +108,19 @@ class SignUpController extends Controller
             $visitor = $request;
             $visitor->image = session('session_link');
 
-            // Save the file to the specified directory
-            Storage::put($directory . '/' . $fileName, $fileContent);
 
-            // File path where the file is saved
-            $filePath = Storage::path($directory . '/' . $fileName);
+            // Check if the directory exists, if not create it
+            if (!File::exists($directory)) {
+                File::makeDirectory($directory);
+            }
+
+
+            // Save the file to the specified directory
+            File::put($directory . '/' . $fileName, $fileContent);
+
 
             $pdf = PDF::loadView('pdf.index', compact('visitor'));
-            $pdf->save(public_path('/pdf/guest_' . $guest->name . '.pdf'));
+            $pdf->save(public_path('pdf/guest_' . $guest->name . '.pdf'));
 
 
             try {
@@ -124,7 +129,7 @@ class SignUpController extends Controller
                 // Notification::route('mail', $guest->email)
                 //     ->notify(new  NewGuest($user));
 
-                Notification::route('mail', 'oluwa.tosin@avenuemontaigne.ng')
+                Notification::route('mail', 'jacob.atam@gmail.com')
                     ->notify(new CheckinNotification($guest));
             } catch (\Throwable $th) {
                 dd($th);

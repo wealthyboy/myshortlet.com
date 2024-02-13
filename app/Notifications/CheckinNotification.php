@@ -44,7 +44,9 @@ class CheckinNotification extends Notification
     {
         return (new MailMessage)
             ->greeting('Hello! Admin')
-            ->attach(public_path('/pdf/guest_' . $this->guest->name))
+            ->attach(
+                public_path('/pdf/guest_' . $this->guest->name . '.pdf')
+            )
             ->line('Thank you for using our application!');
     }
 

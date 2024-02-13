@@ -85,11 +85,7 @@
 
                         <button type="submit" id="login_form_button" data-loading="Loading" class=" ml-1 btn btn-primary btn-round btn-lg btn-block" name="login" value="Log in">Submit</button>
 
-                        <!-- <div class="mt-4 pt-4 text-center border-top">
-                            <p class="form-group col-12">
-                                Have an account? <a class="color--primary bold-2" href="/login">Login</a></p>
-                            </p>
-                        </div> -->
+
                     </form>
                     @endif
 
@@ -179,6 +175,8 @@ $("div.error").html('Please allow your image to finish uploading')
 return false;
 });
 }
+
+$("#form").addClass('header-filter')
 
 
 form.submit();
