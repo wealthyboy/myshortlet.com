@@ -28,6 +28,6 @@ class QrCodeController extends Controller
         // Generate QR code
         // $qrCode = $writer->writeString('https://avenuemontaigne.ng/checkin');
 
-        return view('qrcode', compact('qrCode'));
+        return view('qrcode.qrcode');
     }
 }
