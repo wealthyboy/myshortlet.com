@@ -4,7 +4,7 @@ namespace App\Http\Controllers\QrCode;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
@@ -16,6 +16,14 @@ class QrCodeController extends Controller
         // Create a QR code writer
 
         $image = QrCode::size(200)->generate('https://avenuemontaigne.ng/checkin', public_path('qrcodes/checkin.png'));
+
+
+        $image = QrCode::format('png')
+            ->merge('img/t.jpg', 0.1, true)
+            ->size(200)->errorCorrection('H')
+            ->generate('https://avenuemontaigne.ng/checkin');
+        $output_file = '/img/qr-code/img-' . time() . '.png';
+        Storage::disk('local')->put($output_file, $image);
 
         dd($image);
 
