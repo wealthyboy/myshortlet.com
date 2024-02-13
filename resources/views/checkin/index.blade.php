@@ -5,12 +5,17 @@
 
 @section('content')
 <!--Content-->
-<section class="sec-padding">
+<section style="background-color: rgb(248, 245, 244);" class="sec-padding">
     <div class="container">
         <div class="row justify-content-center">
             <div class="ml-1 col-md-7   mr-1">
                 <div class=" mt-4 mb-4">
-                    <form method="POST" id="submit" class=" pl-4 pr-4 border form-validate" action="/checkin">
+                    @if (session('success'))
+                    <div class="alert alert-success">
+                        Thank you for checking in .Enjoy your stay
+                    </div>
+                    @else
+                    <form method="POST" id="submit" class=" pl-4 pr-4 border form-validate bg-white" action="/checkin">
 
                         <div class="text-center">
                             <h2 class="bold-3">Welcome to Avenue Montaigne</h2>
@@ -54,15 +59,15 @@
 
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label class="bmd-label-floating">Checkin </label>
-                                <input type="text" class="form-control selector" name="phone_number">
+                                <input type="text" class="form-control selector" name="checkin">
                             </div>
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label class="bmd-label-floating">Checkout</label>
-                                <input type="text" class="form-control selector" name="phone_number">
+                                <input type="text" class="form-control selector" name="checkout">
                             </div>
 
                             <div class="form-group bmd-form-group col-md-12 col-12">
-                                <select class="form-control" aria-label="Default select example">
+                                <select name="apartment_id" class="form-control">
                                     <option selected>Choose Apartment</option>
                                     @foreach($rooms as $room)
                                     <option value="{{ $room->id }}">{{ $room->name }}</option>
@@ -86,11 +91,14 @@
                             </p>
                         </div> -->
                     </form>
+                    @endif
+
                 </div>
             </div>
         </div>
     </div>
 </section>
+<div style="height: 200px;"></div>
 <!--End Content-->
 @endsection
 

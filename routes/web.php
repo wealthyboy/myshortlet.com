@@ -164,6 +164,8 @@ Route::get('auto-complete', 'Properties\PropertiesController@autoComplete');
 Route::get('property/{property}', 'Properties\PropertiesController@show');
 Route::get('properties/{category}', 'Properties\PropertiesController@index');
 Route::get('checkin', 'SignUp\SignUpController@index');
+Route::post('checkin', 'SignUp\SignUpController@store');
+
 
 
 

@@ -119,9 +119,6 @@ class WebHookController extends Controller
 
 
 
-
-
-
             foreach ($property_extras as $attribute_id) {
                 $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
                 $attr = AttributeProperty::where('attribute_id', $attribute_id)->first();
