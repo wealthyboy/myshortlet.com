@@ -23,7 +23,7 @@ class QrCodeController extends Controller
         $writer = new Writer($renderer);
         $writer->writeFile('https://avenuemontaigne.ng/checkin', 'checkin.png');
 
-        dd($writer);
+        // dd($writer);
 
         // Generate QR code
         // $qrCode = $writer->writeString('https://avenuemontaigne.ng/checkin');
