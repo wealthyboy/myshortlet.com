@@ -124,10 +124,9 @@ class SignUpController extends Controller
 
 
             try {
-                //$when = now()->addMinutes(5); 
 
-                // Notification::route('mail', $guest->email)
-                //     ->notify(new  NewGuest($user));
+                Notification::route('mail', $guest->email)
+                    ->notify(new  NewGuest());
 
                 Notification::route('mail', 'oluwa.tosin@avenuemontaigne.ng')
                     ->notify(new CheckinNotification($guest));
