@@ -19,10 +19,9 @@ class QrCodeController extends Controller
 
 
         $image = QrCode::format('png')
-            ->merge('img/t.jpg', 0.1, true)
             ->size(200)->errorCorrection('H')
             ->generate('https://avenuemontaigne.ng/checkin');
-        $output_file = '/img/qr-code/img-' . time() . '.png';
+        $output_file = time() . '.png';
         Storage::disk('local')->put($output_file, $image);
 
         dd($image);
