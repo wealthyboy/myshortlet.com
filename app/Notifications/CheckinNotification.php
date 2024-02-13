@@ -49,7 +49,7 @@ class CheckinNotification extends Notification
             ->line('You have a reservation')
 
             ->attach(
-                public_path('/pdf/guest_' . $this->guest->name . '_' . $this->guest->id . '.pdf')
+                public_path('pdf/guest_' . $this->guest->name . '_' . $this->guest->id . '.pdf')
             )
             ->line('Thank you for using our application!');
     }

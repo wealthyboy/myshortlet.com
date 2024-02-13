@@ -6,7 +6,7 @@
 @section('content')
 <!--Content-->
 <section style="background-color: rgb(248, 245, 244);" class="sec-padding">
-    <div class="container">
+    <div class="container ">
         <div class="row justify-content-center">
             <div class="ml-1 col-md-7   mr-1">
                 <div class=" mt-4 mb-4">
@@ -14,12 +14,15 @@
                     <div class="alert alert-success">
                         Thank you for checking in .Enjoy your stay
                     </div>
+
                     @else
-                    <form method="POST" id="submit" class=" pl-4 pr-4 border form-validate bg-white" action="/checkin">
+                    <form method="POST" id="submit" class=" pl-4 pr-4 border form-validate bg-white " action="/checkin">
 
                         <div class="text-center">
-                            <h2 class="bold-3">Welcome to Avenue Montaigne</h2>
-                            <p class="">Checkin</p>
+                            <a href="/" class="navbar-brand mt-5">
+                                <div class="logo-small"><img src="/images/logo/avem-logo.png" alt="" srcset=""></div>
+                            </a>
+                            <p class="bold-2">Fill in the form to check-in </p>
                         </div>
                         @csrf
 

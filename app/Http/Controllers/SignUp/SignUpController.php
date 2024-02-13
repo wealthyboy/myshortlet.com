@@ -80,7 +80,7 @@ class SignUpController extends Controller
             $user_reservation->payment_type = 'checkin';
             $user_reservation->property_id = $property->id;
             $user_reservation->coupon = null;
-            $user_reservation->total = $apartment->price * $date_diff;
+            $user_reservation->total = (optional($apartment)->price || 0) * $date_diff;
             $user_reservation->ip = $request->ip();
             $user_reservation->save();
 
@@ -94,9 +94,6 @@ class SignUpController extends Controller
             $reservation->checkin = $request->checkin;
             $reservation->checkout = $request->checkout;
             $reservation->save();
-
-
-
 
             // Create a file name
             $fileName = 'guest_' . $guest->name . '_' . $guest->id . '.pdf';
