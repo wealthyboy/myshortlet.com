@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\GuestUser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,14 +12,16 @@ class NewGuest extends Notification
 {
     use Queueable;
 
+    public $guest;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(GuestUser $guestUser)
     {
-        //
+        $this->guest = $guestUser;
     }
 
     /**
@@ -41,6 +44,7 @@ class NewGuest extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->greeting("Dear " . $this->guest->name)
             ->subject("Welcome to Avenue Montaigne")
             ->line('On behalf of the entire team at Avenue Montaigne, I would like to extend a warm welcome to you! We are thrilled to have you as our guest and hope your stay with us will be comfortable, enjoyable, and memorable.')
             ->line("Located in the heart of Lagos, Avenue Montaigne offers unparalleled comfort and convenience. Whether you're here for business or leisure, our spacious and elegantly appointed apartments provide the perfect retreat after a day of exploration or work.")

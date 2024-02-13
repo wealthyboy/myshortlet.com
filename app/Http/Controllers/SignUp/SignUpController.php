@@ -96,8 +96,10 @@ class SignUpController extends Controller
             $reservation->save();
 
 
+
+
             // Create a file name
-            $fileName = 'guest_' . $guest->name . '.pdf';
+            $fileName = 'guest_' . $guest->name . '_' . $guest->id . '.pdf';
 
             // Generate some content for the file
             $fileContent = '';
@@ -120,13 +122,13 @@ class SignUpController extends Controller
 
 
             $pdf = PDF::loadView('pdf.index', compact('visitor'));
-            $pdf->save(public_path('pdf/guest_' . $guest->name . '.pdf'));
+            $pdf->save(public_path('pdf/guest_' . $guest->name . '_' . $guest->id . '.pdf'));
 
 
             try {
 
                 Notification::route('mail', $guest->email)
-                    ->notify(new  NewGuest());
+                    ->notify(new  NewGuest($guest));
 
                 Notification::route('mail', 'oluwa.tosin@avenuemontaigne.ng')
                     ->notify(new CheckinNotification($guest));
