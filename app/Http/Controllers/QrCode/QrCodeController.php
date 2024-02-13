@@ -24,7 +24,7 @@ class QrCodeController extends Controller
         $output_file = time() . '.png';
         Storage::disk('local')->put($output_file, $image);
 
-        dd($image);
+        // dd($image);
 
 
         // dd($writer);
