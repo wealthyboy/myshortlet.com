@@ -44,6 +44,8 @@ class CheckinNotification extends Notification
     {
         return (new MailMessage)
             ->greeting('Hello! Admin')
+            ->line('You have a reservation')
+
             ->attach(
                 public_path('/pdf/guest_' . $this->guest->name . '.pdf')
             )
