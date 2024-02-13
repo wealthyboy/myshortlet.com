@@ -5,10 +5,8 @@ namespace App\Http\Controllers\QrCode;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Writer;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 class QrCodeController extends Controller
 {
@@ -16,12 +14,11 @@ class QrCodeController extends Controller
     {
 
         // Create a QR code writer
-        $renderer = new ImageRenderer(
-            new RendererStyle(400),
-            new ImagickImageBackEnd()
-        );
-        $writer = new Writer($renderer);
-        $writer->writeFile('https://avenuemontaigne.ng/checkin', 'checkin.png');
+
+        $image = QrCode::size(200)->generate('https://avenuemontaigne.ng/checkin', public_path('qrcodes/checkin.png'));
+
+        dd($image);
+
 
         // dd($writer);
 
