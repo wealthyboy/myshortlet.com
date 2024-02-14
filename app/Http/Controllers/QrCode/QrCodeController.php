@@ -15,9 +15,7 @@ class QrCodeController extends Controller
 
         // Create a QR code writer
 
-        $image = QrCode::size(200)->generate('https://avenuemontaigne.ng/checkin', public_path('qrcodes/checkin.png'));
-
-
+        // $image = QrCode::size(200)->generate('https://avenuemontaigne.ng/checkin', public_path('qrcodes/checkin.png'));
         // $image = QrCode::format('png')
         //     ->size(200)->errorCorrection('H')
         //     ->generate('https://avenuemontaigne.ng/checkin');
@@ -25,8 +23,6 @@ class QrCodeController extends Controller
         // Storage::disk('local')->put($output_file, $image);
 
         // dd($image);
-
-
         // dd($writer);
 
         // Generate QR code
