@@ -18,11 +18,11 @@ class QrCodeController extends Controller
         $image = QrCode::size(200)->generate('https://avenuemontaigne.ng/checkin', public_path('qrcodes/checkin.png'));
 
 
-        $image = QrCode::format('png')
-            ->size(200)->errorCorrection('H')
-            ->generate('https://avenuemontaigne.ng/checkin');
-        $output_file = time() . '.png';
-        Storage::disk('local')->put($output_file, $image);
+        // $image = QrCode::format('png')
+        //     ->size(200)->errorCorrection('H')
+        //     ->generate('https://avenuemontaigne.ng/checkin');
+        // $output_file = time() . '.png';
+        // Storage::disk('local')->put($output_file, $image);
 
         // dd($image);
 
