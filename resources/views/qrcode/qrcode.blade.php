@@ -13,7 +13,7 @@
     </div>
 
 
-    <div class="visible-print text-center">
+    <div style="margin-top: 100px;" class="visible-print text-center ">
         {!! QrCode::size(200)->generate('https://avenuemontaigne.ng'); !!}
     </div>
 
