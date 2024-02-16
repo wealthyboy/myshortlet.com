@@ -1,19 +1,18 @@
 @extends('layouts.app')
 @section('content')
 
+
 <div class="video-section">
    <div class="intro-image">
       <img src="/images/logo/avm_residences.png" alt="">
    </div>
 
-   <div role="button" class="down-icon">
-      <a href="#">
-         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
-            <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+   <div role="button" class="intro-image play">
+      <a class=" play-video" href="#">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
          </svg>
       </a>
-
    </div>
 
    <!-- <video class=" vidoeo-intro" src="/video/avem.mp4" autoplay muted loop></video> -->
@@ -26,13 +25,15 @@
          @endforeach
 
       </ol>
-      <div class="carousel-inner">
+      <div class="carousel-inner header-filter">
          @foreach($sliders as $key => $slider)
 
          <div class="carousel-item {{ $key === 0 ? 'active' : ''}}">
             <img src="{{ $slider->image }}" class="d-block w-100" alt="...">
          </div>
          @endforeach
+
+
 
       </div>
       <button class="carousel-control-prev" data-target="#carouselExampleIndicators" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
@@ -50,7 +51,10 @@
 
 
 
-<div class="search-header d-block">
+
+
+
+<div class="search-header d-block ">
    <search-apartments />
 </div>
 
@@ -83,7 +87,7 @@
       </div>
    </section>
 </div>
-<div style="background-color: rgb(248, 245, 244);" class="ap">
+<div style="background-color: rgb(248, 245, 244);" class="ap mb-3">
    <div class="container-fluid p-5">
 
       <div class="title">
@@ -253,6 +257,13 @@
 
 
 
+
+
+
+
+
+
+
 <!-- -------- START HEADER 4 w/ search book a ticket form ------- -->
 <header>
 
@@ -280,6 +291,15 @@
 <!-- -------- END HEADER 4 w/ search book a ticket form ------- -->
 @endsection
 @section('inline-scripts')
+
+
+
+
+
+
+
+
+
 jQuery(function () {
 $(".owl-carousel").owlCarousel({
 margin: 10,
