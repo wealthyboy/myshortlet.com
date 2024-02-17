@@ -300,8 +300,7 @@ video.vidoeo-intro {
   cursor: pointer !important;
 }
 
-.carousel-inner {
-
+#main-banner .carousel-inner {
   height: 650px;
 }
 
@@ -822,6 +821,12 @@ button.owl-next {
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
 }
 
+.apartment-amenities svg {
+  height: 22px;
+  width: 36px;
+}
+
+
 @media only screen and (max-width: 600px) {
   .card-background-image {
     height: 210px;
@@ -833,7 +838,7 @@ button.owl-next {
     margin-top: 7rem !important;
   }
 
-  .carousel-inner {
+  #main-banner .carousel-inner {
     height: 274px;
   }
 
@@ -1434,6 +1439,10 @@ carousel-fade .carousel-item {
   background-color: #A58263;
 }
 
+.white-background {
+  background-color: #fff !important;
+}
+
 .main-background {
   background-color: #342c27;
 }
@@ -1450,7 +1459,7 @@ carousel-fade .carousel-item {
 }
 
 .h-28 {
-  height: 28vh !important;
+  height: 65vh !important;
 }
 
 .custom-border-bottom {

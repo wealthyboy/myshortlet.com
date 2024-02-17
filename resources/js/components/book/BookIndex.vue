@@ -569,25 +569,25 @@ export default {
 
 
       //if (this.booking_details.is_agent) {
-      axios
-        .post("/webhook/payment", {
-          booking: payload,
-        })
-        .then((response) => {
-          context.payment_is_processing = false;
-          context.paymentIsComplete = true;
-          localStorage.removeItem('searchParams');
-          document.getElementById("back-to-selection").remove()
-        })
-        .catch((error) => {
-          context.order_text = "Make Payment";
-          context.payment_is_processing = false;
-        });
-      return;
+      // axios
+      //   .post("/webhook/payment", {
+      //     booking: payload,
+      //   })
+      //   .then((response) => {
+      //     context.payment_is_processing = false;
+      //     context.paymentIsComplete = true;
+      //     localStorage.removeItem('searchParams');
+      //     document.getElementById("back-to-selection").remove()
+      //   })
+      //   .catch((error) => {
+      //     context.order_text = "Make Payment";
+      //     context.payment_is_processing = false;
+      //   });
+      // return;
       //}
 
       var handler = PaystackPop.setup({
-        key: "pk_test_2659f44a347260823efb597be7b846264d5cb393", //'pk_live_c4f922bc8d4448065ad7bd3b0a545627fb2a084f',//'pk_test_844112398c9a22ef5ca147e85860de0b55a14e7c',
+        key: "pk_test_c5b3db1649d534eec8ab6a35ed696ad624e3070a", //'pk_live_c5fd554e0bc5c39d5f8f14b5f2a6263a403b9e55',//'pk_test_844112398c9a22ef5ca147e85860de0b55a14e7c',
         email: payload.email,
         amount: payload.total * 100,
         currency: "NGN",

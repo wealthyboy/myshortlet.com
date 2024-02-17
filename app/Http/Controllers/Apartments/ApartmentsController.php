@@ -247,7 +247,6 @@ class ApartmentsController extends Controller
     public function location(Request $request, Location $location)
     {
 
-        dd(true);
 
         $types =  [
             'extra_services',
@@ -319,7 +318,6 @@ class ApartmentsController extends Controller
 
         $next_page[] = $properties->nextPageUrl();
         $properties->load('categories');
-
 
 
         return  view('apartments.index', compact(
