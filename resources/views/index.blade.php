@@ -86,7 +86,7 @@
 </div> -->
 
 <div class="container-fluid">
-   <div class="row p-1">
+   <div style="background-image: url(/images/banners/avm_montaigne_intro_bckground.jpg); background-position: center;" class="row p-1">
       <div class="col-md-12">
 
 
