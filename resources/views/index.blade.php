@@ -54,7 +54,7 @@
 
 
 
-<div class="search-header d-block ">
+<div class="search-header d-block  mb-3">
    <search-apartments />
 </div>
 
@@ -157,8 +157,8 @@
       </div>
       <div class="row">
 
-         @foreach($apartments as $apartment)
-         <div class="col-12 col-md-3   mb-1 mt-1 pl-1 pb-1 px-0">
+         @foreach($apartments as $key => $apartment)
+         <div id="product-{{$key}}" class="col-12 col-md-3   mb-1 mt-1 pl-1 pb-1 px-0 opacity-0">
             <div class="col-md-12 aprts position-relative p-0">
                <div class="owl-carousel owl-theme">
                   @foreach($apartment->images as $image)

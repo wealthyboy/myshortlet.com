@@ -160,6 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: 'rightBox', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
     { id: 'intro-box', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInDown'] },
     { id: 'intro-box2', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInDown'] },
+    { id: 'product-0', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+    { id: 'product-1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+    { id: 'product-2', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+    { id: 'product-3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+
+
     { id: 'leftbox1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
     { id: 'rbox1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
     { id: 'box3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
