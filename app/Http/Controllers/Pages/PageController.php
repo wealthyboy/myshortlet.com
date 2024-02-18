@@ -21,7 +21,7 @@ class PageController extends Controller
             'contact-us' => 'contact_us',
             'experience' => 'experience',
             'about-us' => 'about',
-
+            'gallery' => 'gallery',
         ];
 
         $link_name = Str::replaceFirst('-', ' ', request()->path());

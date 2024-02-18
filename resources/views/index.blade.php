@@ -301,7 +301,7 @@
                      <p class="mt-4  text-left text-black light-bold">
                         Indulge in a lifestyle of unparalleled luxury with our meticulously designed apartments, complemented by a suite of unmatched amenities. Every detail has been thoughtfully curated to elevate your living experience. Enjoy the convenience of concierge services, savor moments of tranquility in lush landscaped gardens. Our commitment to providing exceptional amenities ensures that every day in your new home is a lavish retreat.
                      <div class="buttons">
-                        <a href="/apartments" class="btn btn-primary rounded bold-2">
+                        <a href="/experience" class="btn btn-primary rounded bold-2">
                            View More
                         </a>
                      </div>

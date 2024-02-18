@@ -67,7 +67,6 @@
             </p>
             <h3>
                 Experience the Height of Luxury at Avenue Montaigne
-
             </h3>
             <p>
                 Elevate your stay in Lagos to new heights of luxury and sophistication at Avenue Montaigne. Discover a sanctuary of style, comfort, and unparalleled service in the heart of Ikoyi, where every moment is crafted to perfection. Whether you're traveling for business or leisure, make Avenue Montaigne your home away from home and experience the epitome of refined living in Nigeria's bustling metropolis. Welcome to Avenue Montaigne, where luxury knows no bounds.
