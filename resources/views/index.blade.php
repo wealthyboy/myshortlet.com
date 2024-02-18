@@ -6,39 +6,34 @@
    <div class="intro-image">
       <img src="/images/logo/avm_residences.png" alt="">
    </div>
-
+   <!-- 
    <div role="button" class="intro-image play">
       <a class=" play-video" href="#">
-         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
             <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
          </svg>
       </a>
-   </div>
+   </div> -->
 
    <!-- <video class=" vidoeo-intro" src="/video/avem.mp4" autoplay muted loop></video> -->
 
    <div id="main-banner" class="carousel slide carousel-fade" data-ride=" carousel">
       <ol class="carousel-indicators">
          @foreach($sliders as $key => $slider)
-
          <li data-target="#main-banner" data-slide-to="{{ $key }}" class="{{ $key === 0 ? 'active' : ''}}"></li>
          @endforeach
-
       </ol>
       <div class="carousel-inner header-filter">
          @foreach($sliders as $key => $slider)
-
          <div class="carousel-item {{ $key === 0 ? 'active' : ''}}">
             <img src="{{ $slider->image }}" class="d-block w-100" alt="...">
          </div>
          @endforeach
-
-
-
       </div>
       <button class="carousel-control-prev" data-target="#main-banner" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
             <path d="M19.9 40L1.3 20 19.9 0" class="carousel-control-prev-icon" aria-hidden="true" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
-         </svg><span class="sr-only">Previous</span></button>
+         </svg><span class="sr-only">Previous</span>
+      </button>
 
       <button class="carousel-control-next" data-target="#main-banner" data-slide="next"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg">
             <path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -46,10 +41,6 @@
    </div>
 
 </div>
-
-
-
-
 
 
 
