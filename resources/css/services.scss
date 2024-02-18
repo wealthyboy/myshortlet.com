@@ -1502,6 +1502,10 @@ svg.uitk-icon-medium {
   fill: #ffffff;
 }
 
+.header-filter:before {
+  background: rgba(0, 0, 0, .2) !important;
+}
+
 
 // .animate-left {
 //   transform: translateX(150%);
