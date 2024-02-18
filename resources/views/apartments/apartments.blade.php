@@ -2,7 +2,6 @@
 @section('content')
 
 <header>
-
     <div class="page-header min-vh-75 h-28 position-relative" style="background-image: url(/images/banners/main_buiding.png); background-position: top;" loading="lazy">
         <span class="position-absolute top-0 start-0 w-100 h-100  bg-black opacity-50"></span>
         <div class="container">
@@ -16,7 +15,6 @@
             </div>
         </div>
     </div>
-
 </header>
 
 

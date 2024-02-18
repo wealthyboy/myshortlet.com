@@ -78,14 +78,12 @@
             <div class="row bg-grey position-relative  pb-5 pt-5">
                <div id="leftBox" style="z-index: 2;" class="col-md-5  opacity-0 re-order text-center d-flex justify-content-center align-items-center">
                   <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
-                     <h2 class="mb-4 bold-2">Unrivaled Amenities</h2>
-                     <div class="lead text-secondary">Elevate Your Living Experience</div>
+                     <h2 class="mb-4 bold-2">Spa</h2>
+                     <div class="lead text-secondary">Coming Soon</div>
                      <p class="mt-4  text-left text-black light-bold">
-                        Indulge in a lifestyle of unparalleled luxury with our meticulously designed apartments, complemented by a suite of unmatched amenities. Every detail has been thoughtfully curated to elevate your living experience. Enjoy the convenience of concierge services, savor moments of tranquility in lush landscaped gardens. Our commitment to providing exceptional amenities ensures that every day in your new home is a lavish retreat.
+                        our spa will offer a sanctuary of serenity amidst the hustle and bustle of everyday life
+                     </p>
                      <div class="buttons">
-                        <a href="/apartments" class="btn btn-primary rounded bold-2">
-                           View More
-                        </a>
                      </div>
                      </p>
                   </div>
@@ -100,7 +98,7 @@
                      </ol> -->
                      <div class="carousel-inner">
                         <div class="carousel-item active">
-                           <img src="/images/banners/5E8A5472.jpg" class="d-block w-100" alt="...">
+                           <img src="/images/banners/spa.jpeg" class="d-block w-100" alt="...">
                         </div>
 
                      </div>
@@ -241,27 +239,27 @@
                <div class="col-md-7 rounded  card-background-image">
                   <div id="c1" class="carousel slide" data-ride="carousel">
                      <ol class="carousel-indicators">
-                        <li data-target="#c1" data-slide-to="0" class="active"></li>
-                        <li data-target="#c1" data-slide-to="1"></li>
-                        <li data-target="#c1" data-slide-to="2"></li>
+                        <li data-target="#r1" data-slide-to="0" class="active"></li>
+                        <li data-target="#r1" data-slide-to="1"></li>
+                        <li data-target="#r1" data-slide-to="2"></li>
                      </ol>
                      <div class="carousel-inner">
                         <div class="carousel-item active">
-                           <img src="/images/banners/5E8A0784.jpg" class="d-block w-100" alt="...">
+                           <img src="/images/banners/r.jpeg" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                           <img src="/images/banners/ikoyi_city.jpg" class="d-block w-100" alt="...">
+                           <img src="/images/banners/r.jpeg" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                           <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/04/Pendry-March-2023-HR-115.jpg" class="d-block w-100" alt="...">
+                           <img src="/images/banners/r.jpeg" class="d-block w-100" alt="...">
                         </div>
                      </div>
 
-                     <button class="carousel-control-prev" data-target="#c1" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
+                     <button class="carousel-control-prev" data-target="#r1" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
                            <path d="M19.9 40L1.3 20 19.9 0" class="carousel-control-prev-icon" aria-hidden="true" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg><span class="sr-only">Previous</span></button>
 
-                     <button class="carousel-control-next" data-target="#c1" data-slide="next"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg">
+                     <button class="carousel-control-next" data-target="#r1" data-slide="next"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg">
                            <path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg><span class="sr-only">Next</span></button>
 
@@ -269,13 +267,21 @@
                </div>
                <div class="col-md-5  text-center d-flex justify-content-center align-items-center">
                   <div class="about-panel  bg-right-panel bg-panel-white  bg-panel p-sm-3 p-md-5">
-                     <h2 class="mb-4">Seamless Indoor-Outdoor Harmony</h2>
-                     <div class="lead text-secondary"> Discover Tranquility in our Apartments</div>
+                     <h2 class="mb-">The Restaurant</h2>
+                     <div class="lead text-secondary"> Experience exquisite cuisine from all over the world</div>
                      <p class="mt-4  text-left text-black light-bold">
-                        Step into a world where the boundaries between indoor and outdoor living dissolve. Expansive windows frame breathtaking vistas, while private balconies and terraces invite you to savor the beauty of nature. Our commitment to harmonious design ensures that every residence is a sanctuary in sync with the surrounding environment.
-                     <div class=" buttons">
-
-                     </div>
+                        The experienced chefs creates international specialties with unique flavors. Relax with gourmet cuisine and signature cocktails or homemade tonics, all enhanced by beautiful music and gorgeous views over the city. From seasonal menus to dining experiences to satisfy any craving, see what our chefs are preparing for you. </p>
+                     <ul class="text-left">
+                        <li> <span class="">
+                           </span> <span class="list-content">Location: Ground Floor</span> </li>
+                        <li> <span class="">
+                           </span> <span class="list-content">
+                              Serves: Breakfast, Brunch, Lunch, Dinner, Dessert</span> </li>
+                        <li> <span class="">
+                           </span> <span class="list-content">Phone: +234 810 688 7920</span> <a class="list-link" href="tel:+234 810 688 7920"></a> </li>
+                        <li> <span class="">
+                           </span> <span class="list-content">Hours: 8:00 am -10:00 pm</span> </li>
+                     </ul>
                   </div>
                </div>
             </div>

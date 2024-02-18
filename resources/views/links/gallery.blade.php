@@ -18,11 +18,7 @@
                 <img src="{{ asset('images/apartments/' . $file->getFilename()) }}" class="img-fluid" alt="{{ $file->getFilename() }}">
             </a>
         </div>
-
         @endforeach
-
-
-
     </div>
 </div>
 
