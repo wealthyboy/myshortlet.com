@@ -4,7 +4,7 @@
 
 <div class="video-section">
    <div class="intro-image">
-      <img src="/images/logo/avm_residences.png" alt="">
+      <img src="https://drive.google.com/thumbnail?id=1eQ_hLe9Th_2Oew3Qoew_qQKhuGBpHGZm&sz=w2000" alt="">
    </div>
    <!-- 
    <div role="button" class="intro-image play">
@@ -125,8 +125,8 @@
                         Our apartments offer amazing amenities, stylish design, and a perfect location for living the lagos dream. With your choice of spacious, meticulously-designed 3-bedroom apartments, youll be sure to find the ideal fit for your needs and lifestyle.
                      </p>
                      <div class=" buttons">
-                        <a href="/gallery" class="btn btn-primary rounded bold-2">
-                           View Gallery
+                        <a href="/apartments" class="btn btn-primary rounded bold-2">
+                           Explore the Residences
                         </a>
                      </div>
                   </div>
