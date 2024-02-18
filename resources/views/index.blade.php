@@ -54,7 +54,7 @@
 
 
 
-<div class="search-header d-block  mb-3">
+<div class="search-header d-block  mb-3 p-3">
    <search-apartments />
 </div>
 

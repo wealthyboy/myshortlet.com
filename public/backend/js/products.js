@@ -4,7 +4,7 @@ function resetFile(input) {
   input.unwrap();
 }
 
-$(document).on("click", ".remove-image", function(e) {
+$(document).on("click", ".remove-image", function (e) {
   e.preventDefault();
   e.stopPropagation();
   let self = $(this);
@@ -30,7 +30,7 @@ $(document).on("click", ".remove-image", function(e) {
     url: "/admin/delete/image?folder=apartments",
     type: "POST",
     data: payload,
-    success: function(data) {
+    success: function (data) {
       $("#" + randid).remove();
       if (parent.find(".j-complete").length == 0) {
         upload_text.removeClass("hide");
@@ -41,13 +41,13 @@ $(document).on("click", ".remove-image", function(e) {
         }
       }
     },
-    error: function(XMLHttpRequest, textStatus, errorThrown) {},
+    error: function (XMLHttpRequest, textStatus, errorThrown) { },
   });
 });
 
-jQuery(function() {
+jQuery(function () {
   localStorage.setItem("allow_variation", true);
-  $(document).on("change", ".bedrooms", function(e) {
+  $(document).on("change", ".bedrooms", function (e) {
     console.log(true);
     let self = $(this);
     let value = self.val();
@@ -63,16 +63,16 @@ jQuery(function() {
     }
   });
 
-  $(".cancel :checkbox").on("change", function(e) {
+  $(".cancel :checkbox").on("change", function (e) {
     $(".cancellation-message").toggleClass("d-none");
   });
 
   /***
    * Add more variations
    */
-  $("#product-attribute-add").on("click", function(e) {
+  $("#product-attribute-add").on("click", function (e) {
     var values = [];
-    $(".product-attributes").each(function() {
+    $(".product-attributes").each(function () {
       values.push($(this).val());
     });
     var payLoad = { attribute_ids: values };
@@ -80,7 +80,7 @@ jQuery(function() {
       type: "POST",
       url: "/admin/load-attributes",
       data: payLoad,
-    }).done(function(response) {
+    }).done(function (response) {
       $(".p-attr")
         .last()
         .after(response);
@@ -91,11 +91,11 @@ jQuery(function() {
   /**
    * Add more rooms
    */
-  $("#add-room").on("click", function(e) {
+  $("#add-room").on("click", function (e) {
     $.ajax({
       type: "GET",
       url: "/admin/properties/apartment",
-    }).done(function(response) {
+    }).done(function (response) {
       $(".new-room")
         .last()
         .after(response);
@@ -103,18 +103,18 @@ jQuery(function() {
     });
   });
 
-  $("#add-apartment").on("click", function(e) {
+  $("#add-apartment").on("click", function (e) {
     $.ajax({
       type: "GET",
       url: "/add/apartment",
-    }).done(function(response) {
+    }).done(function (response) {
       $(".new-apartment")
         .last()
         .after(response);
     });
   });
 
-  $(document).on("click", ".radio-button", function() {
+  $(document).on("click", ".radio-button", function () {
     //console.log(true);
     let self = $(this);
     let p = self.parent().parent();
@@ -123,11 +123,11 @@ jQuery(function() {
     p.find(".bed-qty").val("");
   });
 
-  $('[data-toggle="collapse"]').on("click", function(e) {
+  $('[data-toggle="collapse"]').on("click", function (e) {
     console.log(true);
   });
 
-  $(document).on("click", ".open-close-panel", function(e) {
+  $(document).on("click", ".open-close-panel", function (e) {
     e.preventDefault();
     $(this)
       .parent()
@@ -144,7 +144,7 @@ jQuery(function() {
     }
   });
 
-  $(document).on("click", ".remove-panel", function(e) {
+  $(document).on("click", ".remove-panel", function (e) {
     e.preventDefault();
     $(this)
       .parent()
@@ -152,45 +152,44 @@ jQuery(function() {
       .remove();
   });
 
-  $(document).on("click", ".extra_services", function(e) {
+  $(document).on("click", ".extra_services", function (e) {
     let gParent = $(this).parentsUntil("div.mt-2");
     gParent.find(".extra-services-input").prop("disabled", false);
   });
 
-  $(document).on("click", ".delete-panel", function(e) {
+  $(document).on("click", ".delete-panel", function (e) {
     e.preventDefault();
     $(this).text("Taking it out....");
     $.ajax({
       type: "delete",
       url: $(this).attr("href"),
     })
-      .done(function(response) {
+      .done(function (response) {
         console.log(response);
         $(this)
-          .parent()
           .parent(".variation-panel")
           .remove();
       })
-      .catch(function() {
+      .catch(function () {
         $(this).text("Something went wrong.");
       });
   });
 
-  $(".search_products").on("input", function(e) {
+  $(".search_products").on("input", function (e) {
     var $self = $(this),
       payLoad = { product_name: $self.val() };
     $.ajax({
       type: "GET",
       url: "/admin/related/products",
       data: payLoad,
-    }).done(function(response) {
+    }).done(function (response) {
       $("#related_products")
         .html("")
         .append(response);
     });
   });
 
-  $(document).on("click", ".add_product", function(e) {
+  $(document).on("click", ".add_product", function (e) {
     e.preventDefault();
     $(this)
       .parentsUntil("tbody")
@@ -207,7 +206,7 @@ jQuery(function() {
       .removeClass("hide");
   });
 
-  $(document).on("click", ".remove_related_product", function(e) {
+  $(document).on("click", ".remove_related_product", function (e) {
     e.preventDefault();
     $(this)
       .parentsUntil("tbody")
@@ -220,10 +219,10 @@ jQuery(function() {
     $.ajax({
       type: "delete",
       url: $(this).attr("href"),
-    }).done(function(response) {});
+    }).done(function (response) { });
   });
 
-  $("#apartment-type").on("change", function() {
+  $("#apartment-type").on("change", function () {
     $self = $(this);
     console.log($self.val());
     if ($self.val() === "single") {
@@ -251,7 +250,7 @@ jQuery(function() {
 
   console.log(s.initMaterialWizard());
 
-  setTimeout(function() {
+  setTimeout(function () {
     $(".card.wizard-card").addClass("active");
   }, 600);
 });
