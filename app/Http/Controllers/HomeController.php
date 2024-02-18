@@ -32,8 +32,6 @@ class HomeController
         $site_status = Live::first();
         $banners =  Banner::banners()->get();
 
-
-
         if (!$site_status->make_live) {
             return view('index', compact(
                 'banners',
@@ -47,6 +45,63 @@ class HomeController
             return view('underconstruction.index');
         }
     }
+
+
+
+    public  static function generateThumbnailUrl($originalUrl)
+    {
+        // Extract the ID from the original URL using regular expressions
+        preg_match('/\/file\/d\/(.+?)\//', $originalUrl, $matches);
+        $id = $matches[1];
+
+        // Construct the thumbnail URL
+        $thumbnailUrl = "https://drive.google.com/thumbnail?id={$id}&sz=w2000";
+
+        return $thumbnailUrl;
+    }
+
+    public  function images()
+    {
+
+
+        return [
+
+            'sliders' => [
+                'https://drive.google.com/file/d/17jMj4PYxnUgEa37VTw513F61Tk3WTi8a/view?usp=drive_link',
+                'https://drive.google.com/file/d/1xe9lnx6RfmSpQSp_r9tSOWwV1RNmMBxY/view?usp=drive_link',
+                'https://drive.google.com/file/d/1R3qBwhzOU479zhtMiPxtx8sPUp4iqoMe/view?usp=drive_link',
+                'https://drive.google.com/file/d/16XtNpeqCSoiPVZ4KhTRb0rq72tYosN3h/view?usp=drive_link',
+                'https://drive.google.com/file/d/1Ob-RctxqUb6nmoBNl53V-vY6uSDGfY-W/view?usp=drive_link',
+                'https://drive.google.com/file/d/1j0b9Hih3ozJgipUpJuAGjlENkuqndo2N/view?usp=drive_link',
+                'https://drive.google.com/file/d/17jMj4PYxnUgEa37VTw513F61Tk3WTi8a/view?usp=drive_link',
+                'https://drive.google.com/file/d/1C3EWAhlUIjKurP91K6fCLz5MnEFpet5c/view?usp=drive_link',
+            ],
+
+            'welcome' => [
+                'https://drive.google.com/file/d/1ES6PROkjg09AnQdO2hn033mzg48dJT8S/view?usp=drive_link',
+            ],
+            'amenities' => [
+                'https://drive.google.com/file/d/1objnfLxXO6ui1XncszCPhF9skQMbnM8t/view?usp=drive_link',
+            ],
+            'gallery' => [
+                'https://drive.google.com/file/d/1iS_70GjTLThz4NGdPDYUbLneEq8z5ev9/view?usp=drive_link',
+                'https://drive.google.com/file/d/1VVLjDieMwBTHJBfcDb6lv7EOh1dHCnGW/view?usp=drive_link',
+                'https://drive.google.com/file/d/1EUI6dfkxfcyvdbKL_y0aZfT61sGXk6r7/view?usp=drive_link',
+                'https://drive.google.com/file/d/1iFlKwt-LtCc11KkjPndzUiiXlMG-LvUL/view?usp=drive_link',
+                'https://drive.google.com/file/d/1objnfLxXO6ui1XncszCPhF9skQMbnM8t/view?usp=drive_link',
+                'https://drive.google.com/file/d/1xe9lnx6RfmSpQSp_r9tSOWwV1RNmMBxY/view?usp=drive_link',
+                'https://drive.google.com/file/d/1V1SRVA1JQEUaFHwCsqTpvQkKr1d6vOAI/view?usp=drive_link',
+                'https://drive.google.com/file/d/1TC5cOTsxA5h7YnjY0NJkvvCOVPrzTxGY/view?usp=drive_link',
+                'https://drive.google.com/file/d/19r4ddA9EBAlq7g37zN64N3Voz1tuglIm/view?usp=drive_link',
+                'https://drive.google.com/file/d/19r4ddA9EBAlq7g37zN64N3Voz1tuglIm/view?usp=drive_link',
+                'https://drive.google.com/file/d/1ozt2otCY9XmxbjQMtAjcU0YKXJcapqke/view?usp=drive_link',
+                'https://drive.google.com/file/d/1iVvVYIaeYqu8heqyUgSB1wkEWHettHEv/view?usp=drive_link',
+            ]
+
+        ];
+    }
+
+
 
 
 
@@ -65,6 +120,7 @@ class HomeController
         $sliders = Banner::where('type', 'slider')->orderBy('sort_order', 'asc')->get();
         $property = Property::first();
 
+
         $date  = explode("to", $request->check_in_checkout);
         $nights = '1 night';
         $sub_total = null;
@@ -72,6 +128,10 @@ class HomeController
         $areas = [];
         $restaurants = [];
         $saved =  null;
+
+        $images = $this->images();
+
+        $generator = new self;
 
         $safety_practices = [];
         $amenities = [];
@@ -120,6 +180,9 @@ class HomeController
                 'amenities',
                 'bedrooms',
                 'restaurants',
+                'images',
+                'generator',
+
             ));
         } else {
             //Show site if admin is logged in
@@ -138,6 +201,8 @@ class HomeController
                     'saved',
                     'sub_total',
                     'property',
+                    'images',
+                    'generator',
                     'days',
                     'nights',
                     'areas',
