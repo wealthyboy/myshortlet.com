@@ -1,58 +1,69 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 @section('content')
 
 
-<div class="video-section">
-   <div class="intro-image">
-      <img src="/images/logo/avm_residences.png" alt="">
-   </div>
-
-   <div role="button" class="intro-image play">
-      <a class=" play-video" href="#">
-         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-            <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
-         </svg>
-      </a>
-   </div>
-
-   <!-- <video class=" vidoeo-intro" src="/video/avem.mp4" autoplay muted loop></video> -->
-
-   <div id="main-banner" class="carousel slide carousel-fade" data-ride=" carousel">
-      <ol class="carousel-indicators">
-
-         <li data-target="#main-banner" data-slide-to="1" class="active"></li>
-
-      </ol>
-      <div class="carousel-inner header-filter">
-
-         <div class="carousel-item ">
-            <img src="#" class="d-block w-100" alt="...">
-         </div>
 
 
 
+
+
+
+<div class="container-fluid mb-3">
+   <div class="row p-1">
+      <div class="col-md-12">
+
+
+         <section id="intro-box" class=" opacity-0 ">
+            <div class="row  bg-grey pb-5 pt-5 position-relative">
+               <div class="col-md-7 rounded  card-background-image">
+                  <div id="c1" class="carousel slide" data-ride="carousel">
+                     <ol class="carousel-indicators">
+                        <li data-target="#c1" data-slide-to="0" class="active"></li>
+                        <li data-target="#c1" data-slide-to="1"></li>
+                        <li data-target="#c1" data-slide-to="2"></li>
+                     </ol>
+                     <div class="carousel-inner">
+                        <div class="carousel-item active">
+                           <img src="/images/banners/5E8A0784.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                           <img src="/images/banners/ikoyi_city.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                           <img src="https://pendryresidencesweho.com/wp-content/uploads/2023/04/Pendry-March-2023-HR-115.jpg" class="d-block w-100" alt="...">
+                        </div>
+                     </div>
+
+                     <button class="carousel-control-prev" data-target="#c1" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
+                           <path d="M19.9 40L1.3 20 19.9 0" class="carousel-control-prev-icon" aria-hidden="true" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg><span class="sr-only">Previous</span></button>
+
+                     <button class="carousel-control-next" data-target="#c1" data-slide="next"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg">
+                           <path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg><span class="sr-only">Next</span></button>
+
+                  </div>
+               </div>
+               <div class="col-md-5  text-center d-flex justify-content-center align-items-center">
+                  <div class="about-panel  bg-right-panel bg-panel-white  bg-panel p-sm-3 p-md-5">
+                     <h2 class="mb-4">Seamless Indoor-Outdoor Harmony</h2>
+                     <div class="lead text-secondary"> Discover Tranquility in our Apartments</div>
+                     <p class="mt-4  text-left text-black light-bold">
+                        Step into a world where the boundaries between indoor and outdoor living dissolve. Expansive windows frame breathtaking vistas, while private balconies and terraces invite you to savor the beauty of nature. Our commitment to harmonious design ensures that every residence is a sanctuary in sync with the surrounding environment.
+                     <div class="buttons">
+                        <a href="/apartments" class="btn btn-primary rounded bold-2">
+                           View All
+                        </a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
       </div>
-      <button class="carousel-control-prev" data-target="#main-banner" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19.9 40L1.3 20 19.9 0" class="carousel-control-prev-icon" aria-hidden="true" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
-         </svg><span class="sr-only">Previous</span></button>
-
-      <button class="carousel-control-next" data-target="#main-banner" data-slide="next"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg">
-            <path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
-         </svg><span class="sr-only">Next</span></button>
    </div>
-
 </div>
 
 
-
-
-
-
-
-
-<div class="search-header d-block ">
-   <search-apartments />
-</div>
 
 
 
