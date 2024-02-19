@@ -16,7 +16,7 @@
           <div class="col-md-2 check-availablility  mt-sm-2 mt-md-0">
             <button type="button" @click.prevent="checkAvailabity()"
               class="btn btn-primary btn-block m-auto bold-2 check-availablility-button rounded">
-              Check availablity
+              Check availablitybnnbnbnb
             </button>
           </div>
         </div>
@@ -78,6 +78,19 @@
         </div>
       </div>
     </form>
+
+    <div class="modal-overlay ">
+      <div class="modal ">
+        <div class="modal-content">
+          <!-- Your modal content here -->
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus euismod ultrices velit, nec cursus ipsum
+            tincidunt ut.</p>
+          <!-- Add more content as needed -->
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </template>
 <script>
@@ -128,6 +141,8 @@ export default {
     this.roomsAv = this.apartments;
   },
   mounted() {
+
+    // Show the modal
 
     const retrievedJsonString = localStorage.getItem('searchParams');
     // Check if the retrieved JSON string is not null
@@ -283,3 +298,4 @@ export default {
   },
 };
 </script>
+

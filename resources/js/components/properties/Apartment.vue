@@ -87,7 +87,7 @@
                     <a @click.prevent="showRoom(room)" class="d-flex active-link text-highlight font-weight-bold-2"
                         href="#">
                         <span aria-hidden="true">More details</span>
-                        <svg class="" aria-hidden="true" class="align-self-center" viewBox="0 0 24 24"
+                        <svg aria-hidden="true" class="align-self-center" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>
                         </svg>
@@ -138,7 +138,12 @@
             </div>
         </div>
 
-        <div v-if="lunchModal" class=" gallery-images" style="
+
+
+        <!-- Modal -->
+
+
+        <!-- <div v-if="lunchModal" class=" gallery-images" style="
           position: fixed; 
           display: block;
           width: 100%; 
@@ -223,7 +228,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
@@ -293,26 +298,9 @@ export default {
             return arr.reduce((a, b) => parseInt(a) + parseInt(b), 0);
         },
         showRoom(room) {
-            this.lunchModal = !this.lunchModal;
-            this.showSlider = true;
-            jQuery(function () {
-                $(".room-carousel").owlCarousel({
-                    margin: 10,
-                    nav: true,
-                    dots: true,
-                    responsive: {
-                        0: {
-                            items: 1,
-                        },
-                        600: {
-                            items: 1,
-                        },
-                        1000: {
-                            items: 1,
-                        },
-                    },
-                });
-            });
+
+            this.$emit("showRoom", room);
+
         },
         reserve(room) {
             this.$emit("reserve", { room });
