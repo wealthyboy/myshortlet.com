@@ -50,7 +50,7 @@
 
 
 
-<div class="search-header d-block  mb-3 p-3">
+<div class="search-header d-block   p-3">
    <search-apartments />
 </div>
 
@@ -93,7 +93,7 @@
       <div class="col-md-12">
 
 
-         <section id="rbox1" class=" opacity-0 ">
+         <section id="rbox1" class=" ">
             <div class="row   pb-5 pt-5 position-relative">
                <div class="col-md-7 rounded  card-background-image">
                   <div id="c1" class="carousel slide" data-ride="carousel">
