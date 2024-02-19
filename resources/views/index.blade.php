@@ -82,8 +82,9 @@
 </div> -->
 
 <div class="container-fluid mb-3">
+
    <div class="row p-1 ">
-      <div style="background-image: url(/images/banners/tree.png);
+      <div style="background-image: url(https://drive.google.com/thumbnail?id=1aP9OVoify71pxLWDV-P33fYb5sopnI2g&sz=w2000);
     background-repeat: no-repeat;
     background-position: right -10px top 35px;
     height: 500px;
