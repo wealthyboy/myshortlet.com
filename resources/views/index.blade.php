@@ -81,7 +81,7 @@
    </section>
 </div> -->
 
-<div class="container-fluid mb-3">
+<div class="container-fluid mb-2">
 
    <div class="row p-1 ">
       <div id="tree" class="opacity-0" style="background-image: url(https://drive.google.com/thumbnail?id=1aP9OVoify71pxLWDV-P33fYb5sopnI2g&sz=w2000);
@@ -94,7 +94,7 @@
 
 
          <section id="rbox1" class=" ">
-            <div class="row   pb-5 pt-5 position-relative">
+            <div class="row   position-relative">
                <div class="col-md-7 rounded  card-background-image">
                   <div id="c1" class="carousel slide" data-ride="carousel">
                      <!-- <ol class="carousel-indicators">
