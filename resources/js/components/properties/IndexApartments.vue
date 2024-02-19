@@ -141,90 +141,67 @@
                             </div>
 
                             <div class="uitk-spacing uitk-spacing-margin-blockend-six">
-                                <h3 class="uitk-heading uitk-heading-5 uitk-spacing uitk-spacing-margin-blockend-six">Room
+                                <h3 class="uitk-heading uitk-heading-5 uitk-spacing uitk-spacing-margin-blockend-six">
+                                    Apartment
                                     amenities</h3>
-                                <div class="uitk-layout-grid uitk-layout-grid-has-auto-columns uitk-layout-grid-has-columns uitk-layout-grid-has-columns-by-medium uitk-layout-grid-has-space uitk-layout-grid-display-grid"
-                                    style="--uitk-layoutgrid-auto-columns: minmax(var(--uitk-layoutgrid-egds-size__0x), 1fr); --uitk-layoutgrid-columns: repeat(1, minmax(0, 1fr)); --uitk-layoutgrid-columns-medium: repeat(2, minmax(0, 1fr)); --uitk-layoutgrid-column-gap: var(--uitk-layoutgrid-space-six); --uitk-layoutgrid-row-gap: var(--uitk-layoutgrid-space-six);">
-                                    <div class="uitk-layout-grid-item">
-                                        <div class="uitk-layout-flex uitk-layout-flex-gap-three"><svg
-                                                class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
-                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                <div class="" style="">
+                                    <div class="">
+                                        <div class="d-flex align-items-center">
+                                            <svg class="" aria-hidden="true" viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink">
                                                 <path fill-rule="evenodd"
                                                     d="M20 13V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.4 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.51l1.25-1.25a.828.828 0 0 1 1.41.59V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2ZM4 19h16v-4H4v4Z"
                                                     clip-rule="evenodd"></path>
                                             </svg>
-                                            <h4 class="uitk-heading uitk-heading-6 uitk-layout-flex-item">Bathroom</h4>
+                                            <h4 class="ml-2">Bathroom</h4>
                                         </div>
-                                        <div class="uitk-spacing uitk-spacing-padding-inlinestart-six">
-                                            <div class="uitk-spacing uitk-spacing-padding-inlinestart-three">
-                                                <ul class="uitk-typelist uitk-typelist-orientation-stacked uitk-typelist-size-2 uitk-typelist-spacing uitk-spacing uitk-spacing-margin-blockstart-two"
-                                                    role="list">
-                                                    <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                        role="listitem"><span aria-hidden="true"
-                                                            class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                            class="uitk-typelist-item-child">Bathrobes</span></li>
-                                                    <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                        role="listitem"><span aria-hidden="true"
-                                                            class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                            class="uitk-typelist-item-child">Eco-friendly toiletries</span>
+                                        <div class="">
+                                            <div class="">
+                                                <ul class="" role="list">
+                                                    <li class="" role="listitem"><span aria-hidden="true"
+                                                            class=""></span><span class="">Bathrobes</span></li>
+                                                    <li class="" role="listitem"><span aria-hidden="true"
+                                                            class=""></span><span class="">Eco-friendly toiletries</span>
                                                     </li>
-                                                    <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                        role="listitem"><span aria-hidden="true"
-                                                            class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                            class="uitk-typelist-item-child">Free toiletries</span></li>
-                                                    <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                        role="listitem"><span aria-hidden="true"
-                                                            class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                            class="uitk-typelist-item-child">Hair dryer</span></li>
-                                                    <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                        role="listitem"><span aria-hidden="true"
-                                                            class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                            class="uitk-typelist-item-child">Private bathroom</span></li>
-                                                    <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                        role="listitem"><span aria-hidden="true"
-                                                            class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                            class="uitk-typelist-item-child">Shower</span></li>
-                                                    <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                        role="listitem"><span aria-hidden="true"
-                                                            class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                            class="uitk-typelist-item-child">Slippers</span></li>
-                                                    <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                        role="listitem"><span aria-hidden="true"
-                                                            class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                            class="uitk-typelist-item-child">Toothbrush and toothpaste not
+                                                    <li class="" role="listitem"><span aria-hidden="true"
+                                                            class=""></span><span class="">Free toiletries</span></li>
+                                                    <li class="" role="listitem"><span aria-hidden="true"
+                                                            class=""></span><span class="">Hair
+                                                            dryer</span></li>
+                                                    <li class="" role="listitem"><span aria-hidden="true"
+                                                            class=""></span><span class="">Private
+                                                            bathroom</span></li>
+                                                    <li class="" role="listitem"><span aria-hidden="true"
+                                                            class=""></span><span class="">Shower</span></li>
+                                                    <li class="" role="listitem"><span aria-hidden="true"
+                                                            class=" "></span><span class="">Slippers</span></li>
+                                                    <li class="" role="listitem"><span aria-hidden="true"
+                                                            class=""></span><span class="">Toothbrush and toothpaste not
                                                             available</span></li>
-                                                    <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                        role="listitem"><span aria-hidden="true"
-                                                            class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                            class="uitk-typelist-item-child">Towels</span></li>
+                                                    <li class="" role="listitem"><span aria-hidden="true"
+                                                            class=""></span><span class="">Towels</span></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="uitk-layout-grid-item">
-                                        <div class="uitk-layout-flex uitk-layout-flex-gap-three"><svg
-                                                class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
+                                    <div class="">
+                                        <div class="d-flex align-items-center"><svg class="" aria-hidden="true"
                                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink">
                                                 <path fill-rule="evenodd"
                                                     d="M11 7h8a4 4 0 0 1 4 4v9h-2v-3H3v3H1V5h2v9h8V7zm-1 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"
                                                     clip-rule="evenodd"></path>
                                             </svg>
-                                            <h4 class="uitk-heading uitk-heading-6 uitk-layout-flex-item">Bedroom</h4>
+                                            <h4 class="ml-2">Bedroom</h4>
                                         </div>
-                                        <div class="uitk-spacing uitk-spacing-padding-inlinestart-six">
-                                            <div class="uitk-spacing uitk-spacing-padding-inlinestart-three">
-                                                <ul class="uitk-typelist uitk-typelist-orientation-stacked uitk-typelist-size-2 uitk-typelist-spacing uitk-spacing uitk-spacing-margin-blockstart-two"
-                                                    role="list">
-                                                    <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                        role="listitem"><span aria-hidden="true"
-                                                            class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                            class="uitk-typelist-item-child">Bed sheets</span></li>
-                                                    <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                        role="listitem"><span aria-hidden="true"
-                                                            class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                            class="uitk-typelist-item-child">Blackout drapes/curtains</span>
+                                        <div class="">
+                                            <div class="">
+                                                <ul class="" role="list">
+                                                    <li class="" role="listitem"><span aria-hidden="true"
+                                                            class=""></span><span class="">Bed sheets</span></li>
+                                                    <li class="" role="listitem"><span aria-hidden="true"
+                                                            class=""></span><span class="">Blackout drapes/curtains</span>
                                                     </li>
                                                     <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
                                                         role="listitem"><span aria-hidden="true"
@@ -254,13 +231,12 @@
                                         </div>
                                     </div>
                                     <div class="uitk-layout-grid-item">
-                                        <div class="uitk-layout-flex uitk-layout-flex-gap-three"><svg
-                                                class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
-                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                        <div class="d-flex align-items-center"><svg class="uitk-icon uitk-layout-flex-item"
+                                                aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink">
                                                 <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
                                             </svg>
-                                            <h4 class="uitk-heading uitk-heading-6 uitk-layout-flex-item">Entertainment</h4>
+                                            <h4 class="ml-2">Entertainment</h4>
                                         </div>
                                         <div class="uitk-spacing uitk-spacing-padding-inlinestart-six">
                                             <div class="uitk-spacing uitk-spacing-padding-inlinestart-three">
@@ -287,16 +263,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="uitk-layout-grid-item">
-                                        <div class="uitk-layout-flex uitk-layout-flex-gap-three"><svg
-                                                class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
-                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                    <div class="">
+                                        <div class="d-flex align-items-center"><svg class="uitk-icon uitk-layout-flex-item"
+                                                aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink">
                                                 <path fill-rule="evenodd"
                                                     d="M20.15 10.15c-1.59 1.59-3.74 2.09-5.27 1.38L13.41 13l6.88 6.88-1.41 1.41L12 14.41l-6.89 6.87-1.41-1.41 9.76-9.76c-.71-1.53-.21-3.68 1.38-5.27 1.92-1.91 4.66-2.27 6.12-.81 1.47 1.47 1.1 4.21-.81 6.12zm-9.22.36L8.1 13.34 3.91 9.16a4 4 0 0 1 0-5.66l7.02 7.01z"
                                                     clip-rule="evenodd"></path>
                                             </svg>
-                                            <h4 class="uitk-heading uitk-heading-6 uitk-layout-flex-item">Food and drink
+                                            <h4 class="ml-2">Food and drink
                                             </h4>
                                         </div>
                                         <div class="uitk-spacing uitk-spacing-padding-inlinestart-six">
@@ -318,15 +293,14 @@
                                         </div>
                                     </div>
                                     <div class="uitk-layout-grid-item">
-                                        <div class="uitk-layout-flex uitk-layout-flex-gap-three"><svg
-                                                class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
-                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                        <div class="d-flex align-items-center"><svg class="uitk-icon uitk-layout-flex-item"
+                                                aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink">
                                                 <path fill-rule="evenodd"
                                                     d="m1 9 2 2a12.73 12.73 0 0 1 18 0l2-2A15.57 15.57 0 0 0 1 9zm8 8 3 3 3-3a4.24 4.24 0 0 0-6 0zm-2-2-2-2a9.91 9.91 0 0 1 14 0l-2 2a7.07 7.07 0 0 0-10 0z"
                                                     clip-rule="evenodd"></path>
                                             </svg>
-                                            <h4 class="uitk-heading uitk-heading-6 uitk-layout-flex-item">Internet</h4>
+                                            <h4 class="ml-2">Internet</h4>
                                         </div>
                                         <div class="uitk-spacing uitk-spacing-padding-inlinestart-six">
                                             <div class="uitk-spacing uitk-spacing-padding-inlinestart-three">
@@ -341,13 +315,12 @@
                                         </div>
                                     </div>
                                     <div class="uitk-layout-grid-item">
-                                        <div class="uitk-layout-flex uitk-layout-flex-gap-three"><svg
-                                                class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
-                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                        <div class="d-flex align-items-center"><svg class="uitk-icon uitk-layout-flex-item"
+                                                aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink">
                                                 <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
                                             </svg>
-                                            <h4 class="uitk-heading uitk-heading-6 uitk-layout-flex-item">More</h4>
+                                            <h4 class="ml-2">More</h4>
                                         </div>
                                         <div class="uitk-spacing uitk-spacing-padding-inlinestart-six">
                                             <div class="uitk-spacing uitk-spacing-padding-inlinestart-three">
