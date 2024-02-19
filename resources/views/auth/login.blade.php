@@ -14,5 +14,8 @@
         </div>
     </div>
 </section>
+
+<div style="height: 150px;"></div>
+
 <!--End Content-->
 @endsection

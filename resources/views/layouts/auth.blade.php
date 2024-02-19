@@ -16,7 +16,6 @@
       <div class="main  index-page">
          @yield('content')
 
-         <div style="height: 50px;"></div>
 
       </div>
 
