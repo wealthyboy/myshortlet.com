@@ -81,8 +81,14 @@
    </section>
 </div> -->
 
-<div class="container-fluid">
-   <div class="row p-1">
+<div class="container-fluid mb-3">
+   <div class="row p-1 ">
+      <div style="background-image: url(/images/banners/tree.png);
+    background-repeat: no-repeat;
+    background-position: right -10px top 35px;
+    height: 500px;
+    position: absolute;
+    width: -webkit-fill-available;"></div>
       <div class="col-md-12">
 
 
@@ -101,10 +107,6 @@
                         </div>
 
                      </div>
-
-
-
-
 
 
                      <!-- <button class="carousel-control-prev" data-target="#c1" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
@@ -290,7 +292,7 @@
    </div>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid mb-3">
    <div class="row p-1">
       <div class="col-md-12">
          <section class=" mb-1">
@@ -337,7 +339,7 @@
 
 
 
-<div class="container-fluid">
+<div class="container-fluid ">
    <div class="row p-1">
       <div class="col-md-12">
 
