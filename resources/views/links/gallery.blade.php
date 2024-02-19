@@ -11,11 +11,10 @@
 <div class="container-fluid mb-3">
     <div class="row ">
 
-
-        @foreach ($files as $file)
+        @foreach($images['galleries'] as $key => $image)
         <div class="col-md-4 mb-3 mt-5">
-            <a href="{{ asset('images/apartments/' . $file->getFilename()) }}" data-lightbox="gallery">
-                <img src="{{ asset('images/apartments/' . $file->getFilename()) }}" class="img-fluid" alt="{{ $file->getFilename() }}">
+            <a href="{{ $generator::generateThumbnailUrl($image) }}" data-lightbox="gallery">
+                <img src="{{ $generator::generateThumbnailUrl($image) }}" class="img-fluid" alt="{{ $generator::generateThumbnailUrl($image) }}">
             </a>
         </div>
         @endforeach
