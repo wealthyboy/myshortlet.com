@@ -633,7 +633,6 @@ svg.bi.bi-chevron-double-down {
 }
 
 .aprts .item {
-  height: 234px;
   overflow: hidden;
 }
 
@@ -850,9 +849,7 @@ button.owl-next {
     margin-top: 10px;
   }
 
-  .item {
-    height: 200px !important;
-  }
+  .item {}
 
 
   .down-icon {
