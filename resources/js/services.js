@@ -158,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const targetConfigs = [
     { id: 'leftBox', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig'] },
     { id: 'rightBox', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
+    { id: 'tree', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
     { id: 'intro-box', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInDown'] },
     { id: 'intro-box2', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInDown'] },
     { id: 'product-0', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
