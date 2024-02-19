@@ -10,7 +10,6 @@
 
 <div class="container-fluid mb-3">
     <div class="row g-0 pr-1 pl-1">
-
         @foreach($images['galleries'] as $key => $image)
         <div class="col-md-4 mb-1 mt-1 pr-1 pl-1">
             <a href="{{ $generator::generateThumbnailUrl($image) }}" data-lightbox="gallery">
