@@ -75,6 +75,9 @@
                                 </div>
                             </div>
 
+                            <div class="card-title bold-2 text-size-1-big  mt-lg-0 mt-sm-3 ">
+                                {{ room.name }}
+                            </div>
                             <div class="mb-5 bg-grey p-3 rounded">
                                 <div class="d-flex">
                                     <svg class="" aria-describedby="cleanliness-description" role="img" viewBox="0 0 24 24"
