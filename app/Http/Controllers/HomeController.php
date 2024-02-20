@@ -150,6 +150,7 @@ class HomeController
         $apartments->load('images',  'free_services', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
         $date = $request->check_in_checkout;
         $days = 0;
+        $filter = false;
 
 
         $saved =  auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];
@@ -177,6 +178,7 @@ class HomeController
                 'restaurants',
                 'images',
                 'generator',
+                'filter'
 
             ));
         } else {
@@ -205,6 +207,7 @@ class HomeController
                     'amenities',
                     'bedrooms',
                     'restaurants',
+                    'filter'
                 ));
             }
             return view('underconstruction.index');

@@ -14,7 +14,7 @@
       </div>
     </div>
     <div style="min-width: 100%; z-index: 2; background: #ffffff; opacity: 0;" id="people-dropdown"
-      class="people-dropdown d-none pl-4 pt-3 pb-4 pr-4 position-absolute  border">
+      class="people-dropdown d-none pl-4 pt-3 pb-4 pr-4 position-absolute  guest-dropdown border">
       <div class=" d-flex p-2 justify-content-between">
         <div class="text-left">
           <div class="" id="">Adults</div>
@@ -108,7 +108,6 @@ export default {
 
     checkForGuests(e) {
       const retrievedJsonString = localStorage.getItem('searchParams');
-      console.log(retrievedJsonString)
       // Check if the retrieved JSON string is not null
       if (retrievedJsonString !== null) {
         // Convert the JSON string back to an object

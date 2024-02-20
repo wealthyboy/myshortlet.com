@@ -65,6 +65,12 @@ class ApartmentsController extends Controller
         $query = Apartment::query();
 
         if ($request->check_in_checkout) {
+            // Check if apartment_id is present in the request
+            if ($request->has('apartment_id')) {
+                $apartmentId = $request->apartment_id;
+
+                $query->where('id', $apartmentId); // Filter by the provided apartment ID
+            }
             $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
                 $query->where(function ($q) use ($startDate, $endDate) {
                     $q->where('checkin', '<', $endDate)
@@ -74,6 +80,12 @@ class ApartmentsController extends Controller
                 ->where('apartments.max_adults', '>=',  $data['max_adults'])
                 ->where('apartments.max_children', '>=', $data['max_children'])
                 ->where('apartments.no_of_rooms', '>=', $data['rooms']);
+        }
+
+
+        if ($request->has('apartment_id')) {
+            $apartments = $query->latest()->first();
+            return $apartments;
         }
 
 

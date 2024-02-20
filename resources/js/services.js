@@ -17,6 +17,9 @@ const AddProperty = require("./components/properties/AddProperty.vue").default;
 const CategorySearch = require("./components/properties/CategorySearch.vue")
   .default;
 
+// const IndexProperty = require("./components/properties/Index.vue")
+//   .default;
+
 const ProductsIndex = require("./components/properties/Index.vue").default;
 const FilterSearch = require("./components/properties/Filter.vue").default;
 const PropertiesCount = require("./components/properties/PropertyCount.vue")
