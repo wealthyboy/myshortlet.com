@@ -38,12 +38,13 @@
                 </div>
             </div>
 
+
             <div :class="{ 'header-filter': propertyIsLoading }" id="" class="name mt-1 rounded p-2">
                 <div class="position-relative">
                     <input type="hidden" name="property_id" value="217" />
                     <template v-if="roomsAv.length">
                         <div class="row">
-                            <apartment @showRoom="showRoom" @reserve="reserve" :amenities="amenities"
+                            <apartment :classType="classType" @showRoom="showRoom" @reserve="reserve" :amenities="amenities"
                                 v-for="room in roomsAv" :key="room.id" :room="room" :stays="stays" :qty="qty" />
                         </div>
                     </template>
@@ -69,7 +70,7 @@
                             </svg>
                         </a>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body quick-view">
                         <div class="row">
                             <div class="col-md-12 rounded">
                                 <div class="room-carousel owl-carousel owl-theme">
@@ -85,10 +86,10 @@
                                         <input type="hidden" name="_token" :value="$root.token" />
                                         <input type="hidden" name="property_id" :value="property.id" />
                                         <div>
-                                            <div class="row p-3">
+                                            <div class="row  quick-view p-3">
                                                 <div
                                                     class="form-group  p-0  form-border cursor-pointer search col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
-                                                    <label class="pl-2 " for="flatpickr-input-f">Check-in -
+                                                    <label class=" label" for="flatpickr-input-f">Check-in -
                                                         Check-out</label>
                                                     <date :isDateNeedsToToOpen="isDateNeedsToToOpen"
                                                         @dateSelected="dateSelected" />
@@ -459,7 +460,8 @@ export default {
         filter: {
             type: Number,
             default: 1
-        }
+        },
+
     },
     data() {
         return {
@@ -482,6 +484,7 @@ export default {
             apartmentIsAvailable: false,
             apartmentIsChecked: false,
             loading: false,
+            classType: ['col-12 col-md-4'],
             room: {},
             form: {
                 room_quantity: [],
@@ -537,9 +540,14 @@ export default {
             });
         });
 
+        console.log(this.filter)
+
         if (!this.filter) {
+            //  this.type = 'col-md-3'
+            this.classType = ['col-12 col-md-3']
             this.roomsAv = this.apartments;
         } else {
+            this.classType = ['col-12 col-md-4']
             this.getApartments()
         }
     },

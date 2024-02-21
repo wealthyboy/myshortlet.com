@@ -44,7 +44,7 @@
         @else
 
         <div id="load-products" class="col-md-12">
-            <apartments-index :property="{{$property}}" :apartments="{{ $apartments }}" />
+            <apartments-index :filter="1" :property="{{$property}}" :apartments="{{ $apartments }}" />
         </div>
         @endif
 
