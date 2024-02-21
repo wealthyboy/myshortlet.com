@@ -161,7 +161,7 @@
       </div>
       <div class="row">
          <div id="load-products" class="col-md-12">
-            <apartments-index :classType="col-md-3" :filter="0" :property="{{$property}}" :apartments="{{ $apartments }}" />
+            <apartments-index :filter="0" :property="{{$property}}" :apartments="{{ $apartments }}" />
          </div>
       </div>
    </div>
