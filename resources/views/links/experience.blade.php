@@ -69,7 +69,7 @@
                      <h2 class="mb-4 bold-2">Spa</h2>
                      <div class="lead text-secondary">Coming Soon</div>
                      <p class="mt-4  text-left text-black light-bold">
-                        our spa will offer a sanctuary of serenity amidst the hustle and bustle of everyday life
+                        Our spa will offer a sanctuary of serenity amidst the hustle and bustle of everyday life.
                      </p>
                      <div class="buttons">
                      </div>

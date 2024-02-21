@@ -44,14 +44,13 @@
                     <input type="hidden" name="property_id" value="217" />
                     <template v-if="roomsAv.length">
                         <div class="row">
-                            <apartment :classType="classType" @showRoom="showRoom" @reserve="reserve" :amenities="amenities"
-                                v-for="room in roomsAv" :key="room.id" :room="room" :stays="stays" :qty="qty" />
+                            <apartment :showReserve="filter" :classType="classType" @showRoom="showRoom" @reserve="reserve"
+                                :amenities="amenities" v-for="room in roomsAv" :key="room.id" :room="room" :stays="stays"
+                                :qty="qty" />
                         </div>
                     </template>
                 </div>
             </div>
-
-
         </form>
 
         <transition name="modal-fade">
@@ -461,6 +460,7 @@ export default {
             type: Number,
             default: 1
         },
+        showReserve: Number
 
     },
     data() {
@@ -585,12 +585,15 @@ export default {
         },
         openModal() {
             this.showModal = true;
+            document.body.style.overflow = 'hidden'; // Prevent scrolling on the body
             // Add event listener to close modal when clicking outside
             document.body.addEventListener('click', this.clickOutsideHandler);
         },
         closeModal() {
             this.showModal = false;
             // Remove event listener when closing modal
+            document.body.style.overflow = ''; // Prevent scrolling on the body
+
             document.body.removeEventListener('click', this.clickOutsideHandler);
         },
         clickOutsideHandler(event) {
@@ -598,6 +601,9 @@ export default {
             if (!this.$refs.modal.contains(event.target)) {
                 this.closeModal();
             }
+
+            document.body.style.overflow = ''; // Prevent scrolling on the body
+
         },
         dateSelected(value) {
             this.form.check_in_checkout = value;

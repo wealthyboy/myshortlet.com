@@ -119,7 +119,7 @@
                         <div class="font-weight-bold-2 text-success" v-if="room.is_refundable">
                             Fully Refundable
                         </div>
-                        <a target="_blank" @click.prevent="reserve(room)"
+                        <a target="_blank" v-if="showReserve" @click.prevent="reserve(room)"
                             class="btn btn-round  btn-primary  py-2  bold-2  text-white  align-self-end font-weight-bold-2">
                             Reserve
                         </a>
@@ -140,95 +140,7 @@
 
 
 
-        <!-- Modal -->
 
-
-        <!-- <div v-if="lunchModal" class=" gallery-images" style="
-          position: fixed; 
-          display: block;
-          width: 100%; 
-          height: 100vh; 
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          z-index: 2090; 
-          background-color: #fff;
-          cursor: pointer;">
-            <div class="container">
-                <div class="">
-                    <div class="py-2  border-bottom">
-                        <h3 class="bold-2">Apartment Information</h3>
-
-                        <button @click="lunchModal = !lunchModal" style="z-index: 1; right:10px; top: 15px"
-                            class="close-icon  cursor-pointer fa-1x position-absolute raised">
-                            <i class="fal fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-4">
-                        <div class="card-title  bold-2 text-size-1-big">
-                            <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
-                        </div>
-                        <div class="d-flex  flex-column">
-                            <div class="position-relative mb-2">
-                                <span class="position-absolute svg-icon-section">
-                                    <svg>
-                                        <use xlink:href="#bedrooms-icon"></use>
-                                    </svg>
-                                </span>
-                                <span class="svg-icon-text">{{ room.no_of_rooms }} Bedrooms</span>
-                            </div>
-                            <div class="position-relative mb-2">
-                                <span class="position-absolute svg-icon-section">
-                                    <svg>
-                                        <use xlink:href="#bathroom-icon"></use>
-                                    </svg>
-                                </span>
-                                <span class="svg-icon-text">{{ room.toilets }} bathrooms</span>
-                            </div>
-                            <div class="position-relative mb-2">
-                                <span class="position-absolute svg-icon-section">
-                                    <svg>
-                                        <use xlink:href="#sleeps-icon"></use>
-                                    </svg>
-                                </span>
-                                <span class="svg-icon-text">{{ room.guests }} Guests</span>
-                            </div>
-                        </div>
-                        <div class="facilities">
-                            <h4 class="card-title bold-2 text-size-1-big">
-                                Amenities
-                            </h4>
-                            <div :key="amenity.id" v-for="(amenity, index) in amenities">
-                                <div class="">
-                                    <div class="bold-2">
-                                        {{ index }}
-                                    </div>
-                                    <div v-for="facility in  amenity" class="svg-icon-text">{{ facility.name }} </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="d-flex justify-content-end">
-
-                            <a target="_blank" @click.prevent="reserve(room)"
-                                class="btn btn-round  btn-blue   py-2  bold-2   align-self-end font-weight-bold-2">
-                                Reserve
-                            </a>
-                        </div>
-                        <div class="room-carousel owl-carousel owl-theme">
-                            <div class="item" :key="image.id" v-for="image in room.images">
-                                <img :src="image.image" class="img  img-fluid" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
 </template>
 <script>
@@ -241,7 +153,8 @@ export default {
         stays: Array,
         qty: Boolean,
         amenities: Array,
-        classType: Array
+        classType: Array,
+        showReserve: Number
     },
     data() {
         return {
