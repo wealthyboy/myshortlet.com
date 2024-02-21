@@ -193,8 +193,8 @@
                                     <h3 class="uitk-heading uitk-heading-5 uitk-spacing uitk-spacing-margin-blockend-six">
                                         Apartment
                                         amenities</h3>
-                                    <div class="" style="">
-                                        <div class="">
+                                    <div class="row" style="">
+                                        <div class="col-md-6">
                                             <div class="d-flex align-items-center">
                                                 <svg class="" aria-hidden="true" viewBox="0 0 24 24"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -235,7 +235,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="">
+                                        <div class="col-md-6">
                                             <div class="d-flex align-items-center"><svg class="" aria-hidden="true"
                                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -254,35 +254,27 @@
                                                                 class=""></span><span class="">Blackout
                                                                 drapes/curtains</span>
                                                         </li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span
                                                                 class="uitk-typelist-item-child">Climate-controlled air
                                                                 conditioning</span></li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">Free cribs/infant
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="">Free cribs/infant
                                                                 beds</span>
                                                         </li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">Pillowtop bed</span></li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">Premium bedding</span></li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">Rollaway/extra beds not
-                                                                available</span></li>
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="">Pillowtop bed</span></li>
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="">Premium bedding</span></li>
+                                                        <li class="" role="listitem">
+                                                            <span aria-hidden="true" class=""></span><span
+                                                                class="">Rollaway/extra beds not available</span>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="uitk-layout-grid-item">
+                                        <div class="col-md-6">
                                             <div class="d-flex align-items-center"><svg
                                                     class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
                                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -318,7 +310,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="">
+                                        <div class="col-md-6">
                                             <div class="d-flex align-items-center"><svg
                                                     class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
                                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -339,17 +331,12 @@
                                                                 class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
                                                                 class="uitk-typelist-item-child">24-hour room service</span>
                                                         </li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">Minibar (fees may
-                                                                apply)</span>
-                                                        </li>
+
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="uitk-layout-grid-item">
+                                        <div class="col-md-6">
                                             <div class="d-flex align-items-center"><svg
                                                     class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
                                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -372,7 +359,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="uitk-layout-grid-item">
+                                        <div class="col-md-6">
                                             <div class="d-flex align-items-center"><svg
                                                     class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
                                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -382,49 +369,34 @@
                                                 </svg>
                                                 <h4 class="ml-2">More</h4>
                                             </div>
-                                            <div class="uitk-spacing uitk-spacing-padding-inlinestart-six">
-                                                <div class="uitk-spacing uitk-spacing-padding-inlinestart-three">
-                                                    <ul class="uitk-typelist uitk-typelist-orientation-stacked uitk-typelist-size-2 uitk-typelist-spacing uitk-spacing uitk-spacing-margin-blockstart-two"
-                                                        role="list">
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">Connecting rooms
-                                                                available</span></li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">Daily housekeeping</span>
+                                            <div class="">
+                                                <div class="">
+                                                    <ul class="" role="list">
+                                                        <li class="" role="listitem">
+                                                            <span aria-hidden="true" class="">
+                                                            </span>
+                                                            <span class="">Connecting rooms
+                                                                available</span>
                                                         </li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">In-room massage</span></li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">Iron/ironing board</span>
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="">Daily housekeeping</span>
                                                         </li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">LED light bulbs</span></li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">Phone</span></li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">Recycling bin</span></li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">Safe</span></li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">Wardrobe or closet</span>
+
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="d">Iron/ironing board</span>
+                                                        </li>
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="">LED light bulbs</span></li>
+                                                        <li class="" role="listitem">
+                                                            <span aria-hidden="true" class=""></span><span
+                                                                class="">Phone</span>
+                                                        </li>
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="">Recycling bin</span></li>
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="">Safe</span></li>
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="">Wardrobe or closet</span>
                                                         </li>
                                                     </ul>
                                                 </div>
