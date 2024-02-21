@@ -15,16 +15,16 @@ class ReservationReceipt extends Mailable
 
     public $settings;
 
-    public function __construct($user_reservation,$settings)
+    public function __construct($user_reservation, $settings)
     {
         $this->user_reservation = $user_reservation;
-        
+
         $this->settings = $settings;
     }
 
-    
+
     public function build()
-    {   
-        return $this->subject('AvenueMontaigne Confirmation')->view('emails.receipt.index');
+    {
+        return $this->subject('Reservation Confirmation: Your Stay at Avenuemontaigne')->view('emails.receipt.index');
     }
 }
