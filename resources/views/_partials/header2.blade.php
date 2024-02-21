@@ -3,11 +3,7 @@
     <div class="navbar-translate d-flex justify-content-between w-100 fixed-top">
         <a href="/" class="navbar-brand">
             <div class="logo-small">
-
-
-                <img src="/images/logo/avem-logo.png" alt="" srcset="">
-
-
+                <img src="/images/logo/avnmont-white-04.png" alt="" srcset="">
                 @if(isset($show_logo) && $show_logo)
                 @else
                 @endif
@@ -19,14 +15,14 @@
 
         <div class="d-flex">
             @guest
-            <a href="/login" class="align-self-center bold-3 font-weight-bold  px-3 py-1 mr-2">
+            <a href="/login" class="align-self-center  text-white bold-3 font-weight-bold  px-3 py-1 mr-2">
                 <i class="fal fa-sign-in"></i>
                 Login
             </a>
             @endguest
 
             @auth
-            <a href="/account" class="align-self-center bold-3 font-weight-bold  px-3 py-1 mr-2">
+            <a href="/account" class="align-self-center bold-3  text-white font-weight-bold  px-3 py-1 mr-2">
                 <i class="fal fa-sign-in"></i>
                 Account
             </a>
@@ -34,7 +30,7 @@
 
 
             @if(isset($show_logo) && $show_logo)
-            <a href="/apartments" class="align-self-center font-weight-bold px-3 py-1">
+            <a href="/apartments" class="align-self-center font-weight-bold  text-white px-3 py-1">
                 <i class="fal fa-sign-in"></i>
                 Book Now
             </a>

@@ -1441,11 +1441,15 @@ carousel-fade .carousel-item {
 }
 
 .main-background {
-  background-color: #342c27;
+  background-color: #342c27 !important;
 }
 
 .primary-color {
   color: #342c27 !important;
+}
+
+.navbar-toggler-icon {
+  background-color: #fff;
 }
 
 .underline {

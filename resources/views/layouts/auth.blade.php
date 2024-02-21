@@ -9,7 +9,7 @@
 
 <body>
    <div id="app" class="appp">
-      <nav class="navbar   navbar-expand-lg " id="sectionsNav">
+      <nav class="navbar main-background  navbar-expand-lg " id="sectionsNav">
          @include('_partials.header2')
       </nav>
 

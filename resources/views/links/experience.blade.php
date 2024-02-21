@@ -1,18 +1,8 @@
 @extends('layouts.auth')
 @section('content')
-
-
-
-
-
-
-
-
 <div class="container-fluid mb-3">
    <div class="row p-1">
       <div class="col-md-12">
-
-
          <section class="  ">
             <div class="row  bg-grey pb-5 pt-5 position-relative">
                <div id="leftBox" class="col-md-7 opacity-0 rounded  card-background-image">
@@ -29,9 +19,7 @@
                            <img src="{{ $generator::generateThumbnailUrl($image) }}" class="d-block w-100" alt="...">
                         </div>
                         @endforeach
-                        <!-- <div class="carousel-item">
-                           <img src="/images/banners/main_buiding.png" class="d-block w-100" alt="...">
-                        </div> -->
+
                      </div>
 
                      <button class="carousel-control-prev" data-target="#gallery-banner" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
