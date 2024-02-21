@@ -25,6 +25,7 @@ return [
         'secret' => env('MAILCHIMP_SECRET'),
         'list' => env('MAILCHIMP_LISTID'),
     ],
+
     'ses' => [
         'key' => env('SES_KEY'),
         'secret' => env('SES_SECRET'),

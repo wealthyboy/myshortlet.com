@@ -186,7 +186,7 @@
 
               <!-- Logo -->
               <div class="p-t-b-15">
-                <img src="https://royalbnbproperties.com/uploads/MLC4TLmEKqndCOICWFbxJSqMPSWbXdw5C3k5gGar.jpg" height="86" width="70" alt="">
+                <img src="https://drive.google.com/thumbnail?id=1eQ_hLe9Th_2Oew3Qoew_qQKhuGBpHGZm&sz=w2000" height="86" width="70" alt="">
               </div>
               <!-- /End Logo -->
 

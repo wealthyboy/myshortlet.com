@@ -17,6 +17,7 @@ use App\Models\SystemSetting;
 use App\Http\Helper;
 use App\Models\Apartment;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController
 {
@@ -31,6 +32,8 @@ class HomeController
 
         $site_status = Live::first();
         $banners =  Banner::banners()->get();
+
+
 
         if (!$site_status->make_live) {
             return view('index', compact(
@@ -113,6 +116,9 @@ class HomeController
         $banners = Banner::where('type', 'banner')->orderBy('sort_order', 'asc')->get();
         $sliders = Banner::where('type', 'slider')->orderBy('sort_order', 'asc')->get();
         $property = Property::first();
+
+        //dd(Storage::disk('google')->allFiles());
+
 
 
         $date  = explode("to", $request->check_in_checkout);
