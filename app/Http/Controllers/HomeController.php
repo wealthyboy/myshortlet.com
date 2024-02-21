@@ -88,7 +88,6 @@ class HomeController
                 'https://drive.google.com/file/d/1VVLjDieMwBTHJBfcDb6lv7EOh1dHCnGW/view?usp=drive_link',
                 'https://drive.google.com/file/d/1EUI6dfkxfcyvdbKL_y0aZfT61sGXk6r7/view?usp=drive_link',
                 'https://drive.google.com/file/d/1iFlKwt-LtCc11KkjPndzUiiXlMG-LvUL/view?usp=drive_link',
-                'https://drive.google.com/file/d/1objnfLxXO6ui1XncszCPhF9skQMbnM8t/view?usp=drive_link',
                 'https://drive.google.com/file/d/1xe9lnx6RfmSpQSp_r9tSOWwV1RNmMBxY/view?usp=drive_link',
                 'https://drive.google.com/file/d/1V1SRVA1JQEUaFHwCsqTpvQkKr1d6vOAI/view?usp=drive_link',
                 'https://drive.google.com/file/d/1TC5cOTsxA5h7YnjY0NJkvvCOVPrzTxGY/view?usp=drive_link',
