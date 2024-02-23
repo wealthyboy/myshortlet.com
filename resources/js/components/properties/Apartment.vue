@@ -2,14 +2,12 @@
     <div :class="classType" class=" border-bottom  mb-1 mt-1 pl-1 pb-1 px-0">
         <div class="col-md-12 aprts position-relative p-0">
             <div class="owl-carousel owl-theme">
-                <div class="item">
 
-                    <div v-if="room.google_drive_video_link" class="item">
-                        <iframe style="width: 100%;" height="250" :src="room.google_drive_video_link">
-                        </iframe>
-                    </div>
-
+                <div v-if="room.google_drive_video_link" class="item">
+                    <iframe style="width: 100%;" height="250" :src="room.google_drive_video_link">
+                    </iframe>
                 </div>
+
                 <div class="item rounded-top" :key="image.id" v-for="image in room.images">
                     <img @click.prevent="showRoom(room)" :src="image.image" class="img cursor-pointer  img-fluid" />
 
