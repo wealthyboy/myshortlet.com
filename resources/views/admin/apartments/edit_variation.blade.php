@@ -126,6 +126,19 @@
                     <input class="form-control  datepicker pull-right" value="{{ $helper::getReversedFormatedDate($apartment->sale_price_expires) }}" name="edit_room_sale_price_expires[{{ $apartment->id }}]" id="datepicker" type="text">
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="form-group label-floating ">
+                    <label class="control-label">Image links</label>
+                    <input name="edit_image_links[{{ $apartment->id }}]" value="{{ $apartment->image_link }}" class="form-control  variation" type="text">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group label-floating ">
+                    <label class="control-label">Video Link</label>
+                    <input name="edit_video_links[{{ $apartment->id }}]" value="{{ $apartment->video_link }}" class="form-control  variation" type="text">
+                </div>
+            </div>
 
             <div class="col-md-12 bed mb-5">
                 @include('admin.apartments.beds')

@@ -15,6 +15,12 @@
       </a>
    </div> -->
 
+
+
+
+
+
+
    <!-- <video class=" vidoeo-intro" src="/video/avem.mp4" autoplay muted loop></video> -->
 
    <div id="main-banner" class="carousel slide carousel-fade" data-ride=" carousel">
@@ -108,7 +114,6 @@
                         </div>
 
                      </div>
-
 
 
                      <!-- <button class="carousel-control-prev" data-target="#c1" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
@@ -223,7 +228,7 @@
 
 
          <section id="box3" class=" opacity-0 ">
-            <div class="row   pb-5  position-relative">
+            <div class="row   pb-5 pt-5 position-relative">
                <div class="col-md-7 rounded  card-background-image">
                   <div id="gallery-banner" class="carousel slide" data-ride="carousel">
                      <ol class="carousel-indicators">

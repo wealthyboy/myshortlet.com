@@ -108,6 +108,19 @@
                     <input class="form-control  datepicker pull-right" name="room_sale_price_expires[{{ $counter }}]" id="datepicker" type="text">
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="form-group label-floating">
+                    <label class="control-label">Image Links</label>
+                    <input class="form-control   pull-right" name="room_image_links[{{ $counter }}]" type="text">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group label-floating">
+                    <label class="control-label">Video Links</label>
+                    <input class="form-control   pull-right" name="room_video_links[{{ $counter }}]" type="text">
+                </div>
+            </div>
+
 
 
             <div class="col-md-12 bed mb-5">

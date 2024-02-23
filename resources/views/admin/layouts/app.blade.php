@@ -197,6 +197,13 @@
                         </a>
                     </li>
 
+                    <li class="{{ $helper->active_link(['media']) }} ">
+                        <a href="{{ route('media.index') }}">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            <p> Gallery</p>
+                        </a>
+                    </li>
+
                     <li class="{{ $helper->active_link(['banners']) }} ">
                         <a data-toggle="collapse" href="dashboard.html#Design">
                             <i class="fa fa-paint-brush"></i>

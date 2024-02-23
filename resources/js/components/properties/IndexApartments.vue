@@ -73,11 +73,21 @@
                         <div class="row">
                             <div class="col-md-12 rounded">
                                 <div class="room-carousel owl-carousel owl-theme">
+                                    <div v-if="room.google_drive_video_link" class="item">
+                                        <iframe style="width: 100%;" height="400" :src="room.google_drive_video_link">
+                                        </iframe>
+                                    </div>
+                                    <template v-if="room.google_drive_image_links">
+                                        <div class="item" :key="index"
+                                            v-for="(image, index) in room.google_drive_image_links">
+                                            <img :src="image" class="img  img-fluid rounded" />
+                                        </div>
+                                    </template>
                                     <div class="item" :key="image.id" v-for="image in room.images">
                                         <img :src="image.image" class="img  img-fluid rounded" />
                                     </div>
                                 </div>
-                                <div class="container   p-0   ">
+                                <div class="container p-0">
                                     <h4 class="primary-color">Check availablity FOR {{ room.name }}</h4>
 
                                     <form id="single-form" :action="'/book/' + property.slug" method="GET"

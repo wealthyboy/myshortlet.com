@@ -30,6 +30,8 @@ class Apartment extends Model
         'guests',
         'display_price',
         'percentage_off',
+        'google_drive_image_links',
+        'google_drive_video_link'
 
     ];
 
@@ -49,7 +51,9 @@ class Apartment extends Model
         'toilets',
         'type',
         'price_mode',
-        'apartment_id'
+        'apartment_id',
+        'image_link',
+        'video_link'
     ];
 
 
@@ -81,6 +85,70 @@ class Apartment extends Model
     {
         return $this->belongsToMany(Attribute::class)->withPivot('bed_count');;
     }
+
+
+    // Define the accessor method
+    public function getGoogleDriveImageLinksAttribute($value)
+    {
+        $images = [];
+        // If the attribute exists and is not empty
+        if ($this->image_links) {
+            // Split the comma-separated links into an array
+            $links  = explode(',', $this->image_links);
+
+            foreach ($links as $link) {
+                $images[] = self::generateThumbnailUrl($link);
+            }
+
+            return $images;
+        }
+
+        // Return an empty array if the attribute is empty
+        return [];
+    }
+
+
+    public function getGoogleDriveVideoLinkAttribute()
+    {
+        $link = self::generateId($this->video_link);
+
+        return self::generateVideoLink($link);
+    }
+
+
+    public  static function generateId($originalUrl)
+    {
+        // Extract the ID from the original URL using regular expressions
+        preg_match('/\/file\/d\/(.+?)\//', $originalUrl, $matches);
+        $id = $matches[1];
+
+        return $id;
+    }
+
+
+    public  static function generateThumbnailUrl($originalUrl)
+    {
+        // Extract the ID from the original URL using regular expressions
+        preg_match('/\/file\/d\/(.+?)\//', $originalUrl, $matches);
+        $id = $matches[1];
+
+        // Construct the thumbnail URL
+        $thumbnailUrl = "https://drive.google.com/thumbnail?id={$id}&sz=w2000";
+
+        return $thumbnailUrl;
+    }
+
+
+    public  static function generateVideoLink($id)
+    {
+        $link = "https://drive.google.com/file/d/{$id}/preview";
+        return $link;
+    }
+
+
+
+
+
 
 
     public function free_services()

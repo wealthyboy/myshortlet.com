@@ -86,7 +86,7 @@ class PropertiesController extends Controller
         $extras = Attribute::parents()->where('type', 'extra services')->orderBy('sort_order', 'asc')->get();
         $bedrooms = Attribute::parents()->where('type', 'bedrooms')->orderBy('sort_order', 'asc')->get();
         $others = Attribute::where('type', 'other')->orderBy('sort_order', 'asc')->get()->groupBy('parent.name');
-        $room_ids =  Attribute::parents()->where('type', 'room_id')->orderBy('sort_order', 'asc')->get();
+        $room_ids = Attribute::parents()->where('type', 'room_id')->orderBy('sort_order', 'asc')->get();
 
 
         $helper =  new Helper;
@@ -120,7 +120,7 @@ class PropertiesController extends Controller
     {
 
         $this->validate($request, [
-            "apartment_name"  => "required",
+            "apartment_name" => "required",
             'address' => "required",
             "description" => "required"
         ]);
@@ -258,11 +258,11 @@ class PropertiesController extends Controller
             $apartment->slug = str_slug($request->room_name[$key]);
             $apartment->max_adults = $request->room_max_adults[$key];
             $apartment->quantity = $request->room_quantity[$key];
+            $apartment->image_link = $request->room_image_links[$key];
+            $apartment->video_link = $request->room_video_links[$key];
             $apartment->type = $request->type;
             $apartment->price_mode = $request->price_mode[$key];
             $apartment->apartment_id = $request->apartment_id[$key];
-
-
             $apartment->max_children = $request->room_max_children[$key];
             $apartment->no_of_rooms = $request->room_number[$key];
             $apartment->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires[$key], true);
@@ -483,6 +483,8 @@ class PropertiesController extends Controller
                         'max_adults' => $request->edit_room_max_adults[$room_id],
                         'max_children' => $request->edit_room_max_children[$room_id],
                         'apartment_id' => $request->edit_apartment_id[$room_id],
+                        'image_link' => $request->edit_image_links[$room_id],
+                        'video_link' => $request->edit_video_links[$room_id],
                         'property_id'  => $property->id,
                         'no_of_rooms' => $request->edit_room_number[$room_id],
                         'toilets'  => $request->edit_room_toilets[$room_id],

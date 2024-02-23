@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
+<link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 
 @include('_partials.header_styles')
 
@@ -31,6 +32,8 @@
    <script src="/js/services_js.js"></script>
 
    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
+   <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+
 
    @yield('page-scripts')
    <script type="text/javascript">
