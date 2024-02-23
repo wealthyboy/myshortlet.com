@@ -110,7 +110,8 @@ class Apartment extends Model
 
     public function getGoogleDriveVideoLinkAttribute()
     {
-        $link = self::generateId($this->video_link);
+        if ($this->video_link)
+            $link = self::generateId($this->video_link);
 
         return self::generateVideoLink($link);
     }
