@@ -15,15 +15,23 @@
       </a>
    </div> -->
 
+   <div class="owl-carousel owl-theme d-block d-sm-none">
+      @foreach($images['sliders'] as $key => $image)
+
+      <div style="background-image: url({{ $generator::generateThumbnailUrl($image) }}); " class="item page-header min-vh-75 half-hv position-relative rounded-top">
+         <span class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></span>
+      </div>
+      @endforeach
+
+   </div>
 
 
 
 
 
 
-   <!-- <video class=" vidoeo-intro" src="/video/avem.mp4" autoplay muted loop></video> -->
 
-   <div id="main-banner" class="carousel slide carousel-fade" data-ride=" carousel">
+   <div id="main-banner" class="carousel slide carousel-fade d-none d-md-block" data-ride=" carousel">
       <ol class="carousel-indicators">
          @foreach($images['sliders'] as $key => $image)
          <li data-target="#main-banner" data-slide-to="{{ $key }}" class="{{ $key === 0 ? 'active' : ''}}"></li>
@@ -316,9 +324,15 @@
 
 jQuery(function () {
 $(".owl-carousel").owlCarousel({
-margin: 10,
+margin: 0,
 nav: true,
-dots: false,
+dots: true,
+autoplay: true,
+smartSpeed: 500,
+animateOut: 'animate__fadeInUp',
+animateIn: 'animate__fadeInUp',
+dots: true,
+loop : true,
 responsive: {
 0: {
 items: 1,

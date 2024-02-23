@@ -833,6 +833,11 @@ button.owl-next {
   }
 
 
+  .intro-image img {
+    width: 41% !important;
+  }
+
+
   .intro-image.play {
     margin-top: 7rem !important;
   }
@@ -848,9 +853,6 @@ button.owl-next {
     right: 0px;
     margin-top: 10px;
   }
-
-  .item {}
-
 
   .down-icon {
     width: 100%;
@@ -1563,6 +1565,8 @@ svg.uitk-icon-medium {
     overflow-y: auto;
     /* Enable vertical scrolling if content exceeds modal height */
   }
+
+
 }
 
 
@@ -1612,4 +1616,12 @@ svg.uitk-icon-medium {
   position: absolute;
   left: 10.5px;
   top: -10px;
+}
+
+.down-icon,
+.intro-image {
+  display: flex;
+  justify-content: space-around;
+  position: absolute;
+  width: 84%;
 }
