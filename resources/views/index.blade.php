@@ -204,7 +204,7 @@
                      </ol> -->
                      <div class="carousel-inner">
                         <div class="carousel-item active">
-                           <img src="https://drive.google.com/thumbnail?id=1objnfLxXO6ui1XncszCPhF9skQMbnM8t&sz=w2000" class="d-block w-100" alt="...">
+                           <img src="https://drive.google.com/thumbnail?id=1GlZ6VnD1-5X-v2F3t6aOURj6_NglHntq&sz=w2000" class="d-block w-100" alt="...">
                         </div>
 
                      </div>
