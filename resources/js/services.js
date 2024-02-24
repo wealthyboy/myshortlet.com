@@ -236,6 +236,9 @@ const app = new Vue({
       animation: "slide",
     });
 
+
+
+
     jQuery(function () {
       $(".test-carousel").owlCarousel({
         margin: 10,

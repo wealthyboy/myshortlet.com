@@ -490,11 +490,6 @@ export default {
             document.getElementById("full-bg").remove();
         }
 
-
-        // // Loop through each element and hide it
-        // loaderElements.forEach(function (element) {
-        //     element.style.display = 'none';
-        // });
         const retrievedJsonString = localStorage.getItem('searchParams');
         // Check if the retrieved JSON string is not null
         if (retrievedJsonString !== null) {
@@ -507,7 +502,7 @@ export default {
             $(".owl-carousel").owlCarousel({
                 margin: 10,
                 nav: true,
-                dots: false,
+                dots: true,
                 responsive: {
                     0: {
                         items: 1,
@@ -522,7 +517,6 @@ export default {
             });
         });
 
-        console.log(this.filter)
 
         if (!this.filter) {
             //  this.type = 'col-md-3'

@@ -6,29 +6,16 @@
    <div class="intro-image">
       <img src="https://drive.google.com/thumbnail?id=1eQ_hLe9Th_2Oew3Qoew_qQKhuGBpHGZm&sz=w2000" alt="">
    </div>
-   <!-- 
-   <div role="button" class="intro-image play">
-      <a class=" play-video" href="#">
-         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-            <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
-         </svg>
-      </a>
-   </div> -->
 
-   <div class="owl-carousel owl-theme d-block d-sm-none">
+
+
+   <div class=" owl-carousel owl-theme d-block d-sm-none">
       @foreach($images['sliders'] as $key => $image)
-
       <div style="background-image: url({{ $generator::generateThumbnailUrl($image) }}); " class="item page-header min-vh-75 half-hv position-relative rounded-top">
          <span class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></span>
       </div>
       @endforeach
-
    </div>
-
-
-
-
-
 
 
    <div id="main-banner" class="carousel slide carousel-fade d-none d-md-block" data-ride=" carousel">
@@ -44,10 +31,6 @@
             <img src="{{ $generator::generateThumbnailUrl($image) }}" class="d-block w-100" alt="...">
          </div>
          @endforeach
-
-
-
-
       </div>
       <button class="carousel-control-prev" data-target="#main-banner" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
             <path d="M19.9 40L1.3 20 19.9 0" class="carousel-control-prev-icon" aria-hidden="true" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -323,16 +306,13 @@
 
 
 jQuery(function () {
-$(".owl-carousel").owlCarousel({
+$(".banner-carousel").owlCarousel({
 margin: 0,
 nav: true,
-dots: true,
 autoplay: true,
 smartSpeed: 500,
-animateOut: 'fadeOut'
-animateIn: 'fadeOut'
-dots: true,
-loop : true,
+dots:true,
+loop:true,
 responsive: {
 0: {
 items: 1,
