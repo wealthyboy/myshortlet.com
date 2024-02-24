@@ -72,7 +72,7 @@
                             </svg>
                         </a>
                     </div>
-                    <div class="modal-body quick-view">
+                    <div v-if="room.is_gallery" class="modal-body quick-view">
                         <div class="row">
                             <div class="col-md-12 rounded">
                                 <div class="room-carousel owl-carousel owl-theme">
