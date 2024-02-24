@@ -30,13 +30,18 @@
                     </div>
                 </div>
             </div>
-            <div id="" v-if="!propertyLoading && !roomsAv.length" class="name mt-1 rounded bg-white p-2">
-                <div class="text-muted text-danger">
-                    {{
-                        error_msg || "There are not available apartments for your search."
-                    }}
+
+            <div v-if="!gallery">
+                <div id="" v-if="!propertyLoading && !roomsAv.length" class="name mt-1 rounded bg-white p-2">
+                    <div class="text-muted text-danger">
+                        {{
+                            error_msg || "There are not available apartments for your search."
+                        }}
+
+                    </div>
                 </div>
             </div>
+
 
 
 
@@ -45,10 +50,9 @@
                     <input type="hidden" name="property_id" value="217" />
                     <template v-if="roomsAv.length">
                         <div class="row">
-                            {{ isGallery }}
-                            <apartment :isGallery="isGallery" :showReserve="filter" :classType="classType"
-                                @showRoom="showRoom" @reserve="reserve" :amenities="amenities" v-for="room in roomsAv"
-                                :key="room.id" :room="room" :stays="stays" :qty="qty" />
+                            <apartment :showReserve="filter" :classType="classType" @showRoom="showRoom" @reserve="reserve"
+                                :amenities="amenities" v-for="room in roomsAv" :key="room.id" :room="room" :stays="stays"
+                                :qty="qty" />
                         </div>
                     </template>
                 </div>
@@ -446,7 +450,7 @@ export default {
             default: 1
         },
         showReserve: Number,
-        isGallery: Array
+        gallery: Number
     },
     data() {
         return {
@@ -489,7 +493,9 @@ export default {
     mounted() {
         // Get all elements with class 'p-loader'
 
-        if (this.filter) {
+        let lo = document.getElementById("full-bg")
+
+        if (lo) {
             document.getElementById("full-bg").remove();
         }
 
@@ -505,7 +511,7 @@ export default {
             $(".owl-carousel").owlCarousel({
                 margin: 10,
                 nav: true,
-                dots: true,
+                dots: false,
                 responsive: {
                     0: {
                         items: 1,

@@ -164,7 +164,7 @@ export default {
         amenities: Array,
         classType: Array,
         showReserve: Number,
-        isGallery: Array
+        isGallery: Number
     },
     data() {
         return {
