@@ -35,7 +35,6 @@ class Apartment extends Model
 
     ];
 
-
     protected $fillable = [
         'name',
         'price',

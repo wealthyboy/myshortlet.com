@@ -44,7 +44,7 @@
         @else
 
         <div id="load-products" class="col-md-12">
-            <apartments-index :filter="1" :property="{{$property}}" :apartments="{{ $apartments }}" />
+            <apartments-index :isGallery="[]" :filter="1" :property="{{$property}}" :apartments="{{ $apartments }}" />
         </div>
         @endif
 

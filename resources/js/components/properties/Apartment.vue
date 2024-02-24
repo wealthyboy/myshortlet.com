@@ -31,14 +31,14 @@
         </div>
         <div class="col-md-12 bg-white  pt-3">
             <div class="card-title bold-2 text-size-1-big  mt-lg-0 mt-sm-3 ">
-                <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
+                <a @click.prevent="showRoom(room)" href="#">{{ room.name }} {{ room.no_of_rooms }}</a>
             </div>
-            <div class="text-size-2 text-gold">
+            <div v-if="!room.is_gallery" class="text-size-2 text-gold">
                 <i class="fas fa-info-circle mr-2 "></i>Instant Confirmation
             </div>
-            <div class="entire-apartments">
-                <div class="bold-2 mb-2">Entire apartment</div>
-                <div class="d-flex justify-content-between flex-wrap flex-column">
+            <div :class="{ 'h-25': room.is_gallery }" class="entire-apartments h-25">
+                <div v-if="!room.is_gallery" class="bold-2 mb-2">Entire apartment</div> {{ isGallery }}
+                <div v-if="!room.is_gallery" class="d-flex justify-content-between flex-wrap flex-column">
                     <div class="position-relative mb-1">
                         <span class="position-absolute svg-icon-section">
                             <svg>
@@ -73,7 +73,7 @@
                 </div>
                  -->
 
-                <template v-if="room.bedrooms && room.bedrooms.length">
+                <template v-if="!room.is_gallery && room.bedrooms && room.bedrooms.length">
                     <div v-for="bed in room.bedrooms" :key="bed.id" class="position-relative mb-1">
                         <span class="position-absolute svg-icon-section">
                             <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <div>
+            <div v-if="!room.is_gallery">
                 <div class="d-flex d-flex justify-content-between">
                     <div class="price-box ">
                         <div class="d-inline-flex  mt-sm-3">
@@ -161,7 +161,8 @@ export default {
         qty: Boolean,
         amenities: Array,
         classType: Array,
-        showReserve: Number
+        showReserve: Number,
+        isGallery: Array
     },
     data() {
         return {

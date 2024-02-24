@@ -39,19 +39,22 @@
             </div>
 
 
+
             <div :class="{ 'header-filter': propertyIsLoading }" id="" class="name mt-1 rounded p-2">
                 <div class="position-relative">
                     <input type="hidden" name="property_id" value="217" />
                     <template v-if="roomsAv.length">
                         <div class="row">
-                            <apartment :showReserve="filter" :classType="classType" @showRoom="showRoom" @reserve="reserve"
-                                :amenities="amenities" v-for="room in roomsAv" :key="room.id" :room="room" :stays="stays"
-                                :qty="qty" />
+                            {{ isGallery }}
+                            <apartment :isGallery="isGallery" :showReserve="filter" :classType="classType"
+                                @showRoom="showRoom" @reserve="reserve" :amenities="amenities" v-for="room in roomsAv"
+                                :key="room.id" :room="room" :stays="stays" :qty="qty" />
                         </div>
                     </template>
                 </div>
             </div>
         </form>
+
 
         <transition name="modal-fade">
             <div v-if="showModal" @click.self="closeModal" class="modal-overlay d-flex">
@@ -442,8 +445,8 @@ export default {
             type: Number,
             default: 1
         },
-        showReserve: Number
-
+        showReserve: Number,
+        isGallery: Array
     },
     data() {
         return {

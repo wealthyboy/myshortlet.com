@@ -49,6 +49,9 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('location', 'Admin\Location\LocationController', ['names' => 'location']);
     Route::resource('media', 'Admin\Media\MediaController', ['names' => 'media']);
 
+    Route::resource('galleries', 'Admin\Gallery\GalleryController', ['names' => 'admin.galleries']);
+
+
     Route::resource('attributes', 'Admin\Attributes\AttributesController', ['names' => 'attributes']);
     Route::resource('rates', 'Admin\CurrencyRates\CurrencyRatesController', ['name' => 'rates']);
     Route::resource('vouchers', 'Admin\Vouchers\VouchersController', ['names' => 'vouchers']);

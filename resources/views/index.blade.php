@@ -158,7 +158,7 @@
       </div>
       <div class="row  p-1">
          <div id="load-products" class="col-md-12">
-            <apartments-index :filter="0" :property="{{$property}}" :apartments="{{ $apartments }}" />
+            <apartments-index :isGallery="0" :filter="0" :property="{{$property}}" :apartments="{{ $apartments }}" />
          </div>
       </div>
    </div>

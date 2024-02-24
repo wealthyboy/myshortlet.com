@@ -197,8 +197,8 @@
                         </a>
                     </li>
 
-                    <li class="{{ $helper->active_link(['media']) }} ">
-                        <a href="{{ route('media.index') }}">
+                    <li class="{{ $helper->active_link(['galleries']) }} ">
+                        <a href="{{ route('admin.galleries.index') }}">
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                             <p> Gallery</p>
                         </a>

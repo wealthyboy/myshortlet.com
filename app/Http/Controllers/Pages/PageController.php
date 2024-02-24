@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Http\Helper;
+use App\Models\Apartment;
+use App\Models\Gallery;
+use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
@@ -19,6 +23,7 @@ class PageController extends Controller
      */
     public function index()
     {
+        $request = request();
         $links = [
             'contact-us' => 'contact_us',
             'experience' => 'experience',
@@ -36,7 +41,72 @@ class PageController extends Controller
         $link_name = ucfirst($link_name);
         $generator = new self;
         $images = $this->images();
-        return view('links.' . $links[request()->path()], compact('images', 'generator', 'files', 'link_name'));
+
+        $types =  [
+            'extra_services',
+            'facilities',
+            'rules',
+            'room_facilities',
+            'other' => 'other'
+        ];
+
+        $str = new  Str;
+        $date = $request->check_in_checkout;
+        $property_is_not_available = null;
+        $cites = [];
+        $page_title = null;
+
+        $date = explode("to", $request->check_in_checkout);
+        $date = Helper::toAndFromDate($request->check_in_checkout);
+        $property_is_not_available = null;
+        $data = [];
+        $attributes = null;
+        $data['max_children'] = $request->children ?? 1;
+        $data['max_adults'] = $request->adults ?? 1;
+        $data['rooms'] = $request->rooms ?? 1;
+        $startDate = $date['start_date'];
+        $endDate = $date['end_date'];
+        $properties = null;
+        $breadcrumb = null;
+
+        $query = Apartment::query();
+
+        if ($request->check_in_checkout) {
+            // Check if apartment_id is present in the request
+            if ($request->has('apartment_id')) {
+                $apartmentId = $request->apartment_id;
+
+                $query->where('id', $apartmentId); // Filter by the provided apartment ID
+            }
+            $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
+                $query->where(function ($q) use ($startDate, $endDate) {
+                    $q->where('checkin', '<', $endDate)
+                        ->where('checkout', '>', $startDate);
+                });
+            })
+                ->where('apartments.max_adults', '>=',  $data['max_adults'])
+                ->where('apartments.max_children', '>=', $data['max_children'])
+                ->where('apartments.no_of_rooms', '>=', $data['rooms']);
+        }
+
+
+
+
+        $apartments = $query->latest()->get();
+        $saved = null;
+        $property = Property::first();
+
+        $galleries = Gallery::all();
+        $galleries->load('images');
+        $apartments->load('images', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
+        foreach ($apartments as $apartment) {
+            $apartment->is_gallery = 1;
+        }
+
+
+
+        $isGallery = false;
+        return view('links.' . $links[request()->path()], compact('isGallery', 'apartments', 'galleries', 'property', 'images', 'generator', 'files', 'link_name'));
     }
 
 

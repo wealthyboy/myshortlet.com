@@ -7,18 +7,23 @@
 
 
 
+<div style="background-color: rgb(248, 245, 244);">
+    <div class="container-fluid">
 
-<div class="container-fluid mb-3">
-    <div class="row g-0 pr-1 pl-1">
-        @foreach($images['galleries'] as $key => $image)
-        <div class="col-md-4 mb-1 mt-1 pr-1 pl-1">
-            <a href="{{ $generator::generateThumbnailUrl($image) }}" data-lightbox="gallery">
-                <img src="{{ $generator::generateThumbnailUrl($image) }}" class="img-fluid" alt="{{ $generator::generateThumbnailUrl($image) }}">
-            </a>
+
+
+        <div class="row  p-1">
+            <div id="load-products" class="col-md-12">
+                <apartments-index :filter="0" :isGallery="{{ $galleries }}" :property="{{$property}}" :apartments="{{ $apartments }}" />
+            </div>
+
+            <div id="load-products" class="col-md-12">
+                <apartments-index :filter="0" :isGallery="{{ $galleries }}" :property="{{$property}}" :apartments="{{ $galleries }}" />
+            </div>
         </div>
-        @endforeach
     </div>
 </div>
+
 
 
 
