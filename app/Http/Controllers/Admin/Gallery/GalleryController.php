@@ -39,6 +39,8 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         $images =  $request->images;
+        $input = $request->all();
+        $input['is_gallery'] = 1;
 
         $gallery = Gallery::create($request->all());
 
