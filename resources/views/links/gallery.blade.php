@@ -3,10 +3,6 @@
 
 
 
-
-
-
-
 <div style="background-color: rgb(248, 245, 244);">
     <div class="container-fluid">
 
@@ -20,7 +16,7 @@
 
         <div class="row  p-1">
             <div id="load-products" class="col-md-12">
-                <apartments-index :filter="0" :gallery="1" :property="{{$property}}" :apartments="{{ $apartments }}" />
+                <apartments-index :filter="0" :gallery="0" :property="{{$property}}" :apartments="{{ $apartments }}" />
             </div>
 
             <div id="load-products" class="col-md-12">
@@ -31,23 +27,6 @@
 </div>
 
 <div style="height: 200px; background-color: rgb(248, 245, 244);"></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @endsection
 @section('inline-scripts')
 
