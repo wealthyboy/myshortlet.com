@@ -156,8 +156,8 @@
 
 
 <div style="background-color: rgb(248, 245, 244);" class="ap mb-3">
-   <div class="container-fluid p-5">
-      <div id="intro-box2" class=" opacity-0 mt-4 mb-4 ml-2">
+   <div class="container-fluid ">
+      <div id="intro-box2" class=" opacity-0 mt-4 mb-4">
          <h2 class=" bold-3 text-left">Luxury Redefined</h2>
          <div class=" text-secondary  lead  text-left mt-2"> Explore Our Exquisite Collection of Apartments</div>
       </div>
@@ -173,7 +173,7 @@
          </div>
 
       </div>
-      <div class="row">
+      <div class="row  p-1">
          <div id="load-products" class="col-md-12">
             <apartments-index :filter="0" :property="{{$property}}" :apartments="{{ $apartments }}" />
          </div>
@@ -329,8 +329,8 @@ nav: true,
 dots: true,
 autoplay: true,
 smartSpeed: 500,
-animateOut: 'animate__fadeInUp',
-animateIn: 'animate__fadeInUp',
+animateOut: 'fadeOut'
+animateIn: 'fadeOut'
 dots: true,
 loop : true,
 responsive: {
