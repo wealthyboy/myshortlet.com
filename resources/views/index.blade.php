@@ -142,7 +142,7 @@
    <div class="container-fluid ">
       <div id="intro-box2" class=" opacity-0 mt-4 mb-4">
          <h2 class=" bold-3 text-left">Luxury Redefined</h2>
-         <div class=" text-secondary  lead  text-left mt-2"> Explore Our Exquisite Collection of Apartments</div>
+         <div class=" text-secondary   text-left mt-2"> Explore Our Exquisite Collection of Apartments</div>
       </div>
 
       <div class="title">

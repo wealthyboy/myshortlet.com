@@ -597,8 +597,9 @@ export default {
         },
         getApartments() {
             this.propertyLoading = true
+            let t = new Date().getSeconds()
             axios
-                .get(window.location)
+                .get(window.location + '?=' + t)
                 .then((response) => {
                     this.roomsAv = response.data.data;
                     this.stays = response.data.nights;
