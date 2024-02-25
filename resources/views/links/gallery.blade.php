@@ -1,8 +1,5 @@
 @extends('layouts.auth')
 @section('content')
-
-
-
 <div style="background-color: rgb(248, 245, 244);">
     <div class="container-fluid">
 

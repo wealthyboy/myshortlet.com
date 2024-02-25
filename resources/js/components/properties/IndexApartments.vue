@@ -508,10 +508,13 @@ export default {
         }
 
         jQuery(function () {
+
+
             $(".owl-carousel").owlCarousel({
                 margin: 10,
                 nav: true,
-                dots: false,
+                dots: true,
+
                 responsive: {
                     0: {
                         items: 1,
