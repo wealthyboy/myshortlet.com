@@ -512,7 +512,6 @@ export default {
 
             $(".owl-carousel").owlCarousel({
                 margin: 10,
-                nav: true,
                 dots: true,
 
                 responsive: {

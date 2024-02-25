@@ -1636,18 +1636,18 @@ svg.uitk-icon-medium {
   -webkit-backface-visibility: visible;
   background: transparent;
   background: #ddd;
-  border-radius: 50%;
+  border-radius: 0%;
   display: block;
-  height: 10px;
+  height: 3px;
   margin: 2px;
   position: relative;
   transition: all .3s ease;
-  width: 10px
+  width: 30px
 }
 
 .owl-theme .owl-dots .owl-dot span:before {
   background-color: #342c27 !important;
-  border-radius: 50%;
+  border-radius: 0%;
   content: "";
   display: block;
   height: 11px;
@@ -1704,21 +1704,21 @@ svg.uitk-icon-medium {
   -webkit-backface-visibility: visible;
   background: transparent;
   background: #ddd;
-  border-radius: 50%;
+  border-radius: 0%;
   display: block;
-  height: 10px;
+  height: 3px;
   margin: 2px;
   position: relative;
   transition: all .3s ease;
-  width: 10px
+  width: 30px
 }
 
 .owl-theme .owl-dots .owl-dot span:before {
   background-color: #342c27 !important;
-  border-radius: 50%;
+  border-radius: 0%;
   content: "";
   display: block;
-  height: 11px;
+  height: 3px;
   left: 50%;
   margin-left: -.35rem;
   margin-top: -.35rem;
@@ -1728,7 +1728,7 @@ svg.uitk-icon-medium {
   transform: scale(0);
   transition: all .3s;
   visibility: hidden;
-  width: 11px
+  width: 30px
 }
 
 .owl-theme .owl-dots .owl-dot.active span,
@@ -1765,14 +1765,14 @@ svg.uitk-icon-medium {
 .owl-theme .owl-dots {
   margin-left: auto !important;
   margin-right: auto !important;
-  max-width: 285px !important;
+  max-width: 100% !important;
   position: relative;
   top: -30px;
 }
 
 .owl-theme .owl-dots {
   -webkit-tap-highlight-color: transparent;
-  background-color: #fff;
+  background-color: none !important;
   border-radius: 20px;
   line-height: 1;
   text-align: center;
