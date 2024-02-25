@@ -511,7 +511,7 @@ export default {
 
 
             $(".owl-carousel").owlCarousel({
-                margin: 10,
+                margin: 0,
                 dots: true,
 
                 responsive: {
@@ -597,12 +597,14 @@ export default {
         },
         getApartments() {
             this.propertyLoading = true
-            const now = new Date();
+            //const now = new Date().getTime()
 
             // Calculate the total number of seconds since the beginning of the day
-            const seconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+            // const seconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+
+            // console.log(window.location, now)
             axios
-                .get(window.location + '?t=' + seconds)
+                .get(window.location + '?t=' + Math.random())
                 .then((response) => {
                     this.roomsAv = response.data.data;
                     this.stays = response.data.nights;

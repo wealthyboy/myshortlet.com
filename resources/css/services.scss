@@ -1652,15 +1652,15 @@ svg.uitk-icon-medium {
   display: block;
   height: 11px;
   left: 50%;
-  margin-left: -.35rem;
+  margin-left: -1rem !important;
   margin-top: -.35rem;
   opacity: 0;
   position: absolute;
-  top: 50%;
+  top: 191% !important;
   transform: scale(0);
   transition: all .3s;
   visibility: hidden;
-  width: 11px
+  width: 30px !important;
 }
 
 .owl-theme .owl-dots .owl-dot.active span,
