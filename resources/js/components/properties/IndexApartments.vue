@@ -597,9 +597,12 @@ export default {
         },
         getApartments() {
             this.propertyLoading = true
-            let t = new Date().getSeconds()
+            const now = new Date();
+
+            // Calculate the total number of seconds since the beginning of the day
+            const seconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
             axios
-                .get(window.location + '?=' + t)
+                .get(window.location + '?t=' + seconds)
                 .then((response) => {
                     this.roomsAv = response.data.data;
                     this.stays = response.data.nights;
