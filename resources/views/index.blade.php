@@ -47,7 +47,7 @@
 
 
 
-<div class="search-header d-block slider  p-3">
+<div class="search-header d-block   p-3">
    <search-apartments />
 </div>
 
