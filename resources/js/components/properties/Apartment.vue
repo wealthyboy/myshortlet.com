@@ -1,7 +1,7 @@
 <template>
     <div :class="classType" class=" border-bottom  mb-1 mt-1 pl-1 pb-1 px-0">
-        <div class="col-md-12 aprts position-relative p-0">
-            <div class="owl-carousel owl-theme">
+        <div class="col-md-12 small aprts position-relative p-0">
+            <div class="owl-carousel  owl-theme">
 
                 <div v-if="room.google_drive_video_link" class="item">
                     <iframe class="rounded" style="width: 100%;" height="235" :src="room.google_drive_video_link">
