@@ -87,13 +87,13 @@ class Apartment extends Model
 
 
     // Define the accessor method
-    public function getGoogleDriveImageLinksAttribute($value)
+    public function getGoogleDriveImageLinksAttribute()
     {
         $images = [];
         // If the attribute exists and is not empty
-        if ($this->image_links) {
+        if ($this->image_link) {
             // Split the comma-separated links into an array
-            $links  = explode(',', $this->image_links);
+            $links  = explode(',', $this->image_link);
 
             foreach ($links as $link) {
                 $images[] = self::generateThumbnailUrl($link);
