@@ -5,8 +5,12 @@
 
 
 
-                <div class="item rounded-top" :key="index" v-for="(image, index) in room.google_drive_image_links">
-                    <img @click.prevent="showRoom(room)" :src="image" class="img cursor-pointer  img-fluid" />
+
+
+
+
+                <div class="item rounded-top" :key="image.id" v-for="image in room.images">
+                    <img @click.prevent="showRoom(room)" :src="image.image" class="img cursor-pointer  img-fluid" />
 
                     <div class="images-count">
                         <button type="button"
@@ -26,10 +30,8 @@
                     </div>
                 </div>
 
-
-
-                <div class="item rounded-top" :key="image.id" v-for="image in room.images">
-                    <img @click.prevent="showRoom(room)" :src="image.image" class="img cursor-pointer  img-fluid" />
+                <div class="item rounded-top" :key="index" v-for="(image, index) in room.google_drive_image_links">
+                    <img @click.prevent="showRoom(room)" :src="image" class="img cursor-pointer  img-fluid" />
 
                     <div class="images-count">
                         <button type="button"
