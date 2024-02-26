@@ -3,10 +3,7 @@
         <div class="col-md-12 small aprts position-relative p-0">
             <div class="owl-carousel  owl-theme">
 
-                <div v-if="room.google_drive_video_link" class="item">
-                    <iframe class="rounded" style="width: 100%;" height="235" :src="room.google_drive_video_link">
-                    </iframe>
-                </div>
+
 
                 <div class="item rounded-top" :key="index" v-for="(image, index) in room.google_drive_image_links">
                     <img @click.prevent="showRoom(room)" :src="image" class="img cursor-pointer  img-fluid" />
@@ -50,6 +47,11 @@
                             }}</span>
                         </button>
                     </div>
+                </div>
+
+                <div v-if="room.google_drive_video_link" class="item">
+                    <iframe class="rounded" style="width: 100%;" height="235" :src="room.google_drive_video_link">
+                    </iframe>
                 </div>
             </div>
         </div>
@@ -146,7 +148,7 @@
                         </div>
                         <div class="text-size-2">{{ room.price_mode }}</div>
                     </div>
-                    <div class="align-self-end">
+                    <div class="align-self-end ">
                         <div class="font-weight-bold-2 text-success" v-if="room.is_refundable">
                             Fully Refundable
                         </div>
