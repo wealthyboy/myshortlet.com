@@ -4,8 +4,7 @@
             <div class="owl-carousel owl-theme">
 
                 <div v-if="room.google_drive_video_link" class="item">
-                    <iframe class="rounded" style="width: 100%; height: 100%;" height=""
-                        :src="room.google_drive_video_link">
+                    <iframe class="rounded" style="width: 100%;" height="235" :src="room.google_drive_video_link">
                     </iframe>
                 </div>
 
