@@ -30,7 +30,7 @@ class Apartment extends Model
         'guests',
         'display_price',
         'percentage_off',
-        'google_drive_image_links',
+        'google_drive_image_link',
         'google_drive_video_link'
 
     ];
