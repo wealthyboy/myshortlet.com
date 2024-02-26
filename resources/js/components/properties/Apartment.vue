@@ -93,7 +93,7 @@
                 <div class="position-relative mb-1">
                     <a @click.prevent="showRoom(room)" class="d-flex active-link text-highlight font-weight-bold-2"
                         href="#">
-                        <span aria-hidden="true">More details</span>
+                        <span aria-hidden="true">Book now </span>
                         <svg aria-hidden="true" class="align-self-center" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>

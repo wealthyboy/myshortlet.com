@@ -301,28 +301,22 @@
                                                 </svg>
                                                 <h4 class="ml-2">Entertainment</h4>
                                             </div>
-                                            <div class="uitk-spacing uitk-spacing-padding-inlinestart-six">
-                                                <div class="uitk-spacing uitk-spacing-padding-inlinestart-three">
-                                                    <ul class="uitk-typelist uitk-typelist-orientation-stacked uitk-typelist-size-2 uitk-typelist-spacing uitk-spacing uitk-spacing-margin-blockstart-two"
-                                                        role="list">
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">55-inch flat-screen
+                                            <div class="">
+                                                <div class="">
+                                                    <ul class="" role="list">
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="">Large flat-screen
                                                                 TV</span>
                                                         </li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child"> Cable channels</span></li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child"> iPod dock</span></li>
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child"> Pay movies</span></li>
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="uitk-typelist-item-child">
+                                                                Cable channels</span></li>
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="uitk-typelist-item-child"> iPod
+                                                                dock</span></li>
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="uitk-typelist-item-child"> Pay
+                                                                movies</span></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -339,14 +333,11 @@
                                                 <h4 class="ml-2">Food and drink
                                                 </h4>
                                             </div>
-                                            <div class="uitk-spacing uitk-spacing-padding-inlinestart-six">
-                                                <div class="uitk-spacing uitk-spacing-padding-inlinestart-three">
-                                                    <ul class="uitk-typelist uitk-typelist-orientation-stacked uitk-typelist-size-2 uitk-typelist-spacing uitk-spacing uitk-spacing-margin-blockstart-two"
-                                                        role="list">
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">24-hour room service</span>
+                                            <div class="">
+                                                <div class="">
+                                                    <ul class="" role="list">
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="">24-hour room service</span>
                                                         </li>
 
                                                     </ul>
@@ -364,14 +355,11 @@
                                                 </svg>
                                                 <h4 class="ml-2">Internet</h4>
                                             </div>
-                                            <div class="uitk-spacing uitk-spacing-padding-inlinestart-six">
-                                                <div class="uitk-spacing uitk-spacing-padding-inlinestart-three">
-                                                    <ul class="uitk-typelist uitk-typelist-orientation-stacked uitk-typelist-size-2 uitk-typelist-spacing uitk-spacing uitk-spacing-margin-blockstart-two"
-                                                        role="list">
-                                                        <li class="uitk-typelist-item uitk-typelist-item-bullet-unordered uitk-typelist-item-orientation-stacked uitk-typelist-item-size-2 uitk-typelist-item-default-theme uitk-typelist-item-indent"
-                                                            role="listitem"><span aria-hidden="true"
-                                                                class="uitk-typelist-item-bulletchar uitk-typelist-item-bulletchar-bullet-unordered uitk-typelist-item-bulletchar-size-2"></span><span
-                                                                class="uitk-typelist-item-child">WiFi</span></li>
+                                            <div class="">
+                                                <div class="u">
+                                                    <ul class="o" role="list">
+                                                        <li class="" role="listitem"><span aria-hidden="true"
+                                                                class=""></span><span class="">WiFi</span></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -513,6 +501,11 @@ export default {
             $(".owl-carousel").owlCarousel({
                 margin: 0,
                 dots: true,
+                nav: true,
+                navText: [
+                    '<div class="nav-btn prev-slide"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                    '<div class="nav-btn next-slide"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                ],
 
                 responsive: {
                     0: {

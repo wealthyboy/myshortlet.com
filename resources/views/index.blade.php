@@ -9,7 +9,7 @@
 
 
 
-   <div class=" owl-carousel owl-theme d-block d-sm-none">
+   <div class=" owl-carousel owl-theme d-block d-sm-none slider">
       @foreach($images['sliders'] as $key => $image)
       <div style="background-image: url({{ $generator::generateThumbnailUrl($image) }}); " class="item page-header min-vh-75 half-hv position-relative rounded-top">
          <span class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></span>
@@ -47,7 +47,7 @@
 
 
 
-<div class="search-header d-block   p-3">
+<div class="search-header d-block slider  p-3">
    <search-apartments />
 </div>
 
@@ -142,7 +142,7 @@
    <div class="container-fluid ">
       <div id="intro-box2" class=" opacity-0 mt-4 mb-4">
          <h2 class=" bold-3 text-left">Luxury Redefined</h2>
-         <div class=" text-secondary   text-left mt-2"> Explore Our Exquisite Collection of Apartments</div>
+         <div class=" text-secondary   text-left mt-2"> Explore Our Exquisite Collection of Apartments.</div>
       </div>
 
       <div class="title">

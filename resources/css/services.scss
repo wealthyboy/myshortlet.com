@@ -293,8 +293,8 @@ video.vidoeo-intro {
   z-index: 2;
 }
 
-.carousel-control-prev svg,
-.carousel-control-next svg {
+.carousel-control-prev button svg,
+.carousel-control-next button svg {
   width: 37px;
   height: 37px;
   cursor: pointer !important;
@@ -1776,4 +1776,33 @@ svg.uitk-icon-medium {
   border-radius: 20px;
   line-height: 1;
   text-align: center;
+}
+
+button.owl-prev,
+button.owl-next {
+  box-shadow: none !important;
+  width: 37px !important;
+  height: 37px !important;
+  min-height: 2rem !important;
+  background-color: transparent !important;
+  color: #342c27 !important;
+  border-radius: 50% !important;
+  position: absolute;
+  top: 50% !important;
+}
+
+button.owl-prev svg,
+button.owl-next svg {
+  width: 37px !important;
+  height: 37px !important;
+}
+
+.owl-nav [class*=owl-]:hover {
+  color: #000 !important;
+  background-color: transparent !important;
+}
+
+.owl-theme .owl-nav [class*=owl-]:hover {
+  color: #000 !important;
+  background-color: transparent !important;
 }
