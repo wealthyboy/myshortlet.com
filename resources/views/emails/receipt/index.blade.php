@@ -694,21 +694,7 @@
                                                                                           <td height="9"></td>
                                                                                        </tr>
                                                                                        @if(null !== $reservation->extras && $reservation->extras->count() )
-                                                                                       <tr>
-                                                                                          <td class="text" style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em">
-                                                                                             Room Services
-                                                                                          </td>
-                                                                                       </tr>
-                                                                                       <tr>
-                                                                                          <td height="9"></td>
-                                                                                       </tr>
-                                                                                       @foreach($reservation->extras as $extra)
-                                                                                       <tr>
-                                                                                          <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
-                                                                                             {{ optional($extra->attribute)->name }} {{ $user_reservation->currency ?? '₦'}}{{ $extra->price }} X {{ $extra->quantity }} night(s) - {{ $user_reservation->currency ?? '₦' }}{{ $extra->quantity * $extra->price}}
-                                                                                          </td>
-                                                                                       </tr>
-                                                                                       @endforeach
+
                                                                                        @endif
                                                                                     </tbody>
                                                                                  </table>
