@@ -41,9 +41,9 @@ class ReservationsController extends Controller
 
 
 
-		UserReservation::truncate();
-		Reservation::truncate();
-		//$reservations = UserReservation::orderBy('created_at')->get();
+		//UserReservation::truncate();
+		//Reservation::truncate();
+		$reservations = UserReservation::orderBy('created_at', 'desc')->get();
 
 
 		//dd($reservations);
