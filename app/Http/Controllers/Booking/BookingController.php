@@ -98,39 +98,22 @@ class BookingController extends Controller
 		$price = optional($ap)->converted_price;
 		$sale_price = optional($ap)->discounted_price;
 		$sp = $sale_price ?? $price;
-		if (\Cookie::get('booking') !== null) {
 
-			$token  = \Cookie::get('booking');
-			$booking = $booking->updateOrCreate(
-				['apartment_id' => $apId, 'token' => $token],
-				[
-					'apartment_id' => $apId,
-					'property_id' => $request->propertyId,
-					'user_id' => optional($request->user())->id,
-					'quantity' => 1,
-					'price' => $price,
-					'sale_price' => optional($ap)->discounted_price,
-					'total' => $sp * 1,
-					'checkin' => $start_date,
-					'checkout' => $end_date,
-				]
-			);
-		} else {
-			$value = bcrypt('^%&#*$((j1a2c3o4b5@+-40');
-			session()->put('booking', $value);
-			$cookie = cookie('booking', session()->get('booking'), time() + 86400);
-			$booking->apartment_id = $apId;
-			$booking->quantity = 1;
-			$booking->property_id = $request->propertyId;
-			$booking->price = $price;
-			$booking->sale_price = optional($ap)->discounted_price;
-			$booking->total = $sp * 1;
-			$booking->user_id = optional($request->user())->id;
-			$booking->checkin = $start_date;
-			$booking->checkout = $end_date;
-			$booking->token = $cookie->getValue();
-			$booking->save();
-		}
+		$value = bcrypt('^%&#*$((j1a2c3o4b5@+-40');
+		session()->put('booking', $value);
+		$cookie = cookie('booking', session()->get('booking'), time() + 86400);
+		$booking->apartment_id = $apId;
+		$booking->quantity = 1;
+		$booking->property_id = $request->propertyId;
+		$booking->price = $price;
+		$booking->sale_price = optional($ap)->discounted_price;
+		$booking->total = $sp * 1;
+		$booking->user_id = optional($request->user())->id;
+		$booking->checkin = $start_date;
+		$booking->checkout = $end_date;
+		$booking->token = $cookie->getValue();
+		$booking->save();
+
 
 
 
