@@ -81,7 +81,8 @@
                             <div class="col-md-12 rounded">
                                 <div class="room-carousel owl-carousel owl-theme">
                                     <div v-if="room.google_drive_video_link" class="item">
-                                        <iframe style="width: 100%;" height="400" :src="room.google_drive_video_link">
+                                        <iframe style="width: 100%;" class="custom-iframe"
+                                            :src="room.google_drive_video_link">
                                         </iframe>
                                     </div>
                                     <template v-if="room.google_drive_image_links">

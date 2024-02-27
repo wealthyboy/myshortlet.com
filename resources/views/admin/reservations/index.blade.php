@@ -1,26 +1,46 @@
 @extends('admin.layouts.app')
-@section('content')
 
+@section('content')
 
 <div class="row">
    <div class="col-md-12">
+      <div class="text-right">
+         <a href="{{ route('admin.properties.index') }}" rel="tooltip" title="Refresh" class="btn btn-primary btn-simple btn-xs">
+            <i class="material-icons">refresh</i>
+            Refresh
+         </a>
+
+
+      </div>
+   </div>
+
+
+
+   <div class="col-md-12">
       <div class="card">
+
          <div class="card-content">
-            <div class="col-md-12">
-               <div class="text-left">
-                  <h4 class="card-title">reservations</h4>
-               </div>
-               <div class="text-right">
-               </div>
+
+            <h4 class="card-title">Properties</h4>
+            <div class="toolbar">
+               <!-- Here you can write extra buttons/actions for the toolbar              -->
             </div>
-
             <div class="material-datatables">
-               <form action="" method="post" enctype="multipart/form-data" id="form-reservations">
+               <form action="{{ route('admin.properties.destroy',['property'=>1]) }}" method="post" enctype="multipart/form-data" id="form-apartments">
+                  @method('DELETE')
+                  @csrf
 
-                  <table id="datatables" class="table table-striped table-shopping table-no-breservationed table-hover" cellspacing="0" width="100%" style="width:100%">
+                  <table id="datatables" class="table table-striped table-shopping table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                      <thead>
-                        <tr>
 
+                        <tr>
+                           <th>
+                              <div class="checkbox">
+                                 <label>
+                                    <input onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" type="checkbox" name="optionsCheckboxes">
+                                 </label>
+                              </div>
+                           </th>
                            <th>Invoice</th>
                            <th>Customer</th>
                            <th>Date Added</th>
@@ -28,23 +48,31 @@
                            <th class="text-right"></th>
                         </tr>
                      </thead>
+
                      <tbody>
                         @foreach ($reservations as $reservation )
                         <tr>
+                           <td>
+                              <div class="checkbox">
+                                 <label>
+                                    <input type="checkbox" value="{{ $reservation->id }}" name="selected[]">
+                                 </label>
+                              </div>
+                           </td>
 
                            <td class="text-left">{{ $reservation->invoice }}</td>
-                           <td>{{ $reservation->user->fullname() }}</td>
+                           <td>{{ $reservation->guest_user->fullname() }}</td>
                            <td>{{ $reservation->created_at }}</td>
                            <td class="text-left">{{ $reservation->currency  ?? '₦'}}{{ number_format($reservation->total) }}</td>
-                           <td class="td-actions text-center">
 
+                           <td class="td-actions ">
                               @if(!$reservation->is_cancelled)
                               <span><a href="{{ route('admin.reservations.show',['reservation'=>$reservation->id]) }}" rel="tooltip" class="btn btn-success btn-simple" data-original-title="" title="View">
-                                    <i class="fa fa-eye"></i>
+                                    more details
                                  </a></span>
 
                               <span><a href="/admin/reservations?cancel=1&id={{ $reservation->id }}" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel">
-                                    <i class="fa fa-refresh"></i>
+                                    cancel
                                  </a></span>
                               @else
                               <span class="btn btn-danger btn-simple">
@@ -52,42 +80,20 @@
                               </span>
                               @endif
                            </td>
-                           @endforeach
-
+                        </tr>
+                        @endforeach
                      </tbody>
                   </table>
                </form>
-
-
             </div>
-         </div>
-         <!-- end content-->
-      </div>
-      <!--  end card  -->
-   </div>
-   <!-- end col-md-12 -->
-</div>
-<!-- end row -->
+            <div class="pull-right">{{ $reservations->links() }}</div>
+         </div><!-- end content-->
+      </div><!--  end card  -->
+   </div> <!-- end col-md-12 -->
+</div> <!-- end row -->
 @endsection
-@section('pagespecificscripts')
-@stop
 @section('inline-scripts')
-
 $(document).ready(function() {
-$('#datatables').DataTable({
-"pagingType": "full_numbers",
-"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-responsive: true,
-language: {
-search: "_INPUT_",
-searchPlaceholder: "Search records",
-}
-});
 
-$('#cat_sub_cat_id').on('change',function(){
-$name = $(this).find(':selected').data('name');
-$(this).attr('name', $name);
-});
-s.initFormExtendedDatetimepickers();
 });
 @stop

@@ -1816,3 +1816,15 @@ button.owl-next svg {
 .small .owl-carousel.owl-theme.owl-loaded.owl-drag {
   height: 235px;
 }
+
+@media (min-width: 768px) {
+  .custom-iframe {
+    height: 400px;
+  }
+}
+
+@media (max-width: 767px) {
+  .custom-iframe {
+    height: 239px;
+  }
+}

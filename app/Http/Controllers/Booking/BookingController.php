@@ -99,6 +99,8 @@ class BookingController extends Controller
 		$sale_price = optional($ap)->discounted_price;
 		$sp = $sale_price ?? $price;
 
+
+
 		$value = bcrypt('^%&#*$((j1a2c3o4b5@+-40');
 		session()->put('booking', $value);
 		$cookie = cookie('booking', session()->get('booking'), time() + 86400);
@@ -113,9 +115,6 @@ class BookingController extends Controller
 		$booking->checkout = $end_date;
 		$booking->token = $cookie->getValue();
 		$booking->save();
-
-
-
 
 		if ($cookie == null) {
 			return response()->json([
