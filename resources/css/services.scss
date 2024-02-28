@@ -1474,7 +1474,7 @@ button.uitk-button {
   background-color: rgba(12, 14, 28, 0.56);
   color: #fff;
   border-radius: 20%;
-  width: 48px;
+  width: 83px;
   height: 30px;
   border: none;
   outline: none
@@ -1826,5 +1826,14 @@ button.owl-next svg {
 @media (max-width: 767px) {
   .custom-iframe {
     height: 239px;
+  }
+
+  .flatpickr-calendar.rangeMode.animate.multiMonth.arrowTop.arrowLeft.centerMost.open {
+    width: 100% !important;
+    overflow-x: scroll;
+  }
+
+  .flatpickr-innerContainer {
+    overflow: scroll !important;
   }
 }

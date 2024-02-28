@@ -25,7 +25,7 @@
                                     d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z"
                                     clip-rule="evenodd"></path>
                             </svg><span aria-hidden="true">{{ room.images.length + room.google_drive_image_links.length
-                            }}</span>
+                            }} View All</span>
                         </button>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                                     d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z"
                                     clip-rule="evenodd"></path>
                             </svg><span aria-hidden="true">{{ room.images.length + room.google_drive_image_links.length
-                            }}</span>
+                            }} View All</span>
                         </button>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                 <i class="fas fa-info-circle mr-2 "></i>Instant Confirmation
             </div>
             <div :class="{ 'h-25': room.is_gallery }" class="entire-apartments h-25">
-                <div v-if="!room.is_gallery" class="bold-2 mb-2">Entire apartment</div> {{ isGallery }}
+                <div v-if="!room.is_gallery" class="bold-2 mb-2">Entire apartment</div>
                 <div v-if="!room.is_gallery" class="d-flex justify-content-between flex-wrap flex-column">
                     <div class="position-relative mb-1">
                         <span class="position-absolute svg-icon-section">
