@@ -80,11 +80,7 @@
                         <div class="row">
                             <div class="col-md-12 rounded">
                                 <div class="room-carousel owl-carousel owl-theme">
-                                    <div v-if="room.google_drive_video_link" class="item">
-                                        <iframe style="width: 100%;" class="custom-iframe"
-                                            :src="room.google_drive_video_link">
-                                        </iframe>
-                                    </div>
+
                                     <template v-if="room.google_drive_image_links">
                                         <div class="item" :key="index"
                                             v-for="(image, index) in room.google_drive_image_links">
@@ -93,6 +89,12 @@
                                     </template>
                                     <div class="item" :key="image.id" v-for="image in room.images">
                                         <img :src="image.image" class="img  img-fluid rounded" />
+                                    </div>
+
+                                    <div v-if="room.google_drive_video_link" class="item">
+                                        <iframe style="width: 100%;" class="custom-iframe"
+                                            :src="room.google_drive_video_link">
+                                        </iframe>
                                     </div>
                                 </div>
                                 <div class="container p-0">
