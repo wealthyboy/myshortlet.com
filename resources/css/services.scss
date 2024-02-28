@@ -1829,7 +1829,8 @@ button.owl-next svg {
     height: 239px;
   }
 
-  .flatpickr-calendar.rangeMode.animate.multiMonth.arrowTop.arrowLeft.centerMost.open {
+  .flatpickr-calendar.rangeMode.animate.multiMonth.arrowTop.arrowLeft.centerMost.open,
+  .flatpickr-calendar.rangeMode.animate.multiMonth.open.arrowTop.arrowLeft.rightMost {
     width: 100% !important;
     overflow-x: scroll;
   }
