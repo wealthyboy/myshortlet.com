@@ -916,9 +916,9 @@ export default {
             this.room = room
             jQuery(function () {
                 $(".room-carousel").owlCarousel({
-                    margin: 10,
+                    margin: 0,
                     nav: true,
-                    dots: true,
+                    dots: false,
                     responsive: {
                         0: {
                             items: 1,

@@ -1643,7 +1643,7 @@ svg.uitk-icon-medium {
   margin: 2px;
   position: relative;
   transition: all .3s ease;
-  width: 30px
+  width: 30px;
 }
 
 .owl-theme .owl-dots .owl-dot span:before {
@@ -1768,7 +1768,7 @@ svg.uitk-icon-medium {
   margin-right: auto !important;
   max-width: 100% !important;
   position: relative;
-  top: -19px;
+  top: -28px;
 }
 
 .owl-theme .owl-dots {
@@ -1829,6 +1829,10 @@ svg.uitk-icon-medium {
     height: 239px;
   }
 
+  .owl-theme .owl-dots {
+    top: -19px !important;
+  }
+
   .flatpickr-calendar.rangeMode.animate.multiMonth.arrowTop.arrowLeft.centerMost.open,
   .flatpickr-calendar.rangeMode.animate.multiMonth.open.arrowTop.arrowLeft.rightMost {
     width: 100% !important;
@@ -1841,5 +1845,5 @@ svg.uitk-icon-medium {
 }
 
 .aprt-content {
-  margin-top: -10px;
+  margin-top: -17px;
 }
