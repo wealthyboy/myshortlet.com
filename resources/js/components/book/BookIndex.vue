@@ -48,7 +48,7 @@
                   </template>
                 </select>
               </div>
-              <div class="form-group bmd-form-group col-4">
+              <div class="form-group bmd-form-group col-md-4 col-9">
                 <label class="bmd-label-floating">Phone number</label>
                 <input type="text" class="form-control  required" name="phone_number" v-model="form.phone_number"
                   @input="removeError($event)" @blur="vInput($event)" :class="{ 'has-danger': errors.phone_number }" />
@@ -59,7 +59,7 @@
                   }}</strong>
                 </span>
               </div>
-              <div class="form-group bmd-form-group col-5">
+              <div class="form-group bmd-form-group col-md-5 col-12">
                 <label class="bmd-label-floating">Email address</label>
                 <input id="email" type="email" class="form-control  required" name="email" v-model="form.email"
                   @input="removeError($event)" @blur="vInput($event)" :class="{ 'has-danger': errors.email }" />
