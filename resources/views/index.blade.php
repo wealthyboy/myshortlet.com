@@ -4,7 +4,7 @@
 
 <div class="video-section">
    <div class="intro-image">
-      <img src="https://drive.google.com/thumbnail?id=1eQ_hLe9Th_2Oew3Qoew_qQKhuGBpHGZm&sz=w2000" alt="">
+      <img alt="Avenue Montaigne logo" src="https://drive.google.com/thumbnail?id=1eQ_hLe9Th_2Oew3Qoew_qQKhuGBpHGZm&sz=w2000" alt="">
    </div>
 
 
@@ -156,7 +156,7 @@
          </div>
 
       </div>
-      <div id="products-section" class="row opacity-0  p-1">
+      <div class="row  p-1">
          <div id="load-products" class="col-md-12">
             <apartments-index :isGallery="0" :filter="0" :property="{{$property}}" :apartments="{{ $apartments }}" />
          </div>

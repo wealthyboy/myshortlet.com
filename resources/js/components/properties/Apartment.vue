@@ -4,7 +4,8 @@
             <div class="owl-carousel  owl-theme">
 
                 <div class="item rounded-top" :key="image.id" v-for="image in room.images">
-                    <img @click.prevent="showRoom(room)" :src="image.image" class="img cursor-pointer  img-fluid" />
+                    <img :alt="room.name" @click.prevent="showRoom(room)" :src="image.image"
+                        class="img cursor-pointer  img-fluid" />
 
                     <div class="images-count">
                         <button role="button" type="button"
@@ -27,7 +28,8 @@
                 </div>
 
                 <div class="item rounded-top" :key="index" v-for="(image, index) in room.google_drive_image_link">
-                    <img @click.prevent="showRoom(room)" :src="image" class="img cursor-pointer  img-fluid" />
+                    <img :alt="room.name" @click.prevent="showRoom(room)" :src="image"
+                        class="img cursor-pointer  img-fluid" />
 
                     <div class="images-count">
                         <button role="button" type="button"
