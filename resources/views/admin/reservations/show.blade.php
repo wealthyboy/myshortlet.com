@@ -102,7 +102,7 @@
                               <td>
                                  <h4>Guests</h4>
                                  <div>
-                                    <b>Name:</b> {{$user_reservation->guest_user->name }}{{ $user_reservation->guest_user->last_name}}
+                                    <b>Name:</b> {{$user_reservation->guest_user->name }} {{ $user_reservation->guest_user->last_name}}
                                  </div>
                                  <div>
                                     <b>Email:</b> {{$user_reservation->guest_user->email }}
