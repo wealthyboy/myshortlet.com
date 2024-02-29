@@ -1,5 +1,5 @@
 <template>
-    <div :id="'product-' + index" :class="classType" class="border-bottom opacity-0  mb-1 mt-1 pl-1 pb-1 px-0">
+    <div :id="'product-' + index" :class="classType" class="border-bottom   mb-1 mt-1 pl-1 pb-1 px-0">
         <div class="col-md-12 small aprts position-relative p-0">
             <div class="owl-carousel  owl-theme">
 
@@ -18,7 +18,7 @@
                                 <path fill-rule="evenodd"
                                     d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z"
                                     clip-rule="evenodd"></path>
-                            </svg><span @click.prevent="showImages(room)" class="cursor-pointer" role="button"
+                            </svg><span @click.prevent="showRoom(room)" class="cursor-pointer" role="button"
                                 aria-hidden="true">{{ room.images.length +
                                     room.google_drive_image_links.length
                                 }} View All</span>
@@ -41,7 +41,7 @@
                                 <path fill-rule="evenodd"
                                     d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z"
                                     clip-rule="evenodd"></path>
-                            </svg><span @click.prevent="showImages(room)" class="cursor-pointer" role="button"
+                            </svg><span @click.prevent="showRoom(room)" class="cursor-pointer" role="button"
                                 aria-hidden="true">{{ room.images.length +
                                     room.google_drive_image_links.length
                                 }} View All</span>
