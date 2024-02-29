@@ -595,27 +595,16 @@ export default {
         metadata: {
           custom_fields: [
             {
-
+              booking: payload,
             },
           ],
         },
         callback: function (response) {
-          axios
-            .post("/webhook/payment", {
-              booking: payload,
-            })
-            .then((response) => {
-              context.payment_is_processing = false;
-              context.paymentIsComplete = true;
-            })
-            .catch((error) => {
-              context.order_text = "Make Payment";
-              context.payment_is_processing = false;
-            });
+          context.payment_is_processing = false;
+          context.paymentIsComplete = true;
         },
         onClose: function () {
-          context.order_text = "Place Order";
-          context.checkingout = false;
+          context.order_text = "Make Payment";
           context.payment_is_processing = false;
         },
       });

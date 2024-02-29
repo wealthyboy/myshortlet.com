@@ -38,7 +38,9 @@ class WebHookController extends Controller
     public function payment(Request $request)
     {
 
-        //  dd($request->all());
+        Log::info($request->all());
+
+        return;
 
         try {
 
