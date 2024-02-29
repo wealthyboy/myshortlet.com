@@ -163,11 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: 'rightBox', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
     { id: 'tree', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
     { id: 'intro-box', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInDown'] },
-    { id: 'intro-box2', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInDown'] },
+    { id: 'intro-box2', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig'] },
     { id: 'product-0', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
-    { id: 'product-1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
+    { id: 'product-1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig'] },
     { id: 'product-2', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
-    { id: 'product-3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
+    { id: 'product-3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
 
 
     { id: 'leftbox1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
