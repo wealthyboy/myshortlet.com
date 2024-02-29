@@ -38,6 +38,10 @@ class WebHookController extends Controller
     public function payment(Request $request)
     {
 
+
+        $input = $request->all();
+
+        Log::info($input['data']['metadata']['custom_fields'][0]['booking']);
         Log::info($request->all());
 
         return;
