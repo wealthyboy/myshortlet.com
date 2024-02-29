@@ -705,6 +705,7 @@ export default {
                 this.form.check_in_checkout.split(" ").length < 2
             ) {
                 this.isDateNeedsToToOpen = true;
+                alert("Please select your check-in and check-out dates")
                 return;
             }
 
