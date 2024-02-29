@@ -593,7 +593,11 @@ export default {
                 $(".room-carousel").owlCarousel({
                     margin: 0,
                     nav: true,
-                    dots: false,
+                    dots: true,
+                    navText: [
+                        '<div class="nav-btn prev-slide"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                        '<div class="nav-btn next-slide"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                    ],
                     responsive: {
                         0: {
                             items: 1,
