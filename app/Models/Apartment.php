@@ -31,6 +31,7 @@ class Apartment extends Model
         'display_price',
         'percentage_off',
         'google_drive_image_links',
+        'google_drive_image_link',
         'google_drive_video_link'
 
     ];
@@ -100,6 +101,28 @@ class Apartment extends Model
             }
 
             return $images;
+        }
+
+        // Return an empty array if the attribute is empty
+        return [];
+    }
+
+
+    public function getGoogleDriveImageLinkAttribute()
+    {
+        $images = [];
+        // If the attribute exists and is not empty
+        if ($this->image_link) {
+            // Split the comma-separated links into an array
+            $links  = explode(',', $this->image_link);
+
+            foreach ($links as $link) {
+                $images[] = self::generateThumbnailUrl($link);
+            }
+
+            $images_count  = $this->images->count();
+
+            return  array_slice($images, 0, 9 -  $images_count);
         }
 
         // Return an empty array if the attribute is empty

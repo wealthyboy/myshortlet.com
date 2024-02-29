@@ -1,5 +1,5 @@
 <template>
-    <div :class="classType" class=" border-bottom  mb-1 mt-1 pl-1 pb-1 px-0">
+    <div :id="'product-' + index" :class="classType" class="border-bottom opacity-0  mb-1 mt-1 pl-1 pb-1 px-0">
         <div class="col-md-12 small aprts position-relative p-0">
             <div class="owl-carousel  owl-theme">
 
@@ -26,7 +26,7 @@
                     </div>
                 </div>
 
-                <div class="item rounded-top" :key="index" v-for="(image, index) in room.google_drive_image_links">
+                <div class="item rounded-top" :key="index" v-for="(image, index) in room.google_drive_image_link">
                     <img @click.prevent="showRoom(room)" :src="image" class="img cursor-pointer  img-fluid" />
 
                     <div class="images-count">
@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 bg-white  pt-3">
+        <div class="col-md-12 bg-white  aprt-content pt-3">
             <div class="card-title bold-2 text-size-1-big   mt-sm-3 mt-3">
                 <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
             </div>
@@ -190,7 +190,8 @@ export default {
         amenities: Array,
         classType: Array,
         showReserve: Number,
-        isGallery: Number
+        isGallery: Number,
+        index: Number
     },
     data() {
         return {

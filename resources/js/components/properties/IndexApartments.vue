@@ -51,8 +51,8 @@
                     <template v-if="roomsAv.length">
                         <div class="row">
                             <apartment :showReserve="filter" :classType="classType" @showRoom="showRoom" @reserve="reserve"
-                                :amenities="amenities" v-for="room in roomsAv" :key="room.id" :room="room" :stays="stays"
-                                :qty="qty" />
+                                :amenities="amenities" v-for="(room, index) in roomsAv" :index="index" :key="room.id"
+                                :room="room" :stays="stays" :qty="qty" />
                         </div>
                     </template>
                 </div>
