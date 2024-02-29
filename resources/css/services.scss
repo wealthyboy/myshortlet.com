@@ -1475,7 +1475,7 @@ button.uitk-button {
   background-color: rgba(12, 14, 28, 0.56);
   color: #fff;
   border-radius: 20%;
-  width: 83px;
+  width: auto;
   height: 30px;
   border: none;
   outline: none
@@ -1846,4 +1846,17 @@ svg.uitk-icon-medium {
 
 .aprt-content {
   margin-top: -17px;
+}
+
+
+
+/* Targeting iPhone 12 */
+@media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) {
+
+  /* Your CSS styles specific to iPhone 12 */
+  /* For example: */
+  body {
+    background-color: red;
+    /* Change background color */
+  }
 }
