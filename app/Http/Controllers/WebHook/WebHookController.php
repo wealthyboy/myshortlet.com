@@ -39,17 +39,13 @@ class WebHookController extends Controller
     {
 
 
-        $input = $request->all();
 
-        Log::info($input['data']['metadata']['custom_fields'][0]['booking']);
         Log::info($request->all());
-
-        return;
 
         try {
 
             $input = $request->all();
-            $input = $input['booking'];
+            $input = $input['data']['metadata']['custom_fields'][0]['booking'];
             $user_reservation = new UserReservation;
             $guest = new GuestUser;
             $guest->name = $input['first_name'];
