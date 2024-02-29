@@ -156,7 +156,7 @@
          </div>
 
       </div>
-      <div class="row  p-1">
+      <div id="products-section" class="row opacity-0  p-1">
          <div id="load-products" class="col-md-12">
             <apartments-index :isGallery="0" :filter="0" :property="{{$property}}" :apartments="{{ $apartments }}" />
          </div>
