@@ -104,7 +104,7 @@ svg#date-outline {
 
 .images-count {
   position: absolute;
-  bottom: 31px;
+  bottom: 20px;
   right: 20px;
   cursor: pointer;
 }
@@ -1779,8 +1779,8 @@ svg.uitk-icon-medium {
   text-align: center;
 }
 
-button.owl-prev,
-button.owl-next {
+.main-banner button.owl-prev,
+.main-banner button.owl-next {
   box-shadow: none !important;
   width: 37px !important;
   height: 37px !important;
@@ -1792,29 +1792,29 @@ button.owl-next {
   top: 50% !important;
 }
 
-button.owl-prev svg,
-button.owl-next svg {
+.main-banner button.owl-prev svg,
+.main-banner button.owl-next svg {
   width: 37px !important;
   height: 37px !important;
 }
 
-.owl-nav [class*=owl-]:hover {
+.main-banner .owl-nav [class*=owl-]:hover {
   color: #000 !important;
   background-color: transparent !important;
 }
 
-.owl-theme .owl-nav [class*=owl-]:hover {
+.main-banner .owl-theme .owl-nav [class*=owl-]:hover {
   color: #000 !important;
   background-color: transparent !important;
 }
 
-.carousel-control-next svg,
-.carousel-control-prev svg {
+.main-banner .carousel-control-next svg,
+.main-banner .carousel-control-prev svg {
   width: 37px !important;
   height: 37px !important;
 }
 
-.small .owl-carousel.owl-theme.owl-loaded.owl-drag {
+.main-banner .small .owl-carousel.owl-theme.owl-loaded.owl-drag {
   height: 235px;
 }
 

@@ -3,17 +3,11 @@
         <div class="col-md-12 small aprts position-relative p-0">
             <div class="owl-carousel  owl-theme">
 
-
-
-
-
-
-
                 <div class="item rounded-top" :key="image.id" v-for="image in room.images">
                     <img @click.prevent="showRoom(room)" :src="image.image" class="img cursor-pointer  img-fluid" />
 
                     <div class="images-count">
-                        <button type="button"
+                        <button role="button" type="button"
                             class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
                             <svg class="uitk-icon uitk-icon-leading uitk-icon-medium"
                                 aria-label="Show all 7 images for Classic Twin Room" role="img" viewBox="0 0 24 24"
@@ -24,8 +18,10 @@
                                 <path fill-rule="evenodd"
                                     d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z"
                                     clip-rule="evenodd"></path>
-                            </svg><span aria-hidden="true">{{ room.images.length + room.google_drive_image_links.length
-                            }} View All</span>
+                            </svg><span @click.prevent="showImages(room)" class="cursor-pointer" role="button"
+                                aria-hidden="true">{{ room.images.length +
+                                    room.google_drive_image_links.length
+                                }} View All</span>
                         </button>
                     </div>
                 </div>
@@ -34,7 +30,7 @@
                     <img @click.prevent="showRoom(room)" :src="image" class="img cursor-pointer  img-fluid" />
 
                     <div class="images-count">
-                        <button type="button"
+                        <button role="button" type="button"
                             class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
                             <svg class="uitk-icon uitk-icon-leading uitk-icon-medium"
                                 aria-label="Show all 7 images for Classic Twin Room" role="img" viewBox="0 0 24 24"
@@ -45,8 +41,10 @@
                                 <path fill-rule="evenodd"
                                     d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z"
                                     clip-rule="evenodd"></path>
-                            </svg><span aria-hidden="true">{{ room.images.length + room.google_drive_image_links.length
-                            }} View All</span>
+                            </svg><span @click.prevent="showImages(room)" class="cursor-pointer" role="button"
+                                aria-hidden="true">{{ room.images.length +
+                                    room.google_drive_image_links.length
+                                }} View All</span>
                         </button>
                     </div>
                 </div>
@@ -250,9 +248,10 @@ export default {
             return arr.reduce((a, b) => parseInt(a) + parseInt(b), 0);
         },
         showRoom(room) {
-
             this.$emit("showRoom", room);
-
+        },
+        showImages(room) {
+            this.$emit("showImages", room);
         },
         reserve(room) {
             this.$emit("reserve", { room });
