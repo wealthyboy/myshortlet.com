@@ -569,7 +569,7 @@ export default {
             this.classType = ['col-12 col-lg-3 col-md-6']
             this.roomsAv = this.apartments;
         } else {
-            this.classType = ['col-12 col-md-4 col-md-6']
+            this.classType = ['col-12 col-lg-4 col-md-6']
             this.getApartments()
         }
     },
