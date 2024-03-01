@@ -92,7 +92,7 @@
 
          <section id="rbox1" class=" ">
             <div class="row   position-relative">
-               <div class="col-md-7 rounded  card-background-image">
+               <div class="col-lg-7 col-md-12  rounded  card-background-image">
                   <div id="c1" class="carousel slide" data-ride="carousel">
                      <!-- <ol class="carousel-indicators">
                         <li data-target="#c1" data-slide-to="0" class="active"></li>
@@ -117,7 +117,7 @@
 
                   </div>
                </div>
-               <div class="col-md-5  text-center d-flex justify-content-center align-items-center">
+               <div class="col-lg-5 col-md-12 welcome text-center d-flex justify-content-center align-items-center">
                   <div class="about-panel  bg-right-panel bg-panel-white  bg-panel p-sm-3 p-md-5">
                      <div class="primary-color ">STAY IN THE HEART OF LAGOS</div>
                      <h2 class=" bold-2">Welcome to Avenue Montiagne</h2>
@@ -171,7 +171,7 @@
       <div class="col-md-12">
          <section class=" mb-1">
             <div class="row bg-grey position-relative  pb-5 pt-5">
-               <div id="leftBox" style="z-index: 2;" class="col-md-5  opacity-0 re-order text-center d-flex justify-content-center align-items-center">
+               <div id="leftBox" style="z-index: 2;" class="col-lg-5  col-md-12  order-sm-2 opacity-0 re-order text-center d-flex justify-content-center align-items-center">
                   <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
                      <h2 class="mb-4 bold-2">Unrivaled Amenities</h2>
                      <div class="lead text-secondary">Elevate Your Living Experience</div>
@@ -186,7 +186,7 @@
                   </div>
                </div>
 
-               <div id="rightBox" class="col-md-7 opacity-0">
+               <div id="rightBox" class="col-lg-7  col-md-12  order-sm-1 opacity-0">
                   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                      <!-- <ol class="carousel-indicators">
                         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -220,7 +220,7 @@
 
          <section id="box3" class=" opacity-0 ">
             <div class="row   pb-5 pt-5 position-relative">
-               <div class="col-md-7 rounded  card-background-image">
+               <div class="col-lg-7 col-md-12 rounded  card-background-image">
                   <div id="gallery-banner" class="carousel slide" data-ride="carousel">
                      <ol class="carousel-indicators">
                         @foreach($images['gallery'] as $key => $image)
@@ -249,7 +249,7 @@
 
                   </div>
                </div>
-               <div class="col-md-5  text-center d-flex justify-content-center align-items-center">
+               <div class="col-lg-5 col-md-12  text-center d-flex justify-content-center align-items-center">
                   <div class="about-panel  bg-right-panel bg-panel-white  bg-panel p-sm-3 p-md-5">
                      <h2 class="mb-4">Seamless Indoor-Outdoor Harmony</h2>
                      <div class="lead text-secondary"> Discover Tranquility in our Apartments</div>

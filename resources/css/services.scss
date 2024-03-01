@@ -1869,4 +1869,23 @@ svg.uitk-icon-medium {
   #main-banner .carousel-inner {
     height: auto !important;
   }
+
+  .bg-right-panel {
+    position: absolute;
+    right: 0 !important;
+    z-index: 2;
+    margin-left: 0 !important;
+  }
+
+  .welcome {
+    margin-bottom: 7rem;
+  }
+
+  .bg-left-panel {
+    position: relative;
+    right: 0px;
+    z-index: 2;
+    margin-left: 0rem;
+
+  }
 }

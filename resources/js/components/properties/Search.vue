@@ -4,16 +4,16 @@
 
         <div class="form-row">
 
-            <div class="orm-group   form-border cursor-pointer search col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
+            <div class="orm-group   form-border cursor-pointer search col-lg-5 col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
                 <label class=" pl-2 ml-4" for="flatpickr-input-f">Check-in - Check-out</label>
                 <date-range @dateSelected="dateSelected" />
             </div>
 
-            <div id="people-number" class="col-md-5 cursor-pointer px-sm-0 px-md-1">
+            <div id="people-number" class="col-lg-5 col-md-4 cursor-pointer px-sm-0 px-md-1">
                 <guests />
             </div>
 
-            <div class="col-md-2 check-availablility  mt-sm-2 mt-md-0">
+            <div class="col-lg-2 col-md-3 col-12 check-availablility  mt-xs-2 mt-md-0">
                 <button type=" button" @click.prevent="search()"
                     class="btn btn-primary btn-block m-auto rounded  bold check-availablility-button">
                     Check availablity
