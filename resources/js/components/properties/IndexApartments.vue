@@ -10,10 +10,10 @@
                         <label class="pl-2 " for="flatpickr-input-f">Check-in - Check-out</label>
                         <date :isDateNeedsToToOpen="isDateNeedsToToOpen" @dateSelected="dateSelected" />
                     </div>
-                    <div id="people-number" class="col-md-5 cursor-pointer px-sm-0 px-md-1">
+                    <div id="people-number" class="col-md-5 cursor-pointer px-sm-0 px-md-1 mb-sm-2 mb-md-0">
                         <guests />
                     </div>
-                    <div class="col-md-2 check-availablility  mt-sm-2 mt-md-0">
+                    <div class="col-md-2 check-availablility  ">
                         <button type="button" @click.prevent="checkAvailabity()"
                             class="btn btn-primary btn-block m-auto bold-2 check-availablility-button rounded">
                             Check availablity
