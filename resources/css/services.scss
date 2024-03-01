@@ -1768,7 +1768,7 @@ svg.uitk-icon-medium {
   margin-right: auto !important;
   max-width: 100% !important;
   position: relative;
-  top: -25px;
+  top: -17px;
 }
 
 .owl-theme .owl-dots {
@@ -1858,5 +1858,15 @@ svg.uitk-icon-medium {
   body {
     //  background-color: red;
     /* Change background color */
+  }
+}
+
+/* Targeting iPad */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+
+  /* Your CSS styles specific to iPad */
+  /* For example: */
+  #main-banner .carousel-inner {
+    height: auto !important;
   }
 }

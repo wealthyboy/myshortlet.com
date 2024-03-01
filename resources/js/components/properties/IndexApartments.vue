@@ -503,7 +503,7 @@ export default {
             apartmentIsAvailable: false,
             apartmentIsChecked: false,
             loading: false,
-            classType: ['col-12 col-md-4'],
+            classType: ['col-lg-3 col-md-4 col-12'],
             message: "LKNL",
             title: "LM;;",
             showImageModal: false,
@@ -554,7 +554,7 @@ export default {
                     0: {
                         items: 1,
                     },
-                    600: {
+                    850: {
                         items: 1,
                     },
                     1000: {
@@ -566,10 +566,10 @@ export default {
 
         if (!this.filter) {
             //  this.type = 'col-md-3'
-            this.classType = ['col-12 col-md-3']
+            this.classType = ['col-12 col-lg-3 col-md-6']
             this.roomsAv = this.apartments;
         } else {
-            this.classType = ['col-12 col-md-4']
+            this.classType = ['col-12 col-md-4 col-md-6']
             this.getApartments()
         }
     },
