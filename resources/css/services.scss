@@ -1853,8 +1853,9 @@ svg.uitk-icon-medium {
 /* Targeting iPhone 12 */
 @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) {
 
-  /* Your CSS styles specific to iPhone 12 */
-  /* For example: */
+  .cursor-pointer.search {
+    margin-bottom: 1rem !important;
+  }
 
 }
 
