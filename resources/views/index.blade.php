@@ -171,7 +171,7 @@
       <div class="col-md-12">
          <section class=" mb-1">
             <div class="row bg-grey position-relative  pb-5 pt-5">
-               <div id="leftBox" style="z-index: 2;" class="col-lg-5  col-md-12  order-sm-2 opacity-0 re-order text-center d-flex justify-content-center align-items-center">
+               <div id="leftBox" style="z-index: 2;" class="col-lg-5  col-md-12  order-sm-2 order-lg-1 opacity-0 re-order text-center d-flex justify-content-center align-items-center">
                   <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
                      <h2 class="mb-4 bold-2">Unrivaled Amenities</h2>
                      <div class="lead text-secondary">Elevate Your Living Experience</div>
