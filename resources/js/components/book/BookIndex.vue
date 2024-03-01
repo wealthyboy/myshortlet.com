@@ -3,10 +3,10 @@
     <div v-if="paymentIsComplete" class="d-flex col-md-12 align-items-center" style="height:65vh; overflow:hidden;">
       <booking-complete />
     </div>
-    <div v-if="!paymentIsComplete" class="col-md-7 mb-3">
+    <div v-if="!paymentIsComplete" class=" col-md-7 mb-3">
       <h3 class="bold-3">Review and book</h3>
     </div>
-    <div v-if="!paymentIsComplete" class="col-md-7">
+    <div v-if="!paymentIsComplete" class="col-lg-7 col-md-7 ">
       <form action="" method="get">
         <!-- <booking-property :property="property" /> -->
 
