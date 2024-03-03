@@ -10,16 +10,17 @@
                         <label class="pl-2 " for="flatpickr-input-f">Check-in - Check-out</label>
                         <date :check_in_date="1" :isDateNeedsToToOpen="isDateNeedsToToOpen" @dateSelected="checkIn" />
                     </div>
-                    <div class="form-group   form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
+                    <div
+                        class="form-group  ml-lg-1  form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
                         <label class="pl-2 " for="flatpickr-input-f">Check-in - Check-out</label>
                         <date :check_in_date="0" :isDateNeedsToToOpen="isDateNeedsToToOpen" @dateSelected="checkOut" />
                     </div>
                     <div id="people-number" class="col-md-4 cursor-pointer px-sm-0 px-md-1 mb-sm-2 mb-md-0">
                         <guests />
                     </div>
-                    <div class="col-md-2 check-availablility  ">
+                    <div class="col-md-1 w-100 check-availablility  ">
                         <button type="button" @click.prevent="checkAvailabity()"
-                            class="btn btn-primary btn-block m-auto bold-2 check-availablility-button rounded">
+                            class="btn btn-primary btn-block  w-auto w-xs-100 m-auto bold-2 check-availablility-button rounded">
                             Check availablity
                         </button>
                     </div>
@@ -112,20 +113,27 @@
                                         <div>
                                             <div class="row  quick-view p-3">
                                                 <div
-                                                    class="form-group  p-0  form-border cursor-pointer search col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
+                                                    class="form-group  p-0  form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
                                                     <label class=" label" for="flatpickr-input-f">Check-in -
                                                         Check-out</label>
                                                     <date :isDateNeedsToToOpen="isDateNeedsToToOpen"
-                                                        @dateSelected="dateSelected" />
+                                                        @dateSelected="checkIn" />
+                                                </div>
+                                                <div
+                                                    class="form-group  p-0 ml-lg-1 form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
+                                                    <label class=" label" for="flatpickr-input-f">Check-in -
+                                                        Check-out</label>
+                                                    <date :isDateNeedsToToOpen="isDateNeedsToToOpen"
+                                                        @dateSelected="checkOut" />
                                                 </div>
                                                 <div id="people-number"
-                                                    class=" guest col-md-5 cursor-pointer px-sm-0 px-md-1">
+                                                    class="guest col-md-4 cursor-pointer px-sm-0 px-md-1">
                                                     <guests />
                                                 </div>
-                                                <div class="col-md-2 check-availablility  mt-sm-2 mt-md-0">
+                                                <div class="col-md-1 check-availablility  mt-sm-2 mt-md-0">
                                                     <button :class="{ disabled: loading }" type="button"
                                                         @click.prevent="checkSingleAvailabity(room)"
-                                                        class="btn btn-primary btn-block m-auto bold-2 check-availablility-button rounded">
+                                                        class="btn w-auto w-xs-100 btn-primary btn-block m-auto bold-2 check-availablility-button rounded">
                                                         <span v-if="loading" class="spinner-border spinner-border-sm"
                                                             role="status" aria-hidden="true"></span> Check
 
@@ -319,9 +327,7 @@
                                                         <li class="" role="listitem"><span aria-hidden="true"
                                                                 class=""></span><span class="uitk-typelist-item-child">
                                                                 Cable channels</span></li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="uitk-typelist-item-child"> iPod
-                                                                dock</span></li>
+
                                                         <li class="" role="listitem"><span aria-hidden="true"
                                                                 class=""></span><span class="uitk-typelist-item-child"> Pay
                                                                 movies</span></li>
@@ -690,7 +696,6 @@ export default {
                                 '<div class="nav-btn prev-slide d-flex justify-content-center align-items-center mr-1"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
                                 '<div class="nav-btn next-slide d-flex justify-content-center align-items-center ml-1"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
                             ],
-
                             responsive: {
                                 0: {
                                     items: 1,
@@ -834,16 +839,11 @@ export default {
 
         checkSingleAvailabity: function (apartment) {
 
+            this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
             this.form.children = document.querySelector("#children").value;
             this.form.adults = document.querySelector("#adults").value;
             this.form.rooms = document.querySelector("#rooms").value;
-            if (
-                !this.form.check_in_checkout ||
-                this.form.check_in_checkout.split(" ").length < 2
-            ) {
-                this.isDateNeedsToToOpen = true;
-                return;
-            }
+
 
             // Sample object to be saved
             const myObject = {
@@ -851,22 +851,53 @@ export default {
                 check_in_checkout: this.form.check_in_checkout,
                 children: this.form.children,
                 adults: this.form.adults,
+                checkin: this.form.checkin,
+                checkout: this.form.checkout,
+
             };
 
-            // Convert the object to a JSON string
+            const storageKey = 'searchParams';
+
             const jsonString = JSON.stringify(myObject);
 
-            // Save the JSON string in localStorage with a specific key
-            const storageKey = 'searchParams';
-            localStorage.setItem(storageKey, jsonString);
 
-            // Retrieve the object from localStorage
-            const retrievedJsonString = localStorage.getItem(storageKey);
+            const currentValue = localStorage.getItem(storageKey);
 
-            // Convert the JSON string back to an object
-            const retrievedObject = JSON.parse(retrievedJsonString);
 
-            // Now 'retrievedObject' contains the object retrieved from localStorage
+            // Check if the item exists in localStorage
+            if (currentValue !== null) {
+                // Update the retrieved value
+
+                // Store the updated value back into jsonString
+                localStorage.setItem(storageKey, jsonString);
+
+                // Optionally, return true to indicate successful update
+            } else {
+                // Item with the specified name does not exist in localStorage
+                // Handle this case as needed, such as returning false or throwing an error
+                localStorage.setItem(storageKey, jsonString);
+
+            }
+            // Convert the object to a JSON string
+
+            console.log(currentValue)
+
+
+
+            if (
+                !this.form.check_in_checkout ||
+                this.form.check_in_checkout.split(" ").length < 2
+            ) {
+                this.isDateNeedsToToOpen = true;
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
+                alert("Set your check-in and check-out correctly")
+                return;
+            }
+
 
             this.loading = true
 

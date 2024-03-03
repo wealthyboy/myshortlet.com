@@ -10,18 +10,19 @@
             </div>
 
 
-            <div class="orm-group   form-border cursor-pointer search col-lg-3 col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
+            <div
+                class="orm-group  ml-lg-1   form-border cursor-pointer search col-lg-3 col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
                 <label class=" pl-2 ml-4" for="flatpickr-input-f">Check-in</label>
                 <date-range :check_in_date="0" placeholder="Check-out" @dateSelected="checkOut" />
             </div>
 
-            <div id="people-number" class="col-lg-4 col-md-4 cursor-pointer px-sm-0 px-md-1 mb-sm-2 mb-md-0">
+            <div id="people-number" class="col-lg-4 col-md-4 cursor-pointer  px-sm-0 px-md-1 mb-sm-2 mb-md-0">
                 <guests />
             </div>
 
-            <div class="col-lg-2 col-md-3 col-12 check-availablility  ">
+            <div class="col-lg-1  col-md-3 col-12 check-availablility  ">
                 <button type=" button" @click.prevent="search()"
-                    class="btn btn-primary btn-block m-auto rounded  bold check-availablility-button">
+                    class="btn btn-primary w-auto  btn-block m-auto  w-xs-100 rounded  bold check-availablility-button">
                     Check availablity
                 </button>
             </div>

@@ -1844,6 +1844,10 @@ svg.uitk-icon-medium {
   .flatpickr-innerContainer {
     overflow: scroll !important;
   }
+
+  .w-xs-100 {
+    width: 100% !important;
+  }
 }
 
 .aprt-content {
@@ -1855,7 +1859,7 @@ svg.uitk-icon-medium {
 /* Targeting iPhone 12 */
 @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) {
   .cursor-pointer.search {
-    margin-bottom: 1rem !important;
+    margin-bottom: .4rem !important;
   }
 
 }
@@ -1887,6 +1891,8 @@ svg.uitk-icon-medium {
     margin-left: 0rem;
 
   }
+
+
 }
 
 a.modal-close {
@@ -1895,4 +1901,8 @@ a.modal-close {
   height: 30px;
   border-radius: 50%;
   box-shadow: 0px 2px 0.25rem 0px rgba(0, 11, 38, 0.2) !important;
+}
+
+.w-auto {
+  width: auto;
 }
