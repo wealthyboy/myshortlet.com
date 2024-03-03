@@ -126,9 +126,10 @@ export default {
             this.form.adults = document.querySelector("#adults").value;
             this.form.rooms = document.querySelector("#rooms").value;
 
+
+
             if (
-                !this.form.check_in_checkout ||
-                this.form.check_in_checkout.split(" ").length < 2
+                !this.form.checkout && !this.form.checkin
             ) {
                 alert("Please select your check-in and check-out dates")
                 return;

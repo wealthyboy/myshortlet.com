@@ -1835,7 +1835,7 @@ svg.uitk-icon-medium {
     top: -15px !important;
   }
 
-  .flatpickr-calendar.rangeMode.animate.multiMonth.arrowTop.arrowLeft.centerMost.open,
+  .flatpickr-calendar.animate.multiMonth.arrowLeft.open.arrowTop.centerMost,
   .flatpickr-calendar.rangeMode.animate.multiMonth.open.arrowTop.arrowLeft.rightMost {
     width: 100% !important;
     overflow-x: scroll;
@@ -1854,7 +1854,6 @@ svg.uitk-icon-medium {
 
 /* Targeting iPhone 12 */
 @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) {
-
   .cursor-pointer.search {
     margin-bottom: 1rem !important;
   }
