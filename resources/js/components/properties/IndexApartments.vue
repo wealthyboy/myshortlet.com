@@ -686,10 +686,10 @@ export default {
                             margin: 0,
                             dots: true,
                             nav: true,
-                            // navText: [
-                            //     '<div class="nav-btn prev-slide"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-                            //     '<div class="nav-btn next-slide"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-                            // ],
+                            navText: [
+                                '<div class="nav-btn prev-slide d-flex justify-content-center align-items-center mr-1"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                                '<div class="nav-btn next-slide d-flex justify-content-center align-items-center ml-1"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                            ],
 
                             responsive: {
                                 0: {
@@ -927,10 +927,9 @@ export default {
 
             let ap = room.room
             if (
-                !this.form.check_in_checkout ||
-                this.form.check_in_checkout.split(" ").length < 2
+                !this.form.checkout && !this.form.checkin
             ) {
-                this.isDateNeedsToToOpen = true;
+                alert("Please select your check-in and check-out dates")
                 return;
             }
 
