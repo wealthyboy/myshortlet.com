@@ -57,7 +57,7 @@
                     <input type="hidden" name="property_id" value="217" />
                     <template v-if="roomsAv.length">
                         <div class="row">
-                            <apartment :showReserve="filter" :classType="classType" @showImages="showImages"
+                            <apartment :showReserve="apartmentIsChecked" :classType="classType" @showImages="showImages"
                                 @showRoom="showRoom" @reserve="reserve" :amenities="amenities"
                                 v-for="(room, index) in roomsAv" :index="index" :key="room.id" :room="room" :stays="stays"
                                 :qty="qty" />
@@ -153,7 +153,8 @@
                                                 Reserve
                                             </button>
 
-                                            <div v-if="!apartmentIsAvailable && apartmentIsChecked" class="text-danger">
+                                            <div v-if="!apartmentIsAvailable && singleApartmentIsChecked"
+                                                class="text-danger">
                                                 This apartment is not available on your selected date
                                             </div>
                                         </div>
@@ -512,6 +513,7 @@ export default {
             propertyLoading: false,
             propertyIsLoading: false,
             isDateNeedsToToOpen: false,
+            singleApartmentIsChecked: false,
             error_msg: null,
             showModal: false,
             apartmentIsAvailable: false,
@@ -601,7 +603,7 @@ export default {
     methods: {
         isValidDate(dateString) {
             // Attempt to create a Date object from the dateString
-            const dateObject = new window.Date(dateString);
+            const dateObject = new Date(dateString);
 
             // Check if the dateObject is a valid Date and the dateString remains the same after conversion
             return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
@@ -682,20 +684,79 @@ export default {
         dateSelected(value) {
             this.form.check_in_checkout = value;
         },
+        parseDateRange(dateRangeString) {
+            // Split the date range string into two dates
+            const [startDateString, endDateString] = dateRangeString.split(' to ');
+
+            // Parse the start date and end date
+            const startDate = new Date(startDateString);
+            const endDate = new Date(endDateString);
+
+            // Return an object containing both start and end dates
+            return { startDate, endDate };
+        },
+        getQueryParam(key) {
+            // Get the current query string
+            const queryString = window.location.search;
+
+            // Parse the query string into URLSearchParams
+            const urlParams = new URLSearchParams(queryString);
+
+            // Get the value of the specified key
+            const value = urlParams.get(key);
+
+            // Return both the key and value
+            return { key, value };
+        },
+        isValidDateRange(dateRangeString) {
+            // Split the date range string into two dates
+            const [startDateString, endDateString] = dateRangeString.split(' to ');
+
+            // Validate each date individually
+            return this.isValidDate(startDateString) && this.isValidDate(endDateString);
+        },
+        isValidDate(dateString) {
+            // Regular expression pattern for "YYYY-MM-DD" format
+            const pattern = /^\d{4}-\d{2}-\d{2}$/;
+
+            // Check if the string matches the pattern
+            if (!pattern.test(dateString)) {
+                return false; // Return false if the format doesn't match
+            }
+
+            // Attempt to create a Date object from the dateString
+            const dateObject = new window.Date(dateString);
+
+            // Check if the Date object represents a valid date
+            return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
+        },
         getApartments() {
             this.propertyLoading = true
-            //const now = new Date().getTime()
 
-            // Calculate the total number of seconds since the beginning of the day
-            // const seconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryString = urlParams.toString();
 
-            // console.log(window.location, now)
+
             axios
                 .get(window.location + '?t=' + Math.random())
                 .then((response) => {
                     this.roomsAv = response.data.data;
                     this.stays = response.data.nights;
                     this.propertyLoading = false;
+
+                    const paramNameToGet = 'check_in_checkout';
+                    const { key, value } = this.getQueryParam(paramNameToGet);
+
+
+                    if (value && this.isValidDateRange(value)) {
+                        this.apartmentIsChecked = true
+                    }
+                    if (this.form.checkin && this.form.checkout) {
+                        if (this.isValidDate(this.form.checkin) && this.isValidDate(this.form.checkout)) {
+                            this.apartmentIsChecked = true
+                        }
+                    }
+
 
                     //document.getElementById("full-bg").remove();
                     jQuery(function () {
@@ -746,6 +807,7 @@ export default {
             this.form.children = document.querySelector("#children").value;
             this.form.adults = document.querySelector("#adults").value;
             this.form.rooms = document.querySelector("#rooms").value;
+            this.apartmentIsChecked = true
 
 
             // Sample object to be saved
@@ -791,7 +853,6 @@ export default {
                 !this.form.check_in_checkout ||
                 this.form.check_in_checkout.split(" ").length < 2
             ) {
-                this.isDateNeedsToToOpen = true;
                 alert("Please select your check-in and check-out dates")
                 return;
             }
@@ -911,7 +972,6 @@ export default {
                 !this.form.check_in_checkout ||
                 this.form.check_in_checkout.split(" ").length < 2
             ) {
-                this.isDateNeedsToToOpen = true;
                 alert("Please select your check-in and check-out dates")
                 return;
             }
@@ -950,7 +1010,7 @@ export default {
                     }
                 })
                 .then((response) => {
-                    this.apartmentIsChecked = true
+                    this.singleApartmentIsChecked = true
                     this.loading = false
                     this.apartmentIsAvailable = response.data
                     return Promise.resolve();
@@ -991,13 +1051,31 @@ export default {
             this.amount = this.apTotal;
         },
         reserve(room) {
-            this.propertyIsLoading = true;
 
             let ap = room.room
             if (
                 !this.form.checkout && !this.form.checkin
             ) {
                 alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (
+                !this.isValidDate(this.form.checkin)
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (
+                !this.isValidDate(this.form.checkout)
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
+                alert("Set your check-in and check-out dates correctly")
                 return;
             }
 
@@ -1018,6 +1096,9 @@ export default {
                 apID: ap.id,
                 check_in_checkout: this.form.check_in_checkout,
             };
+
+            this.propertyIsLoading = true;
+
 
 
             axios
@@ -1039,14 +1120,31 @@ export default {
         },
 
         reserveSingle(room) {
-            this.propertyIsLoading = true;
 
             let ap = room
             if (
                 !this.form.check_in_checkout ||
                 this.form.check_in_checkout.split(" ").length < 2
             ) {
-                this.isDateNeedsToToOpen = true;
+                return;
+            }
+
+            if (
+                !this.isValidDate(this.form.checkin)
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (
+                !this.isValidDate(this.form.checkout)
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
+                alert("Set your check-in and check-out dates correctly")
                 return;
             }
 
@@ -1067,6 +1165,9 @@ export default {
                 apID: ap.id,
                 check_in_checkout: this.form.check_in_checkout,
             };
+
+            this.propertyIsLoading = true;
+
 
 
             axios

@@ -89,7 +89,7 @@
                                 <use xlink:href="#sleeps-icon"></use>
                             </svg>
                         </span>
-                        <span class="svg-icon-text">{{ room.guests }} Guests</span>
+                        <span class="svg-icon-text">{{ room.guests }} Guests {{ showReserve }}</span>
                     </div>
                 </div>
 
@@ -118,7 +118,7 @@
                     </div>
                 </template>
 
-                <div class="position-relative mb-1">
+                <!-- <div class="position-relative mb-1">
                     <a @click.prevent="showRoom(room)"
                         class="d-flex btn btn-round btn-primary py-1 bold-2 text-white  w-50 align-self-end font-weight-bold-2"
                         href="#">
@@ -128,7 +128,7 @@
                             <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>
                         </svg>
                     </a>
-                </div>
+                </div> -->
             </div>
 
             <div v-if="!room.is_gallery">
@@ -153,7 +153,7 @@
                     </div>
                     <div class="align-self-end ">
                         <div class="font-weight-bold-2 text-success" v-if="room.is_refundable">
-                            Fully Refundable
+                            Fully Refundable {{ showReserve }}
                         </div>
                         <a target="_blank" v-if="showReserve" @click.prevent="reserve(room)"
                             class="btn btn-round  btn-primary  py-2  bold-2  text-white  align-self-end font-weight-bold-2">
@@ -192,7 +192,7 @@ export default {
         qty: Boolean,
         amenities: Array,
         classType: Array,
-        showReserve: Number,
+        showReserve: Boolean,
         isGallery: Number,
         index: Number
     },
