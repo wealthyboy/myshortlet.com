@@ -70,10 +70,10 @@
                 <div class="modal d-block">
                     <div class="modal-content-header d-flex align-items-center p-3 justify-content-between">
                         <h5 class="modal-title" id="">Apartment Information</h5>
-                        <a @click.prevent="closeModal" href="#" role="button">
-                            <svg class="uitk-icon" aria-label="Close, go back to hotel details." role="img"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <a @click.prevent="closeModal" href="#"
+                            class="modal-close d-flex justify-content-center align-items-center" role="button">
+                            <svg class="" aria-label="Close, go back to hotel details." role="img" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title id="undefined-close-toolbar-title">Close, go back to hotel details.</title>
                                 <path
                                     d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z">
@@ -425,7 +425,7 @@
             </div>
         </transition>
 
-        <transition name="modal-fade">
+        <!-- <transition name="modal-fade">
             <div v-if="showImageModal" @click.self="showImageModal" class="modal-overlay d-flex">
                 <div class="modal d-block">
                     <div class="modal-content-header d-flex align-items-center p-3 justify-content-between">
@@ -457,7 +457,7 @@
                     </div>
                 </div>
             </div>
-        </transition>
+        </transition> -->
 
 
 
@@ -608,10 +608,10 @@ export default {
                     margin: 0,
                     nav: true,
                     dots: true,
-                    // navText: [
-                    //     '<div class="nav-btn prev-slide"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-                    //     '<div class="nav-btn next-slide"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-                    // ],
+                    navText: [
+                        '<div class="nav-btn prev-slide d-flex justify-content-center align-items-center mr-1"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                        '<div class="nav-btn next-slide d-flex justify-content-center align-items-center ml-1"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                    ],
                     responsive: {
                         0: {
                             items: 1,
