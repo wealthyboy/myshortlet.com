@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 bg-white  aprt-content pt-3">
+        <div class="col-md-12 bg-white  aprt-content pt-3 pb-2">
             <div class="card-title bold-2 text-size-1-big   mt-sm-3 mt-3">
                 <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
             </div>
