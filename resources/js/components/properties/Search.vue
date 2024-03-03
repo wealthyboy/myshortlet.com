@@ -160,7 +160,7 @@ export default {
             }
 
             if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
-                alert("Set your check-in and check-out correctly")
+                alert("Set your check-in and check-out dates correctly")
                 return;
             }
 

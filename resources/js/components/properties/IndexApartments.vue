@@ -599,6 +599,13 @@ export default {
     },
 
     methods: {
+        isValidDate(dateString) {
+            // Attempt to create a Date object from the dateString
+            const dateObject = new window.Date(dateString);
+
+            // Check if the dateObject is a valid Date and the dateString remains the same after conversion
+            return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
+        },
         checkIn(value) {
             this.form.checkin = value;
         },
@@ -789,8 +796,22 @@ export default {
                 return;
             }
 
+            if (
+                !this.isValidDate(this.form.checkin)
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (
+                !this.isValidDate(this.form.checkout)
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
             if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
-                alert("Set your check-in and check-out correctly")
+                alert("Set your check-in and check-out dates correctly")
                 return;
             }
 
@@ -884,8 +905,6 @@ export default {
             }
             // Convert the object to a JSON string
 
-            console.log(currentValue)
-
 
 
             if (
@@ -897,8 +916,22 @@ export default {
                 return;
             }
 
+            if (
+                !this.isValidDate(this.form.checkin)
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (
+                !this.isValidDate(this.form.checkout)
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
             if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
-                alert("Set your check-in and check-out correctly")
+                alert("Set your check-in and check-out dates correctly")
                 return;
             }
 
