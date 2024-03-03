@@ -122,18 +122,38 @@ export default {
 
             return checkinDate > checkoutDate;
         },
+        isValidDate(dateString) {
+            // Attempt to create a Date object from the dateString
+            const dateObject = new Date(dateString);
+
+            // Check if the dateObject is a valid Date and the dateString remains the same after conversion
+            return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
+        },
 
         search: function () {
 
             this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
-            alert(this.form.checkin, this.form.checkout);
-            return;
+
             this.form.children = document.querySelector("#children").value;
             this.form.adults = document.querySelector("#adults").value;
             this.form.rooms = document.querySelector("#rooms").value;
 
             if (
-                !this.form.checkout && !this.form.checkin
+                !this.form.checkin && !this.form.checkout
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (
+                !this.isValidDate(this.form.checkin)
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (
+                !this.isValidDate(this.form.checkout)
             ) {
                 alert("Please select your check-in and check-out dates")
                 return;
