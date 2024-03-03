@@ -258,7 +258,7 @@ const app = new Vue({
       });
     });
 
-    $(".cities-carousel").owlCarousel({
+    $(".cities-carousel.owl-theme").owlCarousel({
       loop: true,
       margin: 10,
       nav: true,

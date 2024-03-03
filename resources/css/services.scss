@@ -1796,6 +1796,8 @@ svg.uitk-icon-medium {
 .main-banner button.owl-next svg {
   width: 37px !important;
   height: 37px !important;
+  fill: none;
+  stroke: #fff;
 }
 
 .main-banner .owl-nav [class*=owl-]:hover {
@@ -1886,4 +1888,12 @@ svg.uitk-icon-medium {
     margin-left: 0rem;
 
   }
+}
+
+a.modal-close {
+  border: 2px solid grey;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  box-shadow: 0px 2px 0.25rem 0px rgba(0, 11, 38, 0.2) !important;
 }

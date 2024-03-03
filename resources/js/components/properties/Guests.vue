@@ -100,9 +100,9 @@ export default {
     };
   },
   mounted() {
-    this.romms = this.checkForGuests() ? this.checkForGuests().rooms : 1
-    this.children = this.checkForGuests() ? this.checkForGuests().children : 0
-    this.adults = this.checkForGuests() ? this.checkForGuests().adults : 0
+    this.romms = this.checkForGuests() ? this.checkForGuests().rooms : 2
+    this.children = this.checkForGuests() ? this.checkForGuests().children : 1
+    this.adults = this.checkForGuests() ? this.checkForGuests().adults : 1
   },
   methods: {
 

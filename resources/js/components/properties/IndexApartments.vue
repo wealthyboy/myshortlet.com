@@ -6,11 +6,15 @@
             <div v-if="filter">
                 <h3 class="bold-2">Choose your apartment</h3>
                 <div class="form-row">
-                    <div class="form-group   form-border cursor-pointer search col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
+                    <div class="form-group   form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
                         <label class="pl-2 " for="flatpickr-input-f">Check-in - Check-out</label>
-                        <date :isDateNeedsToToOpen="isDateNeedsToToOpen" @dateSelected="dateSelected" />
+                        <date :check_in_date="1" :isDateNeedsToToOpen="isDateNeedsToToOpen" @dateSelected="checkIn" />
                     </div>
-                    <div id="people-number" class="col-md-5 cursor-pointer px-sm-0 px-md-1 mb-sm-2 mb-md-0">
+                    <div class="form-group   form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
+                        <label class="pl-2 " for="flatpickr-input-f">Check-in - Check-out</label>
+                        <date :check_in_date="0" :isDateNeedsToToOpen="isDateNeedsToToOpen" @dateSelected="checkOut" />
+                    </div>
+                    <div id="people-number" class="col-md-4 cursor-pointer px-sm-0 px-md-1 mb-sm-2 mb-md-0">
                         <guests />
                     </div>
                     <div class="col-md-2 check-availablility  ">
@@ -515,6 +519,8 @@ export default {
                 adults: 1,
                 rooms: 1,
                 check_in_checkout: null,
+                checkin: null,
+                checkout: null,
                 property_id: this.property.id,
             },
         };
@@ -536,7 +542,9 @@ export default {
         // Check if the retrieved JSON string is not null
         if (retrievedJsonString !== null) {
             const retrievedObject = JSON.parse(retrievedJsonString);
-            this.form.check_in_checkout = retrievedObject.check_in_checkout
+            this.form.checkin = retrievedObject.checkin
+            this.form.checkout = retrievedObject.checkout
+
             //this.checkAvailabity()
         }
 
@@ -545,10 +553,10 @@ export default {
                 margin: 0,
                 dots: true,
                 nav: true,
-                // navText: [
-                //     '<div class="nav-btn prev-slide"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-                //     '<div class="nav-btn next-slide"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-                // ],
+                navText: [
+                    '<div class="nav-btn prev-slide d-flex justify-content-center align-items-center mr-1"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                    '<div class="nav-btn next-slide d-flex justify-content-center align-items-center ml-1"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                ],
 
                 responsive: {
                     0: {
@@ -581,6 +589,12 @@ export default {
     },
 
     methods: {
+        checkIn(value) {
+            this.form.checkin = value;
+        },
+        checkOut(value) {
+            this.form.checkout = value;
+        },
         showImages(room) {
             this.showImageModal = !this.showImageModal;
             this.room = room
@@ -698,12 +712,65 @@ export default {
                     console.log(error)
                 });
         },
-        checkAvailabity: function () {
-            // this.build()
+        objectToQueryString(obj) {
+            return Object.keys(obj)
+                .filter(key => obj[key] !== null && obj[key] !== undefined && obj[key] !== '') // Filter out null, undefined, and empty values
+                .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
+                .join('&');
+        },
+        isCheckinGreaterThanCheckout(checkinDate, checkoutDate) {
 
+            console.log(checkinDate, checkoutDate)
+            checkinDate = new window.Date(checkinDate);
+            checkoutDate = new window.Date(checkoutDate);
+            return checkinDate > checkoutDate;
+        },
+        checkAvailabity: function () {
+            this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
             this.form.children = document.querySelector("#children").value;
             this.form.adults = document.querySelector("#adults").value;
             this.form.rooms = document.querySelector("#rooms").value;
+
+
+            // Sample object to be saved
+            const myObject = {
+                rooms: this.form.rooms,
+                check_in_checkout: this.form.check_in_checkout,
+                children: this.form.children,
+                adults: this.form.adults,
+                checkin: this.form.checkin,
+                checkout: this.form.checkout,
+
+            };
+
+            const storageKey = 'searchParams';
+
+            const jsonString = JSON.stringify(myObject);
+
+
+            const currentValue = localStorage.getItem(storageKey);
+
+
+            // Check if the item exists in localStorage
+            if (currentValue !== null) {
+                // Update the retrieved value
+
+                // Store the updated value back into jsonString
+                localStorage.setItem(storageKey, jsonString);
+
+                // Optionally, return true to indicate successful update
+            } else {
+                // Item with the specified name does not exist in localStorage
+                // Handle this case as needed, such as returning false or throwing an error
+                localStorage.setItem(storageKey, jsonString);
+
+            }
+            // Convert the object to a JSON string
+
+            console.log(currentValue)
+
+
+
             if (
                 !this.form.check_in_checkout ||
                 this.form.check_in_checkout.split(" ").length < 2
@@ -713,26 +780,10 @@ export default {
                 return;
             }
 
-            // Sample object to be saved
-            const myObject = {
-                rooms: this.form.rooms,
-                check_in_checkout: this.form.check_in_checkout,
-                children: this.form.children,
-                adults: this.form.adults,
-            };
-
-            // Convert the object to a JSON string
-            const jsonString = JSON.stringify(myObject);
-
-            // Save the JSON string in localStorage with a specific key
-            const storageKey = 'searchParams';
-            localStorage.setItem(storageKey, jsonString);
-
-            // Retrieve the object from localStorage
-            const retrievedJsonString = localStorage.getItem(storageKey);
-
-            // Convert the JSON string back to an object
-            const retrievedObject = JSON.parse(retrievedJsonString);
+            if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
+                alert("Set your check-in and check-out correctly")
+                return;
+            }
 
             // Now 'retrievedObject' contains the object retrieved from localStorage
             this.propertyIsLoading = true
@@ -841,7 +892,12 @@ export default {
                 });
 
         },
-
+        checkIn(value) {
+            this.form.checkin = value;
+        },
+        checkOut(value) {
+            this.form.checkout = value;
+        },
 
         check(e) {
             let extra_services = document.querySelectorAll(

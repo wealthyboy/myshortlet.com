@@ -38,7 +38,8 @@
             <div class="modal d-block">
                 <div class="modal-content-header d-flex align-items-center p-3 justify-content-between">
                     <h5 class="modal-title" id="">Apartment Information</h5>
-                    <a @click.prevent="closeModal" href="#" role="button">
+                    <a @click.prevent="closeModal" href="#"
+                        class="modal-close d-flex justify-content-center align-items-center" role="button">
                         <svg class="uitk-icon" aria-label="Close, go back to hotel details." role="img" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title id="undefined-close-toolbar-title">Close, go back to hotel details.</title>

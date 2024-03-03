@@ -8,7 +8,7 @@
       </span>
     </div>
     <pickr v-model="check_in_checkout" :config="config" class="form-control date-range cursor-pointer  location-search"
-      placeholder="Check in - Check out" name="check_in_checkout" ref="datePicker" @on-change="dateSelected" style="" />
+      :placeholder="placeholder" name="check_in_checkout" ref="datePicker" @on-change="dateSelected" style="" />
   </div>
 </template>
 <script>
@@ -17,24 +17,36 @@ import Pickr from "vue-flatpickr-component";
 export default {
   props: {
     isDateNeedsToToOpen: Boolean,
+    placeholder: String,
+    check_in_date: Number,
+    checkout_date: String
+
   },
   data() {
     return {
       guests: 0,
       check_in_checkout: null,
+
       config: {
         wrap: true, // set wrap to true only when using 'input-group'
         altFormat: "M j, Y",
         altInput: true,
-        mode: "range",
         minDate: "today",
         dateFormat: "Y-m-d",
         showMonths: 2,
+        disableMobile: "true"
+
       },
     };
   },
   mounted() {
-    this.check_in_checkout = this.checkForDate()
+    console.log(typeof this.checkForDate().checkin)
+    if (this.check_in_date === 1) {
+      this.check_in_checkout = typeof this.checkForDate().checkin !== 'undefined' ? this.checkForDate().checkin : 'Check-in'
+    } else {
+      this.check_in_checkout = typeof this.checkForDate().checkout !== 'undefined' ? this.checkForDate().checkout : 'Check-out'
+    }
+
   },
   components: {
     Pickr,
@@ -60,8 +72,7 @@ export default {
         // Convert the JSON string back to an object
         const retrievedObject = JSON.parse(retrievedJsonString);
 
-        console.log(retrievedObject)
-        return retrievedObject.check_in_checkout
+        return retrievedObject;
       } else {
         return null
       }
