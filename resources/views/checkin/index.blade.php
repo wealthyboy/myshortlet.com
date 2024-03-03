@@ -96,7 +96,7 @@
         </div>
     </div>
 </section>
-<div style="height: 200px;"></div>
+<div style="height: 200px; background-color: rgb(248, 245, 244);"></div>
 <!--End Content-->
 @endsection
 

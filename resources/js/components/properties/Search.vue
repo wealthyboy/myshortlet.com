@@ -66,9 +66,11 @@ export default {
     },
     mounted() {
         //this.build();
-        console.log(this.checkForDate().checkin)
-        this.form.checkin = typeof this.checkForDate().checkin !== 'undefined' ? this.checkForDate().checkin : 'Check-in'
-        this.form.checkout = typeof this.checkForDate().checkout !== 'undefined' ? this.checkForDate().checkout : 'Check-out'
+        this.form.checkin = typeof this.checkForDate().checkin !== 'undefined' ? this.checkForDate().checkin : 'Check-in';
+        this.form.checkout = typeof this.checkForDate().checkout !== 'undefined' ? this.checkForDate().checkout : 'Check-out';
+        if (this.isCheckinEqualsToCheckout(this.form.checkin, this.form.checkout)) {
+            localStorage.clear()
+        }
         // localStorage.clear()
     },
     methods: {
@@ -119,6 +121,12 @@ export default {
             checkoutDate = new Date(checkoutDate);
 
             return checkinDate > checkoutDate;
+        },
+        isCheckinEqualsToCheckout(checkinDate, checkoutDate) {
+            checkinDate = new Date(checkinDate);
+            checkoutDate = new Date(checkoutDate);
+
+            return checkinDate === checkoutDate;
         },
         search: function () {
 

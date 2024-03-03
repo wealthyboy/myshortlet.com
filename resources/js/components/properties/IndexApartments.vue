@@ -106,7 +106,7 @@
                                     </div>
                                 </div>
                                 <div class="container p-0">
-                                    <h4 class="primary-color">Check availablity FOR {{ room.name }}</h4>
+                                    <h4 class="primary-color">Check availablity for {{ room.name }}</h4>
 
                                     <form id="single-form" :action="'/book/' + property.slug" method="GET"
                                         class="form-group">
