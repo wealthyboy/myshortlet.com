@@ -126,6 +126,8 @@ export default {
         search: function () {
 
             this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
+            alert(this.form.checkin, this.form.checkout);
+            return;
             this.form.children = document.querySelector("#children").value;
             this.form.adults = document.querySelector("#adults").value;
             this.form.rooms = document.querySelector("#rooms").value;
