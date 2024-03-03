@@ -12,7 +12,7 @@
 
             <div
                 class="orm-group  ml-lg-1   form-border cursor-pointer search col-lg-3 col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
-                <label class=" pl-2 ml-4" for="flatpickr-input-f">Check-in</label>
+                <label class=" pl-2 ml-4" for="flatpickr-input-f">Check-out</label>
                 <date-range :check_in_date="0" placeholder="Check-out" @dateSelected="checkOut" />
             </div>
 
