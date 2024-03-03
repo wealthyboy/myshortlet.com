@@ -7,13 +7,15 @@
                 <h3 class="bold-2">Choose your apartment</h3>
                 <div class="form-row">
                     <div class="form-group   form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
-                        <label class="pl-2 " for="flatpickr-input-f">Check-in - Check-out</label>
-                        <date :check_in_date="1" :isDateNeedsToToOpen="isDateNeedsToToOpen" @dateSelected="checkIn" />
+                        <label class="pl-2 " for="flatpickr-input-f">Check-in</label>
+                        <date :check_in_date="1" placeholder="Check-in" :isDateNeedsToToOpen="isDateNeedsToToOpen"
+                            @dateSelected="checkIn" />
                     </div>
                     <div
                         class="form-group  ml-lg-1  form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
-                        <label class="pl-2 " for="flatpickr-input-f">Check-in - Check-out</label>
-                        <date :check_in_date="0" :isDateNeedsToToOpen="isDateNeedsToToOpen" @dateSelected="checkOut" />
+                        <label class="pl-2 " for="flatpickr-input-f">Check-out</label>
+                        <date :check_in_date="0" placeholder="Check-out" :isDateNeedsToToOpen="isDateNeedsToToOpen"
+                            @dateSelected="checkOut" />
                     </div>
                     <div id="people-number" class="col-md-4 cursor-pointer px-sm-0 px-md-1 mb-sm-2 mb-md-0">
                         <guests />
@@ -116,14 +118,16 @@
                                                     class="form-group  p-0  form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
                                                     <label class=" label" for="flatpickr-input-f">Check-in -
                                                         Check-out</label>
-                                                    <date :isDateNeedsToToOpen="isDateNeedsToToOpen"
+                                                    <date :check_in_date="1" placeholder="Check-in"
+                                                        :isDateNeedsToToOpen="isDateNeedsToToOpen"
                                                         @dateSelected="checkIn" />
                                                 </div>
                                                 <div
                                                     class="form-group  p-0 ml-lg-1 form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
                                                     <label class=" label" for="flatpickr-input-f">Check-in -
                                                         Check-out</label>
-                                                    <date :isDateNeedsToToOpen="isDateNeedsToToOpen"
+                                                    <date :check_in_date="0" placeholder="Check-out"
+                                                        :isDateNeedsToToOpen="isDateNeedsToToOpen"
                                                         @dateSelected="checkOut" />
                                                 </div>
                                                 <div id="people-number"
