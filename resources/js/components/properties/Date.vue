@@ -43,9 +43,9 @@ export default {
     console.log(this.checkForDate())
 
     if (this.check_in_date === 1) {
-      this.check_in_checkout = typeof this.checkForDate() !== null && typeof this.checkForDate().checkin !== 'undefined' ? this.checkForDate().checkin : 'Check-in'
+      this.check_in_checkout = this.checkForDate() && typeof this.checkForDate().checkin !== 'undefined' ? this.checkForDate().checkin : null
     } else {
-      this.check_in_checkout = typeof this.checkForDate() !== null && typeof this.checkForDate().checkout !== 'undefined' ? this.checkForDate().checkout : 'Check-out'
+      this.check_in_checkout = this.checkForDate() && typeof this.checkForDate().checkout !== 'undefined' ? this.checkForDate().checkout : null
     }
 
     // if (this.isCheckinEqualsToCheckout(this.checkForDate().checkin, this.checkForDate().checkout)) {
