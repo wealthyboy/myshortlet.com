@@ -147,13 +147,13 @@
                                         </div>
 
                                         <div class=" mt-3">
-                                            <button v-if="apartmentIsChecked && apartmentIsAvailable" type="button"
-                                                @click.prevent="reserveSingle(room)"
+                                            <button v-if="singleApartmentIsAvailable && singleApartmentIsChecked"
+                                                type="button" @click.prevent="reserveSingle(room)"
                                                 class="btn btn-primary  m-auto bold-2  rounded">
                                                 Reserve
                                             </button>
 
-                                            <div v-if="!apartmentIsAvailable && singleApartmentIsChecked"
+                                            <div v-if="!singleApartmentIsAvailable && singleApartmentIsChecked"
                                                 class="text-danger">
                                                 This apartment is not available on your selected date
                                             </div>
@@ -514,6 +514,8 @@ export default {
             propertyIsLoading: false,
             isDateNeedsToToOpen: false,
             singleApartmentIsChecked: false,
+            singleApartmentIsAvailable: false,
+
             error_msg: null,
             showModal: false,
             apartmentIsAvailable: false,
@@ -825,7 +827,6 @@ export default {
 
             const jsonString = JSON.stringify(myObject);
 
-
             const currentValue = localStorage.getItem(storageKey);
 
 
@@ -843,10 +844,7 @@ export default {
                 localStorage.setItem(storageKey, jsonString);
 
             }
-            // Convert the object to a JSON string
-
-            console.log(currentValue)
-
+            // Convert the object to a JSON strin
 
 
             if (
@@ -946,7 +944,6 @@ export default {
 
             const jsonString = JSON.stringify(myObject);
 
-
             const currentValue = localStorage.getItem(storageKey);
 
 
@@ -964,8 +961,6 @@ export default {
                 localStorage.setItem(storageKey, jsonString);
 
             }
-            // Convert the object to a JSON string
-
 
 
             if (
@@ -998,7 +993,6 @@ export default {
 
             this.loading = true
 
-
             axios
                 .get('/apartments', {
                     params: {
@@ -1010,9 +1004,10 @@ export default {
                     }
                 })
                 .then((response) => {
+                    console.log(response.data)
                     this.singleApartmentIsChecked = true
                     this.loading = false
-                    this.apartmentIsAvailable = response.data
+                    this.singleApartmentIsAvailable = response.data
                     return Promise.resolve();
                 })
                 .catch((error) => {
