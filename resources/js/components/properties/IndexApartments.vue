@@ -1080,10 +1080,6 @@ export default {
             }
 
 
-            console.log(this.form.checkin)
-            return
-
-
             let selectApartmentQty = document.querySelectorAll(".room-q");
             var checked = [];
             let filters = {};
