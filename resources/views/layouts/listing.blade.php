@@ -24,6 +24,7 @@
    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map.map') }}&v=weekly&channel=2" async></script>
 
    <script src="/js/popper.min.js" type="text/javascript"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
    <script src="/js/services_js.js?version={{ str_random(6) }}"></script>
    @yield('page-scripts')
    <script type="text/javascript">
