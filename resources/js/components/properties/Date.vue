@@ -33,26 +33,19 @@ export default {
         altInput: true,
         minDate: "today",
         dateFormat: "Y-m-d",
-        showMonths: 2,
+        showMonths: 1,
         disableMobile: "true"
 
       },
     };
   },
   mounted() {
-    console.log(this.checkForDate())
 
     if (this.check_in_date === 1) {
       this.check_in_checkout = this.checkForDate() && typeof this.checkForDate().checkin !== 'undefined' ? this.checkForDate().checkin : null
     } else {
       this.check_in_checkout = this.checkForDate() && typeof this.checkForDate().checkout !== 'undefined' ? this.checkForDate().checkout : null
     }
-
-    // if (this.isCheckinEqualsToCheckout(this.checkForDate().checkin, this.checkForDate().checkout)) {
-    //   localStorage.clear()
-    // }
-
-    // console.log(this.isCheckinEqualsToCheckout(this.checkForDate().checkin, this.checkForDate().checkout))
 
   },
   components: {

@@ -18,21 +18,18 @@
         <div class="d-flex justify-content-center align-items-center">
             @guest
             <a href="/login" class="d-none d-lg-block text-white bold-2 mr-4">
-                <i class="fal fa-sign-in"></i>
                 Login
             </a>
             @endguest
 
             @auth
             <a href="/account" class="d-none d-lg-block text-white bold-2 mr-4">
-                <i class="fal fa-sign-in"></i>
                 Account
             </a>
             @endauth
 
             @if(isset($show_book) && $show_book)
             <a href="/apartments" class="align-self-center mr-3  d-none d-lg-block font-weight-bold btn-primary bold-3 btn text-white  ">
-                <i class="fal fa-sign-in"></i>
                 Book Now
             </a>
             @endif
@@ -71,6 +68,10 @@
 
             <li class="w-100 py-3  font-weight-bold">
                 <a target="_blank" href="https://theluxurysale.com">Shop @avm</a>
+            </li>
+
+            <li class="w-100 py-3  font-weight-bold border-top">
+                <a target="_blank" href="/login">Login</a>
             </li>
         </ul>
     </div>

@@ -38,8 +38,6 @@
    @yield('page-scripts')
    <script type="text/javascript">
       @yield('inline-scripts')
-
-
       jQuery(function() {
 
       });
