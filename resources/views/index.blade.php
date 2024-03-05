@@ -219,7 +219,7 @@
 
 
          <section id="box3" class=" opacity-0 ">
-            <div class="row   pb-5 pt-5 position-relative">
+            <div class="row  position-relative">
                <div class="col-lg-7 col-md-12 rounded  card-background-image">
                   <div id="gallery-banner" class="carousel slide" data-ride="carousel">
                      <ol class="carousel-indicators">
