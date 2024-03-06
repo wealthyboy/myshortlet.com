@@ -152,7 +152,7 @@ class HomeController
             ->where('apartments.no_of_rooms', '>=', $data['rooms'])
             ->select('apartments.*')
             ->groupBy('apartments.id')
-            ->get();
+            ->paginate(4);
         $apartments->load('images',  'free_services', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
         $date = $request->check_in_checkout;
         $days = 0;

@@ -7,8 +7,9 @@
         </svg>
       </span>
     </div>
-    <pickr v-model="check_in_checkout" :config="config" class="form-control date-range cursor-pointer  location-search"
-      :placeholder="placeholder" name="check_in_checkout" ref="datePicker" @on-change="dateSelected" style="" />
+    <pickr @on-change="handleDateChange(placeholder)" :id="placeholder" v-model="check_in_checkout" :config="config"
+      class="form-control date-range cursor-pointer  location-search" :placeholder="placeholder" name="check_in_checkout"
+      ref="datePicker" style="" />
   </div>
 </template>
 <script>
@@ -34,7 +35,8 @@ export default {
         minDate: "today",
         dateFormat: "Y-m-d",
         showMonths: 1,
-        disableMobile: "true"
+        disableMobile: "true",
+
 
       },
     };
@@ -61,7 +63,21 @@ export default {
     },
   },
   methods: {
+    handleDateChange(pickerId) {
+
+
+      console.log(`Date selected in ${pickerId}:`, this.check_in_checkout);
+      this.$emit("dateSelected", this.check_in_checkout);
+
+    },
     dateSelected() {
+      // const flatpickrDaySpans = document.querySelectorAll('span.flatpickr-day');
+
+      // // Loop through each span element
+      // flatpickrDaySpans.forEach(span => {
+      //   // Remove the 'today' class from each span
+      //   span.classList.remove('today');
+      // });
       this.$emit("dateSelected", this.check_in_checkout);
     },
     isCheckinEqualsToCheckout(checkinDate, checkoutDate) {
