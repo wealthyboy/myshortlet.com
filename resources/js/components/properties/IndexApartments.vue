@@ -71,7 +71,7 @@
         <transition name="modal-fade">
             <div v-if="showModal" @click.self="closeModal" class="modal-overlay d-flex">
                 <div class="modal d-block">
-                    <div class="modal-content-header d-flex align-items-center p-3 justify-content-between">
+                    <div class="modal-content-header d-flex align-items-center p-3 mt-4 justify-content-between">
                         <h5 class="modal-title" id="">Apartment Information</h5>
                         <a @click.prevent="closeModal" href="#"
                             class="modal-close d-flex justify-content-center align-items-center" role="button">
@@ -563,6 +563,36 @@ export default {
         }
 
         jQuery(function () {
+            $(".custom-iframe").on("touchstart", function (event) {
+                // Record the initial touch position
+                var startX = event.touches[0].clientX;
+
+                // Add touch move event listener
+                $(this).on("touchmove", function (event) {
+                    // Calculate the distance moved
+                    var moveX = event.touches[0].clientX - startX;
+
+                    // If the distance moved is greater than a threshold, trigger carousel swipe
+                    if (Math.abs(moveX) > 50) { // Adjust threshold as needed
+                        if (moveX > 0) {
+                            // Swipe right
+                            $(".owl-carousel").trigger("prev.owl.carousel");
+                        } else {
+                            // Swipe left
+                            $(".owl-carousel").trigger("next.owl.carousel");
+                        }
+
+                        // Remove touchmove event listener to prevent multiple triggers
+                        $(this).off("touchmove");
+                    }
+                });
+
+                // Add touchend event listener to clean up
+                $(this).on("touchend", function () {
+                    // Remove touchmove event listener
+                    $(this).off("touchmove");
+                });
+            });
             $(".owl-carousel").owlCarousel({
                 margin: 0,
                 dots: true,
@@ -621,10 +651,42 @@ export default {
             this.room = room
         },
         showRoom(room) {
-            console.log(room)
             this.showModal = !this.showModal;
             this.room = room
             jQuery(function () {
+                // Add touch event listeners to centered images
+                $(".custom-iframe").on("touchstart", function (event) {
+                    // Record the initial touch position
+                    var startX = event.touches[0].clientX;
+
+                    // Add touch move event listener
+                    $(this).on("touchmove", function (event) {
+                        // Calculate the distance moved
+                        var moveX = event.touches[0].clientX - startX;
+
+                        // If the distance moved is greater than a threshold, trigger carousel swipe
+                        if (Math.abs(moveX) > 50) { // Adjust threshold as needed
+                            if (moveX > 0) {
+                                // Swipe right
+                                $(".owl-carousel").trigger("prev.owl.carousel");
+                            } else {
+                                // Swipe left
+                                $(".owl-carousel").trigger("next.owl.carousel");
+                            }
+
+                            // Remove touchmove event listener to prevent multiple triggers
+                            $(this).off("touchmove");
+                        }
+                    });
+
+                    // Add touchend event listener to clean up
+                    $(this).on("touchend", function () {
+                        // Remove touchmove event listener
+                        $(this).off("touchmove");
+                    });
+                });
+                console.log(true)
+
                 $(".owl-carousel").owlCarousel({
                     margin: 0,
                     nav: true,
