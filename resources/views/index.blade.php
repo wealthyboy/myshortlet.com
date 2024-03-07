@@ -166,11 +166,11 @@
 
 
 
-   <div class="container-fluid mb-3">
+   <div class="container-fluid mb-3 bg-dark">
       <div class="row p-1">
          <div class="col-md-12">
             <section class=" mb-1">
-               <div class="row bg-grey position-relative  pb-5 pt-5">
+               <div class="row bg-dark position-relative  pb-5 pt-5">
                   <div id="leftBox" style="z-index: 2;" class="col-lg-5  col-md-12  order-sm-2 order-lg-1 opacity-0 re-order text-center d-flex justify-content-center align-items-center">
                      <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
                         <h2 class="mb-4 bold-2">Unrivaled Amenities</h2>
