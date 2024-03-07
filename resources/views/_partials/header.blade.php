@@ -70,7 +70,7 @@
                 <a target="_blank" href="https://theluxurysale.com">Shop @avm</a>
             </li>
 
-            <li class="w-100 py-3  font-weight-bold border-top">
+            <li class="w-100  font-weight-bold ">
                 <a target="_blank" href="/login">Login</a>
             </li>
         </ul>
