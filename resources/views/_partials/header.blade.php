@@ -71,7 +71,7 @@
             </li>
 
             <li class="w-100  font-weight-bold ">
-                <a target="_blank" href="/login">Login</a>
+                <a href="/login">Login</a>
             </li>
         </ul>
     </div>
