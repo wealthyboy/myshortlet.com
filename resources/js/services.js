@@ -230,18 +230,7 @@ const app = new Vue({
   jQuery(function () {
 
 
-    // Initialize Hammer.js for swipe gestures
-    var carousel = document.querySelector('.carousel');
-    var hammertime = new Hammer(carousel);
 
-    // Enable swipe left and right
-    hammertime.on('swipeleft swiperight', function (ev) {
-      if (ev.type === 'swipeleft') {
-        $('.carousel').carousel('next');
-      } else if (ev.type === 'swiperight') {
-        $('.carousel').carousel('prev');
-      }
-    });
 
 
     $(".flexslider").flexslider({

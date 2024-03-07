@@ -307,6 +307,8 @@
 
 jQuery(function () {
 
+
+
 // Add touch event listeners to centered images
 $(".intro-image").on("touchstart", function(event){
 // Record the initial touch position

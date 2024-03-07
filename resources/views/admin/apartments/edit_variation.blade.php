@@ -129,7 +129,7 @@
             <div class="col-md-12">
                 <div class="form-group label-floating ">
                     <label class="control-label">Image links</label>
-                    <input name="edit_image_links[{{ $apartment->id }}]" value="{{ $apartment->image_link }}" class="form-control  variation" type="text">
+                    <textarea rows="20" name="edit_image_links[{{ $apartment->id }}]" class="form-control  variation" type="text">{{ $apartment->image_link }} </textarea>
                 </div>
             </div>
 
