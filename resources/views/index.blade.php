@@ -215,10 +215,14 @@
 
 <div class="container-fluid ">
    <div class="row p-1">
+      <div class="" style="background-image: url('/images/banners/flowers.png');"></div>
+
       <div class="col-md-12">
 
 
-         <section id="box3" class=" opacity-0 ">
+
+         <section style="background-image: url('/images/banners/flowers.png');" id="box3" class=" opacity-0 ">
+
             <div class="row  position-relative">
                <div class="col-lg-7 col-md-12 rounded  card-background-image">
                   <div id="gallery-banner" class="carousel slide" data-ride="carousel">
