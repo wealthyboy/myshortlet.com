@@ -111,7 +111,7 @@
             <div class="col-md-12">
                 <div class="form-group label-floating">
                     <label class="control-label">Image Links</label>
-                    <textarea rows="20" name="room_image_links[{{ $counter->id }}]" class="form-control  variation" type="text"></textarea>
+                    <textarea rows="20" name="room_image_links[{{ $counter }}]" class="form-control  variation" type="text"></textarea>
 
                 </div>
             </div>
