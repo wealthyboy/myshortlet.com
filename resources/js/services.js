@@ -173,6 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: 'leftbox1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
     { id: 'rbox1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
     { id: 'box3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+    { id: 'box4', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+
     { id: 'lbox3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig', 'index-1'] },
     { id: 'rbox3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
     { id: 'category-box', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] }
