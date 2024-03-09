@@ -32,7 +32,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 
 
-   <script src="/js/services_js.js"></script>
+   <script src="/js/services_js.js?version={{ str_random(6) }}"></script>
 
    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
 
