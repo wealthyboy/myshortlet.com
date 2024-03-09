@@ -116,16 +116,14 @@
                                             <div class="row  quick-view p-3">
                                                 <div
                                                     class="form-group  p-0  form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
-                                                    <label class=" label" for="flatpickr-input-f">Check-in -
-                                                        Check-out</label>
+                                                    <label class=" label" for="flatpickr-input-f">Check-in </label>
                                                     <date :check_in_date="1" placeholder="Check-in"
                                                         :isDateNeedsToToOpen="isDateNeedsToToOpen"
                                                         @dateSelected="checkIn" />
                                                 </div>
                                                 <div
                                                     class="form-group  p-0 ml-lg-1 form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
-                                                    <label class=" label" for="flatpickr-input-f">Check-in -
-                                                        Check-out</label>
+                                                    <label class=" label" for="flatpickr-input-f">Check-in</label>
                                                     <date :check_in_date="0" placeholder="Check-out"
                                                         :isDateNeedsToToOpen="isDateNeedsToToOpen"
                                                         @dateSelected="checkOut" />
@@ -254,9 +252,7 @@
                                                         </li>
                                                         <li class="" role="listitem"><span aria-hidden="true"
                                                                 class=""></span><span class="">Free toiletries</span></li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Hair
-                                                                dryer</span></li>
+
                                                         <li class="" role="listitem"><span aria-hidden="true"
                                                                 class=""></span><span class="">Private
                                                                 bathroom</span></li>
@@ -296,10 +292,7 @@
                                                                 class=""></span><span
                                                                 class="uitk-typelist-item-child">Climate-controlled air
                                                                 conditioning</span></li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Free cribs/infant
-                                                                beds</span>
-                                                        </li>
+
                                                         <li class="" role="listitem"><span aria-hidden="true"
                                                                 class=""></span><span class="">Pillowtop bed</span></li>
                                                         <li class="" role="listitem"><span aria-hidden="true"
