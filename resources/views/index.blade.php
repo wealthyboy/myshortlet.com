@@ -166,7 +166,7 @@
 
 <div class="room-essencials bg-dark py-5">
    <div class=" container-fluid apartment-essencials">
-      <div id="box4" class=" opacity-0  row p-1">
+      <div class="   row p-1">
          <div class="col-md-6 mb-5">
 
             <div class="">
