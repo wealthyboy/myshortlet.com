@@ -1939,3 +1939,13 @@ a.modal-close {
 .chat-on-watsapp {
   background-color: rgb(45, 183, 66);
 }
+
+.modal-body .owl-item.active {
+  // position: fixed !important;
+
+}
+
+
+.modal-body .item {
+  position: relative !important;
+}
