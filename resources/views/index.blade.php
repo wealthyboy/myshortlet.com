@@ -163,7 +163,7 @@
       </div>
    </div>
 
-   <div class="room-essencials bg-dark py-5">
+   <div class="room-essencials main-background py-5">
       <div class=" container-fluid apartment-essencials">
          <div class="row p-1">
             <div class="col-md-6 mb-5">
