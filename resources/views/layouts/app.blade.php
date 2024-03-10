@@ -28,7 +28,7 @@
 
 
    <div class="watsapp pt-3">
-      <a class="chat-on-watsapp" target="_blank" href="https://wa.me/{{ $system_settings->store_phone }}">
+      <a class="chat-on-watsapp bold-2" target="_blank" href="https://wa.me/{{ $system_settings->store_phone }}">
          Need help? Chat with us <i class="fab fa-whatsapp fa-2x float-right mr-2"></i></a>
    </div>
 

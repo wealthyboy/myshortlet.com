@@ -77,7 +77,7 @@
    </section>
 </div> -->
 
-<div class="container-fluid mb-2 bg-dark">
+<div class="container-fluid mb-2">
 
    <div class="row p-1 ">
       <div id="tree" class="opacity-0" style="background-image: url(https://drive.google.com/thumbnail?id=1aP9OVoify71pxLWDV-P33fYb5sopnI2g&sz=w2000);
@@ -163,125 +163,7 @@
    </div>
 </div>
 
-<div class="room-essencials bg-dark py-5">
-   <div class=" container-fluid apartment-essencials">
-      <div class="row p-1">
-         <div class="col-md-6 mb-5">
 
-            <div class="">
-
-               <div class="cs-title-wrap">
-                  <div class="text-white"><span class="room-service-color ">The Essential In-Room Amenities</span></div>
-                  <h2 class="mb-4 text-white">Our spaces have all the essentials you need for your stay.</h2>
-
-               </div>
-            </div>
-         </div>
-         <div class="col-md-6  mb-5 room-service-color ">
-            Our spaces are thoughtfully designed to provide you with everything you need for a comfortable and enjoyable stay. From essential amenities like air conditioning and high-speed WiFi to convenient onsite parking and daily housekeeping services, we ensure that your needs are met with care and attention to detail.
-         </div>
-
-         <div class="col-md-3 col-12 mb-5">
-            <div class="d-flex flex-column">
-               <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <path d="M22 11h-4.17l3.24-3.24-1.41-1.42L15 11h-2V9l4.66-4.66-1.42-1.41L13 6.17V2h-2v4.17L7.76 2.93 6.34 4.34 11 9v2H9L4.34 6.34 2.93 7.76 6.17 11H2v2h4.17l-3.24 3.24 1.41 1.42L9 13h2v2l-4.66 4.66 1.42 1.41L11 17.83V22h2v-4.17l3.24 3.24 1.42-1.41L13 15v-2h2l4.66 4.66 1.41-1.42L17.83 13H22v-2z"></path>
-               </svg><span class="text-white">Air conditioning</span>
-            </div>
-            <div class="room-service-color ">
-               Enjoy comfortable indoor temperatures regardless of the weather with our efficient air conditioning systems.
-            </div>
-         </div>
-
-         <div class="col-md-3 col-12  mb-5">
-            <div class="d-flex  flex-column "><svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <path fill-rule="evenodd" d="m1 9 2 2a12.73 12.73 0 0 1 18 0l2-2A15.57 15.57 0 0 0 1 9zm8 8 3 3 3-3a4.24 4.24 0 0 0-6 0zm-2-2-2-2a9.91 9.91 0 0 1 14 0l-2 2a7.07 7.07 0 0 0-10 0z" clip-rule="evenodd"></path>
-               </svg><span class="text-white">Free WiFi</span></div>
-
-            <div style="color: #9E9E9E;" class="room-service-color ">
-               Stay connected and productive with complimentary high-speed WiFi available throughout the property.
-            </div>
-         </div>
-
-         <div class="col-md-3 col-12  mb-5">
-
-            <div class="d-flex  flex-column ">
-               <svg class="uitk-icon uitk-spacing uitk-spacing-padding-inlineend-two uitk-icon-small uitk-icon-default-theme" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <path fill-rule="evenodd" d="M20.15 10.15c-1.59 1.59-3.74 2.09-5.27 1.38L13.41 13l6.88 6.88-1.41 1.41L12 14.41l-6.89 6.87-1.41-1.41 9.76-9.76c-.71-1.53-.21-3.68 1.38-5.27 1.92-1.91 4.66-2.27 6.12-.81 1.47 1.47 1.1 4.21-.81 6.12zm-9.22.36L8.1 13.34 3.91 9.16a4 4 0 0 1 0-5.66l7.02 7.01z" clip-rule="evenodd"></path>
-               </svg>
-               <span class="text-white">Restaurant</span>
-            </div>
-            <div class="room-service-color ">
-               Indulge in culinary delights at our onsite restaurants, offering a variety of dishes to satisfy every palate. </div>
-         </div>
-
-         <div class="col-md-3 col-12  mb-5">
-
-            <div class="d-flex  flex-column ">
-               <svg class="uitk-icon uitk-spacing uitk-spacing-padding-inlineend-two uitk-icon-small uitk-icon-default-theme" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
-               </svg>
-               <span class="text-white ">Housekeeping</span>
-            </div>
-            <div class="room-service-color ">
-               Relax and unwind knowing that our dedicated housekeeping team is taking care of your accommodations.
-            </div>
-         </div>
-
-
-         <div class="col-md-3 col-12  mb-5">
-            <div class="d-flex flex-column ">
-               <svg class="uitk-icon uitk-spacing uitk-spacing-padding-inlineend-two uitk-icon-small uitk-icon-default-theme" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <path d="M9.82 11.64h.01a4.15 4.15 0 0 1 4.36 0h.01c.76.46 1.54.47 2.29 0l.41-.23L10.48 5C8.93 3.45 7.5 2.99 5 3v2.5c1.82-.01 2.89.39 4 1.5l1 1-3.25 3.25c.27.1.52.25.77.39.75.47 1.55.47 2.3 0z"></path>
-                  <path fill-rule="evenodd" d="M21.98 16.5c-1.1 0-1.71-.37-2.16-.64h-.01a2.08 2.08 0 0 0-2.29 0 4.13 4.13 0 0 1-4.36 0h-.01a2.08 2.08 0 0 0-2.29 0 4.13 4.13 0 0 1-4.36 0h-.01a2.08 2.08 0 0 0-2.29 0l-.03.02c-.47.27-1.08.62-2.17.62v-2c.56 0 .78-.13 1.15-.36a4.13 4.13 0 0 1 4.36 0h.01c.76.46 1.54.47 2.29 0a4.13 4.13 0 0 1 4.36 0h.01c.76.46 1.54.47 2.29 0a4.13 4.13 0 0 1 4.36 0h.01c.36.22.6.36 1.14.36v2z" clip-rule="evenodd"></path>
-                  <path d="M19.82 20.36c.45.27 1.07.64 2.18.64v-2a1.8 1.8 0 0 1-1.15-.36 4.13 4.13 0 0 0-4.36 0c-.75.47-1.53.46-2.29 0h-.01a4.15 4.15 0 0 0-4.36 0h-.01c-.75.47-1.55.47-2.3 0a4.15 4.15 0 0 0-4.36 0h-.01A1.8 1.8 0 0 1 2 19v2c1.1 0 1.72-.36 2.18-.63l.01-.01a2.07 2.07 0 0 1 2.3 0c1.39.83 2.97.82 4.36 0h.01a2.08 2.08 0 0 1 2.29 0h.01c1.38.83 2.95.83 4.34.01l.02-.01a2.08 2.08 0 0 1 2.29 0h.01zM19 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
-               </svg>
-               <span class="text-white">Pool</span>
-            </div>
-            <div class="room-service-color ">
-               Enjoy swimming laps for exercise or simply lounge by the poolside, soaking up the sun and enjoying the serene ambiance. </div>
-         </div>
-
-         <div class="col-md-3 col-12  mb-5">
-            <div class="d-flex  flex-column">
-               <svg class="uitk-icon uitk-spacing uitk-spacing-padding-inlineend-two uitk-icon-small uitk-icon-default-theme" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <path fill-rule="evenodd" d="M14 7c0 .28-.06.55-.16.79A9.01 9.01 0 0 1 21 16H3a9.01 9.01 0 0 1 7.16-8.21A2 2 0 0 1 12 5a2 2 0 0 1 2 2zm8 12v-2H2v2h20z" clip-rule="evenodd"></path>
-               </svg>
-               <span class="text-white">Room service</span>
-            </div>
-            <div class="room-service-color ">
-               Indulge in the convenience of room service, bringing delicious meals right to your door for a delightful dining experience without leaving the comfort of your apartment. </div>
-         </div>
-
-         <div class="col-md-3 col-12  mb-5">
-
-            <div class="d-flex  flex-column ">
-               <svg class="uitk-icon uitk-spacing uitk-spacing-padding-inlineend-two uitk-icon-small uitk-icon-default-theme" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <path fill-rule="evenodd" d="M6 3h7a6 6 0 0 1 0 12h-3v6H6V3zm4 8h3.2a2 2 0 0 0 2-2 2 2 0 0 0-2-2H10v4z" clip-rule="evenodd"></path>
-               </svg>
-               <span class="text-white">Parking included</span>
-            </div>
-
-            <div class="room-service-color ">
-               Convenient parking facilities are available onsite, providing secure and hassle-free parking for guests' vehicles.
-            </div>
-         </div>
-
-         <div class="col-md-3 col-12  mb-5">
-
-            <div class="d-flex  flex-column ">
-               <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <path fill-rule="evenodd" d="M19 7V4H5v3H2v13h8v-4h4v4h8V7h-3zM9 10v1h2v1H8V9h2V8H8V7h3v3H9zm6 2h1V7h-1v2h-1V7h-1v3h2v2z" clip-rule="evenodd"></path>
-               </svg>
-               <span class="text-white">24/7 front desk</span>
-            </div>
-            <div class="room-service-color ">
-               Experience peace of mind with our 24/7 front desk, available around the clock to assist you with any inquiries you may need. </div>
-
-         </div>
-      </div>
-
-   </div>
-</div>
 </div>
 
 
