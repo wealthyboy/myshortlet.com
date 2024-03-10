@@ -87,16 +87,16 @@
                     <div v-if="!gallery" class="modal-body quick-view">
                         <div class="row">
                             <div class="col-md-12 rounded">
-                                <div class="room-carousel owl-carousel owl-theme">
+                                <div class="room-carousel  owl-carousel owl-theme">
 
                                     <template v-if="room.google_drive_image_links">
                                         <div class="item" :key="index"
                                             v-for="(image, index) in room.google_drive_image_links">
-                                            <img :src="image" class="img  img-fluid rounded" />
+                                            <img :src="image" class="img room-image  img-fluid rounded" />
                                         </div>
                                     </template>
-                                    <div class="item" :key="image.id" v-for="image in room.images">
-                                        <img :src="image.image" class="img  img-fluid rounded" />
+                                    <div class="" style="z-index: -1;" :key="image.id" v-for="image in room.images">
+                                        <img :src="image.image" class="img  room-image  img-fluid rounded" />
                                     </div>
 
                                     <div v-if="room.google_drive_video_link" class="item">
@@ -685,8 +685,8 @@ export default {
                     nav: true,
                     dots: true,
                     navText: [
-                        '<div class="nav-btn prev-slide d-flex justify-content-center align-items-center mr-1"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-                        '<div class="nav-btn next-slide d-flex justify-content-center align-items-center ml-1"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                        '<div class="nav-btn prev-slide d-flex z-index justify-content-center align-items-center mr-1"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                        '<div class="nav-btn next-slide d-flex z-index justify-content-center align-items-center ml-1"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
                     ],
                     responsive: {
                         0: {

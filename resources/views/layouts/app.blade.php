@@ -5,6 +5,9 @@
 
 <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+
+
 @include('_partials.header_styles')
 
 <body>
@@ -32,7 +35,10 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 
 
+
    <script src="/js/services_js.js?version={{ str_random(6) }}"></script>
+
+   <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
 
