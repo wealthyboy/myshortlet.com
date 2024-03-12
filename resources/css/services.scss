@@ -1828,6 +1828,7 @@ svg.uitk-icon-medium {
 }
 
 @media (max-width: 767px) {
+
   .custom-iframe {
     height: 239px;
     width: 100% !important;
@@ -1998,6 +1999,7 @@ a.modal-close {
   background-position: 15px;
   background-size: 25px 25px;
   border: none;
+  cursor: pointer !important;
 }
 
 .slick-prev {
@@ -2006,6 +2008,8 @@ a.modal-close {
   z-index: 222;
   top: 50%;
   background-position: 11px !important;
+  cursor: pointer !important;
+
 }
 
 .slick-next {
@@ -2014,6 +2018,8 @@ a.modal-close {
   z-index: 222;
   top: 50%;
   right: 0px;
+  cursor: pointer !important;
+
 }
 
 .slick-dots {
