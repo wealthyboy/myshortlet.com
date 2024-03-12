@@ -381,7 +381,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div style="margin-bottom: 5rem;" class="col-md-6">
                                             <div class="d-flex align-items-center"><svg
                                                     class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
                                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -422,8 +422,11 @@
                                                         </li>
                                                     </ul>
                                                 </div>
+
+
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
