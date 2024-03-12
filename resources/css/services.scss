@@ -1940,12 +1940,65 @@ a.modal-close {
   background-color: rgb(45, 183, 66);
 }
 
-.modal-body .owl-item.active {
-  // position: fixed !important;
+// .slick-arrow::after {
+//   content: "";
+//   /* Empty content */
+//   display: block;
+//   /* Display as a block element */
+//   width: 0;
+//   /* Set width to 0 */
+//   height: 0;
+//   /* Set height to 0 */
+//   overflow: hidden;
+//   /* Hide overflow */
+//   visibility: hidden;
+//   /* Hide visibility */
+// }
 
+// .slick-arrow {
+//   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 21 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19.9 40L1.3 20 19.9 0' fill-rule='evenodd' stroke-linecap='round' stroke-linejoin='round'%3E%3C/path%3E%3C/svg%3E");
+//   background-repeat: no-repeat;
+//   background-position: center left;
+//   /* Adjust the position as needed */
+//   padding-left: 30px;
+//   /* Adjust the padding to make room for the SVG */
+// }
+
+.slick-arrow {
+  /* Hide the original text */
+  font-size: 0;
+  color: transparent;
+  text-indent: -9999px;
+  overflow: hidden;
 }
 
+/* Add the SVG icon */
+.slick-arrow {
+  /* Hide the original text */
+  font-size: 0;
+  color: transparent;
+  text-indent: -9999px;
+  overflow: hidden;
 
-.modal-body .item {
-  position: relative !important;
+  /* Add the SVG icon as background image */
+  background-repeat: no-repeat;
+  background-size: contain;
+  /* Ensure the SVG icon fits within the button */
+  padding-left: 30px;
+  /* Adjust padding to make room for the SVG icon */
+}
+
+.slick-prev {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 21 40'%3E%3Cpath d='M19.9 40L1.3 20 19.9 0' fill-rule='evenodd' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  position: absolute;
+  z-index: 222;
+  top: 26%;
+}
+
+.slick-next {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19 40'%3E%3Cpath d='M.1 0l18.6 20L.1 40' fill-rule='evenodd' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  position: absolute;
+  z-index: 222;
+  top: 26%;
+  right: 0px;
 }

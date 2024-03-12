@@ -87,23 +87,32 @@
                     <div v-if="!gallery" class="modal-body quick-view">
                         <div class="row">
                             <div class="col-md-12 rounded">
-                                <div class="room-carousel  owl-carousel owl-theme">
+                                <div class=" ">
 
-                                    <template v-if="room.google_drive_image_links">
-                                        <div class="item" :key="index"
-                                            v-for="(image, index) in room.google_drive_image_links">
-                                            <img :src="image" class="img room-image  img-fluid rounded" />
+                                    <VueSlickCarousel v-bind="settings" :arrows="true" :dots="true">
+                                        <template v-if="room.google_drive_image_links">
+
+                                            <div class="item" :key="index"
+                                                v-for="(image, index) in room.google_drive_image_links">
+                                                <img :src="image" class="img room-image  img-fluid rounded" />
+                                            </div>
+                                        </template>
+                                        <template v-if="room.images.length">
+                                            <div class="item" :key="index" v-for="(image, index) in room.images">
+                                                <img :src="image" class="img room-image  img-fluid rounded" />
+                                            </div>
+                                        </template>
+                                        <div v-if="room.google_drive_video_link" class="item">
+                                            <iframe style="width: 100%;" class="custom-iframe"
+                                                :src="room.google_drive_video_link">
+                                            </iframe>
                                         </div>
-                                    </template>
-                                    <div class="" style="z-index: -1;" :key="image.id" v-for="image in room.images">
-                                        <img :src="image.image" class="img  room-image  img-fluid rounded" />
-                                    </div>
+                                    </VueSlickCarousel>
 
-                                    <div v-if="room.google_drive_video_link" class="item">
-                                        <iframe style="width: 100%;" class="custom-iframe"
-                                            :src="room.google_drive_video_link">
-                                        </iframe>
-                                    </div>
+
+
+
+
                                 </div>
                                 <div class="container p-0">
                                     <h4 class="primary-color">Check availablity for {{ room.name }}</h4>
@@ -473,6 +482,8 @@ import Guests from "../properties/Guests.vue";
 import Apartment from "./Apartment.vue";
 import Date from "./Date.vue";
 import Pickr from "vue-flatpickr-component";
+import VueSlickCarousel from 'vue-slick-carousel'
+import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import axios from "axios";
 
 export default {
@@ -492,6 +503,12 @@ export default {
     },
     data() {
         return {
+            settings: {
+                arrows: true,
+                fade: true,
+                swipe: true,
+                touchMove: true
+            },
             roomsAv: [],
             total: 0,
             aps: 0,
@@ -623,6 +640,7 @@ export default {
         Guests,
         Apartment,
         Date,
+        VueSlickCarousel
     },
 
     methods: {
