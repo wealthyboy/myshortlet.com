@@ -1,5 +1,5 @@
 <template>
-    <div :id="'product-' + index" :class="classType" class="   mb-1 mt-1 pl-1 pb-1 px-0">
+    <div :id="'product-' + index" :class="classType" class=" opacity-0  mb-1 mt-1 pl-1 pb-1 px-0">
         <div class="col-md-12 small aprts position-relative p-0">
             <div class="owl-carousel  owl-theme">
 
@@ -227,6 +227,33 @@ export default {
         };
     },
     mounted() {
+
+        // Example usage with multiple elements and dynamic classes
+        const targetConfigs = [
+
+            { id: 'product-0', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig'] },
+            { id: 'product-1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
+            { id: 'product-2', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+            { id: 'product-3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
+            { id: 'product-4', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig'] },
+            { id: 'product-6', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+            { id: 'product-7', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
+            { id: 'product-8', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+            { id: 'product-9', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+
+        ];
+
+
+        const observerHandler = new IntersectionObserverHandler({ threshold: 0.5 });
+
+        // Get the target elements by ID and associated dynamic classes
+        const targets = targetConfigs.map(config => ({
+            element: document.getElementById(config.id),
+            dynamicClasses: config.dynamicClasses,
+        }));
+
+        // Start observing the target elements
+        observerHandler.observe(targets);
         jQuery(function () {
             $(".room-carousel").owlCarousel({
                 margin: 10,
@@ -299,5 +326,45 @@ export default {
         },
     },
 };
+
+
+class IntersectionObserverHandler {
+    constructor(options) {
+        this.observer = new IntersectionObserver(this.handleIntersection.bind(this), options);
+        this.dynamicClassesMap = new Map();
+    }
+
+    handleIntersection(entries, observer) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const dynamicClasses = this.dynamicClassesMap.get(entry.target);
+                if (dynamicClasses) {
+                    entry.target.classList.remove('opacity-0');
+                    dynamicClasses.forEach(className => entry.target.classList.add(className));
+                    observer.unobserve(entry.target);
+                }
+            }
+        });
+    }
+
+    observe(targets) {
+        targets.forEach(target => {
+            const { element, dynamicClasses } = target;
+
+            // Check if the element exists in the DOM before observing
+            if (element && document.body.contains(element)) {
+                this.observer.observe(element);
+                this.dynamicClassesMap.set(element, dynamicClasses);
+            }
+        });
+    }
+
+    unobserve(targets) {
+        targets.forEach(target => {
+            this.observer.unobserve(target.element);
+            this.dynamicClassesMap.delete(target.element);
+        });
+    }
+}
 </script>
   

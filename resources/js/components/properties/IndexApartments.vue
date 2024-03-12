@@ -829,6 +829,8 @@ export default {
                     }
 
 
+
+
                     //document.getElementById("full-bg").remove();
                     jQuery(function () {
                         $(".owl-carousel").owlCarousel({
@@ -1255,6 +1257,45 @@ export default {
         },
     },
 };
+
+class IntersectionObserverHandler {
+    constructor(options) {
+        this.observer = new IntersectionObserver(this.handleIntersection.bind(this), options);
+        this.dynamicClassesMap = new Map();
+    }
+
+    handleIntersection(entries, observer) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const dynamicClasses = this.dynamicClassesMap.get(entry.target);
+                if (dynamicClasses) {
+                    entry.target.classList.remove('opacity-0');
+                    dynamicClasses.forEach(className => entry.target.classList.add(className));
+                    observer.unobserve(entry.target);
+                }
+            }
+        });
+    }
+
+    observe(targets) {
+        targets.forEach(target => {
+            const { element, dynamicClasses } = target;
+
+            // Check if the element exists in the DOM before observing
+            if (element && document.body.contains(element)) {
+                this.observer.observe(element);
+                this.dynamicClassesMap.set(element, dynamicClasses);
+            }
+        });
+    }
+
+    unobserve(targets) {
+        targets.forEach(target => {
+            this.observer.unobserve(target.element);
+            this.dynamicClassesMap.delete(target.element);
+        });
+    }
+}
 </script>
 
 <style scoped>
