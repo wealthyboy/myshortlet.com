@@ -1823,12 +1823,14 @@ svg.uitk-icon-medium {
 @media (min-width: 768px) {
   .custom-iframe {
     height: 400px;
+    width: 100% !important;
   }
 }
 
 @media (max-width: 767px) {
   .custom-iframe {
     height: 239px;
+    width: 100% !important;
   }
 
   .owl-theme .owl-dots {
@@ -2002,7 +2004,7 @@ a.modal-close {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 21 40'%3E%3Cpath d='M19.9 40L1.3 20 19.9 0' fill-rule='evenodd' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   position: absolute;
   z-index: 222;
-  top: 22%;
+  top: 50%;
   background-position: 11px !important;
 }
 
@@ -2010,10 +2012,10 @@ a.modal-close {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19 40'%3E%3Cpath d='M.1 0l18.6 20L.1 40' fill-rule='evenodd' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   position: absolute;
   z-index: 222;
-  top: 22%;
+  top: 50%;
   right: 0px;
 }
 
 .slick-dots {
-  display: none;
+  display: none !important;
 }
