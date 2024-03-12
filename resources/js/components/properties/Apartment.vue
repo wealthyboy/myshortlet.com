@@ -232,7 +232,7 @@ export default {
         const targetConfigs = [
 
             { id: 'product-0', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig'] },
-            { id: 'product-1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
+            { id: 'product-1', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
             { id: 'product-2', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
             { id: 'product-3', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInRightBig'] },
             { id: 'product-4', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInLeftBig'] },
