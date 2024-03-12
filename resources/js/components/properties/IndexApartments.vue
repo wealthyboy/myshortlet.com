@@ -97,11 +97,7 @@
                                                 <img :src="image" class="img room-image  img-fluid rounded" />
                                             </div>
                                         </template>
-                                        <template v-if="room.images.length">
-                                            <div class="item" :key="index" v-for="(image, index) in room.images">
-                                                <img :src="image" class="img room-image  img-fluid rounded" />
-                                            </div>
-                                        </template>
+
                                         <div v-if="room.google_drive_video_link" class="item">
                                             <iframe style="width: 100%;" class="custom-iframe"
                                                 :src="room.google_drive_video_link">

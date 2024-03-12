@@ -1974,18 +1974,29 @@ a.modal-close {
 
 /* Add the SVG icon */
 .slick-arrow {
-  /* Hide the original text */
   font-size: 0;
   color: transparent;
   text-indent: -9999px;
   overflow: hidden;
-
-  /* Add the SVG icon as background image */
   background-repeat: no-repeat;
   background-size: contain;
-  /* Ensure the SVG icon fits within the button */
   padding-left: 30px;
-  /* Adjust padding to make room for the SVG icon */
+  box-shadow: 0px 2px 0.25rem 0px rgba(0, 11, 38, 0.2) !important;
+  width: 3rem !important;
+  height: 3rem !important;
+  min-height: 2rem !important;
+  background-color: #fff !important;
+  color: #342c27 !important;
+  border-radius: 50% !important;
+  position: absolute;
+  top: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  background-position: 15px;
+  background-size: 25px 25px;
+  border: none;
 }
 
 .slick-prev {
