@@ -598,13 +598,17 @@ export default {
 
         const parentElement = document.getElementById('sm-main-banner');
 
-        // Get all child elements with the class d-none
-        const hiddenDivs = parentElement.querySelectorAll('.d-none');
+        if (parentElement) {
+            // Get all child elements with the class d-none
+            const hiddenDivs = parentElement.querySelectorAll('.d-none');
 
-        // Remove each hidden div
-        hiddenDivs.forEach(div => {
-            div.classList.remove('d-none');
-        });
+            // Remove each hidden div
+            hiddenDivs.forEach(div => {
+                div.classList.remove('d-none');
+            });
+        }
+
+
 
         if (!this.filter) {
             //  this.type = 'col-md-3'
@@ -811,8 +815,6 @@ export default {
                             this.apartmentIsChecked = true
                         }
                     }
-
-
 
 
                     //document.getElementById("full-bg").remove();
