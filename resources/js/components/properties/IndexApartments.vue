@@ -572,36 +572,7 @@ export default {
         }
 
         jQuery(function () {
-            $(".custom-iframe").on("touchstart", function (event) {
-                // Record the initial touch position
-                var startX = event.touches[0].clientX;
 
-                // Add touch move event listener
-                $(this).on("touchmove", function (event) {
-                    // Calculate the distance moved
-                    var moveX = event.touches[0].clientX - startX;
-
-                    // If the distance moved is greater than a threshold, trigger carousel swipe
-                    if (Math.abs(moveX) > 50) { // Adjust threshold as needed
-                        if (moveX > 0) {
-                            // Swipe right
-                            $(".owl-carousel").trigger("prev.owl.carousel");
-                        } else {
-                            // Swipe left
-                            $(".owl-carousel").trigger("next.owl.carousel");
-                        }
-
-                        // Remove touchmove event listener to prevent multiple triggers
-                        $(this).off("touchmove");
-                    }
-                });
-
-                // Add touchend event listener to clean up
-                $(this).on("touchend", function () {
-                    // Remove touchmove event listener
-                    $(this).off("touchmove");
-                });
-            });
             $(".owl-carousel").owlCarousel({
                 margin: 0,
                 dots: true,
@@ -623,6 +594,16 @@ export default {
                     },
                 },
             });
+        });
+
+        const parentElement = document.getElementById('sm-main-banner');
+
+        // Get all child elements with the class d-none
+        const hiddenDivs = parentElement.querySelectorAll('.d-none');
+
+        // Remove each hidden div
+        hiddenDivs.forEach(div => {
+            div.classList.remove('d-none');
         });
 
         if (!this.filter) {
