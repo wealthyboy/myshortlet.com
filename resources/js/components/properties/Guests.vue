@@ -94,7 +94,7 @@ export default {
   data() {
     return {
       guests: 0,
-      rooms: null || 1,
+      rooms: null || 2,
       children: null || 0,
       adults: null || 1,
     };
