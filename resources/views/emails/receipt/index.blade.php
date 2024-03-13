@@ -346,8 +346,8 @@
                                                       <td class="esFrMb" width="30"></td>
                                                       <td style="line-height:1px;" align="center"><a href="/" target="_blank" style="text-decoration: none;">
 
-                                                            <img class="logo-light" src="https://avenuemontaigne.ng/images/logo/avem-logo.png" style="display: none; max-width:100px; height: 30px; margin-top: 37px;display: block;text-decoration: none;border: none;" alt="Avm" vspace="0" hspace="0" border="0" align="top">
-                                                            <img class="logo-dark" src="https://avenuemontaigne.ng/images/logo/avnmont-white-04.png" style="display: none; max-width:100px; height: 30px; margin-top: 37px;display: block;text-decoration: none;border: none;" alt="Avm" vspace="0" hspace="0" border="0" align="top">
+                                                            <img class="logo-light" src="https://avenuemontaigne.ng/images/logo/avem-logo.png" style="display: none; max-width:100px; height: 51px; margin-top: 37px;display: block;text-decoration: none;border: none;" alt="Avm" vspace="0" hspace="0" border="0" align="top">
+                                                            <img class="logo-dark" src="https://avenuemontaigne.ng/images/logo/avnmont-white-04.png" style="display: none; max-width:100px; height: 51px; margin-top: 37px;display: block;text-decoration: none;border: none;" alt="Avm" vspace="0" hspace="0" border="0" align="top">
 
                                                          </a></td>
                                                       <td class="esFrMb" width="30"></td>
