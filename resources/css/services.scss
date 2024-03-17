@@ -1007,6 +1007,10 @@ button.owl-next {
   background-color: rgba(0, 0, 0, 0.9) !important;
 }
 
+.bg-black-2 {
+  background-color: rgba(0, 0, 0, .4) !important;
+}
+
 .opacity-50 {
   opacity: 0.5 !important;
 }
@@ -1158,6 +1162,10 @@ button.owl-next {
 
 .navbar.navbar-transparent .navbar-toggler .navbar-toggler-icon {
   background-color: #ffffff;
+}
+
+.navbar-toggler {
+  z-index: 8888;
 }
 
 #bodyClick {
