@@ -121,7 +121,7 @@
                      <div class="primary-color ">STAY IN THE HEART OF LAGOS</div>
                      <h2 class=" bold-2">Welcome to Avenue Montiagne</h2>
                      <p class="mt-4  text-left text-black light-bold">
-                        Our apartments offer amazing amenities, stylish design, and a perfect location for living the lagos dream. With your choice of spacious, meticulously-designed 3-bedroom apartments, youll be sure to find the ideal fit for your needs and lifestyle.
+                        Our apartments offer amazing amenities, stylish design, and a perfect location for living the lagos dream. With your choice of spacious, meticulously-designed 3-bedroom apartments, you'll be sure to find the ideal fit for your needs and lifestyle.
                      </p>
                      <div class=" buttons">
                         <a href="/apartments" class="btn btn-primary rounded bold-2">
