@@ -117,7 +117,7 @@
                                         class="form-group">
                                         <input type="hidden" name="_token" :value="$root.token" />
                                         <input type="hidden" name="property_id" :value="property.id" />
-                                        <div>
+                                        <div class="mr-lg-4">
                                             <div class="row quick-view p-3">
                                                 <div
                                                     class="form-group  p-0  form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
