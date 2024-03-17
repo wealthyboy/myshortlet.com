@@ -89,7 +89,7 @@
                                 <use xlink:href="#sleeps-icon"></use>
                             </svg>
                         </span>
-                        <span class="svg-icon-text">{{ room.guests }} Guests {{ showReserve }}</span>
+                        <span class="svg-icon-text">{{ room.guests }} Guests</span>
                     </div>
                 </div>
 
