@@ -129,7 +129,7 @@
             <price-details :voucher="voucher" :bookings="bookings" :property="property" :booking_details="booking_details"
               :amount="amount" :sub_total="bookingSubTotal" />
 
-            <div class="cart-discount mb-0 p-0 mt-3 col-sm-12">
+            <div class="cart-discount mb-0 p-3 mt-3 col-sm-12">
               <h4>Apply Discount Code</h4>
               <div class="row g-0">
                 <div class="col-8"><input v-model="coupon" type="text" class="form-control b" placeholder="Enter  code"
