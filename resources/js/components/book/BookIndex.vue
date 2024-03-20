@@ -124,8 +124,28 @@
 
           <div class="card-body pt-0">
 
-            <price-details :bookings="bookings" :property="property" :booking_details="booking_details" :amount="amount"
-              :sub_total="bookingSubTotal" />
+
+
+            <price-details :voucher="voucher" :bookings="bookings" :property="property" :booking_details="booking_details"
+              :amount="amount" :sub_total="bookingSubTotal" />
+
+            <div class="cart-discount mb-0 p-0 mt-3 col-sm-12">
+              <h4>Apply Discount Code</h4>
+              <div class="row g-0">
+                <div class="col-8"><input v-model="coupon" type="text" class="form-control b" placeholder="Enter  code"
+                    required=""></div>
+                <div class="col-4"><button @click.prevent="applyCoupon"
+                    class="btn btn-sm w-100 rounded-0 coupon-button bg-main bold fs-3 text-white" type="submit">
+                    <span v-if="submiting" class="spinner-border spinner-border-sm" role="status"
+                      aria-hidden="true"></span>
+                    Apply </button></div>
+              </div><!---->
+
+              <!-- End .input-group -->
+              <div v-if="coupon_error" class="text- text-danger">
+                {{ coupon_error }}
+              </div>
+            </div>
             <div class="primary-color p-3">
               By clicking on the button below, I acknowledge that I have read
               and understand the rules and regulations of this property
@@ -144,8 +164,8 @@
       </form>
     </div>
     <div v-if="!paymentIsComplete" class="col-md-5 d-none d-lg-block">
-      <price-details :bookings="bookings" :property="property" :booking_details="booking_details" :amount="amount"
-        :sub_total="bookingSubTotal" />
+      <price-details :voucher="voucher" :bookings="bookings" :property="property" :booking_details="booking_details"
+        :amount="amount" :sub_total="bookingSubTotal" />
     </div>
   </div>
 </template>
@@ -556,14 +576,17 @@ export default {
         phone_number: this.form.phone_number,
         services: this.form.services,
         currency: this.property.currency,
-        total:
-          context.bookingPropertyServicesTotal +
+        total: context.voucher.length ? context.voucher[0].sub_total : context.bookingPropertyServicesTotal +
           context.bookingServicesTotal +
-          context.bookingTotal,
+          context.bookingTotal
+        ,
         booking_ids: context.booking_details.booking_ids,
         property_id: context.property.id,
         coupon: this.coupon_code,
         property_services: this.form.property_services,
+        original_amount: context.bookingPropertyServicesTotal +
+          context.bookingServicesTotal +
+          context.bookingTotal
       }
 
 

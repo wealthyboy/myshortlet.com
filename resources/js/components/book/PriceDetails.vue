@@ -78,14 +78,31 @@
         <p class="text-heading bold-3 mb-0">
           Total Price:
         </p>
-        <span :data-total="bookingTotal + bookingPropertyServicesTotal + bookingServicesTotal
-          " class=" bold-3 text-heading total-price price">{{ property.currency
-  }}{{
-  (bookingTotal +
-    bookingPropertyServicesTotal +
-    bookingServicesTotal)
-  | priceFormat
-}}</span>
+        <span :data-total="bookingTotal + bookingPropertyServicesTotal + bookingServicesTotal"
+          class=" bold-3 text-heading total-price price">
+
+
+          <template v-if="voucher.length">
+            <span class="text-danger fs-3">
+              <del> {{ property.currency }}{{ (bookingTotal + bookingPropertyServicesTotal + bookingServicesTotal) |
+                priceFormat
+              }} </del></span>
+            {{ property.currency }}{{ voucher[0].sub_total | priceFormat }}
+
+            <p class="fs-5">{{ voucher[0].percent }}</p>
+          </template>
+          <template v-else>
+            {{ property.currency }}{{ (bookingTotal + bookingPropertyServicesTotal + bookingServicesTotal) | priceFormat
+            }}
+
+          </template>
+        </span>
+
+
+
+
+
+
       </div>
     </div>
   </div>
@@ -94,7 +111,7 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  props: ["booking_details", "sub_total", "bookings", "amount", "property"],
+  props: ["booking_details", "voucher", "sub_total", "bookings", "amount", "property"],
   data() {
     return {};
   },

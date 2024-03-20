@@ -132,6 +132,8 @@ class BookingController extends Controller
 
 		$cart_total  = $request->total;
 
+		$symbol = optional(optional($this->settings)->currency)->symbol;
+
 		if (!$cart_total) {
 			$error['error'] = 'We cannot process your voucher';
 			return response()->json($error, 422);
@@ -170,7 +172,7 @@ class BookingController extends Controller
 
 
 		if ($cart_total < $coupon->from_value) {
-			$error['error'] = 'You can only use this coupon when your purchase is above  ' . $this->settings->currency->symbol . $coupon->from_value;
+			$error['error'] = 'You can only use this coupon when your purchase is above  ' . $symbol . $coupon->from_value;
 			return response()->json($error, 422);
 		}
 
@@ -181,7 +183,7 @@ class BookingController extends Controller
 		}
 		//get all the infomation 
 		$total = [];
-		$total['currency'] = $this->settings->currency->symbol;
+		$total['currency'] = $symbol;
 
 		if (!empty($coupon->from_value) && $cart_total >= $coupon->from_value) {
 			$new_total = ($coupon->amount * $cart_total) / 100;

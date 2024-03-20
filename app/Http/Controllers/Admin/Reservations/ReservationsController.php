@@ -36,15 +36,11 @@ class ReservationsController extends Controller
 			$userReservation->save();
 			//CancelledNotification::not
 			//Notification::notify();
-
 		}
-
-
 
 		//UserReservation::truncate();
 		//Reservation::truncate();
 		$reservations = UserReservation::orderBy('created_at', 'desc')->paginate(50);
-
 
 		//dd($reservations);
 		return view('admin.reservations.index', compact('reservations'));
@@ -64,10 +60,9 @@ class ReservationsController extends Controller
 	public function show($id)
 	{
 		$user_reservation = UserReservation::find($id);
-		$sub_total = $user_reservation->total;
+		$sub_total = $user_reservation->original_amount;
 		$statuses = static::order_status();
 		//dd($user_reservation->reservations);
-
 		return view('admin.reservations.show', compact('statuses', 'user_reservation', 'sub_total'));
 	}
 

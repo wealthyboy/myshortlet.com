@@ -186,7 +186,7 @@
                      <tfoot>
                         <tr>
                            <td colspan="6" class="text-right">Sub-Total</td>
-                           <td class="text-right"><small>{{ $reservation->currency  ?? '₦' }}</small>{{ number_format($sub_total)  }}</td>
+                           <td class="text-right"><small>{{ $reservation->currency  ?? '₦' }}</small>{{ number_format($user_reservation->original_amount)  }}</td>
                         </tr>
                         <tr>
                            <td colspan="6" class="text-right">Coupon</td>

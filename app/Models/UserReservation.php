@@ -13,6 +13,8 @@ class UserReservation extends Model
     protected $dates = ['checkin', 'checkout'];
 
 
+
+
     public function registered_user()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -50,6 +52,9 @@ class UserReservation extends Model
             return $this->belongsTo(GuestUser::class, 'guest_user_id');
         }
     }
+
+
+
 
 
     public function get_total()

@@ -62,6 +62,7 @@ class WebHookController extends Controller
             $user_reservation->property_id = $input['property_id'];
             $user_reservation->coupon =  $input['coupon'];
             $user_reservation->total = $input['total'];
+            $user_reservation->original_amount = $input['original_amount'];
             // $user_reservation->checkin = optional($booking)->checkin;
             // $user_reservation->checkout = optional($booking)->checkout;
             $user_reservation->ip = $request->ip();
@@ -102,7 +103,7 @@ class WebHookController extends Controller
                             $extras = new Extra;
                             if ($booking->apartment_id == $key) {
                                 $attribute = ApartmentAttribute::where('attribute_id', $attribute_id)->first();
-                                $extras->apartment_id  = $key;
+                                $extras->apartment_id = $key;
                                 $extras->property_id = $request->property_id;
                                 $extras->quantity = $qty;
                                 $extras->user_id = optional($request->user())->id;
