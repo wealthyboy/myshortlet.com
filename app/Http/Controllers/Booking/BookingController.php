@@ -47,6 +47,8 @@ class BookingController extends Controller
 		$ids = $bookings->pluck('id')->toArray();
 		$ids = $ids;
 		$booking = $bookings[0];
+
+		dd($booking);
 		$nights = [];
 		$phone_codes = Helper::phoneCodes();
 		$days = $booking->checkin->diffInDays($booking->checkout);
