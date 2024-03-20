@@ -135,7 +135,8 @@
                 <div class="col-8"><input v-model="coupon" type="text" class="form-control b" placeholder="Enter  code"
                     required=""></div>
                 <div class="col-4"><button @click.prevent="applyCoupon"
-                    class="btn btn-sm w-100 rounded-0 coupon-button bg-main bold fs-3 text-white" type="submit">
+                    class="btn btn-sm w-100 rounded-0 coupon-button btn-primary bg-main bold fs-3 text-white"
+                    type="submit">
                     <span v-if="submiting" class="spinner-border spinner-border-sm" role="status"
                       aria-hidden="true"></span>
                     Apply </button></div>
