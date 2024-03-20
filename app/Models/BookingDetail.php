@@ -56,22 +56,24 @@ class BookingDetail extends Model
   {
     if (null == $bookings) return null;
 
-    dd($bookings->count());
 
     foreach ($bookings as $booking) {
-      if ($booking &&  null === optional($booking)->apartment) {
-        $booking->delete();
-      }
 
-      if (null !== $booking->apartment && $booking->apartment->quantity  == 0) {
+      if (null !== $booking) {
+        if (null === optional($booking)->apartment) {
+          $booking->delete();
+        }
+
+        if (null !== $booking->apartment && $booking->apartment->quantity  == 0) {
+          $booking->update([
+            'quantity' => 0,
+          ]);
+        }
+
         $booking->update([
-          'quantity' => 0,
+          'user_id' => optional(auth()->user())->id
         ]);
       }
-
-      $booking->update([
-        'user_id' => optional(auth()->user())->id
-      ]);
     }
   }
 
