@@ -56,7 +56,7 @@ class BookingDetail extends Model
   {
     if (null == $bookings) return null;
 
-    dd($bookings);
+    dd($bookings->count());
 
     foreach ($bookings as $booking) {
       if ($booking &&  null === optional($booking)->apartment) {
