@@ -56,7 +56,7 @@ class BookingDetail extends Model
   {
     if (null == $bookings) return null;
     foreach ($bookings as $booking) {
-      if (null == $booking->apartment) {
+      if (null === optional($booking)->apartment) {
         $booking->delete();
       }
 
