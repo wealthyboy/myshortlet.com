@@ -26,6 +26,7 @@ class Apartment extends Model
         'converted_price',
         'percentage_off',
         'image_m',
+        'image_g',
         'image_tn',
         'guests',
         'display_price',
@@ -222,5 +223,11 @@ class Apartment extends Model
     {
         $image = basename(optional(optional($this->images)->first())->image);
         return asset('images/' . $this->folder . '/' . 'm' . '/' . $image);
+    }
+
+
+    public function getImageGAttribute()
+    {
+        return $this->image_m ?? $this->google_drive_image_link[0]
     }
 }

@@ -666,7 +666,10 @@
                                                                      <table width="100%" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
                                                                         <tbody>
                                                                            <tr>
-                                                                              <td align="right" class="container-image"><img class="p-img" src="{{ optional($reservation->apartment)->image_m }}" width="100%" height="auto" alt="locl" style="width: 100%; max-width: 150px; display: block; border: 0px;"></td>
+                                                                              <td align="right" class="container-image">
+                                                                                 <img class="p-img" src="{{ optional($reservation->apartment)->image_g }}" width="100%" height="auto" alt="locl" style="width: 100%; max-width: 150px; display: block; border: 0px;">
+
+                                                                              </td>
                                                                            </tr>
                                                                         </tbody>
                                                                      </table>
@@ -784,7 +787,7 @@
                                                                                  <tbody>
                                                                                     <tr>
                                                                                        <td class="text" style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em">
-                                                                                          Extras
+                                                                                          <!-- Extras -->
                                                                                        </td>
                                                                                     </tr>
                                                                                     <tr>
@@ -793,7 +796,7 @@
                                                                                     @foreach($user_reservation->extras as $extra)
                                                                                     <tr>
                                                                                        <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
-                                                                                          {{ optional($extra->attribute)->name }} - {{ $user_reservation->currency }}{{ $extra->price }}
+                                                                                          {{-- optional($extra->attribute)->name --}} - {{-- $user_reservation->currency --}}{{-- $extra->price --}}
                                                                                        </td>
                                                                                     </tr>
                                                                                     @endforeach

@@ -143,7 +143,7 @@
                         <tr>
                            <td>
                               <div class="img-container">
-                                 <img src="{{ optional($reservation->apartment)->image_m }}" alt="...">
+                                 <img src="{{ optional($reservation->apartment)->image_g }}" alt="...">
                               </div>
                               <div class="form-group label-floating">
                                  <input type="hidden" class="p-v-id" value="{{ $reservation->id }}" />
