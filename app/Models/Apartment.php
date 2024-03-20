@@ -228,6 +228,6 @@ class Apartment extends Model
 
     public function getImageGAttribute()
     {
-        return $this->image_m ?? $this->google_drive_image_link[0]
+        return $this->image_m ?? $this->google_drive_image_link[0];
     }
 }
