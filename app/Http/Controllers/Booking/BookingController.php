@@ -48,7 +48,10 @@ class BookingController extends Controller
 		$ids = $ids;
 		$booking = $bookings[0];
 
-		dd($booking);
+
+		if (!$booking) {
+			return redirect()->to('/');
+		}
 		$nights = [];
 		$phone_codes = Helper::phoneCodes();
 		$days = $booking->checkin->diffInDays($booking->checkout);
