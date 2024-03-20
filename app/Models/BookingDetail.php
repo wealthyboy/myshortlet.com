@@ -55,6 +55,9 @@ class BookingDetail extends Model
   public  static function sync($bookings)
   {
     if (null == $bookings) return null;
+
+    dd($bookings);
+
     foreach ($bookings as $booking) {
       if ($booking &&  null === optional($booking)->apartment) {
         $booking->delete();
