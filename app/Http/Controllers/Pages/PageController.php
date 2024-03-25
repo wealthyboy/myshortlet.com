@@ -151,15 +151,20 @@ class PageController extends Controller
                 'https://drive.google.com/file/d/1EUI6dfkxfcyvdbKL_y0aZfT61sGXk6r7/view?usp=drive_link',
                 'https://drive.google.com/file/d/1ZIlkG4pBMD8FycEtq0XLZ1jIllXA71qA/view?usp=drive_link',
                 'https://drive.google.com/file/d/1hw7i_IpvKuALzlJcJDm4Dcb5fyV4ExsN/view?usp=drive_link',
-                'https://drive.google.com/file/d/1objnfLxXO6ui1XncszCPhF9skQMbnM8t/view?usp=drive_link',
                 'https://drive.google.com/file/d/1xe9lnx6RfmSpQSp_r9tSOWwV1RNmMBxY/view?usp=drive_link',
-                'https://drive.google.com/file/d/1V1SRVA1JQEUaFHwCsqTpvQkKr1d6vOAI/view?usp=drive_link',
                 'https://drive.google.com/file/d/1TC5cOTsxA5h7YnjY0NJkvvCOVPrzTxGY/view?usp=drive_link',
                 'https://drive.google.com/file/d/1nSFx6fjbtbhtugr6L3h00TdlqOgHlJ7q/view?usp=drive_link',
                 'https://drive.google.com/file/d/1SberdfVKwB_MCQnO1zOsEiFCJ6ZFcI_2/view?usp=drive_link',
                 'https://drive.google.com/file/d/1iVvVYIaeYqu8heqyUgSB1wkEWHettHEv/view?usp=drive_link',
                 'https://drive.google.com/file/d/1sZqQUvUmj-hs0rh8u_MoMHb6ldMtvhjP/view?usp=drive_link',
-                'https://drive.google.com/file/d/1dG4yq-xF7X4A8LchRBmymYNaygiIg5tg/view?usp=drive_link'
+                'https://drive.google.com/file/d/1dG4yq-xF7X4A8LchRBmymYNaygiIg5tg/view?usp=drive_link',
+                'https://drive.google.com/file/d/17Q7VVil2pSVfCUMIGjpPd8_KRxvTbq3G/view?usp=drive_link',
+                'https://drive.google.com/file/d/1iFlKwt-LtCc11KkjPndzUiiXlMG-LvUL/view?usp=drive_link',
+                'https://drive.google.com/file/d/1EUI6dfkxfcyvdbKL_y0aZfT61sGXk6r7/view?usp=drive_link',
+                'https://drive.google.com/file/d/1Rr5JVlFUg62HHYpBokrfORs0A9eRBXAQ/view?usp=drive_link',
+                'https://drive.google.com/file/d/1bOCz16X5_GjfRblDoRJzoi_R3cl1rFS2/view?usp=drive_link',
+                'https://drive.google.com/file/d/1Wd0OcGVZSVEEGxciOqy352RaKBE_LOrQ/view?usp=drive_link',
+                'https://drive.google.com/file/d/1jr3i7vnw6vEOXxdbytxQXAbPBWh-Cftz/view?usp=drive_link',
 
             ],
             'galleries' => [

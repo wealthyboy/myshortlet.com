@@ -134,8 +134,7 @@ export default {
 
             this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
 
-            this.form.children = document.querySelector("#children").value;
-            this.form.adults = document.querySelector("#adults").value;
+            this.form.persons = document.querySelector("#persons").value;
             this.form.rooms = document.querySelector("#rooms").value;
 
             if (
@@ -164,6 +163,9 @@ export default {
                 return;
             }
 
+            var now = new Date().getTime(); // Current timestamp
+
+
             // Sample object to be saved
             const myObject = {
                 rooms: this.form.rooms,
@@ -171,7 +173,8 @@ export default {
                 checkin: this.form.checkin,
                 checkout: this.form.checkout,
                 children: this.form.children,
-                adults: this.form.adults,
+                persons: this.form.persons,
+                expiry: now + 3600000
             };
 
             // Convert the object to a JSON string
@@ -179,6 +182,7 @@ export default {
 
             // Save the JSON string in localStorage with a specific key
             const storageKey = 'searchParams';
+
             localStorage.setItem(storageKey, jsonString);
 
             // Retrieve the object from localStorage

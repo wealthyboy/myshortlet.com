@@ -4377,36 +4377,53 @@ jQuery(function () {
   //   }
   // }
 });
-let types = {
-  adults: 1,
-  children: 1,
-  rooms: 1,
-};
+// let types = {
+//   adults: 1,
+//   children: 1,
+//   rooms: 2,
+// };
 
-$(document).on("click", ".add-subtract", function (e) {
-  let self = $(this);
-  let n = self.data("name");
-  if (self.data("math") == "add") {
-    let counter = types[n]++;
-    $("input[name=" + n + "]").val(counter);
-    $("." + n).text(counter);
-    if (counter >= 1) {
-      $(".min-" + n).attr("disabled", false);
-    }
-  } else {
-    types[n]--;
-    if (self.data("math") != "add") {
-      let e = $("input[name=" + n + "]").val();
-      let m = parseInt(e) - 1;
-      $("input[name=" + n + "]").val(m);
-      $("." + n).text(m);
-      if (m < 1) {
-        $(".min-" + n).attr("disabled", true);
-      }
-      return;
-    }
-  }
-});
+// $(document).on("click", ".add-subtract", function (e) {
+//   let self = $(this);
+//   let n = self.data("name");
+//   if (self.data("math") == "add") {
+//     let counter = types[n]++;
+//     $("input[name=" + n + "]").val(counter);
+//     $("." + n).text(counter);
+
+//     if (self.data("name") == "rooms") {
+//       if (counter == 3) {
+//         self.attr("disabled", true);
+//       }
+//       return;
+//     }
+
+//     console.log(counter)
+
+//     if (counter >= 1) {
+//       $(".min-" + n).attr("disabled", false);
+//     }
+//   } else {
+//     types[n]--;
+//     if (self.data("math") != "add") {
+//       let e = $("input[name=" + n + "]").val();
+//       let m = parseInt(e) - 1;
+//       $("input[name=" + n + "]").val(m);
+//       $("." + n).text(m);
+
+//       if (self.data("name") == "rooms") {
+//         if (m == 2) {
+//           $(".min-" + n).attr("disabled", true);
+//         }
+//         return;
+//       }
+//       if (m === 1) {
+//         $(".min-" + n).attr("disabled", true);
+//       }
+//       return;
+//     }
+//   }
+// });
 
 $("body").on("click", function (evt) {
   if ($(evt.target).closest("#people-number").length) return;

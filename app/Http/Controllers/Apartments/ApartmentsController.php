@@ -43,7 +43,7 @@ class ApartmentsController extends Controller
             'room_facilities',
             'other' => 'other'
         ];
-
+        // dd($request->all());
         $str = new  Str;
         $date = $request->check_in_checkout;
         $property_is_not_available = null;
@@ -54,9 +54,8 @@ class ApartmentsController extends Controller
         $property_is_not_available = null;
         $data = [];
         $attributes = null;
-        $data['max_children'] = $request->children ?? 1;
-        $data['max_adults'] = $request->adults ?? 1;
-        $data['rooms'] = $request->rooms ?? 1;
+        $data['persons'] = $request->persons ?? 1;
+        $data['rooms'] = $request->rooms ?? 2;
         $startDate = $date['start_date'];
         $endDate = $date['end_date'];
         $properties = null;
@@ -77,8 +76,7 @@ class ApartmentsController extends Controller
                         ->where('checkout', '>', $startDate);
                 });
             })
-                ->where('apartments.max_adults', '>=',  $data['max_adults'])
-                ->where('apartments.max_children', '>=', $data['max_children'])
+                ->where('apartments.max_adults', '>=',  $data['persons'])
                 ->where('apartments.no_of_rooms', '>=', $data['rooms']);
         }
 
@@ -140,8 +138,6 @@ class ApartmentsController extends Controller
             ->latest()->paginate(3);
         $properties->appends(request()->all());
 
-
-
         if ($request->ajax()) {
             return PropertyLists::collection(
                 $properties
@@ -186,8 +182,7 @@ class ApartmentsController extends Controller
         $property_is_not_available = null;
         $data = [];
         $attributes = null;
-        $data['max_children'] = $request->children ?? 1;
-        $data['max_adults'] = $request->adults ?? 1;
+        $data['persons'] = $request->adults ?? 1;
         $data['rooms'] = $request->rooms ?? 1;
         $properties = null;
 
@@ -204,8 +199,7 @@ class ApartmentsController extends Controller
 
         if ($request->check_in_checkout) {
             $query->whereHas('apartments', function ($query) use ($data, $date) {
-                $query->where('apartments.max_adults', '>=',  $data['max_adults']);
-                $query->where('apartments.max_children', '>=', $data['max_children']);
+                $query->where('apartments.max_adults', '>=',  $data['persons']);
                 $query->where('apartments.no_of_rooms', '>=', $data['rooms']);
             })
                 ->select('reservations.id as reservation_id', 'reservations.quantity as reservation_qty', 'properties.*')
@@ -296,8 +290,7 @@ class ApartmentsController extends Controller
 
         if ($request->check_in_checkout) {
             $query->whereHas('apartments', function ($query) use ($data, $date) {
-                $query->where('apartments.max_adults', '>=',  $data['max_adults']);
-                $query->where('apartments.max_children', '>=', $data['max_children']);
+                $query->where('apartments.max_adults', '>=',  $data['persons']);
                 $query->where('apartments.no_of_rooms', '>=', $data['rooms']);
             })
                 ->select('reservations.id as reservation_id', 'reservations.quantity as reservation_qty', 'properties.*')
@@ -382,8 +375,7 @@ class ApartmentsController extends Controller
                             ->where('checkout', '>', $startDate);
                     });
                 })
-                ->where('apartments.max_adults', '>=',  $data['max_adults'])
-                ->where('apartments.max_children', '>=', $data['max_children'])
+                ->where('apartments.max_adults', '>=',  $data['persons'])
                 ->where('apartments.no_of_rooms', '>=', $data['rooms'])
                 ->get();
 
@@ -410,16 +402,12 @@ class ApartmentsController extends Controller
         $property_is_not_available = null;
         $data = [];
         $attributes = null;
-        $data['location']     =  'lagos';
-        $data['max_children'] = $request->children ?? 1;
-        $data['max_adults']   = $request->adults ?? 1;
+        $data['location'] = 'lagos';
+        $data['max_adults'] = $request->persons ?? 1;
         $data['rooms'] = $request->rooms ?? 1;
-        $cities  = Property::where('location_full_name', 'like', '%' . $data['location'] . '%')->get();
+        $cities = Property::where('location_full_name', 'like', '%' . $data['location'] . '%')->get();
         $properties = null;
-        $location   = null;
-
-        //return $data;
-
+        $location = null;
 
         if ($cities->count() !== 0) {
 
@@ -438,8 +426,7 @@ class ApartmentsController extends Controller
             $properties = Property::whereHas('locations', function ($query) use ($data) {
                 $query->where('locations.name', 'like', '%' . $data['location'] . '%');
             })->whereHas('apartments', function ($query) use ($data) {
-                $query->where('apartments.max_adults', '>=',  $data['max_adults']);
-                $query->where('apartments.max_children', '>=', $data['max_children']);
+                $query->where('apartments.max_adults', '>=',  $data['persons']);
                 $query->where('apartments.no_of_rooms', '>=', $data['rooms']);
             })
                 ->select('reservations.id as reservation_id', 'reservations.quantity as reservation_qty', 'properties.*')

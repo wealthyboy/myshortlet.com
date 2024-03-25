@@ -96,17 +96,12 @@
 
             <div class="col-md-2">
                 <div class="form-group label-floating ">
-                    <label class="control-label">Max Adults</label>
+                    <label class="control-label">Total Guests</label>
                     <input name="edit_room_max_adults[{{ $apartment->id }}]" required="true" value="{{ $apartment->max_adults }}" class="form-control   variation" type="number">
                 </div>
             </div>
 
-            <div class="col-md-2">
-                <div class="form-group label-floating ">
-                    <label class="control-label">Max Children</label>
-                    <input name="edit_room_max_children[{{ $apartment->id }}]" required="true" value="{{ $apartment->max_children }}" class="form-control   variation" type="number">
-                </div>
-            </div>
+
 
             <div class="col-md-2">
                 <div class="form-group label-floating ">

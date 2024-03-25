@@ -36,13 +36,11 @@ export default {
         dateFormat: "Y-m-d",
         showMonths: 1,
         disableMobile: "true",
-
-
       },
     };
   },
   mounted() {
-
+    console.log(this.checkForDate())
     if (this.check_in_date === 1) {
       this.check_in_checkout = this.checkForDate() && typeof this.checkForDate().checkin !== 'undefined' ? this.checkForDate().checkin : null
     } else {
@@ -64,11 +62,7 @@ export default {
   },
   methods: {
     handleDateChange(pickerId) {
-
-
-      console.log(`Date selected in ${pickerId}:`, this.check_in_checkout);
       this.$emit("dateSelected", this.check_in_checkout);
-
     },
     dateSelected() {
       // const flatpickrDaySpans = document.querySelectorAll('span.flatpickr-day');
@@ -83,7 +77,6 @@ export default {
     isCheckinEqualsToCheckout(checkinDate, checkoutDate) {
       checkinDate = new Date(checkinDate);
       checkoutDate = new Date(checkoutDate);
-
       return checkinDate === checkoutDate;
     },
 
@@ -91,10 +84,19 @@ export default {
       const retrievedJsonString = localStorage.getItem('searchParams');
       // Check if the retrieved JSON string is not null
       if (retrievedJsonString !== null) {
+
         // Convert the JSON string back to an object
         const retrievedObject = JSON.parse(retrievedJsonString);
 
-        return retrievedObject;
+
+        if (new Date().getTime() < retrievedObject.expiry) {
+          return retrievedObject;
+        } else {
+          // Remove expired data from storage
+          localStorage.removeItem('searchParams');
+          return null
+        }
+
       } else {
         return null
       }

@@ -78,17 +78,17 @@
 
             <div class="col-md-2">
                 <div class="form-group label-floating is-empty">
-                    <label class="control-label">Max Adults</label>
+                    <label class="control-label">Total Guests</label>
                     <input name="room_max_adults[{{ $counter }}]" required="true" value="" class="form-control   variation" type="number">
                 </div>
             </div>
 
-            <div class="col-md-2">
+            <!-- <div class="col-md-2">
                 <div class="form-group label-floating is-empty">
                     <label class="control-label">Max Children</label>
                     <input name="room_max_children[{{ $counter }}]" required="true" value="" class="form-control   variation" type="number">
                 </div>
-            </div>
+            </div> -->
 
             <div class="col-md-2">
                 <div class="form-group label-floating is-empty">
