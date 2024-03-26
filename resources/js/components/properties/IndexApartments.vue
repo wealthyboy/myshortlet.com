@@ -251,8 +251,10 @@
                                             <div class="">
                                                 <div class="">
                                                     <ul class="" role="list">
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">{{ apartment_facility.name
+                                                        <li class="" :key="apartment_facility.id"
+                                                            v-for="apartment_facility in room.apartment_facilities"
+                                                            role="listitem"><span aria-hidden="true" class=""></span><span
+                                                                class="">{{ apartment_facility.name
                                                                 }}</span></li>
 
 
