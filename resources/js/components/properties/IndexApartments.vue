@@ -235,9 +235,8 @@
                                         Apartment
                                         amenities</h3>
                                     <div class="row" style="">
-                                        <div :key="apartment_facility.id"
-                                            v-for="apartment_facility in room.apartment_facilities"
-                                            style="margin-bottom: 9rem;" class="col-md-6">
+                                        <div v-for="(objects, parentName) in apartment_facilities" :key="parentName"
+                                            style="margin-bottom: 5rem;" class="col-md-6">
                                             <div class="d-flex align-items-center">
                                                 <svg class="" aria-hidden="true" viewBox="0 0 24 24"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -246,16 +245,17 @@
                                                         d="M20 13V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.4 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.51l1.25-1.25a.828.828 0 0 1 1.41.59V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2ZM4 19h16v-4H4v4Z"
                                                         clip-rule="evenodd"></path>
                                                 </svg>
-                                                <h4 class="ml-2">{{ apartment_facility.parent.name }}</h4>
+                                                <h4 class="ml-2">{{ parentName }}</h4>
                                             </div>
                                             <div class="">
                                                 <div class="">
                                                     <ul class="" role="list">
-                                                        <li class="" :key="apartment_facility.id"
-                                                            v-for="apartment_facility in room.apartment_facilities"
-                                                            role="listitem"><span aria-hidden="true" class=""></span><span
-                                                                class="">{{ apartment_facility.name
-                                                                }}</span></li>
+                                                        <li class="" v-for="obj in objects" :key="obj.id" role="listitem">
+                                                            <span aria-hidden="true" class=""></span><span class=""> {{
+                                                                obj.name }}
+
+                                                            </span>
+                                                        </li>
 
 
                                                     </ul>
@@ -361,6 +361,7 @@ export default {
             isDateNeedsToToOpen: false,
             singleApartmentIsChecked: false,
             singleApartmentIsAvailable: false,
+            apartment_facilities: null,
 
             error_msg: null,
             showModal: false,
@@ -486,6 +487,8 @@ export default {
         showRoom(room) {
             this.showModal = !this.showModal;
             this.room = room
+
+            this.groupData(room)
             jQuery(function () {
                 // Add touch event listeners to centered images
                 $(".custom-iframe").on("touchstart", function (event) {
@@ -604,6 +607,16 @@ export default {
 
             // Return both the key and value
             return { key, value };
+        },
+        groupData(room) {
+            this.apartment_facilities = room.apartment_facilities.reduce((acc, obj) => {
+                const parentName = obj.parent.name;
+                if (!acc[parentName]) {
+                    acc[parentName] = [];
+                }
+                acc[parentName].push(obj);
+                return acc;
+            }, {});
         },
         isValidDateRange(dateRangeString) {
             // Split the date range string into two dates
