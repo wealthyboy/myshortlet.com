@@ -235,7 +235,9 @@
                                         Apartment
                                         amenities</h3>
                                     <div class="row" style="">
-                                        <div class="col-md-6">
+                                        <div :key="apartment_facility.id"
+                                            v-for="apartment_facility in room.apartment_facilities"
+                                            style="margin-bottom: 9rem;" class="col-md-6">
                                             <div class="d-flex align-items-center">
                                                 <svg class="" aria-hidden="true" viewBox="0 0 24 24"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -244,188 +246,21 @@
                                                         d="M20 13V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.4 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.51l1.25-1.25a.828.828 0 0 1 1.41.59V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2ZM4 19h16v-4H4v4Z"
                                                         clip-rule="evenodd"></path>
                                                 </svg>
-                                                <h4 class="ml-2">Bathroom</h4>
+                                                <h4 class="ml-2">{{ apartment_facility.parent.name }}</h4>
                                             </div>
                                             <div class="">
                                                 <div class="">
                                                     <ul class="" role="list">
                                                         <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Bathrobes</span></li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Eco-friendly
-                                                                toiletries</span>
-                                                        </li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Free toiletries</span></li>
+                                                                class=""></span><span class="">{{ apartment_facility.name
+                                                                }}</span></li>
 
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Private
-                                                                bathroom</span></li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Shower</span></li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=" "></span><span class="">Slippers</span></li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Toothbrush and toothpaste not
-                                                                available</span></li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Towels</span></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="d-flex align-items-center"><svg class="" aria-hidden="true"
-                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <path fill-rule="evenodd"
-                                                        d="M11 7h8a4 4 0 0 1 4 4v9h-2v-3H3v3H1V5h2v9h8V7zm-1 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                <h4 class="ml-2">Bedroom</h4>
-                                            </div>
-                                            <div class="">
-                                                <div class="">
-                                                    <ul class="" role="list">
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Bed sheets</span></li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Blackout
-                                                                drapes/curtains</span>
-                                                        </li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span
-                                                                class="uitk-typelist-item-child">Climate-controlled air
-                                                                conditioning</span></li>
-
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Pillowtop bed</span></li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Premium bedding</span></li>
-                                                        <li class="" role="listitem">
-                                                            <span aria-hidden="true" class=""></span><span
-                                                                class="">Rollaway/extra beds not available</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="d-flex align-items-center"><svg
-                                                    class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
-                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z">
-                                                    </path>
-                                                </svg>
-                                                <h4 class="ml-2">Entertainment</h4>
-                                            </div>
-                                            <div class="">
-                                                <div class="">
-                                                    <ul class="" role="list">
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Large flat-screen
-                                                                TV</span>
-                                                        </li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="uitk-typelist-item-child">
-                                                                Cable channels</span></li>
-
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="uitk-typelist-item-child"> Pay
-                                                                movies</span></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="d-flex align-items-center"><svg
-                                                    class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
-                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <path fill-rule="evenodd"
-                                                        d="M20.15 10.15c-1.59 1.59-3.74 2.09-5.27 1.38L13.41 13l6.88 6.88-1.41 1.41L12 14.41l-6.89 6.87-1.41-1.41 9.76-9.76c-.71-1.53-.21-3.68 1.38-5.27 1.92-1.91 4.66-2.27 6.12-.81 1.47 1.47 1.1 4.21-.81 6.12zm-9.22.36L8.1 13.34 3.91 9.16a4 4 0 0 1 0-5.66l7.02 7.01z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                <h4 class="ml-2">Food and drink
-                                                </h4>
-                                            </div>
-                                            <div class="">
-                                                <div class="">
-                                                    <ul class="" role="list">
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">24-hour room service</span>
-                                                        </li>
 
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="d-flex align-items-center"><svg
-                                                    class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
-                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <path fill-rule="evenodd"
-                                                        d="m1 9 2 2a12.73 12.73 0 0 1 18 0l2-2A15.57 15.57 0 0 0 1 9zm8 8 3 3 3-3a4.24 4.24 0 0 0-6 0zm-2-2-2-2a9.91 9.91 0 0 1 14 0l-2 2a7.07 7.07 0 0 0-10 0z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                <h4 class="ml-2">Internet</h4>
-                                            </div>
-                                            <div class="">
-                                                <div class="u">
-                                                    <ul class="o" role="list">
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">WiFi</span></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div style="margin-bottom: 5rem;" class="col-md-6">
-                                            <div class="d-flex align-items-center"><svg
-                                                    class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
-                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z">
-                                                    </path>
-                                                </svg>
-                                                <h4 class="ml-2">More</h4>
-                                            </div>
-                                            <div class="">
-                                                <div class="">
-                                                    <ul class="" role="list">
-                                                        <li class="" role="listitem">
-                                                            <span aria-hidden="true" class="">
-                                                            </span>
-                                                            <span class="">Connecting rooms
-                                                                available</span>
-                                                        </li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Daily housekeeping</span>
-                                                        </li>
 
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="d">Iron/ironing board</span>
-                                                        </li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">LED light bulbs</span></li>
-                                                        <li class="" role="listitem">
-                                                            <span aria-hidden="true" class=""></span><span
-                                                                class="">Phone</span>
-                                                        </li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Recycling bin</span></li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Safe</span></li>
-                                                        <li class="" role="listitem"><span aria-hidden="true"
-                                                                class=""></span><span class="">Wardrobe or closet</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
 
                                     </div>
                                 </div>
@@ -577,6 +412,7 @@ export default {
                 margin: 0,
                 dots: true,
                 nav: true,
+                loop: true,
                 navText: [
                     '<div class="nav-btn prev-slide d-flex justify-content-center align-items-center mr-1"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
                     '<div class="nav-btn next-slide d-flex justify-content-center align-items-center ml-1"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',

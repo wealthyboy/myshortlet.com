@@ -450,7 +450,6 @@ class PropertiesController extends Controller
         ]);
 
 
-        // dd($request->all());
 
         $property = $this->property($request, $id, true);
 
@@ -508,6 +507,9 @@ class PropertiesController extends Controller
                         }
                     }
                 }
+
+                // dd($request->apartment_facilities_id[$room_id]);
+
 
 
                 if (isset($request->apartment_facilities_id[$room_id])) {

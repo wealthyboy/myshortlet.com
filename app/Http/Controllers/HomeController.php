@@ -159,6 +159,8 @@ class HomeController
         $days = 0;
         $filter = false;
 
+        // dd($apartments);
+
         $saved =  auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];
         if (!optional($site_status)->make_live) {
             return view(
