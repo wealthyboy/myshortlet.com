@@ -68,20 +68,13 @@ class CurrencyByIp
 
                 try {
                     $position = Location::get(request()->ip());
-                    dd($position);
                     $country = Currency::where('country', $position->countryName)->first();
                     if (null == $country) {
-                        if (in_array($position->countryName, array_values(Helper::EU()))) {
-                            $country = Currency::where('country', 'Europe')->first();
-                            $rate = ['rate' => optional($country->rate)->rate, 'country' => $country->name, 'symbol' => $country->symbol];
+                        if ($position->countryName === 'Nigeria') {
+                            $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
                         } else {
-                            $country = Currency::where('country', 'United States')->first();
                             $rate = ['rate' => optional($country->rate)->rate, 'country' => $country->name, 'symbol' => $country->symbol];
                         }
-                    } elseif (null !== $country && $country->country == optional($settings->currency)->country) {
-                        $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
-                    } else {
-                        $rate = ['rate' => optional($country->rate)->rate, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
                     }
                     $request->session()->put('rate', json_encode(collect($rate)));
                     $request->session()->put('userLocation',  json_encode($position));
