@@ -714,8 +714,7 @@ export default {
         },
         checkAvailabity: function () {
             this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
-            this.form.children = document.querySelector("#children").value;
-            this.form.adults = document.querySelector("#adults").value;
+            this.form.persons = document.querySelector("#persons").value;
             this.form.rooms = document.querySelector("#rooms").value;
             this.apartmentIsChecked = true
 
@@ -724,10 +723,10 @@ export default {
             const myObject = {
                 rooms: this.form.rooms,
                 check_in_checkout: this.form.check_in_checkout,
-                children: this.form.children,
-                adults: this.form.adults,
                 checkin: this.form.checkin,
                 checkout: this.form.checkout,
+                persons: this.form.persons,
+                expiry: now + 3600000
 
             };
 
