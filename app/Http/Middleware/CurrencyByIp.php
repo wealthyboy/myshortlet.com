@@ -38,6 +38,9 @@ class CurrencyByIp
                 return $next($request);
             }
 
+            dd(session('rate'));
+
+
 
             if ($request->session()->has('userLocation')) {
                 $user_location =  json_decode(session('userLocation'));
