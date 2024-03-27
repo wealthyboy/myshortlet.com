@@ -76,8 +76,10 @@ class CurrencyByIp
                             $rate = ['rate' => optional($country->rate)->rate, 'country' => $country->name, 'symbol' => $country->symbol];
                         }
                     }
+
                     $request->session()->put('rate', json_encode(collect($rate)));
                     $request->session()->put('userLocation',  json_encode($position));
+                    dd(session('rate'));
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
