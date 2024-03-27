@@ -34,6 +34,9 @@ class CurrencyByIp
 
         if ($settings->allow_multi_currency) {
 
+            $request->session()->forget(['userLocation', 'rate']);
+
+
             if ($request->session()->has('switch')) {
                 return $next($request);
             }
@@ -70,7 +73,7 @@ class CurrencyByIp
                     $position = Location::get(request()->ip());
                     $country = Currency::where('country', $position->countryName)->first();
                     $rate = null;
-                    if (null == $country) {
+                    if (null !== $country) {
                         if ($position->countryName === 'Nigeria') {
                             $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
                         } else {
