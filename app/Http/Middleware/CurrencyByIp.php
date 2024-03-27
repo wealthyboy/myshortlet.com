@@ -74,16 +74,15 @@ class CurrencyByIp
                     $country = Currency::where('country', $position->countryName)->first();
                     $rate = null;
 
-                    if (null == $country) {
-                        if ($position->countryName == 'Nigeria') {
+                    if (null !== $country) {
+                        if ($position->countryName === 'Nigeria') {
                             $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
-                            dd(true);
                         } else {
-
                             $rate = ['rate' => optional($country->rate)->rate, 'country' => $country->name, 'symbol' => $country->symbol];
-                            dd(false);
                         }
                     }
+
+
 
                     $request->session()->put('rate', json_encode(collect($rate)));
                     $request->session()->put('userLocation',  json_encode($position));
