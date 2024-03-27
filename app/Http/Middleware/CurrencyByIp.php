@@ -82,9 +82,11 @@ class CurrencyByIp
                     $rate = null;
                     if ($position->countryName === 'Nigeria') {
                         $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
+                        dd($rate, 1);
                     } else {
                         $country = Currency::where('country', 'United States')->first();
                         $rate = ['rate' => optional($country->rate)->rate, 'country' => $country->name, 'symbol' => $country->symbol];
+                        dd($rate, 2);
                     }
 
                     dd($rate, 3);
