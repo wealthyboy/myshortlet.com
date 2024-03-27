@@ -72,7 +72,6 @@ class CurrencyByIp
                 try {
                     $position = Location::get(request()->ip());
                     $country = Currency::where('country', $position->countryName)->first();
-                    dd($country);
 
                     if (null == $country) {
                         if ($position->countryName === 'Nigeria') {
@@ -82,9 +81,11 @@ class CurrencyByIp
                         }
                     }
 
+                    dd(session('rate'));
+
+
                     $request->session()->put('rate', json_encode(collect($rate)));
                     $request->session()->put('userLocation',  json_encode($position));
-                    dd(session('rate'));
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
