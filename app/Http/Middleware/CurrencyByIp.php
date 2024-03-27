@@ -7,7 +7,7 @@ use App\Models\Currency;
 use App\Models\CurrencyRate;
 use App\Models\SystemSetting;
 use App\Http\Helper;
-use Stevebauman\Location\Location;
+use Stevebauman\Location\Facades\Location;
 
 
 
@@ -27,9 +27,10 @@ class CurrencyByIp
         $rate = [];
         $position = '';
 
-        $position = (new Location())->get(request()->ip());
+        $position = Location::get(request()->ip());
 
         dd($position);
+
 
 
         $settings = SystemSetting::first();
