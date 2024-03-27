@@ -38,9 +38,6 @@ class CurrencyByIp
                 return $next($request);
             }
 
-            $request->session()->forget(['userLocation', 'rate']);
-
-
 
             if ($request->session()->has('userLocation')) {
                 $user_location =  json_decode(session('userLocation'));
@@ -73,20 +70,18 @@ class CurrencyByIp
                     $position = Location::get(request()->ip());
                     $country = Currency::where('country', $position->countryName)->first();
                     $rate = null;
-
-                    if (null !== $country) {
+                    if (null == $country) {
                         if ($position->countryName === 'Nigeria') {
                             $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
                         } else {
+                            $country = Currency::where('country', 'United States')->first();
                             $rate = ['rate' => optional($country->rate)->rate, 'country' => $country->name, 'symbol' => $country->symbol];
                         }
                     }
 
-
-
+                    dd($rate);
                     $request->session()->put('rate', json_encode(collect($rate)));
                     $request->session()->put('userLocation',  json_encode($position));
-                    dd(session('rate'));
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
