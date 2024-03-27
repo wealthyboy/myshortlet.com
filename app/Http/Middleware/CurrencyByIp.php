@@ -75,11 +75,13 @@ class CurrencyByIp
                     $rate = null;
 
                     if (null == $country) {
-                        if ($position->countryName === 'Nigeria') {
+                        if ($position->countryName == 'Nigeria') {
                             $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
                             dd($rate);
                         } else {
+
                             $rate = ['rate' => optional($country->rate)->rate, 'country' => $country->name, 'symbol' => $country->symbol];
+                            dd($rate);
                         }
                     }
 
