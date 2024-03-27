@@ -78,7 +78,7 @@ class CurrencyByIp
                 try {
                     $position = Location::get(request()->ip());
                     $country = Currency::where('country', $position->countryName)->first();
-                    dd($country);
+                    dd($position);
 
                     $rate = null;
                     if (null !== $country) {
