@@ -42,13 +42,13 @@ class CurrencyByIp
                 return $next($request);
             }
 
-            dd(true, 1);
 
 
 
 
 
             if ($request->session()->has('userLocation')) {
+                dd(true, 1);
 
                 $user_location =  json_decode(session('userLocation'));
                 try {
