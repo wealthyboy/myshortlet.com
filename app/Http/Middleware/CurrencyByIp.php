@@ -69,6 +69,8 @@ class CurrencyByIp
                 try {
                     $position = Location::get(request()->ip());
                     $country = Currency::where('country', $position->countryName)->first();
+                    dd($country);
+
                     if (null == $country) {
                         if ($position->countryName === 'Nigeria') {
                             $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
