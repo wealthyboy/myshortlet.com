@@ -33,7 +33,6 @@ class CurrencyByIp
         $settings = SystemSetting::first();
 
         if ($settings->allow_multi_currency) {
-            dd(true, 1);
 
 
             $request->session()->forget(['userLocation', 'rate']);
@@ -42,6 +41,9 @@ class CurrencyByIp
             if ($request->session()->has('switch')) {
                 return $next($request);
             }
+
+            dd(true, 1);
+
 
 
 
