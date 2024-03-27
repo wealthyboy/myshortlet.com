@@ -80,7 +80,7 @@ class CurrencyByIp
                     $country = Currency::where('country', $position->countryName)->first();
 
                     $rate = null;
-                    if (null !== $country && $position->countryName === 'Nigeria') {
+                    if ($position->countryName === 'Nigeria') {
                         $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
                     } else {
                         $country = Currency::where('country', 'United States')->first();
