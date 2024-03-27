@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'driver' => Stevebauman\Location\Drivers\MaxMind::class,
+    'driver' => Stevebauman\Location\Drivers\IpInfo::class,
 
     /*
     |--------------------------------------------------------------------------
