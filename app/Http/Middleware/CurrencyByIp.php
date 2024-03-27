@@ -27,6 +27,10 @@ class CurrencyByIp
         $rate = [];
         $position = '';
 
+        $position = (new Location())->get(request()->ip());
+
+        dd($position);
+
 
         $settings = SystemSetting::first();
 
