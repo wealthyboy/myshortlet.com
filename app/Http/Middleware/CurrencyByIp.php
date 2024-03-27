@@ -38,7 +38,7 @@ class CurrencyByIp
                 return $next($request);
             }
 
-            dd(session('rate'));
+            $request->session()->forget(['userLocation', 'rate']);
 
 
 
