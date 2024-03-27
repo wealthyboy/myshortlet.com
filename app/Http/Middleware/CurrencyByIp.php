@@ -81,7 +81,7 @@ class CurrencyByIp
                         }
                     }
 
-                    dd(session('rate'));
+                    dd($rate);
 
 
                     $request->session()->put('rate', json_encode(collect($rate)));
