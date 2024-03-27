@@ -25,16 +25,15 @@ class CurrencyByIp
     {
 
         $rate = [];
+
         $position = '';
 
         $position = Location::get(request()->ip());
 
-
-
-
         $settings = SystemSetting::first();
 
         if ($settings->allow_multi_currency) {
+
             if ($request->session()->has('switch')) {
                 return $next($request);
             }
@@ -67,7 +66,6 @@ class CurrencyByIp
             } else {
                 try {
                     $position = (new Location())->get(request()->ip());
-                    dd($position);
                     $country = Currency::where('country', $position->countryName)->first();
                     if (null == $country) {
                         if (in_array($position->countryName, array_values(Helper::EU()))) {
