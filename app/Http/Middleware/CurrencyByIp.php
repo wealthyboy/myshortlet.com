@@ -78,6 +78,8 @@ class CurrencyByIp
                 try {
                     $position = Location::get(request()->ip());
                     $country = Currency::where('country', $position->countryName)->first();
+                    dd(Currency::all());
+
                     dd($position);
 
                     $rate = null;
