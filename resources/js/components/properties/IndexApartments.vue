@@ -717,8 +717,7 @@ export default {
             this.form.persons = document.querySelector("#persons").value;
             this.form.rooms = document.querySelector("#rooms").value;
             this.apartmentIsChecked = true
-
-
+            var now = new window.Date().getTime(); // Current timestamp
             // Sample object to be saved
             const myObject = {
                 rooms: this.form.rooms,
