@@ -38,9 +38,7 @@ class CurrencyByIp
 
         if ($settings->allow_multi_currency) {
 
-            if ($request->session()->has('switch') && empty($query)) {
-                return $next($request);
-            }
+
 
             if (isset($query['currency']) && $query['currency'] === 'USD') {
                 $rate = ['rate' => optional($usa->rate)->rate, 'country' => $usa->name, 'code' => $nigeria->iso_code3, 'symbol' => $usa->symbol];
@@ -58,6 +56,10 @@ class CurrencyByIp
 
 
             if ($request->session()->has('userLocation')) {
+
+                if ($request->session()->has('switch') && empty($query)) {
+                    return $next($request);
+                }
 
                 $user_location = json_decode(session('userLocation'));
                 try {
