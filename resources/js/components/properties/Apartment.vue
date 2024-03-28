@@ -1,5 +1,5 @@
 <template>
-    <div :id="'product-' + index" :class="classType" class="  mb-1 mt-1 pl-1 pb-1 px-0">
+    <div :id="'product-' + index" :class="classType" class="opacity-0  mb-1 mt-1 pl-1 pb-1 px-0">
         <div class="col-md-12 small aprts position-relative p-0">
             <div class="owl-carousel  owl-theme">
 
