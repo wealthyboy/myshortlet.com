@@ -40,6 +40,8 @@ class CurrencyByIp
 
             $request->session()->put('switch', 'NGN');
             if ($request->session()->has('switch') && empty($query)) {
+                dd(true);
+
                 return $next($request);
             }
 
@@ -60,7 +62,7 @@ class CurrencyByIp
 
             if ($request->session()->has('userLocation')) {
 
-                $user_location =  json_decode(session('userLocation'));
+                $user_location = json_decode(session('userLocation'));
                 try {
                     dd(true);
                     if ($user_location && $user_location->ip !== request()->ip()) {
