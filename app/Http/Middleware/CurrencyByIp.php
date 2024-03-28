@@ -29,22 +29,33 @@ class CurrencyByIp
         $position = '';
 
         $position = Location::get(request()->ip());
-
         $settings = SystemSetting::first();
+        $nigeria = Currency::where('country', 'Nigeria')->first();
+        $usa = Currency::where('country', 'United States')->first();
+        $position = Location::get(request()->ip());
+        $query = request()->all();
+
 
         if ($settings->allow_multi_currency) {
 
-
-            $request->session()->forget(['userLocation', 'rate']);
-
-
-            if ($request->session()->has('switch')) {
+            $request->session()->put('switch', 'NGN');
+            if ($request->session()->has('switch') && empty($query)) {
                 return $next($request);
             }
 
+            if ($query['currency'] === 'USD') {
+                $rate = ['rate' => optional($usa->rate)->rate, 'country' => $usa->name, 'code' => $nigeria->iso_code3, 'symbol' => $usa->symbol];
+                $request->session()->put('rate', json_encode(collect($rate)));
+                $request->session()->put('switch', 'USD');
+                return $next($request);
+            }
 
-
-
+            if ($query['currency'] === 'NGN') {
+                $rate = ['rate' => 1, 'country' => 'Nigeria', 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
+                $request->session()->put('rate', json_encode(collect($rate)));
+                $request->session()->put('switch', 'NGN');
+                return $next($request);
+            }
 
 
             if ($request->session()->has('userLocation')) {
@@ -52,15 +63,13 @@ class CurrencyByIp
                 $user_location =  json_decode(session('userLocation'));
                 try {
                     if ($user_location && $user_location->ip !== request()->ip()) {
-                        $position = Location::get(request()->ip());
                         $country = Currency::where('country', $position->countryName)->first();
 
                         $rate = null;
                         if ($position->countryName === 'Nigeria') {
-                            $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
+                            $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                         } else {
-                            $country = Currency::where('country', 'United States')->first();
-                            $rate = ['rate' => optional($country->rate)->rate, 'country' => $country->name, 'symbol' => $country->symbol];
+                            $rate = ['rate' => optional($usa->rate)->rate, 'country' => $usa->name, 'symbol' => $usa->symbol];
                         }
 
                         $request->session()->put('rate', json_encode(collect($rate)));
@@ -72,9 +81,7 @@ class CurrencyByIp
             } else {
 
                 try {
-                    $position = Location::get(request()->ip());
                     $country = Currency::where('country', $position->countryName)->first();
-
                     $rate = null;
                     if ($position->countryName === 'Nigeria') {
                         $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];

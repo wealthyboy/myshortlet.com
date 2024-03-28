@@ -28,6 +28,21 @@
             </a>
             @endauth
 
+
+
+            @if(isset($show_book) && !$show_book)
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                    ({{ session('switch')}}) Currency
+                </button>
+                <div class="dropdown-menu bg-white">
+                    <a class="dropdown-item my-1 px-0 border-bottom " href="?currency=USD">(USD) United States</a>
+                    <a class="dropdown-item my-1 px-0 border-bottom " href="?currency=NGN">(NGR) Nigerian Naira</a>
+                </div>
+            </div>
+            @endif
+
+
             @if(isset($show_book) && $show_book)
             <a href="/apartments" class="align-self-center mr-3  d-none d-lg-block font-weight-bold btn-primary bold-3 btn text-white  ">
                 Book Now
