@@ -67,9 +67,9 @@ class ApartmentsController extends Controller
             // Check if apartment_id is present in the request
             if ($request->has('apartment_id')) {
                 $apartmentId = $request->apartment_id;
-
                 $query->where('id', $apartmentId); // Filter by the provided apartment ID
             }
+
             $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
                 $query->where(function ($q) use ($startDate, $endDate) {
                     $q->where('checkin', '<', $endDate)
