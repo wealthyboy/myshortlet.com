@@ -43,14 +43,14 @@ class CurrencyByIp
                 return $next($request);
             }
 
-            if ($query['currency'] === 'USD') {
+            if (isset($query['currency']) && $query['currency'] === 'USD') {
                 $rate = ['rate' => optional($usa->rate)->rate, 'country' => $usa->name, 'code' => $nigeria->iso_code3, 'symbol' => $usa->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'USD');
                 return $next($request);
             }
 
-            if ($query['currency'] === 'NGN') {
+            if (isset($query['currency']) && $query['currency'] === 'NGN') {
                 $rate = ['rate' => 1, 'country' => 'Nigeria', 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'NGN');
