@@ -68,8 +68,10 @@ class CurrencyByIp
                         $rate = null;
                         if ($position->countryName === 'Nigeria') {
                             $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
+                            $request->session()->put('switch', 'NGN');
                         } else {
                             $rate = ['rate' => optional($usa->rate)->rate, 'country' => $usa->name, 'symbol' => $usa->symbol];
+                            $request->session()->put('switch', 'USD');
                         }
 
                         $request->session()->put('rate', json_encode(collect($rate)));
@@ -85,9 +87,11 @@ class CurrencyByIp
                     $rate = null;
                     if ($position->countryName === 'Nigeria') {
                         $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
+                        $request->session()->put('switch', 'NGN');
                     } else {
                         $country = Currency::where('country', 'United States')->first();
                         $rate = ['rate' => optional($country->rate)->rate, 'country' => $country->name, 'symbol' => $country->symbol];
+                        $request->session()->put('switch', 'USD');
                     }
 
                     $request->session()->put('rate', json_encode(collect($rate)));
