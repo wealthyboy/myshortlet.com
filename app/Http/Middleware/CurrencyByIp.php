@@ -35,13 +35,13 @@ class CurrencyByIp
         $position = Location::get(request()->ip());
         $query = request()->all();
 
+        $request->session()->forget(['switch', 'rate']);
+
+
 
         if ($settings->allow_multi_currency) {
 
-            $request->session()->put('switch', 'NGN');
             if ($request->session()->has('switch') && empty($query)) {
-                dd(true);
-
                 return $next($request);
             }
 
@@ -64,7 +64,6 @@ class CurrencyByIp
 
                 $user_location = json_decode(session('userLocation'));
                 try {
-                    dd(true);
                     if ($user_location && $user_location->ip !== request()->ip()) {
                         $country = Currency::where('country', $position->countryName)->first();
                         $rate = null;
