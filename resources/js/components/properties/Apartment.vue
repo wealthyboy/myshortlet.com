@@ -240,6 +240,15 @@ export default {
             { id: 'product-6', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
             { id: 'product-7', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
             { id: 'product-8', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+            { id: 'product-9', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+            { id: 'product-10', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+            { id: 'product-11', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+            { id: 'product-12', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+            { id: 'product-13', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+            { id: 'product-14', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+            { id: 'product-15', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+            { id: 'product-16', dynamicClasses: ['opacity-1', 'animate__animated', 'animate__fadeInUp'] },
+
 
         ];
 
