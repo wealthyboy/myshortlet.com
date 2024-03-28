@@ -35,9 +35,6 @@ class CurrencyByIp
         $position = Location::get(request()->ip());
         $query = request()->all();
 
-        $request->session()->forget(['switch', 'rate']);
-
-
 
         if ($settings->allow_multi_currency) {
 
