@@ -99,7 +99,8 @@ class CurrencyByIp
                 }
             }
         } else {
-            $request->session()->forget(['switch', 'rate']);
+            $request->session()->put('switch', 'NGN');
+            $request->session()->forget(['rate']);
         }
 
 
