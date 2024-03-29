@@ -335,8 +335,9 @@ class PropertiesController extends Controller
 
     public function syncAttributes($request, $apartment, $key = null)
     {
+        $apartment->attributes()->truncate();
         if (is_array($request->bed_count) && !empty($request->bed_count)) {
-            dd($request->all());
+            //dd($request->bed_count);
             $bed_count = array_filter($request->bed_count);
             $beds = [];
             if (!empty($bed_count)) {
@@ -348,10 +349,10 @@ class PropertiesController extends Controller
                 }
             }
 
-            dd($beds);
+            // dd($beds);
 
             if (in_array($key, array_keys($beds))) {
-                $apartment->attributes()->sync($beds[$key]);
+                $apartment->attributes()->syncWithoutDetaching($beds[$key]);
             }
 
 
