@@ -336,11 +336,7 @@ class PropertiesController extends Controller
     public function syncAttributes($request, $apartment, $key = null)
     {
         //  $apartment->attributes()->truncate();
-        $apartment_facilities = ApartmentAttribute::all();
 
-        foreach ($apartment_facilities as  $apartment_facilitie) {
-            $apartment_facilitie->delete();
-        }
 
         if (is_array($request->bed_count) && !empty($request->bed_count)) {
             //dd($request->bed_count);
@@ -456,7 +452,11 @@ class PropertiesController extends Controller
             "description" => "required"
         ]);
 
+        $apartment_facilities = ApartmentAttribute::all();
 
+        foreach ($apartment_facilities as  $apartment_facilitie) {
+            $apartment_facilitie->delete();
+        }
 
         $property = $this->property($request, $id, true);
 
