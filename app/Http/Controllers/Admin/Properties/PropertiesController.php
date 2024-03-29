@@ -335,7 +335,7 @@ class PropertiesController extends Controller
 
     public function syncAttributes($request, $apartment, $key = null)
     {
-        $apartment->attributes()->truncate();
+        //  $apartment->attributes()->truncate();
         if (is_array($request->bed_count) && !empty($request->bed_count)) {
             //dd($request->bed_count);
             $bed_count = array_filter($request->bed_count);
