@@ -71,10 +71,9 @@ class PropertiesController extends Controller
     public function create(Request $request)
     {
         User::canTakeAction(2);
-        $counter    = rand(1, 500);
-        $locations  = Location::parents()->get();
+        $counter = rand(1, 500);
+        $locations = Location::parents()->get();
         $categories = Category::parents()->get();
-
         $attributes = Attribute::parents()->whereIn('type', $this->types)->get()->groupBy('type');
         $house_attributes = null;
         if ($request->mode == 'house') {
@@ -348,7 +347,7 @@ class PropertiesController extends Controller
                 }
             }
 
-            // dd($beds);
+            dd($beds);
 
             if (in_array($key, array_keys($beds))) {
                 $apartment->attributes()->syncWithoutDetaching($beds[$key]);
