@@ -31,7 +31,7 @@
 
 
             @if(isset($show_book) && !$show_book)
-            <div class="dropdown">
+            <div id="currencyDropdown" class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                     ({{ session('switch') !== null ?  session('switch') : 'NGN' }}) Currency
                 </button>

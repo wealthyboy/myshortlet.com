@@ -31,6 +31,13 @@
       @yield('inline-scripts');
    </script>
 
+   <script>
+      document.getElementById('currencyDropdown').addEventListener('click', function() {
+         this.classList.add('show');
+         this.querySelector('.dropdown-menu').classList.add('show');
+      });
+   </script>
+
 </body>
 
 </html>
