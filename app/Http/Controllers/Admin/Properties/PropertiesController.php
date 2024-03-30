@@ -455,12 +455,14 @@ class PropertiesController extends Controller
 
         $apartment_facilities = ApartmentAttribute::all();
 
-        dd($apartment_facilities);
 
 
         foreach ($apartment_facilities as  $apartment_facilitie) {
             $apartment_facilitie->delete();
         }
+
+        dd($apartment_facilities);
+
 
         $property = $this->property($request, $id, true);
 
