@@ -236,7 +236,7 @@
                                         amenities</h3>
                                     <div class="row" style="">
                                         <div v-for="(objects, parentName) in apartment_facilities" :key="parentName"
-                                            style="margin-bottom: 5rem;" class="col-md-6">
+                                            style="margin-bottom: 2rem;" class="col-md-6">
                                             <div class="d-flex align-items-center">
                                                 <svg class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
                                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -253,11 +253,8 @@
                                                         <li class="" v-for="obj in objects" :key="obj.id" role="listitem">
                                                             <span aria-hidden="true" class=""></span><span class=""> {{
                                                                 obj.name }}
-
                                                             </span>
                                                         </li>
-
-
                                                     </ul>
                                                 </div>
                                             </div>
@@ -362,7 +359,6 @@ export default {
             singleApartmentIsChecked: false,
             singleApartmentIsAvailable: false,
             apartment_facilities: null,
-
             error_msg: null,
             showModal: false,
             apartmentIsAvailable: false,
@@ -617,6 +613,8 @@ export default {
                 acc[parentName].push(obj);
                 return acc;
             }, {});
+
+            console.log(this.apartment_facilities)
         },
         isValidDateRange(dateRangeString) {
             // Split the date range string into two dates
