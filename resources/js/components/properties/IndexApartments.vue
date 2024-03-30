@@ -236,7 +236,7 @@
                                         amenities</h3>
                                     <div class="row" style="">
                                         <div v-for="(objects, parentName) in apartment_facilities" :key="parentName"
-                                            style="margin-bottom: 4rem;" class="col-md-6">
+                                            class="col-md-6">
                                             <div class="d-flex align-items-center">
                                                 <svg class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
                                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -249,7 +249,7 @@
                                             </div>
                                             <div class="">
                                                 <div class="">
-                                                    <ul class="" role="list">
+                                                    <ul style="margin-bottom: 4rem;" class="" role="list">
                                                         <li class="" v-for="obj in objects" :key="obj.id" role="listitem">
                                                             <span aria-hidden="true" class=""></span><span class=""> {{
                                                                 obj.name }}
