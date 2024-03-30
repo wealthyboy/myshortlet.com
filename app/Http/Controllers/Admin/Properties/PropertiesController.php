@@ -461,7 +461,7 @@ class PropertiesController extends Controller
             $apartment_facilitie->delete();
         }
 
-        dd($apartment_facilities);
+        // dd($apartment_facilities);
 
 
         $property = $this->property($request, $id, true);
