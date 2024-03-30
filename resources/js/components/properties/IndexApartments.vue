@@ -614,7 +614,7 @@ export default {
                 return acc;
             }, {});
 
-            console.log(this.apartment_facilities)
+            console.log(room.apartment_facilities)
         },
         isValidDateRange(dateRangeString) {
             // Split the date range string into two dates
