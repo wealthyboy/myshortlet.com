@@ -37,7 +37,7 @@
                 </button>
                 <div class="dropdown-menu bg-white">
                     <a class="dropdown-item my-1 px-0 border-bottom " href="?currency=USD">(USD) United States</a>
-                    <a class="dropdown-item my-1 px-0 border-bottom " href="?currency=NGN">(NGR) Nigerian Naira</a>
+                    <a class="dropdown-item my-1 px-0 border-bottom " href="?currency=NGN">(NGN) Nigerian Naira</a>
                 </div>
             </div>
             @endif
