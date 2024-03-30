@@ -452,7 +452,11 @@ class PropertiesController extends Controller
             "description" => "required"
         ]);
 
+
         $apartment_facilities = ApartmentAttribute::all();
+
+        dd($apartment_facilities);
+
 
         foreach ($apartment_facilities as  $apartment_facilitie) {
             $apartment_facilitie->delete();
