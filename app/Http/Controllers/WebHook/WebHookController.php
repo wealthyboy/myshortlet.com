@@ -56,7 +56,7 @@ class WebHookController extends Controller
             $bookings = BookingDetail::find($input['booking_ids']);
             $user_reservation->user_id = optional($request->user())->id;
             $user_reservation->guest_user_id = $guest->id;
-            $user_reservation->currency =  $input['currency'];
+            $user_reservation->currency =  $input['currency'] === 'NGN' ? '₦' : '$';
             $user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
             $user_reservation->payment_type = 'online';
             $user_reservation->property_id = $input['property_id'];
