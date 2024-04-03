@@ -234,7 +234,7 @@
                                     <h3 class="uitk-heading uitk-heading-5 uitk-spacing uitk-spacing-margin-blockend-six">
                                         Apartment
                                         amenities</h3>
-                                    <div class="row" style="">
+                                    <div class="row" id="apartment-fac" style="">
                                         <div v-for="(objects, parentName) in apartment_facilities" :key="parentName"
                                             class="col-md-6">
                                             <div class="d-flex align-items-center">
@@ -249,7 +249,7 @@
                                             </div>
                                             <div class="">
                                                 <div class="">
-                                                    <ul style="margin-bottom: 4rem;" class="" role="list">
+                                                    <ul class="" role="list">
                                                         <li class="" v-for="obj in objects" :key="obj.id" role="listitem">
                                                             <span aria-hidden="true" class=""></span><span class=""> {{
                                                                 obj.name }}
@@ -484,7 +484,11 @@ export default {
             this.showModal = !this.showModal;
             this.room = room
 
+
+
             this.groupData(room)
+
+
             jQuery(function () {
                 // Add touch event listeners to centered images
                 $(".custom-iframe").on("touchstart", function (event) {
