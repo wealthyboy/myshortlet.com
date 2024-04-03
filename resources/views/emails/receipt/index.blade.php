@@ -754,86 +754,8 @@
       </table>
 
    <?php  } ?>
-   @if($user_reservation->extras->count())
 
-   <table data-bgcolor="tbc" style="table-layout: fixed; margin: 0px auto; background-color: rgb(234, 235, 235);" data-module="InvoiceItemDetailsModule" class="" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#384855" align="center">
-      <tr>
-         <td align="center">
-            <table data-bgcolor="tbc" class="table600Min" style="table-layout: fixed; margin: 0px auto; min-width: 668px; background-color: rgb(234, 235, 235);" width="668" cellspacing="0" cellpadding="0" border="0" bgcolor="#384855" align="center">
-               <tr>
-                  <td class="table600st" style="min-width:668px;" align="center">
-                     <table class="table600Min" style="min-width:629px;" width="629" cellspacing="0" cellpadding="0" border="0" align="center">
-                        <tr>
-                           <td class="table600st" style="min-width:629px;">
-                              <table data-bgcolor="CalculationsBGColor" class="table600" width="629" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" align="left">
-                                 <tr>
-                                    <td align="left">
-                                       <table cellspacing="0" cellpadding="0" border="0" align="center">
-                                          <tr>
-                                             <th class="stack2" style="margin: 0px; padding: 0px; border-bottom: 1px solid rgb(200, 198, 198);" data-border-bottom-color="borderColor" width="1000">
-
-                                                <table class="action" align="center" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; margin: 30px auto; padding: 0; text-align: center; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%;">
-                                                   <tr>
-                                                      <td align="center" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box;">
-                                                         <table width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box;">
-                                                            <tr>
-
-                                                               <th width="50%" align="left" class="container-wrap" valign="top" style="vertical-align: top; width:70%;">
-                                                                  <table width="100%" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
-                                                                     <tbody>
-                                                                        <tr>
-                                                                           <td align="left" class="pn" style="padding-left:10px;">
-                                                                              <table width="260" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:260px;">
-                                                                                 <tbody>
-                                                                                    <tr>
-                                                                                       <td class="text" style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em">
-                                                                                          <!-- Extras -->
-                                                                                       </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                       <td height="9"></td>
-                                                                                    </tr>
-                                                                                    @foreach($user_reservation->extras as $extra)
-                                                                                    <tr>
-                                                                                       <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
-                                                                                          {{-- optional($extra->attribute)->name --}} - {{-- $user_reservation->currency --}}{{-- $extra->price --}}
-                                                                                       </td>
-                                                                                    </tr>
-                                                                                    @endforeach
-                                                                                 </tbody>
-                                                                              </table>
-                                                                           </td>
-                                                                        </tr>
-                                                                  </table>
-                                                               </th>
-                                                            </tr>
-                                                         </table>
-                                                      </td>
-                                                   </tr>
-                                                </table>
-                                             </th>
-
-
-
-
-
-
-                                          </tr>
-                                       </table>
-                                    </td>
-                                 </tr>
-                              </table>
-                           </td>
-                        </tr>
-                     </table>
-                  </td>
-               </tr>
-            </table>
-         </td>
-      </tr>
-   </table>
-
-   @endif
+   <!-- reservation goes here -->
 
 
 
