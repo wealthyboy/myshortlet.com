@@ -634,7 +634,7 @@ export default {
       //pk_test_c5b3db1649d534eec8ab6a35ed696ad624e3070a
 
       var handler = PaystackPop.setup({
-        key: "pk_test_c5b3db1649d534eec8ab6a35ed696ad624e3070a", //'pk_live_c5fd554e0bc5c39d5f8f14b5f2a6263a403b9e55',//'pk_test_844112398c9a22ef5ca147e85860de0b55a14e7c',
+        key: "pk_live_c5fd554e0bc5c39d5f8f14b5f2a6263a403b9e55", //'pk_live_c5fd554e0bc5c39d5f8f14b5f2a6263a403b9e55',//'pk_test_844112398c9a22ef5ca147e85860de0b55a14e7c',
         email: payload.email,
         amount: payload.total * 100,
         currency: context.booking_details.currency,
