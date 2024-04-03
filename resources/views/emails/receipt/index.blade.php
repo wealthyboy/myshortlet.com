@@ -883,7 +883,7 @@
                                           </tr>
                                           <tr>
                                              <td class="wz2" width="30"><br></td>
-                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>{{ $user_reservation->currency ?? '₦'}}{{ number_format($user_reservation->original_amount)   }}</td>
+                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>{{ $user_reservation->property->currency ?? '₦'}}{{ number_format($user_reservation->original_amount)   }}</td>
                                              <td class="wz2" width="30"><br></td>
                                           </tr>
                                           <tr>
@@ -949,7 +949,7 @@
                                           </tr>
                                           <tr>
                                              <td class="wz2" width="30"><br></td>
-                                             <td data-bgcolor="ThemeColorBG" class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="color: rgb(255, 255, 255); font-family: sans-serif; font-size: 15px; text-align: center; line-height: 27px; font-weight: bold; background-color:#342c27;" bgcolor="#67bffd"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>{{ $user_reservation->currency ?? '₦' }}{{ number_format($user_reservation->total) }}</td>
+                                             <td data-bgcolor="ThemeColorBG" class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="color: rgb(255, 255, 255); font-family: sans-serif; font-size: 15px; text-align: center; line-height: 27px; font-weight: bold; background-color:#342c27;" bgcolor="#67bffd"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>{{ $user_reservation->property->currency ?? '₦' }}{{ number_format($user_reservation->total) }}</td>
                                              <td class="wz2" width="30"><br></td>
                                           </tr>
                                           <tr>
@@ -986,7 +986,7 @@
 
                                  <tr>
 
-                                    <td class="moptd" data-link-style="text-decoration:none; color:#333;" data-link-color="MailingOptionsLink" data-color="MailingOptionsTXT" style="color: #333; font-family: sans-serif; font-size: 12px; text-align: center; line-height: 170%;"><a href="#"></a></td>
+                                    <td class="moptd" data-link-style="text-decoration:none; color:#333;" data-link-color="MailingOptionsLink" data-color="MailingOptionsTXT" style="color: #333; font-family: sans-serif; font-size: 12px; text-align: center; line-height: 170%;"><a href="https://avenuemonatigne.ng"></a></td>
                                  </tr>
 
                                  <tr>
