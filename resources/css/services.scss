@@ -2052,8 +2052,9 @@ a.modal-close {
   height: auto !important;
 }
 
-.margin-bottom-13rem {
-  margin-bottom: 13rem;
-}
 
 /* Apply margin-bottom to the last div */
+
+.margin-bottom-13rem:last-child {
+  margin-bottom: 9rem !important;
+}
