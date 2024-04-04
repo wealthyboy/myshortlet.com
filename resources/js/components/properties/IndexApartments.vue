@@ -128,7 +128,7 @@
                                                 </div>
                                                 <div
                                                     class="form-group  p-0 ml-lg-1 form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
-                                                    <label class=" label" for="flatpickr-input-f">Check-in</label>
+                                                    <label class=" label" for="flatpickr-input-f">Check-out</label>
                                                     <date :check_in_date="0" placeholder="Check-out"
                                                         :isDateNeedsToToOpen="isDateNeedsToToOpen"
                                                         @dateSelected="checkOut" />
@@ -832,19 +832,18 @@ export default {
         checkSingleAvailabity: function (apartment) {
 
             this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
-            this.form.children = document.querySelector("#children").value;
-            this.form.adults = document.querySelector("#adults").value;
+            this.form.persons = document.querySelector("#persons").value;
             this.form.rooms = document.querySelector("#rooms").value;
 
-
+            var now = new window.Date().getTime(); // Current timestamp
             // Sample object to be saved
             const myObject = {
                 rooms: this.form.rooms,
                 check_in_checkout: this.form.check_in_checkout,
-                children: this.form.children,
-                adults: this.form.adults,
                 checkin: this.form.checkin,
                 checkout: this.form.checkout,
+                persons: this.form.persons,
+                expiry: now + 3600000
 
             };
 
