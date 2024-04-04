@@ -452,15 +452,14 @@ class PropertiesController extends Controller
         ]);
 
 
-        $apartment_facilities = ApartmentAttribute::all();
+        $apartment_facilities = ApartmentAttribute::where('apartment_id', 27)->get();
 
         // foreach ($apartment_facilities as  $apartment_facilitie) {
         //     $apartment_facilitie->delete();
         // }
 
-        // dd($apartment_facilities);
+        dd($apartment_facilities);
 
-        dd($request->all());
 
 
 
