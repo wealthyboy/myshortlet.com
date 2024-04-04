@@ -159,7 +159,6 @@ class WebHookController extends Controller
 
             return $request->all();
         } catch (\Throwable $th) {
-            throw $th;
             Log::error($th);
         }
     }
