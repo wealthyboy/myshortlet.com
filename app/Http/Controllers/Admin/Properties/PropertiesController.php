@@ -178,15 +178,14 @@ class PropertiesController extends Controller
         $property->cancellation_fee = $request->cancellation_fee;
         $property->virtual_tour = $request->virtual_tour;
         $property->featured = $request->featured ? 1 : 0;
-        $property->allow    = $request->allow ? 1 : 0;
-        $property->is_price_negotiable  = $request->is_price_negotiable ? 1 : 0;
-        $property->is_shortlet  = $request->is_shortlet ? 1 : 1;
-        $property->bedrooms  = $request->bedrooms;
-        $property->toilets  = $request->toilets;
-
+        $property->allow = $request->allow ? 1 : 0;
+        $property->is_price_negotiable = $request->is_price_negotiable ? 1 : 0;
+        $property->is_shortlet = $request->is_shortlet ? 1 : 1;
+        $property->bedrooms = $request->bedrooms;
+        $property->toilets = $request->toilets;
         $property->location_full_name  = $location_full_name;
-        $property->slug                = str_slug($title);
-        $property->token               =  $id ? $property->token : $token;
+        $property->slug = str_slug($title);
+        $property->token =  $id ? $property->token : $token;
         $property->save();
 
         if (!empty($request->location_id)) {
@@ -274,11 +273,11 @@ class PropertiesController extends Controller
             }
 
             if (isset($request->multiple_apartment_extras[$key])) {
-                $this->syncExtras($request->multiple_apartment_extras[$key],  $request->multiple_apartment_extra_services[$key], $apartment);
+                // $this->syncExtras($request->multiple_apartment_extras[$key],  $request->multiple_apartment_extra_services[$key], $apartment);
             }
 
             $this->syncImages($room_images, $apartment, $property);
-            $this->syncAttributes($request, $apartment, $key);
+            //  $this->syncAttributes($request, $apartment, $key);
         }
 
         // $property->price  =  $price;
@@ -463,6 +462,8 @@ class PropertiesController extends Controller
 
 
         $property = $this->property($request, $id, true);
+        $apartment_facilities_id = $request->apartment_facilities_id;
+
 
         /**
          * Reservation Images
@@ -481,7 +482,7 @@ class PropertiesController extends Controller
             $property->save();
             foreach ($request->edit_room_name as $room_id => $room) {
                 $room_images = !empty($request->edit_room_images[$room_id]) ? $request->edit_room_images[$room_id] : [];
-                $apartment       =  Apartment::updateOrCreate(
+                $apartment = Apartment::updateOrCreate(
                     ['id' => $room_id],
                     [
                         'name' => $request->edit_room_name[$room_id],
@@ -523,9 +524,16 @@ class PropertiesController extends Controller
 
 
 
-                if (isset($request->apartment_facilities_id[$room_id])) {
-                    $apartment->attributes()->sync(array_filter($request->apartment_facilities_id[$room_id]));
+                if (!isset($apartment_facilities_id[$room_id])) {
+                    $apartment_facilities_id[$room_id] = [];
                 }
+
+                $apartment->attributes()->sync(
+                    array_filter(
+                        $apartment_facilities_id[$room_id]
+                    )
+                );
+
 
                 if (isset($request->multiple_apartment_extras[$room_id])) {
                     $this->syncExtras($request->multiple_apartment_extras[$room_id],  $request->multiple_apartment_extra_services[$room_id], $apartment);
