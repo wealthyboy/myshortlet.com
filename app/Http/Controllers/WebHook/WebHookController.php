@@ -134,8 +134,6 @@ class WebHookController extends Controller
             }
 
             $admin_emails = explode(',', $this->settings->alert_email);
-
-
             try {
                 //$when = now()->addMinutes(5); 
                 Mail::to($guest->email)
