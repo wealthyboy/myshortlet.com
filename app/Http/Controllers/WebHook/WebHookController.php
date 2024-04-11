@@ -38,8 +38,6 @@ class WebHookController extends Controller
     public function payment(Request $request)
     {
 
-
-
         Log::info($request->all());
 
         try {
@@ -60,7 +58,7 @@ class WebHookController extends Controller
             $user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
             $user_reservation->payment_type = 'online';
             $user_reservation->property_id = $input['property_id'];
-            $user_reservation->coupon =  $input['coupon'];
+            $user_reservation->coupon = $input['coupon'];
             $user_reservation->total = $input['total'];
             $user_reservation->original_amount = $input['original_amount'];
             // $user_reservation->checkin = optional($booking)->checkin;
@@ -141,7 +139,8 @@ class WebHookController extends Controller
             try {
                 //$when = now()->addMinutes(5); 
                 Mail::to($guest->email)
-                    ->bcc('info@avenuemontaigne.ng')
+                    ->cc('info@avenuemontaigne.ng')
+                    ->bcc('jacob.atam@gmail.com')
                     ->send(new ReservationReceipt($user_reservation, $this->settings));
             } catch (\Throwable $th) {
                 //dd($th);
