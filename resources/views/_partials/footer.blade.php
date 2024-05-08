@@ -14,7 +14,7 @@
                 </ul>
             </div>
             <div class="col-md-12 copyright text-center">
-                <p class="">© Copyright {{ Config('app.name') }} {{ date('Y') }}. All rights reserved.err
+                <p class="">© Copyright {{ Config('app.name') }} {{ date('Y') }}. All rights reserved.
                     @if ( auth()->check() && auth()->user()->isAdmin() )
                     <a target="_blank" class="text-white" href="/admin">Go to Admin</a>
                     @endif
