@@ -25,6 +25,6 @@ class ReservationReceipt extends Mailable
 
     public function build()
     {
-        return $this->subject('Reservation Confirmation: Your Stay at Avenuemontaigne')->view('emails.receipt.index');
+        return $this->subject('Reservation Confirmation: Your Stay at Avenue Montaigne')->view('emails.receipt.index');
     }
 }

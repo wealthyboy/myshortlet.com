@@ -18,19 +18,18 @@ class OrderReceipt extends Mailable
     public $currency;
 
 
-    public function __construct($order,$settings,$symbol)
+    public function __construct($order, $settings, $symbol)
     {
         $this->order = $order;
-        
+
         $this->settings = $settings;
 
         $this->currency = $symbol;
-
     }
 
-    
+
     public function build()
-    {   
-        return $this->subject('AvenueMontaigne Confirmation')->view('fashion.emails.receipt.index');
+    {
+        return $this->subject('Avenue Montaigne Confirmation')->view('fashion.emails.receipt.index');
     }
 }
