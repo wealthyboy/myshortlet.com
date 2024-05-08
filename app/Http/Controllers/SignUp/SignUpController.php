@@ -29,7 +29,7 @@ class SignUpController extends Controller
      */
     public function index()
     {
-        $rooms =  Attribute::parents()->where('type', 'room_id')->orderBy('sort_order', 'asc')->get();
+        $rooms =  Attribute::parents()->where('type', 'room_id')->orderBy('sort_order', 'desc')->get();
         return view('checkin.index', compact('rooms'));
     }
 
