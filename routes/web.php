@@ -131,7 +131,7 @@ Route::group(['middleware' => 'currencyByIp'], function () {
     Route::get('auto-complete', 'Properties\PropertiesController@autoComplete');
     Route::get('property/{property}', 'Properties\PropertiesController@show');
     Route::get('properties/{category}', 'Properties\PropertiesController@index');
-    Route::get('checkin', 'SignUp\SignUpController@index');
+    Route::get('check-in', 'SignUp\SignUpController@index');
     Route::post('checkin', 'SignUp\SignUpController@store');
     Route::get('listings', 'Listings\ListingsController@index');
     Route::post('webhook/payment', 'WebHook\WebHookController@payment');

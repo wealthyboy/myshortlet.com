@@ -69,7 +69,8 @@
                             </div>
 
                             <div class="form-group bmd-form-group col-md-12 col-12">
-                                <select name="apartment_id" class="form-control">
+
+                                <select name="apartment_id" class="form-control ">
                                     <option selected>Choose Apartment</option>
                                     @foreach($rooms as $room)
                                     <option value="{{ $room->id }}">{{ $room->name }}</option>
@@ -79,13 +80,13 @@
                             </div>
                         </div>
 
-                        <p class="form-field-wrapper p-1 col-12 ">
-                            <label for="pictures">Upload Pictures</label>
+                        <p class="p-1 col-12 ">
+                            <label for="pictures " class="bmd-label-floating">Upload Id</label>
                         <div class="dropzone col-12 mb-4" id="my-dropzone"></div>
                         <div id="pic-error" class="error"></div>
                         </p>
 
-                        <button type="submit" id="login_form_button" data-loading="Loading" class=" ml-1 btn btn-primary btn-round btn-lg btn-block" name="login" value="Log in">Submit</button>
+                        <button type="submit" id="login_form_button" data-loading="Loading" class=" ml-1 btn btn-primary btn-round btn-lg btn-block mb-5" name="login" value="Log in">Submit</button>
 
 
                     </form>
@@ -112,6 +113,11 @@ $(".selector").flatpickr();
 
 
 Dropzone.autoDiscover = false;
+
+// Customize Dropzone's default message
+Dropzone.options.myDropzone = {
+dictDefaultMessage: "Upload (Govt IDs, int’l passport, voters card, drivers license etc) "
+};
 
 jQuery(window).on('load', function(){
 var d = $("div#my-dropzone")
