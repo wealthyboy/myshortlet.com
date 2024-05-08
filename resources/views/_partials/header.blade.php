@@ -31,15 +31,15 @@
 
 
             @if(isset($show_book) && !$show_book)
-            <div id="currencyDropdown" class="dropdown">
+            <!-- <div id="currencyDropdown" class="dropdown">
                 <button class="btn bold-2 btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                    ({{ session('switch') !== null ?  session('switch') : 'NGN' }}) Currency
+                    ({{-- session('switch') !== null ?  session('switch') : 'NGN' --}}) Currency
                 </button>
                 <div class="dropdown-menu bg-white">
                     <a class="dropdown-item my-1 px-0 border-bottom " href="?currency=USD">(USD) United States Dollar</a>
                     <a class="dropdown-item my-1 px-0 border-bottom " href="?currency=NGN">(NGN) Nigerian Naira</a>
                 </div>
-            </div>
+            </div> -->
             @endif
 
 

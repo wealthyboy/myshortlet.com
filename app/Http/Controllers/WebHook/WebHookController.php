@@ -128,7 +128,7 @@ class WebHookController extends Controller
                 $extras->user_id = optional($request->user())->id;
                 $extras->guest_user_id = $guest->id;
                 $extras->attribute_id = $attribute_id;
-                $extras->user_reservation_id  = $user_reservation->id;
+                $extras->user_reservation_id = $user_reservation->id;
                 $extras->price = optional($attr)->price;
                 $extras->save();
             }
@@ -162,7 +162,7 @@ class WebHookController extends Controller
 
     public function gitHub()
     {
-        $output =  shell_exec('sh /home/forge/avenuemontaigne.ng/deploy.sh');
+        $output = shell_exec('sh /home/forge/avenuemontaigne.ng/deploy.sh');
         echo "Successfull";
         Log::info($output);
     }

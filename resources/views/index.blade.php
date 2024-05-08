@@ -7,8 +7,6 @@
       <img alt="Avenue Montaigne logo" src="https://drive.google.com/thumbnail?id=1eQ_hLe9Th_2Oew3Qoew_qQKhuGBpHGZm&sz=w2000" alt="">
    </div>
 
-
-
    <div id="sm-main-banner" class="main-banner owl-carousel owl-theme d-block d-sm-none slider">
       @foreach($images['sliders'] as $key => $image)
       <div style="background-image: url({{ $generator::generateThumbnailUrl($image) }}); " class="{{  $key > 0 ? 'd-none' : '' }} item page-header min-vh-75 half-hv position-relative rounded-top">
@@ -146,9 +144,7 @@
 
       <div class="title">
          <div class="d-flex justify-content-between">
-            <h3 class="large-heading bold">Apartments
-            </h3>
-
+            <h3 class="large-heading bold">Apartments</h3>
             <a href="/apartments" class="btn btn-round  btn-primary   py-2  bold-2   align-self-end font-weight-bold-2">
                View All
             </a>
