@@ -71,7 +71,7 @@
                             <div class="form-group bmd-form-group col-md-12 col-12">
 
                                 <select name="apartment_id" class="form-control ">
-                                    <option selected>Choose Apartment</option>
+                                    <option selected value="">Choose Apartment</option>
                                     @foreach($rooms as $room)
                                     <option value="{{ $room->id }}">{{ $room->name }}</option>
                                     @endforeach
@@ -81,9 +81,9 @@
                         </div>
 
                         <p class="p-1 col-12 ">
-                            <label for="pictures " class="bmd-label-floating">Upload Id</label>
+                            <label for="pictures " class="bmd-label-floating">Upload ID (It’s compulsory to upload a copy of any govt ID to check-in)</label>
                         <div class="dropzone col-12 mb-4" id="my-dropzone"></div>
-                        <div id="pic-error" class="error"></div>
+                        <div id="pic-error" class="error text-danger"></div>
                         </p>
 
                         <button type="submit" id="login_form_button" data-loading="Loading" class=" ml-1 btn btn-primary btn-round btn-lg btn-block mb-5" name="login" value="Log in">Submit</button>
@@ -105,92 +105,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js" integrity="sha512-En/Po50Bl8kIECa2WkhxhdYeoKDcrJpBKMo9tmbuwbm9RxHWZV8/Y5xM9sh3QbrnFgM3hVR/2umJ33qGJk45pQ==" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('js/upload.js') }}"></script>
+
 @stop
 
 @section('inline-scripts')
-
-$(".selector").flatpickr();
-
-
-Dropzone.autoDiscover = false;
-
-// Customize Dropzone's default message
-Dropzone.options.myDropzone = {
-dictDefaultMessage: "Upload (Govt IDs, int’l passport, voters card, drivers license etc) "
-};
-
-jQuery(window).on('load', function(){
-var d = $("div#my-dropzone")
-
-if (d.length){
-
-myDropzone = new Dropzone("div#my-dropzone",{
-url: "/file/uploads",
-paramName: "file",
-maxFilesize: 10,
-timeout: 180000,
-acceptedFiles: 'image/*',
-addRemoveLinks: true,
-uploadMultiple:true,
-maxFiles: 1,
-
-headers: {
-'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-},
-init: function() {
-
-$("#submit").on('click', function(e) {
-if (!myDropzone.files || !myDropzone.files.length) {
-$("div.error").html('Please upload your id.')
-}
-});
-this.on("addedfile", function(file) { $("div.error").html('')});
-}
-})
-}
-
-
-var $validator = $('form.form-validate').validate({
-rules: {
-first_name: {
-required: true,
-},
-last_name: {
-required: true,
-},
-email: {
-required: true,
-email: true
-},
-
-relationship: {
-required: true,
-},
-
-},
-messages: {
-email: {
-required: "Please enter your email",
-email: "Please enter a valid email"
-},
-
-},
-submitHandler: function(form) {
-//Check if dropzone is uploading
-if(myDropzone){
-myDropzone.on("uploadprogress", function(file) {
-$("div.error").html('Please allow your image to finish uploading')
-return false;
-});
-}
-
-$("#form").addClass('header-filter')
-
-
-form.submit();
-}
-
-});
-})
-
 @stop
