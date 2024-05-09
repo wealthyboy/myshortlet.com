@@ -115,7 +115,59 @@ class SignUpController extends Controller
             File::put($directory . '/' . $fileName, $fileContent);
 
             $pdf = PDF::loadView('pdf.index', compact('visitor', 'reservation'));
-            $pdf->save(public_path('pdf/guest_' . $guest->name . '_' . $guest->id . '.pdf'));
+            $pdf->setPaper('a4')->save(public_path('pdf/guest_' . $guest->name . '_' . $guest->id . '.pdf'));
+
+            $html = '
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Details PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            page-break-inside: avoid; /* Prevent page breaks inside the row */
+        }
+        .left {
+            width: 45%;
+            text-align: left;
+        }
+        .right {
+            width: 45%;
+            text-align: right;
+        }
+        img {
+            max-width: 300px;
+            max-height: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="left">Name: John Doe</div>
+            <div class="right">ID: 123456</div>
+        </div>
+        <div class="row">
+            <!-- Add image -->
+            <img src="path/to/your/image.jpg" alt="Customer Image">
+        </div>
+    </div>
+</body>
+</html>
+';
+
+            // Generate PDF using DomPDF
+            PDF::loadHTML($html)->setPaper('a4')->save('customer_details.pdf');
 
 
             try {

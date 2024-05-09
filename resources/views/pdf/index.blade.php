@@ -1,34 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visitor Details</title>
 </head>
 
-<style>
-    .flex {
-        display: flex;
-        flex-wrap: nowrap;
-    }
+<body style="font-family: Arial, sans-serif;">
 
-    .justify-between {
-        justify-content: space-between;
-    }
+    <div class="row" style="display: flex; justify-content: space-between; margin-bottom: 10px; page-break-inside: avoid;">
+        <img src="https://avenuemontaigne.ng/images/logo/avnmont-white-04.png" alt="Visitor Image" style="max-width: 300px; max-height: 250px;">
 
-    .items-center {
-        align-items: center;
-    }
-</style>
-
-
-<body>
-
-    <img src="https://avenuemontaigne.ng/images/logo/avnmont-white-04.png" alt="Visitor Image">
-    <div class="flex justify-between  items-center">
-        <div class="visitor-content">
+        <div class="left" style="width: 45%; text-align: left;">
             <h1>Visitor Details</h1>
             <p><strong>First Name: </strong>{{ $visitor->first_name }}</p>
             <p><strong>Last Name:</strong>{{ $visitor->last_name }}</p>
@@ -41,7 +23,9 @@
 
         </div>
 
-        <img src="{{ $visitor->image }}" alt="Visitor Image">
+        <div class="right" style="width: 45%; text-align: right;">
+            <img src="{{ $visitor->image }}" alt="Visitor Image" style="max-width: 300px; max-height: 250px;">
+        </div>
     </div>
 
 </body>
