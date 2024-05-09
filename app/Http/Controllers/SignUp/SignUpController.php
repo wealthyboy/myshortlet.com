@@ -105,6 +105,8 @@ class SignUpController extends Controller
             $directory = public_path('pdf');
             $visitor = $request;
             $visitor->image = session('session_link');
+            $reservation->apartment_name = $attr->name;
+            $guest->apartment_name = $attr->name;
 
             // Check if the directory exists, if not create it
             if (!File::exists($directory)) {
