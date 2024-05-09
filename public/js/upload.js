@@ -58,15 +58,25 @@ jQuery(window).on('load', function () {
                 });
             }
 
-            console.log(myDropzone.files.length)
-
             if (myDropzone.files.length === 0) {
                 $("div.error").html('Please upload your ID.')
                 return
             }
 
             $("#form").addClass('header-filter')
-            form.submit();
+
+            // AJAX call
+            $.ajax({
+                url: '/check-in',
+                type: 'POST',
+                data: $(form).serialize(), // Serialize the form data
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
         }
     });
 })

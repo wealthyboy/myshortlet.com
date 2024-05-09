@@ -64,6 +64,25 @@ class SignUpController extends Controller
             $user_reservation = new UserReservation;
             $apartment = Apartment::where('apartment_id', $request->apartment_id)->first();
             $attr = Attribute::find($request->apartment_id);
+            $query = Apartment::query();
+
+            $apartmentId = $apartment->id;
+            $query->where('id', $apartmentId);
+
+            $startDate = Carbon::createFromDate($request->checkin);
+            $endDate = Carbon::createFromDate($request->checkout);
+
+            $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
+                $query->where(function ($q) use ($startDate, $endDate) {
+                    $q->where('checkin', '<', $endDate)
+                        ->where('checkout', '>', $startDate);
+                });
+            });
+
+            $apartments = $query->latest()->first();
+            if (null !==  $apartments) {
+                return response()->json(["message" => "This apartment is not available for youe selected date"], 400);
+            }
 
             $guest = new GuestUser;
             $guest->name = $input['first_name'];
@@ -91,8 +110,8 @@ class SignUpController extends Controller
             $reservation->sale_price = $apartment->sale_price;
             $reservation->user_reservation_id = $user_reservation->id;
             $reservation->property_id = $property->id;
-            $reservation->checkin = $request->checkin;
-            $reservation->checkout = $request->checkout;
+            $reservation->checkin = $startDate;
+            $reservation->checkout = $endDate;
             $reservation->save();
 
             // Create a file name

@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
-use App\Models\GuestUser;
-use App\Models\Reservation;
+
 
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('/', 'Admin\HomeCtrl@index')->name('admin_home');
@@ -154,7 +153,8 @@ Route::group(['middleware' => 'currencyByIp'], function () {
 
 
 Route::get('/mailable', function () {
-    $reservation = Reservation::find(1);
-    $visitor =  GuestUser::find(2);
-    return view('pdf.index', compact('visitor', 'reservation'));
+
+    $user_reservation = App\Models\UserReservation::find(11);
+    $settings =  App\Models\SystemSetting::first();
+    return new App\Mail\ReservationReceipt($user_reservation, $settings);
 });
