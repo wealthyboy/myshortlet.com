@@ -45,7 +45,7 @@
 
 
     <div class="left" style="width: 45%; text-align: left;">
-        <img src="https://avenuemontaigne.ng/images/logo/avm_residences.png" alt="Visitor Image" style="max-width: 300px; max-height: 250px;">
+        <img src="https://avenuemontaigne.ng/images/logo/avem-logo.png" alt="Visitor Image" style="max-width: 300px; max-height: 250px;">
     </div>
     <div class="row " style=" page-break-inside: avoid; padding: 20px;">
 
