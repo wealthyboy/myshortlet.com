@@ -4,7 +4,7 @@ $(".selector").flatpickr();
 Dropzone.autoDiscover = false;
 // Customize Dropzone's default message
 Dropzone.options.myDropzone = {
-    dictDefaultMessage: "Click here to upload your id"
+    dictDefaultMessage: "Click here to upload your ID"
 };
 
 let myDropzone;
