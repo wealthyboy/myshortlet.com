@@ -61,7 +61,7 @@ jQuery(window).on('load', function () {
             console.log(myDropzone.files.length)
 
             if (myDropzone.files.length === 0) {
-                $("div.error").html('Please upload your id.')
+                $("div.error").html('Please upload your ID.')
                 return
             }
 
