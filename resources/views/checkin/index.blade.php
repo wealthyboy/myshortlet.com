@@ -68,20 +68,22 @@
                                 <input type="text" class="form-control selector" name="checkout">
                             </div>
 
-                            <div class="form-group bmd-form-group col-md-12 col-12">
 
-                                <select name="apartment_id" class="form-control ">
+
+                            <div class="form-group bmd-form-group col-md-12 col-12  align-items-center">
+                                <select name="apartment_id" id="mySelect" class="form-control ">
                                     <option selected value="">Choose Apartment</option>
                                     @foreach($rooms as $room)
                                     <option value="{{ $room->id }}">{{ $room->name }}</option>
                                     @endforeach
 
                                 </select>
+
                             </div>
                         </div>
 
                         <p class="p-1 col-12 ">
-                            <label for="pictures " class="bmd-label-floating">Upload ID (It’s compulsory to upload a copy of any govt ID to check-in)</label>
+                            <label for="pictures " class="bmd-label-floating upload">Upload ID (It’s compulsory to upload a copy of any your goverment issued id eg Int’l passport, driver’s license, National id e.t.c)</label>
                         <div class="dropzone col-12 mb-4" id="my-dropzone"></div>
                         <div id="pic-error" class="error text-danger"></div>
                         </p>
@@ -110,4 +112,7 @@
 @stop
 
 @section('inline-scripts')
+document.getElementById('mySelect').addEventListener('change', function() {
+//this.style.borderBottom = '1px solid #ccc'; // Set border-bottom style
+});
 @stop

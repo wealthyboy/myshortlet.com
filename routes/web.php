@@ -132,7 +132,7 @@ Route::group(['middleware' => 'currencyByIp'], function () {
     Route::get('property/{property}', 'Properties\PropertiesController@show');
     Route::get('properties/{category}', 'Properties\PropertiesController@index');
     Route::get('check-in', 'SignUp\SignUpController@index');
-    Route::post('checkin', 'SignUp\SignUpController@store');
+    Route::post('check-in', 'SignUp\SignUpController@store');
     Route::get('listings', 'Listings\ListingsController@index');
     Route::post('webhook/payment', 'WebHook\WebHookController@payment');
     Route::post('webhook/github', 'WebHook\WebHookController@gitHub');
