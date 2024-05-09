@@ -16,7 +16,7 @@
                     </div>
 
                     @else
-                    <form method="POST" id="submit" class=" pl-4 pr-4 border form-validate bg-white " action="/checkin">
+                    <form method="POST" id="submit" class=" pl-4 pr-4 border form-validate bg-white " action="/check-in">
 
                         <div class="text-center">
                             <a href="/" class="navbar-brand mt-5">
