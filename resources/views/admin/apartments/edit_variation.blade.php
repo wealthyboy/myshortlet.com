@@ -209,6 +209,21 @@
                 </div>
                 @endforeach
             </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <legend>
+                        Enable/Disable
+                    </legend>
+                    <div class="togglebutton">
+                        <label>
+                            <input {{ isset($apartment) && $apartment->allow == 1 ? 'checked' : ''}} name="allow[{{ $apartment->id }}]" value="1" type="checkbox">
+                            Enable/Disable
+                        </label>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
 

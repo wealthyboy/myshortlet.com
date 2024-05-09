@@ -68,7 +68,6 @@ class SignUpController extends Controller
 
             $apartmentId = $apartment->id;
             $query->where('id', $apartmentId);
-
             $startDate = Carbon::createFromDate($request->checkin);
             $endDate = Carbon::createFromDate($request->checkout);
 
@@ -114,13 +113,10 @@ class SignUpController extends Controller
             $reservation->checkout = $endDate;
             $reservation->save();
 
-            // Create a file name
             $fileName = 'guest_' . $guest->name . '_' . $guest->id . '.pdf';
 
-            // Generate some content for the file
             $fileContent = '';
 
-            // Specify the directory where you want to save the file
             $directory = public_path('pdf');
             $visitor = $request;
             $visitor->image = session('session_link');

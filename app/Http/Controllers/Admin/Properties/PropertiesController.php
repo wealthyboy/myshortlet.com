@@ -261,7 +261,7 @@ class PropertiesController extends Controller
             $apartment->type = $request->type;
             $apartment->price_mode = $request->price_mode[$key];
             $apartment->apartment_id = $request->apartment_id[$key];
-            //  $apartment->max_children = $request->room_max_children[$key];
+            $apartment->allow = $request->allow[$key];
             $apartment->no_of_rooms = $request->room_number[$key];
             $apartment->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires[$key], true);
             $apartment->property_id = $property->id;
@@ -489,7 +489,7 @@ class PropertiesController extends Controller
                         'sale_price_expires' => Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]),
                         'slug' => str_slug($request->edit_room_name[$room_id]),
                         'max_adults' => $request->edit_room_max_adults[$room_id],
-                        //  'max_children' => $request->edit_room_max_children[$room_id],
+                        'allow' => $request->allow[$room_id],
                         'apartment_id' => $request->edit_apartment_id[$room_id],
                         'image_link' => $request->edit_image_links[$room_id],
                         'video_link' => $request->edit_video_links[$room_id],

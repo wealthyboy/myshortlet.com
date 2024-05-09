@@ -204,6 +204,20 @@
                 </div>
                 @endforeach
             </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <legend>
+                        Enable/Disabled
+                    </legend>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" value="1" name="allow[{{ $counter }}]" type="checkbox" id="flexSwitchCheckChecked">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Enable/Disable</label>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
 
     </div>

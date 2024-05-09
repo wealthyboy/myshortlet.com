@@ -54,7 +54,8 @@ class Apartment extends Model
         'price_mode',
         'apartment_id',
         'image_link',
-        'video_link'
+        'video_link',
+        'allow'
     ];
 
 

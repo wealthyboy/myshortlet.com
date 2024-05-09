@@ -43,7 +43,6 @@ class ApartmentsController extends Controller
             'room_facilities',
             'other' => 'other'
         ];
-        // dd($request->all());
         $str = new  Str;
         $date = $request->check_in_checkout;
         $property_is_not_available = null;
@@ -82,12 +81,12 @@ class ApartmentsController extends Controller
 
 
         if ($request->has('apartment_id')) {
-            $apartments = $query->latest()->first();
+            $apartments = $query->where('allow', 1)->latest()->first();
             return $apartments;
         }
 
 
-        $apartments = $query->latest()->get();
+        $apartments = $query->where('allow', 1)->latest()->get();
         $saved = null;
         $property = Property::first();
 
@@ -115,6 +114,7 @@ class ApartmentsController extends Controller
 
     public function index(Request $request, Location $location)
     {
+
 
         $types =  [
             'extra_services',

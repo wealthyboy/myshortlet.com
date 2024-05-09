@@ -7,6 +7,9 @@ Dropzone.options.myDropzone = {
     dictDefaultMessage: "Click here to upload your ID"
 };
 
+let form_button = $("#login_form_button");
+
+
 let myDropzone;
 
 jQuery(window).on('load', function () {
@@ -65,15 +68,19 @@ jQuery(window).on('load', function () {
 
             $("#form").addClass('header-filter')
 
+            form_button.text("Loading..........")
+
             // AJAX call
             $.ajax({
                 url: '/check-in',
                 type: 'POST',
                 data: $(form).serialize(), // Serialize the form data
                 success: function (response) {
-                    console.log(response);
+                    form_button.text("Loading..........")
+
                 },
                 error: function (xhr, status, error) {
+                    form_button.text("Submit")
                     console.error(xhr.responseText);
                 }
             });
