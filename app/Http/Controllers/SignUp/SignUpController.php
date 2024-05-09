@@ -70,7 +70,6 @@ class SignUpController extends Controller
             $guest->email = $input['email'];
             $guest->phone_number = $input['phone_number'];
             $guest->image = session('session_link');
-
             $guest->save();
 
             $user_reservation->user_id = optional($request->user())->id;
@@ -107,18 +106,15 @@ class SignUpController extends Controller
             $visitor = $request;
             $visitor->image = session('session_link');
 
-
             // Check if the directory exists, if not create it
             if (!File::exists($directory)) {
                 File::makeDirectory($directory);
             }
 
-
             // Save the file to the specified directory
             File::put($directory . '/' . $fileName, $fileContent);
 
-
-            $pdf = PDF::loadView('pdf.index', compact('visitor'));
+            $pdf = PDF::loadView('pdf.index', compact('visitor', 'reservation'));
             $pdf->save(public_path('pdf/guest_' . $guest->name . '_' . $guest->id . '.pdf'));
 
 

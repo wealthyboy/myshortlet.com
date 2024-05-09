@@ -34,8 +34,8 @@
             <p><strong>Last Name:</strong>{{ $visitor->last_name }}</p>
             <p><strong>Email:</strong>{{ $visitor->email }}</p>
             <p><strong>Phone:</strong>{{ $visitor->phone_number }}</p>
-            <p><strong>Check-in:</strong> {{ $visitor->checkin->format('l') }} {{ $visitor->checkin->format('d') }} {{ $visitor->checkin->format('F')  }}{{ $visitor->checkin->isoFormat('Y') }}</p>
-            <p><strong>Check-out:</strong> {{ $visitor->checkout->format('l') }} {{ $visitor->checkout->format('d') }} {{ $visitor->checkout->format('F')  }}{{ $visitor->checkout->isoFormat('Y') }}</p>
+            <p><strong>Check-in:</strong> {{ $reservation->checkin->format('l') }} {{ $reservation->checkin->format('d') }} {{ $reservation->checkin->format('F')  }}{{ $reservation->checkin->isoFormat('Y') }}</p>
+            <p><strong>Check-out:</strong> {{ $reservation->checkout->format('l') }} {{ $reservation->checkout->format('d') }} {{ $reservation->checkout->format('F')  }}{{ $reservation->checkout->isoFormat('Y') }}</p>
 
         </div>
 
