@@ -30,7 +30,7 @@
         }
 
         .right {
-            width: 45%;
+            width: 50%;
             text-align: right;
         }
 
@@ -58,8 +58,8 @@
             <p><strong>Phone:</strong> {{ $visitor->phone_number }}</p>
             <p><strong>Apartment:</strong> {{ $reservation->apartment_name }}</p>
 
-            <p><strong>Check-in:</strong> {{-- $reservation->checkin->format('l') --}} {{-- $reservation->checkin->format('d') --}} {{-- $reservation->checkin->format('F')  --}}{{-- $reservation->checkin->isoFormat('Y') --}}</p>
-            <p><strong>Check-out:</strong> {{-- $reservation->checkout->format('l') --}} {{-- $reservation->checkout->format('d') --}} {{-- $reservation->checkout->format('F')  --}}{{-- $reservation->checkout->isoFormat('Y') --}}</p>
+            <p><strong>Check-in:</strong> {{ $reservation->checkin->format('l') }} {{ $reservation->checkin->format('d') }} {{ $reservation->checkin->format('F')  }}{{ $reservation->checkin->isoFormat('Y') }}</p>
+            <p><strong>Check-out:</strong> {{ $reservation->checkout->format('l') }} {{ $reservation->checkout->format('d') }} {{ $reservation->checkout->format('F')  }}{{ $reservation->checkout->isoFormat('Y') }}</p>
 
         </div>
 
