@@ -45,9 +45,9 @@ class CheckinNotification extends Notification
         return (new MailMessage)
             ->bcc('jacob.atam@gmail.com')
 
-            ->subject('New Reservation')
+            ->subject('New check-in for '.  )
 
-            ->greeting('Hello! Admin')
+            ->greeting('Hello!')
             ->line('You have a reservation')
 
             ->attach(

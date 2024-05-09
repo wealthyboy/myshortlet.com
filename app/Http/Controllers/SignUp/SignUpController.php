@@ -63,6 +63,7 @@ class SignUpController extends Controller
 
             $user_reservation = new UserReservation;
             $apartment = Apartment::where('apartment_id', $request->apartment_id)->first();
+            $attr = Attribute::find($request->apartment_id);
 
             $guest = new GuestUser;
             $guest->name = $input['first_name'];
@@ -102,7 +103,6 @@ class SignUpController extends Controller
 
             // Specify the directory where you want to save the file
             $directory = public_path('pdf');
-
             $visitor = $request;
             $visitor->image = session('session_link');
 
