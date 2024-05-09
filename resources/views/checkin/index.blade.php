@@ -83,7 +83,7 @@
                         </div>
 
                         <p class="p-1 col-12 ">
-                            <label for="pictures " class="bmd-label-floating upload">Upload ID (It’s compulsory to upload a copy of any your goverment issued id eg Int’l passport, driver’s license, National id e.t.c)</label>
+                            <label for="pictures " class="bmd-label-floating upload">Upload ID (It’s compulsory to upload a copy of any of your goverment issued id eg Int’l passport, driver’s license, National id e.t.c)</label>
                         <div class="dropzone col-12 mb-4" id="my-dropzone"></div>
                         <div id="pic-error" class="error text-danger"></div>
                         </p>
