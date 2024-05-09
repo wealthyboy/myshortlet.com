@@ -120,7 +120,6 @@ class BookingController extends Controller
 		$booking->checkout = $end_date;
 		$booking->token = $cookie->getValue();
 		$booking->save();
-
 		if ($cookie == null) {
 			return response()->json([
 				'msg' => 'Reservation sucessfully added'

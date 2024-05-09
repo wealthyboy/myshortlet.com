@@ -8,16 +8,40 @@
     <title>Visitor Details</title>
 </head>
 
+<style>
+    .flex {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    .justify-between {
+        justify-content: space-between;
+    }
+
+    .items-center {
+        align-items: center;
+    }
+</style>
+
+
 <body>
-    <h1>Visitor Details</h1>
-    <p>First Name: {{ $visitor->first_name }}</p>
-    <p>Last Name: {{ $visitor->last_name }}</p>
-    <p>Email: {{ $visitor->email }}</p>
-    <p>Phone: {{ $visitor->phone_number }}</p>
-    <p>Check-in: {{ $visitor->checkin }}</p>
-    <p>Check-out: {{ $visitor->checkout }}</p>
-    <!-- Display image if needed -->
-    <img src="{{ $visitor->image }}" alt="Visitor Image">
+
+    <img src="https://avenuemontaigne.ng/images/logo/avnmont-white-04.png" alt="Visitor Image">
+    <div class="flex justify-between  items-center">
+        <div class="visitor-content">
+            <h1>Visitor Details</h1>
+            <p><strong>First Name: </strong>{{ $visitor->first_name }}</p>
+            <p><strong>Last Name:</strong>{{ $visitor->last_name }}</p>
+            <p><strong>Email:</strong>{{ $visitor->email }}</p>
+            <p><strong>Phone:</strong>{{ $visitor->phone_number }}</p>
+            <p><strong>Check-in:</strong> {{ $visitor->checkin->format('l') }} {{ $visitor->checkin->format('d') }} {{ $visitor->checkin->format('F')  }}{{ $visitor->checkin->isoFormat('Y') }}</p>
+            <p><strong>Check-out:</strong> {{ $visitor->checkout->format('l') }} {{ $visitor->checkout->format('d') }} {{ $visitor->checkout->format('F')  }}{{ $visitor->checkout->isoFormat('Y') }}</p>
+
+        </div>
+
+        <img src="{{ $visitor->image }}" alt="Visitor Image">
+    </div>
+
 </body>
 
 </html>
