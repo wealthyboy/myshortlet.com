@@ -5,7 +5,40 @@
 
 <head>
     <title>Visitor Details</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            page-break-inside: avoid;
+            /* Prevent page breaks inside the row */
+        }
+
+        .left {
+            width: 45%;
+            text-align: left;
+        }
+
+        .right {
+            width: 45%;
+            text-align: right;
+        }
+
+        img {
+            max-width: 300px;
+            max-height: 250px;
+        }
+    </style>
 </head>
 
 <body style="font-family: Arial, sans-serif; background-color: #ccc;">
@@ -14,10 +47,10 @@
     <div class="left" style="width: 45%; text-align: left;">
         <img src="https://avenuemontaigne.ng/images/logo/avm_residences.png" alt="Visitor Image" style="max-width: 300px; max-height: 250px;">
     </div>
-    <div class="row" style=" page-break-inside: avoid;">
+    <div class="row " style=" page-break-inside: avoid; padding: 20px;">
 
 
-        <div class="left col-md-6" style="">
+        <div style="float:left; font-size: 20px; font-weight: bold" class="left">
             <h1>Visitor Details</h1>
             <p><strong>First Name: </strong> {{ $visitor->first_name }}</p>
             <p><strong>Last Name:</strong> {{ $visitor->last_name }}</p>
@@ -30,7 +63,7 @@
 
         </div>
 
-        <div class=" col-md-6" style="">
+        <div style="float:right; font-size: 20px; font-weight: bold" class=" col-md-6">
             <img src="{{ $visitor->image }}" alt="Visitor Image" style="max-width: 300px; max-height: 250px;">
         </div>
     </div>
