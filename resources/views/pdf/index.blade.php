@@ -7,6 +7,14 @@
 
 <body style="font-family: Arial, sans-serif;">
 
+    <page backtop="10mm" backbottom="10mm" style="font-size: 14pt">
+
+        <div align="center">
+            <img src="https://avenuemontaigne.ng/images/logo/avnmont-white-04.png" alt="Visitor Image" style="max-width: 300px; max-height: 250px;">
+            <br />
+        </div>
+    </page>
+
     <div class="row" style="display: flex; justify-content: space-between; margin-bottom: 10px; page-break-inside: avoid;">
         <img src="https://avenuemontaigne.ng/images/logo/avnmont-white-04.png" alt="Visitor Image" style="max-width: 300px; max-height: 250px;">
 
