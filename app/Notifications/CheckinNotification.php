@@ -43,6 +43,8 @@ class CheckinNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->bcc('jacob.atam@gmail.com')
+
             ->subject('New Reservation')
 
             ->greeting('Hello! Admin')
