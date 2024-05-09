@@ -14,10 +14,10 @@
 
     <div class="row" style="display: flex; justify-content: space-between; margin-bottom: 10px; page-break-inside: avoid;">
         <div class="left" style="width: 45%; text-align: left;">
-            <img src="/images/logo/avm_residences.png" alt="Visitor Image" style="max-width: 300px; max-height: 250px;">
+            <img src="https://avenuemontaigne.ng/images/logo/avm_residences.png" alt="Visitor Image" style="max-width: 300px; max-height: 250px;">
         </div>
 
-        <div class="left" style="width: 45%; text-align: left;">
+        <div class="left col-md-6" style="width: 45%; text-align: left;">
             <h1>Visitor Details</h1>
             <p><strong>First Name: </strong> {{ $visitor->first_name }}</p>
             <p><strong>Last Name:</strong> {{ $visitor->last_name }}</p>
@@ -30,7 +30,7 @@
 
         </div>
 
-        <div class="right" style="width: 45%; text-align: right;">
+        <div class="right col-md-6" style="width: 45%; text-align: right;">
             <img src="{{ $visitor->image }}" alt="Visitor Image" style="max-width: 300px; max-height: 250px;">
         </div>
     </div>
