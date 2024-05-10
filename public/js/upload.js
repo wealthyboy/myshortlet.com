@@ -84,7 +84,7 @@ jQuery(window).on('load', function () {
                     form_button.text("Submit")
                     let m = JSON.parse(xhr.responseText);
                     if (typeof m != 'undefined' && typeof m.message !== 'undefined') {
-                        alert("This apartment is not available for youe selected date.");
+                        alert("This apartment is not available for your selected date.");
                     }
                 }
             });
