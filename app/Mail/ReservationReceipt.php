@@ -26,7 +26,7 @@ class ReservationReceipt extends Mailable
     public function build()
     {
         if ($this->user_reservation->agent === 1) {
-            return $this->subject('Reservation Confirmation: Your Stay at Avenue Montaigne')->view('emails.receipt.agent_receipt');
+            return $this->subject('Reservation Confirmation: For ' . $this->user_reservation->apartment_name)->view('emails.receipt.agent_receipt');
         }
         return $this->subject('Reservation Confirmation: Your Stay at Avenue Montaigne')->view('emails.receipt.index');
     }
