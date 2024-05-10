@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Models\GuestUser;
+use App\Models\Reservation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,14 +13,17 @@ class AgentCheckingNotification extends Notification
 {
     use Queueable;
 
+    public $guest;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(GuestUser $guest)
     {
-        //
+
+        $this->guest = $guest;
     }
 
     /**
@@ -41,9 +46,11 @@ class AgentCheckingNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject('New check-in for ' . $this->guest->apartment_name)
+            ->greeting('Hello Host',)
+            ->line('Fullname: ' . $this->guest->name . ' ' . $this->guest->last_name)
+            ->line('Check-in: ' . $this->guest->checkin)
+            ->line('Check-out: ' . $this->guest->checkout);
     }
 
     /**

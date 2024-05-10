@@ -9,6 +9,7 @@ use App\Models\GuestUser;
 use App\Models\Property;
 use App\Models\Reservation;
 use App\Models\UserReservation;
+use App\Notifications\AgentCheckingNotification;
 use App\Notifications\CheckinNotification;
 use App\Notifications\NewGuest;
 use Carbon\Carbon;
@@ -145,8 +146,11 @@ class SignUpController extends Controller
                     ->notify(new CheckinNotification($guest));
 
                 if ($attr->apartment_owner) {
+                    $guest->apartment_name = $attr->name;
+                    $guest->checkin = $startDate;
+                    $guest->checkout = $endDate;
                     Notification::route('mail', $attr->apartment_owner)
-                        ->notify(new CheckinNotification($guest, $attr->apartment_owner));
+                        ->notify(new AgentCheckingNotification($guest));
                 }
             } catch (\Throwable $th) {
                 dd($th);
