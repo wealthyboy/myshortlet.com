@@ -243,7 +243,7 @@ class PropertiesController extends Controller
     {
 
         //  $price = implode(array_values($request->room_price));
-        // dd($request->all());
+        dd($request->all());
 
         foreach ($request->room_price  as $key => $room) {
 
