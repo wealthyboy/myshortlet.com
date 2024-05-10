@@ -403,7 +403,11 @@
                                                    </tr>
                                                    <tr>
                                                       <td class="wz" width="30"></td>
-                                                      <td class="RegularTextTD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #000;font-family: sans-serif;font-size: 13px;font-weight: lighter;text-align: left;line-height: 23px;">Dear {{ $user_reservation->guest_user->fullname() }},<br>Thank you for choosing Avenue montaigne for your stay. We are pleased to inform you that your reservation request is CONFIRMED and your reservation details are as follows.</td>
+                                                      <td class="RegularTextTD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #000;font-family: sans-serif;font-size: 13px;font-weight: lighter;text-align: left;line-height: 23px;">Dear {{ $user_reservation->guest_user->fullname() }},<br>Thank you for choosing Avenue montaigne for your stay. We are pleased to inform you that your reservation request is CONFIRMED and your reservation details are as follows.
+                                                         <br />
+                                                         <b>Note: You’re required to present a valid ID upon arrival to check-in</b>
+
+                                                      </td>
                                                       <td class="wz" width="30"></td>
                                                    </tr>
                                                    <tr>

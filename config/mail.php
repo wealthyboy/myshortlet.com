@@ -85,7 +85,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'info@avenuemontaigne.ng'),
-        'name' => env('MAIL_FROM_NAME', 'Avenue Montaigne'),
+        'name' =>  'Avenue Montaigne',
     ],
 
     /*
@@ -101,7 +101,6 @@ return [
 
     'markdown' => [
         'theme' => 'default',
-
         'paths' => [
             resource_path('views/vendor/mail'),
         ],

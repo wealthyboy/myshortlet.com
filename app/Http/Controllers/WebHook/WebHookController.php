@@ -140,15 +140,15 @@ class WebHookController extends Controller
             $admin_emails = explode(',', $this->settings->alert_email);
             try {
                 //$when = now()->addMinutes(5); 
-                $m = Mail::to($guest->email)
-                    ->cc('frontdesk@avenuemontaigne.ng')
+                Mail::to($guest->email)
+                    ->bcc('frontdesk@avenuemontaigne.ng')
                     ->bcc('jacob.atam@gmail.com')
-                    ->bcc('info@avenuemontaigne.ng');
+                    ->bcc('info@avenuemontaigne.ng')
+                    ->send(new ReservationReceipt($user_reservation, $this->settings));
 
-                if (null !== $attr) {
-                    $m->bcc($attr->apartment_owner);
-                }
-                $m->send(new ReservationReceipt($user_reservation, $this->settings));
+                $user_reservation->agent = 1;
+
+                Mail::to($attr->apartment_owner)->send(new ReservationReceipt($user_reservation, $this->settings));
             } catch (\Throwable $th) {
                 //dd($th);
                 Log::error("Mail error :" . $th);

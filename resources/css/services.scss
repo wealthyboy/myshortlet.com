@@ -710,6 +710,13 @@ button#dropdownIcon {
   border-color: transparent !important;
 }
 
+.flatpickr-day.today {
+  background-color: none !important;
+  border-color: #959ea9;
+  border-color: transparent !important;
+  color: #000 !important;
+}
+
 
 /*
   end Flat Pickr
