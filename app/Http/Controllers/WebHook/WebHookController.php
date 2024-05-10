@@ -147,8 +147,7 @@ class WebHookController extends Controller
                     ->send(new ReservationReceipt($user_reservation, $this->settings));
 
                 $user_reservation->agent = 1;
-                $user_reservation->apartment_name = $apartment->name;
-
+                $user_reservation->apartment_name = optional($apartment)->name;
                 Mail::to($attr->apartment_owner)->send(new ReservationReceipt($user_reservation, $this->settings));
             } catch (\Throwable $th) {
                 //dd($th);
