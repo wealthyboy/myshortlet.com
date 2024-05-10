@@ -405,7 +405,11 @@
                                                       <td class="wz" width="30"></td>
                                                       <td class="RegularTextTD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #000;font-family: sans-serif;font-size: 13px;font-weight: lighter;text-align: left;line-height: 23px;">Dear {{ $user_reservation->guest_user->fullname() }},<br>Thank you for choosing Avenue montaigne for your stay. We are pleased to inform you that your reservation request is CONFIRMED and your reservation details are as follows.
                                                          <br />
-                                                         <b>Note: You’re required to present a valid ID upon arrival to check-in</b>
+                                                         <b>Note: You’re required to present a valid ID upon arrival to check-in
+
+                                                            <br />
+                                                            <a href="https://avenuemontaigne.ng/check-in">Click here to check-in</a>
+                                                         </b>
 
                                                       </td>
                                                       <td class="wz" width="30"></td>
@@ -902,7 +906,13 @@
 
                                  <tr>
 
-                                    <td class="catd" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="FooterCaptionLink" data-color="FooterCaptionTXT" style="color: rgb(12, 13, 13); font-family: sans-serif; font-size: 13px; text-align: center; font-weight: bold; line-height: 190%;"> <a href="#" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="FooterCaptionLink"></a>Thank you for using our service.</td>
+                                    <td class="catd" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="FooterCaptionLink" data-color="FooterCaptionTXT" style="color: rgb(12, 13, 13); font-family: sans-serif; font-size: 13px; text-align: center; font-weight: bold; line-height: 190%;">
+                                       <a href="https://avenuemontaigne.ng/pages/cancellation-policy" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="FooterCaptionLink">
+                                          Click here read about our cancellation policy.
+
+                                       </a>
+                                       <br /> Thank you for using our service.
+                                    </td>
                                  </tr>
 
                                  <tr>
