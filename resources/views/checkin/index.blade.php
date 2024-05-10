@@ -10,12 +10,10 @@
         <div class="row justify-content-center">
             <div class="ml-1 col-md-7   mr-1">
                 <div class=" mt-4 mb-4">
-                    @if (session('success'))
-                    <div class="alert alert-success">
+                    <div id="alert-success" class="alert d-none alert-success">
                         Thank you for checking in .Enjoy your stay
                     </div>
 
-                    @else
                     <form method="POST" id="submit" class=" pl-4 pr-4 border form-validate bg-white " action="/check-in">
 
                         <div class="text-center">
@@ -91,7 +89,6 @@
 
 
                     </form>
-                    @endif
 
                 </div>
             </div>
@@ -111,7 +108,5 @@
 @stop
 
 @section('inline-scripts')
-document.getElementById('mySelect').addEventListener('change', function() {
-//this.style.borderBottom = '1px solid #ccc'; // Set border-bottom style
-});
+
 @stop

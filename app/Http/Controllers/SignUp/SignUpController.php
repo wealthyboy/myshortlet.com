@@ -123,6 +123,7 @@ class SignUpController extends Controller
             $reservation->apartment_name = $attr->name;
             $guest->apartment_name = $attr->name;
 
+
             // Check if the directory exists, if not create it
             if (!File::exists($directory)) {
                 File::makeDirectory($directory);
@@ -142,6 +143,10 @@ class SignUpController extends Controller
 
                 Notification::route('mail', 'oluwa.tosin@avenuemontaigne.ng')
                     ->notify(new CheckinNotification($guest));
+                if ($attr->apartment_owner) {
+                    Notification::route('mail', $attr->apartment_owner)
+                        ->notify(new CheckinNotification($guest, $attr->apartment_owner));
+                }
             } catch (\Throwable $th) {
                 dd($th);
                 //  Log::error("Mail error :" . $th);

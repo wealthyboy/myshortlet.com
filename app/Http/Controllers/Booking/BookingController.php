@@ -48,7 +48,6 @@ class BookingController extends Controller
 		$ids = $ids;
 		$booking = $bookings[0];
 
-
 		if (!$booking) {
 			return redirect()->to('/');
 		}

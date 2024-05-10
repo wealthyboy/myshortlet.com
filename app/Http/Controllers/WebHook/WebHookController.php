@@ -55,8 +55,6 @@ class WebHookController extends Controller
             $user_reservation->user_id = optional($request->user())->id;
             $user_reservation->guest_user_id = $guest->id;
             $user_reservation->currency =  $input['currency'] === 'NGN' ? '₦' : '$';
-            //   $user_reservation->currency =  $input['currency'] === 'NGN' ? '₦' : '$';
-
             $user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
             $user_reservation->payment_type = 'online';
             $user_reservation->property_id = $input['property_id'];
@@ -84,6 +82,10 @@ class WebHookController extends Controller
                     }
                 }
             }
+
+            $apartment = isset($bookings[0]) && !empty($bookings[0]) ? Apartment::find($bookings[0]->apartment_id) : null;
+            $attr = Attribute::find(optional($apartment)->apartment_id);
+
 
             foreach ($bookings as $booking) {
                 $reservation = new Reservation;
@@ -138,10 +140,15 @@ class WebHookController extends Controller
             $admin_emails = explode(',', $this->settings->alert_email);
             try {
                 //$when = now()->addMinutes(5); 
-                Mail::to($guest->email)
-                    ->cc('info@avenuemontaigne.ng')
+                $m = Mail::to($guest->email)
+                    ->cc('frontdesk@avenuemontaigne.ng')
                     ->bcc('jacob.atam@gmail.com')
-                    ->send(new ReservationReceipt($user_reservation, $this->settings));
+                    ->bcc('info@avenuemontaigne.ng');
+
+                if (null !== $attr) {
+                    $m->bcc($attr->apatyment_owner);
+                }
+                $m->send(new ReservationReceipt($user_reservation, $this->settings));
             } catch (\Throwable $th) {
                 //dd($th);
                 Log::error("Mail error :" . $th);

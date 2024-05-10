@@ -175,28 +175,51 @@ class Helper
     public static function agents()
     {
         return [
-            'AM1' => 'afolabi_adekoya@yahoo.com',
-            'AM2' => 'ikuomolaolajuwon@yahoo.com',
-            'BM1' => 'Ikuomolaolajuwon@yahoo.com',
-            'BM2' => 'afolabi_adekoya@yahoo.com',
-            'BM3' => 'afolabi_adekoya@yahoo.com',
-            'BM4' => 'wale@phoenixvibes.net',
-            'BF1' => 'abayomioloko89@gmail.com',
-            'BF2' => 'maimunatk@yahoo.com',
-            'BF3' => 'taiwoshote@yahoo.com',
-            'BF4' => 'jemimasawari@yahoo.com',
-            'BF5' => 'oluwa.tosin@avenuemontaigne.ng',
-            'CM1' => 'jemimasawari@yahoo.com',
-            'CM2' => 'info@licl.com.ng',
-            'CM3' => 'abayomioloko89@gmail.com',
-            'CM4' => 'jemimasawari@yahoo.com',
-            'CF1' => 'jemimasawari@yahoo.com',
-            'CF2' => 'maimunatk@yahoo.com',
-            'CF3' => 'taiwoshote@yahoo.com',
-            'CF4' => 'abayomioloko89@gmail.com',
-            'CF5' => 'james.anjorin@gmail.com',
-            'DM1' => 'oluwafemiolaoluwa01@gmail.com',
-            'DM2' => 'abayomioloko89@gmail.com',
+            'AM1 - ' => 'afolabi_adekoya@yahoo.com',
+            'AM2 - ' => 'ikuomolaolajuwon@yahoo.com',
+            'BM1 - ' => 'Ikuomolaolajuwon@yahoo.com',
+            'BM2 - ' => 'afolabi_adekoya@yahoo.com',
+            'BM3 - ' => 'afolabi_adekoya@yahoo.com',
+            'BM4 - ' => 'wale@phoenixvibes.net',
+            'BF1 - ' => 'abayomioloko89@gmail.com',
+            'BF2 - ' => 'maimunatk@yahoo.com',
+            'BF3 - ' => 'taiwoshote@yahoo.com',
+            'BF4 - ' => 'jemimasawari@yahoo.com',
+            'BF5 - ' => 'oluwa.tosin@avenuemontaigne.ng',
+            'CM1 - ' => 'jemimasawari@yahoo.com',
+            'CM2 - ' => 'info@licl.com.ng',
+            'CM3 - ' => 'abayomioloko89@gmail.com',
+            'CM4 - ' => 'jemimasawari@yahoo.com',
+            'CF1 - ' => 'jemimasawari@yahoo.com',
+            'CF2 - ' => 'maimunatk@yahoo.com',
+            'CF3 - ' => 'taiwoshote@yahoo.com',
+            'CF4 - ' => 'abayomioloko89@gmail.com',
+            'CF5 - ' => 'james.anjorin@gmail.com',
+            'DM1 - ' => 'oluwafemiolaoluwa01@gmail.com',
+            'DM2 - ' => 'abayomioloko89@gmail.com',
+
+            // 'AM1 - Mars'=>'afolabi_adekoya@yahoo.com',
+            // 'AM2 - Nor'=>'ikuomolaolajuwon@yahoo.com',
+            // 'BM1 - Ner'=>'ikuomolaolajuwon@yahoo.com',
+            // 'BM2 - Mercury'=>
+            // 'BM3 - Earth'=>
+            // 'BM4 - BM luxury'=>
+            // 'BF1 - Cannes'=>
+            // 'BF2 - Gates'=>
+            // 'BF3 - Mayfair'=>
+            // 'BF4 - The Pearl'=>
+            // 'BF5 - Eiffel'=>
+            // 'CM1 - Sanctuary' =>
+            // 'CM2 - Le Maison'=>
+            // 'CM3 - Stanmore'=>
+            // 'CM4 - The black Oynx' =>
+            // 'CF1 - Elysium'=>
+            // 'CF2 - Brentwood' =>
+            // 'CF3 - Parklane'=>
+            // 'CF4 - Senna'=>
+            // 'CF5 - Ascot'=>
+            // 'DM1 - Du Louvre' =>
+            // 'DM2 - Theodora'=>
         ];
     }
 

@@ -71,6 +71,8 @@ class AttributesController extends Controller
         $attribute->sort_order = $request->sort_order;
         $attribute->color_code = $request->color_code;
         $attribute->image = $request->image;
+        $attribute->apartment_owner = $request->apartment_owner;
+
         $attribute->svg = $request->svg;
         $attribute->slug = str_slug($request->name, '_');
         $attribute->parent_id  = $request->parent_id ? $request->parent_id : null;
@@ -140,6 +142,7 @@ class AttributesController extends Controller
         $attribute->parent_id  = $request->parent_id ? $request->parent_id : null;
         $attribute->color_code = $request->color_code;
         $attribute->image      = $request->image;
+        $attribute->apartment_owner = $request->apartment_owner;
         $attribute->svg = $request->svg;
 
         $attribute->slug       = str_slug($request->name, '_');

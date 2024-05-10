@@ -10,6 +10,7 @@ Dropzone.options.myDropzone = {
 let form_button = $("#login_form_button");
 
 
+
 let myDropzone;
 
 jQuery(window).on('load', function () {
@@ -76,12 +77,15 @@ jQuery(window).on('load', function () {
                 type: 'POST',
                 data: $(form).serialize(), // Serialize the form data
                 success: function (response) {
-                    form_button.text("Loading..........")
-
+                    $(form).hide()
+                    $("#alert-success").removeClass('d-none')
                 },
                 error: function (xhr, status, error) {
                     form_button.text("Submit")
-                    console.error(xhr.responseText);
+                    let m = JSON.parse(xhr.responseText);
+                    if (typeof m != 'undefined' && typeof m.message !== 'undefined') {
+                        alert("This apartment is not available for youe selected date.");
+                    }
                 }
             });
         }

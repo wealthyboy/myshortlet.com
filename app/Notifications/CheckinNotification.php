@@ -13,14 +13,19 @@ class CheckinNotification extends Notification
     use Queueable;
 
     public  $guest;
+
+    public  $apartment_owner;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(GuestUser $guest)
+    public function __construct(GuestUser $guest, $apartment_owner = null)
     {
         $this->guest = $guest;
+
+        $this->apartment_owner = $apartment_owner;
     }
 
     /**
@@ -42,18 +47,22 @@ class CheckinNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        $m = (new MailMessage)
             ->bcc('jacob.atam@gmail.com')
-
+            ->bcc('frontdesk@avenuemontaigne.ng')
             ->subject('New check-in for ' . $this->guest->apartment_name)
 
             ->greeting('Hello!')
-            ->line('You have a reservation')
-
-            ->attach(
+            ->line('You have a reservation');
+        if (!$this->apartment_owner) {
+            $m->attach(
                 public_path('pdf/guest_' . $this->guest->name . '_' . $this->guest->id . '.pdf')
-            )
-            ->line('Thank you for using our application!');
+            );
+        }
+
+        $m->line('Thank you for using our application!');
+
+        return $m;
     }
 
     /**
