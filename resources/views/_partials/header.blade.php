@@ -66,7 +66,7 @@
 
         <ul class="nav navbar-nav navbar-center w-100 mt-5">
             <li class="w-100 py-3 font-weight-bold">
-                <a href="/apartments">Residences</a>
+                <a href="/apartments">Apartments</a>
             </li>
 
             <li class="w-100  font-weight-bold">
