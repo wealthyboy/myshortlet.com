@@ -21,7 +21,6 @@
 
 
 
-      @include('_partials.footer')
       <footer class="      pt-8 pb-6 footer text-muted position-absolute bottom-0 w-100">
          <div class="container container-xxl">
 
