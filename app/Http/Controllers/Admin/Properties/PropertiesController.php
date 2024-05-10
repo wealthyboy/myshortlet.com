@@ -260,7 +260,7 @@ class PropertiesController extends Controller
             $apartment->type = $request->type;
             $apartment->price_mode = $request->price_mode[$key];
             $apartment->apartment_id = $request->apartment_id[$key];
-            $apartment->allow = $request->apartment_allow[$key];
+            $apartment->allow = $request->is_active[$key];
             $apartment->no_of_rooms = $request->room_number[$key];
             $apartment->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires[$key], true);
             $apartment->property_id = $property->id;

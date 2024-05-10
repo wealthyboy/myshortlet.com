@@ -211,7 +211,7 @@
                         Enable/Disabled
                     </legend>
                     <div class="form-check form-switch">
-                        <input class="form-check-input" value="1" name="apartment_allow[{{ $counter }}]" type="checkbox" id="flexSwitchCheckChecked">
+                        <input class="form-check-input" value="1" name="is_active[{{ $counter }}]" type="checkbox" id="flexSwitchCheckChecked">
                         <label class="form-check-label" for="flexSwitchCheckChecked">Enable/Disable</label>
                     </div>
 
