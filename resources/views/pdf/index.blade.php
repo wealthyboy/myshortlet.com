@@ -63,7 +63,7 @@
 
         </div>
 
-        @if($visitor->image)
+        @if(null === $reservation->apartment_owner)
         <div style="float:right; font-size: 20px; font-weight: bold" class=" col-md-6">
             <img src="{{ $visitor->image }}" alt="Visitor Image" style="max-width: 400px; max-height: 350px;">
         </div>

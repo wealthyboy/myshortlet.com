@@ -2,30 +2,23 @@
 
 namespace App\Notifications;
 
-use App\Models\GuestUser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class CheckinNotification extends Notification
+class AgentCheckingNotification extends Notification
 {
     use Queueable;
-
-    public  $guest;
-
-    public  $apartment_owner;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(GuestUser $guest, $apartment_owner = null)
+    public function __construct()
     {
-        $this->guest = $guest;
-
-        $this->apartment_owner = $apartment_owner;
+        //
     }
 
     /**
@@ -47,25 +40,10 @@ class CheckinNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        $m = (new MailMessage)
-            ->bcc('jacob.atam@gmail.com')
-            ->bcc('frontdesk@avenuemontaigne.ng');
-        if ($this->apartment_owner) {
-            $m->bcc($this->apartment_owner);
-        }
-
-        $m->subject('New check-in for ' . $this->guest->apartment_name)
-
-            ->greeting('Hello!')
-            ->line('You have a reservation');
-        $m->attach(
-            public_path('pdf/guest_' . $this->guest->name . '_' . $this->guest->id . '.pdf')
-        );
-
-
-        $m->line('Thank you for using our application!');
-
-        return $m;
+        return (new MailMessage)
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**

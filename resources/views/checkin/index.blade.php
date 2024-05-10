@@ -58,11 +58,11 @@
 
 
                             <div class="form-group bmd-form-group col-md-6 col-12">
-                                <label class="bmd-label-floating">Checkin </label>
+                                <label class="bmd-label-floating">Check-in </label>
                                 <input type="text" class="form-control selector" name="checkin">
                             </div>
                             <div class="form-group bmd-form-group col-md-6 col-12">
-                                <label class="bmd-label-floating">Checkout</label>
+                                <label class="bmd-label-floating">Check-out</label>
                                 <input type="text" class="form-control selector" name="checkout">
                             </div>
 
@@ -80,7 +80,7 @@
                         </div>
 
                         <p class="p-1 col-12 ">
-                            <label for="pictures " class="bmd-label-floating upload">Upload ID (Only government issed IDs are accepted. eg International Passport, Driver’s License, National ID e.t.c)</label>
+                            <label for="pictures " class="bmd-label-floating upload">Upload ID (Only government issued IDs are accepted. e.g International Passport, Driver’s License, National ID e.t.c)</label>
                         <div class="dropzone col-12 mb-4" id="my-dropzone"></div>
                         <div id="pic-error" class="error text-danger"></div>
                         </p>
