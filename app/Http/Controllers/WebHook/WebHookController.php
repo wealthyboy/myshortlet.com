@@ -142,13 +142,13 @@ class WebHookController extends Controller
                 //$when = now()->addMinutes(5); 
                 Mail::to($guest->email)
                     ->bcc('frontdesk@avenuemontaigne.ng')
-                    ->bcc('jacob.atam@gmail.com')
                     ->bcc('info@avenuemontaigne.ng')
                     ->send(new ReservationReceipt($user_reservation, $this->settings));
 
                 $user_reservation->agent = 1;
                 $user_reservation->apartment_name = optional($apartment)->name;
-                if (null !== $attr &&  $attr->apartment_owner) {
+
+                if (null !== $attr && $attr->apartment_owner) {
                     Mail::to($attr->apartment_owner)->send(new ReservationReceipt($user_reservation, $this->settings));
                 }
             } catch (\Throwable $th) {
