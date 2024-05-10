@@ -38,8 +38,8 @@ class ReservationsController extends Controller
 			//Notification::notify();
 		}
 
-		UserReservation::truncate();
-		Reservation::truncate();
+		//UserReservation::truncate();
+		//Reservation::truncate();
 		$reservations = UserReservation::orderBy('created_at', 'desc')->paginate(50);
 
 		//dd($reservations);
