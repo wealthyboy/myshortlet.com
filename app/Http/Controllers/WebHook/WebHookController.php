@@ -146,7 +146,7 @@ class WebHookController extends Controller
                     ->bcc('info@avenuemontaigne.ng');
 
                 if (null !== $attr) {
-                    $m->bcc($attr->apatyment_owner);
+                    $m->bcc($attr->apartment_owner);
                 }
                 $m->send(new ReservationReceipt($user_reservation, $this->settings));
             } catch (\Throwable $th) {
