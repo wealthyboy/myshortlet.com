@@ -159,6 +159,11 @@
                 </div>
                 <span class="lt bold-2 text-white">{{ order_text }}</span>
               </button>
+            <div class="primary-color p-3">
+              Read
+              <a class="text-info bold-2" target="_blank" href="https://avenuemontaigne.ng/pages/cancellation-policy">
+                Cancellation Policy</a> of this property
+            </div>
             </p>
           </div>
         </div>
