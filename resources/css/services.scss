@@ -710,12 +710,7 @@ button#dropdownIcon {
   border-color: transparent !important;
 }
 
-.flatpickr-day.today {
-  background-color: none !important;
-  border-color: #959ea9;
-  border-color: transparent !important;
-  color: #000 !important;
-}
+
 
 
 /*
@@ -737,6 +732,12 @@ button#dropdownIcon {
   height: 28px;
 }
 
+.flatpickr-day.today {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  border-color: transparent !important;
+  color: #000 !important;
+}
 
 /*
   End Forms
