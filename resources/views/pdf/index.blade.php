@@ -25,7 +25,7 @@
         }
 
         .left {
-            width: 45%;
+            width: 50%;
             text-align: left;
         }
 
@@ -58,16 +58,14 @@
             <p><strong>Phone:</strong> {{ $visitor->phone_number }}</p>
             <p><strong>Apartment:</strong> {{ $reservation->apartment_name }}</p>
 
-            <p><strong>Check-in:</strong> {{ $reservation->checkin->format('l') }} {{ $reservation->checkin->format('d') }} {{ $reservation->checkin->format('F')  }}{{ $reservation->checkin->isoFormat('Y') }}</p>
-            <p><strong>Check-out:</strong> {{ $reservation->checkout->format('l') }} {{ $reservation->checkout->format('d') }} {{ $reservation->checkout->format('F')  }}{{ $reservation->checkout->isoFormat('Y') }}</p>
+            <p><strong>Check-in:</strong> {{ $reservation->checkin->format('l') }} {{ $reservation->checkin->format('d') }} {{ $reservation->checkin->format('F')  }} {{ $reservation->checkin->isoFormat('Y') }}</p>
+            <p><strong>Check-out:</strong> {{ $reservation->checkout->format('l') }} {{ $reservation->checkout->format('d') }} {{ $reservation->checkout->format('F')  }} {{ $reservation->checkout->isoFormat('Y') }}</p>
 
         </div>
 
-        @if(null === $reservation->apartment_owner)
         <div style="float:right; font-size: 20px; font-weight: bold" class=" col-md-6">
             <img src="{{ $visitor->image }}" alt="Visitor Image" style="max-width: 400px; max-height: 350px;">
         </div>
-        @endif
 
     </div>
 
