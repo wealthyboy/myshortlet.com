@@ -217,7 +217,7 @@
                     </legend>
                     <div class="togglebutton">
                         <label>
-                            <input {{ isset($apartment) && $apartment->allow == 1 ? 'checked' : ''}} name="allow[{{ $apartment->id }}]" value="1" type="checkbox">
+                            <input {{ isset($apartment) && $apartment->allow == 1 ? 'checked' : ''}} name="edit_allow[{{ $apartment->id }}]" value="1" type="checkbox">
                             Enable/Disable
                         </label>
                     </div>
