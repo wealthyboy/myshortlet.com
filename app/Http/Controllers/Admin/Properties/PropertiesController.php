@@ -249,6 +249,8 @@ class PropertiesController extends Controller
 
             $apartment = new Apartment;
             $room_images = !empty($request->images[$key]) ? $request->images[$key] : [];
+            $apartment_allow = !empty($request->apartment_allow) ? $request->apartment_allow[$key] : 0;
+
             $apartment->name = $request->room_name[$key];
             $apartment->price = $request->room_price[$key];
             $apartment->sale_price = $request->room_sale_price[$key];
@@ -260,7 +262,7 @@ class PropertiesController extends Controller
             $apartment->type = $request->type;
             $apartment->price_mode = $request->price_mode[$key];
             $apartment->apartment_id = $request->apartment_id[$key];
-            $apartment->allow = $request->is_active[$key];
+            $apartment->allow = $apartment_allow;
             $apartment->no_of_rooms = $request->room_number[$key];
             $apartment->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires[$key], true);
             $apartment->property_id = $property->id;
