@@ -479,7 +479,7 @@ class PropertiesController extends Controller
             $property->save();
             foreach ($request->edit_room_name as $room_id => $room) {
                 $room_images = !empty($request->edit_room_images[$room_id]) ? $request->edit_room_images[$room_id] : [];
-                $allow = !empty($request->edit_allow) ? $request->edit_allow[$room_id] : 0;
+                $allow = !empty($request->edit_allow)  &&  isset($request->edit_allow[$room_id]) ? $request->edit_allow[$room_id] : 0;
 
                 $apartment = Apartment::updateOrCreate(
                     ['id' => $room_id],
