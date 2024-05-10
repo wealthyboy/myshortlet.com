@@ -250,7 +250,6 @@ class PropertiesController extends Controller
             $apartment = new Apartment;
             $room_images = !empty($request->images[$key]) ? $request->images[$key] : [];
             $apartment_allow = !empty($request->apartment_allow) ? $request->apartment_allow[$key] : 0;
-
             $apartment->name = $request->room_name[$key];
             $apartment->price = $request->room_price[$key];
             $apartment->sale_price = $request->room_sale_price[$key];
@@ -480,6 +479,8 @@ class PropertiesController extends Controller
             $property->save();
             foreach ($request->edit_room_name as $room_id => $room) {
                 $room_images = !empty($request->edit_room_images[$room_id]) ? $request->edit_room_images[$room_id] : [];
+                $allow = !empty($request->edit_allow) ? $request->edit_allow[$room_id] : 0;
+
                 $apartment = Apartment::updateOrCreate(
                     ['id' => $room_id],
                     [
@@ -490,7 +491,7 @@ class PropertiesController extends Controller
                         'sale_price_expires' => Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]),
                         'slug' => str_slug($request->edit_room_name[$room_id]),
                         'max_adults' => $request->edit_room_max_adults[$room_id],
-                        'allow' => $request->edit_allow[$room_id],
+                        'allow' => $allow,
                         'apartment_id' => $request->edit_apartment_id[$room_id],
                         'image_link' => $request->edit_image_links[$room_id],
                         'video_link' => $request->edit_video_links[$room_id],
