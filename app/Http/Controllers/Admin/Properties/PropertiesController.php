@@ -483,6 +483,8 @@ class PropertiesController extends Controller
                 $video_links = !empty($request->edit_video_links)  &&  isset($request->edit_video_links[$room_id]) ? $request->edit_video_links[$room_id] : null;
                 $edit_image_links = !empty($request->edit_image_links)  &&  isset($request->edit_image_links[$room_id]) ? $request->edit_image_links[$room_id] : null;
                 $edit_room_price = !empty($request->edit_room_price)  &&  isset($request->edit_room_price[$room_id]) ? $request->edit_room_price[$room_id] : null;
+                $edit_room_sale_price = !empty($request->edit_room_sale_price)  &&  isset($request->edit_room_sale_price[$room_id]) ? $request->edit_room_sale_price[$room_id] : null;
+
 
 
 
@@ -492,7 +494,7 @@ class PropertiesController extends Controller
                     [
                         'name' => $request->edit_room_name[$room_id],
                         'price' => $edit_room_price,
-                        'sale_price' => $request->edit_room_sale_price[$room_id],
+                        'sale_price' => $edit_room_sale_price,
                         'price_mode' => $request->edit_room_price_mode[$room_id],
                         'sale_price_expires' => Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]),
                         'slug' => str_slug($request->edit_room_name[$room_id]),
