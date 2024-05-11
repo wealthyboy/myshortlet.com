@@ -484,6 +484,10 @@ class PropertiesController extends Controller
                 $edit_image_links = !empty($request->edit_image_links)  &&  isset($request->edit_image_links[$room_id]) ? $request->edit_image_links[$room_id] : null;
                 $edit_room_price = !empty($request->edit_room_price)  &&  isset($request->edit_room_price[$room_id]) ? $request->edit_room_price[$room_id] : null;
                 $edit_room_sale_price = !empty($request->edit_room_sale_price)  &&  isset($request->edit_room_sale_price[$room_id]) ? $request->edit_room_sale_price[$room_id] : null;
+                $edit_room_max_adults = !empty($request->edit_room_max_adults)  &&  isset($request->edit_room_max_adults[$room_id]) ? $request->edit_room_max_adults[$room_id] : null;
+                $edit_room_number = !empty($request->edit_room_number)  &&  isset($request->edit_room_number[$room_id]) ? $request->edit_room_number[$room_id] : null;
+                $edit_room_toilets = !empty($request->edit_room_toilets)  &&  isset($request->edit_room_toilets[$room_id]) ? $request->edit_room_toilets[$room_id] : null;
+
 
 
 
@@ -498,14 +502,14 @@ class PropertiesController extends Controller
                         'price_mode' => $request->edit_room_price_mode[$room_id],
                         'sale_price_expires' => !empty($request->edit_room_sale_price_expires)  &&  isset($request->edit_room_sale_price_expires[$room_id]) ? Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]) : null,
                         'slug' => str_slug($request->edit_room_name[$room_id]),
-                        'max_adults' => $request->edit_room_max_adults[$room_id],
+                        'max_adults' => $edit_room_max_adults,
                         'allow' => $allow,
                         'apartment_id' => $request->edit_apartment_id[$room_id],
                         'image_link' => $edit_image_links,
                         'video_link' => $video_links,
                         'property_id'  => $property->id,
-                        'no_of_rooms' => $request->edit_room_number[$room_id],
-                        'toilets'  => $request->edit_room_toilets[$room_id],
+                        'no_of_rooms' => $edit_room_number,
+                        'toilets'  => $edit_room_toilets,
                         'type' => $request->type,
                     ]
                 );
