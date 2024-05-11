@@ -453,6 +453,9 @@ class PropertiesController extends Controller
             "description" => "required"
         ]);
 
+        ini_set('max_input_vars', 11000); // Set max_input_vars to 5000
+
+
 
         $apartment_facilities = Apartment::find(27);
 
