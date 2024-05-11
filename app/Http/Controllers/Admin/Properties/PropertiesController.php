@@ -433,6 +433,8 @@ class PropertiesController extends Controller
         $room_ids =  Attribute::parents()->where('type', 'room_id')->orderBy('sort_order', 'asc')->get();
         $categories = Category::parents()->get();
 
+        dd($property->apartments);
+
         return view('admin.apartments.edit', compact('room_ids', 'house_attributes', 'categories', 'others', 'property_types', 'extras', 'str', 'bedrooms', 'counter', 'attributes', 'locations', 'property', 'helper', 'apartment_facilities'));
     }
 
