@@ -147,7 +147,7 @@ class Apartment extends Model
     {
         // Extract the ID from the original URL using regular expressions
         preg_match('/\/file\/d\/(.+?)\//', $originalUrl, $matches);
-        $id =  isset($matches[1]) ? isset($matches[1]) : null;
+        $id =  isset($matches[1]) ? $matches[1] : null;
 
         return $id;
     }
@@ -157,7 +157,7 @@ class Apartment extends Model
     {
         // Extract the ID from the original URL using regular expressions
         preg_match('/\/file\/d\/(.+?)\//', $originalUrl, $matches);
-        $id =  isset($matches[1]) ? isset($matches[1]) : null;
+        $id =  isset($matches[1]) ? $matches[1] : null;
 
         // Construct the thumbnail URL
         $thumbnailUrl = "https://drive.google.com/thumbnail?id={$id}&sz=w2000";
