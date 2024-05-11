@@ -453,7 +453,7 @@ class PropertiesController extends Controller
             "description" => "required"
         ]);
 
-        ini_set('max_input_vars', 200000); // Set max_input_vars to 5000
+        // ini_set('max_input_vars', 200000); // Set max_input_vars to 5000
 
 
 
