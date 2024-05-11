@@ -460,7 +460,7 @@ class PropertiesController extends Controller
 
         $property = $this->property($request, $id, true);
         $apartment_facilities_id = $request->apartment_facilities_id;
-        dd($request->all());
+        // dd($request->all());
 
         /**
          * Reservation Images

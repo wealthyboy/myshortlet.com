@@ -158,17 +158,16 @@ jQuery(function () {
   });
 
   $(document).on("click", ".delete-panel", function (e) {
+    alert()
     e.preventDefault();
     $(this).text("Taking it out....");
+    let self = $(this)
     $.ajax({
       type: "delete",
       url: $(this).attr("href"),
     })
       .done(function (response) {
-        console.log(response);
-        $(this)
-          .parent(".variation-panel")
-          .remove();
+        self.parent().parent().remove()
       })
       .catch(function () {
         $(this).text("Something went wrong.");
