@@ -147,8 +147,7 @@ class Apartment extends Model
     {
         // Extract the ID from the original URL using regular expressions
         preg_match('/\/file\/d\/(.+?)\//', $originalUrl, $matches);
-        dd($matches);
-        $id = $matches[1];
+        $id =  isset($matches[1]) ? isset($matches[1]) : null;
 
         return $id;
     }
