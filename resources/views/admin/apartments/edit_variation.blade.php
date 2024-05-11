@@ -16,7 +16,7 @@
             <div class="col-md-6">
                 <div class="form-group label-floating is-ty">
                     <label class="control-label">Accommodation Type Name</label>
-                    <input name="edit_room_names[{{ $apartment->id }}]" required="true" value="{{ $apartment->name }}" class="form-control  variation" type="text">
+                    <input name="edit_room_names[{{ $apartment->id }}][]" required="true" value="{{ $apartment->name }}" class="form-control  variation" type="text">
                     <span class="material-input"></span>
                 </div>
             </div>
