@@ -481,6 +481,8 @@ class PropertiesController extends Controller
                 $room_images = !empty($request->edit_room_images[$room_id]) ? $request->edit_room_images[$room_id] : [];
                 $allow = !empty($request->edit_allow)  &&  isset($request->edit_allow[$room_id]) ? $request->edit_allow[$room_id] : 0;
                 $video_links = !empty($request->edit_video_links)  &&  isset($request->edit_video_links[$room_id]) ? $request->edit_video_links[$room_id] : null;
+                $edit_image_links = !empty($request->edit_image_links)  &&  isset($request->edit_image_links[$room_id]) ? $request->edit_image_links[$room_id] : null;
+
 
 
                 $apartment = Apartment::updateOrCreate(
@@ -495,7 +497,7 @@ class PropertiesController extends Controller
                         'max_adults' => $request->edit_room_max_adults[$room_id],
                         'allow' => $allow,
                         'apartment_id' => $request->edit_apartment_id[$room_id],
-                        'image_link' => $request->edit_image_links[$room_id],
+                        'image_link' => $edit_image_links,
                         'video_link' => $video_links,
                         'property_id'  => $property->id,
                         'no_of_rooms' => $request->edit_room_number[$room_id],
