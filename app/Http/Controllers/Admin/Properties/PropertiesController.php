@@ -496,7 +496,7 @@ class PropertiesController extends Controller
                         'price' => $edit_room_price,
                         'sale_price' => $edit_room_sale_price,
                         'price_mode' => $request->edit_room_price_mode[$room_id],
-                        'sale_price_expires' => Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]),
+                        'sale_price_expires' => !empty($request->edit_room_sale_price_expires)  &&  isset($request->edit_room_sale_price_expires[$room_id]) ? Helper::getFormatedDate($request->edit_room_sale_price_expires[$room_id]) : null,
                         'slug' => str_slug($request->edit_room_name[$room_id]),
                         'max_adults' => $request->edit_room_max_adults[$room_id],
                         'allow' => $allow,
