@@ -155,11 +155,8 @@
 
                         <h5 class="mb-2">{{ $parent->name }} </h5>
                         @foreach($parent->children as $bedroom)
-                        <label for="bedroom-{{ $bedroom->id }}-{{ '' }}" class="radio-inline">
-                           <input class="radio-button" value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}" name="{{ $parent->slug }}_{{ '' }}" type="radio" name="optradio">{{ $bedroom->name }}
-                           <div class="bed-count form-group">
-                              <input name="bed_count[{{ $bedroom->id }}]" placeholder="Number of beds" class="form-control" value="" type="number">
-                           </div>
+                        <label for="bedroom-{{ $bedroom->id }}" class="radio-inline">
+                           <input class="radio-button" value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}" name="bed_count[{{$parent->id}}]" type="radio">{{ $bedroom->name }}
                         </label>
                         @endforeach
 

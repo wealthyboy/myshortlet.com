@@ -149,7 +149,7 @@ class ApartmentsController extends Controller
         //     'address' => "required",
         //     "description" => "required"
         // ]);
-
+        // dd($request->all());
         $apartment = new Apartment;
         $room_images = !empty($request->images) ? $request->images : [];
         $apartment_allow = !empty($request->apartment_allow) ? $request->apartment_allow : 0;
@@ -175,9 +175,18 @@ class ApartmentsController extends Controller
             $apartment->attributes()->sync(array_filter($request->apartment_facilities_id));
         }
 
-        if (isset($request->multiple_apartment_extras)) {
-            // $this->syncExtras($request->multiple_apartment_extras[$key],  $request->multiple_apartment_extra_services[$key], $apartment);
+        if (is_array($request->bed_count) && !empty($request->bed_count)) {
+            //dd($request->bed_count);
+            $bed_count = array_filter($request->bed_count);
+            $beds = [];
+            if (!empty($bed_count)) {
+                foreach ($bed_count as $key  => $value) {
+                    $beds[$value] = ['parent_id' => $key, 'bed_count' => 1];
+                }
+            }
         }
+
+        $apartment->attributes()->syncWithoutDetaching($beds);
 
         $this->syncImages($room_images, $apartment);
 
