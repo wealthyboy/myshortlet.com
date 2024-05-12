@@ -48,7 +48,6 @@ class CheckinNotification extends Notification
     public function toMail($notifiable)
     {
         $m = (new MailMessage)
-            ->bcc('jacob.atam@gmail.com')
             ->bcc('frontdesk@avenuemontaigne.ng');
         if ($this->apartment_owner) {
             $m->bcc($this->apartment_owner);
