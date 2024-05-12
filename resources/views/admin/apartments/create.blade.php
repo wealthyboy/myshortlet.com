@@ -3,12 +3,12 @@
 @stop
 @section('content')
 <div class="row">
-<div class="col-sm-12">
-   @include('admin.errors.errors')
-   <!--      Wizard container        -->
-   <div class="wizard-container">
-      <div class="card wizard-card" data-color="rose" id="wizardProfile">
-            <form enctype="multipart/form-data" id="product-form" action="{{ route('admin.properties.store',request()->all()) }}" method="post">
+   <div class="col-sm-12">
+      @include('admin.errors.errors')
+      <!--      Wizard container        -->
+      <div class="wizard-container">
+         <div class="card wizard-card" data-color="rose" id="wizardProfile">
+            <form enctype="multipart/form-data" id="product-form" action="{{ route('admin.apartments.store',request()->all()) }}" method="post">
                @csrf
                @include('admin.apartments.shortlets')
             </form>
@@ -27,14 +27,6 @@
 $(document).ready(function() {
 CKEDITOR.replace('description',{
 height: '400px'
-})       
+})
 });
 @stop
-
-
-
-
-
-
-
-

@@ -12,7 +12,7 @@
 
             <a href="{{ route('admin.apartments.create', ['mode'=>'shortlet']) }}" rel="tooltip" title="Add New" class="btn btn-primary btn-simple btn-xs">
                 <i class="material-icons">add</i>
-                Add Property
+                Add Apartment
             </a>
             <a href="javascript:void(0)" onclick="confirm('Are you sure?') ? $('#form-apartments').submit() : false;" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
                 <i class="material-icons">close</i>
@@ -72,7 +72,6 @@
                                             </label>
                                         </div>
                                     </th>
-                                    <th>Image</th>
                                     <th>Name</th>
                                     <th>Status</th>
                                     <th>category</th>
@@ -90,11 +89,7 @@
                                             </label>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="img-container">
-                                            <img class="" src="{{  $apartment->image  }}" alt="...">
-                                        </div>
-                                    </td>
+
                                     <td><a target="_blank">{{ $apartment->name }} </a></td>
                                     <td>{{ $apartment->allow == 1 ? 'Live' : 'Offline' }}</td>
                                     <td>
