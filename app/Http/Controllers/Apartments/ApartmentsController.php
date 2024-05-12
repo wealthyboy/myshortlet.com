@@ -99,7 +99,6 @@ class ApartmentsController extends Controller
                 $apartments
             )->additional(['attributes' => $attributes, 'search' => false]);
         }
-
         return  view('apartments.apartments', compact(
             'page_title',
             'breadcrumb',
@@ -115,6 +114,7 @@ class ApartmentsController extends Controller
     public function index(Request $request, Location $location)
     {
 
+        dd($apartments = 9);
 
         $types =  [
             'extra_services',

@@ -215,8 +215,7 @@ export default {
       });
     });
 
-
-    console.log(new URL(window.location))
+    console.log(this.propertys);
     this.$store.commit("setPropertyLoading", true);
     let time = new Date().getTime();
     document.getElementById("ap-loaders").classList.add('d-none')
@@ -314,7 +313,7 @@ export default {
       const retrievedObject = JSON.parse(retrievedJsonString);
 
       // Now 'retrievedObject' contains the object retrieved from localStorage
-      console.log(retrievedObject);
+      console.log('here');
 
       axios
         .get(window.location)

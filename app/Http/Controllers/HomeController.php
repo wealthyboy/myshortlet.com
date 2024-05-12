@@ -146,9 +146,9 @@ class HomeController
         $end_date = !empty($date) ? $date['end_date'] : null;
         $nights = Helper::nights($date);
         $property_type = null;
-        $apartments = Apartment::with('images',  'free_services', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent')->where('apartments.property_id', '!=', null)
+        $apartments = Apartment::with('images',  'free_services', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent')
+            ->where('apartments.property_id', '!=', null)
             ->where('apartments.max_adults', '>=',  $data['max_adults'])
-            ->where('apartments.max_children', '>=', $data['max_children'])
             ->where('apartments.no_of_rooms', '>=', $data['rooms'])
             ->select('apartments.*')
             ->groupBy('apartments.id')
@@ -159,7 +159,6 @@ class HomeController
         $days = 0;
         $filter = false;
 
-        // dd($apartments);
 
         $saved =  auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];
         if (!optional($site_status)->make_live) {

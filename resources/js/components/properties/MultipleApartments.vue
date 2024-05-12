@@ -137,6 +137,7 @@ export default {
     };
   },
   created() {
+    console.log(this.apartments)
     this.stays = this.nights;
     this.roomsAv = this.apartments;
   },
