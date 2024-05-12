@@ -228,6 +228,15 @@
                                         </span>
                                         <span class="svg-icon-text">{{ room.max_adults }} Guests</span>
                                     </div>
+
+                                    <div class="position-relative mb-1">
+                                        <span class="position-absolute svg-icon-section">
+                                            <svg>
+                                                <use xlink:href="#location_city"></use>
+                                            </svg>
+                                        </span>
+                                        <span class="svg-icon-text">{{ room.floor }} </span>
+                                    </div>
                                 </div>
 
                                 <div class="uitk-spacing uitk-spacing-margin-blockend-six">

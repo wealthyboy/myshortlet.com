@@ -95,7 +95,7 @@
                     <div class="position-relative mb-1">
                         <span class="position-absolute svg-icon-section">
                             <svg>
-                                <use xlink:href="#bedrooms-icon"></use>
+                                <use xlink:href="#location_city"></use>
                             </svg>
                         </span>
                         <span class="svg-icon-text">{{ room.floor }} </span>
