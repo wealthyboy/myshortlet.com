@@ -567,9 +567,9 @@ class ApartmentsController extends Controller
                     $beds[$value] = ['parent_id' => $key, 'bed_count' => 1];
                 }
             }
+            $apartment->attributes()->syncWithoutDetaching($beds);
         }
 
-        $apartment->attributes()->syncWithoutDetaching($beds);
 
         $this->syncImages($room_images, $apartment);
 
