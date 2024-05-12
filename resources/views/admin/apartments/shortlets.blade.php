@@ -1,113 +1,259 @@
 <!--  You can switch " data-color="purple"   with one of the next bright colors: "green", "orange", "red", "blue"       -->
 <div class="wizard-header">
-               <h3 class="wizard-title">
-                  Upload Property
-               </h3>
-            </div>
-            <div class="wizard-navigation">
-               <ul>
-                  <li><a href="wizard.html#ProductData" data-toggle="tab">Property Data</a></li>
-                  <li><a href="wizard.html#Cancelation" data-toggle="tab">Cancelation/Rules/Facilities </a></li>
-                  <li><a href="wizard.html#ProductVariations" data-toggle="tab">Aprtment</a></li>
-               </ul>
-            </div>
-            <div class="tab-content">
-               <div class="tab-pane" id="ProductData">
-                  @include('admin.apartments.apartment_data')
+   <h3 class="wizard-title">
+      Upload Apartment
+   </h3>
+</div>
+<div class="wizard-navigation">
+   <ul>
+
+      <li><a href="wizard.html#ProductVariations" data-toggle="tab">Aprtment</a></li>
+   </ul>
+</div>
+<div class="tab-content">
+
+
+   <div class="tab-pane" id="ProductVariations">
+
+
+      <div class="clearfix"></div>
+
+
+      <div class="row p-attr mb-2 variation-panel">
+         <div class="col-md-9 col-xs-9 col-sm-9">
+         </div>
+         <div class="col-md-3 col-xs-12 text-right border col-sm-12 pt-2 pb-4">
+            <a href="#" title="open/close panel" class="open-close-panel"><i class="fa fa-plus"></i> Expand</a>
+         </div>
+
+         <div id="variation-panel" data-id="" class=" v-panel">
+            <div class="clearfix"></div>
+            <div class="col-md-12">
+               <input name="has_more_room" value="1" class="" type="hidden">
+               <input name="new_room" value="1" class="" type="hidden">
+               <div class="col-md-4">
+                  <div class="form-group label-floating is-ty">
+                     <label class="control-label">Accommodation Type Name</label>
+                     <input name="room_name" required="true" value="" class="form-control  variation" type="text">
+                     <span class="material-input"></span>
+                  </div>
                </div>
-               <div class="tab-pane" id="Cancelation">
-                  <div class="row">
-                     <div class="col-md-6">
-                       <div class="card-content">
-                           <div class="form-group">
-                              <label class="label-control">Check in iime</label>
-                              <input type="text" required="true" name="check_in_time" class="form-control timepicker" value="14:00"/>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-md-6">
-                       <div class="card-content">
-                           <div class="form-group">
-                              <label class="label-control">Check out Time</label>
-                              <input name="check_out_time"  required="true" type="text" class="form-control timepicker" value="14:00"/>
-                           </div>
-                        </div>
-                     </div>
 
-                     <div class="col-md-12 mt-3 pr-5 ">
-                        <h4 class="card-title">Cancellation</h4>
-                        <div class="togglebutton cancel form-inline">
-                           <label>
-                           <input  name="is_refundable" id="allow_cancellation"  value="1" type="checkbox">
-                              Refundable 
-                           </label>
-                        </div>
-                     </div>
+               <div class="col-md-2">
+                  <div class="form-group">
+                     <select name="price_mode" id="" required="true" class="form-control">
+                        <option value="">Price Mode</option>
+                        <option value="per night">Per night</option>
+                        <option value="per week"> Per week</option>
+                        <option value="per month">Per month</option>
+                        <option value="per year"> Per year</option>
+                     </select>
+                  </div>
+               </div>
 
-                     <div class="col-sm-7  cancellation-message  d-none  {{ isset($apartment) &&  $apartment->allow_cancellation ? '' : ''}} ">
-                        <div class="form-group">
-                           <label for="cancellation_message">Cancellation Policy</label>
-                           <textarea class="form-control" name="cancellation_message" id="cancellation_message" rows="5">{{ isset($apartment) ?   $apartment->is_refundable : '' }}</textarea>
-                        </div>
-                     </div>
+               <div class="col-md-2">
+                  <div class="form-group">
+                     <select name="apartment_id" id="" required="true" class="form-control">
+                        <option value="">Apartment</option>
+                        @foreach($room_ids as $key => $room_id)
+                        <option value="{{ $room_id->id }}">{{ $room_id->name }}</option>
+                        @endforeach
 
-                     <div class="col-md-12 mt-1 pr-5 ">
-                       @include('admin.apartments.attributes',['attris'=> $attributes, 'ob' => null])
-                     </div>
+                     </select>
+                  </div>
+               </div>
 
 
-                     <div class="col-md-12 mt-1 pr-5 ">
-                       @include('admin.apartments.attributes',['attris'=> $others,'ob' => null])
-                     </div>
+               <div class="col-md-2">
+                  <div class="form-group">
+                     <select name="property_id" id="" required="true" class="form-control">
+                        <option value="">Properties</option>
+                        @foreach($properties as $key => $room_id)
+                        <option value="{{ $room_id->id }}">{{ $room_id->name }}</option>
+                        @endforeach
 
-                     
-                     <div class="col-md-12 mt-1 pr-5 ">
-                        <h4 class="">Property Extras</h4>
-                        @include('admin.apartments.extras',[
-                           'obj' => null, 
-                           'name' => 'property_extra_services',
-                           'attribute_name' => 'property_extras'
-                        ])
-                     </div>
+                     </select>
+                  </div>
+               </div>
 
-                     
+
+               <div class="col-md-2">
+                  <div class="form-group">
+                     <select name="room_quantity" name="quantity" id="" required="true" class="form-control">
+                        <option value="" selected>Select Quantity</option>
+                        @for ($i = 1; $i< 10; $i++) <option value="{{ $i }}"> {{ $i }}</option>
+                           @endfor
+                     </select>
+                  </div>
+               </div>
+
+               <div class="col-md-2">
+                  <div class="form-group">
+                     <select name="room_number" name="bedrooms" id="bedrooms" class="form-control  bedrooms">
+                        <option value="" selected>Choose Bedrooms</option>
+                        @for ($i = 1; $i< 10; $i++) <option value="{{ $i }}"> {{ $i }}</option>@endfor
+                     </select>
+                  </div>
+               </div>
+
+               <div class="col-md-2">
+                  <div class="form-group">
+                     <select required="required" name="room_toilets" id="children" class="form-control">
+                        <option value="" selected>Choose Toilets</option>
+                        @for ($i = 1; $i< 10; $i++) @php $value=$i * 0.5; @endphp <option value="{{ $value }}"> {{ $value }}</option>
+                           @endfor
+                     </select>
+                  </div>
+               </div>
+
+
+               <div class="col-md-2">
+                  <div class="form-group label-floating is-empty">
+                     <label class="control-label">Total Guests</label>
+                     <input name="room_max_adults" required="true" value="" class="form-control   variation" type="number">
+                  </div>
+               </div>
+
+
+
+               <div class="col-md-2">
+                  <div class="form-group label-floating is-empty">
+                     <label class="control-label">Price per/night</label>
+                     <input name="room_price" required="true" value="{{ old('price') }}" class="form-control   variation" type="number">
+                  </div>
+               </div>
+               <div class="col-md-2">
+                  <div class="form-group label-floating is-empty">
+                     <label class="control-label">Sale Price</label>
+                     <input name="room_sale_price" value="" class="form-control variation_sale_price variation" type="number">
+                  </div>
+               </div>
+               <div class="col-md-4">
+                  <div class="form-group label-floating">
+                     <label class="control-label">End Date</label>
+                     <input class="form-control  datepicker pull-right" name="room_sale_price_expires" id="datepicker" type="text">
+                  </div>
+               </div>
+               <div class="col-md-12">
+                  <div class="form-group label-floating">
+                     <label class="control-label">Image Links</label>
+                     <textarea rows="20" name="room_image_links" class="form-control  variation" type="text"></textarea>
 
                   </div>
                </div>
-               <div class="tab-pane" id="ProductVariations">
-                  <h4 class="info-text">Apartment</h4>
-                  <div class="clearfix"></div>
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label class="control-label">Apartment Type</label>
-                        <select name="type" id="apartment-type" class="form-control"  required="true" title="Please select product type"  title="" data-size="7">
-                           <option  value="" selected>Choose One</option>
-                           <option  value="multiple" selected>Multiple</option>
-                        </select>
-                     </div>
+               <div class="col-md-12">
+                  <div class="form-group label-floating">
+                     <label class="control-label">Video Links</label>
+                     <input class="form-control   pull-right" name="room_video_links" type="text">
                   </div>
-                  
-                  <div class="clearfix"></div>
-                  <div class="row p-attr  new-room  ">
-                     <label class="col-md-12  col-xs-12 col-xs-12">
-                        <div class="pull-right">
-                           <button type="button"  id="add-room" class="btn btn-round  btn-primary">
-                           Add Apartment
-                           <span class="btn-label btn-label-right">
-                              <i class="fa fa-plus"></i>
-                           </span>
-                           </button>
+               </div>
+
+
+
+               <div class="col-md-12 bed mb-5">
+                  @if ($bedrooms->count())
+                  @foreach($bedrooms as $key => $parent)
+                  <div class="bedroom-{{ $key + 1 }} d-none mb-2">
+                     <h5 class="mb-2">{{ $parent->name }} </h5>
+                     @foreach($parent->children as $bedroom)
+                     <label for="bedroom-{{ $bedroom->id }}-{{ '' }}" class="radio-inline">
+                        <input class="radio-button" value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}" name="{{ $parent->slug }}_{{ '' }}" type="radio" name="optradio">{{ $bedroom->name }}
+                        <div class="bed-count form-group">
+                           <input name="bed_count[{{ $bedroom->id }}]" placeholder="Number of beds" class="form-control" value="" type="number">
                         </div>
                      </label>
+                     @endforeach
+                  </div>
+                  @endforeach
+                  @endif
+               </div>
+
+
+               <div class="clearfix"></div>
+
+               <div class="col-sm-12">
+                  <div id="j-drop" class="j-drop">
+                     <input accept="image/*" required="true" data-msg="Upload  at least 5 images" onchange="getFile(this,'images[]')" class="upload_input" multiple="true" type="file" id="upload_file_input" name="product_image" />
+                     <div class=" upload-text  {{ '' }}">
+                        <a class="" href="#">
+                           <img class="" src="/backend/img/upload_icon.png">
+                           <b>Click on anywhere to upload image</b>
+                        </a>
+                     </div>
+                     <div id="j-details" class="j-details"></div>
                   </div>
                </div>
-               <div class="wizard-footer">
-                  <div class="pull-right">
-                     <input type='button' class='btn btn-next btn-fill btn-rose btn-round btn-wd' name='next' value='Next' />
-                     <input type='submit' class='btn btn-finish btn-fill btn-rose   btn-round  btn-wd' name='finish' value='Finish' />
+
+
+               <div class="col-md-12 mt-5 pr-5">
+                  @foreach( $apartment_facilities as $apartment_facility )
+
+
+                  <h5>{{ $apartment_facility->name }}</h5>
+                  @foreach($apartment_facility->children->sortBy('name') as $child)
+                  <div class="mt-2 mb-2">
+                     <div class="">
+                        <label role="button">
+                           <input name="apartment_facilities_id[]" value="{{ $child->id }}" type="checkbox">
+                           <span class="toggle"></span>
+                           {{ $child->name }}
+                        </label>
+                     </div>
                   </div>
-                  <div class="pull-left">
-                     <input type='button' class='btn btn-previous btn-fill btn-primary  btn-round  btn-wd' name='previous' value='Previous' />
-                  </div>
-                  <div class="clearfix"></div>
+                  @endforeach
+                  @endforeach
                </div>
+
+               <div class="col-md-12 mt-1 pr-5 ">
+                  <h4 class="text-capitalize">Room Extras</h4>
+
+
+
+                  @foreach($extras as $child)
+                  <div class="mt-2 mb-2">
+                     <div class=" d-flex">
+                        <label role="button">
+                           <input name="multiple_apartment_extras[]" value="{{ $child->id }}" type="checkbox">
+                           <span class="toggle"></span>
+                           {{ $child->name }}
+                        </label>
+                        @include('includes.loop',['child'=>$child,'space'=>'&nbsp;&nbsp;','model' => 'Attribute','name' => 'attribute_id'])
+                     </div>
+                     <div class="extras-se  form-group">
+                        <input name="multiple_apartment_extra_services[{{ $child->id }}]" value="" placeholder="Leave blank if you want it free" class="form-control" type="number">
+                     </div>
+                  </div>
+                  @endforeach
+               </div>
+
+               <div class="row">
+                  <div class="col-md-6">
+
+                     <div class="">
+                        <label role="button">
+                           <input name="apartment_allow[]" value="1" type="checkbox">
+                           <span class="toggle"></span>
+                           Enable/Disabled
+                        </label>
+                     </div>
+
+
+                  </div>
+
+               </div>
+            </div>
+
+         </div>
+
+      </div>
+   </div>
+   <div class="wizard-footer">
+      <div class="pull-right">
+         <input type='button' class='btn btn-next btn-fill btn-rose btn-round btn-wd' name='next' value='Next' />
+         <input type='submit' class='btn btn-finish btn-fill btn-rose   btn-round  btn-wd' name='Submit' value='Finish' />
+      </div>
+      <div class="pull-left">
+         <input type='button' class='btn btn-previous btn-fill btn-primary  btn-round  btn-wd' name='previous' value='Previous' />
+      </div>
+      <div class="clearfix"></div>
+   </div>

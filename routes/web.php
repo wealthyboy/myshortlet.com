@@ -58,6 +58,8 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
 
     Route::get('properties/apartment', 'Admin\Properties\PropertiesController@newRoom');
     Route::resource('properties', 'Admin\Properties\PropertiesController', ['names' => 'admin.properties']);
+    Route::resource('apartments', 'Admin\Apartments\ApartmentsController', ['names' => 'admin.apartments']);
+
     Route::delete('room/{id}/delete', 'Admin\Rooms\RoomsController@destroy');
 
     Route::resource('category', 'Admin\Category\CategoryController', ['names' => 'category']);

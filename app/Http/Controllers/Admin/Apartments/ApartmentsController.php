@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Properties;
-
-
+namespace App\Http\Controllers\Admin\Apartments;
 
 use App\Models\User;
 
@@ -31,7 +29,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PropertiesController extends Controller
+class ApartmentsController extends Controller
 {
     protected $settings;
 
@@ -59,8 +57,8 @@ class PropertiesController extends Controller
     public function index(Request $request)
     {
         // dd(ApartmentAttribute::truncate());
-        $properties = Property::orderBy('created_at', 'desc')->paginate(10);
-        return view('admin.properties.index', compact('properties'));
+        $apartments = Apartment::orderBy('created_at', 'desc')->paginate(10);
+        return view('admin.apartments.index', compact('apartments'));
     }
 
     /**
@@ -80,18 +78,23 @@ class PropertiesController extends Controller
             $house_attributes = Attribute::parents()->whereIn('type', $this->house_attrs)->get()->groupBy('type');
         }
 
-        $apartment_facilities = Attribute::parents()->where('type', 'apartment facilities')->orderBy('sort_order', 'asc')->get();
         $property_types = Attribute::parents()->where('type', 'property type')->orderBy('sort_order', 'asc')->get();
+        $properties = Property::all();
+
         $extras = Attribute::parents()->where('type', 'extra services')->orderBy('sort_order', 'asc')->get();
         $bedrooms = Attribute::parents()->where('type', 'bedrooms')->orderBy('sort_order', 'asc')->get();
         $others = Attribute::where('type', 'other')->orderBy('sort_order', 'asc')->get()->groupBy('parent.name');
         $room_ids = Attribute::parents()->where('type', 'room_id')->orderBy('sort_order', 'asc')->get();
 
-
+        $bedrooms = Attribute::parents()->where('type', 'bedrooms')->orderBy('sort_order', 'asc')->get();
+        $attributes = Attribute::parents()->whereIn('type', $this->types)->get();
+        $apartment_facilities = Attribute::parents()->where('type', 'apartment facilities')->orderBy('sort_order', 'asc')->get();
+        $room_ids = Attribute::parents()->where('type', 'room_id')->orderBy('sort_order', 'asc')->get();
+        $extras = Attribute::parents()->where('type', 'extra services')->orderBy('sort_order', 'asc')->get();
         $helper =  new Helper;
         $str = new Str;
         return view(
-            'admin.properties.create',
+            'admin.apartments.create',
             compact(
                 'others',
                 'property_types',
@@ -100,12 +103,12 @@ class PropertiesController extends Controller
                 'extras',
                 'bedrooms',
                 'apartment_facilities',
-                'counter',
                 'locations',
                 'attributes',
                 'categories',
                 'house_attributes',
-                'room_ids'
+                'room_ids',
+                'properties'
             )
         );
     }
@@ -435,7 +438,7 @@ class PropertiesController extends Controller
 
         // dd($property->apartments);
 
-        return view('admin.properties.edit', compact('room_ids', 'house_attributes', 'categories', 'others', 'property_types', 'extras', 'str', 'bedrooms', 'counter', 'attributes', 'locations', 'property', 'helper', 'apartment_facilities'));
+        return view('admin.apartments.edit', compact('room_ids', 'house_attributes', 'categories', 'others', 'property_types', 'extras', 'str', 'bedrooms', 'counter', 'attributes', 'locations', 'property', 'helper', 'apartment_facilities'));
     }
 
     /**

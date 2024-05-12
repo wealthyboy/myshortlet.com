@@ -123,6 +123,13 @@
                                     </a>
                                 </li>
 
+                                <li class="{{ $helper->active_link(['apartments']) }} ">
+                                    <a href="{{ route('admin.apartments.index') }}">
+                                        <span class="sidebar-mini"> A </span>
+                                        <span class="sidebar-normal"> Apartments </span>
+                                    </a>
+                                </li>
+
                                 <li class="{{ $helper->active_link(['agents']) }} ">
                                     <a href="{{ route('admin.sublets.index') }}">
                                         <span class="sidebar-mini"> A </span>
