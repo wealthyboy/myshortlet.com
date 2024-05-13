@@ -203,7 +203,7 @@
                   <div class="col-md-4">
                      <div class="form-group label-floating is-ty">
                         <label class="control-label">Teaser</label>
-                        <textarea name="teaser" class="form-control  variation">{{ $apartment->teaser }}</textarea>
+                        <textarea name="teaser" row="20" class="form-control  variation"></textarea>
                         <span class="material-input"></span>
                      </div>
                   </div>

@@ -33,7 +33,8 @@ class Apartment extends Model
         'percentage_off',
         'google_drive_image_links',
         'google_drive_image_link',
-        'google_drive_video_link'
+        'google_drive_video_link',
+        'hightlights'
 
     ];
 
@@ -55,7 +56,7 @@ class Apartment extends Model
         'apartment_id',
         'image_link',
         'video_link',
-        'allow'
+        'allow',
     ];
 
 
@@ -224,6 +225,14 @@ class Apartment extends Model
     {
         $image = basename(optional(optional($this->images)->first())->image);
         return asset('images/' . $this->folder . '/' . 'm' . '/' . $image);
+    }
+
+
+    public function getHightlightsAttribute()
+    {
+        $array = explode(',', $this->teaser);
+
+        return $array;
     }
 
 

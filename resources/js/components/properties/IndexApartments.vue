@@ -180,14 +180,15 @@
                                         <h3 class="">Highlights</h3>
                                     </div>
                                     <div class="">
-                                        {{ room.teaser }}
+
+                                        <span v-for="(h, index ) in highlights" :key="index" class="ml-2">
+                                            {{ h }}
+                                        </span>
+
+
 
                                     </div>
                                 </div>
-
-
-
-
 
                                 <div class="d-flex  flex-column">
                                     <div class="position-relative mb-2">
@@ -348,6 +349,7 @@ export default {
             qty: false,
             stays: null,
             loading: false,
+            highlights: [],
             propertyLoading: false,
             propertyIsLoading: false,
             isDateNeedsToToOpen: false,
@@ -475,13 +477,17 @@ export default {
             this.showImageModal = !this.showImageModal;
             this.room = room
         },
+        parseStringToArray(str) {
+            const array = str.split(",");
+            // Filter out non-numeric values and empty strings
+            return array;
+        },
         showRoom(room) {
             this.showModal = !this.showModal;
             this.room = room
-
-
-
             this.groupData(room)
+
+            this.highlights = this.parseStringToArray(room.teaser);
 
 
             jQuery(function () {
