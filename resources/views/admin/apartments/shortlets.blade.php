@@ -177,6 +177,36 @@
                         <input class="form-control   pull-right" name="room_video_links" type="text">
                      </div>
                   </div>
+                  <div class="col-md-4">
+                     <div class="form-group label-floating is-ty">
+                        <label class="control-label">Agent Email</label>
+                        <input name="owner_email" class="form-control  variation" type="text">
+                        <span class="material-input"></span>
+                     </div>
+                  </div>
+
+                  <div class="col-md-4">
+                     <div class="form-group label-floating is-ty">
+                        <label class="control-label">Wifi password</label>
+                        <input name="wifi_password" class="form-control  variation" type="text">
+                        <span class="material-input"></span>
+                     </div>
+                  </div>
+
+                  <div class="col-md-4">
+                     <div class="form-group label-floating is-ty">
+                        <label class="control-label">Wifi ssid</label>
+                        <input name="wifi_ssid" class="form-control  variation" type="text">
+                        <span class="material-input"></span>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group label-floating is-ty">
+                        <label class="control-label">Teaser</label>
+                        <input name="teaser" class="form-control  variation" type="text">
+                        <span class="material-input"></span>
+                     </div>
+                  </div>
 
 
 

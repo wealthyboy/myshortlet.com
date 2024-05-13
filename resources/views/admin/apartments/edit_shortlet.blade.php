@@ -73,8 +73,15 @@
                   <div class="form-group">
                      <select name="floor" id="" required="true" class="form-control">
                         <option value="">Floor</option>
+
+
                         @foreach($floors as $key => $floor)
+
+                        @if($apartment->floor == $floor)
+                        <option value="{{  $floor }}" selected>{{ $floor }}</option>
+                        @else
                         <option value="{{ $floor }}">{{ $floor }}</option>
+                        @endif
                         @endforeach
 
                      </select>
@@ -86,8 +93,13 @@
                   <div class="form-group">
                      <select name="property_id" id="" required="true" class="form-control">
                         <option value="">Properties</option>
-                        @foreach($properties as $key => $room_id)
-                        <option value="{{ $room_id->id }}">{{ $room_id->name }}</option>
+                        @foreach($properties as $key => $property)
+
+                        @if($apartment->property_id == $property->id)
+                        <option value="{{  $property->id }}" selected>{{ $property->name }}</option>
+                        @else
+                        <option value="{{ $property->id }}">{{ $property->name }}</option>
+                        @endif
                         @endforeach
 
                      </select>
@@ -99,7 +111,11 @@
                   <div class="form-group">
                      <select name="room_quantity" name="quantity" id="" required="true" class="form-control">
                         <option value="" selected>Select Quantity</option>
-                        @for ($i = 1; $i< 10; $i++) <option value="{{ $i }}"> {{ $i }}</option>
+                        @for ($i = 1; $i< 10; $i++) @if($apartment->quantity == $i)
+                           <option value="{{ $i }}" selected>{{ $i }}</option>
+                           @else
+                           <option value="{{ $i }}">{{ $i }}</option>
+                           @endif
                            @endfor
                      </select>
                   </div>
@@ -123,7 +139,11 @@
                   <div class="form-group">
                      <select required="required" name="room_toilets" id="children" class="form-control">
                         <option value="" selected>Choose Toilets</option>
-                        @for ($i = 1; $i< 10; $i++) @php $value=$i * 0.5; @endphp <option value="{{ $value }}"> {{ $value }}</option>
+                        @for ($i = 1; $i< 4; $i++) @if($apartment->toilets == $i)
+                           <option value="{{ $i }}" selected> {{ $i }}</option>
+                           @else
+                           <option value="{{ $i }}"> {{ $i }}</option>
+                           @endif
                            @endfor
                      </select>
                   </div>
@@ -155,6 +175,38 @@
                   <div class="form-group label-floating">
                      <label class="control-label">End Date</label>
                      <input class="form-control  datepicker pull-right" value="{{ $helper::getReversedFormatedDate($apartment->sale_price_expires) }}" name="room_sale_price_expires" id="datepicker" type="text">
+                  </div>
+               </div>
+
+
+               <div class="col-md-4">
+                  <div class="form-group label-floating is-ty">
+                     <label class="control-label">Agent Email</label>
+                     <input name="owner_email" value="{{ $apartment->owner_email }}" class="form-control  variation" type="text">
+                     <span class="material-input"></span>
+                  </div>
+               </div>
+
+               <div class="col-md-4">
+                  <div class="form-group label-floating is-ty">
+                     <label class="control-label">Wifi password</label>
+                     <input name="wifi_password" value="{{ $apartment->wifi_password }}" class="form-control  variation" type="text">
+                     <span class="material-input"></span>
+                  </div>
+               </div>
+
+               <div class="col-md-4">
+                  <div class="form-group label-floating is-ty">
+                     <label class="control-label">Wifi ssid</label>
+                     <input name="wifi_ssid" value="{{ $apartment->wifi_ssid }}" class="form-control  variation" type="text">
+                     <span class="material-input"></span>
+                  </div>
+               </div>
+               <div class="col-md-4">
+                  <div class="form-group label-floating is-ty">
+                     <label class="control-label">Teaser</label>
+                     <input name="teaser" value="{{ $apartment->teaser }}" class="form-control  variation" type="text">
+                     <span class="material-input"></span>
                   </div>
                </div>
 

@@ -166,6 +166,12 @@ class ApartmentsController extends Controller
         $apartment->price_mode = $request->price_mode;
         $apartment->apartment_id = $request->apartment_id;
         $apartment->allow = $apartment_allow;
+        $apartment->owner_email = $request->owner_email;
+        $apartment->wifi_password = $request->wifi_password;
+        $apartment->wifi_ssid = $request->wifi_ssid;
+        $apartment->teaser = $request->teaser;
+
+
         $apartment->no_of_rooms = $request->room_number;
         $apartment->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires, true);
         $apartment->property_id = $request->property_id;
@@ -186,7 +192,7 @@ class ApartmentsController extends Controller
             }
         }
 
-        $apartment->attributes()->syncWithoutDetaching($beds);
+        // $apartment->attributes()->syncWithoutDetaching($beds);
 
         $this->syncImages($room_images, $apartment);
 
@@ -291,129 +297,6 @@ class ApartmentsController extends Controller
         return $property;
     }
 
-    public function propertyWithMultipleApartments($request,  $property)
-    {
-
-        //  $price = implode(array_values($request->room_price));
-        // dd($request->all());
-
-        foreach ($request->room_price  as $key => $room) {
-
-            $apartment = new Apartment;
-            $room_images = !empty($request->images[$key]) ? $request->images[$key] : [];
-            $apartment_allow = !empty($request->apartment_allow) ? $request->apartment_allow[$key] : 0;
-            $apartment->name = $request->room_name[$key];
-            $apartment->price = $request->room_price[$key];
-            $apartment->sale_price = $request->room_sale_price[$key];
-            $apartment->slug = str_slug($request->room_name[$key]);
-            $apartment->max_adults = $request->room_max_adults[$key];
-            $apartment->quantity = $request->room_quantity[$key];
-            $apartment->image_link = $request->room_image_links[$key];
-            $apartment->video_link = $request->room_video_links[$key];
-            $apartment->type = $request->type;
-            $apartment->price_mode = $request->price_mode[$key];
-            $apartment->apartment_id = $request->apartment_id[$key];
-            $apartment->allow = $apartment_allow;
-            $apartment->no_of_rooms = $request->room_number[$key];
-            $apartment->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires[$key], true);
-            $apartment->property_id = $property->id;
-            $apartment->uuid = time();
-            $apartment->toilets = $request->room_toilets[$key];
-            $apartment->save();
-            if (isset($request->apartment_facilities_id[$key])) {
-                $apartment->attributes()->sync(array_filter($request->apartment_facilities_id[$key]));
-            }
-
-            if (isset($request->multiple_apartment_extras[$key])) {
-                // $this->syncExtras($request->multiple_apartment_extras[$key],  $request->multiple_apartment_extra_services[$key], $apartment);
-            }
-
-            $this->syncImages($room_images, $apartment, $property);
-            //  $this->syncAttributes($request, $apartment, $key);
-        }
-
-        // $property->price  =  $price;
-        $property->save();
-    }
-
-    public function propertyWithSingleApartments($request, $apartment, $property)
-    {
-
-        $room_images = !empty($request->images) ? $request->images : [];
-        $apartment->price = $request->single_room_price;
-        $apartment->sale_price = $request->single_room_sale_price;
-        $apartment->slug = str_slug($request->single_room_name);
-        $apartment->max_adults = $request->single_room_max_adults;
-        $apartment->quantity = 1;
-        $apartment->price_mode = $request->sinble_price_mode;
-        $apartment->type = $request->type;
-        // $apartment->max_children = $request->single_room_max_children;
-        $apartment->no_of_rooms = $request->single_room_number;
-        $apartment->size = $request->size;
-        $apartment->sale_price_expires = Helper::getFormatedDate($request->single_room_sale_price_expires, true);
-        $apartment->property_id = $property->id;
-        $apartment->uuid = time();
-        $apartment->toilets = $request->single_room_toilets;
-        $apartment->save();
-        $property->price = $request->single_room_price;
-        $property->save();
-        $apartment->attributes()->sync(array_filter($request->attribute_id));
-
-        if (!$request->land) {
-            if (isset($request->single_apartment_extras[212])) {
-                $this->syncExtras($request->single_apartment_extras[212],  $request->single_apartment_extra_services[212], $apartment);
-            }
-
-            $this->syncImages($room_images, $apartment, $property);
-            $this->syncAttributes($request, $apartment, 212);
-        }
-    }
-
-    public function syncExtras($extras, $extra_services_price,  $obj)
-    {
-        $obj->attributes()->syncWithoutDetaching($extras);
-        if (!empty($extra_services_price)) {
-            $prices = array_filter($extra_services_price);
-            if (!empty($prices)) {
-                foreach ($prices as $key  => $extra) {
-                    $obj->attributes()->updateExistingPivot($key, [
-                        'price' => $extra,
-                    ]);
-                }
-            }
-        }
-    }
-
-    public function syncAttributes($request, $apartment, $key = null)
-    {
-        //  $apartment->attributes()->truncate();
-
-
-        if (is_array($request->bed_count) && !empty($request->bed_count)) {
-            //dd($request->bed_count);
-            $bed_count = array_filter($request->bed_count);
-            $beds = [];
-            if (!empty($bed_count)) {
-                foreach ($bed_count as $ky  => $value) {
-                    $value = array_filter($value);
-                    foreach ($value as $k  => $v) {
-                        $beds[$ky][$k] = ['bed_count' => $v];
-                    }
-                }
-            }
-
-            // dd($beds);
-
-            if (in_array($key, array_keys($beds))) {
-                $apartment->attributes()->syncWithoutDetaching($beds[$key]);
-            }
-
-
-
-            // dd($apartment->attributes, $beds[$key], ApartmentAttribute::all());
-        }
-    }
-
     public function syncImages($images, $attr, $property = null)
     {
         if (count($images)  > 0) {
@@ -431,16 +314,7 @@ class ApartmentsController extends Controller
         }
     }
 
-    public function beds($request, $key = null)
-    {
-        $beds = [];
-        for ($i = 1; $i < 10; $i++) {
-            $input = $key ? 'bedroom_' . $i . '_' . $key : 'bedroom_' . $i;
-            $input = $request->$input;
-            $beds[] = $input;
-        }
-        return $beds;
-    }
+
 
     public function newRoom(Request $request)
     {
@@ -544,6 +418,10 @@ class ApartmentsController extends Controller
         $apartment->quantity = $request->room_quantity;
         $apartment->image_link = $request->room_image_links;
         $apartment->video_link = $request->room_video_links;
+        $apartment->owner_email = $request->owner_email;
+        $apartment->wifi_password = $request->wifi_password;
+        $apartment->wifi_ssid = $request->wifi_ssid;
+        $apartment->teaser = $request->teaser;
         $apartment->type = $request->type;
         $apartment->floor = $request->floor;
         $apartment->price_mode = $request->price_mode;
