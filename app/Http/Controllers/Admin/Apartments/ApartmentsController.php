@@ -205,97 +205,7 @@ class ApartmentsController extends Controller
         return \Redirect::to('/admin/apartments');
     }
 
-    public function property($request, $id = null, $update = false)
-    {
 
-        $property  = $id ?  Property::find($id) : new Property;
-        $token     = mt_rand();
-        $images = !empty($request->images) ? $request->images : [];
-        $location_full_name = null;
-        if (!empty($request->location_id)) {
-            $location_ids = array_reverse($request->location_id);
-            $location_ids = Location::find($location_ids);
-            $location_full_name = implode(', ', array_reverse($location_ids->pluck('name')->toArray()));
-        }
-
-        $title = $id ? $request->apartment_name . '-' . $property->token : $request->apartment_name . '-' . $token;
-        $property->name = $request->apartment_name;
-        $property->address = $request->address;
-        $property->image = $request->image;
-        $property->type  = $request->type;
-        $property->mode  = $request->mode;
-        $property->price = $request->price;
-        $property->size  = $request->size;
-
-        $property->description = $request->description;
-        $property->is_refundable = $request->is_refundable ? 1 : 0;
-        $property->check_in_time = $request->check_in_time;
-        $property->check_out_time = $request->check_out_time;
-        $property->is_refundable = $request->is_refundable ? 1 : 0;
-        $property->cancellation_message  = $request->cancellation_message;
-        $property->cancellation_fee = $request->cancellation_fee;
-        $property->virtual_tour = $request->virtual_tour;
-        $property->featured = $request->featured ? 1 : 0;
-        $property->allow = $request->allow ? 1 : 0;
-        $property->is_price_negotiable = $request->is_price_negotiable ? 1 : 0;
-        $property->is_shortlet = $request->is_shortlet ? 1 : 1;
-        $property->bedrooms = $request->bedrooms;
-        $property->toilets = $request->toilets;
-        $property->location_full_name  = $location_full_name;
-        $property->slug = str_slug($title);
-        $property->token =  $id ? $property->token : $token;
-        $property->save();
-
-        if (!empty($request->location_id)) {
-            $property->locations()->sync($request->location_id);
-        }
-
-        $property->attributes()->sync($request->attribute_id);
-        $property->categories()->sync($request->category_id);
-        $locations = Location::find($request->location_id);
-
-        if (!empty($request->attribute_id)) {
-            foreach ($request->attribute_id as $key => $attribute) {
-                if ($key && is_string($key)) {
-                    $property->attributes()->updateExistingPivot($attribute, [
-                        'name' => $key,
-                    ]);
-                }
-            }
-        }
-
-
-        if (!empty($request->location_id)) {
-            foreach ($locations as $location) {
-                $location->attributes()->sync($request->attribute_id);
-            }
-        }
-
-
-
-        if ($request->mode == 'shortlet') {
-            if (!empty($request->property_extra_services)) {
-                $prices = array_filter($request->property_extra_services);
-                if (!empty($prices)) {
-                    foreach ($prices as $key  => $extra) {
-                        $property->attributes()->updateExistingPivot($key, [
-                            'price' => $extra,
-                        ]);
-                    }
-                }
-            }
-
-            $this->syncExtras($request->property_extras,  $request->property_extra_services, $property);
-            if (!empty($request->apartment_facilities_id)) {
-                foreach ($request->apartment_facilities_id as $key  => $apartment_facility_id) {
-                    $property->attributes()->syncWithoutDetaching($apartment_facility_id);
-                }
-            }
-        }
-
-
-        return $property;
-    }
 
     public function syncImages($images, $attr, $property = null)
     {
@@ -312,24 +222,6 @@ class ApartmentsController extends Controller
                 }
             }
         }
-    }
-
-
-
-    public function newRoom(Request $request)
-    {
-        $counter = rand(1, 500);
-        $bedrooms =  Attribute::parents()->where('type', 'bedrooms')->orderBy('sort_order', 'asc')->get();
-        $attributes = Attribute::parents()->whereIn('type', $this->types)->get();
-        $apartment_facilities =  Attribute::parents()->where('type', 'apartment facilities')->orderBy('sort_order', 'asc')->get();
-        $room_ids =  Attribute::parents()->where('type', 'room_id')->orderBy('sort_order', 'asc')->get();
-
-        $extras =  Attribute::parents()->where('type', 'extra services')->orderBy('sort_order', 'asc')->get();
-        $helper = new Helper;
-        return view(
-            'admin.apartments.variation',
-            compact('extras', 'room_ids', 'bedrooms', 'apartment_facilities', 'counter', 'attributes', 'helper')
-        );
     }
 
     /**
@@ -481,8 +373,7 @@ class ApartmentsController extends Controller
         (new Activity)->Log("Deleted  {$count} Products");
 
         foreach ($request->selected as $selected) {
-            $delete = Property::find($selected);
-            $delete->apartments()->delete();
+            $delete = Apartment::find($selected);
             $delete->delete();
         }
 
