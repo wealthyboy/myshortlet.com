@@ -192,7 +192,7 @@ class ApartmentsController extends Controller
             }
         }
 
-        // $apartment->attributes()->syncWithoutDetaching($beds);
+        $apartment->attributes()->syncWithoutDetaching($beds);
 
         $this->syncImages($room_images, $apartment);
 
