@@ -139,7 +139,8 @@
                   <div class="form-group">
                      <select required="required" name="room_toilets" id="children" class="form-control">
                         <option value="" selected>Choose Toilets</option>
-                        @for ($i = 1; $i< 4; $i++) @if($apartment->toilets == $i)
+
+                        @for ($i = 1; $i< 10; $i++) @php $value=$i * 0.5; @if($apartment->toilets == $i)
                            <option value="{{ $i }}" selected> {{ $i }}</option>
                            @else
                            <option value="{{ $i }}"> {{ $i }}</option>
