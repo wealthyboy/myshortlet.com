@@ -180,25 +180,7 @@
                                         <h3 class="">Highlights</h3>
                                     </div>
                                     <div class="">
-                                        <span class="">
-                                            Air conditioning
-                                        </span>
-                                        <span class="ml-2">
-                                            Connecting rooms available
-                                        </span>
-
-                                        <span class="ml-2">
-                                            Flat-screen TV
-                                        </span>
-                                        <span class="ml-2">
-                                            Pillowtop bed
-                                        </span>
-                                        <span class="ml-2">
-                                            Premium bedding
-                                        </span>
-                                        <span class="ml-2">
-                                            Blackout drapes/curtains
-                                        </span>
+                                        {{ room.teaser }}
 
                                     </div>
                                 </div>
