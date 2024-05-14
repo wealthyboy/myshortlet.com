@@ -408,7 +408,7 @@
                                                          <b>Note: You’re required to present a valid ID upon arrival to check-in
 
                                                             <br />
-                                                            <a style="color:#67bffd;" class="" href="https://avenuemontaigne.ng/check-in">Click here to Check-in</a>
+                                                            <a style="color:#67bffd;" class="" href="https://avenuemontaigne.ng/check-in?id={{$user_reservation->id}}">Click here to Check-in</a>
                                                          </b>
 
                                                       </td>
