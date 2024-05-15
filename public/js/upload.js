@@ -1,5 +1,10 @@
 
-$(".selector").flatpickr();
+$(".selector").flatpickr({
+    defaultDate: "today", // Start from today's date
+    altInput: true, // Enable the text input
+    altFormat: "F j, Y", // Display format
+    dateFormat: "Y-m-d", // Submit format
+});
 
 Dropzone.autoDiscover = false;
 // Customize Dropzone's default message
@@ -69,7 +74,7 @@ jQuery(window).on('load', function () {
 
             $("#form").addClass('header-filter')
 
-            form_button.text("Loading..........")
+            form_button.text("Loading...")
 
             // AJAX call
             $.ajax({

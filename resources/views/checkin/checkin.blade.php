@@ -35,46 +35,70 @@
                         <div class="form-row">
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label class="bmd-label-floating">First name</label>
-                                <input id="first_name" type="text" class="form-control" name="first_name" value="{{  old('first_name') }}" required>
+                                <input id="first_name" type="text" disabled="true" class="form-control" name="first_name" value="{{ $user_reservation->guest_user->name }}" required>
+                                <input id="first_ame" type="hidden" class="form-control" name="first_name" value="{{ $user_reservation->guest_user->name }}">
+
                             </div>
 
 
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label class="bmd-label-floating">Last name</label>
-                                <input id="last_name" type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" required>
+                                <input id="last_name" type="text" disabled="true" class="form-control" name="last_name" value="{{ $user_reservation->guest_user->last_name  }}" required>
+                                <input id="last_nam" type="hidden" class="form-control" name="last_name" value="{{ $user_reservation->guest_user->last_name  }}">
+
 
                             </div>
 
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label class="bmd-label-floating">Email</label>
-                                <input id="email" type="email" class="form-control" name="email" autocomplete="off">
+                                <input id="email" type="email" disabled="true" class="form-control" name="email" value="{{ $user_reservation->guest_user->email  }}" autocomplete="off">
+                                <input id="emai" type="hidden" name="email" value="{{ $user_reservation->guest_user->email  }}" autocomplete="off">
+
 
                             </div>
 
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label class="bmd-label-floating">Phone</label>
-                                <input id="phone_number" type="text" class="form-control" name="phone_number" value="{{ old('phone_number') }}" required>
+                                <input id="phone_number" type="text" disabled="true" class="form-control" name="phone_number" value="{{  $user_reservation->guest_user->phone_number }}" required>
+                                <input id="phone_numbe" type="hidden" name="phone_number" value="{{  $user_reservation->guest_user->phone_number }}" required>
+
                             </div>
 
 
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label class="bmd-label-floating">Check-in </label>
-                                <input type="text" class="form-control selector" name="checkin">
+                                <input type="text" class="form-control selector" disabled="true" value="{{ $user_reservation->checkin }}" name="checkin">
+                                <input type="hidden" value="{{ $user_reservation->checkin }}" name="checkin">
+
                             </div>
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label class="bmd-label-floating">Check-out</label>
-                                <input type="text" class="form-control selector" name="checkout">
+                                <input type="text" class="form-control selector" disabled="true" value="{{ $user_reservation->checkout }}" name="checkout">
+                                <input type="hidden" value="{{ $user_reservation->checkout }}" name="checkout">
+
                             </div>
 
 
 
                             <div class="form-group bmd-form-group col-md-12 col-12  align-items-center">
-                                <select name="apartment_id" id="mySelect" class="form-control ">
+                                <select disabled="true" name="apartment_id" id="mySelect" class="form-control ">
                                     <option selected value="">Choose Apartment</option>
                                     @foreach($rooms as $room)
                                     <option value="{{ $room->id }}">{{ $room->name }}</option>
+
+
+                                    @if($user_reservation->apartment_id == $room->id)
+                                    <option value="{{  $room->id }}" selected>{{ $room->name }}</option>
+                                    @else
+                                    <option value="{{ $room->id }}">{{ $room->name }}</option>
+                                    @endif
                                     @endforeach
+
+
                                 </select>
+
+                                <input type="hidden" value="{{ $user_reservation->apartment_id }}" name="apartment_id">
+
 
                             </div>
                         </div>

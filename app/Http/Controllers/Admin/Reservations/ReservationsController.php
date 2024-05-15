@@ -41,7 +41,6 @@ class ReservationsController extends Controller
 		//UserReservation::truncate();
 		//Reservation::truncate();
 		$reservations = UserReservation::orderBy('created_at', 'desc')->paginate(50);
-
 		//dd($reservations);
 		return view('admin.reservations.index', compact('reservations'));
 	}

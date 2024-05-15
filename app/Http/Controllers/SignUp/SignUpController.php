@@ -28,9 +28,28 @@ class SignUpController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rooms =  Attribute::parents()->where('type', 'room_id')->orderBy('name')->get();
+        $reservation = null;
+        $rooms = Attribute::parents()->where('type', 'room_id')->orderBy('name')->get();
+
+
+        //  dd($request->id);
+        if ($request->id) {
+            $user_reservation = UserReservation::findOrFail($request->id);
+            $reservation = isset($user_reservation->reservations[0]) && !empty($user_reservation->reservations[0]) ? $user_reservation->reservations[0] : null;
+            $user_reservation->apartment_id = $reservation->apartment_id;
+            $user_reservation->checkin = $reservation->apartment_id;
+            $user_reservation->checkout = $reservation->apartment_id;
+
+            if ($user_reservation->checkout->isPast()) {
+                //abort(404);
+            }
+
+            return view('checkin.checkin', compact('rooms', 'user_reservation'));
+        }
+
+
         return view('checkin.index', compact('rooms'));
     }
 

@@ -161,7 +161,7 @@
                               </div>
                            </td>
                            <td class="td-name">
-                              <a href="">{{ optional($reservation->apartment)->name ?? optional(optional($reservation->apartment)->property)->name }}</a>
+                              <a href="">{{ optional($reservation->apartment)->name ?? optional($reservation->attribute)->name }}</a>
                               <br><small></small>
                            </td>
 
