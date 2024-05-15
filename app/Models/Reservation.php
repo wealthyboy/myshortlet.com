@@ -35,7 +35,7 @@ class Reservation extends Model
 
     public function attribute()
     {
-        return $this->belongsTo(Attribute::class);
+        return $this->belongsTo(Attribute::class, 'apartment_id');
     }
 
     public function extras()
