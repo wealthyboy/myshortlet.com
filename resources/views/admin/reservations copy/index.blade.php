@@ -5,7 +5,7 @@
 <div class="row">
    <div class="col-md-12">
       <div class="text-right">
-         <a href="" rel="tooltip" title="Refresh" class="btn btn-primary btn-simple btn-xs">
+         <a href="{{ route('admin.properties.index') }}" rel="tooltip" title="Refresh" class="btn btn-primary btn-simple btn-xs">
             <i class="material-icons">refresh</i>
             Refresh
          </a>
