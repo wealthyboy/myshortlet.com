@@ -73,4 +73,16 @@ class ReservationsController extends Controller
 		$ordered_product->save();
 		return $ordered_product;
 	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy(Request $request, $id)
+	{
+		$apartment = UserReservation::whereIn('id', $request->selected)->delete();
+		return redirect()->back()->with('success', ' deleted successfully');
+	}
 }

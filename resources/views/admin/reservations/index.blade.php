@@ -10,6 +10,11 @@
             Refresh
          </a>
 
+         <a href="javascript:void(0)" onclick="confirm('Are you sure?') ? $('#form-apartments').submit() : false;" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+            <i class="material-icons">close</i>
+            Remove
+         </a>
+
 
       </div>
    </div>
@@ -26,7 +31,7 @@
                <!-- Here you can write extra buttons/actions for the toolbar              -->
             </div>
             <div class="material-datatables">
-               <form action="{{ route('admin.properties.destroy',['property'=>1]) }}" method="post" enctype="multipart/form-data" id="form-apartments">
+               <form action="{{ route('admin.reservations.destroy',['reservation'=>1]) }}" method="post" enctype="multipart/form-data" id="form-apartments">
                   @method('DELETE')
                   @csrf
 
