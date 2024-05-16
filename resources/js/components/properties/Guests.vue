@@ -59,7 +59,12 @@
             </span>
           </button>
         </div>
+
       </div>
+      <div class=" d-flex  p-2 justify-content-between">
+        <a href="#" class="close-dropdown btn px-3 py-1 btn-primary rounded" role="button" type="button">Close</a>
+      </div>
+
 
       <input type="hidden" class="location-search" name="rooms" :value="rooms" id="rooms" />
       <input type="hidden" class="location-search" name="children" :value="children" id="children" />
@@ -101,7 +106,6 @@ export default {
 
       this.storeData()
 
-      console.log(localStorage.getItem('sParams'))
 
 
     },

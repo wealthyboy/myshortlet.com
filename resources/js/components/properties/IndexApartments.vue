@@ -104,11 +104,6 @@
                                             </iframe>
                                         </div>
                                     </VueSlickCarousel>
-
-
-
-
-
                                 </div>
                                 <div class="container p-0">
                                     <h4 class="primary-color">Check availablity for {{ room.name }}</h4>
@@ -150,11 +145,17 @@
                                         </div>
 
                                         <div class=" mt-3">
-                                            <button v-if="singleApartmentIsAvailable && singleApartmentIsChecked"
-                                                type="button" @click.prevent="reserveSingle(room)"
-                                                class="btn btn-primary  m-auto bold-2  rounded">
-                                                Reserve
-                                            </button>
+                                            <div v-if="singleApartmentIsAvailable && singleApartmentIsChecked">
+                                                <div class="alert alert-success">
+                                                    This apartment is available
+                                                </div>
+                                                <button v-if="singleApartmentIsAvailable && singleApartmentIsChecked"
+                                                    type="button" @click.prevent="reserveSingle(room)"
+                                                    class="btn btn-primary  m-auto bold-2  rounded">
+                                                    Click here to book
+                                                </button>
+                                            </div>
+
 
                                             <div v-if="!singleApartmentIsAvailable && singleApartmentIsChecked"
                                                 class="text-danger">

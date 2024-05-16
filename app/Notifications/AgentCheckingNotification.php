@@ -45,12 +45,16 @@ class AgentCheckingNotification extends Notification
      */
     public function toMail($notifiable)
     {
+
+        $checkin = $this->guest->checkin->format('l')  . ' ' . $$this->guest->checkin->format('d') . ' ' .  $this->guest->checkin->format('F') . ' ' .  $this->guest->checkin->isoFormat('Y');
+        $checkout = $this->guest->checkout->format('l') . ' ' . $this->guest->checkout->format('d')  . ' ' .  $this->guest->checkout->format('F')  . ' ' . $this->guest->checkout->isoFormat('Y');
+
         return (new MailMessage)
             ->subject('New check-in for ' . $this->guest->apartment_name)
             ->greeting('Hello Host',)
             ->line('Fullname: ' . $this->guest->name . ' ' . $this->guest->last_name)
-            ->line('Check-in: ' . $this->guest->checkin)
-            ->line('Check-out: ' . $this->guest->checkout);
+            ->line('Check-in: ' . $checkin)
+            ->line('Check-out: ' . $checkout);
     }
 
     /**

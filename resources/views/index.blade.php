@@ -146,7 +146,7 @@
          <div class="d-flex justify-content-between">
             <h3 class="large-heading bold">Apartments</h3>
             <a href="/apartments" class="btn btn-round  btn-primary   py-2  bold-2   align-self-end font-weight-bold-2">
-               View All
+               View all Apartments
             </a>
          </div>
 
@@ -175,8 +175,8 @@
                      <p class="mt-4  text-left text-black light-bold">
                         Indulge in a lifestyle of unparalleled luxury with our meticulously designed apartments, complemented by a suite of unmatched amenities. Every detail has been thoughtfully curated to elevate your living experience. Enjoy the convenience of concierge services, savor moments of tranquility in lush landscaped gardens. Our commitment to providing exceptional amenities ensures that every day in your new home is a lavish retreat.
                      <div class="buttons">
-                        <a href="/experience" class="btn btn-primary rounded bold-2">
-                           View More
+                        <a href="/apartments" class="btn btn-primary rounded bold-2">
+                           View all Apartments
                         </a>
                      </div>
                      </p>

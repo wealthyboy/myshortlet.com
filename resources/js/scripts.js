@@ -4439,6 +4439,20 @@ $("body").on("click", function (evt) {
   }
 });
 
+$(document).on("click", ".close-dropdown", function (e) {
+  e.preventDefault()
+  let ddown = $(".guest-dropdown");
+  console.log(ddown)
+  if (ddown.hasClass("show")) {
+    ddown
+      .animate({
+        opacity: 0,
+      })
+      .removeClass("show")
+      .addClass("d-none");
+  }
+});
+
 $(document).on("click", ".people-number", function (e) {
   let dropdown = $(".guest-dropdown");
   if (dropdown.hasClass("show")) {
