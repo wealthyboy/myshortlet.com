@@ -9,7 +9,7 @@
     <div class="container ">
         <div class="row justify-content-center">
             <div class="ml-1 col-md-7   mr-1">
-                <div class=" mt-4 mb-4">
+                <div class="position-relative mt-4 mb-4">
                     <div id="alert-success" class="alert d-none alert-success">
                         Thank you for checking in .Enjoy your stay
                     </div>
@@ -114,7 +114,12 @@
 
                     </form>
 
-                </div>
+
+                    <!-- Overlay -->
+                    <!-- <div class="position-absolute top-0 w-100 start-0 bottom-0 end-0 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 text-white">
+                        <p class="text-lg display-4">Please wait while we check you in...</p>
+                    </div> -->
+                </div>≥
             </div>
         </div>
     </div>

@@ -163,6 +163,9 @@ class SignUpController extends Controller
                 Notification::route('mail', 'avenuemontaigneconcierge@gmail.com')
                     ->notify(new CheckinNotification($guest));
 
+                Notification::route('mail', 'oluwa.tosin@avenuemontaigne.ng')
+                    ->notify(new CheckinNotification($guest));
+
                 if ($attr->apartment_owner) {
                     $guest->apartment_name = $attr->name;
                     $guest->checkin = $startDate;

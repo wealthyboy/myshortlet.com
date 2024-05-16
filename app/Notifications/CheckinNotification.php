@@ -48,19 +48,15 @@ class CheckinNotification extends Notification
     public function toMail($notifiable)
     {
         $m = (new MailMessage)
-            ->bcc('oluwa.tosin@avenuemontaigne.ng')
-            ->bcc('frontdesk@avenuemontaigne.ng');
-        if ($this->apartment_owner) {
-            $m->bcc($this->apartment_owner);
-        }
 
-        $m->subject('New check-in for ' . $this->guest->apartment_name)
+
+            ->subject('New check-in for ' . $this->guest->apartment_name)
 
             ->greeting('Hello!')
-            ->line('You have a reservation');
-        $m->attach(
-            public_path('pdf/guest_' . $this->guest->name . '_' . $this->guest->id . '.pdf')
-        );
+            ->line('You have a reservation')
+            ->attach(
+                public_path('pdf/guest_' . $this->guest->name . '_' . $this->guest->id . '.pdf')
+            );
 
 
         $m->line('Thank you for using our application!');
