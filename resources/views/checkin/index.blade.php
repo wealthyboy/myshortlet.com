@@ -9,7 +9,7 @@
     <div class="container ">
         <div class="row justify-content-center">
             <div class="ml-1 col-md-7   mr-1">
-                <div class=" mt-4 mb-4">
+                <div class=" position-relation mt-4 mb-4">
                     <div id="alert-success" class="alert d-none alert-success">
                         Thank you for checking in .Enjoy your stay
                     </div>
@@ -86,9 +86,11 @@
                         </p>
 
                         <button type="submit" id="login_form_button" data-loading="Loading" class=" ml-1 btn btn-primary btn-round btn-lg btn-block mb-5" name="login" value="Log in">Submit</button>
-
-
                     </form>
+
+                    <div class="position-absolute top-0 w-100 start-0 bottom-0 end-0 d-flex align-items-center justify-content-center bg-dark-0 bg-opacity-50 text-white">
+                        <p class="text-lg display-4">Please wait while we check you in...</p>
+                    </div>
 
                 </div>
             </div>
