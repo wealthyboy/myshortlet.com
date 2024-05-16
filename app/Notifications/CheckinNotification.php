@@ -48,10 +48,7 @@ class CheckinNotification extends Notification
     public function toMail($notifiable)
     {
         $m = (new MailMessage)
-
-
             ->subject('New check-in for ' . $this->guest->apartment_name)
-
             ->greeting('Hello!')
             ->line('You have a reservation')
             ->attach(
