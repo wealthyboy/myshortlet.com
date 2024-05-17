@@ -67,9 +67,8 @@ class ProcessGuestCheckin implements ShouldQueue
 
             Notification::route('mail', $this->guest->email)
                 ->notify(new  NewGuest($this->guest));
-            Notification::route('mail', 'avenuemontaigneconcierge@gmail.com')
+            Notification::route('mail', 'frontdesk@avenuemontaigne.ng')
                 ->notify(new CheckinNotification($this->guest, $this->attribute));
-
 
             Notification::route('mail', $this->attribute->apartment_owner)
                 ->notify(new AgentCheckingNotification($this->guest, $this->attribute, $this->reservation));
