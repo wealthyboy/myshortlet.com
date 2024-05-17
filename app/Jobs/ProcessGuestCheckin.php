@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Attribute;
 use App\Models\Guest;
 use App\Models\GuestUser;
 use App\Models\Reservation;
@@ -24,14 +25,14 @@ class ProcessGuestCheckin implements ShouldQueue
 
     protected $guest;
     protected $reservation;
-    protected $visitor;
+    protected $attribute;
 
 
-    public function __construct(GuestUser $guest, Reservation $reservation)
+    public function __construct(GuestUser $guest, Reservation $reservation, Attribute $attribute)
     {
         $this->guest = $guest;
         $this->reservation = $reservation;
-        $this->visitor = null;
+        $this->attribute = $attribute;
     }
 
     public function handle()
@@ -48,10 +49,12 @@ class ProcessGuestCheckin implements ShouldQueue
 
         $reservation = $this->reservation;
 
+        $attribute = $this->attribute;
+
         $g = $this->guest;
 
         // Save the file to the specified directory
-        $pdf = PDF::loadView('pdf.index', compact('g', 'reservation'));
+        $pdf = PDF::loadView('pdf.index', compact('g', 'reservation', 'attribute'));
         $pdf->setPaper('a4')->save($directory . '/' . $fileName);
 
         try {

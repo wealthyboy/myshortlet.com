@@ -56,7 +56,7 @@
             <p><strong>Last Name:</strong> {{ $g->last_name }}</p>
             <p><strong>Email:</strong> {{ $g->email }}</p>
             <p><strong>Phone:</strong> {{ $g->phone_number }}</p>
-            <p><strong>Apartment:</strong> {{ $g->apartment_name }}</p>
+            <p><strong>Apartment:</strong> {{ $attribute->apartment_name }}</p>
 
 
             <p><strong>Check-in:</strong> {{ $reservation->checkin->format('l') }} {{ $reservation->checkin->format('d') }} {{ $reservation->checkin->format('F')  }} {{ $reservation->checkin->isoFormat('Y') }}</p>

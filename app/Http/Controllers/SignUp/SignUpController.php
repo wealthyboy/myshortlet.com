@@ -149,7 +149,9 @@ class SignUpController extends Controller
             $reservation->email = $request->email;
             $reservation->phone_number = $request->phone_number;
 
-            ProcessGuestCheckin::dispatch($guest, $reservation)->delay(now()->addSeconds(30));
+            //dd($reservation);
+
+            ProcessGuestCheckin::dispatch($guest, $reservation, $attr)->delay(now()->addSeconds(30));
 
             return response()->json(null, 200);
         } catch (\Throwable $th) {
