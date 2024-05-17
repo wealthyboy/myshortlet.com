@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\GuestUser;
+use App\Models\Attribute;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -16,16 +17,20 @@ class CheckinNotification extends Notification
 
     public  $apartment_owner;
 
+    public $attribute;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(GuestUser $guest, $apartment_owner = null)
+    public function __construct(GuestUser $guest, Attribute $attribute,  $apartment_owner = null)
     {
         $this->guest = $guest;
 
         $this->apartment_owner = $apartment_owner;
+
+        $this->attribute = $attribute;
     }
 
     /**
@@ -48,7 +53,7 @@ class CheckinNotification extends Notification
     public function toMail($notifiable)
     {
         $m = (new MailMessage)
-            ->subject('New check-in for ' . $this->guest->apartment_name)
+            ->subject('New check-in for ' . $this->attribute->name)
             ->greeting('Hello!')
             ->line('You have a reservation')
             ->attach(

@@ -45,7 +45,6 @@ class ProcessGuestCheckin implements ShouldQueue
             File::makeDirectory($directory);
         }
 
-        $visitor = $this->visitor;
 
         $reservation = $this->reservation;
 
@@ -64,7 +63,7 @@ class ProcessGuestCheckin implements ShouldQueue
             Notification::route('mail', $this->guest->email)
                 ->notify(new  NewGuest($this->guest));
             Notification::route('mail', 'avenuemontaigneconcierge@gmail.com')
-                ->notify(new CheckinNotification($this->guest));
+                ->notify(new CheckinNotification($this->guest, $this->attribute));
 
             if ($this->guest->apartment_owner) {
                 $this->guest->apartment_name = $this->reservation->name;
