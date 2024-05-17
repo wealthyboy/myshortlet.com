@@ -106,7 +106,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js" integrity="sha512-En/Po50Bl8kIECa2WkhxhdYeoKDcrJpBKMo9tmbuwbm9RxHWZV8/Y5xM9sh3QbrnFgM3hVR/2umJ33qGJk45pQ==" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
-<script src="{{ asset('js/upload.js') }}"></script>
+<script src="{{ asset('js/upload.js?version={{ str_random(6) }}') }}"></script>
 
 @stop
 
