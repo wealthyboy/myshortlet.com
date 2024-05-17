@@ -21,6 +21,11 @@ use Illuminate\Support\Facades\Notification;
 
 class ProcessGuestCheckin implements ShouldQueue
 {
+
+    public $timeout = 300;  // Adjust as needed
+    public $tries = 5;      // Adjust as needed
+
+
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $guest;
