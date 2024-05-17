@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Attribute;
 use App\Models\GuestUser;
 use App\Models\Reservation;
 use Illuminate\Bus\Queueable;
@@ -15,15 +16,25 @@ class AgentCheckingNotification extends Notification
 
     public $guest;
 
+    public $attribute;
+
+    public $reservation;
+
+
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(GuestUser $guest)
+    public function __construct(GuestUser $guest, Attribute $attribute, Reservation $reservation)
     {
 
         $this->guest = $guest;
+
+        $this->attribute = $attribute;
+
+        $this->reservation = $reservation;
     }
 
     /**
@@ -46,11 +57,11 @@ class AgentCheckingNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('New check-in for ' . $this->guest->apartment_name)
+            ->subject('New check-in for ' . $this->attribute->name)
             ->greeting('Hello Host',)
             ->line('Fullname: ' . $this->guest->name . ' ' . $this->guest->last_name)
-            ->line('Check-in: ' . $this->guest->checkin)
-            ->line('Check-out: ' . $this->guest->checkout);
+            ->line('Check-in: ' . $this->reservation->checkin->format('l') .' '. $this->reservation->checkin->format('d') .' '. $this->reservation->checkin->format('F')  .' '. $this->reservation->checkin->isoFormat('Y') )
+            ->line('Check-out: ' . $this->reservation->checkout->format('l') .' '. $this->reservation->checkout->format('d') .' '. $this->reservation->checkout->format('F')  .' '. $this->reservation->checkout->isoFormat('Y') )
     }
 
     /**
