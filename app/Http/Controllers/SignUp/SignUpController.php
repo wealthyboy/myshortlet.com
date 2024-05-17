@@ -151,7 +151,7 @@ class SignUpController extends Controller
 
             //dd($reservation);
 
-            ProcessGuestCheckin::dispatch($guest, $reservation, $attr)->delay(now()->addSeconds(30));
+            ProcessGuestCheckin::dispatch($guest, $reservation, $attr)->delay(now()->addSeconds(5));
 
             return response()->json(null, 200);
         } catch (\Throwable $th) {
