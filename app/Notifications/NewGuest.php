@@ -44,9 +44,10 @@ class NewGuest extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting("Dear " . $this->guest->name, ',')
+            ->greeting("Dear " . $this->guest->name . ',')
             ->subject("Welcome to Avenue Montaigne")
-            ->line('On behalf of the entire team at Avenue Montaigne, I would like to extend a warm welcome to you! We are thrilled to have you as our guest and hope your stay with us will be comfortable, enjoyable, and memorable.')
+            ->line('Welcome to Avenue Montaigne,   We are thrilled to have you as our guest and hope your stay with us will be comfortable, enjoyable, and memorable.')
+            ->line("As you settle into your home away from home, please don't hesitate to reach out to our friendly staff for any assistance you may need. We're here to ensure that your stay exceeds your expectations in every way possible.")
             ->line("Warm regards,")
             ->line("Avenue Montaigne.")
             ->action('Visit our website', url('https://avenuemontaigne.ng'))
