@@ -14,6 +14,9 @@ Dropzone.options.myDropzone = {
 
 let form_button = $("#login_form_button");
 
+let overlay = $("#overlay");
+
+
 
 
 let myDropzone;
@@ -76,6 +79,10 @@ jQuery(window).on('load', function () {
 
             form_button.text("Loading...")
 
+            overlay.removeClass('d-none')
+            overlay.addClass('d-flex')
+
+
             // AJAX call
             $.ajax({
                 url: '/check-in',
@@ -84,10 +91,16 @@ jQuery(window).on('load', function () {
                 success: function (response) {
                     $(form).hide()
                     $("#alert-success").removeClass('d-none')
+                    overlay.addClass('d-none')
+                    overlay.removeClass('d-flex')
+
                 },
                 error: function (xhr, status, error) {
                     form_button.text("Submit")
                     let m = JSON.parse(xhr.responseText);
+                    overlay.addClass('d-none')
+                    overlay.removeClass('d-flex')
+
                     if (typeof m != 'undefined' && typeof m.message !== 'undefined') {
                         alert("This apartment is not available for your selected date.");
                     }

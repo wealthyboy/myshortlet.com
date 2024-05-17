@@ -79,6 +79,7 @@
                             </div>
                         </div>
 
+
                         <p class="p-1 col-12 ">
                             <label for="pictures " class="bmd-label-floating upload">Upload ID (Only government issued IDs are accepted. e.g International Passport, Driver’s License, National ID e.t.c)</label>
                         <div class="dropzone col-12 mb-4" id="my-dropzone"></div>
@@ -88,8 +89,8 @@
                         <button type="submit" id="login_form_button" data-loading="Loading" class=" ml-1 btn btn-primary btn-round btn-lg btn-block mb-5" name="login" value="Log in">Submit</button>
                     </form>
 
-                    <div class="position-absolute top-0 w-100 start-0 bottom-0 end-0 d-flex align-items-center justify-content-center bg-dark-0 bg-opacity-50 text-white">
-                        <p class="text-lg display-4">Please wait while we check you in...</p>
+                    <div id="overlay" class="position-absolute  top-0 w-100 start-0 bottom-0 end-0 d-none align-items-center justify-content-center bg-dark-0 bg-opacity-50 text-white">
+                        <p style="font-size: 2.2rem;" class="text-lg display-3">Please wait while we check you in...</p>
                     </div>
 
                 </div>

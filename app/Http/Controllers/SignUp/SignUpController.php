@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\File;
+use App\Jobs\ProcessGuestCheckin;
+
 
 
 
@@ -144,40 +146,9 @@ class SignUpController extends Controller
             $guest->apartment_name = $attr->name;
 
 
-            // Check if the directory exists, if not create it
-            if (!File::exists($directory)) {
-                File::makeDirectory($directory);
-            }
+            ProcessGuestCheckin::dispatch($guest, $reservation)->delay(Carbon::now()->addMinutes(2));
 
-            // Save the file to the specified directory
-            File::put($directory . '/' . $fileName, $fileContent);
-
-            $pdf = PDF::loadView('pdf.index', compact('visitor', 'reservation'));
-            $pdf->setPaper('a4')->save(public_path('pdf/guest_' . $guest->name . '_' . $guest->id . '.pdf'));
-
-
-            try {
-
-                Notification::route('mail', $guest->email)
-                    ->notify(new  NewGuest($guest));
-                Notification::route('mail', 'avenuemontaigneconcierge@gmail.com')
-                    ->notify(new CheckinNotification($guest));
-
-
-                if ($attr->apartment_owner) {
-                    $guest->apartment_name = $attr->name;
-                    $guest->checkin = $startDate;
-                    $guest->checkout = $endDate;
-                    Notification::route('mail', $attr->apartment_owner)
-                        ->notify(new AgentCheckingNotification($guest));
-                }
-            } catch (\Throwable $th) {
-                dd($th);
-                //  Log::error("Mail error :" . $th);
-            }
-
-
-            return back()->with('success', 'Your message goes here.');
+            return response()->json(null, 200);
         } catch (\Throwable $th) {
             //throw $th;
             dd($th);

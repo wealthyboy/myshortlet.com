@@ -52,10 +52,10 @@
 
         <div style="float:left; font-size: 20px; font-weight: bold" class="left">
             <h1>Visitor Details</h1>
-            <p><strong>First Name: </strong> {{ $visitor->first_name }}</p>
-            <p><strong>Last Name:</strong> {{ $visitor->last_name }}</p>
-            <p><strong>Email:</strong> {{ $visitor->email }}</p>
-            <p><strong>Phone:</strong> {{ $visitor->phone_number }}</p>
+            <p><strong>First Name: </strong> {{ $reservation->first_name }}</p>
+            <p><strong>Last Name:</strong> {{ $reservation->last_name }}</p>
+            <p><strong>Email:</strong> {{ $reservation->email }}</p>
+            <p><strong>Phone:</strong> {{ $reservation->phone_number }}</p>
             <p><strong>Apartment:</strong> {{ $reservation->apartment_name }}</p>
 
 
@@ -65,7 +65,7 @@
         </div>
 
         <div style="float:right; font-size: 20px; font-weight: bold" class=" col-md-6">
-            <img src="{{ $visitor->image }}" alt="Visitor Image" style="max-width: 400px; max-height: 350px;">
+            <img src="{{ $reservation->image }}" alt="Visitor Image" style="max-width: 400px; max-height: 350px;">
         </div>
 
     </div>
