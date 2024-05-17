@@ -15,6 +15,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Notification;
+
 
 class ProcessGuestCheckin implements ShouldQueue
 {
@@ -46,13 +48,20 @@ class ProcessGuestCheckin implements ShouldQueue
 
         $reservation = $this->reservation;
 
+        $g = $this->guest;
+
         // Save the file to the specified directory
-        $pdf = PDF::loadView('pdf.index', compact('reservation'));
+        $pdf = PDF::loadView('pdf.index', compact('g', 'reservation'));
         $pdf->setPaper('a4')->save($directory . '/' . $fileName);
 
         try {
-            $this->guest->notify(new NewGuest($this->guest));
-            $this->guest->notify(new CheckinNotification($this->guest));
+            // $this->guest->notify(new NewGuest($this->guest));
+            // $this->guest->notify(new CheckinNotification($this->guest));
+
+            Notification::route('mail', $this->guest->email)
+                ->notify(new  NewGuest($this->guest));
+            Notification::route('mail', 'avenuemontaigneconcierge@gmail.com')
+                ->notify(new CheckinNotification($this->guest));
 
             if ($this->guest->apartment_owner) {
                 $this->guest->apartment_name = $this->reservation->name;
@@ -62,7 +71,7 @@ class ProcessGuestCheckin implements ShouldQueue
             }
         } catch (\Throwable $th) {
             // Log error if needed
-            // Log::error("Mail error: " . $th);
+            \Log::error("Mail error: " . $th);
         }
     }
 }

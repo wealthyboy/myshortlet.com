@@ -52,11 +52,11 @@
 
         <div style="float:left; font-size: 20px; font-weight: bold" class="left">
             <h1>Visitor Details</h1>
-            <p><strong>First Name: </strong> {{ $reservation->first_name }}</p>
-            <p><strong>Last Name:</strong> {{ $reservation->last_name }}</p>
-            <p><strong>Email:</strong> {{ $reservation->email }}</p>
-            <p><strong>Phone:</strong> {{ $reservation->phone_number }}</p>
-            <p><strong>Apartment:</strong> {{ $reservation->apartment_name }}</p>
+            <p><strong>First Name: </strong> {{ $g->name }}</p>
+            <p><strong>Last Name:</strong> {{ $g->last_name }}</p>
+            <p><strong>Email:</strong> {{ $g->email }}</p>
+            <p><strong>Phone:</strong> {{ $g->phone_number }}</p>
+            <p><strong>Apartment:</strong> {{ $g->apartment_name }}</p>
 
 
             <p><strong>Check-in:</strong> {{ $reservation->checkin->format('l') }} {{ $reservation->checkin->format('d') }} {{ $reservation->checkin->format('F')  }} {{ $reservation->checkin->isoFormat('Y') }}</p>
@@ -65,7 +65,7 @@
         </div>
 
         <div style="float:right; font-size: 20px; font-weight: bold" class=" col-md-6">
-            <img src="{{ $reservation->image }}" alt="Visitor Image" style="max-width: 400px; max-height: 350px;">
+            <img src="{{ $g->image }}" alt="Visitor Image" style="max-width: 400px; max-height: 350px;">
         </div>
 
     </div>
