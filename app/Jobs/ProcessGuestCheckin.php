@@ -66,8 +66,8 @@ class ProcessGuestCheckin implements ShouldQueue
                 ->notify(new CheckinNotification($this->guest, $this->attribute));
 
 
-            Notification::route('mail', $this->attribute->apartment_owner)
-                ->notify(new AgentCheckingNotification($this->guest, $this->attribute, $this->reservation));
+            // Notification::route('mail', $this->attribute->apartment_owner)
+            //     ->notify(new AgentCheckingNotification($this->guest, $this->attribute, $this->reservation));
         } catch (\Throwable $th) {
             // Log error if needed
             \Log::error("Mail error: " . $th);
