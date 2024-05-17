@@ -145,6 +145,11 @@ class SignUpController extends Controller
             $reservation->apartment_name = $attr->name;
             $guest->apartment_name = $attr->name;
 
+            $reservation->first_name  = $request->first_name;
+            $reservation->last_name = $request->last_name;
+            $reservation->email = $request->email;
+            $reservation->phone_number = $request->phone_number;
+
 
             ProcessGuestCheckin::dispatch($guest, $reservation)->delay(Carbon::now()->addMinutes(2));
 
