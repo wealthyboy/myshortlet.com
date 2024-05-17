@@ -58,10 +58,10 @@ class AgentCheckingNotification extends Notification
     {
         return (new MailMessage)
             ->subject('New check-in for ' . $this->attribute->name)
-            ->greeting('Hello Host',)
+            ->greeting('Hello Host,')
             ->line('Fullname: ' . $this->guest->name . ' ' . $this->guest->last_name)
-            ->line('Check-in: ' . $this->reservation->checkin->format('l') .' '. $this->reservation->checkin->format('d') .' '. $this->reservation->checkin->format('F')  .' '. $this->reservation->checkin->isoFormat('Y') )
-            ->line('Check-out: ' . $this->reservation->checkout->format('l') .' '. $this->reservation->checkout->format('d') .' '. $this->reservation->checkout->format('F')  .' '. $this->reservation->checkout->isoFormat('Y') )
+            ->line('Check-in: ' . $this->reservation->checkin->format('l') . ' ' . $this->reservation->checkin->format('d') . ' ' . $this->reservation->checkin->format('F')  . ' ' . $this->reservation->checkin->isoFormat('Y'))
+            ->line('Check-out: ' . $this->reservation->checkout->format('l') . ' ' . $this->reservation->checkout->format('d') . ' ' . $this->reservation->checkout->format('F')  . ' ' . $this->reservation->checkout->isoFormat('Y'));
     }
 
     /**
