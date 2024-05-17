@@ -15,5 +15,7 @@ yarn-error.log
 /public/images/attribute
 /public/images/locations
 /public/images/reservations
+/public/pdf
+
 
 .vscode
