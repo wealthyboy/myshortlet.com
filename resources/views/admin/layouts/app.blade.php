@@ -186,7 +186,7 @@
                                 </li>
 
                                 <li>
-                                    <a href="{{ route('admin.reservations.index', ['coming_from' => 'payment']) }}">
+                                    <a href="{{ route('admin.reservations.index', ['coming_from' => 'checkin']) }}">
                                         <span class="sidebar-mini"> C </span>
                                         <span class="sidebar-normal"> Check-in </span>
                                     </a>
