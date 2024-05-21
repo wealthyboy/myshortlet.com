@@ -121,8 +121,6 @@ class SignUpController extends Controller
             $user_reservation->property_id = $property->id;
             $user_reservation->coupon = null;
             $user_reservation->coming_from = "payment";
-
-
             $user_reservation->total = (optional($apartment)->price || 0) * $date_diff;
             $user_reservation->ip = $request->ip();
             $user_reservation->save();
@@ -150,8 +148,6 @@ class SignUpController extends Controller
             $reservation->last_name = $request->last_name;
             $reservation->email = $request->email;
             $reservation->phone_number = $request->phone_number;
-
-            //dd($reservation);
 
             ProcessGuestCheckin::dispatch($guest, $reservation, $attr)->delay(now()->addSeconds(5));
 
