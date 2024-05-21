@@ -105,7 +105,7 @@ class SignUpController extends Controller
                 return response()->json(["message" => "This apartment is not available for youe selected date"], 400);
             }
 
-            $guest = GuestUser::firstOrNew(['id' => data($input, 'guest_id')]);
+            $guest = GuestUser::firstOrNew(['id' => data_get($input, 'guest_id')]);
             $guest->name = $input['first_name'];
             $guest->last_name = $input['last_name'];
             $guest->email = $input['email'];
