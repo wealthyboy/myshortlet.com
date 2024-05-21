@@ -112,6 +112,10 @@
                               <span><a href="/admin/reservations?cancel=1&id={{ $reservation->id }}" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel">
                                     cancel
                                  </a></span>
+
+                              <span><a href="/admin/reservations?cancel=1&id={{ $reservation->id }}" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel">
+                                    Send check-in link
+                                 </a></span>
                               @else
                               <span class="btn btn-danger btn-simple">
                                  Cancelled
