@@ -13,6 +13,7 @@ use App\Http\Helper;
 use App\Models\Apartment;
 use App\Models\Reservation;
 use App\Notifications\CancelledNotification;
+use Carbon\Carbon;
 use Illuminate\Notifications\Notification;
 
 class ReservationsController extends Controller
@@ -40,7 +41,38 @@ class ReservationsController extends Controller
 
 		//UserReservation::truncate();
 		//Reservation::truncate();
-		$reservations = UserReservation::orderBy('created_at', 'desc')->paginate(50);
+		// Get query parameters
+		$email = $request->input('email');
+		$phoneNumber = $request->input('phone');
+		$date = $request->input('date');
+
+		$query = UserReservation::with('guest_user');
+
+		// Check if any filters are provided
+		if ($email || $phoneNumber || $date) {
+			// Apply filters
+			if ($email) {
+				$query->whereHas('guest_user', function ($q) use ($email) {
+					$q->where('email', $email);
+				});
+			}
+
+			if ($phoneNumber) {
+				$query->whereHas('guest_user', function ($q) use ($phoneNumber) {
+					$q->where('phone_number', $phoneNumber);
+				});
+			}
+
+			if ($date) {
+				$query->whereDate('created_at', $date);
+			}
+		} else {
+			// Default to today's reservations if no filters are provided
+			$query->whereDate('created_at', Carbon::today());
+		}
+
+		$reservations = $query->orderBy('created_at', 'desc')->paginate(50);
+
 		//dd($reservations);
 		return view('admin.reservations.index', compact('reservations'));
 	}

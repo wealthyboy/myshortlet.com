@@ -27,19 +27,19 @@
          <div class="card-content">
             <h4 class="card-title">Filter - <small class="category"></small></h4>
 
-            <form>
+            <form action="" method="GET">
                <div class="form-row">
                   <div class="form-group col-md-3">
                      <label for="date">Date</label>
-                     <input type="date" class="form-control" id="date" name="date" required>
+                     <input type="date" class="form-control" id="date" name="date">
                   </div>
                   <div class="form-group col-md-3">
                      <label for="email">Email</label>
-                     <input type="email" class="form-control" id="email" name="email" required>
+                     <input type="email" class="form-control" id="email" name="email">
                   </div>
                   <div class="form-group col-md-3">
                      <label for="phone">Phone</label>
-                     <input type="tel" class="form-control" id="phone" name="phone" required>
+                     <input type="tel" class="form-control" id="phone" name="phone">
                   </div>
 
                   <div class="form-group col-md-2">
