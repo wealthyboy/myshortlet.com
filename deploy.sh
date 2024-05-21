@@ -3,6 +3,10 @@
 # Change to the project directory
 cd /home/forge/avenuemontaigne.ng || exit
 
+# Start the SSH agent and add the id_ed25519 key
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519 || { echo 'Failed to add SSH key'; exit 1; }
+
 # Turn on maintenance mode
 php artisan down || true
 
