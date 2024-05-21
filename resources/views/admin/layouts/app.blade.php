@@ -179,24 +179,19 @@
                         <div class="collapse {{ $helper->active_link(['reservations']) ? 'in' : ''}}" id="shop">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ route('admin.reservations.index', ['coming' => 'payment']) }}">
+                                    <a href="{{ route('admin.reservations.index', ['coming_from' => 'payment']) }}">
                                         <span class="sidebar-mini"> C </span>
                                         <span class="sidebar-normal"> Reservations </span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="{{ route('admin.reservations.index', ['coming' => 'checkin']) }}">
+                                    <a href="{{ route('admin.reservations.index', ['coming_from' => 'payment']) }}">
                                         <span class="sidebar-mini"> C </span>
                                         <span class="sidebar-normal"> Check-in </span>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="/admin/reviews">
-                                        <span class="sidebar-mini"> D</span>
-                                        <span class="sidebar-normal"> Reviews </span>
-                                    </a>
-                                </li>
+
                             </ul>
                         </div>
                     </li>
