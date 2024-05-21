@@ -127,7 +127,7 @@ class SignUpController extends Controller
             $user_reservation->payment_type = 'checkin';
             $user_reservation->property_id = $property->id;
             $user_reservation->coupon = null;
-            $user_reservation->coming_from = "payment";
+            $user_reservation->coming_from = "checkin";
             $user_reservation->total = (optional($apartment)->price || 0) * $date_diff;
             $user_reservation->ip = $request->ip();
             $user_reservation->save();
