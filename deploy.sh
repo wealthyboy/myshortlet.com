@@ -5,8 +5,13 @@ cd /home/forge/avenuemontaigne.ng || exit
 
 # Start the SSH agent and add the id_ed25519 key
 eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519 || { echo 'Failed to add SSH key'; exit 1; }
+# Start the ssh-agent in the background
+eval "$(ssh-agent -s)"
 
+# Add your SSH private key to the ssh-agent
+ssh-add ~/.ssh/id_ed25519 <<EOF
+j1a2c3o4b5
+EOF
 # Turn on maintenance mode
 php artisan down || true
 
