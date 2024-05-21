@@ -133,23 +133,7 @@
                      <tbody>
                         @foreach ( $user_reservation->reservations as $reservation )
                         <tr>
-                           <td>
 
-                              <div class="form-group label-floating">
-                                 <input type="hidden" class="p-v-id" value="{{ $reservation->id }}" />
-                                 <select class="form-control mt-3 update_status" name="reservation_status[{{ $reservation->id }}]" id="">
-                                    <option value="">Choose Status</option>
-                                    @foreach($statuses as $status)
-                                    <option value="{{ $status }}">{{ $status }}</option>
-                                    @endforeach
-                                 </select>
-                                 <div class="">
-                                    <small href="">{{ optional($reservation->apartment)->max_adults + optional($reservation->apartment)->max_children }}
-                                       Guests,
-                                       {{ optional($reservation->apartment)->no_of_rooms }} bedroom</small>
-                                 </div>
-                              </div>
-                           </td>
                            <td class="td-name">
                               <a href="">{{ optional($reservation->apartment)->name ?? optional($reservation->attribute)->name }}</a>
                               <br><small></small>
