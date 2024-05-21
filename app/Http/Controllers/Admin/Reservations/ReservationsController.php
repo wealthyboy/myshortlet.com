@@ -31,6 +31,13 @@ class ReservationsController extends Controller
 	public function index(Request $request)
 	{
 
+		// Check for the coming_from query parameter
+		$comingFrom = $request->input('coming_from');
+		if (!in_array($comingFrom, ['payment', 'checkin'])) {
+			abort(404);
+		}
+
+
 		if ($request->filled('cancel')) {
 			$userReservation = UserReservation::find($request->id);
 			$userReservation->is_cancelled = 1;
@@ -71,7 +78,7 @@ class ReservationsController extends Controller
 			$query->whereDate('created_at', Carbon::today());
 		}
 
-		$reservations = $query->orderBy('created_at', 'desc')->paginate(50);
+		$reservations = $query->where('coming_from', $comingFrom)->orderBy('created_at', 'desc')->paginate(50);
 
 		//dd($reservations);
 		return view('admin.reservations.index', compact('reservations'));

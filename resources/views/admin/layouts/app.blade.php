@@ -179,14 +179,14 @@
                         <div class="collapse {{ $helper->active_link(['reservations']) ? 'in' : ''}}" id="shop">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ route('admin.reservations.index') }}">
+                                    <a href="{{ route('admin.reservations.index', ['coming' => 'payment']) }}">
                                         <span class="sidebar-mini"> C </span>
                                         <span class="sidebar-normal"> Reservations </span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="{{ route('admin.check-in.index') }}">
+                                    <a href="{{ route('admin.reservations.index', ['coming' => 'checkin']) }}">
                                         <span class="sidebar-mini"> C </span>
                                         <span class="sidebar-normal"> Check-in </span>
                                     </a>
