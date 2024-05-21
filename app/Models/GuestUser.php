@@ -9,13 +9,17 @@ class GuestUser extends Model
 {
     use HasFactory;
 
-    
-	public function fullname() { 
-		return ucfirst($this->name) . ' '. ucfirst($this->last_name);
-	}
+    protected $fillable = ['id'];
 
 
-    public function extras(){
+    public function fullname()
+    {
+        return ucfirst($this->name) . ' ' . ucfirst($this->last_name);
+    }
+
+
+    public function extras()
+    {
         return $this->hasMany(Extra::class);
     }
 }
