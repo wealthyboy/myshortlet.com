@@ -11,9 +11,9 @@
             <form enctype="multipart/form-data" id="product-form" action="{{ route('admin.properties.update',['property'=>$property->id,  'mode' => request()->mode ])  }}" method="post">
                @method('PATCH')
                @csrf
-               
-                  @include('admin.apartments.edit_shortlet')
-               
+
+               @include('admin.properties.edit_shortlet')
+
             </form>
          </div>
       </div>
@@ -22,24 +22,18 @@
 </div>
 @endsection
 @section('page-scripts')
-   <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-   <script src="{{ asset('backend/js/products.js') }}"></script>
-   <script src="{{ asset('backend/js/uploader.js') }}"></script>
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('backend/js/products.js') }}"></script>
+<script src="{{ asset('backend/js/uploader.js') }}"></script>
 @stop
 
 
 @section('inline-scripts')
 $(document).ready(function() {
-   CKEDITOR.replace('description',{
-      height: '400px'
-   })  
-   
-   
+CKEDITOR.replace('description',{
+height: '400px'
+})
+
+
 });
 @stop
-
-
-
-
-
-
