@@ -27,11 +27,13 @@
          <div class="card-content">
             <h4 class="card-title">Filter - <small class="category"></small></h4>
 
-            <form action="" method="GET">
+            <form action="{{request()->fullUrl()}}" method="GET">
                <div class="form-row">
                   <div class="form-group col-md-3">
                      <label for="date">Date</label>
                      <input type="date" class="form-control" id="date" name="date">
+                     <input type="hidden" name="coming_from" value="{{ request('coming_from') }}">
+
                   </div>
                   <div class="form-group col-md-3">
                      <label for="email">Email</label>
