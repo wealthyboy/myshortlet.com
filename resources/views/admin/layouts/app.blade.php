@@ -98,7 +98,7 @@
 
                     </li>
 
-                    @if(auth()->user()->email !== 'frontdesk@gmail.com')
+                    @if(auth()->user()->email !== 'frontdesk@avenuemontaigne.ng')
 
                     <li class="{{ $helper->active_link(['category','attributes','vouchers','category']) }} ">
                         <a data-toggle="collapse" href="#Properties">
@@ -201,7 +201,7 @@
                         </div>
                     </li>
 
-                    @if(auth()->user()->email !== 'frontdesk@gmail.com')
+                    @if(auth()->user()->email !== 'frontdesk@avenuemontaigne.ng')
                     <li class="{{ $helper->active_link(['pages']) }} ">
                         <a href="{{ route('pages.index') }}">
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
