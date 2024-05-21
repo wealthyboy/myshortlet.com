@@ -71,7 +71,9 @@
    <div class="col-md-4">
       <div class="card">
          <div class="card-content">
-            <img src="{{$user_reservation->guest_user->image }}" alt="" srcset="">
+            <a target="_blank" href="{{$user_reservation->guest_user->image }}">
+               <img src="{{$user_reservation->guest_user->image }}" alt="" srcset="">
+            </a>
 
          </div>
       </div>
