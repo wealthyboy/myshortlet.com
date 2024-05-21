@@ -182,6 +182,8 @@ return [
         App\Providers\ViewServiceProvider::class,
         App\Providers\MailChimpNewsletterServiceProvider::class,
         App\Providers\GoogleDriveServiceProvider::class,
+        Aws\Laravel\AwsServiceProvider::class,
+
 
 
 
@@ -237,6 +239,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'AWS' => Aws\Laravel\AwsFacade::class,
+
+
 
     ],
 

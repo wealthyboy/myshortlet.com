@@ -134,7 +134,6 @@ class SignUpController extends Controller
             $reservation->checkin = $startDate;
             $reservation->checkout = $endDate;
             $reservation->save();
-
             $fileName = 'guest_' . $guest->name . '_' . $guest->id . '.pdf';
 
             $fileContent = '';
@@ -144,7 +143,7 @@ class SignUpController extends Controller
             $guest->image = session('session_link');
             $reservation->apartment_name = $attr->name;
             $guest->apartment_name = $attr->name;
-            $reservation->first_name  = $request->first_name;
+            $reservation->first_name = $request->first_name;
             $reservation->last_name = $request->last_name;
             $reservation->email = $request->email;
             $reservation->phone_number = $request->phone_number;

@@ -1,8 +1,7 @@
 
 $(".selector").flatpickr({
-    altInput: true, // Enable the text input
-    altFormat: "F j, Y", // Display format
-    dateFormat: "Y-m-d", // Submit format
+    minDate: "today",  // Disable past dates
+    dateFormat: "Y-m-d",  // Set the desired date format
 });
 
 Dropzone.autoDiscover = false;
@@ -14,9 +13,6 @@ Dropzone.options.myDropzone = {
 let form_button = $("#login_form_button");
 
 let overlay = $("#overlay");
-
-
-
 
 let myDropzone;
 
@@ -34,16 +30,29 @@ jQuery(window).on('load', function () {
             addRemoveLinks: true,
             uploadMultiple: true,
             maxFiles: 1,
-
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             init: function () {
-
                 this.on("addedfile", function (file) { $("div.error").html('') });
             }
         })
     }
+
+    // Custom validation method to check if check-in date is before checkout date
+    $.validator.addMethod("checkInBeforeCheckOut", function (value, element) {
+        var checkin = $('#checkin').val();
+        var checkout = $('#checkout').val();
+
+        // Parse the dates
+        var checkinDate = new Date(checkin);
+        var checkoutDate = new Date(checkout);
+
+        // Check if checkin date is before checkout date
+        return this.optional(element) || checkinDate < checkoutDate;
+    }, "");
+
+
     var $validator = $('form.form-validate').validate({
         rules: {
             first_name: { required: true, },
@@ -51,7 +60,10 @@ jQuery(window).on('load', function () {
             email: { required: true, email: true },
             phone_number: { required: true, },
             apartment_id: { required: true, },
-            checkin: { required: true },
+            checkin: {
+                required: true,
+                checkInBeforeCheckOut: true
+            },
             checkout: { required: true }
         },
         messages: {
@@ -59,7 +71,6 @@ jQuery(window).on('load', function () {
             apartment_id: { required: "Please select an  apartment" },
             checkin: { required: "Select a check-in date" },
             checkout: { required: "Select a check-out date" },
-
         },
         submitHandler: function (form) {
             if (myDropzone) {

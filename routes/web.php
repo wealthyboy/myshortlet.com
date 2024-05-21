@@ -20,6 +20,8 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
 
 
     Route::resource('reservations', 'Admin\Reservations\ReservationsController', ['names' => 'admin.reservations']);
+    Route::resource('check-in', 'Admin\Reservations\ReservationsController', ['names' => 'admin.check-in']);
+
 
     Route::resource('agents', 'Admin\Agents\AgentsController', ['names' => 'admin.agents']);
 
@@ -34,15 +36,12 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('reviews',  'Admin\Reviews\ReviewsController', ['names' => 'reviews']);
     Route::resource('posts',  'Admin\Blog\BlogController', ['names' => 'posts']);
 
-
     Route::get('post/{post_id}/comments',  'Admin\Comments\CommentsController@comments');
     Route::delete('comments/{comment}',  'Admin\Comments\CommentsController@destroy');
 
     Route::resource('settings', 'Admin\Settings\SettingsController', ['names' => 'settings']);
     Route::get('account', 'Admin\Account\AccountsController@index')->name('admin_account');
     Route::get('account/filter', 'Admin\Account\AccountsController@index')->name('filter_sales');
-
-
     Route::resource('category', 'Admin\Category\CategoryController', ['names' => 'category']);
     Route::post('category/delete/image', 'Admin\Category\CategoryController@undo');
 
@@ -50,8 +49,6 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('media', 'Admin\Media\MediaController', ['names' => 'media']);
 
     Route::resource('galleries', 'Admin\Gallery\GalleryController', ['names' => 'admin.galleries']);
-
-
     Route::resource('attributes', 'Admin\Attributes\AttributesController', ['names' => 'attributes']);
     Route::resource('rates', 'Admin\CurrencyRates\CurrencyRatesController', ['name' => 'rates']);
     Route::resource('vouchers', 'Admin\Vouchers\VouchersController', ['names' => 'vouchers']);

@@ -98,6 +98,8 @@
 
                     </li>
 
+                    @if(auth()->user()->email !== 'frontdesk@gmail.com')
+
                     <li class="{{ $helper->active_link(['category','attributes','vouchers','category']) }} ">
                         <a data-toggle="collapse" href="#Properties">
                             <i class="fa fa-home" aria-hidden="true"></i>
@@ -160,6 +162,7 @@
                             </ul>
                         </div>
                     </li>
+                    @endif
 
 
 
@@ -181,6 +184,13 @@
                                         <span class="sidebar-normal"> Reservations </span>
                                     </a>
                                 </li>
+
+                                <li>
+                                    <a href="{{ route('admin.check-in.index') }}">
+                                        <span class="sidebar-mini"> C </span>
+                                        <span class="sidebar-normal"> Check-in </span>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="/admin/reviews">
                                         <span class="sidebar-mini"> D</span>
@@ -190,6 +200,8 @@
                             </ul>
                         </div>
                     </li>
+
+                    @if(auth()->user()->email !== 'frontdesk@gmail.com')
                     <li class="{{ $helper->active_link(['pages']) }} ">
                         <a href="{{ route('pages.index') }}">
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -319,6 +331,7 @@
                             <p> Promo </p>
                         </a>
                     </li>
+                    @endif
                 </ul>
             </div>
         </div>

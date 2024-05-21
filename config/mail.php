@@ -33,6 +33,7 @@ return [
     |
     */
 
+
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
@@ -84,7 +85,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@avenuemontaigne.ng'),
+        'address' => env('MAIL_FROM_ADDRESS', 'noreply@avenuemontaigne.ng'),
         'name' =>  'Avenue Montaigne',
     ],
 

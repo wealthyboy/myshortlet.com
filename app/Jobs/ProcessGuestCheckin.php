@@ -62,11 +62,10 @@ class ProcessGuestCheckin implements ShouldQueue
         $pdf->setPaper('a4')->save($directory . '/' . $fileName);
 
         try {
-            // $this->guest->notify(new NewGuest($this->guest));
-            // $this->guest->notify(new CheckinNotification($this->guest));
 
             Notification::route('mail', $this->guest->email)
                 ->notify(new  NewGuest($this->guest));
+
             Notification::route('mail', 'avenuemontaigneconcierge@gmail.com')
                 ->notify(new CheckinNotification($this->guest, $this->attribute));
 

@@ -83,7 +83,7 @@ class UsersController extends Controller
 		$user->password = $request->has('password') ? bcrypt($request->password) : $user->password;
 		$user->save();
 
-		$user->users_permission()->update([
+		$user->users_permission()->create([
 			'permission_id' => $request->permission_id
 		]);
 
