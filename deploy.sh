@@ -1,15 +1,23 @@
+#!/bin/bash
+
 # Change to the project directory
-cd /home/forge/avenuemontaigne.ng
+cd /home/forge/avenuemontaigne.ng || exit
 
 # Turn on maintenance mode
 php artisan down || true
 
-# Pull the latest changes from the git repository
-# git reset --hard
-# git clean -df
-git pull origin master
+# Check for any changes before pulling
+git fetch origin master
 
-# Install/update composer dependecies
+# Pull the latest changes from the git repository
+if git diff --quiet HEAD origin/master; then
+  echo "Already up to date."
+else
+  echo "Pulling latest changes..."
+  git pull origin master || { echo 'Failed to pull from Git repository'; exit 1; }
+fi
+
+# Install/update composer dependencies
 composer install --no-interaction --prefer-dist --optimize-autoloader
 
 # Run database migrations
@@ -31,7 +39,7 @@ php artisan config:cache
 php artisan view:cache
 
 # Install node modules
-#npm install
+# npm install
 
 # Build assets using Laravel Mix
 npm run production
