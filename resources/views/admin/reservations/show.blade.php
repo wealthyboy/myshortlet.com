@@ -122,7 +122,6 @@
                   <table class="table table-shopping">
                      <thead>
                         <tr>
-                           <th class="text-center">Image</th>
                            <th class="th-description">Apartment name</th>
                            <th class="text-left">Check-in</th>
                            <th class="text-left">Check-out</th>
@@ -135,9 +134,7 @@
                         @foreach ( $user_reservation->reservations as $reservation )
                         <tr>
                            <td>
-                              <div class="img-container">
-                                 <img src="{{ optional($reservation)->image }}" alt="...">
-                              </div>
+
                               <div class="form-group label-floating">
                                  <input type="hidden" class="p-v-id" value="{{ $reservation->id }}" />
                                  <select class="form-control mt-3 update_status" name="reservation_status[{{ $reservation->id }}]" id="">
