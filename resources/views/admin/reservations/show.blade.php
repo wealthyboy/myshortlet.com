@@ -27,6 +27,12 @@
                         <td><button data-toggle="tooltip" title="Payment Method" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
                         <td>{{ $user_reservation->payment_type }}</td>
                      </tr>
+                     <tr>
+                        <td>Invoice</td>
+                        <td id="invoice" class="text-right">{{ $user_reservation->invoice  }}</td>
+                        <td style="width: 1%;" class="text-center"><button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-refresh"></i></button>
+                        </td>
+                     </tr>
 
 
                   </tbody>
@@ -65,21 +71,8 @@
    <div class="col-md-4">
       <div class="card">
          <div class="card-content">
-            <div class="panel panel-default">
-               <div class="panel-heading">
-                  <h3 class="panel-title"><i class="fa fa-cog"></i> Options</h3>
-               </div>
-               <table class="table">
-                  <tbody>
-                     <tr>
-                        <td>Invoice</td>
-                        <td id="invoice" class="text-right">{{ $user_reservation->invoice  }}</td>
-                        <td style="width: 1%;" class="text-center"><button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-refresh"></i></button>
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
-            </div>
+            <img src="{{$user_reservation->guest_user->image }}" alt="" srcset="">
+
          </div>
       </div>
    </div>
