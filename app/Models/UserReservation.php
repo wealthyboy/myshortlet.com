@@ -31,6 +31,11 @@ class UserReservation extends Model
         return $this->hasMany(Reservation::class, 'user_reservation_id');
     }
 
+    public function reservation()
+    {
+        return $this->hasOne(Reservation::class, 'user_reservation_id');
+    }
+
 
     public function guest_user()
     {

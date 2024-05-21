@@ -105,13 +105,20 @@ class SignUpController extends Controller
                 return response()->json(["message" => "This apartment is not available for youe selected date"], 400);
             }
 
-            $guest = new GuestUser;
+            $guest = GuestUser::firstOrNew(['id' => data($input, 'guest_id')]);
             $guest->name = $input['first_name'];
             $guest->last_name = $input['last_name'];
             $guest->email = $input['email'];
             $guest->phone_number = $input['phone_number'];
             $guest->image = session('session_link');
             $guest->save();
+
+
+            if ($request->user_reservation_id) {
+                $user_reservation = UserReservation::find($request->user_reservation_id);
+                ProcessGuestCheckin::dispatch($guest, $user_reservation->reservation, $attr)->delay(now()->addSeconds(5));
+                return response()->json(null, 200);
+            }
 
             $user_reservation->user_id = optional($request->user())->id;
             $user_reservation->guest_user_id = $guest->id;

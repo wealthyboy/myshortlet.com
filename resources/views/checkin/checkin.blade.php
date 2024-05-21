@@ -54,6 +54,8 @@
                                 <input id="email" type="email" disabled="true" class="form-control" name="email" value="{{ $user_reservation->guest_user->email  }}" autocomplete="off">
                                 <input id="emai" type="hidden" name="email" value="{{ $user_reservation->guest_user->email  }}" autocomplete="off">
                                 <input id="user_reservation" type="hidden" name="user_reservation_id" value="{{ $user_reservation->id  }}">
+                                <input id="guest_id" type="hidden" name="guest_id" value="{{ $user_reservation->guest_user->id  }}">
+
                             </div>
 
                             <div class="form-group bmd-form-group col-md-6 col-12">
