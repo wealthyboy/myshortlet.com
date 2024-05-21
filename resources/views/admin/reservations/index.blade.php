@@ -19,6 +19,39 @@
       </div>
    </div>
 
+   <div class="col-md-12">
+      <div class="card">
+         <div class="card-header card-header-icon" data-background-color="rose">
+            <i class="material-icons">Filter</i>
+         </div>
+         <div class="card-content">
+            <h4 class="card-title">Filter - <small class="category"></small></h4>
+
+            <form>
+               <div class="form-row">
+                  <div class="form-group col-md-3">
+                     <label for="date">Date</label>
+                     <input type="date" class="form-control" id="date" name="date" required>
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="email">Email</label>
+                     <input type="email" class="form-control" id="email" name="email" required>
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="phone">Phone</label>
+                     <input type="tel" class="form-control" id="phone" name="phone" required>
+                  </div>
+
+                  <div class="form-group col-md-2">
+                     <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+               </div>
+            </form>
+
+         </div>
+      </div>
+   </div>
+
 
 
    <div class="col-md-12">
@@ -26,7 +59,7 @@
 
          <div class="card-content">
 
-            <h4 class="card-title">Properties</h4>
+            <h4 class="card-title">Reservations</h4>
             <div class="toolbar">
                <!-- Here you can write extra buttons/actions for the toolbar              -->
             </div>
