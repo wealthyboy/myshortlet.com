@@ -102,7 +102,7 @@ class SignUpController extends Controller
 
             $apartments = $query->latest()->first();
             if (!$request->user_reservation_id && null !==  $apartments) {
-                return response()->json(["message" => "This apartment is not available for youe selected date"], 400);
+                return response()->json(["message" => $apartments], 400);
             }
 
 
