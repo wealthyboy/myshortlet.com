@@ -101,9 +101,11 @@ class SignUpController extends Controller
             });
 
             $apartments = $query->latest()->first();
-            if (null ===  $apartments) {
+            if (!$request->user_reservation_id && null !==  $apartments) {
                 return response()->json(["message" => "This apartment is not available for youe selected date"], 400);
             }
+
+
 
             $guest = GuestUser::firstOrNew(['id' => data_get($input, 'guest_id')]);
             $guest->name = $input['first_name'];
@@ -156,7 +158,7 @@ class SignUpController extends Controller
             $reservation->email = $request->email;
             $reservation->phone_number = $request->phone_number;
 
-            ProcessGuestCheckin::dispatch($guest, $reservation, $attr)->delay(now()->addSeconds(5));
+            // ProcessGuestCheckin::dispatch($guest, $reservation, $attr)->delay(now()->addSeconds(5));
 
             return response()->json(null, 200);
         } catch (\Throwable $th) {

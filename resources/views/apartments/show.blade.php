@@ -6,25 +6,25 @@
       <div class="row no-gutters bg-white">
          <div class="col-lg-8">
             <div class="bg-white">
-               <div>{{ $property->name }}</div>
+               <div>{{ $apartment->name }}</div>
             </div>
          </div>
          <div class="col-md-4 d-flex  align-items-end  justify-content-end">
             <div>
-               <saved :property="{{$property}}" />
+               <saved :property="{{$apartment}}" />
             </div>
          </div>
          <div class="clearfix"></div>
          <div class="col-md-8  position-relative bg-white ">
-            <a href="#" class="img card-img galleries" style="background-image: url('{{ $property->image }}')"></a>
+            <a href="#" class="img card-img galleries" style="background-image: url('{{ $apartment->image }}')"></a>
          </div>
          <div class="col-md-4 ">
             <div class="row no-gutters">
                <div class="col-6 pl-1  pb-1 pr-1">
-                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ optional($property_type->images[0])->image }}')"></a>
+                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ optional($apartment->images[0])->image }}')"></a>
                </div>
                <div class="col-6 ">
-                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $property_type->images[1]->image }}')"></a>
+                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $apartment->images[1]->image }}')"></a>
                   <a href="#" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
                      <p class="fs-48 font-weight-600 text-white lh-1 mb-1">
                         <svg id="" class="mt-2">
@@ -35,12 +35,12 @@
                   </a>
                </div>
                <div class="col-6 pl-1  pr-1">
-                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ $property_type->images[2]->image }}')"></a>
+                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ $apartment->images[2]->image }}')"></a>
                </div>
                <div class="col-6 pb-2 position-relative">
-                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $property_type->images[3]->image }}')"></a>
+                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $apartment->images[3]->image }}')"></a>
                   <a href="#" id="full-image" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
-                     <p class="fs-48 font-weight-600 text-white lh-1 mb-1">+{{ $property->images->count() }}</p>
+                     <p class="fs-48 font-weight-600 text-white lh-1 mb-1">+{{ $apartment->images->count() }}</p>
                      <p class="fs-16 font-weight-bold text-white lh-1625 text-uppercase">View Gallery</p>
                   </a>
                </div>
@@ -53,7 +53,7 @@
          <div class="col-12 d-block d-sm-none">
             <div class="sm-flexslider">
                  <ul class="slides">
-                  @foreach($property->images as $key => $image)
+                  @foreach($apartment->images as $key => $image)
                       <li data-thumb="{{ $image->image_m }}">
                      <img src="{{ $image->image }}" />
                          
@@ -86,7 +86,7 @@
             <div class=" {{ $property->type == 'single' ? 'col-md-7' : 'col-md-12' }} rounded  mt-1">
                <div id="Overview" class="name rounded bg-white">
                   <div class="card-body">
-                     <h2 class="card-title bold">{{ $property->name }}</h2>
+                     <h2 class="card-title bold">{{ $apartment->name }}</h2>
                      <div class="row">
                         @if($property->type == 'single')
                         <div class="col-12 entire-apartment">

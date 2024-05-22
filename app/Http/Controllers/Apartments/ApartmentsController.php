@@ -114,7 +114,6 @@ class ApartmentsController extends Controller
     public function index(Request $request, Location $location)
     {
 
-        dd($apartments = 9);
 
         $types =  [
             'extra_services',
@@ -486,8 +485,11 @@ class ApartmentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Property $property)
+    public function show(Request $request, Apartment $apartment)
     {
+
+        $apartment->load('images', 'free_services', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
+
         $date  = explode("to", $request->check_in_checkout);
         $nights = '1 night';
         $sub_total = null;
@@ -527,6 +529,8 @@ class ApartmentsController extends Controller
             'apartments.show',
             compact(
                 'apartments',
+                'apartment',
+
                 'property_type',
                 'date',
                 'saved',

@@ -115,7 +115,7 @@ Route::group(['middleware' => 'currencyByIp'], function () {
     Route::get('profile/apartments', 'ProfileApartments\\ProfileApartmentsController@index');
     Route::get('profile/apartments/{property_id}', 'ProfileApartments\\ProfileApartmentsController@apartments');
     Route::resource('profile', 'Profile\\ProfileController', ['names' => 'profiles']);
-    Route::get('apartment/{property}', 'Apartments\ApartmentsController@show');
+    Route::get('apartment/{apartment}', 'Apartments\ApartmentsController@show');
     Route::get('add/apartment', 'Properties\PropertiesController@addApartment');
     Route::post('check/apartment/availablility', 'Apartments\ApartmentsController@checkAvailability');
     Route::get('checkout/{room}', 'Checkout\CheckoutController@index');
