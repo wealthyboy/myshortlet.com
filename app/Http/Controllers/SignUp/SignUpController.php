@@ -33,7 +33,7 @@ class SignUpController extends Controller
     public function index(Request $request)
     {
         $reservation = null;
-        $rooms = Attribute::parents()->where('type', 'room_id')->orderBy('name')->get();
+        $rooms = Apartment::orderBy('name')->get();
 
 
         //  dd($request->id);
@@ -84,11 +84,13 @@ class SignUpController extends Controller
             $date_diff = $checkin->diffInDays($checkout);
 
             $user_reservation = new UserReservation;
+            $attr = Attribute::find($request->apartment_id);
             $apartment = Apartment::where('apartment_id', $request->apartment_id)->first();
             $attr = Attribute::find($request->apartment_id);
             $query = Apartment::query();
+            $query->where('id', $request->apartment_id); // Filter by the provided apartment ID
 
-            $apartmentId = $apartment->id;
+            $apartmentId = $request->apartment_id;
             $query->where('id', $apartmentId);
             $startDate = Carbon::createFromDate($request->checkin);
             $endDate = Carbon::createFromDate($request->checkout);
@@ -101,7 +103,7 @@ class SignUpController extends Controller
             });
 
             $apartments = $query->latest()->first();
-            if (!$request->user_reservation_id && null !==  $apartments) {
+            if (!$request->user_reservation_id && null ===  $apartments) {
                 return response()->json(["message" => $apartments], 400);
             }
 
@@ -136,7 +138,7 @@ class SignUpController extends Controller
 
             $reservation = new Reservation;
             $reservation->quantity = 1;
-            $reservation->apartment_id = $apartment->apartment_id;
+            $reservation->apartment_id = $request->apartment_id;
             $reservation->price = $apartment->price;
             $reservation->sale_price = $apartment->sale_price;
             $reservation->user_reservation_id = $user_reservation->id;

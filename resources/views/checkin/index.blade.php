@@ -72,7 +72,7 @@
                                 <select name="apartment_id" id="mySelect" class="form-control ">
                                     <option selected value="">Choose Apartment</option>
                                     @foreach($rooms as $room)
-                                    <option value="{{ $room->id }}">{{ $room->name }}</option>
+                                    <option value="{{ $room->id }}">{{optional($room->attribute)->name}}</option>
                                     @endforeach
                                 </select>
 

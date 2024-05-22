@@ -72,6 +72,12 @@ class Apartment extends Model
     }
 
 
+    public function attribute()
+    {
+        return $this->belongsTo(Attribute::class, 'apartment_id');
+    }
+
+
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable')->orderBy('id', 'asc');
