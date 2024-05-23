@@ -119,14 +119,13 @@ class SignUpController extends Controller
             $guest->image = session('session_link');
             $guest->save();
 
+            $apartment = Apartment::find($request->apartment_id);
 
             if ($request->user_reservation_id) {
                 $user_reservation = UserReservation::find($request->user_reservation_id);
-                ProcessGuestCheckin::dispatch($guest, $user_reservation->reservation, $attr)->delay(now()->addSeconds(5));
+                ProcessGuestCheckin::dispatch($guest, $user_reservation->reservation, $apartment)->delay(now()->addSeconds(5));
                 return response()->json(null, 200);
             }
-
-            $apartment = Apartment::find($request->apartment_id);
 
             $user_reservation->user_id = optional($request->user())->id;
             $user_reservation->guest_user_id = $guest->id;
@@ -157,14 +156,13 @@ class SignUpController extends Controller
             $directory = public_path('pdf');
             $visitor = $request;
             $guest->image = session('session_link');
-            $reservation->apartment_name = $attr->name;
-            $guest->apartment_name = $attr->name;
+            $reservation->apartment_name = optional($apartment->attribute)->name;
+            $guest->apartment_name = optional($apartment->attribute)->name;
             $reservation->first_name = $request->first_name;
             $reservation->last_name = $request->last_name;
             $reservation->email = $request->email;
             $reservation->phone_number = $request->phone_number;
-
-            ProcessGuestCheckin::dispatch($guest, $reservation, $attr)->delay(now()->addSeconds(5));
+            ProcessGuestCheckin::dispatch($guest, $reservation, $apartment)->delay(now()->addSeconds(5));
 
             return response()->json(null, 200);
         } catch (\Throwable $th) {

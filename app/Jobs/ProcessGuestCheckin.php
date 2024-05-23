@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Apartment;
 use App\Models\Attribute;
 use App\Models\Guest;
 use App\Models\GuestUser;
@@ -30,14 +31,14 @@ class ProcessGuestCheckin implements ShouldQueue
 
     protected $guest;
     protected $reservation;
-    protected $attribute;
+    protected $apartment;
 
 
-    public function __construct(GuestUser $guest, Reservation $reservation, Attribute $attribute)
+    public function __construct(GuestUser $guest, Reservation $reservation, Apartment $apartment)
     {
         $this->guest = $guest;
         $this->reservation = $reservation;
-        $this->attribute = $attribute;
+        $this->apartment = $apartment;
     }
 
     public function handle()
@@ -50,11 +51,8 @@ class ProcessGuestCheckin implements ShouldQueue
             File::makeDirectory($directory);
         }
 
-
         $reservation = $this->reservation;
-
-        $attribute = $this->attribute;
-
+        $apartment = $this->apartment;
         $g = $this->guest;
 
         // Save the file to the specified directory
@@ -67,10 +65,10 @@ class ProcessGuestCheckin implements ShouldQueue
                 ->notify(new  NewGuest($this->guest));
 
             Notification::route('mail', 'avenuemontaigneconcierge@gmail.com')
-                ->notify(new CheckinNotification($this->guest, $this->attribute));
+                ->notify(new CheckinNotification($this->guest, $this->apartment));
 
-            Notification::route('mail', $this->attribute->apartment_owner)
-                ->notify(new AgentCheckingNotification($this->guest, $this->attribute, $this->reservation));
+            Notification::route('mail', $this->apartment->owner_email)
+                ->notify(new AgentCheckingNotification($this->guest, $this->apartment, $this->reservation));
         } catch (\Throwable $th) {
             // Log error if needed
             \Log::error("Mail error: " . $th);
