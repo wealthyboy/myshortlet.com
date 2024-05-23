@@ -38,7 +38,7 @@ class ReservationsController extends Controller
 		}
 
 		$reservations = Reservation::all();
-		foreach ($user_reservations as $user_reservation) {
+		foreach ($reservations as $reservation) {
 			if (null === $reservation->user_reservation) {
 				$reservation->delete();
 			}
