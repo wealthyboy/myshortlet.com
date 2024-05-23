@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Apartment;
 use App\Models\Attribute;
 use App\Models\GuestUser;
 use App\Models\Reservation;
@@ -16,7 +17,7 @@ class AgentCheckingNotification extends Notification
 
     public $guest;
 
-    public $attribute;
+    public $apartment;
 
     public $reservation;
 
@@ -27,12 +28,12 @@ class AgentCheckingNotification extends Notification
      *
      * @return void
      */
-    public function __construct(GuestUser $guest, Attribute $attribute, Reservation $reservation)
+    public function __construct(GuestUser $guest, Apartment $apartment, Reservation $reservation)
     {
 
         $this->guest = $guest;
 
-        $this->attribute = $attribute;
+        $this->apartment = $apartment;
 
         $this->reservation = $reservation;
     }
@@ -57,7 +58,7 @@ class AgentCheckingNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('New check-in for ' . $this->attribute->name)
+            ->subject('New check-in for ' . optional($this->apartment->attribute)->name)
             ->greeting('Hello Host,')
             ->line('Fullname: ' . $this->guest->name . ' ' . $this->guest->last_name)
             ->line('Check-in: ' . $this->reservation->checkin->format('l') . ' ' . $this->reservation->checkin->format('d') . ' ' . $this->reservation->checkin->format('F')  . ' ' . $this->reservation->checkin->isoFormat('Y'))
