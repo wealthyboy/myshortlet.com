@@ -102,7 +102,9 @@ class SignUpController extends Controller
                 });
             });
 
+
             $apartments = $query->latest()->first();
+
             if (!$request->user_reservation_id && null ===  $apartments) {
                 return response()->json(["message" => $apartments], 400);
             }
