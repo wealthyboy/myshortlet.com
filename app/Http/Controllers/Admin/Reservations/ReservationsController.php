@@ -37,6 +37,13 @@ class ReservationsController extends Controller
 			abort(404);
 		}
 
+		$reservations = Reservation::all();
+		foreach ($user_reservations as $user_reservation) {
+			if (null === $reservation->user_reservation) {
+				$reservation->delete();
+			}
+		}
+
 
 		if ($request->filled('cancel')) {
 			$userReservation = UserReservation::find($request->id);
@@ -121,7 +128,13 @@ class ReservationsController extends Controller
 	 */
 	public function destroy(Request $request, $id)
 	{
-		$apartment = UserReservation::whereIn('id', $request->selected)->delete();
+		$reservations = Reservation::all();
+		foreach ($user_reservations as $user_reservation) {
+			if (null === $reservation->user_reservation) {
+				$reservation->delete();
+			}
+		}
+		$userReservations = UserReservation::whereIn('id', $request->selected)->delete();
 		return redirect()->back()->with('success', ' deleted successfully');
 	}
 }
