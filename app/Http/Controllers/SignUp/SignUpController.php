@@ -124,6 +124,8 @@ class SignUpController extends Controller
                 return response()->json(null, 200);
             }
 
+            $apartment = Apartment::find($request->apartment_id);
+
             $user_reservation->user_id = optional($request->user())->id;
             $user_reservation->guest_user_id = $guest->id;
             $user_reservation->currency = null;
