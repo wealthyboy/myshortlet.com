@@ -128,12 +128,7 @@ class ReservationsController extends Controller
 	 */
 	public function destroy(Request $request, $id)
 	{
-		$reservations = Reservation::all();
-		foreach ($user_reservations as $user_reservation) {
-			if (null === $reservation->user_reservation) {
-				$reservation->delete();
-			}
-		}
+
 		$userReservations = UserReservation::whereIn('id', $request->selected)->delete();
 		return redirect()->back()->with('success', ' deleted successfully');
 	}
