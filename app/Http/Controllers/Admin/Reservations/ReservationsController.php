@@ -97,6 +97,11 @@ class ReservationsController extends Controller
 	}
 
 
+	public function sendCheckInLink($id)
+	{
+	}
+
+
 	public function show($id)
 	{
 		$user_reservation = UserReservation::find($id);

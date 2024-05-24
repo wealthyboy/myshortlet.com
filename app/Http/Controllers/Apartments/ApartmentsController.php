@@ -493,13 +493,13 @@ class ApartmentsController extends Controller
         $date  = explode("to", $request->check_in_checkout);
         $nights = '1 night';
         $sub_total = null;
-        $ids = $property->apartments->pluck('id')->toArray();
-        $areas = $property->areas;
-        $restaurants = $property->restaurants;
-        $safety_practices = $property->safety_practicies;
-        $amenities = $property->apartment_facilities->groupBy('parent.name');
-        $property_type = $property->type == 'single' ?  $property->single_room : $property->multiple_rooms[0];
-        $bedrooms = $property_type->bedrooms->groupBy('parent.name');
+        $ids = $apartment->property->apartments->pluck('id')->toArray();
+        $areas = $apartment->property->areas;
+        $restaurants = $apartment->property->restaurants;
+        $safety_practices = $apartment->property->safety_practicies;
+        $amenities = $apartment->property->apartment_facilities->groupBy('parent.name');
+        $property_type = "single";
+        $bedrooms = "";
         $days = 0;
 
 
@@ -510,39 +510,11 @@ class ApartmentsController extends Controller
         $start_date = !empty($date) ?  $date['start_date'] : null;
         $end_date = !empty($date) ? $date['end_date'] : null;
         $nights = Helper::nights($date);
-        $apartments = Apartment::where('apartments.property_id', $property->id)
-            ->where('apartments.max_adults', '>=',  $data['max_adults'])
-            ->where('apartments.max_children', '>=', $data['max_children'])
-            ->where('apartments.no_of_rooms', '>=', $data['rooms'])
-            ->select('reservations.id as reservation_id', 'reservations.quantity as reservation_qty', 'apartments.*')
-            ->leftJoin('reservations', function ($join) use ($start_date, $end_date) {
-                $join->on('apartments.id', '=', 'reservations.apartment_id')
-                    ->whereDate('reservations.checkin', '<=', $start_date)
-                    ->whereDate('reservations.checkout', '>=', $end_date);
-            })
-            ->groupBy('apartments.id')
-            ->get();
-        $apartments->load('images', 'free_services', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
-        $saved =  $this->saved();
-        $date = $request->check_in_checkout;
+
         return view(
             'apartments.show',
             compact(
-                'apartments',
                 'apartment',
-
-                'property_type',
-                'date',
-                'saved',
-                'sub_total',
-                'property',
-                'days',
-                'nights',
-                'areas',
-                'safety_practices',
-                'amenities',
-                'bedrooms',
-                'restaurants'
             )
         );
     }
