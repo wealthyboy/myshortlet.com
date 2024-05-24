@@ -120,9 +120,7 @@ class Apartment extends Model
     public function getGoogleDriveImageLinkAttribute()
     {
         $images = [];
-        // If the attribute exists and is not empty
         if ($this->image_link) {
-            // Split the comma-separated links into an array
             $links  = explode(',', $this->image_link);
 
             foreach ($links as $link) {

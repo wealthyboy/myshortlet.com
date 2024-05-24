@@ -92,7 +92,7 @@ class PageController extends Controller
 
 
 
-        $apartments = $query->latest()->get();
+        $apartments = $query->where('allow', 1)->latest()->get();
         $saved = null;
         $property = Property::first();
 
