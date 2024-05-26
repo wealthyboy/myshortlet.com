@@ -53,7 +53,7 @@ class ExtensionNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Extension for' . optional($this->apartment->attribute)->name)
+            ->subject('Extension for ' . optional($this->apartment->attribute)->name)
             ->greeting('Hello Host,')
             ->line('Fullname: ' . $this->guest->name . ' ' . $this->guest->last_name)
             ->line('Check-in: ' . $this->reservation->checkin->format('l') . ' ' . $this->reservation->checkin->format('d') . ' ' . $this->reservation->checkin->format('F')  . ' ' . $this->reservation->checkin->isoFormat('Y'))
