@@ -42,8 +42,8 @@ class ReservationController extends Controller
      */
     public function show($id)
     {
-        $user_reservation =  UserReservation::find($id);
-        $sub_total   =  $user_reservation->total;
+        $user_reservation = UserReservation::find($id);
+        $sub_total = $user_reservation->total;
         return view('reservations.show', compact('user_reservation', 'sub_total'));
     }
 

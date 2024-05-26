@@ -80,6 +80,38 @@
    </div>
    <div class="col-md-12">
       <div class="card">
+
+         <div class="card-content">
+            <h4 class="card-title">Add extension - <small class="category"></small></h4>
+
+            <form id="reservationForm" data-url="{{request()->fullUrl()}}" action="?add_extension=1" method="GET">
+               <div class="form-row">
+                  <div class="form-group col-md-3">
+                     <label for="date">Check-in</label>
+                     <input class="form-control  datepicker pull-right" name="checkin" id="checkin" type="text" required>
+
+                  </div>
+
+                  <div class="form-group col-md-3">
+                     <label for="date">Check-out</label>
+                     <input class="form-control  datepicker pull-right" name="checkout" id="checkout" type="text" required>
+                  </div>
+
+
+                  <div class="form-group col-md-2">
+                     <button id="add-extension" type="submit" class="btn btn-primary">
+                        Submit
+                        <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display:none;"></span>
+                     </button>
+                  </div>
+               </div>
+            </form>
+
+         </div>
+      </div>
+   </div>
+   <div class="col-md-12">
+      <div class="card">
          <div class="card-header card-header-icon" data-background-color="rose">
             <i class="material-icons">assignment</i>
          </div>
@@ -92,7 +124,6 @@
                   <tr>
                      <td valign="top" align="center">
                         <table class="tableTxt" width="252" cellspacing="0" cellpadding="0" border="0" align="left">
-
                            <tr>
                               <td>
                                  <h4>Guests</h4>
@@ -106,9 +137,7 @@
                                     <b>Phone Number:</b> {{$user_reservation->guest_user->phone_number }}
                                  </div>
                               </td>
-
                            </tr>
-
 
                            <tr>
                               <td colspan="3" style="font-size:0;line-height:0;" height="25"></td>
@@ -117,6 +146,7 @@
                      </td>
                   </tr>
                </table>
+
 
                <div class="card-content">
 
@@ -180,9 +210,17 @@
          </div>
       </div>
    </div>
+   @section('page-scripts')
+   <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+   <script src="{{ asset('backend/js/products.js') }}"></script>
+   <script src="{{ asset('backend/js/uploader.js') }}"></script>
+   @stop
    <!-- end row -->
    @endsection
    @section('inline-scripts')
+
+
+
 
    $(".update_status").on('change',function(e){
    let self = $(this)

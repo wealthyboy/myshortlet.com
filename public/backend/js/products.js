@@ -4,6 +4,45 @@ function resetFile(input) {
   input.unwrap();
 }
 
+$('#reservationForm').on('submit', function (e) {
+  e.preventDefault();
+
+  console.log(true)
+
+  var checkinDate = new Date($('#checkin').val());
+  var checkoutDate = new Date($('#checkout').val());
+
+  console.log($(this).data('url'))
+
+  if (checkinDate >= checkoutDate) {
+    alert('Check-in date must be earlier than check-out date.');
+  } else {
+    var formData = $(this).serialize();
+    $('#add-extension').prop('disabled', true);
+    $('#spinner').show();
+    $.ajax({
+      type: 'GET',
+      url: $(this).data('url'),
+      data: formData,
+      success: function (response) {
+        alert('Reservation successfully made.');
+        location.reload()
+      },
+      error: function (xhr, status, error) {
+        if (xhr.status === 400) {
+          alert('This apartment date is not available for your selected date');
+        } else {
+          alert('An error occurred while making the reservation.');
+        }
+
+        $('#add-extension').prop('disabled', false);
+
+
+      }
+    });
+  }
+});
+
 $(document).on("click", ".remove-image", function (e) {
   e.preventDefault();
   e.stopPropagation();

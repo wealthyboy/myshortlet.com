@@ -68,9 +68,9 @@ class Helper
             if (count($exp_date) > 1) {
                 if ($changeFormat) {
                     $exp_date = explode('/', $date);
-                    $month  = $exp_date[0]; //Month
-                    $day    = $exp_date[1]; //Day
-                    $year   = $exp_date[2]; //YEar
+                    $month = $exp_date[0]; //Month
+                    $day = $exp_date[1]; //Day
+                    $year = $exp_date[2]; //YEar
                     $formarted_date = Carbon::createFromDate($year, $month, $day);
                 } else {
                     $exp_date = explode('-', $date);

@@ -88,8 +88,6 @@ class SignUpController extends Controller
             $apartment = Apartment::where('apartment_id', $request->apartment_id)->first();
             $attr = Attribute::find($request->apartment_id);
             $query = Apartment::query();
-            $query->where('id', $request->apartment_id); // Filter by the provided apartment ID
-
             $apartmentId = $request->apartment_id;
             $query->where('id', $apartmentId);
             $startDate = Carbon::createFromDate($request->checkin);

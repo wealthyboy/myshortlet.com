@@ -13,8 +13,8 @@ use App\Http\Helper;
 use App\Models\Apartment;
 use App\Models\Reservation;
 use App\Notifications\CancelledNotification;
+use App\Notifications\ExtensionNotification;
 use Carbon\Carbon;
-use Illuminate\Notifications\Notification;
 
 class ReservationsController extends Controller
 {
@@ -36,8 +36,6 @@ class ReservationsController extends Controller
 		if (!in_array($comingFrom, ['payment', 'checkin'])) {
 			abort(404);
 		}
-
-
 
 
 		if ($request->filled('cancel')) {
@@ -104,10 +102,55 @@ class ReservationsController extends Controller
 
 	public function show($id)
 	{
+
+		$request = request();
 		$user_reservation = UserReservation::find($id);
+
+		if (!empty($request->query())) {
+			$checkin = Carbon::createFromDate($request->checkin);
+			$checkout = Carbon::createFromDate($request->checkout);
+			$user_reservation = UserReservation::find($id);
+			$stay = Reservation::where('user_reservation_id', $user_reservation->id)->first();
+			$apartment = Apartment::find($stay->apartment_id);
+
+
+			$query = Apartment::query();
+			$query->where('id', $stay->apartment_id); // Filter by the provided apartment ID
+			$query->whereDoesntHave('reservations', function ($query) use ($checkin, $checkout) {
+				$query->where(function ($q) use ($checkin, $checkout) {
+					$q->where('checkin', '<', $checkout)
+						->where('checkout', '>', $checkin);
+				});
+			});
+
+
+			$apartments = $query->latest()->first();
+			if (null ===  $apartments) {
+				return response()->json(["message" => $apartments], 400);
+			}
+
+
+
+			$reservation = new Reservation;
+			$reservation->quantity = 1;
+			$reservation->apartment_id = $stay->apartment_id;
+			$reservation->price = $apartment->price;
+			$reservation->sale_price = $apartment->sale_price;
+			$reservation->user_reservation_id = $user_reservation->id;
+			$reservation->property_id = null;
+			$reservation->checkin = $checkin;
+			$reservation->checkout = $checkout;
+			$reservation->save();
+
+			\Notification::route('mail', 'avenuemontaigneconcierge@gmail.com')
+				->notify(new ExtensionNotification($reservation, $user_reservation->guest_user, $apartment));
+		}
+
+
 		$sub_total = $user_reservation->original_amount;
 		$statuses = static::order_status();
-		//dd($user_reservation->reservations);
+
+
 		return view('admin.reservations.show', compact('statuses', 'user_reservation', 'sub_total'));
 	}
 
