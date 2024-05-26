@@ -43,6 +43,8 @@ const MultipleApartments = require("./components/properties/MultipleApartments.v
   .default;
 
 const PropertyCreate = require("./components/properties/Create.vue").default;
+const SingleSearch = require("./components/search/SingleSearch.vue").default;
+
 
 const Saved = require("./components/properties/Saved.vue").default;
 
@@ -222,7 +224,8 @@ const app = new Vue({
     PropertyCreate,
     DateRange,
     ApartmentsIndex,
-    SearchApartments
+    SearchApartments,
+    SingleSearch
   },
 });
 

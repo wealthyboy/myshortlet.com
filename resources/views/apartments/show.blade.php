@@ -7,7 +7,7 @@
       <div class="row no-gutters bg-white ">
          <div class="col-lg-8 py-3 px-2">
             <div class="bg-white">
-               <div class="bold-3">{{ $apartment->name }}</div>
+               <h3 class="bold-3">{{ $apartment->name }}</h3>
             </div>
          </div>
 
@@ -61,15 +61,8 @@
       </div>
       <div class="row">
          <div class="col-12 ">
-            <div class="d-flex">
-               <nav class="nav text-capitalize bg-white">
-                  <a class="nav-link text-capitalize active" href="#Overview">Overview</a>
-                  <a class="nav-link text-capitalize" href="#Amenities">Amenities</a>
-                  <a class="nav-link text-capitalize pb-1" href="#Reviews">Reviews </a>
-               </nav>
-               <a target="_blank" href="/property/avenu-montaigne-42210936" class="btn btn-round  btn-blue     d-lg-block d-xl-block align-self-end">
-                  Make Reservation
-               </a>
+            <div class="d-">
+               <single-search :apartment="{{$apartment}}" :property="{{$property}}" />
             </div>
 
          </div>
@@ -103,15 +96,15 @@
       <div style="z-index: 1;" class="close-icon fa-2x position-absolute"><i class="fal fa-times"></i></div>
       <div id="gallery-images" class="carousel slide carousel-fade" data-ride="carousel">
          <ol class="carousel-indicators">
-            @foreach($apartment->images as $key => $image)
+            @foreach($apartment->google_drive_image_links as $key => $image)
             <li data-target="#gallery-images" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : ''}}"></li>
             @endforeach
 
          </ol>
          <div class="carousel-inner">
-            @foreach($apartment->images as $key => $image)
+            @foreach($apartment->google_drive_image_links as $key => $image)
             <div class="carousel-item {{ $key == 0 ? 'active' : ''}}">
-               <div class="full-background" style="background-image: url('{{ $image->image }}');">
+               <div class="full-background" style="background-image: url('{{ $image }}');">
                   <div class="container">
                      <div class="row">
                      </div>
@@ -171,10 +164,6 @@ $('.close-icon').on('click',function(){
 $('.gallery-images').addClass('d-none')
 })
 
-  $('.sm-flexslider').flexslider({
-    animation: "slide",
-    controlNav: "thumbnails"
-  });
 
 })
 var geocoder;

@@ -7,12 +7,9 @@ function resetFile(input) {
 $('#reservationForm').on('submit', function (e) {
   e.preventDefault();
 
-  console.log(true)
-
   var checkinDate = new Date($('#checkin').val());
   var checkoutDate = new Date($('#checkout').val());
 
-  console.log($(this).data('url'))
 
   if (checkinDate >= checkoutDate) {
     alert('Check-in date must be earlier than check-out date.');
