@@ -47,9 +47,10 @@ $('.resend-link').on('click', function (event) {
   event.preventDefault(); // Prevent the default anchor tag behavior
 
   var url = $(this).data('url'); // Get the URL from the data-url attribute
-  $(this).addClass('disabled'); // Disable the anchor
+  let self = $(this)
+  //.addClass('disabled'); // Disable the anchor
   $(this).attr('disabled', 'disabled'); // Ad
-  $(this).text('Sending...'); // Re-enable the anchor
+  self.text('Sending...'); // Re-enable the anchor
 
 
 
@@ -57,8 +58,9 @@ $('.resend-link').on('click', function (event) {
     url: url,
     type: 'POST', // Or 'POST' depending on your endpoint
     success: function (response) {
+      self.removeAttr('disabled'); // Remove disabled attribute from the anchor
+      self.html('Send check-in link'); // Re-enable the anchor
       alert('Check-in link sent successfully.');
-
     },
     error: function (xhr, status, error) {
       alert('An error occurred while sending the check-in link.');
