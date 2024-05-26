@@ -34,9 +34,6 @@ class SignUpController extends Controller
     {
         $reservation = null;
         $rooms = Apartment::orderBy('name')->get();
-
-
-        //  dd($request->id);
         if ($request->id) {
             $user_reservation = UserReservation::findOrFail($request->id);
             $reservation = isset($user_reservation->reservations[0]) && !empty($user_reservation->reservations[0]) ? $user_reservation->reservations[0] : null;

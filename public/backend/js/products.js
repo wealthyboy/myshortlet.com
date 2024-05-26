@@ -43,6 +43,34 @@ $('#reservationForm').on('submit', function (e) {
   }
 });
 
+$('.resend-link').on('click', function (event) {
+  event.preventDefault(); // Prevent the default anchor tag behavior
+
+  var url = $(this).data('url'); // Get the URL from the data-url attribute
+  $(this).addClass('disabled'); // Disable the anchor
+  $(this).attr('disabled', 'disabled'); // Ad
+  $(this).text('Sending...'); // Re-enable the anchor
+
+
+
+  $.ajax({
+    url: url,
+    type: 'POST', // Or 'POST' depending on your endpoint
+    success: function (response) {
+      alert('Check-in link sent successfully.');
+
+    },
+    error: function (xhr, status, error) {
+      alert('An error occurred while sending the check-in link.');
+    },
+    complete: function () {
+      $(this).removeClass('disabled'); // Re-enable the anchor
+      $(this).removeAttr('disabled'); // Remove disabled attribute from the anchor
+      $(this).text('Send check-in link'); // Re-enable the anchor
+    }
+  });
+});
+
 $(document).on("click", ".remove-image", function (e) {
   e.preventDefault();
   e.stopPropagation();

@@ -18,11 +18,10 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('permissions', 'Admin\Permission\PermissionsController', ['names' => 'permissions']);
     Route::resource('sublets', 'Admin\SubLets\SubLetsController', ['names' => 'admin.sublets']);
 
-
     Route::resource('reservations', 'Admin\Reservations\ReservationsController', ['names' => 'admin.reservations']);
+    Route::post('reservations/resendLink', 'Admin\Reservations\ReservationsController@resendLink');
+
     Route::resource('check-in', 'Admin\Reservations\ReservationsController', ['names' => 'admin.check-in']);
-
-
     Route::resource('agents', 'Admin\Agents\AgentsController', ['names' => 'admin.agents']);
 
     Route::post('upload', 'Admin\Uploads\UploadsController@store');

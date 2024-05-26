@@ -110,14 +110,18 @@
                               <span><a href="{{ route('admin.reservations.show',['reservation'=>$reservation->id]) }}" rel="tooltip" class="btn btn-success btn-simple" data-original-title="" title="View">
                                     more details
                                  </a></span>
-
-                              <span><a href="/admin/reservations?cancel=1&id={{ $reservation->id }}" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel">
-                                    cancel
-                                 </a></span>
-
-                              <span><a href="/admin/reservations?cancel=1&id={{ $reservation->id }}" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel">
+                              <span>
+                                 <a data-url="/admin/reservations/resendLink?id={{ $reservation->id }}" href="#" rel="tooltip" class="btn btn-success  resend-link btn-simple" data-original-title="" title="Link">
                                     Send check-in link
-                                 </a></span>
+                                 </a>
+                              </span>
+                              <span>
+                                 <a href="/admin/reservations?cancel=1&id={{ $reservation->id }}" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel">
+                                    cancel
+                                 </a>
+                              </span>
+
+
                               @else
                               <span class="btn btn-danger btn-simple">
                                  Cancelled
@@ -136,6 +140,9 @@
    </div> <!-- end col-md-12 -->
 </div> <!-- end row -->
 @endsection
+@section('page-scripts')
+<script src="{{ asset('backend/js/products.js') }}"></script>
+@stop
 @section('inline-scripts')
 $(document).ready(function() {
 

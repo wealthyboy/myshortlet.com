@@ -14,6 +14,7 @@ use App\Models\Apartment;
 use App\Models\Reservation;
 use App\Notifications\CancelledNotification;
 use App\Notifications\ExtensionNotification;
+use App\Notifications\ResendLink;
 use Carbon\Carbon;
 
 class ReservationsController extends Controller
@@ -95,8 +96,13 @@ class ReservationsController extends Controller
 	}
 
 
-	public function sendCheckInLink($id)
+	public function resendLink(Request $request)
 	{
+
+		$user_reservation = UserReservation::find($request->id);
+		\Notification::route('mail', 'avenuemontaigneconcierge@gmail.com')
+			->notify(new ResendLink($user_reservation));
+		return response()->json(null, 200);
 	}
 
 
