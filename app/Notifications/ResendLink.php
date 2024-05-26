@@ -47,6 +47,7 @@ class ResendLink extends Notification
         $url = url("/check-in?id={$this->user->id}");
 
         return (new MailMessage)
+            ->bcc('avenuemontaigneconcierge@gmail.com')
             ->subject('Check-In Confirmation')
             ->greeting('Hello!')
             ->line('Please click the button below to complete your check-in.')

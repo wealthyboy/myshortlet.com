@@ -99,9 +99,9 @@ class ReservationsController extends Controller
 	public function resendLink(Request $request)
 	{
 
-		$user_reservation = UserReservation::find($request->id);
-		\Notification::route('mail', 'avenuemontaigneconcierge@gmail.com')
-			->notify(new ResendLink($user_reservation));
+		$user = UserReservation::find($request->id);
+		\Notification::route('mail', optional($user->guest_user)->email)
+			->notify(new ResendLink($user));
 		return response()->json(null, 200);
 	}
 
