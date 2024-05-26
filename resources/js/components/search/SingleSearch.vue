@@ -306,7 +306,6 @@ export default {
                     this.roomsAv = response.data.data;
                     this.stays = response.data.nights;
                     this.propertyLoading = false;
-
                     const paramNameToGet = 'check_in_checkout';
                     const { key, value } = this.getQueryParam(paramNameToGet);
 
@@ -314,12 +313,12 @@ export default {
                     if (value && this.isValidDateRange(value)) {
                         this.apartmentIsChecked = true
                     }
+
                     if (this.form.checkin && this.form.checkout) {
                         if (this.isValidDate(this.form.checkin) && this.isValidDate(this.form.checkout)) {
                             this.apartmentIsChecked = true
                         }
                     }
-
 
                     //document.getElementById("full-bg").remove();
                     jQuery(function () {
@@ -347,8 +346,6 @@ export default {
                     return Promise.resolve();
                 })
                 .catch((error) => {
-                    // commit("setPropertyLoading", false);
-                    // commit("setProperties", []);
                     console.log(error)
                 });
         },
@@ -359,8 +356,6 @@ export default {
                 .join('&');
         },
         isCheckinGreaterThanCheckout(checkinDate, checkoutDate) {
-
-            console.log(checkinDate, checkoutDate)
             checkinDate = new window.Date(checkinDate);
             checkoutDate = new window.Date(checkoutDate);
             return checkinDate > checkoutDate;
@@ -383,9 +378,7 @@ export default {
             };
 
             const storageKey = 'searchParams';
-
             const jsonString = JSON.stringify(myObject);
-
             const currentValue = localStorage.getItem(storageKey);
 
 

@@ -12,10 +12,10 @@
          </div>
 
          <div class="clearfix"></div>
-         <div class="col-md-8  position-relative bg-white ">
+         <div class="col-md-8  d-none d-md-block d-lg-block  d-xxl-block  position-relative bg-white ">
             <a href="#" class="img card-img galleries" style="background-image: url('{{ $apartment->google_drive_image_links[0] }}')"></a>
          </div>
-         <div class="col-md-4 ">
+         <div class="col-md-4   d-none d-md-block d-lg-block  d-xxl-block ">
             <div class="row no-gutters">
                <div class="col-6 pl-1  pb-1 pr-1">
                   <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ $apartment->google_drive_image_links[1] }}')"></a>
@@ -43,39 +43,22 @@
             </div>
          </div>
 
-
-
-
-         <div class="col-12 d-block d-sm-none">
-            <div class="sm-flexslider">
-                 <ul class="slides">
-                  @foreach($apartment->google_drive_image_links as $key => $image)
-                      <li data-thumb="{{ $image }}">
-                     <img src="{{ $image }}" />
-                         
-                  </li>
-                  @endforeach
-                    </ul>
-            </div>
-         </div>
       </div>
       <div class="row">
          <div class="col-12 ">
             <div class="d-">
                <single-search :apartment="{{$apartment}}" :property="{{$property}}" />
             </div>
-
          </div>
       </div>
    </div>
    <div class="">
       <div class="container">
-         <div class="row   align-items-start">
+         <div class="row  align-items-start">
             <div class=" rounded  mt-1">
                <div>
                </div>
             </div>
-
          </div>
       </div>
    </div>
