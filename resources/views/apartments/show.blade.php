@@ -75,8 +75,14 @@
    z-index: 2090; 
    background-color: rgba(0,0,0,.5);
    cursor: pointer;">
-   <div style="" class="">
-      <div style="z-index: 1;" class="close-icon fa-2x position-absolute"><i class="fal fa-times"></i></div>
+   <div class="">
+      <div style="z-index: 3; 
+      background-color: #fff !important;
+    box-shadow: 0 2px .25rem 0 rgba(0, 11, 38, .2) !important;
+    color: #342c27 !important;
+    height: 2rem !important;
+    min-height: 2rem !important;
+    width: 2rem !important;" class="border  close-icon fa-2x position-absolute"><i class="fal fa-times"></i></div>
       <div id="gallery-images" class="carousel slide carousel-fade" data-ride="carousel">
          <ol class="carousel-indicators">
             @foreach($apartment->google_drive_image_links as $key => $image)
