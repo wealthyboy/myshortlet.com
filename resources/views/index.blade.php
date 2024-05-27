@@ -4,7 +4,7 @@
 
 <div class="video-section">
    <div class="intro-image">
-      <img alt="Avenue Montaigne logo" src="https://drive.google.com/thumbnail?id=1eQ_hLe9Th_2Oew3Qoew_qQKhuGBpHGZm&sz=w2000" alt="">
+      <img alt="Avenue Montaigne logo" src="https://drive.google.com/thumbnail?id=1eQ_hLe9Th_2Oew3Qoew_qQKhuGBpHGZm&sz=w2000">
    </div>
 
    <div id="sm-main-banner" class="main-banner owl-carousel owl-theme d-block d-sm-none slider">
@@ -185,14 +185,10 @@
 
                <div id="rightBox" class="col-lg-7  col-md-12  order-sm-1 opacity-0">
                   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                     <!-- <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                     </ol> -->
+
                      <div class="carousel-inner">
                         <div class="carousel-item active">
-                           <img src="https://drive.google.com/thumbnail?id=1GlZ6VnD1-5X-v2F3t6aOURj6_NglHntq&sz=w2000" class="d-block w-100" alt="...">
+                           <img src="https://drive.google.com/thumbnail?id=1GlZ6VnD1-5X-v2F3t6aOURj6_NglHntq&sz=w2000" class="d-block w-100" alt="View amenities">
                         </div>
 
                      </div>

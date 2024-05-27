@@ -43,7 +43,7 @@ class ApartmentsController extends Controller
             'room_facilities',
             'other' => 'other'
         ];
-        $str = new  Str;
+        $str = new Str;
         $date = $request->check_in_checkout;
         $property_is_not_available = null;
         $cites = [];
