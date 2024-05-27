@@ -230,6 +230,106 @@ export default {
             // Filter out non-numeric values and empty strings
             return array;
         },
+        showRoom(room) {
+            this.showModal = !this.showModal;
+            this.room = room
+            this.groupData(room)
+
+            this.highlights = this.parseStringToArray(room.teaser);
+
+
+            jQuery(function () {
+                // Add touch event listeners to centered images
+                $(".custom-iframe").on("touchstart", function (event) {
+                    // Record the initial touch position
+                    var startX = event.touches[0].clientX;
+
+                    // Add touch move event listener
+                    $(this).on("touchmove", function (event) {
+                        // Calculate the distance moved
+                        var moveX = event.touches[0].clientX - startX;
+
+                        // If the distance moved is greater than a threshold, trigger carousel swipe
+                        if (Math.abs(moveX) > 50) { // Adjust threshold as needed
+                            if (moveX > 0) {
+                                // Swipe right
+                                $(".owl-carousel").trigger("prev.owl.carousel");
+                            } else {
+                                // Swipe left
+                                $(".owl-carousel").trigger("next.owl.carousel");
+                            }
+
+                            // Remove touchmove event listener to prevent multiple triggers
+                            $(this).off("touchmove");
+                        }
+                    });
+
+                    // Add touchend event listener to clean up
+                    $(this).on("touchend", function () {
+                        // Remove touchmove event listener
+                        $(this).off("touchmove");
+                    });
+                });
+                console.log(true)
+
+                $(".owl-carousel").owlCarousel({
+                    margin: 0,
+                    nav: true,
+                    dots: true,
+                    navText: [
+                        '<div class="nav-btn prev-slide d-flex z-index justify-content-center align-items-center mr-1"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                        '<div class="nav-btn next-slide d-flex z-index justify-content-center align-items-center ml-1"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
+                    ],
+                    responsive: {
+                        0: {
+                            items: 1,
+                        },
+                        600: {
+                            items: 1,
+                        },
+                        1000: {
+                            items: 1,
+                        },
+                    },
+                });
+            });
+
+        },
+        openModal() {
+            this.showModal = true;
+            document.body.style.overflow = 'hidden'; // Prevent scrolling on the body
+            // Add event listener to close modal when clicking outside
+            document.body.addEventListener('click', this.clickOutsideHandler);
+        },
+        closeModal() {
+            this.showModal = false;
+            // Remove event listener when closing modal
+            document.body.style.overflow = ''; // Prevent scrolling on the body
+
+            document.body.removeEventListener('click', this.clickOutsideHandler);
+        },
+        openImageModal() {
+            this.showImageModal = true;
+            document.body.style.overflow = 'hidden'; // Prevent scrolling on the body
+            // Add event listener to close modal when clicking outside
+            document.body.addEventListener('click', this.clickOutsideHandler);
+        },
+        closeImageModal() {
+            this.showImageModal = false;
+            // Remove event listener when closing modal
+            document.body.style.overflow = ''; // Prevent scrolling on the body
+
+            document.body.removeEventListener('click', this.clickOutsideHandler);
+        },
+        clickOutsideHandler(event) {
+            // Check if the click target is outside of the modal
+            if (!this.$refs.modal.contains(event.target)) {
+                this.closeModal();
+            }
+
+            document.body.style.overflow = ''; // Prevent scrolling on the body
+
+        },
 
 
         dateSelected(value) {

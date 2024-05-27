@@ -59,7 +59,7 @@
         </div>
         <div class="col-md-12 bg-white  aprt-content pt-3 pb-2">
             <div class="card-title bold-2 text-size-1-big   mt-sm-3 mt-3">
-                <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
+                <a :href="`/apartment/${room.slug}`">{{ room.name }}</a>
             </div>
             <div v-if="!room.is_gallery" class="text-size-2 text-gold">
                 <i class="fas fa-info-circle mr-2 "></i>Instant Confirmation

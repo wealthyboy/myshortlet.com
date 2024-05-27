@@ -23,7 +23,7 @@
     </div>
     <div class="col-md-12 bg-white  pt-3">
       <div class="card-title bold-2 text-size-1-big  mt-lg-0 mt-sm-3 ">
-        <a @click.prevent="showRoom(room)" href="#">{{ room.name }}</a>
+        <a @click.prevent="showRoom(room)" :href="`/apartment/${room.slug}`">{{ room.name }}</a>
       </div>
       <div class="text-size-2 text-gold">
         <i class="fas fa-info-circle mr-2 "></i>Instant Confirmation
