@@ -82,7 +82,9 @@
     color: #342c27 !important;
     height: 2rem !important;
     min-height: 2rem !important;
-    width: 2rem !important;" class="border  close-icon fa-2x position-absolute"><i class="fal fa-times"></i></div>
+    width: 2rem !important; 
+    display: flex;
+    justify-content: center;" class="border  close-icon fa-2x position-absolute "><i class="fal fa-times"></i></div>
       <div id="gallery-images" class="carousel slide carousel-fade" data-ride="carousel">
          <ol class="carousel-indicators">
             @foreach($apartment->google_drive_image_links as $key => $image)

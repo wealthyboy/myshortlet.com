@@ -43,6 +43,206 @@
                 </div>
             </div>
         </form>
+
+        <transition name="modal-fade">
+            <div v-if="showModal" @click.self="closeModal" class="modal-overlay d-flex">
+                <div class="modal d-block">
+                    <div class="modal-content-header d-flex align-items-center p-3 mt-4 justify-content-between">
+                        <h5 class="modal-title" id="">Apartment Information</h5>
+                        <a @click.prevent="closeModal" href="#"
+                            class="modal-close d-flex justify-content-center align-items-center" role="button">
+                            <svg class="" aria-label="Close, go back to hotel details." role="img" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <title id="undefined-close-toolbar-title">Close, go back to hotel details.</title>
+                                <path
+                                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
+                    <div v-if="!gallery" class="modal-body quick-view">
+                        <div class="row">
+                            <div class="col-md-12 rounded">
+                                <div class=" ">
+
+                                    <VueSlickCarousel v-bind="settings" :arrows="true" :dots="true">
+                                        <template v-if="room.google_drive_image_links">
+
+                                            <div class="item" :key="index"
+                                                v-for="(image, index) in room.google_drive_image_links">
+                                                <img :src="image" class="img room-image  img-fluid rounded" />
+                                            </div>
+                                        </template>
+
+                                        <div v-if="room.google_drive_video_link" class="item">
+                                            <iframe style="width: 100%;" class="custom-iframe"
+                                                :src="room.google_drive_video_link">
+                                            </iframe>
+                                        </div>
+                                    </VueSlickCarousel>
+                                </div>
+                                <div class="container p-0">
+                                    <h4 class="primary-color">Check availablity for {{ room.name }}</h4>
+
+                                    <form id="single-form" :action="'/book/' + property.slug" method="GET"
+                                        class="form-group">
+                                        <input type="hidden" name="_token" :value="$root.token" />
+                                        <input type="hidden" name="property_id" :value="property.id" />
+                                        <div class="mr-lg-4">
+                                            <div class="row quick-view p-3">
+                                                <div
+                                                    class="form-group  p-0  form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
+                                                    <label class=" label" for="flatpickr-input-f">Check-in </label>
+                                                    <date :check_in_date="1" placeholder="Check-in"
+                                                        :isDateNeedsToToOpen="isDateNeedsToToOpen"
+                                                        @dateSelected="checkIn" />
+                                                </div>
+                                                <div
+                                                    class="form-group  p-0 ml-lg-1 form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
+                                                    <label class=" label" for="flatpickr-input-f">Check-out</label>
+                                                    <date :check_in_date="0" placeholder="Check-out"
+                                                        :isDateNeedsToToOpen="isDateNeedsToToOpen"
+                                                        @dateSelected="checkOut" />
+                                                </div>
+                                                <div id="people-number"
+                                                    class="guest col-md-4 cursor-pointer px-sm-0 px-md-1">
+                                                    <guests />
+                                                </div>
+                                                <div class="col-md-1 check-availablility  mt-sm-2 mt-md-0">
+                                                    <button :class="{ disabled: loading }" type="button"
+                                                        @click.prevent="checkSingleAvailabity(room)"
+                                                        class="btn w-auto w-xs-100 btn-primary btn-block m-auto bold-2 check-availablility-button rounded">
+                                                        <span v-if="loading" class="spinner-border spinner-border-sm"
+                                                            role="status" aria-hidden="true"></span> Check availablity
+
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=" mt-3">
+                                            <div v-if="singleApartmentIsAvailable && singleApartmentIsChecked">
+                                                <div class="alert alert-success">
+                                                    This apartment is available
+                                                </div>
+                                                <button v-if="singleApartmentIsAvailable && singleApartmentIsChecked"
+                                                    type="button" @click.prevent="reserveSingle(room)"
+                                                    class="btn btn-primary  m-auto bold-2  rounded">
+                                                    Click here to book
+                                                </button>
+                                            </div>
+
+
+                                            <div v-if="!singleApartmentIsAvailable && singleApartmentIsChecked"
+                                                class="text-danger">
+                                                This apartment is not available on your selected date
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="card-title bold-2 text-size-1-big  mt-lg-0 mt-sm-3 ">
+                                    {{ room.name }}
+                                </div>
+                                <div class="mb-5 bg-grey p-3 rounded">
+                                    <div class="d-flex">
+                                        <svg class="" aria-describedby="cleanliness-description" role="img"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                                            <desc id="cleanliness-description">cleanliness</desc>
+                                            <path
+                                                d="M19.14 7.25 18 10l-1.14-2.86L14 6l2.86-1.14L18 2l1.14 2.86L22 6l-2.86 1.25zM11 10 9 4l-2 6-6 2 6 2 2 6 2-6 6-2-6-2zm4.5 10.5-1.5-1 1.5-1 1-1.5 1 1.5 1.5 1-1.5 1-1 1.5-1-1.5z">
+                                            </path>
+                                        </svg>
+                                        <h3 class="">Highlights</h3>
+                                    </div>
+                                    <div class="">
+
+                                        <span v-for="(h, index ) in highlights" :key="index" class="ml-2">
+                                            {{ h }}
+                                        </span>
+
+
+
+                                    </div>
+                                </div>
+
+                                <div class="d-flex  flex-column">
+                                    <div class="position-relative mb-2">
+                                        <span class="position-absolute svg-icon-section">
+                                            <svg>
+                                                <use xlink:href="#bedrooms-icon"></use>
+                                            </svg>
+                                        </span>
+                                        <span class="svg-icon-text">{{ room.no_of_rooms }} Bedrooms</span>
+                                    </div>
+                                    <div class="position-relative mb-2">
+                                        <span class="position-absolute svg-icon-section">
+                                            <svg>
+                                                <use xlink:href="#bathroom-icon"></use>
+                                            </svg>
+                                        </span>
+                                        <span class="svg-icon-text">{{ room.toilets }} bathrooms</span>
+                                    </div>
+                                    <div class="position-relative mb-2">
+                                        <span class="position-absolute svg-icon-section">
+                                            <svg>
+                                                <use xlink:href="#sleeps-icon"></use>
+                                            </svg>
+                                        </span>
+                                        <span class="svg-icon-text">{{ room.max_adults }} Guests</span>
+                                    </div>
+
+                                    <div class="position-relative mb-1">
+                                        <span class="position-absolute svg-icon-section">
+                                            <svg>
+                                                <use xlink:href="#location_city"></use>
+                                            </svg>
+                                        </span>
+                                        <span class="svg-icon-text">{{ room.floor }} </span>
+                                    </div>
+                                </div>
+
+                                <div class="uitk-spacing uitk-spacing-margin-blockend-six">
+                                    <h3 class="uitk-heading uitk-heading-5 uitk-spacing uitk-spacing-margin-blockend-six">
+                                        Apartment
+                                        amenities</h3>
+                                    <div class="row" id="apartment-fac" style="">
+                                        <div v-for="(objects, parentName) in apartment_facilities" :key="parentName"
+                                            class="col-md-6 margin-bottom-13rem">
+                                            <div class="d-flex align-items-center">
+                                                <svg class="uitk-icon uitk-layout-flex-item" aria-hidden="true"
+                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                    <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z">
+                                                    </path>
+                                                </svg>
+
+                                                <h4 class="ml-2">{{ parentName }}</h4>
+                                            </div>
+                                            <div class="">
+                                                <div class="">
+                                                    <ul class="" role="list">
+                                                        <li class="" v-for="obj in objects" :key="obj.id" role="listitem">
+                                                            <span aria-hidden="true" class=""></span><span class=""> {{
+                                                                obj.name }}
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 <script>
@@ -229,6 +429,10 @@ export default {
             const array = str.split(",");
             // Filter out non-numeric values and empty strings
             return array;
+        },
+        showImages(room) {
+            this.showImageModal = !this.showImageModal;
+            this.room = room
         },
         showRoom(room) {
             this.showModal = !this.showModal;
