@@ -38,7 +38,6 @@ class ReservationsController extends Controller
 			abort(404);
 		}
 
-		dd(Reservation::where('apartment_id', 27)->get());
 
 
 		if ($request->filled('cancel')) {
