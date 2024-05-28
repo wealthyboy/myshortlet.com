@@ -28,8 +28,6 @@ const PropertiesCount = require("./components/properties/PropertyCount.vue")
 const DateRange = require("./components/properties/Date.vue")
   .default;
 
-
-
 const SingleApartment = require("./components/properties/SingleApartment.vue")
   .default;
 
@@ -44,10 +42,7 @@ const MultipleApartments = require("./components/properties/MultipleApartments.v
 
 const PropertyCreate = require("./components/properties/Create.vue").default;
 const SingleSearch = require("./components/search/SingleSearch.vue").default;
-
-
 const Saved = require("./components/properties/Saved.vue").default;
-
 const Location = require("./components/search/Location.vue").default;
 
 $().ready(function () {

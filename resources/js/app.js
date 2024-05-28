@@ -15,15 +15,12 @@ const SearchBar = require("./components/search/Index.vue").default;
 const SignUp = require("./components/newsletter/SignUp.vue").default;
 const FavoriteIndex = require("./components/favorites/Index.vue").default;
 const Login = require("./components/auth/LoginRegister.vue").default;
-
 const ForgotPassword = require("./components/auth/ForgotPassword.vue").default;
 const ResetPassword = require("./components/auth/ResetPassword.vue").default;
 const ChangePassword = require("./components/auth/ChangePassword.vue").default;
 const Comments = require("./components/blog/Comments.vue").default;
 const Table = require("./components/table/Table").default;
 const Account = require("./components/account/Account").default;
-
-
 
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
