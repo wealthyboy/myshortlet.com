@@ -4,7 +4,7 @@
 
 <div class="video-section">
    <div class="intro-image">
-      <img alt="Avenue Montaigne logo" src="https://drive.google.com/thumbnail?id=1eQ_hLe9Th_2Oew3Qoew_qQKhuGBpHGZm&sz=w2000">
+      <img alt="Avenue Montaigne logo" itemscope itemtype="https://schema.org/VideoObject" src="https://drive.google.com/thumbnail?id=1eQ_hLe9Th_2Oew3Qoew_qQKhuGBpHGZm&sz=w2000">
    </div>
 
    <div id="sm-main-banner" class="main-banner owl-carousel owl-theme d-block d-sm-none slider">
@@ -26,7 +26,7 @@
 
          @foreach($images['sliders'] as $key => $image)
          <div class="carousel-item {{ $key === 0 ? 'active' : ''}} ">
-            <img src="{{ $generator::generateThumbnailUrl($image) }}" class="d-block w-100" alt="...">
+            <img src="{{ $generator::generateThumbnailUrl($image) }}" class="d-block w-100" itemprop="image" alt="slider for avenue montaigne">
          </div>
          @endforeach
       </div>
@@ -76,7 +76,6 @@
 </div> -->
 
 <div class="container-fluid mb-2">
-
    <div class="row">
       <div id="tree" class="opacity-0" style="background-image: url(https://drive.google.com/thumbnail?id=1aP9OVoify71pxLWDV-P33fYb5sopnI2g&sz=w2000);
     background-repeat: no-repeat;
@@ -85,43 +84,25 @@
     position: absolute;
     width: -webkit-fill-available;"></div>
       <div class="col-md-12">
-
-
-         <section id="rbox1" class=" ">
-            <div class="row   position-relative">
-               <div class="col-lg-7 col-md-12  rounded  card-background-image">
+         <section id="rbox1">
+            <div class="row position-relative" itemscope itemtype="https://schema.org/Thing">
+               <div class="col-lg-7 col-md-12 rounded card-background-image" itemprop="image">
                   <div id="c1" class="carousel slide" data-ride="carousel">
-                     <!-- <ol class="carousel-indicators">
-                        <li data-target="#c1" data-slide-to="0" class="active"></li>
-                        <li data-target="#c1" data-slide-to="1"></li>
-                        <li data-target="#c1" data-slide-to="2"></li>
-                     </ol> -->
                      <div class="carousel-inner">
                         <div class="carousel-item active">
-                           <img src="https://drive.google.com/thumbnail?id=1ES6PROkjg09AnQdO2hn033mzg48dJT8S&sz=w2000" class="d-block w-100" alt="...">
+                           <img src="https://drive.google.com/thumbnail?id=1ES6PROkjg09AnQdO2hn033mzg48dJT8S&sz=w2000" itemprop="image" class="d-block w-100" alt="STAY IN THE HEART OF LAGOS avenue montaigne">
                         </div>
-
                      </div>
-
-
-                     <!-- <button class="carousel-control-prev" data-target="#c1" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
-                           <path d="M19.9 40L1.3 20 19.9 0" class="carousel-control-prev-icon" aria-hidden="true" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg><span class="sr-only">Previous</span></button>
-
-                     <button class="carousel-control-next" data-target="#c1" data-slide="next"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg">
-                           <path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg><span class="sr-only">Next</span></button> -->
-
                   </div>
                </div>
-               <div class="col-lg-5 col-md-12 welcome text-center d-flex justify-content-center align-items-center">
-                  <div class="about-panel  bg-right-panel bg-panel-white  bg-panel p-sm-3 p-md-5">
-                     <div class="primary-color ">STAY IN THE HEART OF LAGOS</div>
-                     <h2 class=" bold-2">Welcome to Avenue Montaigne</h2>
-                     <p class="mt-4  text-left text-black light-bold">
-                        Our apartments offer amazing amenities, stylish design, and a perfect location for living the lagos dream. With your choice of spacious, meticulously-designed 3-bedroom apartments, you'll be sure to find the ideal fit for your needs and lifestyle.
+               <div class="col-lg-5 col-md-12 welcome text-center d-flex justify-content-center align-items-center" itemprop="description">
+                  <div class="about-panel bg-right-panel bg-panel-white bg-panel p-sm-3 p-md-5">
+                     <div class="primary-color">STAY IN THE HEART OF LAGOS</div>
+                     <h2 class="bold-2">Welcome to Avenue Montaigne</h2>
+                     <p class="mt-4 text-left text-black light-bold">
+                        Our apartments offer amazing amenities, stylish design, and a perfect location for living the Lagos dream. With your choice of spacious, meticulously-designed 3-bedroom apartments, you'll be sure to find the ideal fit for your needs and lifestyle.
                      </p>
-                     <div class=" buttons">
+                     <div class="buttons">
                         <a href="/apartments" class="btn btn-primary rounded bold-2">
                            View all Apartments
                         </a>
@@ -136,24 +117,23 @@
 
 
 <div style="background-color: rgb(248, 245, 244);" class="ap mb-3">
-   <div class="container-fluid ">
-      <div id="intro-box2" class=" opacity-0 mt-4 mb-4">
-         <h2 class=" bold-3 text-left">Luxury Redefined</h2>
-         <div class=" text-secondary   text-left mt-2"> Explore Our Exquisite Collection of Apartments.</div>
+   <div class="container-fluid">
+      <div id="intro-box2" class="opacity-0 mt-4 mb-4">
+         <h2 class="bold-3 text-left" itemprop="name">Luxury Redefined</h2>
+         <div class="text-secondary text-left mt-2" itemprop="description">Explore Our Exquisite Collection of Apartments.</div>
       </div>
 
       <div class="title">
          <div class="d-flex justify-content-between">
-            <h3 class="large-heading bold">Apartments</h3>
-            <a href="/apartments" class="btn btn-round  btn-primary   py-2  bold-2   align-self-end font-weight-bold-2">
+            <h3 class="large-heading bold" itemprop="name">Apartments</h3>
+            <a href="/apartments" class="btn btn-round btn-primary py-2 bold-2 align-self-end font-weight-bold-2" itemprop="url">
                View all Apartments
             </a>
          </div>
-
       </div>
-      <div class="row  p-1">
-         <div id="load-products" class="col-md-12 ">
-            <apartments-index :isGallery="0" :filter="0" :property="{{$property}}" :apartments="{{ $apartments }}" />
+      <div class="row p-1">
+         <div id="load-products" class="col-md-12" itemscope itemtype="https://schema.org/ItemList">
+            <apartments-index :isGallery="0" :filter="0" :property="{{$property}}" :apartments="{{ $apartments }}" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" />
          </div>
       </div>
    </div>
@@ -166,13 +146,13 @@
 <div class="container-fluid mb-3">
    <div class="row p-1">
       <div class="col-md-12">
-         <section class=" mb-1">
-            <div class="row bg-grey position-relative  pb-5 pt-5">
-               <div id="leftBox" style="z-index: 2;" class="col-lg-5  col-md-12  order-sm-2 order-lg-1 opacity-0 re-order text-center d-flex justify-content-center align-items-center">
+         <section class="mb-1">
+            <div class="row bg-grey position-relative pb-5 pt-5">
+               <div id="leftBox" style="z-index: 2;" class="col-lg-5 col-md-12 order-sm-2 order-lg-1 opacity-0 re-order text-center d-flex justify-content-center align-items-center" itemscope itemtype="https://schema.org/WebPageElement">
                   <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
-                     <h2 class="mb-4 bold-2">Unrivaled Amenities</h2>
-                     <div class="lead text-secondary">Elevate Your Living Experience</div>
-                     <p class="mt-4  text-left text-black light-bold">
+                     <h2 class="mb-4 bold-2" itemprop="name">Unrivaled Amenities</h2>
+                     <div class="lead text-secondary" itemprop="description">Elevate Your Living Experience</div>
+                     <p class="mt-4 text-left text-black light-bold">
                         Indulge in a lifestyle of unparalleled luxury with our meticulously designed apartments, complemented by a suite of unmatched amenities. Every detail has been thoughtfully curated to elevate your living experience. Enjoy the convenience of concierge services, savor moments of tranquility in lush landscaped gardens. Our commitment to providing exceptional amenities ensures that every day in your new home is a lavish retreat.
                      <div class="buttons">
                         <a href="/apartments" class="btn btn-primary rounded bold-2">
@@ -183,21 +163,15 @@
                   </div>
                </div>
 
-               <div id="rightBox" class="col-lg-7  col-md-12  order-sm-1 opacity-0">
+               <div id="rightBox" class="col-lg-7 col-md-12 order-sm-1 opacity-0" itemscope itemtype="https://schema.org/ImageObject">
                   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-
                      <div class="carousel-inner">
                         <div class="carousel-item active">
-                           <img src="https://drive.google.com/thumbnail?id=1GlZ6VnD1-5X-v2F3t6aOURj6_NglHntq&sz=w2000" class="d-block w-100" alt="View amenities">
+                           <img src="https://drive.google.com/thumbnail?id=1GlZ6VnD1-5X-v2F3t6aOURj6_NglHntq&sz=w2000" class="d-block w-100" alt="View amenities" itemprop="url">
                         </div>
-
                      </div>
-
                   </div>
-
-
                </div>
-
             </div>
          </section>
       </div>
