@@ -84,61 +84,7 @@
                                 <div class="container p-0">
                                     <h4 class="primary-color">Check availablity for {{ room.name }}</h4>
 
-                                    <form id="single-form" :action="'/book/' + property.slug" method="GET"
-                                        class="form-group">
-                                        <input type="hidden" name="_token" :value="$root.token" />
-                                        <input type="hidden" name="property_id" :value="property.id" />
-                                        <div class="mr-lg-4">
-                                            <div class="row quick-view p-3">
-                                                <div
-                                                    class="form-group  p-0  form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
-                                                    <label class=" label" for="flatpickr-input-f">Check-in </label>
-                                                    <date :check_in_date="1" placeholder="Check-in"
-                                                        :isDateNeedsToToOpen="isDateNeedsToToOpen"
-                                                        @dateSelected="checkIn" />
-                                                </div>
-                                                <div
-                                                    class="form-group  p-0 ml-lg-1 form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
-                                                    <label class=" label" for="flatpickr-input-f">Check-out</label>
-                                                    <date :check_in_date="0" placeholder="Check-out"
-                                                        :isDateNeedsToToOpen="isDateNeedsToToOpen"
-                                                        @dateSelected="checkOut" />
-                                                </div>
-                                                <div id="people-number"
-                                                    class="guest col-md-4 cursor-pointer px-sm-0 px-md-1">
-                                                    <guests />
-                                                </div>
-                                                <div class="col-md-1 check-availablility  mt-sm-2 mt-md-0">
-                                                    <button :class="{ disabled: loading }" type="button"
-                                                        @click.prevent="checkSingleAvailabity(room)"
-                                                        class="btn w-auto w-xs-100 btn-primary btn-block m-auto bold-2 check-availablility-button rounded">
-                                                        <span v-if="loading" class="spinner-border spinner-border-sm"
-                                                            role="status" aria-hidden="true"></span> Check availablity
 
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class=" mt-3">
-                                            <div v-if="singleApartmentIsAvailable && singleApartmentIsChecked">
-                                                <div class="alert alert-success">
-                                                    This apartment is available
-                                                </div>
-                                                <button v-if="singleApartmentIsAvailable && singleApartmentIsChecked"
-                                                    type="button" @click.prevent="reserveSingle(room)"
-                                                    class="btn btn-primary  m-auto bold-2  rounded">
-                                                    Click here to book
-                                                </button>
-                                            </div>
-
-
-                                            <div v-if="!singleApartmentIsAvailable && singleApartmentIsChecked"
-                                                class="text-danger">
-                                                This apartment is not available on your selected date
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
 
                                 <div class="card-title bold-2 text-size-1-big  mt-lg-0 mt-sm-3 ">
