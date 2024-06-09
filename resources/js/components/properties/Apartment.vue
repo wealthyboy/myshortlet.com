@@ -1,17 +1,16 @@
 <template>
-    <div :class="classType" class=" mb-1 mt-1 pl-1 pb-1 px-0">
-        <div class="col-md-12 small aprts position-relative p-0">
-            <div class="owl-carousel  owl-theme">
-
-                <div class="item rounded-top" :key="image.id" v-for="image in room.images">
+    <div :class="classType" class="mb-1 mt-1 pl-1 pb-1 px-0" itemscope itemtype="https://schema.org/HotelRoom">
+        <div class="col-md-12 small aprts position-relative p-0" itemscope itemtype="https://schema.org/ImageGallery">
+            <div class="owl-carousel owl-theme">
+                <div class="item rounded-top" :key="image.id" v-for="image in room.images" itemprop="photo" itemscope
+                    itemtype="https://schema.org/ImageObject">
                     <img :alt="room.name" @click.prevent="showRoom(room)" :src="image.image"
-                        class="img cursor-pointer  img-fluid" />
-
+                        class="img cursor-pointer img-fluid" alt="Book apartment" itemprop="contentUrl" />
                     <div class="images-count">
                         <button role="button" type="button"
                             class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
                             <svg class="uitk-icon uitk-icon-leading uitk-icon-medium"
-                                aria-label="Show all 7 images for Classic Twin Room" role="img" viewBox="0 0 24 24"
+                                aria-label="Show all images for {{ room.name }}" role="img" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title id="photo_library-property-offers-media-carousel-1-title">Show all
                                     {{ room.images.length + room.google_drive_image_links.length }} images
@@ -20,22 +19,21 @@
                                     d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z"
                                     clip-rule="evenodd"></path>
                             </svg><span @click.prevent="showRoom(room)" class="cursor-pointer" role="button"
-                                aria-hidden="true">{{ room.images.length +
-                                    room.google_drive_image_links.length
-                                }} View All</span>
+                                aria-hidden="true">{{ room.images.length + room.google_drive_image_links.length }} View
+                                All</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="item rounded-top" :key="index" v-for="(image, index) in room.google_drive_image_link">
-                    <img :alt="room.name" @click.prevent="showRoom(room)" :src="image"
-                        class="img cursor-pointer  img-fluid" />
-
+                <div class="item rounded-top" :key="index" v-for="(image, index) in room.google_drive_image_link"
+                    itemprop="photo" itemscope itemtype="https://schema.org/ImageObject">
+                    <img :alt="room.name" @click.prevent="showRoom(room)" :src="image" class="img cursor-pointer img-fluid"
+                        itemprop="contentUrl" />
                     <div class="images-count">
                         <button role="button" type="button"
                             class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
                             <svg class="uitk-icon uitk-icon-leading uitk-icon-medium"
-                                aria-label="Show all 7 images for Classic Twin Room" role="img" viewBox="0 0 24 24"
+                                aria-label="Show all images for {{ room.name }}" role="img" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title id="photo_library-property-offers-media-carousel-1-title">Show all
                                     {{ room.images.length + room.google_drive_image_links.length }} images
@@ -44,30 +42,30 @@
                                     d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z"
                                     clip-rule="evenodd"></path>
                             </svg><span @click.prevent="showRoom(room)" class="cursor-pointer" role="button"
-                                aria-hidden="true">{{ room.images.length +
-                                    room.google_drive_image_links.length
-                                }} View All</span>
+                                aria-hidden="true">{{ room.images.length + room.google_drive_image_links.length }} View
+                                All</span>
                         </button>
                     </div>
                 </div>
 
                 <div v-if="room.google_drive_video_link" class="item">
-                    <iframe class="rounded " style="width: 100%;" height="235" :src="room.google_drive_video_link">
-                    </iframe>
+                    <iframe class="rounded" style="width: 100%;" height="235" :src="room.google_drive_video_link"
+                        itemprop="video" itemscope itemtype="https://schema.org/VideoObject"></iframe>
                 </div>
             </div>
         </div>
-        <div class="col-md-12 bg-white  aprt-content pt-3 pb-2">
-            <div class="card-title bold-2 text-size-1-big   mt-sm-3 mt-3">
+        <div class="col-md-12 bg-white aprt-content pt-3 pb-2">
+            <div class="card-title bold-2 text-size-1-big mt-sm-3 mt-3" itemprop="name">
                 <a :href="`/apartment/${room.slug}`">{{ room.name }}</a>
             </div>
-            <div v-if="!room.is_gallery" class="text-size-2 text-gold">
-                <i class="fas fa-info-circle mr-2 "></i>Instant Confirmation
+            <div v-if="!room.is_gallery" class="text-size-2 text-gold" itemprop="amenityFeature" itemscope
+                itemtype="https://schema.org/LocationFeatureSpecification">
+                <i class="fas fa-info-circle mr-2"></i><span itemprop="name">Instant Confirmation</span>
             </div>
             <div :class="{ 'h-25': room.is_gallery }" class="entire-apartments h-25">
-                <div v-if="!room.is_gallery" class="bold-2 mb-2">Entire apartment</div>
+                <div v-if="!room.is_gallery" class="bold-2 mb-2" itemprop="description">Entire apartment</div>
                 <div v-if="!room.is_gallery" class="d-flex justify-content-between flex-wrap flex-column">
-                    <div class="position-relative mb-1">
+                    <div class="position-relative mb-1" itemprop="numberOfRooms">
                         <span class="position-absolute svg-icon-section">
                             <svg>
                                 <use xlink:href="#bedrooms-icon"></use>
@@ -75,7 +73,7 @@
                         </span>
                         <span class="svg-icon-text">{{ room.no_of_rooms }} Bedrooms</span>
                     </div>
-                    <div class="position-relative mb-1">
+                    <div class="position-relative mb-1" itemprop="numberOfBathroomsTotal">
                         <span class="position-absolute svg-icon-section">
                             <svg>
                                 <use xlink:href="#bathroom-icon"></use>
@@ -83,35 +81,28 @@
                         </span>
                         <span class="svg-icon-text">{{ room.toilets }} bathrooms</span>
                     </div>
-                    <div class="position-relative mb-1">
+                    <div class="position-relative mb-1" itemprop="occupancy" itemscope
+                        itemtype="https://schema.org/QuantitativeValue">
                         <span class="position-absolute svg-icon-section">
                             <svg>
                                 <use xlink:href="#sleeps-icon"></use>
                             </svg>
                         </span>
-                        <span class="svg-icon-text">{{ room.max_adults }} Guests</span>
+                        <span class="svg-icon-text" itemprop="value">{{ room.max_adults }}</span> Guests
                     </div>
-
-                    <div class="position-relative mb-1">
+                    <div class="position-relative mb-1" itemprop="floorLevel">
                         <span class="position-absolute svg-icon-section">
                             <svg>
                                 <use xlink:href="#location_city"></use>
                             </svg>
                         </span>
-                        <span class="svg-icon-text">{{ room.floor }} </span>
+                        <span class="svg-icon-text">{{ room.floor }}</span>
                     </div>
                 </div>
-
-                <!-- <div v-if="room.free_services.length" class="d-inline-flex flex-wrap">
-                    <div v-for="free_service in room.free_services" :key="free_service.id" class="position-relative">
-                        <span class="position-absolute svg-icon-section "></span>
-                        <span class="svg-icon-text text-gray">{{ free_service.name }}</span>
-                    </div>
-                </div>
-                 -->
 
                 <template v-if="!room.is_gallery && room.bedrooms && room.bedrooms.length">
-                    <div v-for="bed in room.bedrooms" :key="bed.id" class="position-relative mb-1">
+                    <div v-for="bed in room.bedrooms" :key="bed.id" class="position-relative mb-1" itemprop="bed" itemscope
+                        itemtype="https://schema.org/BedDetails">
                         <span class="position-absolute svg-icon-section">
                             <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -120,52 +111,41 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </span>
-                        <span class="svg-icon-text">{{ bed.parent.name }}</span>
+                        <span class="svg-icon-text" itemprop="type">{{ bed.parent.name }}</span>
                         <span class="svg-icon-text">
                             {{ bed.pivot.bed_count }} {{ bed.name }}
                         </span>
                     </div>
                 </template>
-
-                <!-- <div class="position-relative mb-1">
-                    <a @click.prevent="showRoom(room)"
-                        class="d-flex btn btn-round btn-primary py-1 bold-2 text-white  w-50 align-self-end font-weight-bold-2"
-                        href="#">
-                        <span aria-hidden="true">More details </span>
-                        <svg aria-hidden="true" class="align-self-center " style="fill: #fff;" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>
-                        </svg>
-                    </a>
-                </div> -->
             </div>
 
             <div v-if="!room.is_gallery">
                 <div class="d-flex d-flex justify-content-between">
-                    <div class="price-box ">
-                        <div class="d-inline-flex  mt-sm-3">
+                    <div class="price-box" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                        <div class="d-inline-flex mt-sm-3">
                             <template v-if="room.discounted_price">
-                                <div class="sale-price mr-3">
+                                <div class="sale-price mr-3" itemprop="price">
                                     {{ room.currency }}{{ room.converted_price | priceFormat }}
                                 </div>
-                                <div class="price bold-3">
+                                <div class="price bold-3" itemprop="price">
                                     {{ room.currency }}{{ room.discounted_price | priceFormat }}
                                 </div>
                             </template>
                             <template v-else>
-                                <div class="price bold-3 mt-2">
+                                <div class="price bold-3 mt-2" itemprop="price">
                                     {{ room.currency }}{{ room.converted_price | priceFormat }}
                                 </div>
                             </template>
                         </div>
-                        <div class="text-size-2">{{ room.price_mode }}</div>
+                        <div class="text-size-2" itemprop="priceCurrency">{{ room.price_mode }}</div>
                     </div>
-                    <div class="align-self-end ">
+                    <div class="align-self-end">
                         <div class="font-weight-bold-2 text-success" v-if="room.is_refundable">
                             Fully Refundable {{ showReserve }}
                         </div>
                         <a target="_blank" v-if="showReserve" @click.prevent="reserve(room)"
-                            class="btn btn-round  btn-primary  py-2  bold-2  text-white  align-self-end font-weight-bold-2">
+                            class="btn btn-round btn-primary py-2 bold-2 text-white align-self-end font-weight-bold-2"
+                            itemprop="url">
                             Reserve
                         </a>
                     </div>
@@ -174,22 +154,18 @@
         </div>
         <div v-if="!room.is_gallery">
             <div v-if="stays && stays[1] != null" class="col-md-12 position-relative bg-white">
-                <div class="form-group ">
+                <div class="form-group">
                     <template v-if="room.reservation_qty && room.quantity == room.reservation_qty">
-                        <div class="text-muted ">
-                            This apartment is not available for your seclected date
+                        <div class="text-muted">
+                            This apartment is not available for your selected date
                         </div>
                     </template>
                 </div>
             </div>
         </div>
-
-
-
-
-
     </div>
 </template>
+
 <script>
 // optional style for arrows & dots
 export default {
