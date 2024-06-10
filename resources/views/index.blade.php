@@ -25,8 +25,8 @@
       <div class="carousel-inner header-filter">
 
          @foreach($images['sliders'] as $key => $image)
-         <div class="carousel-item {{ $key === 0 ? 'active' : ''}} ">
-            <img src="{{ $generator::generateThumbnailUrl($image) }}" class="d-block w-100" itemprop="image" alt="slider for avenue montaigne">
+         <div style="background-color: #ccc; height: 700px;" class="carousel-item {{ $key === 0 ? 'active' : ''}} ">
+            <img data-image="{{ $generator::generateThumbnailUrl($image) }}" class="d-block w-100 image-class" itemprop="image" alt="slider for avenue montaigne">
          </div>
          @endforeach
       </div>
