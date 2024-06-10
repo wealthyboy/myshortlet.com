@@ -9,7 +9,7 @@
 
    <div id="sm-main-banner" class="main-banner owl-carousel owl-theme d-block d-sm-none slider">
       @foreach($images['sliders'] as $key => $image)
-      <div style="background-image: url({{ $generator::generateThumbnailUrl($image) }}); " class="{{  $key > 0 ? 'd-none' : '' }} item page-header min-vh-75 half-hv position-relative rounded-top">
+      <div data-bg-image="{{ $generator::generateThumbnailUrl($image) }}" class=" bg-image-class {{  $key > 0 ? 'd-none' : '' }} item page-header min-vh-75 half-hv position-relative rounded-top">
          <span class="position-absolute top-0 start-0 w-100 h-100 bg-black-2 opacity-50"></span>
       </div>
       @endforeach
@@ -270,6 +270,15 @@
 @endsection
 @section('inline-scripts')
 
+document.addEventListener("DOMContentLoaded", function() {
+var bgImages = document.querySelectorAll('.bg-image-class');
+bgImages.forEach(function(element) {
+var dataBgImage = element.getAttribute('data-bg-image');
+if (dataBgImage) {
+element.style.backgroundImage = 'url(' + dataBgImage + ')';
+}
+});
+});
 
 document.addEventListener("DOMContentLoaded", function() {
 var images = document.querySelectorAll('.image-class');
