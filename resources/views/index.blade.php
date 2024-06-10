@@ -90,7 +90,7 @@
                   <div id="c1" class="carousel slide" data-ride="carousel">
                      <div class="carousel-inner">
                         <div class="carousel-item active">
-                           <img src="https://drive.google.com/thumbnail?id=1ES6PROkjg09AnQdO2hn033mzg48dJT8S&sz=w2000" itemprop="image" class="d-block w-100" alt="STAY IN THE HEART OF LAGOS avenue montaigne">
+                           <img title="STAY IN THE HEART OF LAGOS Avenue montaigne" src="https://drive.google.com/thumbnail?id=1ES6PROkjg09AnQdO2hn033mzg48dJT8S&sz=w2000" itemprop="image" class="d-block w-100" alt="STAY IN THE HEART OF LAGOS avenue montaigne">
                         </div>
                      </div>
                   </div>
@@ -167,7 +167,7 @@
                   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                      <div class="carousel-inner">
                         <div class="carousel-item active">
-                           <img src="https://drive.google.com/thumbnail?id=1GlZ6VnD1-5X-v2F3t6aOURj6_NglHntq&sz=w2000" class="d-block w-100" alt="View amenities" itemprop="url">
+                           <img title="View all Apartments Avenue montaigne" src="https://drive.google.com/thumbnail?id=1GlZ6VnD1-5X-v2F3t6aOURj6_NglHntq&sz=w2000" class="d-block w-100" alt="View amenities" itemprop="url">
                         </div>
                      </div>
                   </div>
