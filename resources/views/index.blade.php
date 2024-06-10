@@ -26,7 +26,7 @@
 
          @foreach($images['sliders'] as $key => $image)
          <div style="background-color: #ccc; height: 700px;" class="carousel-item {{ $key === 0 ? 'active' : ''}} ">
-            <img data-image="{{ $generator::generateThumbnailUrl($image) }}" class="d-block w-100 image-class" itemprop="image" alt="slider for avenue montaigne">
+            <img src="{{ $generator::generateThumbnailUrl($image) }}" class="d-block w-100 " itemprop="image" alt="slider for avenue montaigne">
          </div>
          @endforeach
       </div>
