@@ -27,8 +27,8 @@
 
                 <div class="item rounded-top" :key="index" v-for="(image, index) in room.google_drive_image_link"
                     itemprop="photo" itemscope itemtype="https://schema.org/ImageObject">
-                    <img :alt="room.name" @click.prevent="showRoom(room)" :src="image" class="img cursor-pointer img-fluid"
-                        itemprop="contentUrl" />
+                    <img :alt="room.name" :title="'book ' + room.name + 'Avenue Montaigne'" @click.prevent="showRoom(room)"
+                        :src="image" class="img cursor-pointer img-fluid" itemprop="contentUrl" />
                     <div class="images-count">
                         <button role="button" type="button"
                             class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
