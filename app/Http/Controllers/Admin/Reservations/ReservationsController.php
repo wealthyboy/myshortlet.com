@@ -119,9 +119,8 @@ class ReservationsController extends Controller
 			$user_reservation = UserReservation::find($id);
 			$stay = Reservation::where('user_reservation_id', $user_reservation->id)->first();
 			$apartment = Apartment::find($stay->apartment_id);
-
-
 			$query = Apartment::query();
+
 			$query->where('id', $stay->apartment_id); // Filter by the provided apartment ID
 			$query->whereDoesntHave('reservations', function ($query) use ($checkin, $checkout) {
 				$query->where(function ($q) use ($checkin, $checkout) {
@@ -130,13 +129,11 @@ class ReservationsController extends Controller
 				});
 			});
 
-
 			$apartments = $query->latest()->first();
+
 			if (null ===  $apartments) {
 				return response()->json(["message" => $apartments], 400);
 			}
-
-
 
 			$reservation = new Reservation;
 			$reservation->quantity = 1;

@@ -56,6 +56,12 @@ class ApartmentsController extends Controller
      */
     public function index(Request $request)
     {
+
+        $rr =  Reservation::where('apartment_id', 58)
+            ->whereDate('created_at', '>=', $today)
+            ->get();
+
+        dd($rr);
         // dd(ApartmentAttribute::truncate());
         $apartments = Apartment::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.apartments.index', compact('apartments'));
@@ -298,7 +304,6 @@ class ApartmentsController extends Controller
     public function update(Request $request, $id)
     {
 
-        // dd($request->all());
         $apartment = Apartment::find($id);
         $room_images = !empty($request->images) ? $request->images : [];
         $apartment_allow = !empty($request->apartment_allow) ? $request->apartment_allow : 0;
