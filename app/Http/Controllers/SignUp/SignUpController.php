@@ -33,7 +33,7 @@ class SignUpController extends Controller
     public function index(Request $request)
     {
         $reservation = null;
-        $rooms = Apartment::orderBy('name')->get();
+        $rooms = Apartment::orderBy('name', 'asc')->get();
         if ($request->id) {
             $user_reservation = UserReservation::findOrFail($request->id);
             $reservation = isset($user_reservation->reservations[0]) && !empty($user_reservation->reservations[0]) ? $user_reservation->reservations[0] : null;
