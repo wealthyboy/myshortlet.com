@@ -57,6 +57,7 @@ class ApartmentsController extends Controller
      */
     public function index(Request $request)
     {
+        $today = Carbon::today();
 
         $rr =  Reservation::where('apartment_id', 58)
             ->whereDate('created_at', '>=', $today)
