@@ -74,7 +74,7 @@ class Apartment extends Model
 
     public function attribute()
     {
-        return $this->belongsTo(Attribute::class, 'apartment_id');
+        return $this->belongsTo(Attribute::class, 'apartment_id')->orderBy('sort_order', 'asc');
     }
 
 
