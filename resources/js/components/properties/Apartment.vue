@@ -10,8 +10,8 @@
                     <div class="images-count">
                         <button role="button" type="button"
                             class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
-                            <svg class="uitk-icon uitk-icon-leading uitk-icon-medium" aria-label="Show all images 
-                            " role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                            <svg class="uitk-icon uitk-icon-leading uitk-icon-medium" aria-label="Show all images"
+                                role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title id="photo_library-property-offers-media-carousel-1-title">Show all
                                     {{ room.images.length + room.google_drive_image_links.length }} images
