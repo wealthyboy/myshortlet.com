@@ -67,7 +67,7 @@ class ApartmentsController extends Controller
             })
             ->get();
 
-        dd(UserReservation::find(34)->guest_user);
+        dd($reservaions);
         $apartments = Apartment::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.apartments.index', compact('apartments'));
     }
