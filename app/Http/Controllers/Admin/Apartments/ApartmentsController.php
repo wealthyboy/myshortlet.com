@@ -16,6 +16,7 @@ use App\Models\Location;
 use App\Models\Apartment;
 use App\Models\Category;
 use App\Models\Attribute;
+use App\Models\UserReservation;
 
 use App\Models\AttributePrice;
 use Illuminate\Support\Str;
@@ -59,8 +60,7 @@ class ApartmentsController extends Controller
     {
         $today = Carbon::today();
 
-        $today = Carbon::today();
-
+        dd(UserReservation::find(141));
         $reservations = Reservation::where('apartment_id', 29)
             ->where(function ($query) use ($today) {
                 $query->where('checkin', '>=', $today)
