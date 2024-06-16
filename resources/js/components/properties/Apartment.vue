@@ -10,9 +10,9 @@
                     <div class="images-count">
                         <button role="button" type="button"
                             class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
-                            <svg class="uitk-icon uitk-icon-leading uitk-icon-medium"
-                                aria-label="Show all images for {{ room.name }}" role="img" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <svg class="uitk-icon uitk-icon-leading uitk-icon-medium" aria-label="Show all images 
+                            " role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title id="photo_library-property-offers-media-carousel-1-title">Show all
                                     {{ room.images.length + room.google_drive_image_links.length }} images
                                 </title>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
 
-                <div class="item rounded-top" :key="index" v-for="(image, index) in room.google_drive_image_link"
+                <div class="item rounded-top" :key="index" v-for="(image, index) in  room.google_drive_image_link "
                     itemprop="photo" itemscope itemtype="https://schema.org/ImageObject">
                     <img :alt="room.name" :title="'book ' + room.name + '  Avenue Montaigne'"
                         @click.prevent="showRoom(room)" :src="image" class="img cursor-pointer img-fluid"
@@ -34,9 +34,9 @@
                     <div class="images-count">
                         <button role="button" type="button"
                             class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button">
-                            <svg class="uitk-icon uitk-icon-leading uitk-icon-medium"
-                                aria-label="Show all images for {{ room.name }}" role="img" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <svg class="uitk-icon uitk-icon-leading uitk-icon-medium" aria-label="Show all images "
+                                role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title id="photo_library-property-offers-media-carousel-1-title">Show all
                                     {{ room.images.length + room.google_drive_image_links.length }} images
                                 </title>
@@ -104,8 +104,8 @@
                 </div>
 
                 <template v-if="!room.is_gallery && room.bedrooms && room.bedrooms.length">
-                    <div v-for="bed in room.bedrooms" :key="bed.id" class="position-relative mb-1" itemprop="bed" itemscope
-                        itemtype="https://schema.org/BedDetails">
+                    <div v-for=" bed  in  room.bedrooms " :key="bed.id" class="position-relative mb-1" itemprop="bed"
+                        itemscope itemtype="https://schema.org/BedDetails">
                         <span class="position-absolute svg-icon-section">
                             <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink">
