@@ -60,7 +60,7 @@ class ApartmentsController extends Controller
     {
 
         $today = Carbon::today();
-        $reservations = Reservation::where('apartment_id', 34)
+        $reservations = Reservation::where('apartment_id', 28)
             ->where(function ($query) use ($today) {
                 $query->where('checkin', '>=', $today)
                     ->orWhere('checkout', '>=', $today);
