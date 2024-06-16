@@ -61,14 +61,14 @@ class ApartmentsController extends Controller
 
         $today = Carbon::today();
 
-        $reservations = Reservation::where('apartment_id', 58)
+        $reservations = Reservation::where('apartment_id', 29)
             ->where(function ($query) use ($today) {
                 $query->where('checkin', '>=', $today)
                     ->orWhere('checkout', '>=', $today);
             })
             ->get();
 
-        // dd(ApartmentAttribute::truncate());
+        dd($reservations);
         $apartments = Apartment::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.apartments.index', compact('apartments'));
     }
