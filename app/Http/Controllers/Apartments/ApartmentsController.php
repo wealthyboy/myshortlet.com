@@ -43,11 +43,13 @@ class ApartmentsController extends Controller
             'room_facilities',
             'other' => 'other'
         ];
+
         $str = new Str;
         $date = $request->check_in_checkout;
         $property_is_not_available = null;
         $cites = [];
-        $page_title = null;
+        $page_title =  "Book from our collection of Apartments | Avenue Montaigne";
+        $page_meta_description = "All apartments  Avenue Montaigne";
         $date = explode("to", $request->check_in_checkout);
         $date = Helper::toAndFromDate($request->check_in_checkout);
         $property_is_not_available = null;
@@ -105,7 +107,7 @@ class ApartmentsController extends Controller
             'str',
             'saved',
             'apartments',
-            'property'
+            'property'5
 
         ));
     }
