@@ -107,7 +107,8 @@ class ApartmentsController extends Controller
             'str',
             'saved',
             'apartments',
-            'property'5
+            'property',
+            'page_meta_description'
 
         ));
     }
