@@ -59,15 +59,6 @@ class ApartmentsController extends Controller
     public function index(Request $request)
     {
 
-        $today = Carbon::today();
-        $reservations = Reservation::where('apartment_id', 28)
-            ->where(function ($query) use ($today) {
-                $query->where('checkin', '>=', $today)
-                    ->orWhere('checkout', '>=', $today);
-            })
-            ->get();
-
-        dd(UserReservation::find(157)->load('guest_user'));
         $apartments = Apartment::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.apartments.index', compact('apartments'));
     }
