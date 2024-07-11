@@ -30,11 +30,31 @@
             <form action="{{request()->fullUrl()}}" method="GET">
                <div class="form-row">
                   <div class="form-group col-md-3">
-                     <label for="date">Date</label>
+                     <label for="date">From</label>
                      <input type="date" class="form-control" id="date" name="date">
-                     <input type="hidden" name="coming_from" value="{{ request('coming_from') }}">
+                     <input type="hidden" name="from" value="{{ request('from') }}">
 
                   </div>
+
+                  <div class="form-group col-md-3">
+                     <label for="date">To</label>
+                     <input type="date" class="form-control" id="date" name="date">
+                     <input type="hidden" name="to" value="{{ request('to') }}">
+                  </div>
+
+                  <div class="form-group col-md-3 ">
+                     <label for="date">Apartments </label>
+
+                     <select name="apartment_id" id="" required="true" class="form-control">
+                        <option value="">Choose one</option>
+                        @foreach($apartments as $apartment)
+                        <option value="{{$apartment->id}}">{{$apartment->name}}</option>
+                        @endforeach
+
+                     </select>
+                  </div>
+
+
                   <div class="form-group col-md-3">
                      <label for="email">Email</label>
                      <input type="email" class="form-control" id="email" name="email">

@@ -54,11 +54,14 @@ class ReservationsController extends Controller
 		$email = $request->input('email');
 		$phoneNumber = $request->input('phone');
 		$date = $request->input('date');
-
+		$from_date = $request->input('from');
+		$to_date = $request->input('to');
+		$apartment_id = $request->input('apartment_id');
 		$query = UserReservation::with('guest_user');
+		$apartments = Apartment::orderBy('name', 'asc')->get();
 
 		// Check if any filters are provided
-		if ($email || $phoneNumber || $date) {
+		if (!empty($request->query())) {
 			// Apply filters
 			if ($email) {
 				$query->whereHas('guest_user', function ($q) use ($email) {
@@ -72,6 +75,20 @@ class ReservationsController extends Controller
 				});
 			}
 
+			if ($apartment_id) {
+				$query->whereHas('reservations', function ($q) use ($apartment_id) {
+					$q->where('apartment_id', $apartment_id);
+				});
+			}
+
+
+			if ($from_date && $to_date) {
+				$query->whereHas('reservations', function ($q) use ($from_date, $to_date) {
+					$q->where(['checkin' => $from_date, 'checkout' => $to_date]);
+				});
+			}
+
+
 			if ($date) {
 				$query->whereDate('created_at', $date);
 			}
@@ -83,7 +100,7 @@ class ReservationsController extends Controller
 		$reservations = $query->where('coming_from', $comingFrom)->orderBy('created_at', 'desc')->paginate(50);
 
 		//dd($reservations);
-		return view('admin.reservations.index', compact('reservations'));
+		return view('admin.reservations.index', compact('reservations', 'apartments'));
 	}
 
 
