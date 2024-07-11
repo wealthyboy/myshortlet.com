@@ -32,7 +32,7 @@
                   <div class="form-group col-md-3">
                      <label for="date">From</label>
                      <input type="date" class="form-control" id="from-date" name="from">
-                     <input type="hidden" name="from" value="{{ request('coming_from') }}">
+                     <input type="hidden" name="coming_from" value="{{ request('coming_from') }}">
 
                   </div>
 
