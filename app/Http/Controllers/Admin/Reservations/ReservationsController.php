@@ -128,6 +128,12 @@ class ReservationsController extends Controller
 	{
 
 		$request = request();
+
+		if ($request->filled('delete') && $request->filled('id')) {
+			Reservation::find($request->id)->delete();
+			return redirect()->to('/admin/reservations');
+		}
+
 		$user_reservation = UserReservation::find($id);
 
 		if (!empty($request->query())) {

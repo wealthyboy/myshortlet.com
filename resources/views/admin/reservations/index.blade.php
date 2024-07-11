@@ -31,14 +31,14 @@
                <div class="form-row">
                   <div class="form-group col-md-3">
                      <label for="date">From</label>
-                     <input type="date" class="form-control" id="date" name="date">
-                     <input type="hidden" name="from" value="{{ request('from') }}">
+                     <input type="date" class="form-control" id="from-date" name="from">
+                     <input type="hidden" name="from" value="{{ request('coming_from') }}">
 
                   </div>
 
                   <div class="form-group col-md-3">
                      <label for="date">To</label>
-                     <input type="date" class="form-control" id="date" name="date">
+                     <input type="date" class="form-control" id="to-date" name="to">
                      <input type="hidden" name="to" value="{{ request('to') }}">
                   </div>
 
@@ -135,6 +135,8 @@
                                     Send check-in link
                                  </a>
                               </span>
+
+
                               <span>
                                  <a href="/admin/reservations?cancel=1&id={{ $reservation->id }}" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel">
                                     cancel

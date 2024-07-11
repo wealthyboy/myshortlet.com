@@ -34,6 +34,14 @@
                         </td>
                      </tr>
 
+                     <tr>
+                        <td><button data-toggle="tooltip" title="Payment Method" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
+                        <td>
+
+                           <a href="?delete=true&{{}}" class="href">delete</a>
+                        </td>
+                     </tr>
+
 
                   </tbody>
                </table>
@@ -160,6 +168,8 @@
                            <th class="text-right">Price</th>
                            <th class="text-right">Nights</th>
                            <th class="text-right">Amount</th>
+                           <th class="text-right"></th>
+
                         </tr>
                      </thead>
                      <tbody>
@@ -183,6 +193,10 @@
                            </td>
                            <td class="td-number">
                               <small>{{ $user_reservation->currency  ?? '₦' }}</small>{{ number_format(optional($reservation->apartment)->converted_price) }}
+                           </td>
+
+                           <td class="td-number">
+                              <a href="?delete=true&id={{ $user_reservation->id}}">delete</a>
                            </td>
                         </tr>
                         @endforeach
