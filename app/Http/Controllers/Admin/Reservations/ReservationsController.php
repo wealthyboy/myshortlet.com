@@ -83,14 +83,9 @@ class ReservationsController extends Controller
 
 
 			if ($from_date && $to_date) {
-				$query->whereHas('reservations', function ($q) use ($from_date, $to_date) {
-					$q->where(['checkin' => $from_date, 'checkout' => $to_date]);
-				});
-			}
-
-
-			if ($date) {
-				$query->whereDate('created_at', $date);
+				// $query->whereHas('reservations', function ($q) use ($from_date, $to_date) {
+				// 	$q->where(['checkin' => $from_date, 'checkout' => $to_date]);
+				// });
 			}
 		} else {
 			// Default to today's reservations if no filters are provided

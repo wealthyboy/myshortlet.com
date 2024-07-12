@@ -33,7 +33,6 @@
                      <label for="date">From</label>
                      <input type="date" class="form-control" id="from-date" name="from">
                      <input type="hidden" name="coming_from" value="{{ request('coming_from') }}">
-
                   </div>
 
                   <div class="form-group col-md-3">
