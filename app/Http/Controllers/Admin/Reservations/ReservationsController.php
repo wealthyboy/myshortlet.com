@@ -61,7 +61,7 @@ class ReservationsController extends Controller
 		$apartments = Apartment::orderBy('name', 'asc')->get();
 
 		// Check if any filters are provided
-		if (!empty($request->query())) {
+		if ($email || $phoneNumber || $from_date || $to_date || $apartment_id) {
 			// Apply filters
 			if ($email) {
 				$query->whereHas('guest_user', function ($q) use ($email) {
@@ -83,10 +83,15 @@ class ReservationsController extends Controller
 
 
 			if ($from_date && $to_date) {
-				// $query->whereHas('reservations', function ($q) use ($from_date, $to_date) {
-				// 	$q->where(['checkin' => $from_date, 'checkout' => $to_date]);
-				// });
+				$query->whereHas('reservations', function ($q) use ($from_date, $to_date) {
+					$q->where(['checkin' => $from_date, 'checkout' => $to_date]);
+				});
 			}
+
+
+			// if ($date) {
+			// 	$query->whereDate('created_at', $date);
+			// }
 		} else {
 			// Default to today's reservations if no filters are provided
 			$query->whereDate('created_at', Carbon::today());
