@@ -44,7 +44,7 @@
                   <div class="form-group col-md-3 ">
                      <label for="date">Apartments </label>
 
-                     <select name="apartment_id" id="" required="true" class="form-control">
+                     <select name="apartment_id" id="" class="form-control">
                         <option value="">Choose one</option>
                         @foreach($apartments as $apartment)
                         <option value="{{$apartment->id}}">{{$apartment->name}}</option>
