@@ -56,6 +56,7 @@ class ReservationsController extends Controller
 		$apartment_id = $request->input('apartment_id');
 		$query = UserReservation::with('guest_user');
 		$apartments = Apartment::orderBy('name', 'asc')->get();
+		$request->session()->put('coming_from', $request->coming_from);
 
 		// Check if any filters are provided
 		if ($email || $phoneNumber || $from_date || $to_date || $apartment_id) {
@@ -135,9 +136,7 @@ class ReservationsController extends Controller
 			}
 			$userReservation->delete();
 
-
-
-			return redirect()->to('/admin/reservations?coming_from=' . $request->coming_from);
+			return redirect()->to('/admin/reservations?coming_from=' . session('coming_from'));
 		}
 
 		$user_reservation = UserReservation::find($id);
