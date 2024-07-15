@@ -39,13 +39,10 @@ class ReservationsController extends Controller
 		}
 
 
-
 		if ($request->filled('cancel')) {
 			$userReservation = UserReservation::find($request->id);
 			$userReservation->is_cancelled = 1;
 			$userReservation->save();
-			//CancelledNotification::not
-			//Notification::notify();
 		}
 
 		//UserReservation::truncate();
@@ -131,10 +128,15 @@ class ReservationsController extends Controller
 		$request = request();
 
 		if ($request->filled('delete') && $request->filled('id')) {
-			$reservation = Reservation::find($request->id);
-			dd($reservation);
-			UserReservation::where('id', $reservation->user_reservation_id)->first()->delete();
-			$reservation->delete();
+			$userReservation = UserReservation::with('reservation')->find($request->id);
+
+			if (null === $userReservation->reservation) {
+				$userReservation->reservation()->delete();
+			}
+			$userReservation->delete();
+
+
+
 			return redirect()->to('/admin/reservations?coming_from=' . $request->coming_from);
 		}
 
