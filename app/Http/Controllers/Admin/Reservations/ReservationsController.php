@@ -134,7 +134,7 @@ class ReservationsController extends Controller
 			$reservation = Reservation::find($request->id);
 			UserReservation::where('id', $reservation->user_reservation_id)->first()->delete();
 			$reservation->delete();
-			return redirect()->to('/admin/reservations');
+			return redirect()->to('/admin/reservations?coming_from=' . $request->coming_from);
 		}
 
 		$user_reservation = UserReservation::find($id);
