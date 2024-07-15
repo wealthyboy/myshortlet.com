@@ -38,7 +38,7 @@
                         <td><button data-toggle="tooltip" title="Payment Method" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
                         <td>
 
-                           <a href="?delete=true&{{}}" class="href">delete</a>
+                           <a href="?delete=true&id={{$user_reservation->id}}" class="href">delete</a>
                         </td>
                      </tr>
 

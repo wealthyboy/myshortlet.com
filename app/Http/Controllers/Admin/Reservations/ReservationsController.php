@@ -130,7 +130,9 @@ class ReservationsController extends Controller
 		$request = request();
 
 		if ($request->filled('delete') && $request->filled('id')) {
-			Reservation::find($request->id)->delete();
+			$reservation = Reservation::find($request->id);
+			UserReservation::where('reservation_id', $reservation->reservation_id)->first()->delete();
+			$reservation->delete();
 			return redirect()->to('/admin/reservations');
 		}
 
