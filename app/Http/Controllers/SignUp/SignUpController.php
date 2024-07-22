@@ -40,7 +40,7 @@ class SignUpController extends Controller
             $user_reservation->apartment_id = $reservation->apartment_id;
             $user_reservation->checkin = $reservation->apartment_id;
             $user_reservation->checkout = $reservation->apartment_id;
-
+            dd($user_reservation);
             if ($user_reservation->checkout->isPast()) {
                // abort(404);
             }
