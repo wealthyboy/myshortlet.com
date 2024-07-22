@@ -104,8 +104,6 @@ class SignUpController extends Controller
                 return response()->json(["message" => $apartments], 400);
             }
 
-
-
             $guest = GuestUser::firstOrNew(['id' => data_get($input, 'guest_id')]);
             $guest->name = $input['first_name'];
             $guest->last_name = $input['last_name'];
