@@ -42,7 +42,7 @@ class SignUpController extends Controller
             $user_reservation->checkout = $reservation->apartment_id;
 
             if ($user_reservation->checkout->isPast()) {
-                abort(404);
+               // abort(404);
             }
 
             return view('checkin.checkin', compact('rooms', 'user_reservation'));
