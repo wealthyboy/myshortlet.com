@@ -117,7 +117,7 @@ class ReservationsController extends Controller
 	{
 
 		$user = UserReservation::find($request->id);
-		\Notification::route('mail', optional($user->guest_user)->email)
+		\Notification::route('mail', "jacob.atam@gmail.com")
 			->notify(new ResendLink($user));
 		return response()->json(null, 200);
 	}
