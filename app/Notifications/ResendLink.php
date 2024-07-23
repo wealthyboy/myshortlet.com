@@ -49,8 +49,8 @@ class ResendLink extends Notification
         return (new MailMessage)
             ->bcc('avenuemontaigneconcierge@gmail.com')
             ->subject('Check-In Confirmation')
-            ->greeting('Hello!')
-            ->line('Please click the button below to complete your check-in.')
+            ->greeting('Hello '. Ucfirst(optional($this->user->guest_user)->name))
+            ->line('Thank your for making a reservation with us. Before you can gain access to your apartment, you’re required to check-in and provide a copy of your ID. Please click the link below to complete your check-in process.')
             ->action('Check In', $url)
             ->line('Thank you for choosing our service!');
     }
