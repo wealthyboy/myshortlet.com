@@ -36,7 +36,7 @@ class CurrencyByIp
         $query = request()->all();
 
 
-        if ($settings->allow_multi_currency) {
+        if (optional($settings)->allow_multi_currency) {
 
 
 
