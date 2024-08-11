@@ -83,7 +83,6 @@ jQuery(window).on("load", function () {
       // apartment_id: { required: true },
       checkin: {
         required: true,
-        checkInBeforeCheckOut: true,
       },
       checkout: { required: true },
     },
@@ -92,7 +91,7 @@ jQuery(window).on("load", function () {
         required: "Please enter your email",
         email: "Please enter a valid email",
       },
-      //apartment_id: { required: "Please select an  apartment" },
+      apartment_id: { required: "Please select an  apartment" },
       checkin: {
         required: "Select a check-in date",
       },
@@ -101,6 +100,24 @@ jQuery(window).on("load", function () {
       },
     },
     submitHandler: function (form) {
+      var checkin = $("#checkin").val();
+      var checkout = $("#checkout").val();
+
+      // Parse the dates
+      var checkinDate = new Date(checkin);
+      var checkoutDate = new Date(checkout);
+      // Check if checkin date is before checkout date
+
+      if (checkin === checkout) {
+        alert("You can’t select same date for check-in and check-out");
+        return;
+      }
+
+      if (checkin > checkout) {
+        alert("Check-out date must be greater Check-in date.");
+        return;
+      }
+
       if (myDropzone) {
         myDropzone.on("uploadprogress", function (file) {
           $("div.error").html("Please allow your image to finish uploading");
