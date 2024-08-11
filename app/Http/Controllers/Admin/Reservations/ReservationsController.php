@@ -31,6 +31,22 @@ class ReservationsController extends Controller
 
 	public function index(Request $request)
 	{
+         
+
+
+
+		$today = Carbon::today();
+
+        $todaysReservations = Reservation::whereDate('created_at', $today)->get();
+
+		if ($request->check == 1) {
+			dd( $todaysReservations);
+		}
+
+
+
+
+
 
 		// Check for the coming_from query parameter
 		$comingFrom = $request->input('coming_from');
