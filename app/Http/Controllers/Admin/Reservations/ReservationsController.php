@@ -148,7 +148,7 @@ class ReservationsController extends Controller
 			$userReservation = UserReservation::with('reservation')->find($request->id);
 
 			if (null === $userReservation->reservation) {
-				$userReservation->reservation()->delete();
+				$userReservation->reservation->delete();
 			}
 			$userReservation->delete();
 
@@ -224,7 +224,7 @@ class ReservationsController extends Controller
 
 		foreach ($userReservations as $userReservation) {
 			if (null === $userReservation->reservation) {
-				$userReservation->reservation()->delete();
+				$userReservation->reservation->delete();
 			}
 			$userReservation->delete();
 		}
