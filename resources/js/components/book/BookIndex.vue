@@ -41,7 +41,7 @@
             <div class="form-row">
               <div class="form-group pt-4 col-3 ">
                 <select name="phone_code"  v-model="form.code" class="form-control required" id="">
-                  <option value="">Select</option>
+                  <option value="">Select Code</option>
                   <template v-for="(map, k) in codes">
                     <option v-for="(code, index) in map" :key="index" :value="code">
                       {{ index }} (+{{ code }})
