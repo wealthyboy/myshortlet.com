@@ -33,27 +33,19 @@ class ReservationsController extends Controller
 	{
          
 
-
-
 		$today = Carbon::today();
 
-        $todaysReservations = Reservation::whereDate('created_at', $today)->get();
+        $todaysReservations = Reservation::whereDate('checkin', $today)->get();
 
 		if ($request->check == 1) {
-			dd( $todaysReservations);
+			dd($todaysReservations);
 		}
 
-
-
-
-
-
-		// Check for the coming_from query parameter
+		//Check for the coming_from query parameter
 		$comingFrom = $request->input('coming_from');
 		if (!in_array($comingFrom, ['payment', 'checkin'])) {
 			abort(404);
 		}
-
 
 		if ($request->filled('cancel')) {
 			$userReservation = UserReservation::find($request->id);
