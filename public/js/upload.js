@@ -80,7 +80,7 @@ jQuery(window).on("load", function () {
       last_name: { required: true },
       email: { required: true, email: true },
       phone_number: { required: true },
-      // apartment_id: { required: true },
+      apartment_id: { required: true },
       checkin: {
         required: true,
       },
@@ -136,8 +136,6 @@ jQuery(window).on("load", function () {
 
       overlay.removeClass("d-none");
       overlay.addClass("d-flex");
-
-      return;
 
       // AJAX call
       $.ajax({

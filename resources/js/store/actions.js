@@ -18,13 +18,13 @@ export const applyVoucher = ({ commit }, coupon) => {
       commit("setCoupon", response.data);
       return Promise.resolve();
     })
-    .catch((error) => { });
+    .catch((error) => {});
 };
 
 export const attrFilter = ({ commit }) => {
   var inputs = document.querySelectorAll("input.filter-property:checked");
   var checkboxesChecked = [];
-  for (var i = 0; i < inputs.length; i++) { }
+  for (var i = 0; i < inputs.length; i++) {}
   for (var i = 0; i < inputs.length; i++) {
     if (inputs[i].checked) {
       checkboxesChecked.push(inputs[i].name + "=" + inputs[i].value);
@@ -52,7 +52,6 @@ export const getProperties = ({ commit }, url) => {
       commit("setLinks", response.data.links);
       commit("setNextPageUrl", response.data.links.next);
       commit("setPropertyLoading", false);
-
 
       jQuery(function () {
         $(".owl-carousel").owlCarousel({
@@ -111,7 +110,7 @@ export const getBookings = ({ commit }) => {
       //commit("Loading", false);
       return Promise.resolve();
     })
-    .catch(() => { });
+    .catch(() => {});
 };
 
 export const saveProperty = (
@@ -425,6 +424,7 @@ export const validateForm = ({ dispatch, commit }, { context, input }) => {
     errors = [];
   if (input.length) {
     input.forEach(function (element, v) {
+      console.log(element, v);
       if (element.value == "") {
         k = element.name.split("_").join(" ");
         errors = Object.assign({}, errors, {
@@ -469,6 +469,7 @@ export const validateEmail = (email) => {
 };
 
 export const ruleE = () => {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  var re =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re;
 };
