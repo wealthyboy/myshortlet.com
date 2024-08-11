@@ -40,7 +40,7 @@
             </div>
             <div class="form-row">
               <div class="form-group pt-4 col-3 ">
-                <select name="phone_code"  v-model="form.code"  @change="removeError($event)"  :class="{ 'has-danger': errors.code }"  class="form-control required" id="">
+                <select name="phone_code"  v-model="form.code"  @change="vInput($event)"  :class="{ 'has-danger': errors.code }"  class="form-control required" id="">
                   <option value="">Choose Code</option>
                   <template v-for="(map, k) in codes">
                     <option v-for="(code, index) in map" :key="index" :value="code">
