@@ -89,6 +89,7 @@ class ReservationsController extends Controller
 
 
 			if ($request->input('from') && $request->input('to')) {
+				dd(true);
 				$query->whereHas('reservations', function ($q) use ($startDate, $endDate) {
 					$q->where('checkin', '>=', $startDate)
 					    ->where('checkout', '<=', $endDate);
