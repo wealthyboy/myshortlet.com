@@ -88,6 +88,8 @@ class ReservationsController extends Controller
 			}
 
 			//dd($request->input('from'));
+			dd($startDate , $endDate);
+
 
 
 			if ($startDate && $endDate) {
