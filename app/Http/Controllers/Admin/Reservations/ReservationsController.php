@@ -93,7 +93,6 @@ class ReservationsController extends Controller
 
 
 			if ($startDate && $endDate) {
-				dd($startDate , $endDate);
 				$query->whereHas('reservations', function ($q) use ($startDate, $endDate) {
 					$q->where('checkin', '>=', $startDate)
 					    ->where('checkout', '<=', $endDate);
