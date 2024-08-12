@@ -88,10 +88,6 @@ class ReservationsController extends Controller
 			}
 
 			//dd($request->input('from'));
-			dd($startDate , $endDate);
-
-
-
 			if ($startDate && $endDate) {
 				$query->whereHas('reservations', function ($q) use ($startDate, $endDate) {
 					$q->where('checkin', '>=', $startDate)
