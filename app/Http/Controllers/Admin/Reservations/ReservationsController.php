@@ -61,6 +61,8 @@ class ReservationsController extends Controller
 		$date = $request->input('date');
 		$startDate = Carbon::parse($request->input('from'));
         $endDate = Carbon::parse($request->input('to'));
+
+		dd($request->input('from'));
 		$apartment_id = $request->input('apartment_id');
 		$query = UserReservation::with('guest_user');
 		$apartments = Apartment::orderBy('name', 'asc')->get();
