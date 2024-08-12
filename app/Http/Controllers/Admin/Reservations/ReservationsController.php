@@ -90,12 +90,8 @@ class ReservationsController extends Controller
 
 			if ($startDate && $endDate) {
 				$query->whereHas('reservations', function ($q) use ($startDate, $endDate) {
-					$q->whereBetween('checkin', [$startDate, $endDate])
-						->orWhereBetween('checkout', [$startDate, $endDate])
-						->orWhere(function ($query) use ($startDate, $endDate) {
-							$query->where('checkin', '<=', $startDate)
-								->where('checkout', '>=', $endDate);
-						});
+					$q->where('checkin', '>=', $startDate)
+					    ->where('checkout', '<=', $endDate);
 					
 				});
 
