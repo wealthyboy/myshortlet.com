@@ -33,6 +33,8 @@ class HomeController
         $site_status = Live::first();
         $banners =  Banner::banners()->get();
 
+       
+
 
 
         if (!$site_status->make_live) {

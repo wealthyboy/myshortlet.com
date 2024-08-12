@@ -59,15 +59,15 @@ class ReservationsController extends Controller
 		$email = $request->input('email');
 		$phoneNumber = $request->input('phone');
 		$date = $request->input('date');
-		$from_date = $request->input('from');
-		$to_date = $request->input('to');
+		$startDate = $request->input('from');
+		$endDate = $request->input('to');
 		$apartment_id = $request->input('apartment_id');
 		$query = UserReservation::with('guest_user');
 		$apartments = Apartment::orderBy('name', 'asc')->get();
 		$request->session()->put('coming_from', $request->coming_from);
 
 		// Check if any filters are provided
-		if ($email || $phoneNumber || $from_date || $to_date || $apartment_id) {
+		if ($email || $phoneNumber || $startDate || $endDate || $apartment_id) {
 			// Apply filters
 			if ($email) {
 				$query->whereHas('guest_user', function ($q) use ($email) {
@@ -88,11 +88,18 @@ class ReservationsController extends Controller
 			}
 
 
-			if ($from_date && $to_date) {
-				$query->whereHas('reservations', function ($q) use ($from_date, $to_date) {
-					$q->where('checkin', '<=', $from_date)
-						->where('checkout', '>=', $to_date);
+			if ($startDate && $endDate) {
+				$query->whereHas('reservations', function ($q) use ($startDate, $endDate) {
+					$q->whereBetween('checkin', [$startDate, $endDate])
+						->orWhereBetween('checkout', [$startDate, $endDate])
+						->orWhere(function ($query) use ($startDate, $endDate) {
+							$query->where('checkin', '<=', $startDate)
+								->where('checkout', '>=', $endDate);
+						});
+					
 				});
+
+				
 			}
 
 
