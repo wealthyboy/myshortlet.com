@@ -38,7 +38,6 @@
                   <div class="form-group col-md-3">
                      <label for="date">To</label>
                      <input type="date" class="form-control" id="to-date" name="to">
-                     <input type="hidden" name="to" value="{{ request('to') }}">
                   </div>
 
                   <div class="form-group col-md-3 ">
