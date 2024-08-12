@@ -59,10 +59,8 @@ class ReservationsController extends Controller
 		$email = $request->input('email');
 		$phoneNumber = $request->input('phone');
 		$date = $request->input('date');
-		$startDate = Carbon::parse($request->input('from'));
-        $endDate = Carbon::parse($request->input('to'));
-
-		dd($request->input('from'));
+		$startDate = $request->input('from') ? Carbon::parse($request->input('from')) : null;
+        $endDate = $request->input('to') ?  Carbon::parse($request->input('to')) : null;
 		$apartment_id = $request->input('apartment_id');
 		$query = UserReservation::with('guest_user');
 		$apartments = Apartment::orderBy('name', 'asc')->get();
@@ -92,8 +90,7 @@ class ReservationsController extends Controller
 			//dd($request->input('from'));
 
 
-			if ($request->filled('from') && $request->filled('to')) {
-				dd(true);
+			if ($startDate && $endDate) {
 				$query->whereHas('reservations', function ($q) use ($startDate, $endDate) {
 					$q->where('checkin', '>=', $startDate)
 					    ->where('checkout', '<=', $endDate);
