@@ -1,5 +1,5 @@
 cd /home/forge/avenuemontaigne.ng
-git pull origin $FORGE_SITE_BRANCH
+git pull origin master
 
 $FORGE_COMPOSER install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 

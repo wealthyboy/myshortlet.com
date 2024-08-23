@@ -41,9 +41,9 @@ class ReservationsController extends Controller
 			$r = Reservation::where('apartment_id', 27)->get();
 
 			foreach ($r as $i) {
-               if(null ===  UserReservation::find($i->user_Reservation_id)) {
+                if(null ===  UserReservation::find($i->user_Reservation_id)) {
                     $i->delete();
-			   }
+			    }
 			}
 
 		
