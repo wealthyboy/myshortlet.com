@@ -38,7 +38,16 @@ class ReservationsController extends Controller
         $todaysReservations = Reservation::whereDate('checkin', $today)->get();
 
 		if ($request->check == 1) {
-			dd(Reservation::where('apartment_id', 27)->get());
+			$r = Reservation::where('apartment_id', 27)->get();
+
+			foreach ($r as $i) {
+               if(null ===  UserReservation::find($i->user_Reservation_id)) {
+                    $i->delete();
+			   }
+			}
+
+		
+
 		}
 
 		//Check for the coming_from query parameter
