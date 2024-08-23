@@ -38,7 +38,7 @@ class ReservationsController extends Controller
         $todaysReservations = Reservation::whereDate('checkin', $today)->get();
 
 		if ($request->check == 1) {
-			dd($todaysReservations);
+			dd(Reservation::where('apartment_id', 27)->get());
 		}
 
 		//Check for the coming_from query parameter
