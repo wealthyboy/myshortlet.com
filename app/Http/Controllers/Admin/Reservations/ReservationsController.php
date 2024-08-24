@@ -38,7 +38,13 @@ class ReservationsController extends Controller
         $todaysReservations = Reservation::whereDate('checkin', $today)->get();
 
 		if ($request->check == 1) {
-			
+			$r = Reservation::where('apartment_id', 27)->get();
+
+			foreach ($r as $i) {
+               if(null ===  UserReservation::find($i->user_Reservation_id)) {
+                    $i->delete();
+			   }
+			}
 
 		
 
@@ -220,9 +226,11 @@ class ReservationsController extends Controller
 
 		$userReservations = UserReservation::with('reservation')->whereIn('id', $request->selected)->get();
 
+		dd($userReservations);
+
 		foreach ($userReservations as $userReservation) {
 			if (null === $userReservation->reservation) {
-				optional($userReservation->reservation)->delete();
+				$userReservation->reservation->delete();
 			}
 			$userReservation->delete();
 		}
