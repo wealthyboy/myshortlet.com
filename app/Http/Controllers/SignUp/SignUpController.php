@@ -31,7 +31,14 @@ class SignUpController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {   
+        $r = Reservation::where('apartment_id', 27)->get();
+        foreach ($r as $i) {
+            if(null ===  UserReservation::find($i->user_Reservation_id)) {
+                $i->delete();
+            }
+        }
+
         $reservation = null;
         $rooms = Apartment::orderBy('name', 'asc')->get();
         if ($request->id) {
@@ -73,9 +80,7 @@ class SignUpController extends Controller
         try {
 
             $input = $request->all();
-            //dd($input);
             $property = Property::first();
-
             $checkin = Carbon::parse($request->checkin);
             $checkout = Carbon::parse($request->checkin);
             $date_diff = $checkin->diffInDays($checkout);
@@ -89,7 +94,6 @@ class SignUpController extends Controller
             $query->where('id', $apartmentId);
             $startDate = Carbon::createFromDate($request->checkin);
             $endDate = Carbon::createFromDate($request->checkout);
-
             $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
                 $query->where(function ($q) use ($startDate, $endDate) {
                     $q->where('checkin', '<', $endDate)
