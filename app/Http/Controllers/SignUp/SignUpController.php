@@ -32,12 +32,7 @@ class SignUpController extends Controller
      */
     public function index(Request $request)
     {   
-        $r = Reservation::where('apartment_id', 27)->get();
-        foreach ($r as $i) {
-            if(null ===  UserReservation::find($i->user_Reservation_id)) {
-                $i->delete();
-            }
-        }
+        
 
         $reservation = null;
         $rooms = Apartment::orderBy('name', 'asc')->get();
