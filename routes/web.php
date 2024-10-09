@@ -94,7 +94,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
 Route::group(['middleware' => 'currencyByIp'], function () {
     Route::get('/', 'HomeController@home');
     Route::get('/luxury-service-apartments-in-lagos', 'HomeController@home');
-    Route::get('luxury-service-apartments-in-ikoyi', 'Apartments\ApartmentsController@apartments');
+    Route::get('/luxury-service-apartments-in-ikoyi', 'Apartments\ApartmentsController@apartments');
 
 
 
