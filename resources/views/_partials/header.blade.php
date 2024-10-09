@@ -1,6 +1,6 @@
 <div class="container-fluid" itemscope itemtype="https://schema.org/SiteNavigationElement">
     <div class="navbar-translate d-flex justify-content-between w-100 fixed-top">
-        <a href="/" class="navbar-brand" itemprop="url">
+        <a href="/luxury-service-apartments-in-lagos" class="navbar-brand" itemprop="url">
             <div class="logo-small">
                 <img src="/images/logo/avnmont-white-04.png" alt="" itemprop="logo" srcset="">
                 @if(isset($show_logo) && $show_logo)
@@ -40,7 +40,7 @@
     <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-center w-100 mt-5">
             <li class="w-100 py-3 font-weight-bold" itemprop="name">
-                <a href="/apartments" itemprop="url">Apartments</a>
+                <a href="/luxury-service-apartments-in-in-ikoyi" itemprop="url">Apartments</a>
             </li>
             <li class="w-100 font-weight-bold" itemprop="name">
                 <a href="/experience" itemprop="url">Experience & Amenities</a>

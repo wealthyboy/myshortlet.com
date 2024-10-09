@@ -1,7 +1,7 @@
 <div class="container-fluid" itemscope itemtype="https://schema.org/SiteNavigationElement">
 
     <div class="navbar-translate d-flex justify-content-between w-100 fixed-top">
-        <a href="/" class="navbar-brand" itemprop="url">
+        <a href="/luxury-service-apartments-in-lagos" class="navbar-brand" itemprop="url">
             <div class="logo-small" itemprop="name">
                 <img src="/images/logo/avnmont-white-04.png" alt="Avenue Montaigne Logo" itemprop="logo">
                 @if(isset($show_logo) && $show_logo)
@@ -41,7 +41,7 @@
     <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-center w-100 mt-5" itemscope itemtype="https://schema.org/ItemList">
             <li class="w-100 py-3 font-weight-bold" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                <a href="/apartments" itemprop="url"><span itemprop="name">Apartments</span></a>
+                <a href="/luxury-service-apartments-in-ikoyi" itemprop="url"><span itemprop="name">Apartments</span></a>
             </li>
 
             <li class="w-100 font-weight-bold" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
