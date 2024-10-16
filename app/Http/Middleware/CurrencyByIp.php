@@ -8,6 +8,12 @@ use App\Models\CurrencyRate;
 use App\Models\SystemSetting;
 use App\Http\Helper;
 use Stevebauman\Location\Facades\Location;
+use Carbon\Carbon;
+use App\Models\PriceChanged;
+use App\Models\Apartment;
+
+
+
 
 
 
@@ -36,9 +42,35 @@ class CurrencyByIp
         $query = request()->all();
 
 
+   
+        $currentDate = Carbon::now();
+        $startDate = Carbon::createFromDate(null, 12, 1); // December 1
+        $endDate = Carbon::createFromDate(null, 12, 31); // December 31
+
+        $price_update = PriceChanged::first();
+
+        if (null === $price_update && $currentDate->between($startDate, $endDate)) {
+            Apartment::where('price', '>', 0)
+                ->update(['price' => \DB::raw('price * 1.40')]);
+            PriceChanged::update([
+                'is_updated' => true
+            ]);
+        }
+
+        if (null !== $price_update && $price_update->is_updated) {
+             if ($currentDate->isAfter($endDate)) {
+                Apartment::where('price', '>', 0) 
+                    ->update(['price' => \DB::raw('price / 1.40')]);
+                    PriceChanged::update([
+                        'is_updated' => 0
+                    ]);
+            } 
+        }
+   
+
+
+
         if (optional($settings)->allow_multi_currency) {
-
-
 
             if (isset($query['currency']) && $query['currency'] === 'USD') {
                 $rate = ['rate' => optional($usa->rate)->rate, 'country' => $usa->name, 'code' => $nigeria->iso_code3, 'symbol' => $usa->symbol];

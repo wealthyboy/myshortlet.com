@@ -27,6 +27,9 @@
                                     </span>
                                     <select name="currency1_id" required="true" class="form-control  pull-left" required>
                                         <option value="{{  optional($default->currency)->id }}">{{ optional($default->currency)->country }}({{  optional($default->currency)->symbol }})</option>
+                                        @foreach($currencies as $currency)
+                                            <option  value="{{ $currency->id }}" >{{ $currency->country }}({{  $currency->symbol }})</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

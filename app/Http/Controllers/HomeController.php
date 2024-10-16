@@ -16,6 +16,7 @@ use App\Models\Banner;
 use App\Models\SystemSetting;
 use App\Http\Helper;
 use App\Models\Apartment;
+use App\Models\PriceChanged;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,14 +34,9 @@ class HomeController
         $site_status = Live::first();
         $banners =  Banner::banners()->get();
 
-       
-
-
-
         if (!$site_status->make_live) {
             return view('index', compact(
                 'banners',
-
             ));
         } else {
             //Show site if admin is logged in
@@ -109,6 +105,8 @@ class HomeController
 
 
 
+
+
     public function home(Request $request)
     {
         $site_status = Live::first();
@@ -160,6 +158,7 @@ class HomeController
         $date = $request->check_in_checkout;
         $days = 0;
         $filter = false;
+
 
 
         $saved =  auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];

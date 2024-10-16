@@ -10,8 +10,11 @@
         @endforeach
 
         <li>
-            <a href="#" onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();" class="list-group-item list-group-item-action d-flex align-items-center py-3">
+            <a  href="#" 
+                onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();"
+                class="list-group-item list-group-item-action d-flex align-items-center py-3"
+            >
 
                 <i class="material-icons">logout</i>
                 <span class="ms-2">
