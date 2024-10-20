@@ -65,6 +65,8 @@ class CurrencyByIp
         if (optional($settings)->allow_multi_currency) {
 
             if (isset($query['currency']) && $query['currency'] === 'USD') {
+                dd('Usa');
+
                 $rate = ['rate' => 1, 'country' => $usa->name, 'code' => $nigeria->iso_code3, 'symbol' => $usa->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'USD');
@@ -89,6 +91,7 @@ class CurrencyByIp
                 try {
                     if ($user_location && $user_location->ip !== request()->ip()) {
                         $country = Currency::where('country', $position->countryName)->first();
+                        dd('Nigeria');
                         $rate = null;
                         if ($position->countryName === 'Nigeria') {
                             $rate = ['rate' => 1700, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
@@ -112,6 +115,8 @@ class CurrencyByIp
                     if ($position->countryName === 'Nigeria') {
                         $rate = ['rate' => 1700, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
                         $request->session()->put('switch', 'NGN');
+                        dd('Nigeria2');
+
                     } else {
                         $country = Currency::where('country', 'United States')->first();
                         $rate = ['rate' => 1, 'country' => $country->name, 'symbol' => $country->symbol];
