@@ -61,18 +61,18 @@ class CurrencyByIp
    
 
 
-        dd($usa->load('rate'));
+       // dd($usa->load('rate'));
         if (optional($settings)->allow_multi_currency) {
 
             if (isset($query['currency']) && $query['currency'] === 'USD') {
-                $rate = ['rate' => optional($usa->rate)->rate, 'country' => $usa->name, 'code' => $nigeria->iso_code3, 'symbol' => $usa->symbol];
+                $rate = ['rate' => 1, 'country' => $usa->name, 'code' => $nigeria->iso_code3, 'symbol' => $usa->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'USD');
                 return $next($request);
             }
 
             if (isset($query['currency']) && $query['currency'] === 'NGN') {
-                $rate = ['rate' => 1, 'country' => 'Nigeria', 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
+                $rate = ['rate' => 1700, 'country' => 'Nigeria', 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'NGN');
                 return $next($request);
@@ -91,7 +91,7 @@ class CurrencyByIp
                         $country = Currency::where('country', $position->countryName)->first();
                         $rate = null;
                         if ($position->countryName === 'Nigeria') {
-                            $rate = ['rate' => optional($usa->rate)->rate, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
+                            $rate = ['rate' => 1700, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                             $request->session()->put('switch', 'NGN');
                         } else {
                             $rate = ['rate' => 1, 'country' => $usa->name, 'symbol' => $usa->symbol];
@@ -110,7 +110,7 @@ class CurrencyByIp
                     $country = Currency::where('country', $position->countryName)->first();
                     $rate = null;
                     if ($position->countryName === 'Nigeria') {
-                        $rate = ['rate' => optional($country->rate)->rate, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
+                        $rate = ['rate' => 1700, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
                         $request->session()->put('switch', 'NGN');
                     } else {
                         $country = Currency::where('country', 'United States')->first();
