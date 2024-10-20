@@ -87,6 +87,7 @@ class CurrencyByIp
                 }
 
 
+                $request->session()->forget(['rate']);
 
                 $user_location = json_decode(session('userLocation'));
                 try {
