@@ -29,6 +29,7 @@ class CurrencyByIp
      */
     public function handle($request, Closure $next)
     {
+        $request->session()->forget(['switch']);
 
         $rate = [];
         $position = '';
