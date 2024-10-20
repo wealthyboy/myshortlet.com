@@ -29,7 +29,6 @@ class CurrencyByIp
      */
     public function handle($request, Closure $next)
     {
-        $request->session()->forget(['rate']);
 
         $rate = [];
         $position = '';
@@ -84,7 +83,6 @@ class CurrencyByIp
 
 
             if ($request->session()->has('userLocation')) {
-                dd(session('rate'));
 
 
                 if ($request->session()->has('switch') && empty($query)) {
@@ -95,7 +93,6 @@ class CurrencyByIp
                 try {
                     if ($user_location && $user_location->ip !== request()->ip()) {
                         $country = Currency::where('country', $position->countryName)->first();
-                        dd('Nigeria');
                         $rate = null;
                         if ($position->countryName === 'Nigeria') {
                             $rate = ['rate' => 1700, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
@@ -119,7 +116,6 @@ class CurrencyByIp
                     if ($position->countryName === 'Nigeria') {
                         $rate = ['rate' => 1700, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
                         $request->session()->put('switch', 'NGN');
-                        dd('Nigeria2');
 
                     } else {
                         $country = Currency::where('country', 'United States')->first();
