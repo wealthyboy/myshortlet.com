@@ -82,10 +82,12 @@ class CurrencyByIp
 
             if ($request->session()->has('userLocation')) {
 
-                dd(true);
                 if ($request->session()->has('switch') && empty($query)) {
                     return $next($request);
                 }
+
+                dd(true);
+
 
                 $user_location = json_decode(session('userLocation'));
                 try {
