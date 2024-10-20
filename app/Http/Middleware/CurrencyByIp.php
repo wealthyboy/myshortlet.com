@@ -31,30 +31,22 @@ class CurrencyByIp
     {
 
         $rate = [];
-
         $position = '';
-
         $position = Location::get(request()->ip());
         $settings = SystemSetting::first();
         $nigeria = Currency::where('country', 'Nigeria')->first();
         $usa = Currency::where('country', 'United States')->first();
         $position = Location::get(request()->ip());
         $query = request()->all();
-
-
-   
         $currentDate = Carbon::now();
         $startDate = Carbon::createFromDate(null, 12, 1); // December 1
         $endDate = Carbon::createFromDate(null, 12, 31); // December 31
-
         $price_update = PriceChanged::first();
 
         if (null === $price_update && $currentDate->between($startDate, $endDate)) {
             Apartment::where('price', '>', 0)
                 ->update(['price' => \DB::raw('price * 1.40')]);
-            PriceChanged::update([
-                'is_updated' => true
-            ]);
+            PriceChanged::update(['is_updated' => true]);
         }
 
         if (null !== $price_update && $price_update->is_updated) {
@@ -99,10 +91,10 @@ class CurrencyByIp
                         $country = Currency::where('country', $position->countryName)->first();
                         $rate = null;
                         if ($position->countryName === 'Nigeria') {
-                            $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
+                            $rate = ['rate' => optional($usa->rate)->rate, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                             $request->session()->put('switch', 'NGN');
                         } else {
-                            $rate = ['rate' => optional($usa->rate)->rate, 'country' => $usa->name, 'symbol' => $usa->symbol];
+                            $rate = ['rate' => 1, 'country' => $usa->name, 'symbol' => $usa->symbol];
                             $request->session()->put('switch', 'USD');
                         }
 
@@ -118,11 +110,11 @@ class CurrencyByIp
                     $country = Currency::where('country', $position->countryName)->first();
                     $rate = null;
                     if ($position->countryName === 'Nigeria') {
-                        $rate = ['rate' => 1, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
+                        $rate = ['rate' => optional($country->rate)->rate, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
                         $request->session()->put('switch', 'NGN');
                     } else {
                         $country = Currency::where('country', 'United States')->first();
-                        $rate = ['rate' => optional($country->rate)->rate, 'country' => $country->name, 'symbol' => $country->symbol];
+                        $rate = ['rate' => 1, 'country' => $country->name, 'symbol' => $country->symbol];
                         $request->session()->put('switch', 'USD');
                     }
 
