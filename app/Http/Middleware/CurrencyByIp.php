@@ -87,7 +87,6 @@ class CurrencyByIp
                 }
 
 
-                $request->session()->forget(['rate']);
 
                 $user_location = json_decode(session('userLocation'));
                 try {
@@ -105,6 +104,9 @@ class CurrencyByIp
                             $rate = ['rate' => 1, 'country' => $usa->name, 'symbol' => $usa->symbol];
                             $request->session()->put('switch', 'USD');
                         }
+
+                        dd($country);
+
 
                         $request->session()->put('rate', json_encode(collect($rate)));
                         $request->session()->put('userLocation',  json_encode($position));
