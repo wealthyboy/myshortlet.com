@@ -28,7 +28,10 @@ class CurrencyByIp
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
+    {   
+
+        $request->session()->forget(['rate']);
+
 
         $rate = [];
         $position = '';
@@ -91,14 +94,12 @@ class CurrencyByIp
                 $user_location = json_decode(session('userLocation'));
                 $request->session()->forget(['rate']);
 
-                dd(session('rate'));
 
                 try {
                     if ($user_location && $user_location->ip !== request()->ip()) {
                         
                         $country = Currency::where('country', $position->countryName)->first();
 
-                        dd($country);
 
                         $rate = null;
                         if ($position->countryName === 'Nigeria') {
@@ -109,7 +110,6 @@ class CurrencyByIp
                             $request->session()->put('switch', 'USD');
                         }
 
-                        dd($country);
 
 
                         $request->session()->put('rate', json_encode(collect($rate)));
@@ -142,7 +142,6 @@ class CurrencyByIp
                     //throw $th;
                 }
 
-                dd(session('rate'),2);
 
             }
         } else {
