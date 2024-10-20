@@ -79,13 +79,14 @@ class CurrencyByIp
                 $rate = ['rate' => 1700, 'country' => 'Nigeria', 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'NGN');
-                dd(session('rate'));
 
                 return $next($request);
             }
 
 
             if ($request->session()->has('userLocation')) {
+                dd(session('rate'));
+
 
                 if ($request->session()->has('switch') && empty($query)) {
                     return $next($request);
