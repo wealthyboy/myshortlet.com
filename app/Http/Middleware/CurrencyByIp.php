@@ -86,6 +86,7 @@ class CurrencyByIp
 
 
                 if ($request->session()->has('switch') && empty($query)) {
+                    dd(true);
                     return $next($request);
                 }
 
