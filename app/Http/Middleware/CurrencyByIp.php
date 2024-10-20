@@ -61,7 +61,7 @@ class CurrencyByIp
    
 
 
-        dd(optional($usa->rate)->rate);
+        dd(optional($usa->rate));
         if (optional($settings)->allow_multi_currency) {
 
             if (isset($query['currency']) && $query['currency'] === 'USD') {
