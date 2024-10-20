@@ -14,7 +14,7 @@ class AlterTableApartmentsAddDecemberPrices extends Migration
     public function up()
     {
         Schema::table('apartments', function (Blueprint $table) {
-            //
+            $table->bigInteger('december_prices')->nullable();
         });
     }
 

@@ -63,6 +63,8 @@ class CurrencyByIp
 
        // dd($usa->load('rate'));
         if (optional($settings)->allow_multi_currency) {
+            dd('Nigeria3');
+
 
             if (isset($query['currency']) && $query['currency'] === 'USD') {
                 dd('Usa');
