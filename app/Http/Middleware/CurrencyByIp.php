@@ -29,7 +29,6 @@ class CurrencyByIp
      */
     public function handle($request, Closure $next)
     {
-        $request->session()->forget(['switch']);
 
         $rate = [];
         $position = '';
@@ -74,20 +73,17 @@ class CurrencyByIp
             }
 
             if (isset($query['currency']) && $query['currency'] === 'NGN') {
-
                 $rate = ['rate' => 1700, 'country' => 'Nigeria', 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'NGN');
-
                 return $next($request);
             }
 
 
             if ($request->session()->has('userLocation')) {
 
-
+                dd(true);
                 if ($request->session()->has('switch') && empty($query)) {
-                    dd(true);
                     return $next($request);
                 }
 
