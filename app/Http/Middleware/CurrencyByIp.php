@@ -89,6 +89,8 @@ class CurrencyByIp
 
 
                 $user_location = json_decode(session('userLocation'));
+                dd(session('rate'));
+
                 try {
                     if ($user_location && $user_location->ip !== request()->ip()) {
                         
@@ -115,7 +117,6 @@ class CurrencyByIp
                     //throw $th;
                 }
 
-                dd(session('rate'));
             } else {
 
 
