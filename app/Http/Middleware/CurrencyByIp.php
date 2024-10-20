@@ -91,7 +91,11 @@ class CurrencyByIp
                 $user_location = json_decode(session('userLocation'));
                 try {
                     if ($user_location && $user_location->ip !== request()->ip()) {
+                        
                         $country = Currency::where('country', $position->countryName)->first();
+
+                        dd($country);
+
                         $rate = null;
                         if ($position->countryName === 'Nigeria') {
                             $rate = ['rate' => 1700, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
