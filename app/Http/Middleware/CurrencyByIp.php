@@ -111,6 +111,8 @@ class CurrencyByIp
                 dd(session('rate'));
             } else {
 
+
+
                 try {
                     $country = Currency::where('country', $position->countryName)->first();
                     $rate = null;
@@ -129,6 +131,9 @@ class CurrencyByIp
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
+
+                dd(session('rate'),2);
+
             }
         } else {
             $request->session()->put('switch', 'NGN');
