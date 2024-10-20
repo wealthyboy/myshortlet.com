@@ -86,7 +86,6 @@ class CurrencyByIp
                     return $next($request);
                 }
 
-                dd(true);
 
 
                 $user_location = json_decode(session('userLocation'));
@@ -108,6 +107,8 @@ class CurrencyByIp
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
+
+                dd(session('rate'));
             } else {
 
                 try {
