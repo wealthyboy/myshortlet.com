@@ -84,11 +84,14 @@ class CurrencyByIp
 
             if ($request->session()->has('userLocation')) {
 
+                $request->session()->forget(['switch']);
+
+
                 if ($request->session()->has('switch') && empty($query)) {
                     return $next($request);
                 }
 
-                dd(session('rate'), json_decode(session('userLocation')));
+               // dd(session('rate'), json_decode(session('userLocation')));
 
 
                 $user_location = json_decode(session('userLocation'));
