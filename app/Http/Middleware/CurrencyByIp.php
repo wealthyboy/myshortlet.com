@@ -30,9 +30,6 @@ class CurrencyByIp
     public function handle($request, Closure $next)
     {   
 
-        $request->session()->forget(['rate']);
-
-
         $rate = [];
         $position = '';
         $position = Location::get(request()->ip());
@@ -66,6 +63,7 @@ class CurrencyByIp
 
        // dd($usa->load('rate'));
         if (optional($settings)->allow_multi_currency) {
+            dd(session('rate'), json_decode(session('userLocation')));
 
 
             if (isset($query['currency']) && $query['currency'] === 'USD') {
@@ -89,17 +87,14 @@ class CurrencyByIp
                     return $next($request);
                 }
 
-
-
                 $user_location = json_decode(session('userLocation'));
-                $request->session()->forget(['rate']);
 
+                $request->session()->forget(['rate']);
 
                 try {
                     if ($user_location && $user_location->ip !== request()->ip()) {
                         
                         $country = Currency::where('country', $position->countryName)->first();
-
 
                         $rate = null;
                         if ($position->countryName === 'Nigeria') {
