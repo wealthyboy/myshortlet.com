@@ -42,8 +42,8 @@ class CurrencyByIp
         $startDate = Carbon::createFromDate(null, 12, 1); // December 1
         $endDate = Carbon::createFromDate(null, 12, 31); // December 31
         $price_update = PriceChanged::first();
-        $request->session()->forget(['rate']);
-        $request->session()->forget(['switch']);
+        // $request->session()->forget(['rate']);
+        // $request->session()->forget(['switch']);
 
 
 
@@ -102,18 +102,18 @@ class CurrencyByIp
 
                     $country = Currency::where('country', $position->countryName)->first();
                         $rate = null;
-                        // if ($position->countryName === 'Nigeria') {
-                        //     $rate = ['rate' => 1700, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
-                        //     $request->session()->put('switch', 'NGN');
-                        // } else {
-                        //     $rate = ['rate' => 1, 'country' => $usa->name, 'symbol' => $usa->symbol];
-                        //     $request->session()->put('switch', 'USD');
-                        // }
+                        if ($position->countryName === 'Nigeria') {
+                            $rate = ['rate' => 1700, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
+                            $request->session()->put('switch', 'NGN');
+                        } else {
+                            $rate = ['rate' => 1, 'country' => $usa->name, 'symbol' => $usa->symbol];
+                            $request->session()->put('switch', 'USD');
+                        }
 
 
 
-                        // $request->session()->put('rate', json_encode(collect($rate)));
-                        // $request->session()->put('userLocation',  json_encode($position));
+                        $request->session()->put('rate', json_encode(collect($rate)));
+                        $request->session()->put('userLocation',  json_encode($position));
 
 
                     if ($user_location && $user_location->ip !== request()->ip()) {
