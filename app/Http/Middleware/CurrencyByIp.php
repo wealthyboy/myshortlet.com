@@ -99,17 +99,10 @@ class CurrencyByIp
                 $user_location = json_decode(session('userLocation'));
 
                 try { 
-                    dd(true);
 
 
                     if ($user_location && $user_location->ip !== request()->ip()) {
-
-
-                        
                         $country = Currency::where('country', $position->countryName)->first();
-
-
-
                         $rate = null;
                         if ($position->countryName === 'Nigeria') {
                             $rate = ['rate' => 1700, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
@@ -126,6 +119,8 @@ class CurrencyByIp
                     }
                 } catch (\Throwable $th) {
                     //throw $th;
+
+                    dd($th);
                 }
 
             } else {
