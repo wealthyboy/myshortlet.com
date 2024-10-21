@@ -79,7 +79,6 @@ class CurrencyByIp
                 return $next($request);
             }
 
-            dd(session('rate'), json_decode(session('userLocation')));
 
 
 
@@ -89,9 +88,11 @@ class CurrencyByIp
                     return $next($request);
                 }
 
+                dd(session('rate'), json_decode(session('userLocation')));
+
+
                 $user_location = json_decode(session('userLocation'));
 
-                $request->session()->forget(['rate']);
 
                 try {
                     if ($user_location && $user_location->ip !== request()->ip()) {
