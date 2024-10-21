@@ -42,6 +42,8 @@ class CurrencyByIp
         $startDate = Carbon::createFromDate(null, 12, 1); // December 1
         $endDate = Carbon::createFromDate(null, 12, 31); // December 31
         $price_update = PriceChanged::first();
+        $request->session()->forget(['rate']);
+
 
         if (null === $price_update && $currentDate->between($startDate, $endDate)) {
             Apartment::where('price', '>', 0)
@@ -75,7 +77,7 @@ class CurrencyByIp
 
             if (isset($query['currency']) && $query['currency'] === 'NGN') {
 
-                $rate = ['rate' => 1700, 'country' => 'Nigeria', 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
+                $rate = ['rate' => 1500, 'country' => 'Nigeria', 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'NGN');
 
@@ -116,7 +118,7 @@ class CurrencyByIp
                         $country = Currency::where('country', $position->countryName)->first();
                         $rate = null;
                         if ($position->countryName === 'Nigeria') {
-                            $rate = ['rate' => 1700, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
+                            $rate = ['rate' => 1500, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                             $request->session()->put('switch', 'NGN');
                         } else {
                             $rate = ['rate' => 1, 'country' => $usa->name, 'symbol' => $usa->symbol];
@@ -144,7 +146,7 @@ class CurrencyByIp
 
                     $rate = null;
                     if ($position->countryName === 'Nigeria') {
-                        $rate = ['rate' => 1700, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
+                        $rate = ['rate' => 1500, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
                         $request->session()->put('switch', 'NGN');
 
                     } else {
