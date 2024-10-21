@@ -93,12 +93,10 @@ class CurrencyByIp
                     return $next($request);
                 }
 
+                $user_location = json_decode(session('userLocation'));
+
                 dd(session('rate'), json_decode(session('userLocation')), 1);
 
-
-
-
-                $user_location = json_decode(session('userLocation'));
 
 
                 try {
