@@ -66,6 +66,8 @@ class CurrencyByIp
 
 
             if (isset($query['currency']) && $query['currency'] === 'USD') {
+                dd(true);
+
                 $rate = ['rate' => 1, 'country' => $usa->name, 'code' => $nigeria->iso_code3, 'symbol' => $usa->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'USD');
@@ -75,6 +77,8 @@ class CurrencyByIp
             }
 
             if (isset($query['currency']) && $query['currency'] === 'NGN') {
+                dd(true);
+
                 $rate = ['rate' => 1700, 'country' => 'Nigeria', 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'NGN');
