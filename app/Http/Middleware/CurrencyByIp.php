@@ -63,7 +63,6 @@ class CurrencyByIp
 
        // dd($usa->load('rate'));
         if (optional($settings)->allow_multi_currency) {
-            dd(session('rate'), json_decode(session('userLocation')));
 
 
             if (isset($query['currency']) && $query['currency'] === 'USD') {
@@ -79,6 +78,9 @@ class CurrencyByIp
                 $request->session()->put('switch', 'NGN');
                 return $next($request);
             }
+
+            dd(session('rate'), json_decode(session('userLocation')));
+
 
 
             if ($request->session()->has('userLocation')) {
