@@ -43,6 +43,8 @@ class CurrencyByIp
         $endDate = Carbon::createFromDate(null, 12, 31); // December 31
         $price_update = PriceChanged::first();
         $request->session()->forget(['rate']);
+        $request->session()->forget(['switch']);
+
 
 
         if (null === $price_update && $currentDate->between($startDate, $endDate)) {
