@@ -103,7 +103,6 @@ class CurrencyByIp
                         
                         $country = Currency::where('country', $position->countryName)->first();
 
-                        dd(session('rate'), json_decode(session('userLocation')), $country);
 
 
                         $rate = null;
@@ -130,6 +129,9 @@ class CurrencyByIp
 
                 try {
                     $country = Currency::where('country', $position->countryName)->first();
+
+                    dd(session('rate'), json_decode(session('userLocation')), $country);
+
                     $rate = null;
                     if ($position->countryName === 'Nigeria') {
                         $rate = ['rate' => 1700, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
