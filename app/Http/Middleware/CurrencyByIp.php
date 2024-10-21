@@ -90,6 +90,8 @@ class CurrencyByIp
 
 
                 if ($request->session()->has('switch') && empty($query)) {
+                    dd(session('rate'), json_decode(session('userLocation')), 1);
+
                     return $next($request);
                 }
 
@@ -152,7 +154,6 @@ class CurrencyByIp
 
             }
         } else {
-            dd(session('rate'), json_decode(session('userLocation')), 1);
 
            // $request->session()->put('switch', 'NGN');
             $request->session()->forget(['rate']);
