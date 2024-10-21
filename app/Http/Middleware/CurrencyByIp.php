@@ -90,8 +90,6 @@ class CurrencyByIp
 
 
                 if ($request->session()->has('switch') && empty($query)) {
-                    dd(session('rate'), json_decode(session('userLocation')), 1);
-
                     return $next($request);
                 }
 
@@ -128,9 +126,12 @@ class CurrencyByIp
 
             } else {
 
+                dd(true);
 
 
                 try {
+
+                    dd(true);
                     $country = Currency::where('country', $position->countryName)->first();
 
 
