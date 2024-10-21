@@ -95,9 +95,6 @@ class CurrencyByIp
 
                 $user_location = json_decode(session('userLocation'));
 
-
-
-
                 try { 
 
 
@@ -130,12 +127,10 @@ class CurrencyByIp
             } else {
 
 
-                dd(session('rate'), json_decode(session('userLocation')), 1);
 
                 try {
                     $country = Currency::where('country', $position->countryName)->first();
 
-                    dd(session('rate'), json_decode(session('userLocation')), $country);
 
                     $rate = null;
                     if ($position->countryName === 'Nigeria') {
@@ -157,6 +152,8 @@ class CurrencyByIp
 
             }
         } else {
+            dd(session('rate'), json_decode(session('userLocation')), 1);
+
            // $request->session()->put('switch', 'NGN');
             $request->session()->forget(['rate']);
         }
