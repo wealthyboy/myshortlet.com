@@ -123,7 +123,7 @@ trait FormatPrice
   public function getConvertedPriceAttribute()
   {
     if ($this instanceof Property) {
-      return $this->ConvertCurrencyRate(optional(optional($this->apartments)->first())->price);
+      dd($this->ConvertCurrencyRate(optional(optional($this->apartments)->first())->price));
     }
 
     return $this->ConvertCurrencyRate($this->price);
@@ -134,7 +134,7 @@ trait FormatPrice
 
     $rate = Helper::rate();
     if ($rate) {
-      dd(round(($price * $rate->rate), 0));
+      return round(($price * $rate->rate), 0);
     }
     return round($price, 0);
   }
