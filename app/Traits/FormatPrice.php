@@ -123,7 +123,7 @@ trait FormatPrice
   public function getConvertedPriceAttribute()
   {
     if ($this instanceof Property) {
-      dd(true);
+    
       dd($this->ConvertCurrencyRate(optional(optional($this->apartments)->first())->price));
     }
 
