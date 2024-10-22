@@ -73,8 +73,9 @@ class CurrencyByIp
                 $rate = ['rate' => 1, 'country' => $usa->country, 'code' => $usa->iso_code3, 'symbol' => $usa->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'USD');
-                dd(session('rate'));
                 return $next($request);
+                dd(session('rate'));
+
             }
 
             if (isset($query['currency']) && $query['currency'] === 'NGN') {
