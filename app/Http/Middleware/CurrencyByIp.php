@@ -73,9 +73,6 @@ class CurrencyByIp
                 $rate = ['rate' => 1, 'country' => $usa->name, 'code' => $nigeria->iso_code3, 'symbol' => $usa->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'USD');
-
-                dd(true);
-
                 return $next($request);
             }
 
@@ -109,9 +106,6 @@ class CurrencyByIp
                             $rate = ['rate' => 1, 'country' => $usa->name, 'symbol' => $usa->symbol];
                             $request->session()->put('switch', 'USD');
                         }
-
-
-
                         $request->session()->put('rate', json_encode(collect($rate)));
                         $request->session()->put('userLocation',  json_encode($position));
 
