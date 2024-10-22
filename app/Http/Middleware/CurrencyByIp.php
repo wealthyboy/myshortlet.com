@@ -70,12 +70,9 @@ class CurrencyByIp
 
 
             if (isset($query['currency']) && $query['currency'] === 'USD') {
-                dd($usa);
-                $rate = ['rate' => 1, 'country' => $usa->name, 'code' => $usa->iso_code3, 'symbol' => $usa->symbol];
+                $rate = ['rate' => 1, 'country' => $usa->country, 'code' => $usa->iso_code3, 'symbol' => $usa->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'USD');
-
-                dd(session('rate'));
                 return $next($request);
             }
 
@@ -106,7 +103,7 @@ class CurrencyByIp
                             $rate = ['rate' => 1400, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                             $request->session()->put('switch', 'NGN');
                         } else {
-                            $rate = ['rate' => 1, 'country' => $usa->name, 'symbol' => $usa->symbol];
+                            $rate = ['rate' => 1, 'country' => $usa->country, 'symbol' => $usa->symbol];
                             $request->session()->put('switch', 'USD');
                         }
                         $request->session()->put('rate', json_encode(collect($rate)));
@@ -120,7 +117,7 @@ class CurrencyByIp
                             $rate = ['rate' => 1500, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                             $request->session()->put('switch', 'NGN');
                         } else {
-                            $rate = ['rate' => 1, 'country' => $usa->name, 'symbol' => $usa->symbol];
+                            $rate = ['rate' => 1, 'country' => $usa->country, 'symbol' => $usa->symbol];
                             $request->session()->put('switch', 'USD');
                         }
 
