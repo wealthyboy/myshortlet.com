@@ -133,6 +133,7 @@ trait FormatPrice
   {
 
     $rate = Helper::rate();
+    dd($rate);
     if ($rate) {
       return round(($price * $rate->rate), 0);
     }
