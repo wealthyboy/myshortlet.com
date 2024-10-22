@@ -124,7 +124,7 @@ trait FormatPrice
   {
     if ($this instanceof Property) {
     
-      dd($this->ConvertCurrencyRate(optional(optional($this->apartments)->first())->price));
+      return $this->ConvertCurrencyRate(optional(optional($this->apartments)->first())->price);
     }
 
     return $this->ConvertCurrencyRate($this->price);
