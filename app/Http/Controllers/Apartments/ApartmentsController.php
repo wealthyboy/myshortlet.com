@@ -95,9 +95,7 @@ class ApartmentsController extends Controller
 
 
         if ($request->ajax()) {
-                   // dd( $apartments, Helper::rate());
-
-                   // return $apartments;
+                  
 
             return PropertyLists::collection(
                 $apartments
