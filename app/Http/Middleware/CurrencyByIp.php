@@ -43,7 +43,6 @@ class CurrencyByIp
         $endDate = Carbon::createFromDate(null, 12, 31); // December 31
         $price_update = PriceChanged::first();
         // $request->session()->forget(['rate']);
-         $request->session()->forget(['userLocation']);
 
        // dd(session('userLocation'));
 
@@ -75,6 +74,7 @@ class CurrencyByIp
             if (isset($query['currency']) && $query['currency'] === 'USD') {
                 $rate = ['rate' => 1, 'country' => $usa->country, 'code' => $usa->iso_code3, 'symbol' => $usa->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
+                $request->session()->forget(['userLocation']);
                 $request->session()->put('switch', 'USD');
                 return $next($request);
             }
@@ -82,6 +82,8 @@ class CurrencyByIp
             if (isset($query['currency']) && $query['currency'] === 'NGN') {
                 $rate = ['rate' => 1500, 'country' => 'Nigeria', 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
+                $request->session()->forget(['userLocation']);
+
                 $request->session()->put('switch', 'NGN');
                 return $next($request);
             } 
