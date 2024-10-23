@@ -45,6 +45,9 @@ class CurrencyByIp
         // $request->session()->forget(['rate']);
         // $request->session()->forget(['switch']);
 
+        dd(session('userLocation'));
+
+
 
 
         if (null === $price_update && $currentDate->between($startDate, $endDate)) {
@@ -83,7 +86,6 @@ class CurrencyByIp
                 return $next($request);
             } 
 
-            dd(session('userLocation'));
 
     
 
