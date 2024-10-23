@@ -42,26 +42,26 @@ class CurrencyByIp
         $startDate = Carbon::createFromDate(null, 12, 1); // December 1
         $endDate = Carbon::createFromDate(null, 12, 31); // December 31
         $price_update = PriceChanged::first();
-        $request->session()->forget(['rate']);
-        $request->session()->forget(['switch']);
+        // $request->session()->forget(['rate']);
+        // $request->session()->forget(['switch']);
 
 
 
-        // if (null === $price_update && $currentDate->between($startDate, $endDate)) {
-        //     Apartment::where('price', '>', 0)
-        //         ->update(['price' => \DB::raw('price * 1.40')]);
-        //     PriceChanged::update(['is_updated' => true]);
-        // }
+        if (null === $price_update && $currentDate->between($startDate, $endDate)) {
+            Apartment::where('price', '>', 0)
+                ->update(['price' => \DB::raw('price * 1.40')]);
+            PriceChanged::update(['is_updated' => true]);
+        }
 
-        // if (null !== $price_update && $price_update->is_updated) {
-        //      if ($currentDate->isAfter($endDate)) {
-        //         Apartment::where('price', '>', 0) 
-        //             ->update(['price' => \DB::raw('price / 1.40')]);
-        //             PriceChanged::update([
-        //                 'is_updated' => 0
-        //             ]);
-        //     } 
-        // }
+        if (null !== $price_update && $price_update->is_updated) {
+             if ($currentDate->isAfter($endDate)) {
+                Apartment::where('price', '>', 0) 
+                    ->update(['price' => \DB::raw('price / 1.40')]);
+                    PriceChanged::update([
+                        'is_updated' => 0
+                    ]);
+            } 
+        }
    
 
 
@@ -69,19 +69,27 @@ class CurrencyByIp
         if (optional($settings)->allow_multi_currency) {
 
 
-            if (isset($query['currency']) && $query['currency'] === 'USD') {
-                $rate = ['rate' => 1, 'country' => $usa->country, 'code' => $usa->iso_code3, 'symbol' => $usa->symbol];
-                $request->session()->put('rate', json_encode(collect($rate)));
-                $request->session()->put('switch', 'USD');
-                return $next($request);
-            }
+            // if (isset($query['currency']) && $query['currency'] === 'USD') {
+            //     $rate = ['rate' => 1, 'country' => $usa->country, 'code' => $usa->iso_code3, 'symbol' => $usa->symbol];
+            //     $request->session()->put('rate', json_encode(collect($rate)));
+            //     $request->session()->put('switch', 'USD');
+            //     return $next($request);
+            // }
 
             if (isset($query['currency']) && $query['currency'] === 'NGN') {
                 $rate = ['rate' => 1500, 'country' => 'Nigeria', 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'NGN');
                 return $next($request);
+            } else {
+                $rate = ['rate' => 1, 'country' => $usa->country, 'symbol' => $usa->symbol];
+                $request->session()->put('switch', 'USD');
+                return $next($request);
+
             }
+
+            $request->session()->put('rate', json_encode(collect($rate)));
+                        $request->session()->put('userLocation',  json_encode($position));
 
 
 
