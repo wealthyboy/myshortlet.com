@@ -138,9 +138,13 @@ trait FormatPrice
   {
     $query = request()->all();
 
-    if (isset($query['currency']) && $query['currency'] === 'USD') { 
-      return round(($price * 1), 0);
-  }
+
+        if (isset($query['currency']) && $query['currency'] === 'USD' && $query['debug'] ==1 ) { 
+            dd( json_decode(json_encode(collect([
+                'rate' => 1,
+                'symbol' =>'$'
+            ]))));
+        }
 
     $rate = Helper::rate();
     if ($rate) {
