@@ -44,10 +44,6 @@ class CurrencyByIp
         $price_update = PriceChanged::first();
         $request->session()->forget(['userLocation']);
 
-       // dd(session('userLocation'));
-
-
-
 
         if (null === $price_update && $currentDate->between($startDate, $endDate)) {
             Apartment::where('price', '>', 0)
@@ -74,7 +70,7 @@ class CurrencyByIp
             if (isset($query['currency']) && $query['currency'] === 'USD') {
                 $rate = ['rate' => 1, 'country' => $usa->country, 'code' => $usa->iso_code3, 'symbol' => $usa->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
-                $request->session()->forget(['userLocation']);
+                dd(session('rate'));
                 $request->session()->put('switch', 'USD');
                 return $next($request);
             }
