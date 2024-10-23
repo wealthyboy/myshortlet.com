@@ -133,9 +133,9 @@ trait FormatPrice
   {
 
     $rate = Helper::rate();
-   // if ($rate) {
-      return $rate->rate;
-   // }
+    if ($rate) {
+      return $rate->rate), 0);
+    }
     return round($price, 0);
   }
 }
