@@ -140,7 +140,16 @@ class Helper
     }
 
     public static function rate()
-    {
+    {   
+        $query = request()->all();
+        
+        if (isset($query['currency']) && $query['currency'] === 'USD') { 
+            return  collect([
+                'rate' => 1,
+                'symbol' =>'$'
+            ]);
+        }
+
         $rate = session('rate');;
         $rate = json_decode($rate);
         return $rate;
