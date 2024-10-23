@@ -106,6 +106,7 @@ trait FormatPrice
   {
 
     $rate = Helper::rate();
+    
     if ($rate) {
       return $rate->symbol;
     }
@@ -134,7 +135,7 @@ trait FormatPrice
 
     $rate = Helper::rate();
     if ($rate) {
-      return round(($price * $rate->rate), 0);
+      return $rate->rate;
     }
     return round($price, 0);
   }
