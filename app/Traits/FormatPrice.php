@@ -104,9 +104,13 @@ trait FormatPrice
 
   public function getCurrencyAttribute()
   {
+    $query = request()->all();
 
+    if (isset($query['currency']) && $query['currency'] === 'USD') { 
+      return "$";
+    }
     $rate = Helper::rate();
-    
+  
     if ($rate) {
       return $rate->symbol;
     }
@@ -132,10 +136,15 @@ trait FormatPrice
 
   public function ConvertCurrencyRate($price)
   {
+    $query = request()->all();
+
+    if (isset($query['currency']) && $query['currency'] === 'USD') { 
+      return round(($price * 1), 0);
+  }
 
     $rate = Helper::rate();
     if ($rate) {
-      return $rate->rate;
+      return round(($price * $rate->rate), 0);
     }
     return round($price, 0);
   }
