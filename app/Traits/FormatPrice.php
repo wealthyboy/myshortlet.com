@@ -139,7 +139,7 @@ trait FormatPrice
     $query = request()->all();
 
 
-        if (isset($query['currency']) && $query['currency'] === 'USD' && $query['debug'] ==1 ) { 
+        if (isset($query['currency']) && $query['currency'] === 'USD'  ) { 
             dd( json_decode(json_encode(collect([
                 'rate' => 1,
                 'symbol' =>'$'
