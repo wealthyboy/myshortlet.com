@@ -43,9 +43,9 @@ class CurrencyByIp
         $endDate = Carbon::createFromDate(null, 12, 31); // December 31
         $price_update = PriceChanged::first();
         // $request->session()->forget(['rate']);
-        // $request->session()->forget(['switch']);
+         $request->session()->forget(['userLocation']);
 
-        dd(session('userLocation'));
+       // dd(session('userLocation'));
 
 
 
