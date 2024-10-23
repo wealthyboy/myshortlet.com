@@ -47,21 +47,21 @@ class CurrencyByIp
 
 
 
-        if (null === $price_update && $currentDate->between($startDate, $endDate)) {
-            Apartment::where('price', '>', 0)
-                ->update(['price' => \DB::raw('price * 1.40')]);
-            PriceChanged::update(['is_updated' => true]);
-        }
+        // if (null === $price_update && $currentDate->between($startDate, $endDate)) {
+        //     Apartment::where('price', '>', 0)
+        //         ->update(['price' => \DB::raw('price * 1.40')]);
+        //     PriceChanged::update(['is_updated' => true]);
+        // }
 
-        if (null !== $price_update && $price_update->is_updated) {
-             if ($currentDate->isAfter($endDate)) {
-                Apartment::where('price', '>', 0) 
-                    ->update(['price' => \DB::raw('price / 1.40')]);
-                    PriceChanged::update([
-                        'is_updated' => 0
-                    ]);
-            } 
-        }
+        // if (null !== $price_update && $price_update->is_updated) {
+        //      if ($currentDate->isAfter($endDate)) {
+        //         Apartment::where('price', '>', 0) 
+        //             ->update(['price' => \DB::raw('price / 1.40')]);
+        //             PriceChanged::update([
+        //                 'is_updated' => 0
+        //             ]);
+        //     } 
+        // }
    
 
 
@@ -74,8 +74,6 @@ class CurrencyByIp
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'USD');
                 return $next($request);
-                dd(session('rate'));
-
             }
 
             if (isset($query['currency']) && $query['currency'] === 'NGN') {
@@ -90,7 +88,6 @@ class CurrencyByIp
 
             if ($request->session()->has('userLocation')) {
 
-
                 if ($request->session()->has('switch') && empty($query)) {
                     return $next($request);
                 }
@@ -101,8 +98,9 @@ class CurrencyByIp
 
                         $country = Currency::where('country', $position->countryName)->first();
                         $rate = null;
+
                         if ($position->countryName === 'Nigeria') {
-                            $rate = ['rate' => 1400, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
+                            $rate = ['rate' => 1500, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                             $request->session()->put('switch', 'NGN');
                         } else {
                             $rate = ['rate' => 1, 'country' => $usa->country, 'symbol' => $usa->symbol];
@@ -122,9 +120,6 @@ class CurrencyByIp
                             $rate = ['rate' => 1, 'country' => $usa->country, 'symbol' => $usa->symbol];
                             $request->session()->put('switch', 'USD');
                         }
-
-
-
                         $request->session()->put('rate', json_encode(collect($rate)));
                         $request->session()->put('userLocation',  json_encode($position));
                     }
@@ -140,9 +135,8 @@ class CurrencyByIp
                 try {
 
                     $country = Currency::where('country', $position->countryName)->first();
-
-
                     $rate = null;
+
                     if ($position->countryName === 'Nigeria') {
                         $rate = ['rate' => 1500, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
                         $request->session()->put('switch', 'NGN');

@@ -91,12 +91,9 @@ class ApartmentsController extends Controller
         $apartments = $query->where('allow', 1)->latest()->get();
         $saved = null;
         $property = Property::first();
-
-
         $apartments->load('images', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
 
         if ($request->ajax()) {
-            // dd(true);
             return PropertyLists::collection(
                 $apartments
             )->additional(['attributes' => $attributes, 'search' => false]);
