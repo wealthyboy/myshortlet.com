@@ -122,10 +122,9 @@ trait FormatPrice
 
   public function getConvertedPriceAttribute()
   {
-    if ($this instanceof Property) {
-    
-      return $this->ConvertCurrencyRate(optional(optional($this->apartments)->first())->price);
-    }
+    // if ($this instanceof Property) {
+    //   return $this->ConvertCurrencyRate(optional(optional($this->apartments)->first())->price);
+    // }
 
     return $this->ConvertCurrencyRate($this->price);
   }
