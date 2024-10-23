@@ -82,7 +82,8 @@ class CurrencyByIp
             if (isset($query['currency']) && $query['currency'] === 'NGN') {
                 $rate = ['rate' => 1500, 'country' => 'Nigeria', 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
-                $request->session()->put('rate', json_encode(collect($rate)));
+                dd(session('rate'));
+               // $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('userLocation',  json_encode($position));
                 return $next($request);
             } 
