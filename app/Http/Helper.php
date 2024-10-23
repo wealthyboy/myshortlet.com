@@ -143,11 +143,11 @@ class Helper
     {   
         $query = request()->all();
 
-        if (isset($query['currency']) && $query['currency'] === 'USD') { 
-            return  json_decode(json_encode(collect([
+        if (isset($query['currency']) && $query['currency'] === 'USD' && $query['debug'] ==1 ) { 
+            dd( json_decode(json_encode(collect([
                 'rate' => 1,
                 'symbol' =>'$'
-            ])));
+            ]))));
         }
 
         $rate = session('rate');;
