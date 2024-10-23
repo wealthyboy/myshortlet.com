@@ -93,7 +93,7 @@ class ApartmentsController extends Controller
         $property = Property::first();
         $apartments->load('images', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
 
-        dd( $apartments, Helper::rate());
+       // dd( $apartments, Helper::rate());
 
         if ($request->ajax()) {
             return PropertyLists::collection(
