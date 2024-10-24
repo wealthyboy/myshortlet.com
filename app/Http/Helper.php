@@ -141,11 +141,7 @@ class Helper
 
     public static function rate()
     {   
-
-
-       
-
-        $rate = session('rate');;
+        $rate = session('rate');
         $rate = json_decode($rate);
         return $rate;
     }

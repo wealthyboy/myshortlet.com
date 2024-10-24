@@ -147,6 +147,12 @@ trait FormatPrice
 
   public function getExchangeRateAttribute()
   {
+
+    $query = request()->all();
+
+    if (isset($query['currency']) && $query['currency'] === 'USD') { 
+      return 1;
+    }
     $rate = Helper::rate();
     if ($rate) {
       return $rate->rate;
