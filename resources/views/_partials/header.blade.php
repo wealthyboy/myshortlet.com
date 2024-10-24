@@ -15,6 +15,8 @@
             @auth
             <a href="/account" class="d-none d-lg-block text-white bold-2 mr-4" itemprop="url">Account</a>
             @endauth
+            @if ( auth()->check() && auth()->user()->isAdmin() )
+
             @if(isset($show_book) && !$show_book)
             <div id="currencyDropdown" class="dropdown">
                 <button class="btn bold-2 btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
@@ -26,6 +28,8 @@
                 </div>
             </div>
             @endif
+            @endif
+
             @if(isset($show_book) && $show_book)
             <a href="/apartments" class="align-self-center mr-3 d-none d-lg-block font-weight-bold btn-primary bold-3 btn text-white" itemprop="url">Book Now</a>
             @endif
