@@ -162,11 +162,7 @@ trait FormatPrice
 
   public function ConvertCurrencyRate($price)
   {
-    $query = request()->all();
-
-    if (isset($query['currency']) && $query['currency'] === 'USD') { 
-      return round(($price * 1), 0);
-    }
+    
 
     $rate = Helper::rate();
     if ($rate) {

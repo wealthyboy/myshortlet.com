@@ -65,14 +65,14 @@ class CurrencyByIp
         if (optional($settings)->allow_multi_currency) {
 
 
-            if (isset($query['currency']) && $query['currency'] === 'USD') {
+            if (isset($query['currency']) && strtok($query['currency'], '?') === 'USD') {
                 $rate = ['rate' => 1, 'country' => $usa->country, 'code' => $usa->iso_code3, 'symbol' => $usa->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('switch', 'USD');
                 return $next($request);
             }
 
-            if (isset($query['currency']) && $query['currency'] === 'NGN') {
+            if (isset($query['currency']) && strtok($query['currency'], '?')  === 'NGN') {
                 $rate = ['rate' => 1500, 'country' => 'Nigeria', 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('userLocation',  json_encode($position));
