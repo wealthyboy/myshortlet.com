@@ -24,6 +24,8 @@ class Apartment extends Model
         'discounted_price',
         'currency',
         'converted_price',
+        'exchange_rate',
+        'exchange_price',
         'percentage_off',
         'image_m',
         'image_g',

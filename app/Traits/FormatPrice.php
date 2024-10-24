@@ -134,6 +134,26 @@ trait FormatPrice
     return $this->ConvertCurrencyRate($this->price);
   }
 
+
+  public function getExchangePriceAttribute()
+  {
+    // if ($this instanceof Property) {
+    //   return $this->ConvertCurrencyRate(optional(optional($this->apartments)->first())->price);
+    // }
+
+    return $this->price;
+  }
+
+
+  public function getExchangeRateAttribute()
+  {
+    $rate = Helper::rate();
+    if ($rate) {
+      $rate->rate;
+    }
+    return 1;
+  }
+
   public function ConvertCurrencyRate($price)
   {
     $query = request()->all();
