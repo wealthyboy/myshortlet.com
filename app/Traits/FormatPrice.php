@@ -149,7 +149,7 @@ trait FormatPrice
   {
     $rate = Helper::rate();
     if ($rate) {
-      $rate->rate;
+      return $rate->rate;
     }
     return 1;
   }
