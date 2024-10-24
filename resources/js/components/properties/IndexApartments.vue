@@ -23,7 +23,7 @@
                     <div class="col-md-1 w-100 check-availablility  ">
                         <button type="button" @click.prevent="checkAvailabity()"
                             class="btn btn-primary btn-block  w-auto w-xs-100 m-auto bold-2 check-availablility-button rounded">
-                            Check availablity
+                            Check availablitydd
                         </button>
                     </div>
                 </div>
@@ -732,6 +732,15 @@ export default {
                 expiry: now + 3600000
 
             };
+
+            // Create a URLSearchParams object from the new data (myObject)
+            const queryParams = new URLSearchParams(myObject).toString();
+
+            // Clear any existing query parameters and construct a new URL
+            const newUrl = `${window.location.origin}${window.location.pathname}?${queryParams}`;
+
+            // Update the URL without reloading the page
+            window.history.pushState({ path: newUrl }, '', newUrl);
 
             const storageKey = 'searchParams';
 

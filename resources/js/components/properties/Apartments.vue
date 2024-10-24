@@ -122,7 +122,7 @@
             </div>
             <a target="_blank" @click.prevent="reserve(room)"
               class="btn btn-round  btn-blue   py-2  bold-2   align-self-end font-weight-bold-2">
-              Reserve
+              Book now
             </a>
           </div>
         </div>

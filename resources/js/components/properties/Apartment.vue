@@ -149,7 +149,7 @@
                         <a target="_blank" v-if="showReserve" @click.prevent="reserve(room)"
                             class="btn btn-round btn-primary py-2 bold-2 text-white align-self-end font-weight-bold-2"
                             itemprop="url">
-                            Reserve
+                            Book now
                         </a>
                     </div>
                 </div>
