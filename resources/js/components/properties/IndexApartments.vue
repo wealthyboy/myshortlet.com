@@ -23,7 +23,7 @@
                     <div class="col-md-1 w-100 check-availablility  ">
                         <button type="button" @click.prevent="checkAvailabity()"
                             class="btn btn-primary btn-block  w-auto w-xs-100 m-auto bold-2 check-availablility-button rounded">
-                            Check availablitydd
+                            Check availablity
                         </button>
                     </div>
                 </div>

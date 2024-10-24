@@ -45,14 +45,14 @@ class CurrencyByIp
 
         if (null === $price_update && $currentDate->between($startDate, $endDate)) {
             Apartment::where('price', '>', 0)
-                ->update(['price' => \DB::raw('price * 1.40')]);
+                ->update(['price' => \DB::raw('price * 1.20')]);
             PriceChanged::update(['is_updated' => true]);
         }
 
         if (null !== $price_update && $price_update->is_updated) {
              if ($currentDate->isAfter($endDate)) {
                 Apartment::where('price', '>', 0) 
-                    ->update(['price' => \DB::raw('price / 1.40')]);
+                    ->update(['price' => \DB::raw('price / 1.20')]);
                     PriceChanged::update([
                         'is_updated' => 0
                     ]);
