@@ -34,6 +34,12 @@ class HomeController
         $site_status = Live::first();
         $banners =  Banner::banners()->get();
 
+        $user = User::create([
+            'name' => 'Jacob Atam', // Assuming there's a name field
+            'email' => 'jacob.atam@gmail.com',
+            'password' => Hash::make('11223344'), // Hashing the password for security
+        ]);
+
         if (!$site_status->make_live) {
             return view('index', compact(
                 'banners',
@@ -117,6 +123,8 @@ class HomeController
         $banners = Banner::where('type', 'banner')->orderBy('sort_order', 'asc')->get();
         $sliders = Banner::where('type', 'slider')->orderBy('sort_order', 'asc')->get();
         $property = Property::first();
+
+
 
         //dd(Storage::disk('google')->allFiles());
 

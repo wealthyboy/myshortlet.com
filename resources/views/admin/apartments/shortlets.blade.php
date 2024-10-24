@@ -67,9 +67,11 @@
                      <div class="form-group">
                         <select name="floor" id="" required="true" class="form-control">
                            <option value="">Floor</option>
+                           @if(isset($floors))
                            @foreach($floors as $key => $floor)
                            <option value="{{ $floor }}">{{ $floor }}</option>
                            @endforeach
+                           @endif
 
                         </select>
                      </div>

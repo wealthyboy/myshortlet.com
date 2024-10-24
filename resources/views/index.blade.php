@@ -132,7 +132,7 @@
       </div>
       <div class="row p-1">
          <div id="load-products" class="col-md-12" itemscope itemtype="https://schema.org/ItemList">
-            <apartments-index :isGallery="0" :filter="0" :property="{{$property}}" :apartments="{{ $apartments }}" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" />
+         <apartments-index :isGallery="0" :filter="0" :property="{{$property}}" :apartments="{{ $apartments }}" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" />
          </div>
       </div>
    </div>

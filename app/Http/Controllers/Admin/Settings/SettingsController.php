@@ -36,6 +36,8 @@ class SettingsController extends Controller
 		return view('admin.settings.create',compact('currencies'));
 	}
 
+
+	
 	
 	
 	public function edit($id){
