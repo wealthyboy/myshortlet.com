@@ -22,7 +22,7 @@
                     <div id="people-number" class="col-md-4 cursor-pointer px-sm-0 px-md-1 mb-sm-2 mb-md-0">
                         <guests />
                     </div>
-                    <div class="col-md-1 w-100 check-availablility  ">
+                    <div class="col-md-1 w-100 check-availablility">
                         <button type="button" @click.prevent="checkAvailabity()"
                             class="btn btn-primary btn-block  w-auto w-xs-100 m-auto bold-2 check-availablility-button rounded">
                             Check availablity

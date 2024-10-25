@@ -85,7 +85,7 @@ class BookingController extends Controller
 			'isDecemberPresent'=> $isDecemberPresent, 
 			'daysDecemberTotal' => $daysDecemberTotal,
 			'decemberTotal' => $decemberTotal,
-			'decemberPrice' => $apt->december_prices,
+			'decemberPrice' => $apt->converted_december_price,
 			'currency' => session('switch'), 
 			'loggedIn' => auth()->check(), 
 			'user' => auth()->user(), 
