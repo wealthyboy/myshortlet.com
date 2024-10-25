@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\SystemSetting;
 use App\Models\Category;
 use App\Models\Location;
+use Illuminate\Support\Facades\Http;
 
 
 
@@ -168,6 +169,30 @@ class Helper
         }
 
         return optional($collections)->contains('id', $id) ? 'checked' : '';
+    }
+
+
+    public static function getCurrencyExchangeRate() {
+        $apiKey = 'cur_live_vhjIPU5LPxA5neoR1kRFgUd9HrGDwRzBWJtxHJc2';
+        $url = "https://api.currencyapi.com/v3/latest";
+    
+        // Make the GET request with the required parameters
+        $response = Http::get($url, [
+            'apikey' => env('EXCHANGE_RATE_API_KEY'),
+            'currencies' => 'NGN',
+        ]);
+    
+        // Check if the request was successful
+        if ($response->successful()) {
+            $data = $response->json();
+            // Extract the exchange rate for NGN or handle data as needed
+            $exchangeRate = $data['data']['NGN']['value'] ?? null;
+    
+            return round($exchangeRate - 150,0);
+        }
+    
+        // Handle errors if the request was unsuccessful
+        return 'Unable to retrieve currency data.';
     }
 
 
