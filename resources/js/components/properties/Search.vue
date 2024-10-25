@@ -80,6 +80,34 @@ export default {
         dateSelected(value) {
             //this.form.check_in_checkout = value;
         },
+        isValidDecemberBooking(startDate, endDate) {
+            const start = new window.Date(startDate);
+            const end = new window.Date(endDate);
+
+            if (end < start) {
+                return false; // Invalid date range
+            }
+
+            const startMonth = start.getMonth();
+            const endMonth = end.getMonth();
+            
+            const decemberStart = new window.Date(start.getFullYear(), 11, 1); // December 1st
+            const decemberEnd = new window.Date(start.getFullYear(), 11, 31); // December 31st
+            
+            if (end < decemberStart || start > decemberEnd) {
+                return true; // No days in December, so no 10-day requirement
+            }
+
+            // Calculate the actual December start and end within the range
+            const rangeStartInDecember = start < decemberStart ? decemberStart : start;
+            const rangeEndInDecember = end > decemberEnd ? decemberEnd : end;
+
+            // Calculate the number of days in December within the range
+            const daysInDecember = Math.ceil((rangeEndInDecember - rangeStartInDecember) / (1000 * 60 * 60 * 24)) + 1;
+
+            // Ensure at least 10 days in December if any part of the range is in December
+            return daysInDecember >= 10;
+        },
         checkIn(value) {
             this.form.checkin = value;
         },
@@ -133,7 +161,6 @@ export default {
         search: function () {
 
             this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
-
             this.form.persons = document.querySelector("#persons").value;
             this.form.rooms = document.querySelector("#rooms").value;
 
@@ -161,6 +188,11 @@ export default {
             if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
                 alert("Set your check-in and check-out dates correctly")
                 return;
+            } 
+
+            if (!this.isValidDecemberBooking(this.form.checkin, this.form.checkout)) {
+               alert("Booking within december must be at least 10 days!!")
+               return;
             }
 
             var now = new Date().getTime(); // Current timestamp

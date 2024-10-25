@@ -3,8 +3,10 @@
         <form id="multiple-form" :action="'/book/' + property.slug" method="GET" class="form-group">
             <input type="hidden" name="_token" :value="$root.token" />
             <input type="hidden" name="property_id" :value="property.id" />
+            <input type="hidden" name="apartment_id" :value="apartment_id" />
+
             <div v-if="filter">
-                <h3 class="bold-2">Choose your apartment</h3>
+                <h3 class="bold-2">Choose your apartment {{property.slug}}</h3>
                 <div class="form-row">
                     <div class="form-group   form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
                         <label class="pl-2 " for="flatpickr-input-f">Check-in</label>
@@ -344,6 +346,7 @@ export default {
             aps: 0,
             apTotal: 0,
             attrPrice: 0,
+            apartment_id: null,
             guests: 0,
             amount: 0,
             apQ: [],
@@ -381,12 +384,10 @@ export default {
         };
     },
     created() {
-        // this.stays = this.nights;
+        //this.stays = this.nights;
         //this.roomsAv = this.apartments;
     },
     mounted() {
-        // Get all elements with class 'p-loader'
-
         let lo = document.getElementById("full-bg")
 
         if (lo) {
@@ -434,7 +435,6 @@ export default {
         if (parentElement) {
             // Get all child elements with the class d-none
             const hiddenDivs = parentElement.querySelectorAll('.d-none');
-
             // Remove each hidden div
             hiddenDivs.forEach(div => {
                 div.classList.remove('d-none');
@@ -442,9 +442,7 @@ export default {
         }
 
 
-
         if (!this.filter) {
-            //  this.type = 'col-md-3'
             this.classType = ['col-12 col-lg-3 col-md-6']
             this.roomsAv = this.apartments;
         } else {
@@ -644,9 +642,36 @@ export default {
             // Check if the Date object represents a valid date
             return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
         },
+        isValidDecemberBooking(startDate, endDate) {
+            const start = new window.Date(startDate);
+            const end = new window.Date(endDate);
+
+            if (end < start) {
+                return false; // Invalid date range
+            }
+
+            const startMonth = start.getMonth();
+            const endMonth = end.getMonth();
+            
+            const decemberStart = new window.Date(start.getFullYear(), 11, 1); // December 1st
+            const decemberEnd = new window.Date(start.getFullYear(), 11, 31); // December 31st
+            
+            if (end < decemberStart || start > decemberEnd) {
+                return true; // No days in December, so no 10-day requirement
+            }
+
+            // Calculate the actual December start and end within the range
+            const rangeStartInDecember = start < decemberStart ? decemberStart : start;
+            const rangeEndInDecember = end > decemberEnd ? decemberEnd : end;
+
+            // Calculate the number of days in December within the range
+            const daysInDecember = Math.ceil((rangeEndInDecember - rangeStartInDecember) / (1000 * 60 * 60 * 24)) + 1;
+
+            // Ensure at least 10 days in December if any part of the range is in December
+            return daysInDecember >= 10;
+        },
         getApartments() {
             this.propertyLoading = true
-
             const urlParams = new URLSearchParams(window.location.search);
             const queryString = urlParams.toString();
 
@@ -711,7 +736,6 @@ export default {
         },
         isCheckinGreaterThanCheckout(checkinDate, checkoutDate) {
 
-            console.log(checkinDate, checkoutDate)
             checkinDate = new window.Date(checkinDate);
             checkoutDate = new window.Date(checkoutDate);
             return checkinDate > checkoutDate;
@@ -733,6 +757,15 @@ export default {
 
             };
 
+            // Example usage:
+            const startDate = '2024-12-05';
+            const endDate = '2024-12-15';
+
+            if (!this.isValidDecemberBooking(this.form.checkin, this.form.checkout)) {
+               alert("Booking within december must be at least 10 days!!")
+               return;
+            }
+
             // Create a URLSearchParams object from the new data (myObject)
             const queryParams = new URLSearchParams(myObject).toString();
 
@@ -747,7 +780,6 @@ export default {
             const jsonString = JSON.stringify(myObject);
 
             const currentValue = localStorage.getItem(storageKey);
-
 
             // Check if the item exists in localStorage
             if (currentValue !== null) {
@@ -1012,9 +1044,9 @@ export default {
                 check_in_checkout: this.form.check_in_checkout,
             };
 
+            this.apartment_id = ap.id
+
             this.propertyIsLoading = true;
-
-
 
             axios
                 .post("/book/store", form)

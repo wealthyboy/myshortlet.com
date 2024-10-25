@@ -135,6 +135,16 @@ trait FormatPrice
   }
 
 
+  public function getConvertedDecemberPriceAttribute()
+  {
+    // if ($this instanceof Property) {
+    //   return $this->ConvertCurrencyRate(optional(optional($this->apartments)->first())->price);
+    // }
+
+    return $this->ConvertCurrencyRate($this->december_prices);
+  }
+
+
   public function getExchangePriceAttribute()
   {
     // if ($this instanceof Property) {
@@ -148,7 +158,6 @@ trait FormatPrice
   public function getExchangeRateAttribute()
   {
 
-   
     $rate = Helper::rate();
     if ($rate) {
       return $rate->rate;

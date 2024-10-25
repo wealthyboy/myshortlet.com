@@ -36,7 +36,8 @@ class Apartment extends Model
         'google_drive_image_links',
         'google_drive_image_link',
         'google_drive_video_link',
-        'hightlights'
+        'hightlights',
+        'converted_december_price'
 
     ];
 
@@ -59,6 +60,7 @@ class Apartment extends Model
         'image_link',
         'video_link',
         'allow',
+        'december_prices'
     ];
 
 

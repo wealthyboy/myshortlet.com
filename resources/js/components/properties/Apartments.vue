@@ -91,11 +91,6 @@
         </div>
       </div>
 
-
-
-
-
-
       <div>
         <div class="d-flex d-flex justify-content-between">
           <div class="price-box ">
@@ -129,7 +124,7 @@
       </div>
     </div>
 
-    <div v-if="stays && stays[1] != null" class="col-md-12 position-relative bg-white">
+    <div v-if="stays && stays[1] != null" class="col-md-12 position-relative bg-white"> 
       <div class="form-group ">
         <template v-if="room.reservation_qty && room.quantity == room.reservation_qty">
           <div class="text-muted ">

@@ -32,39 +32,103 @@ class BookingController extends Controller
 	 */
 	public function book(Request $request, Property $property)
 	{
+		
 		if (!$request->check_in_checkout) {
 			return back();
 		}
 
 		$referer = request()->headers->get('referer');
+
 		$bookings = BookingDetail::all_items_in_cart($property->id);
 		$user = auth()->user();
+
 		if (!$bookings->count()) {
 			return redirect()->to('/');
 		}
 
-
 		$ids = $bookings->pluck('id')->toArray();
 		$ids = $ids;
 		$booking = $bookings[0];
+		$apt = Apartment::find($request->apartment_id);
+
 
 		if (!$booking) {
 			return redirect()->to('/');
 		}
+
+		$days = $booking->checkin->diffInDays($booking->checkout);
+
+
+		$daysInDecember = $this->getDaysInDecember($booking->checkin, $booking->checkout);
+		$isDecemberPresent = $daysInDecember > 0 ? true: false;
+		$daysDecemberTotal = $daysInDecember > 0 ? $daysInDecember * $apt->converted_december_price : 0;
+		$otherDays = $daysInDecember > 0 ? $days - $daysInDecember  : 0;
+		$otherDaysTotal = $daysInDecember > 0 ? $otherDays * $apt->converted_price  : 0;
+		$decemberTotal = $daysInDecember > 0 ? $otherDaysTotal + $daysDecemberTotal  : 0;
+
+
+
 		$nights = [];
 		$phone_codes = Helper::phoneCodes();
-		$days = $booking->checkin->diffInDays($booking->checkout);
 		$stays = $days == 1 ? "night" : " nights";
 		$nights[] = $days;
-		$nights[] = $stays;
+		$nights[] = $stays;    
 		$property->load('free_services', 'facilities', 'extra_services');
 		$total = BookingDetail::sum_items_in_cart($property->id);
 		$total = $total * $days;
 		$from = $booking->checkin->format('l') . ' ' . $booking->checkin->format('d') . ' ' . $booking->checkin->format('F') . ' ' . $booking->checkin->isoFormat('Y');
 		$to = $booking->checkout->format('l') . ' ' . $booking->checkout->format('d') . ' ' . $booking->checkout->format('F') . ' ' . $booking->checkout->isoFormat('Y');
-		$booking_details = ['currency' => session('switch'), 'loggedIn' => auth()->check(), 'user' => auth()->user(), 'days' => $days, 'from' => $from, 'to' => $to, 'nights' => $nights, 'total' => $total, 'booking_ids' => $ids, 'is_agent' => optional($user)->isAgent()];
+		$booking_details = [
+			'otherDays' => $otherDays,
+			'otherDaysTotal' => $otherDaysTotal,
+			'daysInDecember' => $daysInDecember,
+			'isDecemberPresent'=> $isDecemberPresent, 
+			'daysDecemberTotal' => $daysDecemberTotal,
+			'decemberTotal' => $decemberTotal,
+			'decemberPrice' => $apt->december_prices,
+			'currency' => session('switch'), 
+			'loggedIn' => auth()->check(), 
+			'user' => auth()->user(), 
+			'days' => $days, 
+			'from' => $from, 
+			'to' => $to, 
+			'nights' => $nights,
+			'total' => $total, 
+			'booking_ids' => $ids,
+			'is_agent' => optional($user)->isAgent()
+		];
 		$qs = request()->all();
 		return view('book.index', compact('qs', 'referer', 'phone_codes', 'property', 'bookings', 'booking_details'));
+	}
+
+
+	public function getDaysInDecember($startDate, $endDate) {
+		// Convert input strings to DateTime objects
+		$start = new \DateTime($startDate);
+		$end = new \DateTime($endDate);
+	
+		// Ensure the end date is after the start date
+		if ($end < $start) {
+			return 0; // Invalid date range
+		}
+	
+		// Define the start and end of December
+		$decemberStart = new \DateTime($start->format('Y') . '-12-01');
+		$decemberEnd = new \DateTime($start->format('Y') . '-12-31');
+	
+		// Check if the date range overlaps with December
+		if ($end < $decemberStart || $start > $decemberEnd) {
+			return 0; // No days in December
+		}
+	
+		// Calculate the actual December start and end within the range
+		$rangeStartInDecember = $start < $decemberStart ? $decemberStart : $start;
+		$rangeEndInDecember = $end > $decemberEnd ? $decemberEnd : $end;
+	
+		// Calculate the number of days in December within the range
+		$daysInDecember = $rangeEndInDecember->diff($rangeStartInDecember)->days + 1;
+	
+		return $daysInDecember;
 	}
 
 

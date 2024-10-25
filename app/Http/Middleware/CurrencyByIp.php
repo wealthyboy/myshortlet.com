@@ -43,6 +43,9 @@ class CurrencyByIp
         $endDate = Carbon::createFromDate(null, 12, 31); // December 31
         $price_update = PriceChanged::first();
 
+        Apartment::where('price', '>', 0)
+                ->update(['december_prices' => \DB::raw('price * 1.20')]);
+
         if (null === $price_update && $currentDate->between($startDate, $endDate)) {
             Apartment::where('price', '>', 0)
                 ->update(['price' => \DB::raw('price * 1.20')]);

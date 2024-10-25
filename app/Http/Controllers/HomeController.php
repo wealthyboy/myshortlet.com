@@ -123,23 +123,14 @@ class HomeController
         $banners = Banner::where('type', 'banner')->orderBy('sort_order', 'asc')->get();
         $sliders = Banner::where('type', 'slider')->orderBy('sort_order', 'asc')->get();
         $property = Property::first();
-
-
-
-        //dd(Storage::disk('google')->allFiles());
-
-
-
-        $date  = explode("to", $request->check_in_checkout);
+        $date = explode("to", $request->check_in_checkout);
         $nights = '1 night';
         $sub_total = null;
         $ids = [];
         $areas = [];
         $restaurants = [];
         $saved =  null;
-
         $images = $this->images();
-
         $generator = new self;
 
         $safety_practices = [];
@@ -166,9 +157,6 @@ class HomeController
         $date = $request->check_in_checkout;
         $days = 0;
         $filter = false;
-
-
-
         $saved =  auth()->check() ? auth()->user()->favorites->pluck('property_id')->toArray() : [];
         if (!optional($site_status)->make_live) {
             return view(
@@ -176,27 +164,27 @@ class HomeController
                 [
                     'apartments' => $apartments,
                     'sliders' => $sliders,
-                    'banners'  => $banners,
-                    'states'  => $states,
-                    'posts'  => $posts,
-                    'featureds'  => $featureds,
-                    'cities'  => $cities,
-                    'saved'  => $saved,
-                    'property_type'  => $property_type,
-                    'date'  => $date,
-                    'saved'  => $saved,
-                    'sub_total'  => $sub_total,
-                    'property'  => $property,
+                    'banners' => $banners,
+                    'states' => $states,
+                    'posts' => $posts,
+                    'featureds' => $featureds,
+                    'cities' => $cities,
+                    'saved' => $saved,
+                    'property_type' => $property_type,
+                    'date' => $date,
+                    'saved' => $saved,
+                    'sub_total' => $sub_total,
+                    'property' => $property,
                     'days'  => $days,
-                    'nights'  => $nights,
-                    'areas'  => $areas,
-                    'safety_practices'  => $safety_practices,
-                    'amenities'  => $amenities,
-                    'bedrooms'  => $bedrooms,
+                    'nights' => $nights,
+                    'areas' => $areas,
+                    'safety_practices' => $safety_practices,
+                    'amenities' => $amenities,
+                    'bedrooms' => $bedrooms,
                     'restaurants'  => $restaurants,
                     'images'  => $images,
-                    'generator'  => $generator,
-                    'filter'  => $filter,
+                    'generator' => $generator,
+                    'filter' => $filter,
                 ]
             );
         } else {
