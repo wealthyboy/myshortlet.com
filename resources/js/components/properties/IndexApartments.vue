@@ -6,7 +6,7 @@
             <input type="hidden" name="apartment_id" :value="apartment_id" />
 
             <div v-if="filter">
-                <h3 class="bold-2">Choose your apartment {{property.slug}}</h3>
+                <h3 class="bold-2">Choose your apartment </h3>
                 <div class="form-row">
                     <div class="form-group   form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
                         <label class="pl-2 " for="flatpickr-input-f">Check-in</label>
