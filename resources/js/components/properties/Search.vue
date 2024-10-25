@@ -190,6 +190,11 @@ export default {
                 return;
             } 
 
+            if (this.form.checkin === this.form.checkout) {
+                alert("Set your check-in and check-out dates correctly. They cannot be the same")
+                return;
+            }
+
             if (!this.isValidDecemberBooking(this.form.checkin, this.form.checkout)) {
                alert("Booking within december must be at least 10 days!!")
                return;

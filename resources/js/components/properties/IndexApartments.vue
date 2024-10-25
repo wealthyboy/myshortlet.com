@@ -825,6 +825,11 @@ export default {
                 return;
             }
 
+            if (this.form.checkin === this.form.checkout) {
+                alert("Set your check-in and check-out dates correctly. They cannot be the same")
+                return;
+            }
+
             // Now 'retrievedObject' contains the object retrieved from localStorage
             this.propertyIsLoading = true
 

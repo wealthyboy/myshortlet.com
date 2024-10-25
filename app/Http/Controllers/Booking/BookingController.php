@@ -58,11 +58,13 @@ class BookingController extends Controller
 
 		$days = $booking->checkin->diffInDays($booking->checkout);
 
+		//dd($request->all());
+
 
 		$daysInDecember = $this->getDaysInDecember($booking->checkin, $booking->checkout);
 		$isDecemberPresent = $daysInDecember > 0 ? true: false;
 		$daysDecemberTotal = $daysInDecember > 0 ? $daysInDecember * $apt->converted_december_price : 0;
-		$otherDays = $daysInDecember > 0 ? $days - $daysInDecember  : 0;
+		$otherDays = $daysInDecember > 0 ? $days - $daysInDecember  : 	$days ;
 		$otherDaysTotal = $daysInDecember > 0 ? $otherDays * $apt->converted_price  : 0;
 		$decemberTotal = $daysInDecember > 0 ? $otherDaysTotal + $daysDecemberTotal  : 0;
 
