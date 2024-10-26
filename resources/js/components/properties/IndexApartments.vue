@@ -29,7 +29,11 @@
                         </button>
                     </div>
                 </div>
+
+            
             </div>
+
+         
 
 
             <div id="full-" v-if="propertyLoading" class="full-bg position-relative">
@@ -49,6 +53,10 @@
 
                     </div>
                 </div>
+            </div>
+
+            <div v-if="form.checkin" class="alert alert-success main-background mt-4" role="alert">
+                 <strong></strong> Results for your selected date below <span class="fw-bold"></span>.
             </div>
 
 
@@ -679,6 +687,17 @@ export default {
             axios
                 .get(window.location + '?t=' + Math.random())
                 .then((response) => {
+                let params = response.data.params
+                    //this.checkin(response.data.params.checkin)
+                    //this.checkOut(response.data.params.checkout)
+
+                   this.form.checkin = params.checkin
+                   this.form.checkout = params.checkout
+                   this.form.rooms = params.rooms
+                   this.form.persons = params.checkout
+
+            // Now 'retrievedObject' contains the object retrieved from localStorage
+
                     this.roomsAv = response.data.data;
                     this.stays = response.data.nights;
                     this.propertyLoading = false;

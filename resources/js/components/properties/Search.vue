@@ -22,8 +22,9 @@
 
             <div class="col-lg-1  col-md-3 col-12 check-availablility  ">
                 <button type=" button" @click.prevent="search()"
+                    :disabled="isDisabled"
                     class="btn btn-primary w-auto  btn-block m-auto  w-xs-100 rounded  bold check-availablility-button">
-                    Check availablity
+                    {{ btnText }}
                 </button>
             </div>
         </div>
@@ -41,6 +42,8 @@ export default {
     data() {
         return {
             guests: 0,
+            btnText: 'Check availablity',
+            isDisabled: false,
             form: {
                 room_quantity: [],
                 selectedRooms: [],
@@ -50,7 +53,6 @@ export default {
                 check_in_checkout: null,
                 checkin: null,
                 checkout: null
-
             },
         };
     },
@@ -163,6 +165,8 @@ export default {
             this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
             this.form.persons = document.querySelector("#persons").value;
             this.form.rooms = document.querySelector("#rooms").value;
+            this.btnText = 'Searching...'
+            this.isDisabled = true; // Disable button on click
 
             if (
                 !this.form.checkin && !this.form.checkout

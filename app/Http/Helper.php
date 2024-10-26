@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\SystemSetting;
 use App\Models\Category;
-use App\Models\Location;
+use App\Models\CurrencyRate;
 use Illuminate\Support\Facades\Http;
 
 
@@ -173,6 +173,8 @@ class Helper
 
 
     public static function getCurrencyExchangeRate() {
+
+        $currency_rate = CurrencyRate::first();
         $apiKey = 'cur_live_vhjIPU5LPxA5neoR1kRFgUd9HrGDwRzBWJtxHJc2';
         $url = "https://api.currencyapi.com/v3/latest";
     
@@ -186,7 +188,7 @@ class Helper
         if ($response->successful()) {
             $data = $response->json();
             // Extract the exchange rate for NGN or handle data as needed
-            $exchangeRate = $data['data']['NGN']['value'] ?? null;
+            $exchangeRate = $data['data']['NGN']['value'] ?? optional($currency_rate)->rate;
     
             return round($exchangeRate - 150,0);
         }

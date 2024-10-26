@@ -95,11 +95,9 @@ class ApartmentsController extends Controller
 
 
         if ($request->ajax()) {
-                  
-
             return PropertyLists::collection(
                 $apartments
-            )->additional(['attributes' => $attributes, 'search' => false]);
+            )->additional(['attributes' => $attributes, 'params' => $request->all(), 'search' => false]);
         }
         return  view('apartments.apartments', compact(
             'page_title',

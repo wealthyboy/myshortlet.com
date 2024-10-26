@@ -45,6 +45,7 @@ class CurrencyByIp
 
 
         $exchaange_rate = Helper::getCurrencyExchangeRate();
+        
         Apartment::where('price', '>', 0)
                 ->update(['december_prices' => \DB::raw('price * 1.20')]);
 
