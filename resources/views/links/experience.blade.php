@@ -1,55 +1,6 @@
 @extends('layouts.auth')
 @section('content')
-<div class="container-fluid mb-3">
-   <div class="row p-1">
-      <div class="col-md-12">
-         <section class="  ">
-            <div class="row  bg-grey pb-5 pt-5 position-relative">
-               <div id="leftBox" class="col-md-7 opacity-0 rounded  card-background-image">
-                  <div id="gallery-banner" class="carousel slide" data-ride="carousel">
-                     <ol class="carousel-indicators">
-                        @foreach($images['gallery'] as $key => $image)
-                        <li data-target="#gallery-banner" data-slide-to="{{ $key }}" class="{{ $key === 0 ? 'active' : ''}}"></li>
-                        @endforeach
-                     </ol>
-                     <div class="carousel-inner">
 
-                        @foreach($images['gallery'] as $key => $image)
-                        <div class="carousel-item {{ $key === 0 ? 'active' : ''}} ">
-                           <img src="{{ $generator::generateThumbnailUrl($image) }}" class="d-block w-100" alt="...">
-                        </div>
-                        @endforeach
-
-                     </div>
-
-                     <button class="carousel-control-prev" data-target="#gallery-banner" data-slide="prev"><svg width="51" height="51" viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg">
-                           <path d="M19.9 40L1.3 20 19.9 0" class="carousel-control-prev-icon" aria-hidden="true" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg><span class="sr-only">Previous</span></button>
-
-                     <button class="carousel-control-next" data-target="#gallery-banner" data-slide="next"><svg width="19" height="40" viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg">
-                           <path d="M.1 0l18.6 20L.1 40" stroke="#FFF" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg><span class="sr-only">Next</span></button>
-
-                  </div>
-               </div>
-               <div id="rightBox" style="z-index: 2;" class="col-md-5  opacity-0 text-center d-flex justify-content-center align-items-center">
-                  <div class="about-panel  bg-right-panel bg-panel-white  bg-panel p-sm-3 p-md-5">
-                     <h2 class="mb-4">Seamless Indoor-Outdoor Harmony</h2>
-                     <div class="lead text-secondary"> Discover Tranquility in our Apartments</div>
-                     <p class="mt-4  text-left text-black light-bold">
-                        Step into a world where the boundaries between indoor and outdoor living dissolve. Expansive windows frame breathtaking vistas, while private balconies and terraces invite you to savor the beauty of nature. Our commitment to harmonious design ensures that every residence is a sanctuary in sync with the surrounding environment.
-                     <div class="buttons">
-                        <a href="/gallery" class="btn btn-primary rounded bold-2">
-                           View All
-                        </a>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </section>
-      </div>
-   </div>
-</div>
 
 
 
@@ -154,9 +105,13 @@
                            </span> <span class="list-content">
                               Serves: Breakfast, Brunch, Lunch, Dinner, Dessert</span> </li>
                         <li> <span class="">
-                           </span> <span class="list-content">Phone: +234 810 688 7920</span> <a class="list-link" href="tel:+234 810 688 7920"></a> </li>
+                           </span> <span class="list-content">Phone: +234 810 688 7920</span> 
+                           <a class=" bold-2" target="_blank" href="https://wa.me/+2347018971322" bis_skin_checked="1">
+         Need help? Chat with us
+         <i class="fab fa-whatsapp fa-2x float-right mr-2"></i></a>
+                           <a class="list-link" href="tel:+234 810 688 7920"></a> </li>
                         <li> <span class="">
-                           </span> <span class="list-content">Hours: 8:00 am -10:00 pm</span> </li>
+                           </span> <span class="list-content">Hours: 24hrs</span> </li>
                      </ul>
                   </div>
                </div>
