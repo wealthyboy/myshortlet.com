@@ -221,7 +221,7 @@ class Helper
                 return round($ngnRate - 135, 0);
 
             } else {
-                return optional($currency_rate)->rate;;
+                return round(optional(($currency_rate)->rate-150),0);
             }
         } catch (\Exception $e) {
             \Log::error("Currency API error: " . $e->getMessage());
