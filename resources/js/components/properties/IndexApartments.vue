@@ -55,8 +55,8 @@
                 </div>
             </div>
 
-            <div v-if="form.checkin" class="alert alert-success main-background mt-4" role="alert">
-                 <strong></strong> Results for your selected date below <span class="fw-bold"></span>.
+            <div v-if="form.checkin" class="bold-2 mt-4" role="alert">
+                 <strong></strong> Results for your selected date below. <span class="fw-bold"></span>.
             </div>
 
 
