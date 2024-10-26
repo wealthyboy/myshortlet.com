@@ -114,7 +114,7 @@
    </div>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid mb-1">
    <div class="row p-1">
       <div class="col-md-12">
 
