@@ -55,7 +55,7 @@
                         <li> <span class="">
                            </span> <span class="list-content">Phone: +234 810 688 7920</span> 
                            <a class=" bold-2" target="_blank" href="https://wa.me/+2348106887920" bis_skin_checked="1">
-         <i class="fab fa-whatsapp fa-2x  ml-2"></i></a>
+         <i class="fab fa-whatsapp fa-2x  ml-2 text-success"></i></a>
                            <a class="list-link" href="tel:+234 810 688 7920"></a> </li>
                         <li> <span class="">
                            </span> <span class="list-content">Hours: 24hrs</span> </li>
@@ -80,7 +80,7 @@
                      <p class="mt-4  text-left text-black light-bold">
                      Enjoy our exclusive in-house spa services designed for ultimate relaxation and rejuvenation. For more information, please contact us!
                      <a class=" bold-2" target="_blank" href="https://wa.me/+2348106887920" bis_skin_checked="1">
-                     <i class="fab fa-whatsapp fa-2x  ml-2"></i></a>
+                     <i class="fab fa-whatsapp fa-2x  ml-2 text-success"></i></a>
                      </p>
                      <div class="buttons">
                         
