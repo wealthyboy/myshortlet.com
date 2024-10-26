@@ -76,7 +76,7 @@
                <div id="lbox3" style="z-index: 2;" class="col-md-5  opacity-0 re-order text-center d-flex justify-content-center align-items-center">
                   <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
                      <h2 class="mb-4 bold-2">Spa</h2>
-                     <div class="lead text-secondary">Coming Soon</div>
+                     <div class="lead text-secondary">Done by professionals</div>
                      <p class="mt-4  text-left text-black light-bold">
                      Enjoy our exclusive in-house spa services designed for ultimate relaxation and rejuvenation. For more information, please contact us!
                      </p>
