@@ -3,58 +3,6 @@
 
 
 
-
-
-
-
-
-
-
-<div class="container-fluid">
-   <div class="row p-1">
-      <div class="col-md-12">
-         <section class=" mb-1">
-            <div class="row bg-grey position-relative  pb-5 pt-5">
-               <div id="lbox3" style="z-index: 2;" class="col-md-5  opacity-0 re-order text-center d-flex justify-content-center align-items-center">
-                  <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
-                     <h2 class="mb-4 bold-2">Spa</h2>
-                     <div class="lead text-secondary">Coming Soon</div>
-                     <p class="mt-4  text-left text-black light-bold">
-                        Our spa will offer a sanctuary of serenity amidst the hustle and bustle of everyday life.
-                     </p>
-                     <div class="buttons">
-                     </div>
-                     </p>
-                  </div>
-               </div>
-
-               <div id="rbox3" class="col-md-7 opacity-0">
-                  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                     <!-- <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                     </ol> -->
-                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                           <img src="/images/banners/spa.jpeg" class="d-block w-100" alt="...">
-                        </div>
-
-                     </div>
-
-                  </div>
-
-
-               </div>
-
-            </div>
-         </section>
-      </div>
-   </div>
-</div>
-
-
-
 <div class="container-fluid">
    <div class="row p-1">
       <div class="col-md-12">
@@ -114,6 +62,51 @@
                      </ul>
                   </div>
                </div>
+            </div>
+         </section>
+      </div>
+   </div>
+</div>
+
+<div class="container-fluid">
+   <div class="row p-1">
+      <div class="col-md-12">
+         <section class=" mb-1">
+            <div class="row bg-grey position-relative  pb-5 pt-5">
+               <div id="lbox3" style="z-index: 2;" class="col-md-5  opacity-0 re-order text-center d-flex justify-content-center align-items-center">
+                  <div class="bg-panel-white bg-left-panel p-sm-3 p-md-5">
+                     <h2 class="mb-4 bold-2">Spa</h2>
+                     <div class="lead text-secondary">Coming Soon</div>
+                     <p class="mt-4  text-left text-black light-bold">
+                     Enjoy our exclusive in-house spa services designed for ultimate relaxation and rejuvenation. For more information, please contact us!
+                     </p>
+                     <div class="buttons">
+                        Contact us <a class=" bold-2" target="_blank" href="https://wa.me/+2348106887920" bis_skin_checked="1">
+                        <i class="fab fa-whatsapp fa-2x  ml-2"></i></a>
+                     </div>
+                     </p>
+                  </div>
+               </div>
+
+               <div id="rbox3" class="col-md-7 opacity-0">
+                  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                     <!-- <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                     </ol> -->
+                     <div class="carousel-inner">
+                        <div class="carousel-item active">
+                           <img src="/images/banners/spa.jpeg" class="d-block w-100" alt="...">
+                        </div>
+
+                     </div>
+
+                  </div>
+
+
+               </div>
+
             </div>
          </section>
       </div>
