@@ -55,7 +55,7 @@
                 </div>
             </div>
 
-            <div v-if="form.checkin" class="bold-2 mt-4" role="alert">
+            <div v-if="form.checkin" class="bold-2 mt-4 alert alert-success" role="alert">
                  <strong></strong> Results for your selected date below. <span class="fw-bold"></span>.
             </div>
 

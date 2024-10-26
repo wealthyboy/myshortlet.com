@@ -95,9 +95,6 @@ Route::group(['middleware' => 'currencyByIp'], function () {
     Route::get('/', 'HomeController@home');
     Route::get('/luxury-service-apartments-in-lagos', 'HomeController@home');
     Route::get('/luxury-service-apartments-in-ikoyi', 'Apartments\ApartmentsController@apartments');
-
-
-
     Route::get('home', 'HomeController@index');
     Route::get('account', 'Account\AccountController@index');
     Route::post('password/reset/link', 'Auth\ForgotPasswordController@sendResetLinkEmail');
