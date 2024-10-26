@@ -8,6 +8,7 @@ use App\Models\SystemSetting;
 use App\Models\Category;
 use App\Models\CurrencyRate;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\RequestException;
 
 
 
@@ -175,26 +176,61 @@ class Helper
     public static function getCurrencyExchangeRate() {
 
         $currency_rate = CurrencyRate::first();
-        $apiKey = 'cur_live_vhjIPU5LPxA5neoR1kRFgUd9HrGDwRzBWJtxHJc2';
-        $url = "https://api.currencyapi.com/v3/latest";
+        // $apiKey = 'cur_live_vhjIPU5LPxA5neoR1kRFgUd9HrGDwRzBWJtxHJc2';
+        // $url = "https://api.currencyapi.com/v3/latest";
+        // try {
+        //     $url = "https://api.currencyapi.com/v3/latest";
+        //     $response = Http::get($url, [
+        //         'apikey' => env('EXCHANGE_RATE_API_KEY'),
+        //         'currencies' => 'NGN',
+        //     ]);
     
+        //     // Check if the request was successful
+        //     if ($response->successful()) {
+        //         $data = $response->json();
+        //         // Extract the exchange rate for NGN or use a fallback value
+        //         $exchangeRate = $data['data']['NGN']['value'] ?? optional($currency_rate)->rate;
+    
+        //         return round($exchangeRate - 150, 0);
+        //     } else {
+        //         // Handle non-200 responses
+        //         return optional($currency_rate)->rate;;
+
+        //     }
+        // } catch (RequestException $e) {
+        //     // Handle specific HTTP request exceptions
+        //     \Log::error("Currency API request error: " . $e->getMessage());
+        //     return optional($currency_rate)->rate;;
+        // } catch (Exception $e) {
+        //     // Handle general exceptions
+        //     \Log::error("An error occurred: " . $e->getMessage());
+        //     return optional($currency_rate)->rate;;
+        // }
         // Make the GET request with the required parameters
-        $response = Http::get($url, [
-            'apikey' => env('EXCHANGE_RATE_API_KEY'),
-            'currencies' => 'NGN',
-        ]);
+
+        try {
+            $url = "https://api.exchangerate-api.com/v4/latest/USD";
     
-        // Check if the request was successful
-        if ($response->successful()) {
-            $data = $response->json();
-            // Extract the exchange rate for NGN or handle data as needed
-            $exchangeRate = $data['data']['NGN']['value'] ?? optional($currency_rate)->rate;
+            $response = Http::get($url);
     
-            return round($exchangeRate - 150,0);
+            if ($response->successful()) {
+                $data = $response->json();
+                // Get the NGN exchange rate
+                $ngnRate = $data['rates']['NGN'] ?? null;
+    
+                return round($ngnRate - 135, 0);
+
+            } else {
+                return optional($currency_rate)->rate;;
+            }
+        } catch (\Exception $e) {
+            \Log::error("Currency API error: " . $e->getMessage());
+            return 'Unable to retrieve NGN exchange rate.';
         }
+        
     
         // Handle errors if the request was unsuccessful
-        return 'Unable to retrieve currency data.';
+        return optional($currency_rate)->rate;;
     }
 
 
