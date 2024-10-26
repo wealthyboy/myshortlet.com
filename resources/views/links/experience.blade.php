@@ -79,10 +79,11 @@
                      <div class="lead text-secondary">Done by professionals</div>
                      <p class="mt-4  text-left text-black light-bold">
                      Enjoy our exclusive in-house spa services designed for ultimate relaxation and rejuvenation. For more information, please contact us!
+                     <a class=" bold-2" target="_blank" href="https://wa.me/+2348106887920" bis_skin_checked="1">
+                     <i class="fab fa-whatsapp fa-2x  ml-2"></i></a>
                      </p>
                      <div class="buttons">
-                        Contact us <a class=" bold-2" target="_blank" href="https://wa.me/+2348106887920" bis_skin_checked="1">
-                        <i class="fab fa-whatsapp fa-2x  ml-2"></i></a>
+                        
                      </div>
                      </p>
                   </div>
