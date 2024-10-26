@@ -133,7 +133,7 @@
                            <img src="https://drive.google.com/thumbnail?id=16XtNpeqCSoiPVZ4KhTRb0rq72tYosN3h&sz=w1000" class="d-block w-100" alt="...">
                         </div> -->
                         <div class="carousel-item active">
-                           <img src="/images/banners/welcom_image.jpg" class="d-block w-100" alt="...">
+                           <img src="/images/banners/dulluso-avm.jpeg" class="d-block w-100" alt="...">
                         </div>
 
                         <!-- <div class="carousel-item">
