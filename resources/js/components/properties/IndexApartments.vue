@@ -55,9 +55,9 @@
                 </div>
             </div>
 
-            <div v-if="form.checkin && roomsAv.length" class="bold-2 mt-4 alert alert-success" role="alert">
+            <!-- <div v-if="form.checkin && roomsAv.length" class="bold-2 mt-4 alert alert-success" role="alert">
                  <strong></strong> Results for your selected date below. <span class="fw-bold"></span>.
-            </div>
+            </div> -->
 
 
             <div :class="{ 'header-filter': propertyIsLoading }" id="" class="name mt-1 rounded p-2">
