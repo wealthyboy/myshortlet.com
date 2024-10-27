@@ -165,35 +165,28 @@ export default {
             this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
             this.form.persons = document.querySelector("#persons").value;
             this.form.rooms = document.querySelector("#rooms").value;
-            this.isDisabled = true; // Disable button on click
 
-            if (
-                !this.form.checkin && !this.form.checkout
-            ) {
+            if ( !this.form.checkin && !this.form.checkout ) {
                 alert("Please select your check-in and check-out dates")
                 return;
             }
 
-            if (
-                !this.isValidDate(this.form.checkin)
-            ) {
+            if ( !this.isValidDate(this.form.checkin) ) {
                 alert("Please select your check-in and check-out dates")
                 return;
             }
 
-            if (
-                !this.isValidDate(this.form.checkout)
-            ) {
+            if ( !this.isValidDate(this.form.checkout) ) {
                 alert("Please select your check-in and check-out dates")
                 return;
             }
 
-            if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
+            if ( this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout) ) {
                 alert("Set your check-in and check-out dates correctly")
                 return;
             } 
 
-            if (this.form.checkin === this.form.checkout) {
+            if ( this.form.checkin === this.form.checkout ) {
                 alert("Set your check-in and check-out dates correctly. They cannot be the same")
                 return;
             }
@@ -204,9 +197,8 @@ export default {
             }
 
             var now = new Date().getTime(); // Current timestamp
-            this.btnText = 'Searching...'
-
-
+            this.btnText = 'Checking...'
+            this.isDisabled = true; // Disable button on click
 
             // Sample object to be saved
             const myObject = {
@@ -232,8 +224,6 @@ export default {
 
             // Convert the JSON string back to an object
             const retrievedObject = JSON.parse(retrievedJsonString);
-
-            // Now 'retrievedObject' contains the object retrieved from localStorage
 
             this.build(myObject);
 
