@@ -165,7 +165,6 @@ export default {
             this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
             this.form.persons = document.querySelector("#persons").value;
             this.form.rooms = document.querySelector("#rooms").value;
-            this.btnText = 'Searching...'
             this.isDisabled = true; // Disable button on click
 
             if (
@@ -205,6 +204,8 @@ export default {
             }
 
             var now = new Date().getTime(); // Current timestamp
+            this.btnText = 'Searching...'
+
 
 
             // Sample object to be saved

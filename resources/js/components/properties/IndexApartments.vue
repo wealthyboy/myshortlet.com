@@ -60,8 +60,6 @@
             </div>
 
 
-
-
             <div :class="{ 'header-filter': propertyIsLoading }" id="" class="name mt-1 rounded p-2">
                 <div class="position-relative">
                     <input type="hidden" name="property_id" value="217" />
