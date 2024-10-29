@@ -3,6 +3,8 @@
         <form id="multiple-form" :action="'/book/' + property.slug" method="GET" class="form-group">
             <input type="hidden" name="_token" :value="$root.token" />
             <input type="hidden" name="property_id" :value="property.id" />
+            <input type="hidden" name="apartment_id" :value="apartment_id" />
+
             <div v-if="filter">
                 <h3 class="bold-2">Check availablity {{ apartment.name }}</h3>
                 <div class="form-row">
@@ -251,6 +253,7 @@ export default {
             message: "LKNL",
             title: "LM;;",
             showImageModal: false,
+            apartment_id: null,
             room: {},
             form: {
                 room_quantity: [],
@@ -893,11 +896,11 @@ export default {
                 propertyId: this.property.id,
                 apID: ap.id,
                 check_in_checkout: this.form.check_in_checkout,
+                apartment_id: room.id
             };
 
             this.propertyIsLoading = true;
-
-
+            this.apartment_id = room.room.id
 
             axios
                 .post("/book/store", form)

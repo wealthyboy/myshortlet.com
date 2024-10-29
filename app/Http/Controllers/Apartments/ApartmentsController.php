@@ -44,6 +44,7 @@ class ApartmentsController extends Controller
             'other' => 'other'
         ];
 
+
         $str = new Str;
         $date = $request->check_in_checkout;
         $property_is_not_available = null;
@@ -95,10 +96,19 @@ class ApartmentsController extends Controller
 
 
         if ($request->ajax()) {
+
             return PropertyLists::collection(
                 $apartments
             )->additional(['attributes' => $attributes, 'params' => $request->all(), 'search' => false]);
+
+
         }
+
+        $showResult = null;
+        if ( $request->check_in_checkout && $apartments->count() ) {
+            $showResult = 1;
+        }
+
         return  view('apartments.apartments', compact(
             'page_title',
             'breadcrumb',
@@ -106,7 +116,8 @@ class ApartmentsController extends Controller
             'saved',
             'apartments',
             'property',
-            'page_meta_description'
+            'page_meta_description',
+            'showResult'
 
         ));
     }
@@ -147,6 +158,8 @@ class ApartmentsController extends Controller
         $next_page = [];
 
         $next_page[] = $properties->nextPageUrl();
+
+
 
         return  view('apartments.index', compact(
             'location',
@@ -224,6 +237,7 @@ class ApartmentsController extends Controller
         $properties->load('images');
 
         if ($request->ajax()) {
+
             return PropertyLists::collection(
                 $properties
             )->additional(['attributes' => $attributes, 'search' => false]);
@@ -232,6 +246,7 @@ class ApartmentsController extends Controller
 
         $next_page[] = $properties->nextPageUrl();
         $properties->load('categories');
+
 
 
 

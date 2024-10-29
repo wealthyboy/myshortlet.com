@@ -39,6 +39,7 @@ class BookingController extends Controller
 
 		$referer = request()->headers->get('referer');
 
+
 		$bookings = BookingDetail::all_items_in_cart($property->id);
 		$user = auth()->user();
 

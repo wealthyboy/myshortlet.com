@@ -55,10 +55,7 @@
                 </div>
             </div>
 
-            <!-- <div v-if="form.checkin && roomsAv.length" class="bold-2 mt-4 alert alert-success" role="alert">
-                 <strong></strong> Results for your selected date below. <span class="fw-bold"></span>.
-            </div> -->
-
+         
 
             <div :class="{ 'header-filter': propertyIsLoading }" id="" class="name mt-1 rounded p-2">
                 <div class="position-relative">
@@ -335,6 +332,10 @@ export default {
         filter: {
             type: Number,
             default: 1
+        },
+        showResults: {
+            type: Number,
+            default: 0
         },
         showReserve: Number,
         gallery: Number
@@ -686,16 +687,10 @@ export default {
                 .get(window.location + '?t=' + Math.random())
                 .then((response) => {
                 let params = response.data.params
-                    //this.checkin(response.data.params.checkin)
-                    //this.checkOut(response.data.params.checkout)
-
-                   this.form.checkin = params.checkin
-                   this.form.checkout = params.checkout
-                   this.form.rooms = params.rooms
-                   this.form.persons = params.checkout
-
-            // Now 'retrievedObject' contains the object retrieved from localStorage
-
+                    this.form.checkin = params.checkin
+                    this.form.checkout = params.checkout
+                    this.form.rooms = params.rooms
+                    this.form.persons = params.checkout
                     this.roomsAv = response.data.data;
                     this.stays = response.data.nights;
                     this.propertyLoading = false;
@@ -703,16 +698,15 @@ export default {
                     const paramNameToGet = 'check_in_checkout';
                     const { key, value } = this.getQueryParam(paramNameToGet);
 
-
                     if (value && this.isValidDateRange(value)) {
                         this.apartmentIsChecked = true
                     }
+
                     if (this.form.checkin && this.form.checkout) {
                         if (this.isValidDate(this.form.checkin) && this.isValidDate(this.form.checkout)) {
                             this.apartmentIsChecked = true
                         }
                     }
-
 
                     //document.getElementById("full-bg").remove();
                     jQuery(function () {
