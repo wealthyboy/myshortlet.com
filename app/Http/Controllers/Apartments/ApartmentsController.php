@@ -105,8 +105,13 @@ class ApartmentsController extends Controller
         }
 
         $showResult = null;
+        $apr = 0;
+
         if ( $request->check_in_checkout && $apartments->count() ) {
             $showResult = 1;
+            $apartments[0]->showResult = 1;
+            $apr = 1;
+
         }
 
         return  view('apartments.apartments', compact(
@@ -117,7 +122,8 @@ class ApartmentsController extends Controller
             'apartments',
             'property',
             'page_meta_description',
-            'showResult'
+            'showResult',
+            'apr'
 
         ));
     }

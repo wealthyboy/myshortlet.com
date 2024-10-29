@@ -53,10 +53,12 @@
 
                     </div>
                 </div>
+            </div>  
+
+            <div  v-if="apr" id="results-available" class="bold-2 mt-4 alert alert-success" role="alert">
+                 <strong></strong> We found {{ roomsAv.length }} apartment(s) available for your chosen dates.
+                 <span class="fw-bold"></span>.
             </div>
-
-         
-
             <div :class="{ 'header-filter': propertyIsLoading }" id="" class="name mt-1 rounded p-2">
                 <div class="position-relative">
                     <input type="hidden" name="property_id" value="217" />
@@ -333,12 +335,10 @@ export default {
             type: Number,
             default: 1
         },
-        showResults: {
-            type: Number,
-            default: 0
-        },
+        showResult: Array,
         showReserve: Number,
-        gallery: Number
+        gallery: Number,
+        apr: null
     },
     data() {
         return {

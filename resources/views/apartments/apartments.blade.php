@@ -43,13 +43,8 @@
         </div>
         @else
 
-        <div id="load-products-2" class="col-md-12">
-           @if ($showResult)
-           <div  id="results-available" class="bold-2 mt-4 alert alert-success" role="alert">
-                 <strong></strong> Results for your selected date below. <span class="fw-bold"></span>.
-            </div>
-            @endif
-            <apartments-index :isGallery="[]" :filter="1" :property="{{$property}}" :apartments="{{ $apartments }}" />
+        <div id="load-products-2" class="col-md-12"> 
+            <apartments-index :isGallery="[]" :filter="1" :showResult="{{$apr}}"  :apr="{{$apr}}"  :property="{{$property}}" :apartments="{{ $apartments }}" />
         </div>
         @endif
 
