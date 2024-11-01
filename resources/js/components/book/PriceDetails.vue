@@ -88,7 +88,7 @@
         </div>
 
       
-      <div v-if="booking_details.isDecemberPresent" class="alert alert-success" role="alert">
+      <div v-if="booking_details.isDecemberPresent" class="alert alert-success  p-3 ml-3" role="alert">
         <strong>Note:</strong> Due to the peak period, prices in December are at <span class="fw-bold"> {{ property.currency }}{{ booking_details.decemberPrice | priceFormat}}</span> per night.
       </div>   
       <div class="card-footer p-3  bg-transparent d-flex justify-content-between p-0 align-items-center">
