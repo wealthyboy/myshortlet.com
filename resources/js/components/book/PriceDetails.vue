@@ -50,7 +50,7 @@
           </div>
         </template>
         <template v-else>
-          <div>
+          <div v-if="booking_details.daysInDecember !== '-1'">
             <div>
               {{ booking.apartment.name || property.name }}
             </div> 
@@ -75,10 +75,7 @@
       v-if="booking_details.isDecemberPresent" 
         class=" p-3  bg-transparent d-flex  justify-content-between p-0 align-items-center">
         <div>
-            <div>
-              
-             
-            </div>
+            
             <div class="bold-2">
               {{ property.currency }}{{ booking_details.decemberPrice | priceFormat}} X {{  booking_details.daysInDecember + ' night(s)' }}
               <div class="text-size-2">per night</div>
@@ -88,7 +85,7 @@
           <div class="bold-2">
             {{ property.currency }}{{ (booking_details.decemberPrice * booking_details.daysInDecember ) | priceFormat }}
           </div>
-      </div>
+        </div>
 
       
       <div v-if="booking_details.isDecemberPresent" class="alert alert-success" role="alert">
