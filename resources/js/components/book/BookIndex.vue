@@ -106,18 +106,20 @@
             <div class="custom-border-bottom ">
               <div class="d-flex justify-content-between align-items-center p-2 px-3 pb-3 ">
                 <h3 class="card-title   mb-0 bold-3">
-                  Payment
+                  Payment Method
                 </h3>
                 <div class="payment-icons d-flex justify-content-center align-items-center">
-                  <div class="payment-image mr-3">
-                    <img src="/img/business.png" class="img-fluid" alt="make payment with mastercard" />
+                 
+                  <div v-if="property.currency !== '$'" class="payment-imag mr-3 border main-background p-1">
+                    <div class="bold-2 text-white">Bank Transfer</div>
                   </div>
-                  <div class="payment-image mr-3">
-                    <img class="img-fluid" src="/img/visa-card-ohram.png" alt="make payment with mastercard" />
+                  <div class="payment-imag mr-3 border main-background p-1">
+                    <div class="bold-2 text-white">Credit/Debit Card</div>
                   </div>
-                  <div class="payment-image">
-                    <img src="/img/Verve.png" class="img-fluid" alt="make payment with mastercard" />
+                  <div v-if="property.currency !== '$'"  class="payment-imag mr-3  border main-background p-1">
+                    <div class="bold-2 text-white ">USSD</div>
                   </div>
+                  
                 </div>
               </div>
             </div>
