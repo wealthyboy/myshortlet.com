@@ -65,7 +65,7 @@ class BookingController extends Controller
 		$daysInDecember = $this->getDaysInDecember($booking->checkin, $booking->checkout);
 		$isDecemberPresent = $daysInDecember > 0 ? true: false;
 		$daysDecemberTotal = $daysInDecember > 0 ? $daysInDecember * $apt->converted_december_price : 0;
-		$otherDays = $daysInDecember > 0 ? $days - $daysInDecember  : 	$days ;
+		$otherDays = $daysInDecember > 0 ? $days - $daysInDecember  : $days ;
 		$otherDaysTotal = $daysInDecember > 0 ? $otherDays * $apt->converted_price  : 0;
 		$decemberTotal = $daysInDecember > 0 ? $otherDaysTotal + $daysDecemberTotal  : 0;
 
@@ -82,7 +82,7 @@ class BookingController extends Controller
 		$from = $booking->checkin->format('l') . ' ' . $booking->checkin->format('d') . ' ' . $booking->checkin->format('F') . ' ' . $booking->checkin->isoFormat('Y');
 		$to = $booking->checkout->format('l') . ' ' . $booking->checkout->format('d') . ' ' . $booking->checkout->format('F') . ' ' . $booking->checkout->isoFormat('Y');
 		$booking_details = [
-			'otherDays' => $otherDays,
+			'otherDays' => $otherDays >0 ?  $otherDays : 0,
 			'otherDaysTotal' => $otherDaysTotal,
 			'daysInDecember' => $daysInDecember,
 			'isDecemberPresent'=> $isDecemberPresent, 
