@@ -32,7 +32,7 @@
             </div>
 
 
-            <div v-if="apartmentIsChecked" class="mt-3">
+            <div v-if="roomsIsAv" class="mt-3">
                 <div class="alert alert-success">
                     This apartment is available 
                 </div>
@@ -98,8 +98,6 @@
                                 </div>
                                 <div class="container p-0">
                                     <h4 class="primary-color">Check availablity for {{ room.name }}</h4>
-
-
                                 </div>
 
                                     
@@ -124,9 +122,6 @@
                                         <span v-for="(h, index ) in highlights" :key="index" class="ml-2">
                                             {{ h }}
                                         </span>
-
-
-
                                     </div>
                                 </div>
 
@@ -242,6 +237,8 @@ export default {
                 touchMove: true
             },
             roomsAv: [],
+            roomsIsAv: null,
+
             total: 0,
             aps: 0,
             apTotal: 0,
@@ -572,6 +569,7 @@ export default {
                 .get(window.location + '?t=' + Math.random())
                 .then((response) => {
                     this.roomsAv = response.data.data;
+                    console.log(this.roomsIsAv)
                     this.stays = response.data.nights;
                     this.propertyLoading = false;
                     const paramNameToGet = 'check_in_checkout';
@@ -709,6 +707,8 @@ export default {
                 .then((response) => {
 
                     this.roomsAv = response.data.data;
+                    this.roomsIsAv = response.data.data.length
+
                     this.stays = response.data.nights;
                     this.propertyIsLoading = false;
 
