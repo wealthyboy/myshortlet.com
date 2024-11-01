@@ -50,7 +50,7 @@
           </div>
         </template>
         <template v-else>
-          <div v-if="booking_details.daysInDecember !== '-1'">
+          <div v-if="booking_details.daysInDecember > 0">
             <div>
               {{ booking.apartment.name || property.name }}
             </div> 
