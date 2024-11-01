@@ -119,6 +119,8 @@
                                         class="form-group">
                                         <input type="hidden" name="_token" :value="$root.token" />
                                         <input type="hidden" name="property_id" :value="property.id" />
+                                        <input type="hidden" name="apartment_id" :value="apartment_id" />
+
                                         <div class="mr-lg-4">
                                             <div class="row quick-view p-3">
                                                 <div
@@ -1085,6 +1087,7 @@ export default {
         reserveSingle(room) {
 
             let ap = room
+         
             if (
                 !this.form.check_in_checkout ||
                 this.form.check_in_checkout.split(" ").length < 2
@@ -1111,6 +1114,9 @@ export default {
                 return;
             }
 
+            this.apartment_id = ap.id 
+
+            console.log(this.apartment_id)
 
             let selectApartmentQty = document.querySelectorAll(".room-q");
             var checked = [];

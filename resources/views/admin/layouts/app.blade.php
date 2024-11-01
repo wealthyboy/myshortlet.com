@@ -159,6 +159,13 @@
                                         <span class="sidebar-normal"> Vouchers </span>
                                     </a>
                                 </li>
+
+                                <li class="{{ $helper->active_link(['peak_periods']) }} ">
+                                    <a href="{{ route('peak_periods.index') }}">
+                                        <span class="sidebar-mini"> PP </span>
+                                        <span class="sidebar-normal"> Peak Periods </span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>

@@ -51,6 +51,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('attributes', 'Admin\Attributes\AttributesController', ['names' => 'attributes']);
     Route::resource('rates', 'Admin\CurrencyRates\CurrencyRatesController', ['name' => 'rates']);
     Route::resource('vouchers', 'Admin\Vouchers\VouchersController', ['names' => 'vouchers']);
+    Route::resource('peak_periods', 'Admin\PeakPeriod\PeakPeriodController', ['names' => 'peak_periods']);
 
     Route::get('properties/apartment', 'Admin\Properties\PropertiesController@newRoom');
     Route::resource('properties', 'Admin\Properties\PropertiesController', ['names' => 'admin.properties']);

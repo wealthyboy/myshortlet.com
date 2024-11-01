@@ -11,11 +11,7 @@ use Stevebauman\Location\Facades\Location;
 use Carbon\Carbon;
 use App\Models\PriceChanged;
 use App\Models\Apartment;
-
-
-
-
-
+use App\Models\PeakPeriod;
 
 
 class CurrencyByIp
@@ -29,7 +25,7 @@ class CurrencyByIp
      */
     public function handle($request, Closure $next)
     {   
-
+        
         $rate = [];
         $position = '';
         $position = Location::get(request()->ip());
@@ -42,12 +38,21 @@ class CurrencyByIp
         $startDate = Carbon::createFromDate(null, 12, 1); // December 1
         $endDate = Carbon::createFromDate(null, 12, 31); // December 31
         $price_update = PriceChanged::first();
-
-
         $exchaange_rate = Helper::getCurrencyExchangeRate();
+        $peak_periods = PeakPeriod::all();
+
+
+        // foreach($peak_periods as $peak_period)  {
+        //     if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
+        //         Helper::updateApartmentPrices($peak_period->start_date, $peak_period->end_date, $peak_period->discount);
+        //     } else  {
+        //         $yesterday = Carbon::yesterday();
+        //         if ($yesterday->eq(Carbon::parse($peak_period->end_date))) {
+        //             Helper::reverseApartmentPrices();
+        //         }
+        //     }
+        // }
         
-        Apartment::where('price', '>', 0)
-                ->update(['december_prices' => \DB::raw('price * 1.20')]);
 
         if (null === $price_update && $currentDate->between($startDate, $endDate)) {
             Apartment::where('price', '>', 0)
@@ -69,7 +74,6 @@ class CurrencyByIp
 
        // dd($usa->load('rate'));
         if (optional($settings)->allow_multi_currency) {
-
 
             if (isset($query['currency']) && strtok($query['currency'], '?') === 'USD') {
                 $rate = ['rate' => 1, 'country' => $usa->country, 'code' => $usa->iso_code3, 'symbol' => $usa->symbol];

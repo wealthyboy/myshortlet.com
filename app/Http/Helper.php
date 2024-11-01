@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\CurrencyRate;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\RequestException;
+use App\Models\Apartment;
 
 
 
@@ -59,7 +60,6 @@ class Helper
         return $expiry_date;
     }
 
-
     public  static function getFormatedDate($date, $changeFormat = true)
     {
         //createFromDate  $year ,$month , $day
@@ -84,7 +84,6 @@ class Helper
         return null;
     }
 
-
     function make_active($link)
     {
         foreach ($this->my_link() as $pages) {
@@ -93,7 +92,6 @@ class Helper
             }
         }
     }
-
 
     public   static function getDate($date)
     {
@@ -233,7 +231,21 @@ class Helper
         return optional($currency_rate)->rate;;
     }
 
+    public static function updateApartmentPrices($startDate, $endDate, $percentageIncrease = 20) {
 
+        $multiplier = 1 + ($percentageIncrease / 100);
+        Apartment::where('price', '>', 0)
+                ->update(['price' => \DB::raw("price * $multiplier")]);
+    
+    }
+
+
+    public static function reverseApartmentPrices($percentageIncrease = 20) {
+        $multiplier = 1 + ($percentageIncrease / 100);
+        Apartment::where('price', '>', 0) 
+                    ->update(['price' => \DB::raw("price / $multiplier")]);
+    
+    }
 
     public static function agents()
     {

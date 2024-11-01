@@ -32,6 +32,19 @@
             </div>
 
 
+            <div v-if="apartmentIsChecked" class="mt-3">
+                <div class="alert alert-success">
+                    This apartment is available 
+                </div>
+                <button 
+                    @click.prevent="reserveFromTop()"
+                    type="button" 
+                    class="btn btn-primary  m-auto bold-2  rounded">
+                    Click here to book
+                </button>
+            </div>
+
+
             <div :class="{ 'header-filter': propertyIsLoading }" id="" class="name mt-1 rounded p-2">
                 <div class="position-relative">
                     <input type="hidden" name="property_id" value="217" />
@@ -88,6 +101,8 @@
 
 
                                 </div>
+
+                                    
 
                                 <div class="card-title bold-2 text-size-1-big  mt-lg-0 mt-sm-3 ">
                                     {{ room.name }}
@@ -850,7 +865,6 @@ export default {
             this.amount = this.apTotal;
         },
         reserve(room) {
-
             let ap = room.room
             if (
                 !this.form.checkout && !this.form.checkin
@@ -919,6 +933,75 @@ export default {
                         "It seems we could not further your request .Try a diffrent date.";
                 });
         },
+        reserveFromTop(room) {
+            let ap = this.apartment
+            if (
+                !this.form.checkout && !this.form.checkin
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (
+                !this.isValidDate(this.form.checkin)
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (
+                !this.isValidDate(this.form.checkout)
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
+                alert("Set your check-in and check-out dates correctly")
+                return;
+            }
+
+
+            let selectApartmentQty = document.querySelectorAll(".room-q");
+            var checked = [];
+            let filters = {};
+
+            filters = {
+                [this.property.id]: ap.id,
+            };
+
+            checked.push(filters);
+
+            this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
+
+            let form = {
+                apartment_quantity: checked,
+                propertyId: this.property.id,
+                apID: ap.id,
+                check_in_checkout: this.form.check_in_checkout,
+                apartment_id: ap.id
+            };
+
+            this.propertyIsLoading = true;
+            this.apartment_id = ap.id
+
+            axios
+                .post("/book/store", form)
+                .then((response) => {
+                    this.propertyLoading = false;
+                    if (response.data) {
+                        document.querySelector("#multiple-form").submit();
+                    } else {
+                        this.error_msg =
+                            "It seems we could not further your request .Try a diffrent date.";
+                        this.roomsAv = [];
+                    }
+                })
+                .catch((error) => {
+                    this.error_msg =
+                        "It seems we could not further your request .Try a diffrent date.";
+                });
+        },
 
         reserveSingle(room) {
 
@@ -968,8 +1051,6 @@ export default {
             };
 
             this.propertyIsLoading = true;
-
-
 
             axios
                 .post("/book/store", form)

@@ -53,17 +53,17 @@
           <div>
             <div>
               {{ booking.apartment.name || property.name }}
-            </div>
+            </div> 
             <div class="bold-2">
               {{ property.currency }}{{ booking.price | priceFormat }} X {{  booking_details.otherDays + ' night(s)' }}
               <div class="text-size-2">per night</div>
               <span v-if="booking_details.isDecemberPresent"  class="badge bg-primary">Regular</span>            </div>
-          </div>
-          <div class="bold-2">
-            {{ property.currency }}{{ (booking.total * booking_details.otherDays) | priceFormat }}
-          </div>
+            </div>
+            <div class="bold-2">
+              {{ property.currency }}{{ (booking.total * booking_details.otherDays) | priceFormat }}
+            </div>
 
-         
+      
         </template>
 
   
