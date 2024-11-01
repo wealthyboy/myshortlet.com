@@ -54,7 +54,7 @@ class CurrencyByIp
         // }
         Apartment::where('price', '>', 0)
         ->update(['december_prices' => \DB::raw('price * 1.50')]);
-         PriceChanged::update(['is_updated' => true]);
+        // PriceChanged::update(['is_updated' => true]);
 
         if (null === $price_update && $currentDate->between($startDate, $endDate)) {
             Apartment::where('price', '>', 0)
