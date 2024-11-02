@@ -37,9 +37,9 @@
                     <a href="`/apartment/${$room->slug}`">{{ $room->name }}</a>
                 </div>
                
-                https://avenuemontaigne.ng/apartments?rooms=2&check_in_checkout=2024-12-03+to+2025-01-01&children=1&adults=1&apartment_id=28
+                <!-- https://avenuemontaigne.ng/apartments?rooms=2&check_in_checkout=2024-12-03+to+2025-01-01&children=1&adults=1&apartment_id=28 -->
 
-                https://avenuemontaigne.ng/apartments?rooms=2&check_in_checkout=2024-12-03%20to%202025-01-01&checkin=2024-12-03&checkout=2025-01-01&children=1&persons=1&expiry=1730573910227?t=0.5217366932299483
+                <!-- https://avenuemontaigne.ng/apartments?rooms=2&check_in_checkout=2024-12-03%20to%202025-01-01&checkin=2024-12-03&checkout=2025-01-01&children=1&persons=1&expiry=1730573910227?t=0.5217366932299483 -->
 
               
                 </div>
