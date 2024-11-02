@@ -639,8 +639,8 @@ export default {
                 checkin: this.form.checkin,
                 checkout: this.form.checkout,
                 persons: this.form.persons,
-                expiry: now + 3600000
-
+                expiry: now + 3600000,
+                apartment_id: this.apartment.id
             };
 
             const storageKey = 'searchParams';
@@ -702,6 +702,7 @@ export default {
                         check_in_checkout: this.form.check_in_checkout,
                         children: this.form.children,
                         adults: this.form.adults,
+                        apartment_id: this.apartment.id
                     }
                 })
                 .then((response) => {

@@ -110,6 +110,12 @@ class PageController extends Controller
     }
 
 
+    public function gallery(Request $request) {
+        $apartments = Apartment::where('allow', true)->get();
+       return view('pages.gallery', compact('apartments'));
+    }
+
+
     public  static function generateThumbnailUrl($originalUrl)
     {
         // Extract the ID from the original URL using regular expressions
