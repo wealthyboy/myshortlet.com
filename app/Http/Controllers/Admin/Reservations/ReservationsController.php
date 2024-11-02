@@ -220,8 +220,6 @@ class ReservationsController extends Controller
 
 		$userReservations = UserReservation::with('reservation')->whereIn('id', $request->selected)->get();
 
-		dd($userReservations);
-
 		foreach ($userReservations as $userReservation) {
 			if (null === $userReservation->reservation) {
 				$userReservation->reservation->delete();
