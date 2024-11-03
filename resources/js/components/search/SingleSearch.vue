@@ -59,7 +59,7 @@
                 <div class="position-relative">
                     <input type="hidden" name="property_id" value="217" />
 
-                    <div v-if="!apartmentIsChecked && roomsIsAv" class="row">
+                    <div  class="row">
                         <apartment :showReserve="apartmentIsChecked" :classType="classType" @showImages="showImages"
                             @showRoom="showRoom" @reserve="reserve" :amenities="amenities" :room="apartment" :stays="stays"
                             :qty="qty" />
