@@ -146,7 +146,11 @@
                         <div class="font-weight-bold-2 text-success" v-if="room.is_refundable">
                             Fully Refundable 
                         </div>
-                        
+                        <a target="_blank"  @click.prevent="reserve(room)"
+                            class="btn btn-round btn-primary py-2 bold-2 text-white align-self-end font-weight-bold-2"
+                            itemprop="url">
+                            Book now
+                        </a>
                     </div>
                 </div>
             </div>
