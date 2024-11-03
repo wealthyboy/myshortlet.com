@@ -31,7 +31,6 @@
                 </div>
             </div>
 
-
             <div v-if="roomsIsAv" class="mt-3">
                 <div class="alert alert-success">
                     This apartment is available 
@@ -280,42 +279,29 @@ export default {
             },
         };
     },
-    created() {
-        // this.stays = this.nights;
-        //this.roomsAv = this.apartments;
-    },
+   
     mounted() {
         // Get all elements with class 'p-loader'
-
         let lo = document.getElementById("full-bg")
-
         if (lo) {
             document.getElementById("full-bg").remove();
         }
 
-
         jQuery(function () {
-
-
             $('.sm-flexslider').flexslider({
                 animation: "slide",
                 controlNav: "thumbnails"
             });
-
         })
 
         const retrievedJsonString = localStorage.getItem('searchParams');
-        // Check if the retrieved JSON string is not null
         if (retrievedJsonString !== null) {
             const retrievedObject = JSON.parse(retrievedJsonString);
             this.form.checkin = retrievedObject.checkin
             this.form.checkout = retrievedObject.checkout
-
-            //this.checkAvailabity()
         }
 
         jQuery(function () {
-
             $(".owl-carousel").owlCarousel({
                 margin: 0,
                 dots: true,
@@ -341,21 +327,14 @@ export default {
         });
 
         const parentElement = document.getElementById('sm-main-banner');
-
         if (parentElement) {
-            // Get all child elements with the class d-none
             const hiddenDivs = parentElement.querySelectorAll('.d-none');
-
-            // Remove each hidden div
             hiddenDivs.forEach(div => {
                 div.classList.remove('d-none');
             });
         }
 
-
-
         if (!this.filter) {
-            //  this.type = 'col-md-3'
             this.classType = ['col-12 col-lg-3 col-md-6']
             this.roomsAv = this.apartments;
         } else {
@@ -373,10 +352,7 @@ export default {
 
     methods: {
         isValidDate(dateString) {
-            // Attempt to create a Date object from the dateString
             const dateObject = new Date(dateString);
-
-            // Check if the dateObject is a valid Date and the dateString remains the same after conversion
             return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
         },
         checkIn(value) {
@@ -388,7 +364,6 @@ export default {
 
         parseStringToArray(str) {
             const array = str.split(",");
-            // Filter out non-numeric values and empty strings
             return array;
         },
         showImages(room) {
@@ -399,43 +374,27 @@ export default {
             this.showModal = !this.showModal;
             this.room = room
             this.groupData(room)
-
             this.highlights = this.parseStringToArray(room.teaser);
 
-
             jQuery(function () {
-                // Add touch event listeners to centered images
                 $(".custom-iframe").on("touchstart", function (event) {
-                    // Record the initial touch position
                     var startX = event.touches[0].clientX;
-
-                    // Add touch move event listener
                     $(this).on("touchmove", function (event) {
-                        // Calculate the distance moved
                         var moveX = event.touches[0].clientX - startX;
-
-                        // If the distance moved is greater than a threshold, trigger carousel swipe
                         if (Math.abs(moveX) > 50) { // Adjust threshold as needed
                             if (moveX > 0) {
-                                // Swipe right
                                 $(".owl-carousel").trigger("prev.owl.carousel");
                             } else {
-                                // Swipe left
                                 $(".owl-carousel").trigger("next.owl.carousel");
                             }
-
-                            // Remove touchmove event listener to prevent multiple triggers
                             $(this).off("touchmove");
                         }
                     });
 
-                    // Add touchend event listener to clean up
                     $(this).on("touchend", function () {
-                        // Remove touchmove event listener
                         $(this).off("touchmove");
                     });
                 });
-                console.log(true)
 
                 $(".owl-carousel").owlCarousel({
                     margin: 0,
@@ -462,38 +421,29 @@ export default {
         },
         openModal() {
             this.showModal = true;
-            document.body.style.overflow = 'hidden'; // Prevent scrolling on the body
-            // Add event listener to close modal when clicking outside
+            document.body.style.overflow = 'hidden';
             document.body.addEventListener('click', this.clickOutsideHandler);
         },
         closeModal() {
             this.showModal = false;
-            // Remove event listener when closing modal
-            document.body.style.overflow = ''; // Prevent scrolling on the body
-
+            document.body.style.overflow = ''; 
             document.body.removeEventListener('click', this.clickOutsideHandler);
         },
         openImageModal() {
             this.showImageModal = true;
-            document.body.style.overflow = 'hidden'; // Prevent scrolling on the body
-            // Add event listener to close modal when clicking outside
+            document.body.style.overflow = 'hidden'; 
             document.body.addEventListener('click', this.clickOutsideHandler);
         },
         closeImageModal() {
             this.showImageModal = false;
-            // Remove event listener when closing modal
-            document.body.style.overflow = ''; // Prevent scrolling on the body
-
+            document.body.style.overflow = ''; 
             document.body.removeEventListener('click', this.clickOutsideHandler);
         },
         clickOutsideHandler(event) {
-            // Check if the click target is outside of the modal
             if (!this.$refs.modal.contains(event.target)) {
                 this.closeModal();
             }
-
             document.body.style.overflow = ''; // Prevent scrolling on the body
-
         },
 
 
@@ -501,27 +451,15 @@ export default {
             this.form.check_in_checkout = value;
         },
         parseDateRange(dateRangeString) {
-            // Split the date range string into two dates
             const [startDateString, endDateString] = dateRangeString.split(' to ');
-
-            // Parse the start date and end date
             const startDate = new Date(startDateString);
             const endDate = new Date(endDateString);
-
-            // Return an object containing both start and end dates
             return { startDate, endDate };
         },
         getQueryParam(key) {
-            // Get the current query string
             const queryString = window.location.search;
-
-            // Parse the query string into URLSearchParams
             const urlParams = new URLSearchParams(queryString);
-
-            // Get the value of the specified key
             const value = urlParams.get(key);
-
-            // Return both the key and value
             return { key, value };
         },
         groupData(room) {
@@ -537,25 +475,15 @@ export default {
             console.log(room.apartment_facilities)
         },
         isValidDateRange(dateRangeString) {
-            // Split the date range string into two dates
             const [startDateString, endDateString] = dateRangeString.split(' to ');
-
-            // Validate each date individually
             return this.isValidDate(startDateString) && this.isValidDate(endDateString);
         },
         isValidDate(dateString) {
-            // Regular expression pattern for "YYYY-MM-DD" format
             const pattern = /^\d{4}-\d{2}-\d{2}$/;
-
-            // Check if the string matches the pattern
             if (!pattern.test(dateString)) {
-                return false; // Return false if the format doesn't match
+                return false; 
             }
-
-            // Attempt to create a Date object from the dateString
             const dateObject = new window.Date(dateString);
-
-            // Check if the Date object represents a valid date
             return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
         },
         getApartments() {
@@ -574,7 +502,6 @@ export default {
                     this.propertyLoading = false;
                     const paramNameToGet = 'check_in_checkout';
                     const { key, value } = this.getQueryParam(paramNameToGet);
-
 
                     if (value && this.isValidDateRange(value)) {
                         this.apartmentIsChecked = true
@@ -632,7 +559,6 @@ export default {
             this.form.rooms = document.querySelector("#rooms").value;
             this.apartmentIsChecked = true
             var now = new window.Date().getTime(); // Current timestamp
-            // Sample object to be saved
             const myObject = {
                 rooms: this.form.rooms,
                 check_in_checkout: this.form.check_in_checkout,
@@ -647,26 +573,14 @@ export default {
             const jsonString = JSON.stringify(myObject);
             const currentValue = localStorage.getItem(storageKey);
 
-
-            // Check if the item exists in localStorage
             if (currentValue !== null) {
-                // Update the retrieved value
-
-                // Store the updated value back into jsonString
                 localStorage.setItem(storageKey, jsonString);
-
-                // Optionally, return true to indicate successful update
             } else {
-                // Item with the specified name does not exist in localStorage
-                // Handle this case as needed, such as returning false or throwing an error
                 localStorage.setItem(storageKey, jsonString);
-
             }
-            // Convert the object to a JSON strin
 
 
-            if (
-                !this.form.check_in_checkout ||
+            if ( !this.form.check_in_checkout ||
                 this.form.check_in_checkout.split(" ").length < 2
             ) {
                 alert("Please select your check-in and check-out dates")
@@ -706,10 +620,8 @@ export default {
                     }
                 })
                 .then((response) => {
-
                     this.roomsAv = response.data.data;
-                    this.roomsIsAv = response.data.data.length
-
+                    this.roomsIsAv = response.data;
                     this.stays = response.data.nights;
                     this.propertyIsLoading = false;
 
