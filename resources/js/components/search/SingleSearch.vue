@@ -60,7 +60,7 @@
                     <input type="hidden" name="property_id" value="217" />
 
                     <div  class="row">
-                        <apartment :showReserve="apartmentIsChecked" :classType="classType" @showImages="showImages"
+                        <apartment :showReserve="roomsIsAv" :classType="classType" @showImages="showImages"
                             @showRoom="showRoom" @reserve="reserve" :amenities="amenities" :room="apartment" :stays="stays"
                             :qty="qty" />
                     </div>
