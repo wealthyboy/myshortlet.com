@@ -43,12 +43,23 @@
                 </button>
             </div>
 
+            <div v-if="apartmentIsChecked &&  roomsIsAv">
+                <div id="" v-if="!propertyLoading && !roomsAv.length" class="name mt-1 rounded bg-white p-2">
+                    <div class="text-muted text-danger">
+                        {{
+                            error_msg || "There are not available apartments for your search."
+                        }}
+
+                    </div>
+                </div>
+            </div> 
+
 
             <div :class="{ 'header-filter': propertyIsLoading }" id="" class="name mt-1 rounded p-2">
                 <div class="position-relative">
                     <input type="hidden" name="property_id" value="217" />
 
-                    <div class="row">
+                    <div v-if="!apartmentIsChecked && roomsIsAv" class="row">
                         <apartment :showReserve="apartmentIsChecked" :classType="classType" @showImages="showImages"
                             @showRoom="showRoom" @reserve="reserve" :amenities="amenities" :room="apartment" :stays="stays"
                             :qty="qty" />
@@ -478,6 +489,34 @@ export default {
             const [startDateString, endDateString] = dateRangeString.split(' to ');
             return this.isValidDate(startDateString) && this.isValidDate(endDateString);
         },
+        isValidDecemberBooking(startDate, endDate) {
+            const start = new window.Date(startDate);
+            const end = new window.Date(endDate);
+
+            if (end < start) {
+                return false; // Invalid date range
+            }
+
+            const startMonth = start.getMonth();
+            const endMonth = end.getMonth();
+            
+            const decemberStart = new window.Date(start.getFullYear(), 11, 1); // December 1st
+            const decemberEnd = new window.Date(start.getFullYear(), 11, 31); // December 31st
+            
+            if (end < decemberStart || start > decemberEnd) {
+                return true; // No days in December, so no 10-day requirement
+            }
+
+            // Calculate the actual December start and end within the range
+            const rangeStartInDecember = start < decemberStart ? decemberStart : start;
+            const rangeEndInDecember = end > decemberEnd ? decemberEnd : end;
+
+            // Calculate the number of days in December within the range
+            const daysInDecember = Math.ceil((rangeEndInDecember - rangeStartInDecember) / (1000 * 60 * 60 * 24)) + 1;
+
+            // Ensure at least 10 days in December if any part of the range is in December
+            return daysInDecember >= 10;
+        },
         isValidDate(dateString) {
             const pattern = /^\d{4}-\d{2}-\d{2}$/;
             if (!pattern.test(dateString)) {
@@ -585,6 +624,11 @@ export default {
             ) {
                 alert("Please select your check-in and check-out dates")
                 return;
+            }
+
+            if (!this.isValidDecemberBooking(this.form.checkin, this.form.checkout)) {
+               alert("Booking within december must be at least 10 days!!")
+               return;
             }
 
             if (

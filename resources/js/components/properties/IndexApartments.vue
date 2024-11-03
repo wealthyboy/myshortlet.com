@@ -55,7 +55,7 @@
                 </div>
             </div>  
 
-            <div  v-if="apr" id="results-available" class="bold-2 mt-4 alert alert-success" role="alert">
+            <div  v-if=" !propertyLoading && apr" id="results-available" class="bold-2 mt-4 alert alert-success" role="alert">
                  <strong></strong> We found {{ roomsAv.length }} apartment(s) available for your chosen dates.
                  <span class="fw-bold"></span>.
             </div>
