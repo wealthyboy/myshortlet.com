@@ -57,7 +57,7 @@
 
             <div :class="{ 'header-filter': propertyIsLoading }" id="" class="name mt-1 rounded p-2">
                 <div class="position-relative">
-                    <div  v-if="!propertyIsLoading && apartmentIsChecked && !roomsIsAv"  class="row">
+                    <div    class="row">
                         <apartment :showReserve="roomsIsAv" :classType="classType" @showImages="showImages"
                             @showRoom="showRoom" @reserve="reserve" :amenities="amenities" :room="apartment" :stays="stays"
                             :qty="qty" />
