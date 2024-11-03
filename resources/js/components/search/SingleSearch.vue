@@ -43,23 +43,21 @@
                 </button>
             </div>
 
-            <div v-if="apartmentIsChecked &&  roomsIsAv">
-                <div id="" v-if="!propertyLoading && !roomsAv.length" class="name mt-1 rounded bg-white p-2">
+
+            <div >
+                <div id="" v-if="!propertyIsLoading && apartmentIsChecked && !roomsIsAv"  class="name mt-1 rounded bg-white p-2">
                     <div class="text-muted text-danger">
                         {{
-                            error_msg || "There are not available apartments for your search."
+                             "This apartment is not available for your selected date."
                         }}
 
                     </div>
                 </div>
             </div> 
 
-
             <div :class="{ 'header-filter': propertyIsLoading }" id="" class="name mt-1 rounded p-2">
                 <div class="position-relative">
-                    <input type="hidden" name="property_id" value="217" />
-
-                    <div  class="row">
+                    <div  v-if="!propertyIsLoading && apartmentIsChecked && !roomsIsAv"  class="row">
                         <apartment :showReserve="roomsIsAv" :classType="classType" @showImages="showImages"
                             @showRoom="showRoom" @reserve="reserve" :amenities="amenities" :room="apartment" :stays="stays"
                             :qty="qty" />
@@ -248,7 +246,6 @@ export default {
             },
             roomsAv: [],
             roomsIsAv: null,
-
             total: 0,
             aps: 0,
             apTotal: 0,
@@ -350,8 +347,10 @@ export default {
             this.roomsAv = this.apartments;
         } else {
             this.classType = ['col-12 col-lg-4 col-md-6']
-            this.getApartments()
+           // this.getApartments()
         }
+
+        this.checkAvailabity()
     },
     components: {
         Pickr,
@@ -527,11 +526,8 @@ export default {
         },
         getApartments() {
             this.propertyLoading = true
-
             const urlParams = new URLSearchParams(window.location.search);
             const queryString = urlParams.toString();
-
-
             axios
                 .get(window.location + '?t=' + Math.random())
                 .then((response) => {
@@ -664,7 +660,8 @@ export default {
                     }
                 })
                 .then((response) => {
-                    this.roomsAv = response.data.data;
+                    
+                    this.roomsAv = response.data;
                     this.roomsIsAv = response.data;
                     this.stays = response.data.nights;
                     this.propertyIsLoading = false;
