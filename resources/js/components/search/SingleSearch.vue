@@ -350,7 +350,7 @@ export default {
            // this.getApartments()
         }
 
-        this.checkAvailabity()
+       // this.checkAvailabity()
     },
     components: {
         Pickr,
