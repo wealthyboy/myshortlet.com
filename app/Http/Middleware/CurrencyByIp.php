@@ -44,7 +44,7 @@ class CurrencyByIp
             if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
                 Helper::updateApartmentPrices($peak_period->start_date, $peak_period->end_date, $peak_period->discount);
                 $price_update = new PriceChanged;
-                $price_update->update = 1;
+                $price_update->is_updated = 1;
                 $price_update->save();
             } else  {
                 $price_update = PriceChanged::first();
@@ -55,7 +55,7 @@ class CurrencyByIp
                     }
     
                     $price_update = PriceChanged::first();
-                    $price_update->update = 0;
+                    $price_update->is_updated = 0;
                     $price_update->save();
                 }
                 
