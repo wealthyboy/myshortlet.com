@@ -55,7 +55,7 @@
                 </div>
             </div>  
 
-            <div  v-if=" !propertyLoading && apr" id="results-available" class="bold-2 mt-4 alert alert-success" role="alert">
+            <div  v-if="!propertyLoading && apr" id="results-available" class="bold-2 mt-4 alert alert-success" role="alert">
                  <strong></strong> We found {{ roomsAv.length }} apartment(s) available for your chosen dates.
                  <span class="fw-bold"></span>.
             </div>
@@ -409,7 +409,6 @@ export default {
             const retrievedObject = JSON.parse(retrievedJsonString);
             this.form.checkin = retrievedObject.checkin
             this.form.checkout = retrievedObject.checkout
-
             //this.checkAvailabity()
         }
 
@@ -442,9 +441,7 @@ export default {
         const parentElement = document.getElementById('sm-main-banner');
 
         if (parentElement) {
-            // Get all child elements with the class d-none
             const hiddenDivs = parentElement.querySelectorAll('.d-none');
-            // Remove each hidden div
             hiddenDivs.forEach(div => {
                 div.classList.remove('d-none');
             });
@@ -458,6 +455,8 @@ export default {
             this.classType = ['col-12 col-lg-4 col-md-6']
             this.getApartments()
         }
+
+        console.log(this.form.checkin)
     },
     components: {
         Pickr,
@@ -759,7 +758,7 @@ export default {
             this.form.rooms = document.querySelector("#rooms").value;
             this.apartmentIsChecked = true
             var now = new window.Date().getTime(); // Current timestamp
-            // Sample object to be saved
+            // Sample object to be savedyy
             const myObject = {
                 rooms: this.form.rooms,
                 check_in_checkout: this.form.check_in_checkout,
@@ -773,11 +772,12 @@ export default {
             // Example usage:
             const startDate = '2024-12-05';
             const endDate = '2024-12-15';
+            const retrievedJsonString = localStorage.getItem('searchParams');
 
-            if (!this.isValidDecemberBooking(this.form.checkin, this.form.checkout)) {
-               alert("Booking within december must be at least 10 days!!")
-               return;
-            }
+
+            console.log(JSON.parse(retrievedJsonString))
+
+            
 
             // Create a URLSearchParams object from the new data (myObject)
             const queryParams = new URLSearchParams(myObject).toString();
@@ -841,6 +841,11 @@ export default {
             if (this.form.checkin === this.form.checkout) {
                 alert("Set your check-in and check-out dates correctly. They cannot be the same")
                 return;
+            }
+
+            if (!this.isValidDecemberBooking(this.form.checkin, this.form.checkout)) {
+               alert("Booking within december must be at least 10 days!!")
+               return;
             }
 
             // Now 'retrievedObject' contains the object retrieved from localStorage
@@ -1115,9 +1120,6 @@ export default {
             }
 
             this.apartment_id = ap.id 
-
-            console.log(this.apartment_id)
-
             let selectApartmentQty = document.querySelectorAll(".room-q");
             var checked = [];
             let filters = {};
@@ -1136,9 +1138,6 @@ export default {
             };
 
             this.propertyIsLoading = true;
-
-
-
             axios
                 .post("/book/store", form)
                 .then((response) => {
@@ -1181,7 +1180,6 @@ class IntersectionObserverHandler {
     observe(targets) {
         targets.forEach(target => {
             const { element, dynamicClasses } = target;
-
             // Check if the element exists in the DOM before observing
             if (element && document.body.contains(element)) {
                 this.observer.observe(element);
