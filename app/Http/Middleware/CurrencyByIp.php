@@ -40,7 +40,7 @@ class CurrencyByIp
         $peak_period = PeakPeriod::first();
 
         $exchaange_rate = Helper::getCurrencyExchangeRate();
-        if(null !==  $peak_period )[
+        if(null !==  $peak_period ){
             if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
                 Helper::updateApartmentPrices($peak_period->start_date, $peak_period->end_date, $peak_period->discount);
                 $price_update = new PriceChanged;
@@ -60,7 +60,7 @@ class CurrencyByIp
                 }
                 
             }
-        ]
+        }
         
         
         // Apartment::where('price', '>', 0)
