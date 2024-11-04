@@ -215,7 +215,6 @@ class Helper
                 $data = $response->json();
                 // Get the NGN exchange rate
                 $ngnRate = $data['rates']['NGN'] ?? null;
-    
                 return round($ngnRate - 135, 0);
 
             } else {

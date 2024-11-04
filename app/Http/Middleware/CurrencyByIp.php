@@ -40,25 +40,28 @@ class CurrencyByIp
         $peak_period = PeakPeriod::first();
 
         $exchaange_rate = Helper::getCurrencyExchangeRate();
-        if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
-            Helper::updateApartmentPrices($peak_period->start_date, $peak_period->end_date, $peak_period->discount);
-            $price_update = new PriceChanged;
-            $price_update->update = 1;
-            $price_update->save();
-        } else  {
-            $price_update = PriceChanged::first();
-            if (null !== $price_update && $price_update->is_updated === true) {
-                $yesterday = Carbon::yesterday();
-                if ($yesterday->eq(Carbon::parse($peak_period->end_date))) {
-                    Helper::reverseApartmentPrices($peak_period->discount);
-                }
-
-                $price_update = PriceChanged::first();
-                $price_update->update = 0;
+        if(null !==  $peak_period )[
+            if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
+                Helper::updateApartmentPrices($peak_period->start_date, $peak_period->end_date, $peak_period->discount);
+                $price_update = new PriceChanged;
+                $price_update->update = 1;
                 $price_update->save();
+            } else  {
+                $price_update = PriceChanged::first();
+                if (null !== $price_update && $price_update->is_updated === true) {
+                    $yesterday = Carbon::yesterday();
+                    if ($yesterday->eq(Carbon::parse($peak_period->end_date))) {
+                        Helper::reverseApartmentPrices($peak_period->discount);
+                    }
+    
+                    $price_update = PriceChanged::first();
+                    $price_update->update = 0;
+                    $price_update->save();
+                }
+                
             }
-            
-        }
+        ]
+        
         
         // Apartment::where('price', '>', 0)
         // ->update(['december_prices' => \DB::raw('price * 1.50')]);
