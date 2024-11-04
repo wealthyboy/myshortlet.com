@@ -137,11 +137,14 @@ trait FormatPrice
 
     $currentDate = Carbon::now();
     $peak_period = PeakPeriod::first();
-    if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
-      if ($this->december_prices > 0 ) {
-        return $this->ConvertCurrencyRate($this->december_prices);
-      }    
-    } 
+    if(null !==  $peak_period ){
+
+      if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
+        if ($this->december_prices > 0 ) {
+          return $this->ConvertCurrencyRate($this->december_prices);
+        }    
+      } 
+    }
 
     
 
