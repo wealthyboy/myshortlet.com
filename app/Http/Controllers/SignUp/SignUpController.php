@@ -79,7 +79,6 @@ class SignUpController extends Controller
             $checkin = Carbon::parse($request->checkin);
             $checkout = Carbon::parse($request->checkin);
             $date_diff = $checkin->diffInDays($checkout);
-
             $user_reservation = new UserReservation;
             $attr = Attribute::find($request->apartment_id);
             $apartment = Apartment::where('apartment_id', $request->apartment_id)->first();

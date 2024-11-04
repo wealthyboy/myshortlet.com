@@ -7,6 +7,10 @@ use App\Models\SystemSetting;
 use App\Http\Helper;
 use App\Models\CurrencyRate;
 use App\Models\Property;
+use App\Models\PeakPeriod;
+use Carbon\Carbon;
+
+
 
 trait FormatPrice
 {
@@ -131,6 +135,16 @@ trait FormatPrice
     //   return $this->ConvertCurrencyRate(optional(optional($this->apartments)->first())->price);
     // }
 
+    $currentDate = Carbon::now();
+    $peak_period = PeakPeriod::first();
+    if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
+      if ($this->december_prices > 0 ) {
+        return $this->ConvertCurrencyRate($this->december_prices);
+      }    
+    } 
+
+    
+
     return $this->ConvertCurrencyRate($this->price);
   }
 
@@ -140,6 +154,8 @@ trait FormatPrice
     // if ($this instanceof Property) {
     //   return $this->ConvertCurrencyRate(optional(optional($this->apartments)->first())->price);
     // }
+
+    
 
     return $this->ConvertCurrencyRate($this->december_prices);
   }
@@ -168,9 +184,9 @@ trait FormatPrice
   public function ConvertCurrencyRate($price)
   {
     
-
     $rate = Helper::rate();
     if ($rate) {
+     
       return round(($price * $rate->rate), 0);
     }
     return round($price, 0);

@@ -37,40 +37,48 @@ class CurrencyByIp
         $currentDate = Carbon::now();
         $startDate = Carbon::createFromDate(null, 12, 1); // December 1
         $endDate = Carbon::createFromDate(null, 12, 31); // December 31
-        $price_update = PriceChanged::first();
+        $peak_period = PeakPeriod::first();
+
         $exchaange_rate = Helper::getCurrencyExchangeRate();
-        $peak_periods = PeakPeriod::all();
+        if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
+            Helper::updateApartmentPrices($peak_period->start_date, $peak_period->end_date, $peak_period->discount);
+            $price_update = new PriceChanged;
+            $price_update->update = 1;
+            $price_update->save();
+        } else  {
+            $price_update = PriceChanged::first();
+            if (null !== $price_update && $price_update->is_updated === true) {
+                $yesterday = Carbon::yesterday();
+                if ($yesterday->eq(Carbon::parse($peak_period->end_date))) {
+                    Helper::reverseApartmentPrices($peak_period->discount);
+                }
 
-
-        // foreach($peak_periods as $peak_period)  {
-        //     if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
-        //         Helper::updateApartmentPrices($peak_period->start_date, $peak_period->end_date, $peak_period->discount);
-        //     } else  {
-        //         $yesterday = Carbon::yesterday();
-        //         if ($yesterday->eq(Carbon::parse($peak_period->end_date))) {
-        //             Helper::reverseApartmentPrices();
-        //         }
-        //     }
-        // }
+                $price_update = PriceChanged::first();
+                $price_update->update = 0;
+                $price_update->save();
+            }
+            
+        }
+        
         // Apartment::where('price', '>', 0)
         // ->update(['december_prices' => \DB::raw('price * 1.50')]);
         // PriceChanged::update(['is_updated' => true]);
 
-        if (null === $price_update && $currentDate->between($startDate, $endDate)) {
-            Apartment::where('price', '>', 0)
-                ->update(['price' => \DB::raw('price * 1.50')]);
-            PriceChanged::update(['is_updated' => true]);
-        }
+        // if (null === $price_update && $currentDate->between($startDate, $endDate)) {
+        //     Apartment::where('price', '>', 0)
+        //         ->update(['price' => \DB::raw('price * 1.50')]);
+        //     PriceChanged::update(['is_updated' => true]);
+        // }
 
-        if (null !== $price_update && $price_update->is_updated) {
-             if ($currentDate->isAfter($endDate)) {
-                Apartment::where('price', '>', 0) 
-                    ->update(['price' => \DB::raw('price / 1.50')]);
-                    PriceChanged::update([
-                        'is_updated' => 0
-                    ]);
-            } 
-        }
+        // if (null !== $price_update && $price_update->is_updated) {
+        //      if ($currentDate->isAfter($endDate)) {
+        //         Apartment::where('price', '>', 0) 
+        //             ->update(['price' => \DB::raw('price / 1.50')]);
+        //             PriceChanged::update([
+        //                 'is_updated' => 0
+        //             ]);
+        //     } 
+        // }
    
 
 

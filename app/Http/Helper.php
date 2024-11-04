@@ -232,18 +232,17 @@ class Helper
     }
 
     public static function updateApartmentPrices($startDate, $endDate, $percentageIncrease = 20) {
-
         $multiplier = 1 + ($percentageIncrease / 100);
         Apartment::where('price', '>', 0)
-                ->update(['price' => \DB::raw("price * $multiplier")]);
-    
+                ->update(['december_prices' => \DB::raw("price * $multiplier")]);
     }
+
 
 
     public static function reverseApartmentPrices($percentageIncrease = 20) {
         $multiplier = 1 + ($percentageIncrease / 100);
-        Apartment::where('price', '>', 0) 
-                    ->update(['price' => \DB::raw("price / $multiplier")]);
+        Apartment::where('december_prices', '>', 0) 
+                    ->update(['december_prices' => 0]);
     
     }
 
