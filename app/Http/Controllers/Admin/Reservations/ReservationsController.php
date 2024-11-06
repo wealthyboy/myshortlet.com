@@ -37,7 +37,6 @@ class ReservationsController extends Controller
 
 
 
-			Reservation::find(950)->delete();
 
 
 		
