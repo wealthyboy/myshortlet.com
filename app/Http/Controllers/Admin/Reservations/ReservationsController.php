@@ -37,17 +37,17 @@ class ReservationsController extends Controller
 
 
 
-        if($request->check === 2) {
 			dd(Reservation::latest()->take(10)->get());
+			Reservation::where('apartment_id' , request()->id)->first()->delete();
 
-		}
+
+		
         $todaysReservations = Reservation::whereDate('checkin', $today)->get();
 
 		if ($request->check == 1) {
 
 
 			
-			Reservation::where('apartment_id' , request()->id)->first()->delete();
 
 		
 
