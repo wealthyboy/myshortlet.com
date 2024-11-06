@@ -37,8 +37,7 @@ class ReservationsController extends Controller
 
 
 
-			dd(Reservation::latest()->take(10)->get());
-			Reservation::where('apartment_id' , request()->id)->first()->delete();
+			Reservation::find(950)->delete();
 
 
 		
