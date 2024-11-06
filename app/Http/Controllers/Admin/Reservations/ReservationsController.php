@@ -37,7 +37,7 @@ class ReservationsController extends Controller
 
 
 
-			dd(Reservation::latest()->take(10)->get());
+			dd(Reservation::latest()->take(20)->get());
 			Reservation::find(950)->delete();
 
 
