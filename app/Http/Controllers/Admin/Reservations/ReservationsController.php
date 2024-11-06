@@ -36,11 +36,6 @@ class ReservationsController extends Controller
 		$today = Carbon::today();
 
 
-
-			dd(Reservation::latest()->take(20)->get());
-			Reservation::find(950)->delete();
-
-
 		
         $todaysReservations = Reservation::whereDate('checkin', $today)->get();
 
