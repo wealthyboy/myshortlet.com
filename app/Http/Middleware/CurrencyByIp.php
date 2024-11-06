@@ -51,9 +51,9 @@ class CurrencyByIp
                 if (null !== $price_update && $price_update->is_updated === true) {
                     $yesterday = Carbon::yesterday();
                     if ($yesterday->eq(Carbon::parse($peak_period->end_date))) {
-                        Helper::reverseApartmentPrices($peak_period->discount);
+                       Helper::reverseApartmentPrices($peak_period->discount);
                     }
-    
+
                     $price_update = PriceChanged::first();
                     $price_update->is_updated = 0;
                     $price_update->save();

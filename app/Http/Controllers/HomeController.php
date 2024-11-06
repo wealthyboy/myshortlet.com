@@ -19,6 +19,7 @@ use App\Models\Apartment;
 use App\Models\PriceChanged;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use App\Models\PeakPeriod;
 
 class HomeController
 {
@@ -135,6 +136,12 @@ class HomeController
 
         $safety_practices = [];
         $amenities = [];
+        $peak_period = PeakPeriod::first();
+
+        $peakPeriod = [
+            'peak_period' => $peak_period,
+            'peak_period_is_available' => $peak_period !== null ? true: false
+        ];
 
         $bedrooms = [];
         $date = Helper::toAndFromDate($request->check_in_checkout);
