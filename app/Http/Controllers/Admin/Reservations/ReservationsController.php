@@ -35,12 +35,19 @@ class ReservationsController extends Controller
 
 		$today = Carbon::today();
 
-		Reservation::find(27)->delete();
 
+
+        if($request->check === 2) {
+			dd(Reservation::latest()->take(10)->get());
+
+		}
         $todaysReservations = Reservation::whereDate('checkin', $today)->get();
 
 		if ($request->check == 1) {
+
+
 			
+			Reservation::where('apartment_id' , request()->id)->first()->delete();
 
 		
 
