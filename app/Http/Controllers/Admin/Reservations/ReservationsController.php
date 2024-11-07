@@ -35,17 +35,9 @@ class ReservationsController extends Controller
 
 		$today = Carbon::today();
 
+        dd(Reservation::doesntHave('user_reservation')->delete());
 		
         $todaysReservations = Reservation::whereDate('checkin', $today)->get();
-
-		if ($request->check == 1) {
-
-
-			
-
-		
-
-		}
 
 		//Check for the coming_from query parameter
 		$comingFrom = $request->input('coming_from');
@@ -235,6 +227,7 @@ class ReservationsController extends Controller
 			}
 			$userReservation->delete();
 		}
+		Reservation::doesntHave('user_reservation')->delete();
 		return redirect()->back()->with('success', ' deleted successfully');
 	}
 }
