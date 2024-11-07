@@ -33,10 +33,7 @@ class ReservationsController extends Controller
 	{
          
 
-		$today = Carbon::today();
-
-        dd(Reservation::doesntHave('user_reservation')->delete());
-		
+		$today = Carbon::today();		
         $todaysReservations = Reservation::whereDate('checkin', $today)->get();
 
 		//Check for the coming_from query parameter
