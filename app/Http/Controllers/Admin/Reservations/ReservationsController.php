@@ -35,7 +35,7 @@ class ReservationsController extends Controller
 
 		$today = Carbon::today();
 
-        dd(Reservation::doesntHave('userReservation')->get());
+        dd(Reservation::doesntHave('user_reservation')->get());
 		
         $todaysReservations = Reservation::whereDate('checkin', $today)->get();
 
