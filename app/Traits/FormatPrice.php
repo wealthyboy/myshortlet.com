@@ -151,8 +151,7 @@ trait FormatPrice
     return $this->ConvertCurrencyRate($this->price);
   }
 
-
-  public function getConvertedDecemberPriceAttribute()
+  public function getConvertedRegularPriceAttribute()
   {
     // if ($this instanceof Property) {
     //   return $this->ConvertCurrencyRate(optional(optional($this->apartments)->first())->price);
@@ -160,7 +159,25 @@ trait FormatPrice
 
     
 
-    return $this->ConvertCurrencyRate($this->december_prices);
+    
+
+    return $this->ConvertCurrencyRate($this->price);
+  }
+
+
+  public function getConvertedPeakPriceAttribute()
+  {
+    $currentDate = Carbon::now();
+    $peak_period = PeakPeriod::first();
+    if(null !==  $peak_period ){
+      if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
+        if ($this->december_prices > 0 ) {
+          return $this->ConvertCurrencyRate($this->december_prices);
+        }    
+      } 
+    }
+
+    return 0;
   }
 
 

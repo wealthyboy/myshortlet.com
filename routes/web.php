@@ -139,6 +139,9 @@ Route::group(['middleware' => 'currencyByIp'], function () {
     Route::post('webhook/github', 'WebHook\WebHookController@gitHub');
     Route::get('/experience',   'Pages\PageController@index');
     Route::get('/gallery',   'Pages\PageController@index');
+    Route::get('/download-images',  'DownLoad\DownLoadController@index');
+    Route::get('/download-images/{id}',  'DownLoad\DownLoadController@downloadImages');
+
     Route::get('/about-us',  'Pages\PageController@index');
     Route::get('/contact-us', 'Pages\PageController@index');
     Route::get('/virtual-tour', 'Pages\PageController@index');

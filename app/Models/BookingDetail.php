@@ -51,6 +51,18 @@ class BookingDetail extends Model
     return   $total = $total->items_total;
   }
 
+  public static function sum_booking($property_id)
+  {
+    $cookie = \Cookie::get('booking');
+    $total = \DB::table('booking_details')
+    ->selectRaw('SUM(regular_price + peak_period_price) as total_sum')
+      ->where(['token' => $cookie, 'property_id' => $property_id])
+      ->where('quantity', '>=', 1)
+      ->whereDate('checkin', '>=', now())
+      ->value('total_sum');
+      return   $total;
+  }
+
 
   public  static function sync($bookings)
   {

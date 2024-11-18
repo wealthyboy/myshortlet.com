@@ -39,6 +39,7 @@ class CurrencyByIp
         $endDate = Carbon::createFromDate(null, 12, 31); // December 31
         $peak_period = PeakPeriod::first();
 
+
         $exchaange_rate = Helper::getCurrencyExchangeRate();
         if(null !==  $peak_period ){
             if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {

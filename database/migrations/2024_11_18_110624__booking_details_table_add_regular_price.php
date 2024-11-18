@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterStoreMarketPlacesAddStoreLocationId extends Migration
+class BookingDetailsTableAddRegularPrice extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AlterStoreMarketPlacesAddStoreLocationId extends Migration
      */
     public function up()
     {
-        Schema::table('store_market_places', function (Blueprint $table) {
-            $table->integer('store_location_id')->nullbale();
+        Schema::table('booking_details', function (Blueprint $table) {
+            $table->bigInteger('regular_price')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class AlterStoreMarketPlacesAddStoreLocationId extends Migration
      */
     public function down()
     {
-        Schema::table('store_market_places', function (Blueprint $table) {
+        Schema::table('booking_details', function (Blueprint $table) {
             //
         });
     }

@@ -460,13 +460,8 @@ export default {
 
     this.amount = this.booking_details.total;
     this.$store.commit("setBookings", this.apartments);
-    if (this.booking_details.isDecemberPresent) {
-      this.$store.commit("setBookingTotal", this.booking_details.decemberTotal);
-      this.$store.commit("setBookingSubTotal", this.booking_details.decemberTotal);
-    } else {
-      this.$store.commit("setBookingTotal", this.booking_details.total);
-      this.$store.commit("setBookingSubTotal", this.booking_details.total);
-    }
+    this.$store.commit("setBookingTotal", this.booking_details.total);
+    this.$store.commit("setBookingSubTotal", this.booking_details.total);
     
   },
   mounted() {

@@ -44,7 +44,7 @@
         @else
 
         <div id="load-products-2" class="col-md-12"> 
-            <apartments-index :isGallery="[]" :filter="1" :showResult="{{$apr}}"  :apr="{{$apr}}"  :property="{{$property}}" :apartments="{{ $apartments }}" />
+            <apartments-index :peak_period="{{$peak_period}}" :isGallery="[]" :filter="1" :showResult="{{$apr}}"  :apr="{{$apr}}"  :property="{{$property}}" :apartments="{{ $apartments }}" />
         </div>
         @endif
 

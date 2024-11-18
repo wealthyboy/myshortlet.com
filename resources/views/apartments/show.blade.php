@@ -47,7 +47,7 @@
       <div class="row">
          <div class="col-12 ">
             <div class="d-">
-               <single-search :apartment="{{$apartment}}" :property="{{$property}}" />
+               <single-search  :peak_period="{{$peak_period}}" :apartment="{{$apartment}}" :property="{{$property}}" />
             </div>
          </div>
       </div>

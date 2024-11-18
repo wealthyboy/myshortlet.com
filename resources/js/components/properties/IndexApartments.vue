@@ -6,7 +6,7 @@
             <input type="hidden" name="apartment_id" :value="apartment_id" />
 
             <div v-if="filter">
-                <h3 class="bold-2">Choose your apartment </h3>
+                <h3 class="bold-2">Choose your apartment</h3>
                 <div class="form-row">
                     <div class="form-group   form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
                         <label class="pl-2 " for="flatpickr-input-f">Check-in</label>
@@ -23,7 +23,7 @@
                         <guests />
                     </div>
                     <div class="col-md-1 w-100 check-availablility">
-                        <button type="button" @click.prevent="checkAvailabity()"
+                        <button type="button" @click.prevent="handleAvailabity()"
                             class="btn btn-primary btn-block  w-auto w-xs-100 m-auto bold-2 check-availablility-button rounded">
                             Check availablity
                         </button>
@@ -32,9 +32,6 @@
 
             
             </div>
-
-         
-
 
             <div id="full-" v-if="propertyLoading" class="full-bg position-relative">
                 <div class="signup--middle">
@@ -323,9 +320,12 @@ import Date from "./Date.vue";
 import Pickr from "vue-flatpickr-component";
 import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+import booking from "../../mixins/booking";
+
 import axios from "axios";
 
 export default {
+    mixins: [booking],
     props: {
         apartments: Array,
         property: Object,
@@ -340,7 +340,11 @@ export default {
         showResult: Array,
         showReserve: Number,
         gallery: Number,
-        apr: null
+        apr: null,
+        peak_period: {
+            type: Object,
+            default: {}
+        },
     },
     data() {
         return {
@@ -467,19 +471,8 @@ export default {
     },
 
     methods: {
-        isValidDate(dateString) {
-            // Attempt to create a Date object from the dateString
-            const dateObject = new Date(dateString);
-
-            // Check if the dateObject is a valid Date and the dateString remains the same after conversion
-            return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
-        },
-        checkIn(value) {
-            this.form.checkin = value;
-        },
-        checkOut(value) {
-            this.form.checkout = value;
-        },
+        
+       
         showImages(room) {
             this.showImageModal = !this.showImageModal;
             this.room = room
@@ -554,6 +547,7 @@ export default {
             });
 
         },
+
         openModal() {
             this.showModal = true;
             document.body.style.overflow = 'hidden'; // Prevent scrolling on the body
@@ -567,6 +561,7 @@ export default {
 
             document.body.removeEventListener('click', this.clickOutsideHandler);
         },
+
         openImageModal() {
             this.showImageModal = true;
             document.body.style.overflow = 'hidden'; // Prevent scrolling on the body
@@ -580,6 +575,7 @@ export default {
 
             document.body.removeEventListener('click', this.clickOutsideHandler);
         },
+
         clickOutsideHandler(event) {
             // Check if the click target is outside of the modal
             if (!this.$refs.modal.contains(event.target)) {
@@ -603,19 +599,7 @@ export default {
             // Return an object containing both start and end dates
             return { startDate, endDate };
         },
-        getQueryParam(key) {
-            // Get the current query string
-            const queryString = window.location.search;
-
-            // Parse the query string into URLSearchParams
-            const urlParams = new URLSearchParams(queryString);
-
-            // Get the value of the specified key
-            const value = urlParams.get(key);
-
-            // Return both the key and value
-            return { key, value };
-        },
+       
         groupData(room) {
             this.apartment_facilities = room.apartment_facilities.reduce((acc, obj) => {
                 const parentName = obj.parent.name;
@@ -628,61 +612,13 @@ export default {
 
             console.log(room.apartment_facilities)
         },
-        isValidDateRange(dateRangeString) {
-            // Split the date range string into two dates
-            const [startDateString, endDateString] = dateRangeString.split(' to ');
-
-            // Validate each date individually
-            return this.isValidDate(startDateString) && this.isValidDate(endDateString);
-        },
-        isValidDate(dateString) {
-            // Regular expression pattern for "YYYY-MM-DD" format
-            const pattern = /^\d{4}-\d{2}-\d{2}$/;
-
-            // Check if the string matches the pattern
-            if (!pattern.test(dateString)) {
-                return false; // Return false if the format doesn't match
-            }
-
-            // Attempt to create a Date object from the dateString
-            const dateObject = new window.Date(dateString);
-
-            // Check if the Date object represents a valid date
-            return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
-        },
-        isValidDecemberBooking(startDate, endDate) {
-            const start = new window.Date(startDate);
-            const end = new window.Date(endDate);
-
-            if (end < start) {
-                return false; // Invalid date range
-            }
-
-            const startMonth = start.getMonth();
-            const endMonth = end.getMonth();
-            
-            const decemberStart = new window.Date(start.getFullYear(), 11, 1); // December 1st
-            const decemberEnd = new window.Date(start.getFullYear(), 11, 31); // December 31st
-            
-            if (end < decemberStart || start > decemberEnd) {
-                return true; // No days in December, so no 10-day requirement
-            }
-
-            // Calculate the actual December start and end within the range
-            const rangeStartInDecember = start < decemberStart ? decemberStart : start;
-            const rangeEndInDecember = end > decemberEnd ? decemberEnd : end;
-
-            // Calculate the number of days in December within the range
-            const daysInDecember = Math.ceil((rangeEndInDecember - rangeStartInDecember) / (1000 * 60 * 60 * 24)) + 1;
-
-            // Ensure at least 10 days in December if any part of the range is in December
-            return daysInDecember >= 10;
-        },
+        
+       
         getApartments() {
             this.propertyLoading = true
             const urlParams = new URLSearchParams(window.location.search);
             const queryString = urlParams.toString();
-
+            this.apartmentIsChecked = true
 
             axios
                 .get(window.location + '?t=' + Math.random())
@@ -740,254 +676,8 @@ export default {
                     console.log(error)
                 });
         },
-        objectToQueryString(obj) {
-            return Object.keys(obj)
-                .filter(key => obj[key] !== null && obj[key] !== undefined && obj[key] !== '') // Filter out null, undefined, and empty values
-                .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
-                .join('&');
-        },
-        isCheckinGreaterThanCheckout(checkinDate, checkoutDate) {
-
-            checkinDate = new window.Date(checkinDate);
-            checkoutDate = new window.Date(checkoutDate);
-            return checkinDate > checkoutDate;
-        },
-        checkAvailabity: function () {
-            this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
-            this.form.persons = document.querySelector("#persons").value;
-            this.form.rooms = document.querySelector("#rooms").value;
-            this.apartmentIsChecked = true
-            var now = new window.Date().getTime(); // Current timestamp
-            // Sample object to be savedyy
-            const myObject = {
-                rooms: this.form.rooms,
-                check_in_checkout: this.form.check_in_checkout,
-                checkin: this.form.checkin,
-                checkout: this.form.checkout,
-                persons: this.form.persons,
-                expiry: now + 3600000
-
-            };
-
-            // Example usage:
-            const startDate = '2024-12-05';
-            const endDate = '2024-12-15';
-            const retrievedJsonString = localStorage.getItem('searchParams');
-
-
-            console.log(JSON.parse(retrievedJsonString))
-
-            
-
-            // Create a URLSearchParams object from the new data (myObject)
-            const queryParams = new URLSearchParams(myObject).toString();
-
-            // Clear any existing query parameters and construct a new URL
-            const newUrl = `${window.location.origin}${window.location.pathname}?${queryParams}`;
-
-            // Update the URL without reloading the page
-            window.history.pushState({ path: newUrl }, '', newUrl);
-
-            const storageKey = 'searchParams';
-
-            const jsonString = JSON.stringify(myObject);
-
-            const currentValue = localStorage.getItem(storageKey);
-
-            // Check if the item exists in localStorage
-            if (currentValue !== null) {
-                // Update the retrieved value
-
-                // Store the updated value back into jsonString
-                localStorage.setItem(storageKey, jsonString);
-
-                // Optionally, return true to indicate successful update
-            } else {
-                // Item with the specified name does not exist in localStorage
-                // Handle this case as needed, such as returning false or throwing an error
-                localStorage.setItem(storageKey, jsonString);
-
-            }
-            // Convert the object to a JSON strin
-
-
-            if (
-                !this.form.check_in_checkout ||
-                this.form.check_in_checkout.split(" ").length < 2
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (
-                !this.isValidDate(this.form.checkin)
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (
-                !this.isValidDate(this.form.checkout)
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
-                alert("Set your check-in and check-out dates correctly")
-                return;
-            }
-
-            if (this.form.checkin === this.form.checkout) {
-                alert("Set your check-in and check-out dates correctly. They cannot be the same")
-                return;
-            }
-
-            if (!this.isValidDecemberBooking(this.form.checkin, this.form.checkout)) {
-               alert("Booking within december must be at least 10 days!!")
-               return;
-            }
-
-            // Now 'retrievedObject' contains the object retrieved from localStorage
-            this.propertyIsLoading = true
-
-            axios
-                .get('/apartments', {
-                    params: {
-                        rooms: this.form.rooms,
-                        check_in_checkout: this.form.check_in_checkout,
-                        children: this.form.children,
-                        adults: this.form.adults,
-                    }
-                })
-                .then((response) => {
-
-                    this.roomsAv = response.data.data;
-                    this.stays = response.data.nights;
-                    this.propertyIsLoading = false;
-
-                    jQuery(function () {
-                        $(".owl-carousel").owlCarousel({
-                            margin: 10,
-                            nav: true,
-                            dots: true,
-                            responsive: {
-                                0: {
-                                    items: 1,
-                                },
-                                600: {
-                                    items: 1,
-                                },
-                                1000: {
-                                    items: 1,
-                                },
-                            },
-                        });
-                    });
-                    return Promise.resolve();
-                })
-                .catch((error) => {
-                    this.propertyIsLoading = false
-                    // commit("setPropertyLoading", false);
-                    // commit("setProperties", []);
-                });
-
-            // this.getProperties(window.location);
-        },
-
-        checkSingleAvailabity: function (apartment) {
-
-            this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
-            this.form.persons = document.querySelector("#persons").value;
-            this.form.rooms = document.querySelector("#rooms").value;
-
-            var now = new window.Date().getTime(); // Current timestamp
-            // Sample object to be saved
-            const myObject = {
-                rooms: this.form.rooms,
-                check_in_checkout: this.form.check_in_checkout,
-                checkin: this.form.checkin,
-                checkout: this.form.checkout,
-                persons: this.form.persons,
-                expiry: now + 3600000
-
-            };
-
-            const storageKey = 'searchParams';
-
-            const jsonString = JSON.stringify(myObject);
-
-            const currentValue = localStorage.getItem(storageKey);
-
-
-            // Check if the item exists in localStorage
-            if (currentValue !== null) {
-                // Update the retrieved value
-
-                // Store the updated value back into jsonString
-                localStorage.setItem(storageKey, jsonString);
-
-                // Optionally, return true to indicate successful update
-            } else {
-                // Item with the specified name does not exist in localStorage
-                // Handle this case as needed, such as returning false or throwing an error
-                localStorage.setItem(storageKey, jsonString);
-
-            }
-
-
-            if (
-                !this.form.check_in_checkout ||
-                this.form.check_in_checkout.split(" ").length < 2
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (
-                !this.isValidDate(this.form.checkin)
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (
-                !this.isValidDate(this.form.checkout)
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
-                alert("Set your check-in and check-out dates correctly")
-                return;
-            }
-
-
-            this.loading = true
-
-            axios
-                .get('/apartments', {
-                    params: {
-                        rooms: this.form.rooms,
-                        check_in_checkout: this.form.check_in_checkout,
-                        children: this.form.children,
-                        adults: this.form.adults,
-                        apartment_id: apartment.id
-                    }
-                })
-                .then((response) => {
-                    console.log(response.data)
-                    this.singleApartmentIsChecked = true
-                    this.loading = false
-                    this.singleApartmentIsAvailable = response.data
-                    return Promise.resolve();
-                })
-                .catch((error) => {
-                    this.loading = false
-                });
-
-        },
+     
+    
         checkIn(value) {
             this.form.checkin = value;
         },
@@ -1011,150 +701,11 @@ export default {
         sum(arr) {
             return arr.reduce((a, b) => parseInt(a) + parseInt(b), 0);
         },
-        getApartmentQuantity({ total, aps }) {
-            console.log(total, aps)
-            this.total = total;
-            this.aps = aps;
-            this.apTotal = total;
-            this.amount = this.apTotal;
-        },
-        reserve(room) {
-
-            let ap = room.room
-            if (
-                !this.form.checkout && !this.form.checkin
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (
-                !this.isValidDate(this.form.checkin)
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (
-                !this.isValidDate(this.form.checkout)
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
-                alert("Set your check-in and check-out dates correctly")
-                return;
-            }
-
-
-            let selectApartmentQty = document.querySelectorAll(".room-q");
-            var checked = [];
-            let filters = {};
-
-            filters = {
-                [this.property.id]: ap.id,
-            };
-
-            checked.push(filters);
-
-            this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
-
-            let form = {
-                apartment_quantity: checked,
-                propertyId: this.property.id,
-                apID: ap.id,
-                check_in_checkout: this.form.check_in_checkout,
-            };
-
-            this.apartment_id = ap.id
-
-            this.propertyIsLoading = true;
-
-            axios
-                .post("/book/store", form)
-                .then((response) => {
-                    this.propertyLoading = false;
-                    if (response.data) {
-                        document.querySelector("#multiple-form").submit();
-                    } else {
-                        this.error_msg =
-                            "It seems we could not further your request .Try a diffrent date.";
-                        this.roomsAv = [];
-                    }
-                })
-                .catch((error) => {
-                    this.error_msg =
-                        "It seems we could not further your request .Try a diffrent date.";
-                });
-        },
-
-        reserveSingle(room) {
-
-            let ap = room
-         
-            if (
-                !this.form.check_in_checkout ||
-                this.form.check_in_checkout.split(" ").length < 2
-            ) {
-                return;
-            }
-
-            if (
-                !this.isValidDate(this.form.checkin)
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (
-                !this.isValidDate(this.form.checkout)
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
-                alert("Set your check-in and check-out dates correctly")
-                return;
-            }
-
-            this.apartment_id = ap.id 
-            let selectApartmentQty = document.querySelectorAll(".room-q");
-            var checked = [];
-            let filters = {};
-
-            filters = {
-                [this.property.id]: ap.id,
-            };
-
-            checked.push(filters);
-
-            let form = {
-                apartment_quantity: checked,
-                propertyId: this.property.id,
-                apID: ap.id,
-                check_in_checkout: this.form.check_in_checkout,
-            };
-
-            this.propertyIsLoading = true;
-            axios
-                .post("/book/store", form)
-                .then((response) => {
-                    this.propertyLoading = false;
-                    if (response.data) {
-                        document.querySelector("#single-form").submit();
-                    } else {
-                        this.error_msg =
-                            "It seems we could not further your request .Try a diffrent date.";
-                        this.roomsAv = [];
-                    }
-                })
-                .catch((error) => {
-                    this.error_msg =
-                        "It seems we could not further your request .Try a diffrent date.";
-                });
-        },
+        handleAvailabity() {
+          this.checkAvailabity()
+        }
+      
+       
     },
 };
 

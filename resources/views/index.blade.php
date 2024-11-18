@@ -44,7 +44,7 @@
 
 
 <div class="search-header d-block   p-3">
-   <search-apartments />
+   <search-apartments :peak_period="{{$peak_period}}" />
 </div>
 
 <!-- 

@@ -40,13 +40,13 @@
               {{ booking.apartment.name || property.name }}
             </div>
             <span class="bold-2">
-              <del>{{ booking.currency }}{{ booking.price | priceFormat }}</del>
-              {{ booking.currency }}{{ booking.sale_price | priceFormat }}  X {{  booking_details.otherDays + ' night(s)' }}
+              <del>{{ booking.currency }}{{ booking.regular_price | priceFormat }}</del>
+              {{ booking.currency }}{{ booking.sale_price | priceFormat }}  X {{  booking_details.days_not_in_peak_period + ' night(s)' }}
             </span>
           </div>
           <span class="text-size-2"> per night</span>
           <div class="bold-2">
-            {{ property.currency }}{{ (booking.total * booking_details.otherDays) | priceFormat }}
+            {{ property.currency }}{{ (booking.regular_price * booking_details.days_not_in_peak_period_total) | priceFormat }}
           </div>
         </template>
         <template v-else>
@@ -55,12 +55,13 @@
               {{ booking.apartment.name || property.name }}
             </div> 
             <div class="bold-2">
-              {{ property.currency }}{{ booking.price | priceFormat }} X {{  booking_details.otherDays + ' night(s)' }}
+              {{ property.currency }}{{ booking.regular_price | priceFormat }} X {{  booking_details.days_not_in_peak_period + ' night(s)' }}
               <div class="text-size-2">per night</div>
-              <span v-if="booking_details.isDecemberPresent"  class="badge bg-primary">Regular</span>            </div>
+              <span v-if="booking_details.is_peak_period_present"  class="badge bg-primary">Regular</span>            
+            </div>
             </div>
             <div class="bold-2">
-              {{ property.currency }}{{ (booking.total * booking_details.otherDays) | priceFormat }}
+              {{ property.currency }}{{ (booking.regular_price * booking_details.days_not_in_peak_period) | priceFormat }}
             </div>
 
       
@@ -72,24 +73,24 @@
       </div>
 
       <div 
-      v-if="booking_details.isDecemberPresent" 
-        class=" p-3  bg-transparent d-flex  justify-content-between p-0 align-items-center">
-        <div>
+          v-if="booking_details.is_peak_period_present" 
+          class=" p-3  bg-transparent d-flex  justify-content-between p-0 align-items-center">
+          <div>
             
             <div class="bold-2">
-              {{ property.currency }}{{ booking_details.decemberPrice | priceFormat}} X {{  booking_details.daysInDecember + ' night(s)' }}
+              {{ property.currency }}{{ booking_details.peak_price | priceFormat }} X {{  booking_details.days_in_peak_period + ' night(s)' }}
               <div class="text-size-2">per night</div>
               <span class="badge bg-primary">Peak Period</span>  
             </div>
           </div>
           <div class="bold-2">
-            {{ property.currency }}{{ (booking_details.decemberPrice * booking_details.daysInDecember ) | priceFormat }}
+            {{ property.currency }}{{ (booking_details.peak_price * booking_details.days_in_peak_period ) | priceFormat }}
           </div>
         </div>
 
       
-      <div v-if="booking_details.isDecemberPresent" class="alert alert-success  p-3 ml-3" role="alert">
-        <strong>Note:</strong> Due to the peak period, prices in December are at <span class="fw-bold"> {{ property.currency }}{{ booking_details.decemberPrice | priceFormat}}</span> per night.
+      <div v-if="booking_details.is_peak_period_present" class="alert alert-success  p-3 ml-3" role="alert">
+        <strong>Note:</strong> Due to the peak period, prices  from  {{ booking_details.peak_period.from_date }} to  {{ booking_details.peak_period.to_date }} are at <span class="fw-bold"> {{ property.currency }}{{ booking_details.peak_price | priceFormat}}</span> per night.
       </div>   
       <div class="card-footer p-3  bg-transparent d-flex justify-content-between p-0 align-items-center">
         <p class="text-heading mb-0 bold-2">
@@ -117,15 +118,9 @@
             <p class="fs-5">{{ voucher[0].percent }}</p>
           </template>
           <template v-else>
-            {{ property.currency }}{{ (bookingTotal + bookingPropertyServicesTotal + bookingServicesTotal) | priceFormat
-            }}
-
+            {{ property.currency }}{{ (bookingTotal + bookingPropertyServicesTotal + bookingServicesTotal) | priceFormat }}
           </template>
         </span>
-
-
-
-
 
 
       </div>

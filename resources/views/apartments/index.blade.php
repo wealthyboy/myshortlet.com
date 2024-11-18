@@ -44,7 +44,7 @@
       <!-- <div class=" mb-2">
          <img src="/images/utilities/shopwhileyoustay-02.jpg" class="img-fluid" alt="">
       </div> -->
-      <products-index :next_page="{{ collect($next_page) }}" :propertys="{{ $apartments }}" />
+      <products-index  :next_page="{{ collect($next_page) }}" :propertys="{{ $apartments }}" />
    </div>
    @endif
 

@@ -23,7 +23,7 @@
                         <guests />
                     </div>
                     <div class="col-md-1 w-100 check-availablility  ">
-                        <button type="button" @click.prevent="checkAvailabity()"
+                        <button type="button" @click.prevent="handleAvailabity()"
                             class="btn btn-primary btn-block  w-auto w-xs-100 m-auto bold-2 check-availablility-button rounded">
                             Check availablity
                         </button>
@@ -220,8 +220,11 @@ import Pickr from "vue-flatpickr-component";
 import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import axios from "axios";
+import booking from "../../mixins/booking";
+
 
 export default {
+    mixins: [booking],
     props: {
         apartment: Object,
         property: Object,
@@ -234,7 +237,11 @@ export default {
             default: 1
         },
         showReserve: Number,
-        gallery: Number
+        gallery: Number,
+        peak_period: {
+            type: Object,
+            default: {}
+        },
     },
     data() {
         return {
@@ -361,10 +368,7 @@ export default {
     },
 
     methods: {
-        isValidDate(dateString) {
-            const dateObject = new Date(dateString);
-            return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
-        },
+      
         checkIn(value) {
             this.form.checkin = value;
         },
@@ -484,310 +488,17 @@ export default {
 
             console.log(room.apartment_facilities)
         },
-        isValidDateRange(dateRangeString) {
-            const [startDateString, endDateString] = dateRangeString.split(' to ');
-            return this.isValidDate(startDateString) && this.isValidDate(endDateString);
-        },
-        isValidDecemberBooking(startDate, endDate) {
-            const start = new window.Date(startDate);
-            const end = new window.Date(endDate);
-
-            if (end < start) {
-                return false; // Invalid date range
-            }
-
-            const startMonth = start.getMonth();
-            const endMonth = end.getMonth();
-            
-            const decemberStart = new window.Date(start.getFullYear(), 11, 1); // December 1st
-            const decemberEnd = new window.Date(start.getFullYear(), 11, 31); // December 31st
-            
-            if (end < decemberStart || start > decemberEnd) {
-                return true; // No days in December, so no 10-day requirement
-            }
-
-            // Calculate the actual December start and end within the range
-            const rangeStartInDecember = start < decemberStart ? decemberStart : start;
-            const rangeEndInDecember = end > decemberEnd ? decemberEnd : end;
-
-            // Calculate the number of days in December within the range
-            const daysInDecember = Math.ceil((rangeEndInDecember - rangeStartInDecember) / (1000 * 60 * 60 * 24)) + 1;
-
-            // Ensure at least 10 days in December if any part of the range is in December
-            return daysInDecember >= 10;
-        },
-        isValidDate(dateString) {
-            const pattern = /^\d{4}-\d{2}-\d{2}$/;
-            if (!pattern.test(dateString)) {
-                return false; 
-            }
-            const dateObject = new window.Date(dateString);
-            return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
-        },
-        getApartments() {
-            this.propertyLoading = true
-            const urlParams = new URLSearchParams(window.location.search);
-            const queryString = urlParams.toString();
-            axios
-                .get(window.location + '?t=' + Math.random())
-                .then((response) => {
-                    this.roomsAv = response.data.data;
-                    console.log(this.roomsIsAv)
-                    this.stays = response.data.nights;
-                    this.propertyLoading = false;
-                    const paramNameToGet = 'check_in_checkout';
-                    const { key, value } = this.getQueryParam(paramNameToGet);
-
-                    if (value && this.isValidDateRange(value)) {
-                        this.apartmentIsChecked = true
-                    }
-
-                    if (this.form.checkin && this.form.checkout) {
-                        if (this.isValidDate(this.form.checkin) && this.isValidDate(this.form.checkout)) {
-                            this.apartmentIsChecked = true
-                        }
-                    }
-
-                    //document.getElementById("full-bg").remove();
-                    jQuery(function () {
-                        $(".owl-carousel").owlCarousel({
-                            margin: 0,
-                            dots: true,
-                            nav: true,
-                            navText: [
-                                '<div class="nav-btn prev-slide d-flex justify-content-center align-items-center mr-1"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-                                '<div class="nav-btn next-slide d-flex justify-content-center align-items-center ml-1"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-                            ],
-                            responsive: {
-                                0: {
-                                    items: 1,
-                                },
-                                600: {
-                                    items: 1,
-                                },
-                                1000: {
-                                    items: 1,
-                                },
-                            },
-                        });
-                    });
-                    return Promise.resolve();
-                })
-                .catch((error) => {
-                    console.log(error)
-                });
-        },
-        objectToQueryString(obj) {
-            return Object.keys(obj)
-                .filter(key => obj[key] !== null && obj[key] !== undefined && obj[key] !== '') // Filter out null, undefined, and empty values
-                .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
-                .join('&');
-        },
-        isCheckinGreaterThanCheckout(checkinDate, checkoutDate) {
-            checkinDate = new window.Date(checkinDate);
-            checkoutDate = new window.Date(checkoutDate);
-            return checkinDate > checkoutDate;
-        },
-        checkAvailabity: function () {
-            this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
-            this.form.persons = document.querySelector("#persons").value;
-            this.form.rooms = document.querySelector("#rooms").value;
-            this.apartmentIsChecked = true
-            var now = new window.Date().getTime(); // Current timestamp
-            const myObject = {
-                rooms: this.form.rooms,
-                check_in_checkout: this.form.check_in_checkout,
-                checkin: this.form.checkin,
-                checkout: this.form.checkout,
-                persons: this.form.persons,
-                expiry: now + 3600000,
-                apartment_id: this.apartment.id
-            };
-
-            const storageKey = 'searchParams';
-            const jsonString = JSON.stringify(myObject);
-            const currentValue = localStorage.getItem(storageKey);
-
-            if (currentValue !== null) {
-                localStorage.setItem(storageKey, jsonString);
-            } else {
-                localStorage.setItem(storageKey, jsonString);
-            }
-
-
-            if ( !this.form.check_in_checkout ||
-                this.form.check_in_checkout.split(" ").length < 2
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (!this.isValidDecemberBooking(this.form.checkin, this.form.checkout)) {
-               alert("Booking within december must be at least 10 days!!")
-               return;
-            }
-
-            if (
-                !this.isValidDate(this.form.checkin)
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (
-                !this.isValidDate(this.form.checkout)
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
-                alert("Set your check-in and check-out dates correctly")
-                return;
-            }
-
-            // Now 'retrievedObject' contains the object retrieved from localStorage
-            this.propertyIsLoading = true
-
-            axios
-                .get('/apartments', {
-                    params: {
-                        rooms: this.form.rooms,
-                        check_in_checkout: this.form.check_in_checkout,
-                        children: this.form.children,
-                        adults: this.form.adults,
-                        apartment_id: this.apartment.id
-                    }
-                })
-                .then((response) => {
-                    
-                    this.roomsAv = response.data;
-                    this.roomsIsAv = response.data;
-                    this.stays = response.data.nights;
-                    this.propertyIsLoading = false;
-
-                    jQuery(function () {
-                        $(".owl-carousel").owlCarousel({
-                            margin: 10,
-                            nav: true,
-                            dots: true,
-                            responsive: {
-                                0: {
-                                    items: 1,
-                                },
-                                600: {
-                                    items: 1,
-                                },
-                                1000: {
-                                    items: 1,
-                                },
-                            },
-                        });
-                    });
-                    return Promise.resolve();
-                })
-                .catch((error) => {
-                    this.propertyIsLoading = false
-                    // commit("setPropertyLoading", false);
-                    // commit("setProperties", []);
-                });
-
-            // this.getProperties(window.location);
+       
+      
+      
+     
+     
+        handleAvailabity: function () {
+            this.roomsIsAv = null
+            this.showAvailability()  
         },
 
-        checkSingleAvailabity: function (apartment) {
-
-            this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
-            this.form.persons = document.querySelector("#persons").value;
-            this.form.rooms = document.querySelector("#rooms").value;
-
-            var now = new window.Date().getTime(); // Current timestamp
-            // Sample object to be saved
-            const myObject = {
-                rooms: this.form.rooms,
-                check_in_checkout: this.form.check_in_checkout,
-                checkin: this.form.checkin,
-                checkout: this.form.checkout,
-                persons: this.form.persons,
-                expiry: now + 3600000
-
-            };
-
-            const storageKey = 'searchParams';
-
-            const jsonString = JSON.stringify(myObject);
-
-            const currentValue = localStorage.getItem(storageKey);
-
-
-            // Check if the item exists in localStorage
-            if (currentValue !== null) {
-                // Update the retrieved value
-
-                // Store the updated value back into jsonString
-                localStorage.setItem(storageKey, jsonString);
-
-                // Optionally, return true to indicate successful update
-            } else {
-                // Item with the specified name does not exist in localStorage
-                // Handle this case as needed, such as returning false or throwing an error
-                localStorage.setItem(storageKey, jsonString);
-
-            }
-
-
-            if (
-                !this.form.check_in_checkout ||
-                this.form.check_in_checkout.split(" ").length < 2
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (
-                !this.isValidDate(this.form.checkin)
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (
-                !this.isValidDate(this.form.checkout)
-            ) {
-                alert("Please select your check-in and check-out dates")
-                return;
-            }
-
-            if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
-                alert("Set your check-in and check-out dates correctly")
-                return;
-            }
-
-
-            this.loading = true
-
-            axios
-                .get('/apartments', {
-                    params: {
-                        rooms: this.form.rooms,
-                        check_in_checkout: this.form.check_in_checkout,
-                        children: this.form.children,
-                        adults: this.form.adults,
-                        apartment_id: apartment.id
-                    }
-                })
-                .then((response) => {
-                    console.log(response.data)
-                    this.singleApartmentIsChecked = true
-                    this.loading = false
-                    this.singleApartmentIsAvailable = response.data
-                    return Promise.resolve();
-                })
-                .catch((error) => {
-                    this.loading = false
-                });
-
-        },
+      
         checkIn(value) {
             this.form.checkin = value;
         },
