@@ -15,7 +15,6 @@ export default {
     
             // Check if the user's start date falls within the peak period
             const userStartWithinPeakPeriod = userStart >= peakStart && userStart <= peakEnd;  
-            console.log(userStart, userEnd, userStartWithinPeakPeriod, bookingDays ,  days_limit)
             // Enforce the minimum days limit if peak period is active and the start date is within the peak period
             if (is_peak_period_active  && userStartWithinPeakPeriod  && bookingDays < days_limit) {
               return false
@@ -412,7 +411,9 @@ export default {
             window.location.reload()
 
         },
-        checkSingleAvailabity: function (apartment) {
+        checkApartmentAvailabity: function (apartment) {
+
+            console.log(this.form.checkin + ' to ' + this.form.checkout)
 
             this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
             this.form.persons = document.querySelector("#persons").value;
@@ -480,11 +481,14 @@ export default {
                 return;
             }
 
+            const { start_date, end_date, days_limit } = this.peak_period;
+
             if ( !this.validateBooking() ) {
                 alert(`Bookings from ${start_date.split("T")[0]} to ${end_date.split("T")[0]} require a minimum stay of ${days_limit} days.`);                
                 return;
             }
 
+            return;
 
             this.loading = true
 

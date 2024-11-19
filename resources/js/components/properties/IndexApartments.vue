@@ -478,9 +478,11 @@ export default {
             this.room = room
         },
         parseStringToArray(str) {
-            const array = str.split(",");
-            // Filter out non-numeric values and empty strings
-            return array;
+            if (str) {
+                const array = str.split(",");
+                return array;
+            }
+            return null;
         },
         showRoom(room) {
             this.showModal = !this.showModal;
@@ -612,8 +614,11 @@ export default {
 
             console.log(room.apartment_facilities)
         },
+
+        checkSingleAvailabity(room) {
+            this.checkApartmentAvailabity(room)
+        },
         
-       
         getApartments() {
             this.propertyLoading = true
             const urlParams = new URLSearchParams(window.location.search);
@@ -677,7 +682,6 @@ export default {
                 });
         },
      
-    
         checkIn(value) {
             this.form.checkin = value;
         },
