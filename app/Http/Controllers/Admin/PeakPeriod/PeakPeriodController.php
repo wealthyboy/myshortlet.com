@@ -44,6 +44,7 @@ class PeakPeriodController extends Controller
 		$peak_period->start_date = Helper::getFDate($request->start_date);
         $peak_period->end_date = Helper::getFDate($request->end_date);
 		$peak_period->discount = $request->discount;
+		$peak_period->day_limit = $request->day_limit;
 		$peak_period->save(); 
 		return redirect('admin/peak_periods');
 				
@@ -75,6 +76,7 @@ class PeakPeriodController extends Controller
 		$peak_period->start_date = Helper::getFDate($request->start_date);
         $peak_period->end_date = Helper::getFDate($request->end_date);
 		$peak_period->discount = $request->discount;
+		$peak_period->day_limit = $request->day_limit;
 		$peak_period->save(); 
 		return redirect('admin/peak_periods');	
 	}

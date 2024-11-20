@@ -43,6 +43,15 @@
                                 <input class="form-control  pull-right" name="end_date" id="" type="date">
                             </div>
                         </div>
+
+                        <div class="col-lg-3 col-sm-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+									<i class="fa fa-dollar"></i>
+								</span>
+                                <input class="form-control  pull-right" name="days_limit" id="" type="text">
+                            </div>
+                        </div>
                        
                         
 

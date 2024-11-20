@@ -41,9 +41,15 @@
                         <div class="col-lg-3 col-sm-4">
                             <div class="input-group">
                                 <span class="input-group-addon">
-									<i class="fa fa-dollar"></i>
+                                <i class="fa fa-calendar"></i>
 								</span>
                                 <input  value="{{ date('Y') }}-{{ optional($peak_period->end_date)->format('m-d') }}" class="form-control  pull-right" name="end_date" id="" type="date">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-4">
+                            <div class="input-group">
+                                <input class="form-control  pull-right" name="days_limit" id="" value="{{ $peak_period->days_limit }}" type="text">
                             </div>
                         </div>
                        
