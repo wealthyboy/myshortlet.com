@@ -40,6 +40,7 @@ class BookingController extends Controller
 
 		$referer = request()->headers->get('referer');
 		$bookings = BookingDetail::all_items_in_cart($property->id);
+		
 		$user = auth()->user();
 
 		if (!$bookings->count()) {
@@ -59,8 +60,10 @@ class BookingController extends Controller
 		$days = $booking->checkin->diffInDays($booking->checkout);
 
 
+
         $peak_period =  PeakPeriod::first();
-		$daysInPeakPeriod = $peak_period->calculateDaysWithinPeak($booking->checkin, $booking->checkout);
+		$daysInPeakPeriod = $peak_period->calculateOverlappingDays($booking->checkin, $booking->checkout);
+		//dd($daysInPeakPeriod);
 		$daysNotInPeakPeriod = $peak_period->calculateDaysOutsidePeak($booking->checkin, $booking->checkout);
 		$isPeakPeriodPresent = $daysInPeakPeriod > 0 ? true: false;
 		$daysInPeakPeriodTotal = $daysInPeakPeriod > 0 ? $daysInPeakPeriod * $apt->converted_peak_price : 0;
@@ -96,6 +99,8 @@ class BookingController extends Controller
 			'booking_ids' => $ids,
 			'is_agent' => optional($user)->isAgent()
 		];
+
+		dd($booking_details);
 
 		$qs = request()->all();
 		return view('book.index', compact('qs', 'referer', 'phone_codes', 'property', 'bookings', 'booking_details'));
