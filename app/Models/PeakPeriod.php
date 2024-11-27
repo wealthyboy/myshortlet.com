@@ -33,6 +33,13 @@ class PeakPeriod extends Model
        return $this->days_limit <= $this->daysLeftInRange($this->start_date, $this->end_date);
     } 
 
+    function increasePriceByPercentage($price)
+   {
+
+        $increase = ($price * $this->discount) / 100;
+        return $price + $increase;
+   }
+
     public function getFromDateAttribute()
         {
         return $this->start_date->format('l') . ' ' .  $this->start_date->format('d') . ' ' .  $this->start_date->format('F') . ' ' . $this->start_date->isoFormat('Y');

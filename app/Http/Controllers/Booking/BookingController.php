@@ -50,7 +50,6 @@ class BookingController extends Controller
 		$ids = $bookings->pluck('id')->toArray();
 		$ids = $ids;
 		$booking = $bookings[0];
-		$apt = Apartment::find($request->apartment_id);
 
 
 		if (!$booking) {
@@ -64,8 +63,11 @@ class BookingController extends Controller
         $peak_period =  PeakPeriod::first();
 		$daysInPeakPeriod = $peak_period->calculateOverlappingDays($booking->checkin, $booking->checkout);
 		$daysNotInPeakPeriod = $peak_period->calculateDaysOutsidePeak($booking->checkin, $booking->checkout);
+		$apt = Apartment::find($request->apartment_id);
+
+		$peak_period_price = $apt->converted_peak_price > 0 ? $apt->converted_peak_price : $peak_period->increasePriceByPercentage($apt->converted_price);
 		$isPeakPeriodPresent = $daysInPeakPeriod > 0 ? true: false;
-		$daysInPeakPeriodTotal = $daysInPeakPeriod > 0 ? $daysInPeakPeriod * $apt->converted_peak_price : 0;
+		$daysInPeakPeriodTotal = $daysInPeakPeriod > 0 ? $daysInPeakPeriod * $peak_period_price : 0;
 		$daysNotInPeakPeriodTotal = $daysNotInPeakPeriod > 0 ? $daysNotInPeakPeriod * $apt->converted_regular_price : 0;
 
 		$nights = [];
@@ -85,7 +87,7 @@ class BookingController extends Controller
 			'days_not_in_peak_period'=> $daysNotInPeakPeriod, 
 			'peak_period_total' => $daysInPeakPeriodTotal,
 			'days_not_in_peak_period_total' => $daysNotInPeakPeriodTotal,
-			'peak_price' => $apt->converted_peak_price,
+			'peak_price' => $peak_period_price,
 			'regular_price' => $apt->converted_regular_price,
 			'currency' => session('switch'), 
 			'loggedIn' => auth()->check(), 
@@ -99,7 +101,6 @@ class BookingController extends Controller
 			'is_agent' => optional($user)->isAgent()
 		];
 
-		dd($booking_details);
 
 		$qs = request()->all();
 		return view('book.index', compact('qs', 'referer', 'phone_codes', 'property', 'bookings', 'booking_details'));

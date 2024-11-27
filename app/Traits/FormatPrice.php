@@ -177,8 +177,21 @@ trait FormatPrice
       } 
     }
 
+
+
+    if(null !==  $peak_period ){
+      if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
+        if ($this->december_prices > 0 ) {
+          return $this->ConvertCurrencyRate($this->december_prices);
+        }    
+      } 
+    }
+
     return 0;
   }
+
+
+
 
 
   public function getExchangePriceAttribute()
