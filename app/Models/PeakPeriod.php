@@ -131,7 +131,7 @@ class PeakPeriod extends Model
         $overlappingDays = $overlapStart->greaterThan($overlapEnd) ? 0 : $overlapStart->diffInDays($overlapEnd) + 1;
 
         // Days outside the peak period
-        return $totalUserDays - $overlappingDays;
+        return ($totalUserDays - $overlappingDays) -1;
     }
 
 }

@@ -640,15 +640,15 @@ export default {
                     const paramNameToGet = 'check_in_checkout';
                     const { key, value } = this.getQueryParam(paramNameToGet);
 
-                    // if (value && this.isValidDateRange(value)) {
-                    //     this.apartmentIsChecked = true
-                    // }
+                    if (value && this.isValidDateRange(value)) {
+                        this.apartmentIsChecked = true
+                    }
 
-                    // if (this.form.checkin && this.form.checkout) {
-                    //     if (this.isValidDate(this.form.checkin) && this.isValidDate(this.form.checkout)) {
-                    //         this.apartmentIsChecked = true
-                    //     }
-                    // }
+                    if (this.form.checkin && this.form.checkout) {
+                        if (this.isValidDate(this.form.checkin) && this.isValidDate(this.form.checkout)) {
+                            this.apartmentIsChecked = true
+                        }
+                    }
 
                     this.roomsAv = response.data.data;
                     this.stays = response.data.nights;
