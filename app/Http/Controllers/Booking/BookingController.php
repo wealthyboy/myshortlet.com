@@ -63,7 +63,6 @@ class BookingController extends Controller
 
         $peak_period =  PeakPeriod::first();
 		$daysInPeakPeriod = $peak_period->calculateOverlappingDays($booking->checkin, $booking->checkout);
-		//dd($daysInPeakPeriod);
 		$daysNotInPeakPeriod = $peak_period->calculateDaysOutsidePeak($booking->checkin, $booking->checkout);
 		$isPeakPeriodPresent = $daysInPeakPeriod > 0 ? true: false;
 		$daysInPeakPeriodTotal = $daysInPeakPeriod > 0 ? $daysInPeakPeriod * $apt->converted_peak_price : 0;
