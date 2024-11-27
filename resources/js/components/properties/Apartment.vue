@@ -26,6 +26,7 @@
                     </div>
                 </div>
 
+
                 <div class="item rounded-top" :key="index" v-for="(image, index) in  room.google_drive_image_link "
                     itemprop="photo" itemscope itemtype="https://schema.org/ImageObject">
                     <img :alt="room.name" :title="'book ' + room.name + '  Avenue Montaigne'"
