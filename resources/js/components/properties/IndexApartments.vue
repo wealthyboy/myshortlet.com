@@ -614,6 +614,8 @@ export default {
 
             console.log(room.apartment_facilities)
         },
+        
+      
 
         checkSingleAvailabity(room) {
             this.checkApartmentAvailabity(room)

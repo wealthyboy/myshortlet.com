@@ -28,6 +28,13 @@ export default {
             const dateObject = new Date(dateString);
             return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
         },
+        isValidDateRange(dateRangeString) {
+            // Split the date range string into two dates
+            const [startDateString, endDateString] = dateRangeString.split(' to ');
+
+            // Validate each date individually
+            return this.isValidDate(startDateString) && this.isValidDate(endDateString);
+        },
 
         dateSelected(value) {
             //this.form.check_in_checkout = value;
@@ -488,7 +495,6 @@ export default {
                 return;
             }
 
-            return;
 
             this.loading = true
 
