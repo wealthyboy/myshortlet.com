@@ -413,6 +413,7 @@ export default {
             const retrievedObject = JSON.parse(retrievedJsonString);
             this.form.checkin = retrievedObject.checkin
             this.form.checkout = retrievedObject.checkout
+            console.log(this.form.checkout)
             //this.checkAvailabity()
         }
 
@@ -625,24 +626,23 @@ export default {
             this.propertyLoading = true
             const urlParams = new URLSearchParams(window.location.search);
             const queryString = urlParams.toString();
-            this.apartmentIsChecked = true
 
             axios
                 .get(window.location + '?t=' + Math.random())
                 .then((response) => {
+
                 let params = response.data.params
-                    this.form.checkin = params.checkin
-                    this.form.checkout = params.checkout
+                   
                     this.form.rooms = params.rooms
                     this.form.persons = params.checkout
                     this.roomsAv = response.data.data;
                     this.stays = response.data.nights;
                     this.propertyLoading = false;
-
                     const paramNameToGet = 'check_in_checkout';
                     const { key, value } = this.getQueryParam(paramNameToGet);
 
                     if (value && this.isValidDateRange(value)) {
+                        console.log(value,this.isValidDateRange(value) )
                         this.apartmentIsChecked = true
                     }
 
