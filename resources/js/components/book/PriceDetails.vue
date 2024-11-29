@@ -29,10 +29,10 @@
     </div>
     <div class="bg-white mt-2">
       <div class="card-title bold-3 custom-border-bottom p-3 text-size-1-big">
-        Price Details 
+        Price Details  {{ days_not_in_peak_period }}
       </div>
 
-      <div v-for="booking in bookings" :key="booking.id"
+      <div v-if="booking_details.days_not_in_peak_period > 0" v-for="booking in bookings" :key="booking.id"
         class=" p-3  bg-transparent d-flex justify-content-between p-0 align-items-center">
         <template v-if="booking.sale_price">
           <div>
