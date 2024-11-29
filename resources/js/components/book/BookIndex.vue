@@ -625,6 +625,8 @@ export default {
           context.bookingTotal
       }
 
+      
+
 
 
       // if (this.booking_details.is_agent) {

@@ -51,7 +51,12 @@ class WebHookController extends Controller
             $guest->name = $input['first_name'];
             $guest->last_name = $input['last_name'];
             $guest->email = $input['email'];
-            $guest->phone_number = '+' .$input['phone_number'].''.$input['phone_number'];
+
+            if (isset($input['code']) && !empty($input['code'])) {
+                $guest->phone_number = '+' . $input['code'] . ' ' . $input['phone_number'];
+            } else {
+                $guest->phone_number = $input['phone_number'];
+            }
             $guest->save();
             $bookings = BookingDetail::find($input['booking_ids']);
             $user_reservation->user_id = optional($request->user())->id;
