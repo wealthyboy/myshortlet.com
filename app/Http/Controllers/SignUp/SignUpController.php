@@ -36,6 +36,7 @@ class SignUpController extends Controller
 
         $reservation = null;
         $rooms = Apartment::orderBy('name', 'asc')->get();
+       // dd($rooms);
         if ($request->id) {
             $user_reservation = UserReservation::findOrFail($request->id);
             $reservation = isset($user_reservation->reservations[0]) && !empty($user_reservation->reservations[0]) ? $user_reservation->reservations[0] : null;
@@ -73,6 +74,13 @@ class SignUpController extends Controller
     public function store(Request $request)
     {
         try {
+
+            $user_reservation = UserReservation::find($request->user_reservation_id);
+
+            if ($request->filled('user_reservation_id')  && null !== $user_reservation && $user_reservation->checked) {
+                response()->json(null, 200);
+            }
+
 
             $input = $request->all();
             $property = Property::first();
@@ -124,6 +132,7 @@ class SignUpController extends Controller
             $user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
             $user_reservation->payment_type = 'checkin';
             $user_reservation->property_id = $property->id;
+            $user_reservation->checked = true;
             $user_reservation->coupon = null;
             $user_reservation->coming_from = "checkin";
             $user_reservation->total = (optional($apartment)->price || 0) * $date_diff;
@@ -141,7 +150,6 @@ class SignUpController extends Controller
             $reservation->checkout = $endDate;
             $reservation->save();
             $fileName = 'guest_' . $guest->name . '_' . $guest->id . '.pdf';
-
             $fileContent = '';
 
             $directory = public_path('pdf');
@@ -155,7 +163,7 @@ class SignUpController extends Controller
             $reservation->phone_number = $request->phone_number;
             ProcessGuestCheckin::dispatch($guest, $reservation, $apartment)->delay(now()->addSeconds(5));
 
-            return response()->json(null, 200);
+            return response()->json("Success", 200);
         } catch (\Throwable $th) {
             //throw $th;
             dd($th);

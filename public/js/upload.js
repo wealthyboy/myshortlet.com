@@ -102,21 +102,26 @@ jQuery(window).on("load", function () {
     submitHandler: function (form) {
       var checkin = $("#checkin").val();
       var checkout = $("#checkout").val();
+      var user_reservation = $("#user_reservation").val();
+
 
       // Parse the dates
       var checkinDate = new Date(checkin);
       var checkoutDate = new Date(checkout);
       // Check if checkin date is before checkout date
+      if (user_reservation === "") {
+        if (checkin === checkout) {
+          alert("You can’t select same date for check-in and check-out");
+          return;
+        }
 
-      if (checkin === checkout) {
-        alert("You can’t select same date for check-in and check-out");
-        return;
+        
+        if (checkin > checkout) {
+          alert("Check-out date must be greater Check-in date.");
+          return;
+        }
       }
-
-      if (checkin > checkout) {
-        alert("Check-out date must be greater Check-in date.");
-        return;
-      }
+     
 
       if (myDropzone) {
         myDropzone.on("uploadprogress", function (file) {
