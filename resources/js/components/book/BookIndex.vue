@@ -554,6 +554,8 @@ export default {
         .post("/book/coupon", {
           coupon: this.coupon,
           total: this.bookingTotal,
+          limit: this.booking_details.days,
+
         })
         .then((response) => {
           this.submiting = false;

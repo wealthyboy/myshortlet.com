@@ -58,6 +58,7 @@ class VouchersController  extends Controller
 		$voucher->from_value = $request->has('from_value') ? $request->from_value : null;
 		$voucher->category_id = $request->has('category') ? $request->category : null;
 		$voucher->status =$request->status;
+		$voucher->limits = $request->limits;
 		$voucher->save(); 
 		return redirect('admin/vouchers');
 				
@@ -87,14 +88,14 @@ class VouchersController  extends Controller
 		//dd($request->expiry);
 
 
-		$coupon->code     =  $request->code; 
-		$coupon->user_id  = \Auth::user()->id;
-		$coupon->amount   = $request->discount;
-		$coupon->type     = $request->type;
-		$coupon->expires  = Helper::getFDate($request->expiry);
+		$coupon->code = $request->code; 
+		$coupon->user_id = \Auth::user()->id;
+		$coupon->amount = $request->discount;
+		$coupon->type = $request->type;
+		$coupon->expires = Helper::getFDate($request->expiry);
+		$coupon->limits = $request->limits;
 		$coupon->from_value = $request->has('from_value') ? $request->from_value : null;
-		//$coupon->category_id = $request->has('category') ? $request->category : null;
-		$coupon->status =$request->status;
+		$coupon->status = $request->status;
 		$coupon->save(); 			
 		return redirect('admin/vouchers');	
 	}

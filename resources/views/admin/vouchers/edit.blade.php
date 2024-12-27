@@ -80,6 +80,15 @@
                             </div>
                         </div>
 
+                        <div class="col-lg-3 col-sm-4">
+                            <div class="input-group">
+                              
+                                <input name="limits" value="{{ $voucher->limits }}" placeholder="Limit" id="limits" class="form-control" type="text">
+
+
+                            </div>
+                        </div>
+
                         <div class="clearfix"></div>
 
                         <input value="search" name="search" type="hidden">

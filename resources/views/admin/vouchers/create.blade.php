@@ -77,6 +77,13 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-lg-3 col-sm-4">
+                            <div class="input-group">
+                              
+                                <input class="form-control" placeholder="Limit" name="limits" id="limits" type="text">
+
+                            </div>
+                        </div>
 
                         <div class="clearfix"></div>
                         <input value="search" name="search" type="hidden">

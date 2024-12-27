@@ -252,6 +252,12 @@ class BookingController extends Controller
 		}
 
 
+		if ($request->limit > $coupon->limits) {
+			$error['error'] = 'Coupon can only be used for   ' . $coupon->limits . ' night(s)';
+			return response()->json($error, 422);
+		}
+
+
 		if (!$coupon->is_valid()) {
 			$error['error'] = 'Coupon is invalid ';
 			return response()->json($error, 422);
