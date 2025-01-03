@@ -166,6 +166,13 @@
                                         <span class="sidebar-normal"> Peak Periods </span>
                                     </a>
                                 </li>
+
+                                <li class="{{ $helper->active_link(['blocks']) }} ">
+                                    <a target="_blank" href="/admin/blocks">
+                                        <span class="sidebar-mini"> BA </span>
+                                        <span class="sidebar-normal"> Block Apartment </span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>

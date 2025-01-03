@@ -89,6 +89,8 @@ class ReservationsController extends Controller
 
 						$q->whereBetween('checkin', [$startDate, $endDate])
 						->orWhereBetween('checkout', [$startDate, $endDate])
+						->where('is_blocked', false)
+
 						->orWhere(function ($query) use ($startDate, $endDate) {
 							$query->where('checkin', '<=', $startDate)
 								  ->where('checkout', '>=', $endDate);

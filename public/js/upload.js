@@ -168,4 +168,80 @@ jQuery(window).on("load", function () {
       });
     },
   });
+
+
+
+  var $valid = $("form.form-block").validate({
+    rules: {
+      first_name: { required: true },
+      last_name: { required: true },
+      email: { required: true, email: true },
+      phone_number: { required: true },
+      apartment_id: { required: true },
+      checkin: {
+        required: true,
+      },
+      checkout: { required: true },
+    },
+    messages: {
+      email: {
+        required: "Please enter your email",
+        email: "Please enter a valid email",
+      },
+      apartment_id: { required: "Please select an  apartment" },
+      checkin: {
+        required: "Select a check-in date",
+      },
+      checkout: {
+        required: "Select a check-out date",
+      },
+    },
+    submitHandler: function (form) {
+      var checkin = $("#checkin").val();
+      var checkout = $("#checkout").val();
+      var checkinDate = new Date(checkin);
+      var checkoutDate = new Date(checkout);
+      if (checkin === checkout) {
+        alert("You can’t select same date for check-in and check-outererer");
+        return;
+      }
+
+      
+      if (checkin > checkout) {
+        alert("Check-out date must be greater Check-in date.");
+        return;
+      }
+
+    
+      $("#form").addClass("header-filter");
+
+      form_button.text("Loading...");
+
+      overlay.removeClass("d-none");
+      overlay.addClass("d-flex");
+
+      // AJAX call
+      $.ajax({
+        url: "/block",
+        type: "POST",
+        data: $(form).serialize(), // Serialize the form data
+        success: function (response) {
+          $(form).hide();
+          $("#alert-success").removeClass("d-none");
+          overlay.addClass("d-none");
+          overlay.removeClass("d-flex");
+        },
+        error: function (xhr, status, error) {
+          form_button.text("Submit");
+          let m = JSON.parse(xhr.responseText);
+          overlay.addClass("d-none");
+          overlay.removeClass("d-flex");
+
+          if (typeof m != "undefined" && typeof m.message !== "undefined") {
+            alert("This apartment is not available for your selected date.");
+          }
+        },
+      });
+    },
+  });
 });

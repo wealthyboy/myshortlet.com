@@ -22,6 +22,8 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::post('reservations/resendLink', 'Admin\Reservations\ReservationsController@resendLink');
 
     Route::resource('check-in', 'Admin\Reservations\ReservationsController', ['names' => 'admin.check-in']);
+
+
     Route::resource('agents', 'Admin\Agents\AgentsController', ['names' => 'admin.agents']);
 
     Route::post('upload', 'Admin\Uploads\UploadsController@store');
@@ -48,17 +50,17 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('media', 'Admin\Media\MediaController', ['names' => 'media']);
 
     Route::resource('galleries', 'Admin\Gallery\GalleryController', ['names' => 'admin.galleries']);
+    Route::resource('blocks', 'Admin\Block\BlockApartmentsController', ['names' => 'admin.blocks']);
+
+
     Route::resource('attributes', 'Admin\Attributes\AttributesController', ['names' => 'attributes']);
     Route::resource('rates', 'Admin\CurrencyRates\CurrencyRatesController', ['name' => 'rates']);
     Route::resource('vouchers', 'Admin\Vouchers\VouchersController', ['names' => 'vouchers']);
     Route::resource('peak_periods', 'Admin\PeakPeriod\PeakPeriodController', ['names' => 'peak_periods']);
-
     Route::get('properties/apartment', 'Admin\Properties\PropertiesController@newRoom');
     Route::resource('properties', 'Admin\Properties\PropertiesController', ['names' => 'admin.properties']);
     Route::resource('apartments', 'Admin\Apartments\ApartmentsController', ['names' => 'admin.apartments']);
-
     Route::delete('room/{id}/delete', 'Admin\Rooms\RoomsController@destroy');
-
     Route::resource('category', 'Admin\Category\CategoryController', ['names' => 'category']);
     Route::post('category/delete/image', 'Admin\Category\CategoryController@undo');
 
@@ -70,15 +72,11 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
 
 
     Route::post('logout',  'Auth\LoginController@logout')->name('admin_users_logout');
-
     Route::get('register', 'Admin\Users\UsersController@create')->name('create_admin_users');
     Route::post('register', 'Auth\RegisterController@register');
-
     Route::resource('users',  'Admin\Users\UsersController', ['names' => 'admin.users']);
     Route::resource('customers', 'Admin\Customers\CustomersController', ['name' => 'customers']);
-
-
-    //Route::resource('templates',              'Admin\Templates\TemplatesController',['name'=>'templates']);
+    //Route::resource('templates', 'Admin\Templates\TemplatesController',['name'=>'templates']);
 
     Route::resource('promos',             'Admin\Promo\PromoController', ['names' => 'promos']);
     Route::get('promo-text/create/{id}',      'Admin\PromoText\PromoTextController@create')->name('create_promo_text');
@@ -134,6 +132,10 @@ Route::group(['middleware' => 'currencyByIp'], function () {
     Route::get('properties/{category}', 'Properties\PropertiesController@index');
     Route::get('check-in', 'SignUp\SignUpController@index');
     Route::post('check-in', 'SignUp\SignUpController@store');
+    Route::get('block', 'Admin\Block\BlockApartmentsController@block');
+
+    Route::post('block', 'SignUp\SignUpController@block');
+
     Route::get('listings', 'Listings\ListingsController@index');
     Route::post('webhook/payment', 'WebHook\WebHookController@payment');
     Route::post('webhook/github', 'WebHook\WebHookController@gitHub');
@@ -151,14 +153,8 @@ Route::group(['middleware' => 'currencyByIp'], function () {
 
 
 
-
-
-
-
-
 Route::get('/mailable', function () {
-
     $user_reservation = App\Models\UserReservation::find(11);
-    $settings =  App\Models\SystemSetting::first();
+    $settings = App\Models\SystemSetting::first();
     return new App\Mail\ReservationReceipt($user_reservation, $settings);
 });

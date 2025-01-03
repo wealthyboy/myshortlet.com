@@ -82,6 +82,7 @@ class ApartmentsController extends Controller
             })
                 ->where('apartments.max_adults', '>=',  $data['persons'])
                 ->where('apartments.no_of_rooms', '>=', $data['rooms']);
+
         }
 
 
