@@ -192,11 +192,11 @@ class SignUpController extends Controller
            
             $apartments = $query->latest()->first();
             $guest = GuestUser::firstOrNew(['id' => data_get($input, 'guest_id')]);
-            $guest->name = $input['first_name'];
-            $guest->last_name = $input['last_name'];
-            $guest->email = $input['email'];
-            $guest->phone_number = $input['phone_number'];
-            $guest->image = session('session_link');
+            $guest->name = "Block";
+            $guest->last_name = "Blocked";
+            $guest->email = "blocked@blocked";
+            $guest->phone_number = "082394839384";
+            $guest->image = "kkk.jpg";
             $guest->save();
 
             $apartment = Apartment::find($request->apartment_id);
@@ -228,10 +228,10 @@ class SignUpController extends Controller
             $guest->image = "kkkkk.jpg";
             $reservation->apartment_name = optional($apartment->attribute)->name;
             $guest->apartment_name = optional($apartment->attribute)->name;
-            $reservation->first_name = $request->first_name;
+            $reservation->first_name = "block";
             $reservation->last_name = $request->last_name;
-            $reservation->email = $request->email;
-            $reservation->phone_number = $request->phone_number;
+            $reservation->email = "block@block.com";
+            $reservation->phone_number = "block";
             return response()->json("Success", 200);
         } catch (\Throwable $th) {
             //throw $th;

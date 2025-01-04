@@ -34,37 +34,10 @@
 
                         <div class="form-row">
                             <div class="form-group bmd-form-group col-md-6 col-12">
-                                <label class="bmd-label-floating">First name</label>
-                                <input id="first_name" type="text"  class="form-control" name="first_name" value="" required>
-
-                            </div>
-
-
-                            <div class="form-group bmd-form-group col-md-6 col-12">
-                                <label class="bmd-label-floating">Last name</label>
-                                <input id="last_name" type="text"  class="form-control" name="last_name" value="" required>
-
-
-                            </div>
-
-                            <div class="form-group bmd-form-group col-md-6 col-12">
-                                <label class="bmd-label-floating">Email</label>
-                                <input id="email" type="email"  class="form-control" name="email" value="" autocomplete="off">
-
-                            </div>
-
-                            <div class="form-group bmd-form-group col-md-6 col-12">
-                                <label class="bmd-label-floating">Phone</label>
-                                <input id="phone_number" type="text"  class="form-control" name="phone_number" value="" required>
-
-                            </div>
-
-
-                            <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label for="checkin" class="bmd-label-floating">Check-in </label>
                                 <input type="text"  id="checkin" class="form-control selector"   name="checkin">
-
                             </div>
+                            
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label for="checkout" class="bmd-label-floating">Check-out</label>
                                 <input type="text" id="checkout" class="form-control selector"   name="checkout">
@@ -76,11 +49,7 @@
                                     <option selected value="">Choose Apartment</option>
                                     @foreach($rooms as $room)
                                     <option value="{{ $room->id }}">{{ $room->name }}</option>
-
-
-                                   
                                     @endforeach
-
 
                                 </select>
 

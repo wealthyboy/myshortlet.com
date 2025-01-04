@@ -60,6 +60,9 @@ class ReservationsController extends Controller
 		$query = UserReservation::with('guest_user');
 		$apartments = Apartment::orderBy('name', 'asc')->get();
 		$request->session()->put('coming_from', $request->coming_from);
+		$query->whereHas('reservations', function ($q) use ($apartment_id) {
+			$q->where('is_blocked', false);
+		});
 
 		// Check if any filters are provided
 		if ($email || $phoneNumber || $startDate || $endDate || $apartment_id) {
@@ -82,37 +85,25 @@ class ReservationsController extends Controller
 				});
 			}
 
-			//dd($request->input('from'));
 			if ($startDate && $endDate) {
 				$query->whereHas('reservations', function ($q) use ($startDate, $endDate) {
-					
-
-						$q->whereBetween('checkin', [$startDate, $endDate])
-						->orWhereBetween('checkout', [$startDate, $endDate])
-						->where('is_blocked', false)
-
-						->orWhere(function ($query) use ($startDate, $endDate) {
-							$query->where('checkin', '<=', $startDate)
-								  ->where('checkout', '>=', $endDate);
-						});
+					$q->whereBetween('checkin', [$startDate, $endDate])
+					->orWhereBetween('checkout', [$startDate, $endDate])
+					->orWhere(function ($query) use ($startDate, $endDate) {
+						$query->where('checkin', '<=', $startDate)
+							->where('checkout', '>=', $endDate);
+					});
 					
 				});
 
 				
 			}
 
-
-			// if ($date) {
-			// 	$query->whereDate('created_at', $date);
-			// }
 		} else {
-			// Default to today's reservations if no filters are provided
 			$query->whereDate('created_at', Carbon::today());
 		}
 
 		$reservations = $query->where('coming_from', $comingFrom)->orderBy('created_at', 'desc')->paginate(50);
-
-		//dd($reservations);
 		return view('admin.reservations.index', compact('reservations', 'apartments'));
 	}
 
