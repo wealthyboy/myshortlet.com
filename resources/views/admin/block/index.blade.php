@@ -10,7 +10,7 @@
                 Refresh
             </a>
 
-            <a target="_blank" href="/admin/block" rel="tooltip" title="Add New" class="btn btn-primary btn-simple btn-xs">
+            <a target="_blank" href="/block" rel="tooltip" title="Add New" class="btn btn-primary btn-simple btn-xs">
                 <i class="material-icons">add</i>
                 Block Apartment
             </a>
