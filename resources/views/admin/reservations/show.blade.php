@@ -92,7 +92,7 @@
          <div class="card-content">
             <h4 class="card-title">Add extension - <small class="category"></small></h4>
 
-            <form id="reservationForm" data-url="{{request()->fullUrl()}}" action="?add_extension=1" method="GET">
+            <form id="reservationForm" data-url="{{request()->fullUrl()}}?add_extension=1" action="?add_extension=1" method="GET">
                <div class="form-row">
                   <div class="form-group col-md-3">
                      <label for="date">Check-in</label>
@@ -123,7 +123,7 @@
          <div class="card-content">
             <h4 class="card-title">Update Reservation - <small class="category"></small></h4>
 
-            <form id="UpdateForm" data-url="{{request()->fullUrl()}}" action="?add_update=1" method="GET">
+            <form id="UpdateForm" data-url="{{request()->fullUrl()}}?add_update=1" action="?add_update=1" method="GET">
                <div class="form-row">
                   <div class="form-group col-md-3">
                      <label for="date">Check-in</label>

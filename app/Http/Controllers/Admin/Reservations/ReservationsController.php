@@ -152,7 +152,6 @@ class ReservationsController extends Controller
 			$user_reservation = UserReservation::find($id);
 			$stay = Reservation::where('user_reservation_id', $user_reservation->id)->first();
 			$apartment = Apartment::find($stay->apartment_id);
-
 			$reservation = Reservation::find($stay->id);
 			$reservation->quantity = 1;
 			$reservation->apartment_id = $stay->apartment_id;

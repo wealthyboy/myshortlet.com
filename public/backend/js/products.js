@@ -40,8 +40,9 @@ $('#reservationForm').on('submit', function (e) {
   }
 });
 
-$('#updateForm').on('submit', function (e) {
+$('#UpdateForm').on('submit', function (e) {
   e.preventDefault();
+
 
   var checkinDate = new Date($('#checkin-update').val());
   var checkoutDate = new Date($('#checkout-update').val());
@@ -58,8 +59,8 @@ $('#updateForm').on('submit', function (e) {
       url: $(this).data('url'),
       data: formData,
       success: function (response) {
-        alert('Reservation successfully made.');
-        location.reload()
+        alert('Updated was successfull .');
+       location.reload()
       },
       error: function (xhr, status, error) {
         if (xhr.status === 400) {
@@ -68,7 +69,7 @@ $('#updateForm').on('submit', function (e) {
           alert('An error occurred while making the reservation.');
         }
 
-        $('#add-extension').prop('disabled', false);
+        $('#add_update').prop('disabled', false);
 
 
       }
