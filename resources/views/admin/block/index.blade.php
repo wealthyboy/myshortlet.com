@@ -10,11 +10,17 @@
                 Refresh
             </a>
 
-            <a target="_blank" href="/block" rel="tooltip" title="Add New" class="btn btn-primary btn-simple btn-xs">
+            <a target="_blank" href="/admin/block" rel="tooltip" title="Add New" class="btn btn-primary btn-simple btn-xs">
                 <i class="material-icons">add</i>
                 Block Apartment
             </a>
            
+
+            <a href="javascript:void(0)" onclick="confirm('Are you sure?') ? $('#form-apartments').submit() : false;" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                <i class="material-icons">close</i>
+                Remove
+            </a>
+
         </div>
     </div>
 
@@ -30,7 +36,7 @@
                     <!-- Here you can write extra buttons/actions for the toolbar              -->
                 </div>
                 <div class="material-datatables">
-                    <form action="{{ route('admin.apartments.destroy',['apartment'=>1]) }}" method="post" enctype="multipart/form-data" id="form-apartments">
+                    <form action="{{ route('admin.blocks.destroy',['block'=>1]) }}" method="post" enctype="multipart/form-data" id="form-apartments">
                         @method('DELETE')
                         @csrf
 
@@ -46,9 +52,7 @@
                                         </div>
                                     </th>
                                     <th>Name</th>
-                                    <th>Status</th>
-                                    <th>category</th>
-                                    <th class="disabled-sorting text-right">Actions</th>
+                                    <th>Checkin - Checkout</th>
                                 </tr>
                             </thead>
 
@@ -64,13 +68,11 @@
                                     </td>
 
                                     <td><a target="_blank">{{ $apartment->name }} </a></td>
-                                    <td>{{ $apartment->allow == 1 ? 'Live' : 'Offline' }}</td>
                                     <td>
-                                        {{ '' }}
+                                        {{ $apartment->reservations[0]->checkin->format('Y-m-d')  }} - {{ $apartment->reservations[0]->checkout->format('Y-m-d') }}
+
                                     </td>
-                                    <td class="td-actions ">
-                                       
-                                    </td>
+                                   
                                 </tr>
                                 @endforeach
                             </tbody>

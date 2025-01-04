@@ -1,6 +1,26 @@
-$(".selector").flatpickr({
+$("#checkin").flatpickr({
   minDate: "today", // Disable past dates
   dateFormat: "Y-m-d", // Set the desired date format
+  onChange: function(selectedDates, dateStr, instance) {
+    // Get the selected check-in date
+    let checkinDate = new Date(selectedDates[0]);
+    // Calculate the next day for the checkout date
+    let minCheckoutDate = new Date(checkinDate);
+    minCheckoutDate.setDate(checkinDate.getDate() + 1);
+    
+    // Initialize or update checkout flatpickr with new minDate and defaultDate
+    $("#checkout").flatpickr({
+      minDate: minCheckoutDate,
+      dateFormat: "Y-m-d",
+      defaultDate: minCheckoutDate // Automatically set next day as the active date
+    });
+  }
+});
+
+// Initialize checkout flatpickr initially
+$("#checkout").flatpickr({
+  minDate: "today", // Initial minimum date
+  dateFormat: "Y-m-d" // Set the desired date format
 });
 
 Dropzone.autoDiscover = false;

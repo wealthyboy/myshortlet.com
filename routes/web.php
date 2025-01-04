@@ -50,7 +50,9 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('media', 'Admin\Media\MediaController', ['names' => 'media']);
 
     Route::resource('galleries', 'Admin\Gallery\GalleryController', ['names' => 'admin.galleries']);
+    Route::get('block', 'Admin\Block\BlockApartmentsController@block');
     Route::resource('blocks', 'Admin\Block\BlockApartmentsController', ['names' => 'admin.blocks']);
+    
 
 
     Route::resource('attributes', 'Admin\Attributes\AttributesController', ['names' => 'attributes']);
@@ -132,7 +134,6 @@ Route::group(['middleware' => 'currencyByIp'], function () {
     Route::get('properties/{category}', 'Properties\PropertiesController@index');
     Route::get('check-in', 'SignUp\SignUpController@index');
     Route::post('check-in', 'SignUp\SignUpController@store');
-    Route::get('block', 'Admin\Block\BlockApartmentsController@block');
 
     Route::post('block', 'SignUp\SignUpController@block');
 

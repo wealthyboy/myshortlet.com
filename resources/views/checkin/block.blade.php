@@ -40,7 +40,7 @@
                             
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label for="checkout" class="bmd-label-floating">Check-out</label>
-                                <input type="text" id="checkout" class="form-control selector"   name="checkout">
+                                <input type="text"  id="checkout" class="form-control selector"   name="checkout">
 
                             </div>
 

@@ -146,7 +146,26 @@ class ReservationsController extends Controller
 
 		$user_reservation = UserReservation::find($id);
 
-		if (!empty($request->query())) {
+		if ($request->add_update) { 
+			$checkin = Carbon::createFromDate($request->checkin);
+			$checkout = Carbon::createFromDate($request->checkout);
+			$user_reservation = UserReservation::find($id);
+			$stay = Reservation::where('user_reservation_id', $user_reservation->id)->first();
+			$apartment = Apartment::find($stay->apartment_id);
+
+			$reservation = Reservation::find($stay->id);
+			$reservation->quantity = 1;
+			$reservation->apartment_id = $stay->apartment_id;
+			$reservation->price = $apartment->price;
+			$reservation->sale_price = $apartment->sale_price;
+			$reservation->user_reservation_id = $user_reservation->id;
+			$reservation->property_id = null;
+			$reservation->checkout = $checkout;
+			$reservation->save();
+		}
+
+
+		if ($request->add_extension) {
 			$checkin = Carbon::createFromDate($request->checkin);
 			$checkout = Carbon::createFromDate($request->checkout);
 			$user_reservation = UserReservation::find($id);

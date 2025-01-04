@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Block;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use App\Models\Reservation;
 
 class BlockApartmentsController extends Controller
 {
@@ -15,7 +16,9 @@ class BlockApartmentsController extends Controller
      */
     public function index()
     {  
-        $apartments = Apartment::whereHas('reservations', function ($query) {
+        $apartments = Apartment::with(['reservations' => function ($query) {
+            $query->where('is_blocked', true);
+        }])->whereHas('reservations', function ($query) {
             $query->where('is_blocked', true);
         })->get();
 
@@ -50,39 +53,7 @@ class BlockApartmentsController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+   
 
     /**
      * Remove the specified resource from storage.
@@ -91,7 +62,15 @@ class BlockApartmentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {   
+        $request = request();
+
+        if (!empty($request->selected)) {
+            Reservation::whereIn('apartment_id', $request->selected)
+                ->where('is_blocked', true)
+                ->delete(); 
+    
+                return redirect()->back();
+            }
     }
 }

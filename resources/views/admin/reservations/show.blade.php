@@ -123,23 +123,23 @@
          <div class="card-content">
             <h4 class="card-title">Update Reservation - <small class="category"></small></h4>
 
-            <form id="UpdateForm" data-url="{{request()->fullUrl()}}" action="?add_extension=1" method="GET">
+            <form id="UpdateForm" data-url="{{request()->fullUrl()}}" action="?add_update=1" method="GET">
                <div class="form-row">
                   <div class="form-group col-md-3">
                      <label for="date">Check-in</label>
-                     <input class="form-control  datepicker pull-right" name="checkin" id="checkin" type="text" required>
+                     <input class="form-control  datepicker pull-right" name="checkin" id="checkin-update" type="text" required>
                   </div>
 
                   <div class="form-group col-md-3">
                      <label for="date">Check-out</label>
-                     <input class="form-control  datepicker pull-right" name="checkout" id="checkout" type="text" required>
+                     <input class="form-control  datepicker pull-right" name="checkout" id="checkout-update" type="text" required>
                   </div>
 
 
                   <div class="form-group col-md-2">
-                     <button id="add-extension" type="submit" class="btn btn-primary">
+                     <button id="add-update" type="submit" class="btn btn-primary">
                         Submit
-                        <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display:none;"></span>
+                        <span id="spinner-update" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display:none;"></span>
                      </button>
                   </div>
                </div>

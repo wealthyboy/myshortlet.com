@@ -40,6 +40,42 @@ $('#reservationForm').on('submit', function (e) {
   }
 });
 
+$('#updateForm').on('submit', function (e) {
+  e.preventDefault();
+
+  var checkinDate = new Date($('#checkin-update').val());
+  var checkoutDate = new Date($('#checkout-update').val());
+
+
+  if (checkinDate >= checkoutDate) {
+    alert('Check-in date must be earlier than check-out date.');
+  } else {
+    var formData = $(this).serialize();
+    $('#add-update').prop('disabled', true);
+    $('#spinner-update').show();
+    $.ajax({
+      type: 'GET',
+      url: $(this).data('url'),
+      data: formData,
+      success: function (response) {
+        alert('Reservation successfully made.');
+        location.reload()
+      },
+      error: function (xhr, status, error) {
+        if (xhr.status === 400) {
+          alert('This apartment date is not available for your selected date');
+        } else {
+          alert('An error occurred while making the reservation.');
+        }
+
+        $('#add-extension').prop('disabled', false);
+
+
+      }
+    });
+  }
+});
+
 $('.resend-link').on('click', function (event) {
   event.preventDefault(); // Prevent the default anchor tag behavior
 
