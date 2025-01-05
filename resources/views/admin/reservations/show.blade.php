@@ -94,7 +94,7 @@
 
             <form id="reservationForm" data-url="{{request()->fullUrl()}}?add_extension=1" action="?add_extension=1" method="GET">
                <div class="form-row">
-                 
+                
 
                   <div class="form-group col-md-3">
                      <label for="date">Check-out</label>
