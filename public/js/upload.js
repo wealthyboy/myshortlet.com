@@ -10,7 +10,6 @@ $("#checkin").flatpickr({
     $("#checkout").flatpickr({
       minDate: minCheckoutDate,
       dateFormat: "Y-m-d",
-      defaultDate: minCheckoutDate // Automatically set next day as the active date
     });
   }
 });
