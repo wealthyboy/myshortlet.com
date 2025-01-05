@@ -1,21 +1,22 @@
-$("#checkin").flatpickr({
+let checkinPicker = $("#checkin").flatpickr({
   minDate: "today", // Disable past dates
   dateFormat: "Y-m-d", // Set the desired date format
-  onChange: function(selectedDates, dateStr, instance) {
-    // Get the selected check-in date
-    let checkinDate = new Date(selectedDates[0]);
-    let minCheckoutDate = new Date(checkinDate);
-    minCheckoutDate.setDate(checkinDate.getDate() + 1);
-    
-    $("#checkout").flatpickr({
-      minDate: minCheckoutDate,
-      dateFormat: "Y-m-d",
-    });
+  onChange: function (selectedDates, dateStr, instance) {
+    if (selectedDates.length > 0) {
+      let checkinDate = new Date(selectedDates[0]);
+      let minCheckoutDate = new Date(checkinDate);
+      minCheckoutDate.setDate(checkinDate.getDate() + 1);
+
+      // Dynamically update checkout picker
+      if (checkoutPicker) {
+        checkoutPicker.set('minDate', minCheckoutDate);
+      }
+    }
   }
 });
 
-// Initialize checkout flatpickr initially
-$("#checkout").flatpickr({
+// Initialize checkout flatpickr with a variable to manage settings
+let checkoutPicker = $("#checkout").flatpickr({
   minDate: "today", // Initial minimum date
   dateFormat: "Y-m-d" // Set the desired date format
 });

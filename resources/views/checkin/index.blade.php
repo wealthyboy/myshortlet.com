@@ -59,11 +59,11 @@
 
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label class="bmd-label-floating">Check-in </label>
-                                <input type="text" id="checkin" class="form-control selector" name="checkin" required>
+                                <input type="text" id="checkin" class="form-control " name="checkin" required>
                             </div>
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label class="bmd-label-floating">Check-out</label>
-                                <input type="text" id="checkout" class="form-control selector" name="checkout" required>
+                                <input type="text" id="checkout" class="form-control " name="checkout" required>
                             </div>
 
 
