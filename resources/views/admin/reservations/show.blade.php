@@ -94,7 +94,6 @@
 
             <form id="reservationForm" data-url="{{request()->fullUrl()}}?add_extension=1" action="?add_extension=1" method="GET">
                <div class="form-row">
-                
 
                   <div class="form-group col-md-3">
                      <label for="date">Check-out</label>
@@ -122,7 +121,10 @@
 
             <form id="UpdateForm" data-url="{{request()->fullUrl()}}?add_update=1" action="?add_update=1" method="GET">
                <div class="form-row">
-                
+                  <div class="form-group col-md-3">
+                     <label for="date">Check-in</label>
+                     <input class="form-control  datepicker pull-right" name="checkin" id="checkin-update" type="text" required>
+                  </div>
 
                   <div class="form-group col-md-3">
                      <label for="date">Check-out</label>
