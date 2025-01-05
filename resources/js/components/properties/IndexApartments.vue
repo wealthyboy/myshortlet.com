@@ -416,6 +416,15 @@ export default {
             this.form.checkout = retrievedObject.checkout
             console.log(this.form.checkout)
             //this.checkAvailabity()
+        } else {
+            const urlParams = new URLSearchParams(window.location.search);
+            const checkin = urlParams.get('checkin') || ''; 
+            const checkout = urlParams.get('checkout') || ''; 
+            this.form.checkin = checkin;
+            this.form.checkout = checkout;
+            
+            const fallbackParams = JSON.stringify({ checkin, checkout });
+            localStorage.setItem('searchParams', fallbackParams);
         }
 
         jQuery(function () {
