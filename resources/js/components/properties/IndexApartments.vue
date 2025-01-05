@@ -420,8 +420,7 @@ export default {
                 const checkout = urlParams.get('checkout') || ''; 
                 this.form.checkin = checkin;
                 this.form.checkout = checkout;
-                const fallbackParams = JSON.stringify({ checkin, checkout });
-                localStorage.setItem('searchParams', fallbackParams);
+              
             }
 
             
@@ -437,7 +436,6 @@ export default {
             //this.checkAvailabity()
         } else {
 
-            alert(true);
             
         }
 
