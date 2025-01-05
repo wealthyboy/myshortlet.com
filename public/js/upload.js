@@ -7,6 +7,8 @@ let checkinPicker = $("#checkin").flatpickr({
       let minCheckoutDate = new Date(checkinDate);
       minCheckoutDate.setDate(checkinDate.getDate() + 1);
 
+      alert(true);
+
       // Dynamically update checkout picker
       if (checkoutPicker) {
         checkoutPicker.set('minDate', minCheckoutDate);
