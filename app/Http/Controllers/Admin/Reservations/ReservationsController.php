@@ -147,12 +147,12 @@ class ReservationsController extends Controller
 		$user_reservation = UserReservation::find($id);
 
 		if ($request->add_update) { 
-			$checkin = Carbon::createFromDate($request->checkin);
 			$checkout = Carbon::createFromDate($request->checkout);
 			$user_reservation = UserReservation::find($id);
 			$stay = Reservation::where('user_reservation_id', $user_reservation->id)->first();
 			$apartment = Apartment::find($stay->apartment_id);
 			$reservation = Reservation::find($stay->id);
+			$old_checkout = $reservation->checkout;
 			$reservation->quantity = 1;
 			$reservation->apartment_id = $stay->apartment_id;
 			$reservation->price = $apartment->price;
@@ -160,6 +160,9 @@ class ReservationsController extends Controller
 			$reservation->user_reservation_id = $user_reservation->id;
 			$reservation->property_id = null;
 			$reservation->checkout = $checkout;
+			$reservation->save();
+
+			$reservation->extension_date = "Checkout updated from {$old_checkout->format('Y-m-d')} to {$checkout->format('Y-m-d')}.";
 			$reservation->save();
 		}
 

@@ -95,7 +95,6 @@
 
                                     <VueSlickCarousel v-bind="settings" :arrows="true" :dots="true">
                                         <template v-if="room.google_drive_image_links">
-
                                             <div class="item" :key="index"
                                                 v-for="(image, index) in room.google_drive_image_links">
                                                 <img :src="image" class="img room-image  img-fluid rounded" />
@@ -410,6 +409,7 @@ export default {
         const retrievedJsonString = localStorage.getItem('searchParams');
         // Check if the retrieved JSON string is not null
         if (retrievedJsonString !== null) {
+            alert(retrievedObject.checkin);
             const retrievedObject = JSON.parse(retrievedJsonString);
             this.form.checkin = retrievedObject.checkin
             this.form.checkout = retrievedObject.checkout

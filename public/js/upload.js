@@ -4,11 +4,9 @@ $("#checkin").flatpickr({
   onChange: function(selectedDates, dateStr, instance) {
     // Get the selected check-in date
     let checkinDate = new Date(selectedDates[0]);
-    // Calculate the next day for the checkout date
     let minCheckoutDate = new Date(checkinDate);
     minCheckoutDate.setDate(checkinDate.getDate() + 1);
     
-    // Initialize or update checkout flatpickr with new minDate and defaultDate
     $("#checkout").flatpickr({
       minDate: minCheckoutDate,
       dateFormat: "Y-m-d",

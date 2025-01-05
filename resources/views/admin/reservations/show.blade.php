@@ -94,10 +94,7 @@
 
             <form id="reservationForm" data-url="{{request()->fullUrl()}}?add_extension=1" action="?add_extension=1" method="GET">
                <div class="form-row">
-                  <div class="form-group col-md-3">
-                     <label for="date">Check-in</label>
-                     <input class="form-control  datepicker pull-right" name="checkin" id="checkin" type="text" required>
-                  </div>
+                 
 
                   <div class="form-group col-md-3">
                      <label for="date">Check-out</label>
@@ -134,7 +131,7 @@
                      <label for="date">Check-out</label>
                      <input class="form-control  datepicker pull-right" name="checkout" id="checkout-update" type="text" required>
                   </div>
-
+               
 
                   <div class="form-group col-md-2">
                      <button id="add-update" type="submit" class="btn btn-primary">
@@ -143,10 +140,32 @@
                      </button>
                   </div>
                </div>
+
+             
             </form>
 
+           
+
          </div>
+        
+       
       </div>
+      
+   </div>
+
+   <div class="col-md-12">
+
+   @if($user_reservation->reservations[0]->extension_date)
+
+   <div class="card">
+      <div class="card-content">
+            <div  class="">
+            <h5 class="card-title">{{ $user_reservation->reservations[0]->extension_date }}</h5>
+            </div>
+      </div>
+   </div>
+   @endif
+
    </div>
    <div class="col-md-12">
       <div class="card">
