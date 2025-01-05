@@ -415,12 +415,11 @@ export default {
                 this.form.checkin = retrievedObject.checkin
                 this.form.checkout = retrievedObject.checkout
             } else  {
-               // const urlParams = new URLSearchParams(window.location.search);
+                const urlParams = new URLSearchParams(window.location.search);
                 const checkin = urlParams.get('checkin') || ''; 
                 const checkout = urlParams.get('checkout') || ''; 
                 this.form.checkin = checkin;
                 this.form.checkout = checkout;
-                
                 const fallbackParams = JSON.stringify({ checkin, checkout });
                 localStorage.setItem('searchParams', fallbackParams);
             }
