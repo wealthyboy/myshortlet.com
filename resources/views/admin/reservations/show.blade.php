@@ -86,38 +86,12 @@
          </div>
       </div>
    </div>
+  
    <div class="col-md-12">
       <div class="card">
 
          <div class="card-content">
-            <h4 class="card-title">Add extension - <small class="category"></small></h4>
-
-            <form id="reservationForm" data-url="{{request()->fullUrl()}}?add_extension=1" action="?add_extension=1" method="GET">
-               <div class="form-row">
-
-                  <div class="form-group col-md-3">
-                     <label for="date">Check-out</label>
-                     <input class="form-control  datepicker pull-right" name="checkout" id="checkout" type="text" required>
-                  </div>
-
-
-                  <div class="form-group col-md-2">
-                     <button id="add-extension" type="submit" class="btn btn-primary">
-                        Submit
-                        <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display:none;"></span>
-                     </button>
-                  </div>
-               </div>
-            </form>
-
-         </div>
-      </div>
-   </div>
-   <div class="col-md-12">
-      <div class="card">
-
-         <div class="card-content">
-            <h4 class="card-title">Update Reservation - <small class="category"></small></h4>
+            <h4 class="card-title">Modify Reservation - <small class="category"></small></h4>
 
             <form id="UpdateForm" data-url="{{request()->fullUrl()}}?add_update=1" action="?add_update=1" method="GET">
                <div class="form-row">
