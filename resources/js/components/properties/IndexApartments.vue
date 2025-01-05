@@ -410,12 +410,23 @@ export default {
         // Check if the retrieved JSON string is not null
         if (retrievedJsonString !== null) {
             const retrievedObject = JSON.parse(retrievedJsonString);
-            this.form.checkin = retrievedObject.checkin
-            this.form.checkout = retrievedObject.checkout
-            //this.checkAvailabity()
-        } else {
 
-            alert(true);
+            if (retrievedObject.checkin  !== null) {
+                this.form.checkin = retrievedObject.checkin
+                this.form.checkout = retrievedObject.checkout
+            } else  {
+               // const urlParams = new URLSearchParams(window.location.search);
+                const checkin = urlParams.get('checkin') || ''; 
+                const checkout = urlParams.get('checkout') || ''; 
+                this.form.checkin = checkin;
+                this.form.checkout = checkout;
+                
+                const fallbackParams = JSON.stringify({ checkin, checkout });
+                localStorage.setItem('searchParams', fallbackParams);
+            }
+
+            
+
             // const urlParams = new URLSearchParams(window.location.search);
             // const checkin = urlParams.get('checkin') || ''; 
             // const checkout = urlParams.get('checkout') || ''; 
@@ -424,6 +435,11 @@ export default {
             
             // const fallbackParams = JSON.stringify({ checkin, checkout });
             // localStorage.setItem('searchParams', fallbackParams);
+            //this.checkAvailabity()
+        } else {
+
+            alert(true);
+            
         }
 
         jQuery(function () {
