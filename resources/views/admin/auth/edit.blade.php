@@ -49,8 +49,15 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Password</label>
-                                    <input id="Password" type="text" class="form-control{{ $errors->has('Password') ? ' is-invalid' : '' }}" name="password" value="{{ old('Password') }}" autofocus>
+                                    <label for="Password" class="control-label">Password</label>
+                                    <input id="Password" type="password" class="form-control" name="password"   >
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label  class="control-label">Phone</label>
+                                    <input id="Password" required="true" type="text" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" value="{{ $user->phone_number }}" autofocus>
                                 </div>
                             </div>
 

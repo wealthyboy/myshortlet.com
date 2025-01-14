@@ -330,14 +330,14 @@ class ApartmentsController extends Controller
         }
 
         if (is_array($request->bed_count) && !empty($request->bed_count)) {
-            $bed_count = array_filter($request->bed_count);
-            $beds = [];
-            if (!empty($bed_count)) {
-                foreach ($bed_count as $key  => $value) {
-                    $beds[$value] = ['parent_id' => $key, 'bed_count' => 1];
-                }
-            }
-            $apartment->attributes()->syncWithoutDetaching($beds);
+            // $bed_count = array_filter($request->bed_count);
+            // $beds = [];
+            // if (!empty($bed_count)) {
+            //     foreach ($bed_count as $key  => $value) {
+            //         $beds[$value] = ['parent_id' => $key, 'bed_count' => 1];
+            //     }
+            // }
+            // $apartment->attributes()->syncWithoutDetaching($beds);
         }
 
 
