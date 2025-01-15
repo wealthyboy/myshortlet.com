@@ -98,7 +98,7 @@ class Apartment extends Model
 
     public function attributes()
     {
-        return $this->belongsToMany(Attribute::class)->withPivot('bed_count');;
+        return $this->belongsToMany(Attribute::class)->whereNull('bed_count')->withPivot('bed_count');;
     }
 
 

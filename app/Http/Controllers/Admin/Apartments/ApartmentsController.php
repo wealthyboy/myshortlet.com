@@ -233,10 +233,10 @@ class ApartmentsController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $property   = Property::find($id);
-        $locations  = Location::parents()->get();
-        $helper     = new Helper();
-        $counter    = rand(1, 500);
+        $property = Property::find($id);
+        $locations = Location::parents()->get();
+        $helper = new Helper();
+        $counter = rand(1, 500);
         $house_attributes = null;
         if ($request->mode == 'house') {
             $house_attributes = Attribute::parents()->whereIn('type', $this->house_attrs)->get()->groupBy('type');
