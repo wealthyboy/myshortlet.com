@@ -57,7 +57,8 @@ class ApartmentsController extends Controller
      * return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {   
+        $this->updateBedrooms();
         $apartments = Apartment::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.apartments.index', compact('apartments'));
     }
@@ -201,6 +202,31 @@ class ApartmentsController extends Controller
 
         (new Activity)->Log("Created a new apartments {$request->apartment_name}");
         return \Redirect::to('/admin/apartments');
+    }
+
+
+    public function updateBedrooms()
+    {
+        // Fetch all apartments
+        $apartments = Apartment::all();
+
+        foreach ($apartments as $apartment) {
+            // Get the number of rooms for the current apartment
+            $no_of_rooms = $apartment->no_of_rooms;
+
+            // Loop through the number of rooms and update bedroom_X fields
+            for ($count = 1; $count <= $no_of_rooms; $count++) {
+                $bedroom_field = 'bedroom_' . $count; // Dynamic field name
+
+                // Update the field with a default value
+                $apartment->$bedroom_field = 'Extra-large double bed';
+            }
+
+            // Save the updated apartment
+            $apartment->save();
+        }
+
+        return 'Bedrooms updated successfully!';
     }
 
 
