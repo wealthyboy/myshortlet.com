@@ -40,6 +40,37 @@ $('#reservationForm').on('submit', function (e) {
   }
 });
 
+
+$('#bedrooms-update').on('change', function () {
+  const selectedValue = parseInt($(this).val());
+
+  console.log(true)
+  
+  // Loop through current dropdowns and remove extras if selected value is less than the current number
+  for (let i = selectedValue + 1; i <= 10; i++) {
+    $(`#bedroom_${i}`).closest('.bedroom-group').remove();
+  }
+
+  // Add new dropdowns if needed
+  for (let i = 1; i <= selectedValue; i++) {
+    if ($(`#bedroom_${i}`).length === 0) {
+      const dropdown = `
+        <div class="form-group col-md-2 bedroom-group mb-5">
+            <label for="bedroom_${i}">Bedroom ${i}</label>
+            <select name="bedroom_${i}" id="bedroom_${i}" class="form-control bedroom-select">
+              <option value="" selected="">Choose bed type</option>
+              <option value="Extra-large double bed">Extra-large double bed</option>
+              <option value="Single bed">Single bed</option>
+              <option value="Large bed">Large bed</option>
+            </select>
+        </div>
+      `;
+      $('#bedroom-dropdowns-container').append(dropdown);
+    }
+  }
+});
+
+
 $('#UpdateForm').on('submit', function (e) {
   e.preventDefault();
 

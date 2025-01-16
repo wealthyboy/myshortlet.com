@@ -103,7 +103,7 @@
 
                   <div class="col-md-2">
                      <div class="form-group">
-                        <select name="room_number" name="bedrooms" id="bedrooms" class="form-control  bedrooms">
+                        <select name="room_number" name="bedrooms" id="bedrooms-update" class="form-control ">
                            <option value="" selected>Choose Bedrooms</option>
                            @for ($i = 1; $i< 10; $i++) <option value="{{ $i }}"> {{ $i }}</option>@endfor
                         </select>
@@ -151,26 +151,19 @@
 
 
                   <div class="col-md-12 bed mb-5">
-                     @if ($bedrooms->count())
-                     @foreach($bedrooms as $key => $parent)
-                     <div class="bedroom-{{ $key + 1 }} d-none mb-2">
+                     <div id="bedroom-dropdowns-container">  
 
-                        <h5 class="mb-2">{{ $parent->name }} </h5>
-                        @foreach($parent->children as $bedroom)
-                        <label for="bedroom-{{ $bedroom->id }}" class="radio-inline">
-                           <input class="radio-button" value="{{ $bedroom->id }}" id="bedroom-{{ $bedroom->id }}" name="bed_count[{{$parent->id}}]" type="radio">{{ $bedroom->name }}
-                        </label>
-                        @endforeach
+               
+
+
+                 
 
                      </div>
-                     @endforeach
-                     @endif
                   </div>
                   <div class="col-md-12">
                      <div class="form-group label-floating">
                         <label class="control-label">Image Links</label>
                         <textarea rows="20" name="room_image_links" class="form-control  variation" type="text"></textarea>
-
                      </div>
                   </div>
                   <div class="col-md-12">

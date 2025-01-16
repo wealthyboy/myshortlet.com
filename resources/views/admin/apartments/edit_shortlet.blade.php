@@ -123,9 +123,9 @@
 
                <div class="col-md-2">
                   <div class="form-group">
-                     <select name="room_number" name="bedrooms" id="bedrooms" class="form-control  bedrooms">
+                     <select name="room_number" name="bedrooms" id="bedrooms-update" class="form-control">
                         <option value="" selected>Choose Bedrooms</option>
-                        @for ($i = 1; $i< 11; $i++) @if($apartment->no_of_rooms == $i)
+                         @for ($i = 1; $i< 11; $i++) @if($apartment->no_of_rooms == $i)
                            <option value="{{ $i }}" selected>{{ $i }}</option>
                            @else
                            <option value="{{ $i }}">{{ $i }}</option>
@@ -134,6 +134,8 @@
                      </select>
                   </div>
                </div>
+
+           
 
                <div class="col-md-2">
                   <div class="form-group">
@@ -172,6 +174,9 @@
                      <input name="room_sale_price" value="{{ $apartment->sale_price }}" class="form-control variation_sale_price variation" type="number">
                   </div>
                </div>
+             
+
+
                <div class="col-md-4">
                   <div class="form-group label-floating">
                      <label class="control-label">End Date</label>
@@ -188,28 +193,32 @@
                   </div>
                </div>
 
-               <div class="col-md-4">
-                  <div class="form-group label-floating is-ty">
-                     <label class="control-label">Wifi password</label>
-                     <input name="wifi_password" value="{{ $apartment->wifi_password }}" class="form-control  variation" type="text">
-                     <span class="material-input"></span>
+               <div>
+                  <div class="col-md-4">
+                     <div class="form-group label-floating is-ty">
+                        <label class="control-label">Wifi password</label>
+                        <input name="wifi_password" value="{{ $apartment->wifi_password }}" class="form-control  variation" type="text">
+                        <span class="material-input"></span>
+                     </div>
+                  </div>
+
+                  <div class="col-md-4">
+                     <div class="form-group label-floating is-ty">
+                        <label class="control-label">Wifi ssid</label>
+                        <input name="wifi_ssid" value="{{ $apartment->wifi_ssid }}" class="form-control  variation" type="text">
+                        <span class="material-input"></span>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group label-floating is-ty">
+                        <label class="control-label">Teaser</label>
+                        <textarea name="teaser" class="form-control  variation">{{ $apartment->teaser }}</textarea>
+                        <span class="material-input"></span>
+                     </div>
                   </div>
                </div>
 
-               <div class="col-md-4">
-                  <div class="form-group label-floating is-ty">
-                     <label class="control-label">Wifi ssid</label>
-                     <input name="wifi_ssid" value="{{ $apartment->wifi_ssid }}" class="form-control  variation" type="text">
-                     <span class="material-input"></span>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="form-group label-floating is-ty">
-                     <label class="control-label">Teaser</label>
-                     <textarea name="teaser" class="form-control  variation">{{ $apartment->teaser }}</textarea>
-                     <span class="material-input"></span>
-                  </div>
-               </div>
+             
 
 
                <div class="col-md-12 bed mb-5">
@@ -227,6 +236,19 @@
                   </div>
                   @endforeach
                   @endif
+               </div>
+               <div id="bedroom-dropdowns-container mb-5">
+                  @for ($i = 1; $i <= $apartment->no_of_rooms; $i++)
+                     <div class="form-group col-md-2 ">
+                        <label for="bedroom_{{ $i }}">Bedroom {{ $i }}</label>
+                        <select name="bedroom_{{ $i }}" id="bedroom_{{ $i }}" class="form-control">
+                              <option value="" selected>Choose bed type</option>
+                              <option value="Extra-large double bed" {{ $apartment->{'bedroom_'.$i} == 'Extra-large double bed' ? 'selected' : '' }}>Extra-large double bed</option>
+                              <option value="Single bed" {{ $apartment->{'bedroom_'.$i} == 'Single bed' ? 'selected' : '' }}>Single bed</option>
+                              <option value="Large bed" {{ $apartment->{'bedroom_'.$i} == 'Large bed' ? 'selected' : '' }}>Large bed</option>
+                        </select>
+                     </div>
+                  @endfor
                </div>
                <div class="col-md-12">
                   <div class="form-group label-floating">

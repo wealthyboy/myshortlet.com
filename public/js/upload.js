@@ -17,6 +17,8 @@ let checkinPicker = $("#checkin").flatpickr({
   }
 });
 
+
+
 // Initialize checkout flatpickr with a variable to manage settings
 let checkoutPicker = $("#checkout").flatpickr({
   minDate: "today", // Initial minimum date
@@ -36,6 +38,10 @@ let overlay = $("#overlay");
 let myDropzone;
 
 jQuery(window).on("load", function () {
+
+
+
+  
   var d = $("div#my-dropzone");
 
   if (d.length) {
@@ -187,6 +193,9 @@ jQuery(window).on("load", function () {
         },
       });
     },
+
+
+    
   });
 
 

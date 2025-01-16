@@ -103,21 +103,17 @@
                         <span class="svg-icon-text">{{ room.floor }}</span>
                     </div>
                 </div>
-
-                <template v-if="!room.is_gallery && room.bedrooms && room.bedrooms.length">
-                    <div v-for=" bed  in  room.bedrooms " :key="bed.id" class="position-relative mb-1" itemprop="bed"
-                        itemscope itemtype="https://schema.org/BedDetails">
+                <template v-if="!room.is_gallery && room.no_of_rooms">
+                    <div v-for="index in room.no_of_rooms" :key="index" class="position-relative mb-1" itemprop="bed" itemscope itemtype="https://schema.org/BedDetails">
                         <span class="position-absolute svg-icon-section">
-                            <svg class="" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <path fill-rule="evenodd"
-                                    d="M11 7h8a4 4 0 014 4v9h-2v-3H3v3H1V5h2v9h8V7zm-1 3a3 3 0 11-6 0 3 3 0 016 0z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
+                        <svg aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M11 7h8a4 4 0 014 4v9h-2v-3H3v3H1V5h2v9h8V7zm-1 3a3 3 0 11-6 0 3 3 0 016 0z" clip-rule="evenodd"></path>
+                        </svg>
                         </span>
-                        <span class="svg-icon-text" itemprop="type">{{ bed.parent.name }}</span>
+                        <span class="svg-icon-text" itemprop="type">Bedroom {{ index }}</span>
                         <span class="svg-icon-text">
-                            {{ bed.pivot.bed_count }} {{ bed.name }}
+                        <!-- Assuming room has dynamic properties like bedroom_1, bedroom_2 -->
+                        {{ room['bedroom_' + index] }}
                         </span>
                     </div>
                 </template>

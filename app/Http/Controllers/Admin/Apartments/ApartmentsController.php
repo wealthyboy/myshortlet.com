@@ -162,6 +162,12 @@ class ApartmentsController extends Controller
         $apartment->quantity = $request->room_quantity;
         $apartment->image_link = $request->room_image_links;
         $apartment->video_link = $request->room_video_links;
+        $apartment->bedroom_1 = $request->bedroom_1;
+        $apartment->bedroom_2 = $request->bedroom_2;
+        $apartment->bedroom_3 = $request->bedroom_3;
+        $apartment->bedroom_4 = $request->bedroom_4;
+        $apartment->bedroom_5 = $request->bedroom_5;
+        $apartment->bedroom_6 = $request->bedroom_6;
         $apartment->type = $request->type;
         $apartment->floor = $request->floor;
         $apartment->price_mode = $request->price_mode;
@@ -183,17 +189,8 @@ class ApartmentsController extends Controller
             $apartment->attributes()->sync(array_filter($request->apartment_facilities_id));
         }
 
-        if (is_array($request->bed_count) && !empty($request->bed_count)) {
-            $bed_count = array_filter($request->bed_count);
-            $beds = [];
-            if (!empty($bed_count)) {
-                foreach ($bed_count as $key  => $value) {
-                    $beds[$value] = ['parent_id' => $key, 'bed_count' => 1];
-                }
-            }
-        }
+        
 
-        $apartment->attributes()->syncWithoutDetaching($beds);
 
         $this->syncImages($room_images, $apartment);
 
@@ -313,6 +310,12 @@ class ApartmentsController extends Controller
         $apartment->owner_email = $request->owner_email;
         $apartment->wifi_password = $request->wifi_password;
         $apartment->wifi_ssid = $request->wifi_ssid;
+        $apartment->bedroom_1 = $request->bedroom_1;
+        $apartment->bedroom_2 = $request->bedroom_2;
+        $apartment->bedroom_3 = $request->bedroom_3;
+        $apartment->bedroom_4 = $request->bedroom_4;
+        $apartment->bedroom_5 = $request->bedroom_5;
+        $apartment->bedroom_6 = $request->bedroom_6;
         $apartment->teaser = $request->teaser;
         $apartment->type = $request->type;
         $apartment->floor = $request->floor;
