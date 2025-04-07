@@ -23,7 +23,6 @@ class SendAbandonedBookingNotifications implements ShouldQueue
 
         // Find user tracking records that indicate abandonment
         $abandonedUsers = UserTracking::where('action', 'abandoned')
-            ->where('created_at', '<=', $threshold)
             ->get();
 
         foreach ($abandonedUsers as $track) {
