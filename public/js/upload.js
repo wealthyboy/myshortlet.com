@@ -39,9 +39,6 @@ let myDropzone;
 
 jQuery(window).on("load", function () {
 
-
-
-  
   var d = $("div#my-dropzone");
 
   if (d.length) {

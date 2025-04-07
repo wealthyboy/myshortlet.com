@@ -10,6 +10,8 @@ use App\Models\GuestUser;
 use App\Models\Currency;
 use App\Models\Reservation;
 use App\Models\UserReservation;
+use App\Models\UserTracking;
+
 
 use Carbon\Carbon;
 
@@ -51,6 +53,10 @@ class WebHookController extends Controller
             $guest->name = $input['first_name'];
             $guest->last_name = $input['last_name'];
             $guest->email = $input['email'];
+            $sessionId = $input['sessionId'];
+            $page_url = $input['page_url'];
+
+
 
             if (isset($input['code']) && !empty($input['code'])) {
                 $guest->phone_number = '+' . $input['code'] . ' ' . $input['phone_number'];
@@ -91,6 +97,12 @@ class WebHookController extends Controller
             }
 
             $attr = Attribute::find(optional($apartment)->apartment_id);
+            $user = UserTracking::updateOrInsert(
+                ['session_id' => $sessionId, 'apartment_id' => $attr->id],
+                [
+                    'action' => 'completed',
+                ]
+            );
 
 
             foreach ($bookings as $booking) {

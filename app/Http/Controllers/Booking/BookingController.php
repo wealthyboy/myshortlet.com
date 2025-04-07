@@ -12,6 +12,7 @@ use App\Models\SystemSetting;
 use App\Http\Helper;
 use App\Models\BookingDetail;
 use App\Models\PeakPeriod;
+use App\Models\UserTracking;
 
 
 
@@ -33,14 +34,14 @@ class BookingController extends Controller
 	 */
 	public function book(Request $request, Property $property)
 	{
-		
+
 		if (!$request->check_in_checkout) {
 			return back();
 		}
 
 		$referer = request()->headers->get('referer');
 		$bookings = BookingDetail::all_items_in_cart($property->id);
-		
+
 		$user = auth()->user();
 
 		if (!$bookings->count()) {
@@ -57,18 +58,17 @@ class BookingController extends Controller
 		}
 
 		$days = $booking->checkin->diffInDays($booking->checkout);
+		$userTracking = UserTracking::latest('id')->value('id');
 
-
-
-        $peak_period =  PeakPeriod::first();
+		$peak_period =  PeakPeriod::first();
 		$daysInPeakPeriod = $peak_period->calculateDaysWithinPeak($booking->checkin, $booking->checkout);
 		$daysNotInPeakPeriod = $peak_period->calculateDaysOutsidePeak($booking->checkin, $booking->checkout);
-		$daysNotInPeakPeriod = $daysNotInPeakPeriod < 0 ? 0 : $daysNotInPeakPeriod ;
+		$daysNotInPeakPeriod = $daysNotInPeakPeriod < 0 ? 0 : $daysNotInPeakPeriod;
 		$apt = Apartment::find($request->apartment_id);
 
 
 		$peak_period_price = $apt->converted_peak_price > 0 ? $apt->converted_peak_price : $peak_period->increasePriceByPercentage($apt->converted_price);
-		$isPeakPeriodPresent = $daysInPeakPeriod > 0 ? true: false;
+		$isPeakPeriodPresent = $daysInPeakPeriod > 0 ? true : false;
 		$daysInPeakPeriodTotal = $daysInPeakPeriod > 0 ? $daysInPeakPeriod * $peak_period_price : 0;
 		$daysNotInPeakPeriodTotal = $daysNotInPeakPeriod > 0 ? $daysNotInPeakPeriod * $apt->converted_regular_price : 0;
 
@@ -76,7 +76,7 @@ class BookingController extends Controller
 		$phone_codes = Helper::phoneCodes();
 		$stays = $days == 1 ? "night" : " nights";
 		$nights[] = $days;
-		$nights[] = $stays;    
+		$nights[] = $stays;
 		$property->load('free_services', 'facilities', 'extra_services');
 		$total = BookingDetail::sum_items_in_cart($property->id);
 		$total = $daysInPeakPeriodTotal + $daysNotInPeakPeriodTotal;
@@ -84,21 +84,21 @@ class BookingController extends Controller
 		$to = $booking->checkout->format('l') . ' ' . $booking->checkout->format('d') . ' ' . $booking->checkout->format('F') . ' ' . $booking->checkout->isoFormat('Y');
 		$booking_details = [
 			'peak_period' => PeakPeriod::first(),
-			'is_peak_period_present'=> $daysInPeakPeriod > 0 ?true: false, 
-			'days_in_peak_period'=> $daysInPeakPeriod, 
-			'days_not_in_peak_period'=> $daysNotInPeakPeriod, 
+			'is_peak_period_present' => $daysInPeakPeriod > 0 ? true : false,
+			'days_in_peak_period' => $daysInPeakPeriod,
+			'days_not_in_peak_period' => $daysNotInPeakPeriod,
 			'peak_period_total' => $daysInPeakPeriodTotal,
 			'days_not_in_peak_period_total' => $daysNotInPeakPeriodTotal,
 			'peak_price' => $peak_period_price,
 			'regular_price' => $apt->converted_regular_price,
-			'currency' => session('switch'), 
-			'loggedIn' => auth()->check(), 
-			'user' => auth()->user(), 
-			'days' => $days, 
-			'from' => $from, 
-			'to' => $to, 
+			'currency' => session('switch'),
+			'loggedIn' => auth()->check(),
+			'user' => auth()->user(),
+			'days' => $days,
+			'from' => $from,
+			'to' => $to,
 			'nights' => $nights,
-			'total' => $total, 
+			'total' => $total,
 			'booking_ids' => $ids,
 			'is_agent' => optional($user)->isAgent()
 		];
@@ -109,32 +109,33 @@ class BookingController extends Controller
 	}
 
 
-	public function getDaysInDecember($startDate, $endDate) {
+	public function getDaysInDecember($startDate, $endDate)
+	{
 		// Convert input strings to DateTime objects
 		$start = new \DateTime($startDate);
 		$end = new \DateTime($endDate);
-	
+
 		// Ensure the end date is after the start date
 		if ($end < $start) {
 			return 0; // Invalid date range
 		}
-	
+
 		// Define the start and end of December
 		$decemberStart = new \DateTime($start->format('Y') . '-12-01');
 		$decemberEnd = new \DateTime($start->format('Y') . '-12-31');
-	
+
 		// Check if the date range overlaps with December
 		if ($end < $decemberStart || $start > $decemberEnd) {
 			return 0; // No days in December
 		}
-	
+
 		// Calculate the actual December start and end within the range
 		$rangeStartInDecember = $start < $decemberStart ? $decemberStart : $start;
 		$rangeEndInDecember = $end > $decemberEnd ? $decemberEnd : $end;
-	
+
 		// Calculate the number of days in December within the range
 		$daysInDecember = $rangeEndInDecember->diff($rangeStartInDecember)->days + 1;
-	
+
 		return $daysInDecember;
 	}
 

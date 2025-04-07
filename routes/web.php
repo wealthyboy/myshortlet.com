@@ -52,7 +52,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('galleries', 'Admin\Gallery\GalleryController', ['names' => 'admin.galleries']);
     Route::get('block', 'Admin\Block\BlockApartmentsController@block');
     Route::resource('blocks', 'Admin\Block\BlockApartmentsController', ['names' => 'admin.blocks']);
-    
+
 
 
     Route::resource('attributes', 'Admin\Attributes\AttributesController', ['names' => 'attributes']);
@@ -92,7 +92,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
 });
 
 
-Route::group(['middleware' => 'currencyByIp'], function () {
+Route::group(['middleware' => ['currencyByIp', 'tracking']], function () {
     Route::get('/', 'HomeController@home');
     Route::get('/luxury-service-apartments-in-lagos', 'HomeController@home');
     Route::get('/luxury-service-apartments-in-ikoyi', 'Apartments\ApartmentsController@apartments');
@@ -109,6 +109,8 @@ Route::group(['middleware' => 'currencyByIp'], function () {
     Route::get('accounts/apartments', 'Apartments\ApartmentsController@apartments');
     Route::get('login/{service}', 'Auth\SocialLoginController@redirect');
     Route::get('login/{service}/callback', 'Auth\SocialLoginController@callback');
+    Route::post('abandoned-cart', 'AbandonedCart\AbandonedCartsController@store');
+
     Route::post('login', 'Auth\LoginController@login');
     Route::get('pages/{information}', 'Information\InformationController@show');
     Route::get('apartments', 'Apartments\ApartmentsController@apartments');
@@ -117,7 +119,7 @@ Route::group(['middleware' => 'currencyByIp'], function () {
     Route::get('profile/apartments', 'ProfileApartments\\ProfileApartmentsController@index');
     Route::get('profile/apartments/{property_id}', 'ProfileApartments\\ProfileApartmentsController@apartments');
     Route::resource('profile', 'Profile\\ProfileController', ['names' => 'profiles']);
-    Route::get('apartment/{apartment}', 'Apartments\ApartmentsController@show');
+    Route::get('apartment/{apartment}', 'Apartments\ApartmentsController@show')->name('apartments.show');
     Route::get('add/apartment', 'Properties\PropertiesController@addApartment');
     Route::post('check/apartment/availablility', 'Apartments\ApartmentsController@checkAvailability');
     Route::get('checkout/{room}', 'Checkout\CheckoutController@index');

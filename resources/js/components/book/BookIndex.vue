@@ -470,6 +470,8 @@ export default {
   },
   mounted() {
     document.getElementById("full-bg").remove();
+
+
   },
   components: {
     PriceDetails,
@@ -555,7 +557,6 @@ export default {
           coupon: this.coupon,
           total: this.bookingTotal,
           limit: this.booking_details.days,
-
         })
         .then((response) => {
           this.submiting = false;
@@ -624,30 +625,18 @@ export default {
         property_services: this.form.property_services,
         original_amount: context.bookingPropertyServicesTotal +
           context.bookingServicesTotal +
-          context.bookingTotal
+          context.bookingTotal,
+        page_url: window.location.href,
+        session_id: this.booking_details.sessionId
       }
 
+    
+      axios
+        .post('/abandoned-cart', {
+          payload,
+        })
+        
       
-
-
-
-      // if (this.booking_details.is_agent) {
-      // axios
-      //   .post("/webhook/payment", {
-      //     booking: payload,
-      //   })
-      //   .then((response) => {
-      //     context.payment_is_processing = false;
-      //     context.paymentIsComplete = true;
-      //     localStorage.removeItem('searchParams');
-      //     document.getElementById("back-to-selection").remove()
-      //   })
-      //   .catch((error) => {
-      //     context.order_text = "Make Payment";
-      //     context.payment_is_processing = false;
-      //   });
-      // return;
-      // }
       //pk_test_c5b3db1649d534eec8ab6a35ed696ad624e3070a
 
       var handler = PaystackPop.setup({
