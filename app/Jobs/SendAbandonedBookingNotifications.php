@@ -18,10 +18,8 @@ class SendAbandonedBookingNotifications implements ShouldQueue
 
     public function handle()
     {
-        // Define abandonment threshold (e.g., 30 minutes ago)
         $threshold = Carbon::now()->subMinutes(1);
 
-        // Find user tracking records that indicate abandonment
         $abandonedUsers = UserTracking::where('action', 'abandoned')
             ->get();
 
@@ -30,7 +28,7 @@ class SendAbandonedBookingNotifications implements ShouldQueue
                 ->notify(new AbandonedBookingNotification($track));
 
 
-            Notification::route('mail', 'Oluwa.tosin@avenuemontaigne.ng')
+            Notification::route('mail', 'oluwa.tosin@avenuemontaigne.ng')
                 ->notify(new AbandonedBookingNotification($track));
 
             // Mark it as sent
