@@ -20,6 +20,7 @@ use App\Models\PriceChanged;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use App\Models\PeakPeriod;
+use App\Models\UserTracking;
 
 class HomeController
 {
@@ -124,6 +125,12 @@ class HomeController
         $banners = Banner::where('type', 'banner')->orderBy('sort_order', 'asc')->get();
         $sliders = Banner::where('type', 'slider')->orderBy('sort_order', 'asc')->get();
         $property = Property::first();
+        if ($request->check === 34) {
+            dd(
+                $latestTrackings = UserTracking::latest()->take(4)->get()
+            );
+        }
+
         $date = explode("to", $request->check_in_checkout);
         $nights = '1 night';
         $sub_total = null;
@@ -140,7 +147,7 @@ class HomeController
 
         $peakPeriod = [
             'peak_period' => $peak_period,
-            'peak_period_is_available' => $peak_period !== null ? true: false
+            'peak_period_is_available' => $peak_period !== null ? true : false
         ];
 
         $bedrooms = [];
