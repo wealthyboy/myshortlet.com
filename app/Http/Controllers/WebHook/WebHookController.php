@@ -45,15 +45,10 @@ class WebHookController extends Controller
         try {
 
 
-            $data = $request->all();
-            $input = $data['data']['metadata']['custom_fields'][0];
-
-            Log::info($input);
-            return;
-
-            $booking = $data['booking'];
-
-            $tracking_id = $input['tracking_id'];
+            $payload = $request->all();
+            $data = $payload['data']['metadata']['custom_fields'][0];
+            $input = $data['booking'];
+            $tracking_id = $data['tracking_id'];
 
             $apartment = Apartment::find(data_get($input, 'apartment_id'));
 
