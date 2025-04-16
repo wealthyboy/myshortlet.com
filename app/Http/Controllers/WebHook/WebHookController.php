@@ -57,7 +57,6 @@ class WebHookController extends Controller
             $guest->last_name = data_get($input, 'last_name');
             $guest->email = data_get($input, 'email');
             $sessionId = data_get($input, 'sessionId');
-            $tracking_id = data_get($input, 'tracking_id');
 
 
 
