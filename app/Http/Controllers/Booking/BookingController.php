@@ -58,7 +58,6 @@ class BookingController extends Controller
 		}
 
 		$days = $booking->checkin->diffInDays($booking->checkout);
-		$userTracking = UserTracking::latest('id')->value('id');
 
 		$peak_period =  PeakPeriod::first();
 		$daysInPeakPeriod = $peak_period->calculateDaysWithinPeak($booking->checkin, $booking->checkout);

@@ -55,7 +55,7 @@ class WebHookController extends Controller
             $guest->last_name = data_get($input, 'last_name');
             $guest->email = data_get($input, 'email');
             $sessionId = data_get($input, 'sessionId');
-            $page_url = data_get($input, 'page_url');
+            $tracking_id = data_get($input, 'tracking_id');
 
 
 
@@ -98,9 +98,9 @@ class WebHookController extends Controller
             }
 
             $attr = Attribute::find(optional($apartment)->apartment_id);
-            if ($sessionId) {
+            if ($tracking_id) {
                 $user = UserTracking::updateOrInsert(
-                    ['session_id' => $sessionId, 'page_url' => $page_url, 'apartment_id' => optional($apartment)->id],
+                    ['id' => $tracking_id],
                     [
                         'action' => 'completed',
                     ]
