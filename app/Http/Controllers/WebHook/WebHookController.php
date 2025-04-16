@@ -50,40 +50,40 @@ class WebHookController extends Controller
             $input = $input['data']['metadata']['custom_fields'][0]['booking'];
             $user_reservation = new UserReservation;
             $guest = new GuestUser;
-            $guest->name = $input['first_name'];
-            $guest->last_name = $input['last_name'];
-            $guest->email = $input['email'];
-            $sessionId = $input['sessionId'];
-            $page_url = $input['page_url'];
+            $guest->name = data_get($input, 'first_name');
+            $guest->last_name = data_get($input, 'last_name');
+            $guest->email = data_get($input, 'email');
+            $sessionId = data_get($input, 'sessionId');
+            $page_url = data_get($input, 'page_url');
 
 
 
-            if (isset($input['code']) && !empty($input['code'])) {
-                $guest->phone_number = '+' . $input['code'] . ' ' . $input['phone_number'];
+            if (!empty(data_get($input, 'code'))) {
+                $guest->phone_number = '+' . data_get($input, 'code') . ' ' . data_get($input, 'phone_number');
             } else {
-                $guest->phone_number = $input['phone_number'];
+                $guest->phone_number = data_get($input, 'phone_number');
             }
             $guest->save();
-            $bookings = BookingDetail::find($input['booking_ids']);
+
+            $bookings = BookingDetail::find(data_get($input, 'booking_ids'));
+
             $user_reservation->user_id = optional($request->user())->id;
             $user_reservation->guest_user_id = $guest->id;
-            $user_reservation->currency = $input['currency'] === 'NGN' ? '₦' : '$';
+            $user_reservation->currency = data_get($input, 'currency') === 'NGN' ? '₦' : '$';
             $user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
             $user_reservation->payment_type = 'online';
-            $user_reservation->property_id = $input['property_id'];
-            $user_reservation->coupon = $input['coupon'];
-            $user_reservation->total = $input['total'];
-            $user_reservation->original_amount = $input['original_amount'];
+            $user_reservation->property_id = data_get($input, 'property_id');
+            $user_reservation->coupon = data_get($input, 'coupon');
+            $user_reservation->total = data_get($input, 'total');
+            $user_reservation->original_amount = data_get($input, 'original_amount');
             $user_reservation->coming_from = 'payment';
-            // $user_reservation->checkout = optional($booking)->checkout;
             $user_reservation->ip = $request->ip();
             $user_reservation->save();
+
             $e_services = [];
-            $services = $input['services'];
-            $e_services = [];
+            $services = data_get($input, 'services', []);
             $aq = [];
-            $services = $input['services'];
-            $property_extras = $input['property_services'];
+            $property_extras = data_get($input, 'property_services', []);
 
             if (!empty($services)) {
                 foreach ($services as $key => $room_serices) {
@@ -97,6 +97,7 @@ class WebHookController extends Controller
             }
 
             $attr = Attribute::find(optional($apartment)->apartment_id);
+
             $user = UserTracking::updateOrInsert(
                 ['session_id' => $sessionId, 'apartment_id' => $attr->id],
                 [
