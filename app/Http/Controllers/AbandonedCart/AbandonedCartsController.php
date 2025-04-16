@@ -22,10 +22,11 @@ class AbandonedCartsController extends Controller
     public function store(Request $request)
     {
         $sessionId = session()->getId();
-        $input = $request->payload;
+        $input = $request->all();
         $sessionId = session()->getId();
         $bookingId = $input['booking_ids'];
         $bookingId = array_shift($bookingId);
+
         $path = $input['page_url'];
 
         $user = UserTracking::updateOrCreate(

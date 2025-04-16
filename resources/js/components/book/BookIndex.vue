@@ -632,11 +632,14 @@ export default {
       }
     
       axios
-        .post('/abandoned-cart', {
-          payload,
-        }).then((res) =>{
-           payload.tracking_id = res.data.id
-        })
+      .post('/abandoned-cart', payload)
+      .then((res) => {
+        payload.tracking_id = res.data.id // 👈 Store tracking ID
+        console.log('Tracking ID:', payload.tracking_id)
+      })
+      .catch((err) => {
+        console.error('Error sending abandoned cart payload:', err)
+      })
         
       
       //pk_test_c5b3db1649d534eec8ab6a35ed696ad624e3070a
