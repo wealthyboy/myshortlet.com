@@ -637,7 +637,7 @@ export default {
       .post('/abandoned-cart', payload)
       .then((res) => {
         tracking_id = res.data.id // 👈 Store tracking ID
-        console.log('Tracking ID:', tracking_idtracking_id)
+        console.log('Tracking ID:', tracking_id)
       })
       .catch((err) => {
         console.error('Error sending abandoned cart payload:', err)
