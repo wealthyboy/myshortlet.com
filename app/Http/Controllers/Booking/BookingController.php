@@ -100,7 +100,8 @@ class BookingController extends Controller
 			'nights' => $nights,
 			'total' => $total,
 			'booking_ids' => $ids,
-			'is_agent' => optional($user)->isAgent()
+			'is_agent' => optional($user)->isAgent(),
+			'apt_id' => optional($apt)->id
 		];
 
 
