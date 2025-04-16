@@ -28,29 +28,27 @@ class AbandonedCartsController extends Controller
         $bookingId = array_shift($bookingId);
         $path = $input['page_url'];
 
-        $user = UserTracking::updateOrInsert(
+        $user = UserTracking::updateOrCreate(
             ['session_id' => $sessionId, 'page_url' => $path],
             [
                 'user_id' => optional(auth()->user())->id,
                 'visited_at' => now(),
                 'apartment_id' => $bookingId,
                 'action' => 'abandoned',
-                'first_name' => $input['first_name'],
-                'last_name' => $input['last_name'],
-                'email' => $input['email'],
-                'code' => $input['code'],
-                'phone_number' => $input['phone_number'],
-                'currency' => $input['currency'],
-                'total' => $input['total'],
-                'property_id' => $input['property_id'],
-                'coupon' => $input['coupon'],
-                'original_amount' => $input['original_amount'],
+                'first_name' => data_get($input, 'first_name'),
+                'last_name' => data_get($input, 'last_name'),
+                'email' => data_get($input, 'email'),
+                'code' => data_get($input, 'code'),
+                'phone_number' => data_get($input, 'phone_number'),
+                'currency' => data_get($input, 'currency'),
+                'total' => data_get($input, 'total'),
+                'property_id' => data_get($input, 'property_id'),
+                'coupon' => data_get($input, 'coupon'),
+                'original_amount' => data_get($input, 'original_amount'),
             ]
         );
 
         \App\Jobs\SendAbandonedBookingNotifications::dispatch()->delay(now()->addMinute(30));
-
-
         return response()->json($user);
     }
 

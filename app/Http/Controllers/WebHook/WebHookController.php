@@ -100,7 +100,7 @@ class WebHookController extends Controller
             $attr = Attribute::find(optional($apartment)->apartment_id);
             if ($sessionId) {
                 $user = UserTracking::updateOrInsert(
-                    ['session_id' => $sessionId, 'apartment_id' => optional($apartment)->id],
+                    ['session_id' => $sessionId, 'page_url' => $page_url, 'apartment_id' => optional($apartment)->id],
                     [
                         'action' => 'completed',
                     ]
