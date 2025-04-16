@@ -110,6 +110,8 @@ Route::group(['middleware' => ['currencyByIp', 'tracking']], function () {
     Route::get('login/{service}', 'Auth\SocialLoginController@redirect');
     Route::get('login/{service}/callback', 'Auth\SocialLoginController@callback');
     Route::post('abandoned-cart', 'AbandonedCart\AbandonedCartsController@store');
+    Route::put('abandoned-cart/{id}', 'AbandonedCart\AbandonedCartsController@update');
+
 
     Route::post('login', 'Auth\LoginController@login');
     Route::get('pages/{information}', 'Information\InformationController@show');

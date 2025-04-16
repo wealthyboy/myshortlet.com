@@ -11,7 +11,35 @@ class AbandonedCartsController extends Controller
 {
 
 
+    public function update(Request $request, $id)
+    {
+        $sessionId = session()->getId();
+        $input = $request->all();
+        $path = $input['page_url'];
 
+        $user = UserTracking::updateOrCreate(
+            ['id' => $id],
+            [
+                'user_id' => optional(auth()->user())->id,
+                'visited_at' => now(),
+                'apartment_id' => data_get($input, 'apartment_id'),
+                'action' => 'abandoned',
+                'first_name' => data_get($input, 'first_name'),
+                'last_name' => data_get($input, 'last_name'),
+                'email' => data_get($input, 'email'),
+                'code' => data_get($input, 'code'),
+                'phone_number' => data_get($input, 'phone_number'),
+                'currency' => data_get($input, 'currency'),
+                'total' => data_get($input, 'total'),
+                'property_id' => data_get($input, 'property_id'),
+                'coupon' => data_get($input, 'coupon'),
+                'original_amount' => data_get($input, 'original_amount'),
+            ]
+        );
+
+        \App\Jobs\SendAbandonedBookingNotifications::dispatch()->delay(now()->addMinute(30));
+        return response()->json($user);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -24,8 +52,6 @@ class AbandonedCartsController extends Controller
         $sessionId = session()->getId();
         $input = $request->all();
         $sessionId = session()->getId();
-        $bookingId = $input['booking_ids'];
-        $bookingId = array_shift($bookingId);
 
         $path = $input['page_url'];
 
@@ -34,7 +60,7 @@ class AbandonedCartsController extends Controller
             [
                 'user_id' => optional(auth()->user())->id,
                 'visited_at' => now(),
-                'apartment_id' => $bookingId,
+                'apartment_id' => data_get($input, 'apartment_id'),
                 'action' => 'abandoned',
                 'first_name' => data_get($input, 'first_name'),
                 'last_name' => data_get($input, 'last_name'),

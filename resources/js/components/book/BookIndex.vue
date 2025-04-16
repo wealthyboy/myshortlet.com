@@ -420,6 +420,7 @@ export default {
       ],
       coupon: null,
       amount: this.booking_details.total,
+      tracking_id: null,
       payment_method: null,
       paymentIsComplete: null,
       coupon_error: null,
@@ -470,6 +471,18 @@ export default {
   },
   mounted() {
     document.getElementById("full-bg").remove();
+    let payload = {
+        page_url: window.location.href,
+        apartment_id: this.booking_details.apt_id
+      }
+    axios
+      .post('/abandoned-cart', payload)
+      .then((res) => {
+        this.tracking_id = res.data.id // 👈 Store tracking ID
+      })
+      .catch((err) => {
+        console.error('Error sending abandoned cart payload:', err)
+      })
 
 
   },
@@ -541,6 +554,7 @@ export default {
         };
       }
     },
+
     applyCoupon: function () {
       if (!this.coupon) {
         this.coupon_error = "Enter a coupon code";
@@ -631,17 +645,11 @@ export default {
         apartment_id: this.booking_details.apt_id
       }
 
-      let tracking_id = null;
+      console.log(payload)
+
     
       axios
-      .post('/abandoned-cart', payload)
-      .then((res) => {
-        tracking_id = res.data.id // 👈 Store tracking ID
-        console.log('Tracking ID:', tracking_id)
-      })
-      .catch((err) => {
-        console.error('Error sending abandoned cart payload:', err)
-      })
+        .put('/abandoned-cart/' + this.tracking_id, payload)
         
       
       //pk_test_c5b3db1649d534eec8ab6a35ed696ad624e3070a
@@ -656,7 +664,7 @@ export default {
           custom_fields: [
             {
               booking: payload,
-              tracking_id: tracking_id
+              tracking_id: context.id
             },
           ],
         },
