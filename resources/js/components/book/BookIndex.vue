@@ -664,7 +664,7 @@ export default {
           custom_fields: [
             {
               booking: payload,
-              tracking_id: context.id
+              tracking_id: context.tracking_id
             },
           ],
         },
