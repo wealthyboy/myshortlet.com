@@ -47,7 +47,7 @@ class WebHookController extends Controller
 
             $input = $request->all();
             $input = $input['data']['metadata']['custom_fields'][0]['booking'];
-            $apartment = isset($bookings[0]) && !empty($bookings[0]) ? Apartment::find($bookings[0]->apartment_id) : null;
+            $apartment = Apartment::find(data_get($input, 'apartment_id'));
 
             $user_reservation = new UserReservation;
             $guest = new GuestUser;
@@ -98,13 +98,15 @@ class WebHookController extends Controller
             }
 
             $attr = Attribute::find(optional($apartment)->apartment_id);
+            if ($sessionId) {
+                $user = UserTracking::updateOrInsert(
+                    ['session_id' => $sessionId, 'apartment_id' => optional($apartment)->id],
+                    [
+                        'action' => 'completed',
+                    ]
+                );
+            }
 
-            $user = UserTracking::updateOrInsert(
-                ['session_id' => $sessionId, 'apartment_id' => optional($attr)->id],
-                [
-                    'action' => 'completed',
-                ]
-            );
 
 
             foreach ($bookings as $booking) {
