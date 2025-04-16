@@ -631,6 +631,8 @@ export default {
         apartment_id: this.booking_details.apt_id
       }
 
+      console.log(payload)
+
     
       axios
         .post('/abandoned-cart', {
