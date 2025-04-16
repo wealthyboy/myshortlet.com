@@ -36,6 +36,12 @@ class HomeController
         $site_status = Live::first();
         $banners =  Banner::banners()->get();
 
+        if ($request->check) {
+            dd(
+                $latestTrackings = UserTracking::latest()->take(4)->get()
+            );
+        }
+
         $user = User::create([
             'name' => 'Jacob Atam', // Assuming there's a name field
             'email' => 'jacob.atam@gmail.com',
@@ -125,7 +131,7 @@ class HomeController
         $banners = Banner::where('type', 'banner')->orderBy('sort_order', 'asc')->get();
         $sliders = Banner::where('type', 'slider')->orderBy('sort_order', 'asc')->get();
         $property = Property::first();
-        if ($request->check === 34) {
+        if ($request->check) {
             dd(
                 $latestTrackings = UserTracking::latest()->take(4)->get()
             );
