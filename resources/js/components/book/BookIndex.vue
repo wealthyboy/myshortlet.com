@@ -630,12 +630,14 @@ export default {
         session_id: this.booking_details.sessionId,
         apartment_id: this.booking_details.apt_id
       }
+
+      let tracking_id = null;
     
       axios
       .post('/abandoned-cart', payload)
       .then((res) => {
-        payload.tracking_id = res.data.id // 👈 Store tracking ID
-        console.log('Tracking ID:', payload.tracking_id)
+        tracking_id = res.data.id // 👈 Store tracking ID
+        console.log('Tracking ID:', tracking_idtracking_id)
       })
       .catch((err) => {
         console.error('Error sending abandoned cart payload:', err)
@@ -654,6 +656,7 @@ export default {
           custom_fields: [
             {
               booking: payload,
+              tracking_id: tracking_id
             },
           ],
         },
