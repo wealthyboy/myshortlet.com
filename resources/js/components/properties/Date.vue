@@ -7,9 +7,17 @@
         </svg>
       </span>
     </div>
-    <pickr @on-change="handleDateChange(placeholder)" :id="placeholder" v-model="check_in_checkout" :config="config"
-      class="form-control date-range cursor-pointer  location-search" :placeholder="placeholder" name="check_in_checkout"
-      ref="datePicker" style="" />
+    <pickr
+      @on-change="handleDateChange(placeholder)"
+      :id="placeholder"
+      v-model="check_in_checkout"
+      :config="config"
+      class="form-control date-range cursor-pointer location-search"
+      :placeholder="placeholder"
+      name="check_in_checkout"
+      ref="datePicker"
+      style=""
+    />
   </div>
 </template>
 <script>
@@ -20,8 +28,7 @@ export default {
     isDateNeedsToToOpen: Boolean,
     placeholder: String,
     check_in_date: Number,
-    checkout_date: String
-
+    checkout_date: String,
   },
   data() {
     return {
@@ -40,13 +47,37 @@ export default {
     };
   },
   mounted() {
-    console.log(this.checkForDate())
-    if (this.check_in_date === 1) {
-      this.check_in_checkout = this.checkForDate() && typeof this.checkForDate().checkin !== 'undefined' ? this.checkForDate().checkin : null
-    } else {
-      this.check_in_checkout = this.checkForDate() && typeof this.checkForDate().checkout !== 'undefined' ? this.checkForDate().checkout : null
-    }
+    const urlParams = new URLSearchParams(window.location.search);
 
+    const checkin = urlParams.get("checkin");
+    const checkout = urlParams.get("checkout");
+
+    // Simple date validation
+    const isValidDate = (dateStr) => !isNaN(Date.parse(dateStr));
+
+    if (this.check_in_date === 1) {
+      if (
+        this.checkForDate() &&
+        typeof this.checkForDate().checkin !== "undefined"
+      ) {
+        this.check_in_checkout = this.checkForDate().checkin;
+      } else if (checkin && isValidDate(checkin)) {
+        this.check_in_checkout = checkin;
+      } else {
+        this.check_in_checkout = null;
+      }
+    } else {
+      if (
+        this.checkForDate() &&
+        typeof this.checkForDate().checkout !== "undefined"
+      ) {
+        this.check_in_checkout = this.checkForDate().checkout;
+      } else if (checkout && isValidDate(checkout)) {
+        this.check_in_checkout = checkout;
+      } else {
+        this.check_in_checkout = null;
+      }
+    }
   },
   components: {
     Pickr,
@@ -65,13 +96,6 @@ export default {
       this.$emit("dateSelected", this.check_in_checkout);
     },
     dateSelected() {
-      // const flatpickrDaySpans = document.querySelectorAll('span.flatpickr-day');
-
-      // // Loop through each span element
-      // flatpickrDaySpans.forEach(span => {
-      //   // Remove the 'today' class from each span
-      //   span.classList.remove('today');
-      // });
       this.$emit("dateSelected", this.check_in_checkout);
     },
     isCheckinEqualsToCheckout(checkinDate, checkoutDate) {
@@ -81,26 +105,23 @@ export default {
     },
 
     checkForDate(e) {
-      const retrievedJsonString = localStorage.getItem('searchParams');
+      const retrievedJsonString = localStorage.getItem("searchParams");
       // Check if the retrieved JSON string is not null
       if (retrievedJsonString !== null) {
-
         // Convert the JSON string back to an object
         const retrievedObject = JSON.parse(retrievedJsonString);
-
 
         if (new Date().getTime() < retrievedObject.expiry) {
           return retrievedObject;
         } else {
           // Remove expired data from storage
-          localStorage.removeItem('searchParams');
-          return null
+          localStorage.removeItem("searchParams");
+          return null;
         }
-
       } else {
-        return null
+        return null;
       }
-    }
+    },
   },
 };
 </script>

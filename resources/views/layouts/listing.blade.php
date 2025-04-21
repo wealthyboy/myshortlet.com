@@ -31,10 +31,13 @@
    </script>
 
    <script>
-      document.getElementById('currencyDropdown').addEventListener('click', function() {
-         this.classList.add('show');
-         this.querySelector('.dropdown-menu').classList.add('show');
-      });
+      let currencyDropdown = document.getElementById('currencyDropdown');
+      if (currencyDropdown) {
+         currencyDropdown.addEventListener('click', function() {
+            this.classList.add('show');
+            this.querySelector('.dropdown-menu').classList.add('show');
+         });
+      }
    </script>
 
 </body>
