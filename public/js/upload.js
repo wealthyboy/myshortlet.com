@@ -6,23 +6,18 @@ let checkinPicker = $("#checkin").flatpickr({
       let checkinDate = new Date(selectedDates[0]);
       let minCheckoutDate = new Date(checkinDate);
       minCheckoutDate.setDate(checkinDate.getDate() + 1);
-
-      alert(true);
-
       // Dynamically update checkout picker
       if (checkoutPicker) {
-        checkoutPicker.set('minDate', minCheckoutDate);
+        checkoutPicker.set("minDate", minCheckoutDate);
       }
     }
-  }
+  },
 });
-
-
 
 // Initialize checkout flatpickr with a variable to manage settings
 let checkoutPicker = $("#checkout").flatpickr({
   minDate: "today", // Initial minimum date
-  dateFormat: "Y-m-d" // Set the desired date format
+  dateFormat: "Y-m-d", // Set the desired date format
 });
 
 Dropzone.autoDiscover = false;
@@ -38,7 +33,6 @@ let overlay = $("#overlay");
 let myDropzone;
 
 jQuery(window).on("load", function () {
-
   var d = $("div#my-dropzone");
 
   if (d.length) {
@@ -132,21 +126,16 @@ jQuery(window).on("load", function () {
       // Check if checkin date is before checkout date
 
       if (typeof user_reservation === "undefined") {
-
         if (checkin === checkout) {
           alert("You can’t select same date for check-in and check-out");
           return;
         }
 
-        
         if (checkin > checkout) {
           alert("Check-out date must be greater Check-in date.");
           return;
         }
-
-      
       }
-     
 
       if (myDropzone) {
         myDropzone.on("uploadprogress", function (file) {
@@ -190,12 +179,7 @@ jQuery(window).on("load", function () {
         },
       });
     },
-
-
-    
   });
-
-
 
   var $valid = $("form.form-block").validate({
     rules: {
@@ -232,13 +216,11 @@ jQuery(window).on("load", function () {
         return;
       }
 
-      
       if (checkin > checkout) {
         alert("Check-out date must be greater Check-in date.");
         return;
       }
 
-    
       $("#form").addClass("header-filter");
 
       form_button.text("Loading...");
