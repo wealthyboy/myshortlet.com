@@ -208,15 +208,15 @@
 
                                 <li>
                                     <a href="{{ route('admin.reservations.index', ['coming_from' => 'checkin']) }}">
-                                        <span class="sidebar-mini"> C </span>
+                                        <span class="sidebar-mini"> A </span>
                                         <span class="sidebar-normal"> Abandoned Checkout </span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{{ route('admin.reservations.index', ['coming_from' => 'checkin']) }}">
-                                        <span class="sidebar-mini"> C </span>
-                                        <span class="sidebar-normal"> Abandoned Checkout </span>
+                                        <span class="sidebar-mini"> V </span>
+                                        <span class="sidebar-normal"> Visits </span>
                                     </a>
                                 </li>
 
