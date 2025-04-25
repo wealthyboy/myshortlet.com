@@ -29,6 +29,7 @@ class UserTracking extends Model
         'currency',
         'total',
         'property_id',
+        'country',
         'coupon',
         'original_amount',
     ];

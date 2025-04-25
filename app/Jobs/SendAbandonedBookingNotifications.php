@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\UserTracking;
 use App\Notifications\AbandonedBookingNotification;
+use App\Notifications\AbandonedCartAlert;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Carbon;
 use Illuminate\Queue\SerializesModels;
@@ -29,7 +30,7 @@ class SendAbandonedBookingNotifications implements ShouldQueue
 
 
             Notification::route('mail', 'oluwa.tosin@avenuemontaigne.ng')
-                ->notify(new AbandonedBookingNotification($track));
+                ->notify(new AbandonedCartAlert($track));
 
             // Mark it as sent
             $track->update(['action' => 'sent']);

@@ -24,11 +24,13 @@ class CurrencyByIp
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {   
-        
+    {
+
         $rate = [];
         $position = '';
         $position = Location::get(request()->ip());
+        $request->session()->put('country_name', optional($position)->countryName);
+
         $settings = SystemSetting::first();
         $nigeria = Currency::where('country', 'Nigeria')->first();
         $usa = Currency::where('country', 'United States')->first();
@@ -42,52 +44,30 @@ class CurrencyByIp
 
         $exchaange_rate = Helper::getCurrencyExchangeRate();
 
-        if(null !==  $peak_period ){
-            if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
+        if (null !==  $peak_period) {
+            if ($currentDate->between($peak_period->start_date, $peak_period->end_date)) {
                 Helper::updateApartmentPrices($peak_period->start_date, $peak_period->end_date, $peak_period->discount);
                 $price_update = new PriceChanged;
                 $price_update->is_updated = 1;
                 $price_update->save();
-            } else  {
+            } else {
                 $price_update = PriceChanged::first();
                 if (null !== $price_update && $price_update->is_updated === true) {
                     $yesterday = Carbon::yesterday();
                     if ($yesterday->eq(Carbon::parse($peak_period->end_date))) {
-                       Helper::reverseApartmentPrices($peak_period->discount);
+                        Helper::reverseApartmentPrices($peak_period->discount);
                     }
 
                     $price_update = PriceChanged::first();
                     $price_update->is_updated = 0;
                     $price_update->save();
                 }
-                
             }
         }
-        
-        
-        // Apartment::where('price', '>', 0)
-        // ->update(['december_prices' => \DB::raw('price * 1.50')]);
-        // PriceChanged::update(['is_updated' => true]);
-
-        // if (null === $price_update && $currentDate->between($startDate, $endDate)) {
-        //     Apartment::where('price', '>', 0)
-        //         ->update(['price' => \DB::raw('price * 1.50')]);
-        //     PriceChanged::update(['is_updated' => true]);
-        // }
-
-        // if (null !== $price_update && $price_update->is_updated) {
-        //      if ($currentDate->isAfter($endDate)) {
-        //         Apartment::where('price', '>', 0) 
-        //             ->update(['price' => \DB::raw('price / 1.50')]);
-        //             PriceChanged::update([
-        //                 'is_updated' => 0
-        //             ]);
-        //     } 
-        // }
-   
 
 
-       // dd($usa->load('rate'));
+
+        // dd($usa->load('rate'));
         if (optional($settings)->allow_multi_currency) {
 
             if (isset($query['currency']) && strtok($query['currency'], '?') === 'USD') {
@@ -102,7 +82,7 @@ class CurrencyByIp
                 $request->session()->put('rate', json_encode(collect($rate)));
                 $request->session()->put('userLocation',  json_encode($position));
                 return $next($request);
-            } 
+            }
 
 
 
@@ -114,20 +94,20 @@ class CurrencyByIp
 
                 $user_location = json_decode(session('userLocation'));
 
-                try { 
+                try {
 
-                        $country = Currency::where('country', $position->countryName)->first();
-                        $rate = null;
+                    $country = Currency::where('country', $position->countryName)->first();
+                    $rate = null;
 
-                        if ($position->countryName === 'Nigeria') {
-                            $rate = ['rate' => $exchaange_rate, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
-                            $request->session()->put('switch', 'NGN');
-                        } else {
-                            $rate = ['rate' => 1, 'country' => $usa->country, 'symbol' => $usa->symbol];
-                            $request->session()->put('switch', 'USD');
-                        }
-                        $request->session()->put('rate', json_encode(collect($rate)));
-                        $request->session()->put('userLocation',  json_encode($position));
+                    if ($position->countryName === 'Nigeria') {
+                        $rate = ['rate' => $exchaange_rate, 'country' => $position->countryName, 'code' => $nigeria->iso_code3,  'symbol' => $nigeria->symbol];
+                        $request->session()->put('switch', 'NGN');
+                    } else {
+                        $rate = ['rate' => 1, 'country' => $usa->country, 'symbol' => $usa->symbol];
+                        $request->session()->put('switch', 'USD');
+                    }
+                    $request->session()->put('rate', json_encode(collect($rate)));
+                    $request->session()->put('userLocation',  json_encode($position));
 
 
                     if ($user_location && $user_location->ip !== request()->ip()) {
@@ -147,7 +127,6 @@ class CurrencyByIp
                     //throw $th;
 
                 }
-
             } else {
 
 
@@ -160,7 +139,6 @@ class CurrencyByIp
                     if ($position->countryName === 'Nigeria') {
                         $rate = ['rate' => $exchaange_rate, 'country' => $position->countryName, 'code' => $country->iso_code3,  'symbol' => $country->symbol];
                         $request->session()->put('switch', 'NGN');
-
                     } else {
                         $country = Currency::where('country', 'United States')->first();
                         $rate = ['rate' => 1, 'country' => $country->name, 'symbol' => $country->symbol];
@@ -172,12 +150,10 @@ class CurrencyByIp
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
-
-
             }
         } else {
 
-           // $request->session()->put('switch', 'NGN');
+            // $request->session()->put('switch', 'NGN');
             $request->session()->forget(['rate']);
         }
 

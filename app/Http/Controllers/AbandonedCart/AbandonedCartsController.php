@@ -33,11 +33,12 @@ class AbandonedCartsController extends Controller
                 'total' => data_get($input, 'total'),
                 'property_id' => data_get($input, 'property_id'),
                 'coupon' => data_get($input, 'coupon'),
+                'country' => session('country_name'),
                 'original_amount' => data_get($input, 'original_amount'),
             ]
         );
 
-        \App\Jobs\SendAbandonedBookingNotifications::dispatch()->delay(now()->addMinute(30));
+        \App\Jobs\SendAbandonedBookingNotifications::dispatch()->delay(now()->addMinute(1));
         return response()->json($user);
     }
 

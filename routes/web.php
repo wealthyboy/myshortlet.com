@@ -67,6 +67,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::post('category/delete/image', 'Admin\Category\CategoryController@undo');
 
 
+
     /* INFORMATION */
     Route::resource('pages', 'Information\InformationController', ['name' => 'pages']);
     /* INFORMATION */

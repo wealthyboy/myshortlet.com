@@ -109,7 +109,7 @@
                         </a>
 
                         <div class="collapse 
-                   {{ $helper->active_link([
+                       {{ $helper->active_link([
                         'properties',
                         'category',
                         'fine_art',
@@ -203,6 +203,20 @@
                                     <a href="{{ route('admin.reservations.index', ['coming_from' => 'checkin']) }}">
                                         <span class="sidebar-mini"> C </span>
                                         <span class="sidebar-normal"> Check-in </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('admin.reservations.index', ['coming_from' => 'checkin']) }}">
+                                        <span class="sidebar-mini"> C </span>
+                                        <span class="sidebar-normal"> Abandoned Checkout </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('admin.reservations.index', ['coming_from' => 'checkin']) }}">
+                                        <span class="sidebar-mini"> C </span>
+                                        <span class="sidebar-normal"> Abandoned Checkout </span>
                                     </a>
                                 </li>
 
