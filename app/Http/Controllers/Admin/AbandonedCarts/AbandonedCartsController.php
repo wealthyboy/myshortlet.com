@@ -17,7 +17,11 @@ class AbandonedCartsController extends Controller
     public function index()
     {
 
-        $carts = UserTracking::whereIn('action', ['abandonded', 'sent'])->paginate(20);
+        $carts = UserTracking::whereIn('action', ['abandonded', 'sent'])
+            ->when($source, function ($query, $source) {
+                $query->where('referer', 'like', "%{$source}%");
+            })
+            ->paginate(20);
         $knownSources = ['google', 'instagram', 'twitter', 'facebook'];
 
         $sourceCounts = [
