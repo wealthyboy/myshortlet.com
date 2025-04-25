@@ -15,11 +15,16 @@ class VisitsController extends Controller
      */
     public function index()
     {
+        $source = request('referer');
+
         $visits = \DB::table('user_trackings')
             ->whereIn('id', function ($query) {
                 $query->selectRaw('MIN(id)')
                     ->from('user_trackings')
                     ->groupBy('session_id');
+            })
+            ->when($source, function ($query, $source) {
+                $query->where('referer', 'like', "%{$source}%");
             })
             ->orderByDesc('id')
             ->paginate(20);
