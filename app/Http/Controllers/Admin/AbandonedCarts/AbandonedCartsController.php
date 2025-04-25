@@ -16,6 +16,8 @@ class AbandonedCartsController extends Controller
     public function index()
     {
         $carts = UserTracking::whereIn('action', ['abandonded', 'sent'])->paginate(20);
+
+        dd($carts);
         return view('admin.abandonded_carts.index', compact('carts'));
     }
 
