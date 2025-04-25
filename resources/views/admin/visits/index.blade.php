@@ -24,41 +24,30 @@
          <div class="col-lg-3 col-md-6 col-sm-6" bis_skin_checked="1">
             <div class="card card-stats" bis_skin_checked="1">
                <div class="card-header card-header-rose card-header-icon" bis_skin_checked="1">
-                  <p class="card-category">Instagram</p>
+
+                  <h4 class="card-category"><a href="http://">Instagram</a></h4>
                   <h3 class="card-title">{{$sourceCounts['instagram']}}</h3>
                </div>
-               <div class="card-footer" bis_skin_checked="1">
 
-               </div>
             </div>
          </div>
          <div class="col-lg-3 col-md-6 col-sm-6" bis_skin_checked="1">
             <div class="card card-stats" bis_skin_checked="1">
                <div class="card-header card-header-success card-header-icon" bis_skin_checked="1">
-
-                  <p class="card-category">Facebook</p>
+                  <h4 class="card-category"><a href="http://">Facebook</a></h4>
                   <h3 class="card-title">{{$sourceCounts['facebook']}}</h3>
                </div>
-               <div class="card-footer" bis_skin_checked="1">
-                  <div class="stats" bis_skin_checked="1">
-                     <i class="material-icons">date_range</i>
-                  </div>
-               </div>
+
             </div>
          </div>
 
          <div class="col-lg-3 col-md-6 col-sm-6" bis_skin_checked="1">
             <div class="card card-stats" bis_skin_checked="1">
                <div class="card-header card-header-success card-header-icon" bis_skin_checked="1">
-
-                  <p class="card-category">Other</p>
+                  <h4 class="card-category"><a href="http://">Others</a></h4>
                   <h3 class="card-title">{{$sourceCounts['others']}}</h3>
                </div>
-               <div class="card-footer" bis_skin_checked="1">
-                  <div class="stats" bis_skin_checked="1">
-                     <i class="material-icons">date_range</i>
-                  </div>
-               </div>
+
             </div>
          </div>
 
