@@ -23,6 +23,7 @@ class AbandonedCartsController extends Controller
                 'user_id' => optional(auth()->user())->id,
                 'visited_at' => now(),
                 'apartment_id' => data_get($input, 'apartment_id'),
+                'ip_address' => $request->ip(),
                 'action' => 'abandoned',
                 'first_name' => data_get($input, 'first_name'),
                 'last_name' => data_get($input, 'last_name'),

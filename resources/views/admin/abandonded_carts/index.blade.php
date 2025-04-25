@@ -33,8 +33,9 @@
                         <tr>
 
                            <td class="">
-                              <a href="/admin/abandoned_cartss/{{$cart->id}}">
-                                 {{ $cart->ip_address }}
+                              <a href="/admin/abandoned_carts/{{$cart->id}}">
+                                 {{$cart->ip_address ?  $cart->ip_address : 'N/A'}}
+
                               </a>
                            </td>
 
