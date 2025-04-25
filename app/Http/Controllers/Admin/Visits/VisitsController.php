@@ -24,6 +24,23 @@ class VisitsController extends Controller
             ->orderByDesc('id')
             ->paginate(20);
 
+        $knownSources = ['google', 'instagram', 'twitter', 'facebook'];
+
+        $otherCount = UserTracking::where(function ($query) use ($knownSources) {
+            foreach ($knownSources as $source) {
+                $query->where('referer', 'not like', '%' . $source . '%');
+            }
+        })->count();
+
+
+        $sourceCounts = [
+            'google' => UserTracking::where('referer', 'like', '%google%')->count(),
+            'instagram' => UserTracking::where('referer', 'like', '%instagram%')->count(),
+            'twitter' => UserTracking::where('referer', 'like', '%twitter%')->count(),
+            'facebook' => UserTracking::where('referer', 'like', '%facebook%')->count(),
+            'others' => $otherCount,
+        ];
+
         return view('admin.visits.index', compact('visits'));
     }
 
