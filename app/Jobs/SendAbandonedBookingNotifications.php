@@ -24,14 +24,12 @@ class SendAbandonedBookingNotifications implements ShouldQueue
         $abandonedUsers = UserTracking::with('apartment')->where('action', 'abandoned')
             ->get();
 
-        \Log::info($abandonedUsers);
-
         foreach ($abandonedUsers as $track) {
             Notification::route('mail', $track->email)
                 ->notify(new AbandonedBookingNotification($track));
 
 
-            Notification::route('mail', 'jacob.atam@gmail.com')
+            Notification::route('mail', 'oluwa.tosin@avenuemontaigne.ng')
                 ->notify(new AbandonedCartAlert($track));
 
             // Mark it as sent
