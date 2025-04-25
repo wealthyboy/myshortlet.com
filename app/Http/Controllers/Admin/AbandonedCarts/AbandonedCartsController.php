@@ -18,7 +18,29 @@ class AbandonedCartsController extends Controller
     {
 
         $carts = UserTracking::whereIn('action', ['abandonded', 'sent'])->paginate(20);
-        return view('admin.abandonded_carts.index', compact('carts'));
+        $knownSources = ['google', 'instagram', 'twitter', 'facebook'];
+
+        $sourceCounts = [
+            'google' => UserTracking::whereIn('action', ['abandonded', 'sent'])
+                ->where('referer', 'like', '%google%')->count(),
+
+            'instagram' => UserTracking::whereIn('action', ['abandonded', 'sent'])
+                ->where('referer', 'like', '%instagram%')->count(),
+
+            'twitter' => UserTracking::whereIn('action', ['abandonded', 'sent'])
+                ->where('referer', 'like', '%twitter%')->count(),
+
+            'facebook' => UserTracking::whereIn('action', ['abandonded', 'sent'])
+                ->where('referer', 'like', '%facebook%')->count(),
+
+            'others' => UserTracking::whereIn('action', ['abandonded', 'sent'])
+                ->where(function ($query) use ($knownSources) {
+                    foreach ($knownSources as $source) {
+                        $query->where('referer', 'not like', '%' . $source . '%');
+                    }
+                })->count(),
+        ];
+        return view('admin.abandonded_carts.index', compact('carts', 'sourceCounts'));
     }
 
     /**
