@@ -56,7 +56,7 @@ class VisitsController extends Controller
      */
     public function show($id)
     {
-        $tracking = UserTracking::find($id);
+        $tracking = UserTracking::with('apartment')->find($id);
         return view('admin.visits.show', compact('tracking'));
     }
 
