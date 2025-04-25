@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\AbandonedCarts;
 
 use App\Http\Controllers\Controller;
+use App\Models\Apartment;
 use App\Models\UserTracking;
 use Illuminate\Http\Request;
 
@@ -49,7 +50,7 @@ class AbandonedCartsController extends Controller
     public function show($id)
     {
         $cart = UserTracking::with('apartment')->find($id);
-        dd($cart);
+        dd(Apartment::find(964));
         return view('admin.abandonded_carts.show', compact('cart'));
     }
 
