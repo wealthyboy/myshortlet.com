@@ -23,9 +23,9 @@ class TrackUserActivity
         $sessionId = session()->getId();
         $path = $request->fullUrl();
 
-        if ($request->ch) {
-            dd($request->headers->get('referer'));
-        }
+        // if ($request->ch) {
+        dd($request->headers->get('referer'));
+        // }
 
         UserTracking::updateOrInsert(
             ['session_id' => $sessionId,  'page_url' => $path],
