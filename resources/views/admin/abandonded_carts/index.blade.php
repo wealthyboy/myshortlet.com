@@ -33,7 +33,7 @@
                         <tr>
 
                            <td class="">
-                              <a href="/admin/visits/{{$cart->id}}">
+                              <a href="/admin/abandoned_cartss/{{$cart->id}}">
                                  {{ $cart->ip_address }}
                               </a>
                            </td>
