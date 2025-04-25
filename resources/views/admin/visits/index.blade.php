@@ -15,16 +15,10 @@
          <div class="col-lg-3 col-md-6 col-sm-6" bis_skin_checked="1">
             <div class="card card-stats" bis_skin_checked="1">
                <div class="card-header card-header-warning card-header-icon" bis_skin_checked="1">
-
-                  <p class="card-category">Google</p>
+                  <h4 class="card-category"><a href="http://">Google</a></h4>
                   <h3 class="card-title">{{$sourceCounts['google']}}</h3>
                </div>
-               <div class="card-footer" bis_skin_checked="1">
-                  <div class="stats" bis_skin_checked="1">
-                     <i class="material-icons text-danger">warning</i>
-                     <a href="/google" bis_skin_checked="1">Get More Space...</a>
-                  </div>
-               </div>
+
             </div>
          </div>
          <div class="col-lg-3 col-md-6 col-sm-6" bis_skin_checked="1">
