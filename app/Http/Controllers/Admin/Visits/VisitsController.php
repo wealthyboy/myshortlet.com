@@ -41,7 +41,7 @@ class VisitsController extends Controller
             'others' => $otherCount,
         ];
 
-        return view('admin.visits.index', compact('visits'));
+        return view('admin.visits.index', compact('visits', 'sourceCounts'));
     }
 
     /**
