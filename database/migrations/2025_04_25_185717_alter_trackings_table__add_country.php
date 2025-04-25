@@ -16,7 +16,6 @@ class AlterTrackingsTableAddCountry extends Migration
 
 
         Schema::table('user_trackings', function (Blueprint $table) {
-            $table->string('country')->nullable();
             $table->string('referer')->nullable();
             $table->string('user_agent')->nullable();
         });
