@@ -3,10 +3,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="text-right">
-            <a href="{{ route('admin.carts.index') }}" rel="tooltip" title="Refresh" class="btn btn-primary btn-simple btn-xs">
-                <i class="material-icons">refresh</i>
-                Refresh
-            </a>
+
 
         </div>
     </div>
