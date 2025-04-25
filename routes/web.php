@@ -20,6 +20,10 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
 
     Route::resource('reservations', 'Admin\Reservations\ReservationsController', ['names' => 'admin.reservations']);
     Route::post('reservations/resendLink', 'Admin\Reservations\ReservationsController@resendLink');
+    Route::resource('visits', 'Admin\Visits\VisitsController', ['names' => 'admin.visits']);
+    Route::resource('abandoned-carts', 'Admin\AbandonedCarts\AbandonedCartsController', ['names' => 'admin.abandoned_carts']);
+
+
 
     Route::resource('check-in', 'Admin\Reservations\ReservationsController', ['names' => 'admin.check-in']);
 

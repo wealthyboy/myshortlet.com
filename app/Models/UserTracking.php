@@ -32,5 +32,13 @@ class UserTracking extends Model
         'country',
         'coupon',
         'original_amount',
+        'referer',
+        'user_agent'
     ];
+
+
+    public function apartment()
+    {
+        return $this->belongsTo(Apartment::class);
+    }
 }

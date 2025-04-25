@@ -29,7 +29,7 @@ class SendAbandonedBookingNotifications implements ShouldQueue
                 ->notify(new AbandonedBookingNotification($track));
 
 
-            Notification::route('mail', 'oluwa.tosin@avenuemontaigne.ng')
+            Notification::route('mail', 'jacob.atam@gmail.com')
                 ->notify(new AbandonedCartAlert($track));
 
             // Mark it as sent

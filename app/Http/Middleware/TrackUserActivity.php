@@ -27,7 +27,9 @@ class TrackUserActivity
             ['session_id' => $sessionId,  'page_url' => $path],
             [
                 'ip_address' => $request->ip(),
-                // 'user_agent' => $request->userAgent(),
+                'user_agent' => $request->userAgent(),
+                'referer' => $request->headers->get('referer'),
+
                 'user_id' => optional(auth()->user())->id,
                 'visited_at' => now(),
                 'method' => $request->method(),

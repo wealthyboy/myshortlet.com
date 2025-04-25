@@ -27,7 +27,7 @@
           <i class="material-icons">equalizer</i>
         </div>
         <p class="card-category">Website Visits</p>
-        <h3 class="card-title">75.521</h3>
+        <h3 class="card-title"></h3>
       </div>
       <div class="card-footer" bis_skin_checked="1">
 
@@ -41,11 +41,11 @@
           <i class="material-icons">store</i>
         </div>
         <p class="card-category">Users</p>
-        <h3 class="card-title">$34,245</h3>
+        <h3 class="card-title"></h3>
       </div>
       <div class="card-footer" bis_skin_checked="1">
         <div class="stats" bis_skin_checked="1">
-          <i class="material-icons">date_range</i> Last 24 Hours
+          <i class="material-icons">date_range</i>
         </div>
       </div>
     </div>

@@ -47,7 +47,7 @@ class AbandonedCartAlert extends Notification
             ->line('Source: ' . ($this->track->referrer ?? 'Unknown'))
             ->line('Apartment Name: ' . (optional($this->track->apartment)->name ?? 'N/A'))
             ->line('Ip Address: ' . ($this->track->ip_address ?? 'N/A'))
-            ->line('Amount: $' . number_format($this->track->amount ?? 0, 2))
+            ->line('Amount: $' . number_format(optional($this->track->apartment)->price ?? 0, 2))
             ->action('Country', $this->track->country ?? '#')
             ->line('You are receiving this because the user did not complete their booking.');
     }

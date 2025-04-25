@@ -207,14 +207,14 @@
                                 </li>
 
                                 <li>
-                                    <a href="{{ route('admin.reservations.index', ['coming_from' => 'checkin']) }}">
+                                    <a href="{{ route('admin.abandoned_carts.index', ['coming_from' => 'abandoned_carts']) }}">
                                         <span class="sidebar-mini"> A </span>
                                         <span class="sidebar-normal"> Abandoned Checkout </span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="{{ route('admin.reservations.index', ['coming_from' => 'checkin']) }}">
+                                    <a href="{{ route('admin.visits.index', ['coming_from' => 'visits']) }}">
                                         <span class="sidebar-mini"> V </span>
                                         <span class="sidebar-normal"> Visits </span>
                                     </a>
