@@ -25,9 +25,6 @@
                      <thead>
                         <tr>
                            <td class="text-left"> Ip Address</td>
-                        </tr>
-
-                        <tr>
                            <td class="text-left"> Name</td>
                         </tr>
                      </thead>
@@ -38,7 +35,6 @@
                            <td class="">
                               <a href="/admin/visits/{{$cart->id}}">
                                  {{ $cart->ip_address }}
-
                               </a>
                            </td>
 
