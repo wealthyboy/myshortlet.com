@@ -644,9 +644,6 @@ export default {
         session_id: this.booking_details.sessionId,
         apartment_id: this.booking_details.apt_id
       }
-
-      console.log(payload)
-
     
       axios
         .put('/abandoned-cart/' + this.tracking_id, payload)
