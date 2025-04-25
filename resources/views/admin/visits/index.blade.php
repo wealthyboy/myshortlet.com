@@ -11,67 +11,68 @@
       </div>
    </div>
    <div class="col-md-12">
+      <div class="row" bis_skin_checked="1">
+         <div class="col-lg-3 col-md-6 col-sm-6" bis_skin_checked="1">
+            <div class="card card-stats" bis_skin_checked="1">
+               <div class="card-header card-header-warning card-header-icon" bis_skin_checked="1">
+
+                  <p class="card-category">Google</p>
+                  <h3 class="card-title">{{$sourceCounts['google']}}</h3>
+               </div>
+               <div class="card-footer" bis_skin_checked="1">
+                  <div class="stats" bis_skin_checked="1">
+                     <i class="material-icons text-danger">warning</i>
+                     <a href="/google" bis_skin_checked="1">Get More Space...</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3 col-md-6 col-sm-6" bis_skin_checked="1">
+            <div class="card card-stats" bis_skin_checked="1">
+               <div class="card-header card-header-rose card-header-icon" bis_skin_checked="1">
+                  <p class="card-category">Instagram</p>
+                  <h3 class="card-title">{{$sourceCounts['instagram']}}</h3>
+               </div>
+               <div class="card-footer" bis_skin_checked="1">
+
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3 col-md-6 col-sm-6" bis_skin_checked="1">
+            <div class="card card-stats" bis_skin_checked="1">
+               <div class="card-header card-header-success card-header-icon" bis_skin_checked="1">
+
+                  <p class="card-category">Facebook</p>
+                  <h3 class="card-title">{{$sourceCounts['facebook']}}</h3>
+               </div>
+               <div class="card-footer" bis_skin_checked="1">
+                  <div class="stats" bis_skin_checked="1">
+                     <i class="material-icons">date_range</i>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-lg-3 col-md-6 col-sm-6" bis_skin_checked="1">
+            <div class="card card-stats" bis_skin_checked="1">
+               <div class="card-header card-header-success card-header-icon" bis_skin_checked="1">
+
+                  <p class="card-category">Other</p>
+                  <h3 class="card-title">{{$sourceCounts['others']}}</h3>
+               </div>
+               <div class="card-footer" bis_skin_checked="1">
+                  <div class="stats" bis_skin_checked="1">
+                     <i class="material-icons">date_range</i>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+      </div>
       <div class="card">
          <div class="card-content">
             <h4 class="card-title">Visits</h4>
-            <div class="row" bis_skin_checked="1">
-               <div class="col-lg-3 col-md-6 col-sm-6" bis_skin_checked="1">
-                  <div class="card card-stats" bis_skin_checked="1">
-                     <div class="card-header card-header-warning card-header-icon" bis_skin_checked="1">
 
-                        <p class="card-category">Google</p>
-                        <h3 class="card-title">{{$sourceCounts['google']}}</h3>
-                     </div>
-                     <div class="card-footer" bis_skin_checked="1">
-                        <div class="stats" bis_skin_checked="1">
-                           <i class="material-icons text-danger">warning</i>
-                           <a href="/google" bis_skin_checked="1">Get More Space...</a>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-lg-3 col-md-6 col-sm-6" bis_skin_checked="1">
-                  <div class="card card-stats" bis_skin_checked="1">
-                     <div class="card-header card-header-rose card-header-icon" bis_skin_checked="1">
-                        <p class="card-category">Instagram</p>
-                        <h3 class="card-title">{{$sourceCounts['instagram']}}</h3>
-                     </div>
-                     <div class="card-footer" bis_skin_checked="1">
-
-                     </div>
-                  </div>
-               </div>
-               <div class="col-lg-3 col-md-6 col-sm-6" bis_skin_checked="1">
-                  <div class="card card-stats" bis_skin_checked="1">
-                     <div class="card-header card-header-success card-header-icon" bis_skin_checked="1">
-
-                        <p class="card-category">Facebook</p>
-                        <h3 class="card-title">{{$sourceCounts['facebook']}}</h3>
-                     </div>
-                     <div class="card-footer" bis_skin_checked="1">
-                        <div class="stats" bis_skin_checked="1">
-                           <i class="material-icons">date_range</i>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-
-               <div class="col-lg-3 col-md-6 col-sm-6" bis_skin_checked="1">
-                  <div class="card card-stats" bis_skin_checked="1">
-                     <div class="card-header card-header-success card-header-icon" bis_skin_checked="1">
-
-                        <p class="card-category">Other</p>
-                        <h3 class="card-title">{{$sourceCounts['others']}}</h3>
-                     </div>
-                     <div class="card-footer" bis_skin_checked="1">
-                        <div class="stats" bis_skin_checked="1">
-                           <i class="material-icons">date_range</i>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-
-            </div>
             <div class="material-datatables">
                <form action="{{ route('admin.visits.destroy',['visit'=>1]) }}" method="post" enctype="multipart/form-data" id="form-vouchers">
                   @method('DELETE')
@@ -80,9 +81,9 @@
                      <thead>
                         <tr>
                            <td class="text-left"> Ip Address</td>
-                        </tr>
 
-                        <tr>
+
+
                            <td class="text-left"> Name</td>
                         </tr>
                      </thead>
