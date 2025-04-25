@@ -16,6 +16,7 @@ class AbandonedCartsController extends Controller
      */
     public function index()
     {
+        $source = request('referer');
 
         $carts = UserTracking::whereIn('action', ['abandonded', 'sent'])
             ->when($source, function ($query, $source) {
