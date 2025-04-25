@@ -32,9 +32,10 @@
                                 <th>Visited At</th>
                                 <td>{{ $tracking->visited_at }}</td>
                             </tr>
+
                             <tr>
-                                <th>Apartment ID</th>
-                                <td>{{ $tracking->apartment_id }}</td>
+                                <th>Apartment</th>
+                                <td>{{ optional($tracking->apartment)->name }}</td>
                             </tr>
                             <tr>
                                 <th>Session ID</th>

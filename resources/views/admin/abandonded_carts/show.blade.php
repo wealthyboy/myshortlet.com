@@ -30,8 +30,8 @@
                                 <td>{{ $cart->visited_at }}</td>
                             </tr>
                             <tr>
-                                <th>Apartment ID</th>
-                                <td>{{ $cart->apartment_id }}</td>
+                                <th>Apartment</th>
+                                <td>{{ optional($cart->apartment)->name }}</td>
                             </tr>
                             <tr>
                                 <th>Session ID</th>
