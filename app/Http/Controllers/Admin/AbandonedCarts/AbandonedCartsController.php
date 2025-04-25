@@ -48,7 +48,8 @@ class AbandonedCartsController extends Controller
      */
     public function show($id)
     {
-        //
+        $cart = UserTracking::find($id);
+        return view('admin.abandonded_carts.show', compact('cart'));
     }
 
     /**
