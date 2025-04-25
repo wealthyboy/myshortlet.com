@@ -61,7 +61,7 @@
                      <div class="card-header card-header-success card-header-icon" bis_skin_checked="1">
 
                         <p class="card-category">Other</p>
-                        <h3 class="card-title">{{$sourceCounts['other']}}</h3>
+                        <h3 class="card-title">{{$sourceCounts['others']}}</h3>
                      </div>
                      <div class="card-footer" bis_skin_checked="1">
                         <div class="stats" bis_skin_checked="1">
