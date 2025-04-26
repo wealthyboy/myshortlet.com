@@ -2278,3 +2278,8 @@ h6 {
 .flex-wrap {
   flex-wrap: wrap !important;
 }
+
+.btn .btn-outline-primary {
+  background-color: #342c27;
+  border-color: #342c27;
+}
