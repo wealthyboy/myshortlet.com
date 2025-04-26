@@ -2259,7 +2259,7 @@ label.error {
   display: none !important;
 }
 
-.table-shopping>thead>tr>th {
+.table-shopping > thead > tr > th {
   font-size: 0.9em;
   text-transform: uppercase !important;
   font-weight: 700 !important;
@@ -2273,4 +2273,8 @@ h5,
 h6 {
   font-weight: 700 !important;
   color: #000 !important;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
 }
