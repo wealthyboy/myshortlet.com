@@ -78,7 +78,7 @@ class ApartmentsController extends Controller
                 $query->where(function ($q) use ($startDate, $endDate) {
                     $q->where('checkin', '<', $endDate)
                         ->where('checkout', '>', $startDate)
-                        ->where('checkin', '!=', $startDate); // <-- allow exact checkout on $endDate
+                        ->where('checkout', '!=', $startDate); // Allow checkout exactly on start date
                 });
             })
                 ->where('apartments.max_adults', '>=', $data['persons'])

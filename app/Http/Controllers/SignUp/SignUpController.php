@@ -101,7 +101,7 @@ class SignUpController extends Controller
                     $q->where('checkin', '<', $endDate)
                         ->where('reservations.is_blocked', false)
                         ->where('checkout', '>', $startDate)
-                        ->where('checkout', '!=', $endDate); // <-- allow exact checkout on $endDate
+                        ->where('checkin', '!=', $startDate); // <-- allow exact checkout on $endDate
 
 
                 });
