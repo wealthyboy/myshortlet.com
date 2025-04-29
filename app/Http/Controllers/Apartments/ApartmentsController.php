@@ -74,15 +74,11 @@ class ApartmentsController extends Controller
                 $query->where('id', $apartmentId)->get(); // Filter by the provided apartment ID
             }
 
-            $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
-                $query->where(function ($q) use ($startDate) {
-                    $q->where('checkin', '<', $startDate)  // Reservation started before requested start
-                        ->where('checkout', '>', $startDate); // Reservation ends AFTER requested start (i.e. it's occupied)
-
-                })
-                    ->orWhere(function ($q) use ($startDate) {
-                        $q->where('checkin', '=', $startDate); // Someone is checking in same day you're trying to check-in
-                    });
+            $query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
+                $q->where(function ($subQ) use ($startDate) {
+                    $subQ->where('checkin', '<', $startDate)
+                        ->where('checkout', '>', $startDate);
+                });
             })
                 ->where('apartments.max_adults', '>=',  $data['persons'])
                 ->where('apartments.no_of_rooms', '>=', $data['rooms']);
