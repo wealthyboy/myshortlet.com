@@ -77,8 +77,7 @@ class ApartmentsController extends Controller
             $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
                 $query->where(function ($q) use ($startDate, $endDate) {
                     $q->where('checkin', '<', $endDate)
-                        ->where('checkout', '>', $startDate)
-                        ->where('checkout', '!=', $startDate); // Allow checkout exactly on start date
+                        ->where('checkout', '>', $startDate); // Allow checkout exactly on start date
                 });
             })
                 ->where('apartments.max_adults', '>=', $data['persons'])
