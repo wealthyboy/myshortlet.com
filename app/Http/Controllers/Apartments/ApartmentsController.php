@@ -75,12 +75,15 @@ class ApartmentsController extends Controller
             }
 
             $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
-                $query->where(function ($q) use ($startDate, $endDate) {
-                    $q->where('checkin', '<', $endDate)
-                        ->where('checkout', '>', $startDate); // Allow checkout exactly on start date
-                });
+                $query->where(function ($q) use ($startDate) {
+                    $q->where('checkin', '<', $startDate)  // Reservation started before requested start
+                        ->where('checkout', '>', $startDate); // Reservation ends AFTER requested start (i.e. it's occupied)
+                })
+                    ->orWhere(function ($q) use ($startDate) {
+                        $q->where('checkin', '=', $startDate); // Someone is checking in same day you're trying to check-in
+                    });
             })
-                ->where('apartments.max_adults', '>=', $data['persons'])
+                ->where('apartments.max_adults', '>=',  $data['persons'])
                 ->where('apartments.no_of_rooms', '>=', $data['rooms']);
         }
 
