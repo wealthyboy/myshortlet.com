@@ -31,12 +31,12 @@ class SignUpController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {   
-        
+    {
+
 
         $reservation = null;
         $rooms = Apartment::orderBy('name', 'asc')->get();
-       // dd($rooms);
+        // dd($rooms);
         if ($request->id) {
             $user_reservation = UserReservation::findOrFail($request->id);
             $reservation = isset($user_reservation->reservations[0]) && !empty($user_reservation->reservations[0]) ? $user_reservation->reservations[0] : null;
@@ -45,7 +45,7 @@ class SignUpController extends Controller
             $user_reservation->checkout = $reservation->apartment_id;
             //dd($user_reservation);
             if ($user_reservation->checkout->isPast()) {
-               // abort(404);
+                // abort(404);
             }
 
             return view('checkin.checkin', compact('rooms', 'user_reservation'));
@@ -100,7 +100,10 @@ class SignUpController extends Controller
                 $query->where(function ($q) use ($startDate, $endDate) {
                     $q->where('checkin', '<', $endDate)
                         ->where('reservations.is_blocked', false)
-                        ->where('checkout', '>', $startDate);
+                        ->where('checkout', '>', $startDate)
+                        ->where('checkout', '!=', $endDate); // <-- allow exact checkout on $endDate
+
+
                 });
             });
 
@@ -189,7 +192,7 @@ class SignUpController extends Controller
             $query->where('id', $apartmentId);
             $startDate = Carbon::createFromDate($request->checkin);
             $endDate = Carbon::createFromDate($request->checkout);
-           
+
             $apartments = $query->latest()->first();
             $guest = GuestUser::firstOrNew(['id' => data_get($input, 'guest_id')]);
             $guest->name = "Block";
