@@ -4,12 +4,10 @@ function getDynamicMinDate() {
   nineAM.setHours(9, 0, 0, 0);
 
   if (now < nineAM) {
-    // Allow yesterday's date before 9am
     const yesterday = new Date(now);
     yesterday.setDate(now.getDate() - 1);
     return yesterday;
   } else {
-    // From 9am onwards, only allow today and future
     return now;
   }
 }

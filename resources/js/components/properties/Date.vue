@@ -8,6 +8,7 @@
       </span>
     </div>
     <pickr
+      @on-open="updateMinDate"
       @on-change="handleDateChange(placeholder)"
       :id="placeholder"
       v-model="check_in_checkout"
@@ -16,7 +17,6 @@
       :placeholder="placeholder"
       name="check_in_checkout"
       ref="datePicker"
-      style=""
     />
   </div>
 </template>
@@ -92,6 +92,27 @@ export default {
     },
   },
   methods: {
+    getMinDate() {
+    const now = new Date();
+    const hour = now.getHours();
+
+    // Between 12:00 AM and 8:59 AM — allow yesterday
+    if (hour < 9) {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      return yesterday;
+    }
+
+    // From 9:00 AM onwards — today
+    return "today";
+  },
+
+  updateMinDate() {
+    if (this.$refs.datePicker && this.$refs.datePicker.flatpickr) {
+      const newMinDate = this.getMinDate();
+      this.$refs.datePicker.flatpickr.set("minDate", newMinDate);
+    }
+  },
     handleDateChange(pickerId) {
       this.$emit("dateSelected", this.check_in_checkout);
     },

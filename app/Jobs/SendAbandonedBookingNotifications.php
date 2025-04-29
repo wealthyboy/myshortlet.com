@@ -21,7 +21,12 @@ class SendAbandonedBookingNotifications implements ShouldQueue
     {
         $threshold = Carbon::now()->subMinutes(1);
 
-        $abandonedUsers = UserTracking::with('apartment')->where('action', 'abandoned')
+        $abandonedUsers = UserTracking::with('apartment')
+            ->where('action', 'abandoned')
+            ->whereNotNull('first_name')
+            ->whereNotNull('last_name')
+            ->whereNotNull('phone_number')
+            ->whereNotNull('email')
             ->get();
 
         foreach ($abandonedUsers as $track) {
