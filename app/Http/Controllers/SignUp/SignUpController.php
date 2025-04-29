@@ -96,15 +96,11 @@ class SignUpController extends Controller
             $query->where('id', $apartmentId);
             $startDate = Carbon::createFromDate($request->checkin);
             $endDate = Carbon::createFromDate($request->checkout);
-            $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
-                $query->where(function ($q) use ($startDate, $endDate) {
-                    $query->where(function ($q) use ($startDate) {
-                        $q->where('checkin', '<', $startDate)  // Reservation started before requested start
-                            ->where('checkout', '>', $startDate); // Reservation ends AFTER requested start (i.e. it's occupied)
-                    })
-                        ->orWhere(function ($q) use ($startDate) {
-                            $q->where('checkin', '=', $startDate); // Someone is checking in same day you're trying to check-in
-                        });
+            $query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
+                $q->where(function ($subQ) use ($startDate) {
+                    $subQ->where('checkin', '<', $startDate)
+                        ->where('reservations.is_blocked', false)
+                        ->where('checkout', '>', $startDate);
                 });
             });
 
