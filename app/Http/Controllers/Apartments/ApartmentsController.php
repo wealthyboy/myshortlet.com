@@ -54,7 +54,7 @@ class ApartmentsController extends Controller
         $date = explode("to", $request->check_in_checkout);
         $date = Helper::toAndFromDate($request->check_in_checkout);
 
-        
+
         $property_is_not_available = null;
         $data = [];
         $attributes = null;
@@ -71,18 +71,18 @@ class ApartmentsController extends Controller
             // Check if apartment_id is present in the request
             if ($request->has('apartment_id')) {
                 $apartmentId = $request->apartment_id;
-                 $query->where('id', $apartmentId)->get(); // Filter by the provided apartment ID
+                $query->where('id', $apartmentId)->get(); // Filter by the provided apartment ID
             }
 
             $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
                 $query->where(function ($q) use ($startDate, $endDate) {
                     $q->where('checkin', '<', $endDate)
-                        ->where('checkout', '>', $startDate);
+                        ->where('checkout', '>', $startDate)
+                        ->where('checkout', '!=', $endDate); // <-- allow exact checkout on $endDate
                 });
             })
-                ->where('apartments.max_adults', '>=',  $data['persons'])
+                ->where('apartments.max_adults', '>=', $data['persons'])
                 ->where('apartments.no_of_rooms', '>=', $data['rooms']);
-
         }
 
 
@@ -103,18 +103,15 @@ class ApartmentsController extends Controller
             return PropertyLists::collection(
                 $apartments
             )->additional(['attributes' => $attributes, 'params' => $request->all(), 'search' => false]);
-
-
         }
 
         $showResult = null;
         $apr = 0;
 
-        if ( $request->check_in_checkout && $apartments->count() ) {
+        if ($request->check_in_checkout && $apartments->count()) {
             $showResult = 1;
             $apartments[0]->showResult = 1;
             $apr = 1;
-
         }
 
         return  view('apartments.apartments', compact(
@@ -237,7 +234,7 @@ class ApartmentsController extends Controller
         }
 
 
-        $properties = $query->filter($request,  $this->getFilters($attributes))
+        $properties = $query->filter($request, $this->getFilters($attributes))
             ->latest()->paginate(20);
 
         $properties  = $properties->appends(request()->all());
@@ -255,9 +252,6 @@ class ApartmentsController extends Controller
 
         $next_page[] = $properties->nextPageUrl();
         $properties->load('categories');
-
-
-
 
         return  view('apartments.index', compact(
             'location',
