@@ -78,9 +78,11 @@ class ApartmentsController extends Controller
                 $query->where(function ($q) use ($startDate) {
                     $q->where('checkin', '<', $startDate)  // Reservation started before requested start
                         ->where('checkout', '>', $startDate); // Reservation ends AFTER requested start (i.e. it's occupied)
-                    $q->where('checkin', '=', $startDate); // Someone is checking in same day you're trying to check-in
 
-                });
+                })
+                    ->orWhere(function ($q) use ($startDate) {
+                        $q->where('checkin', '=', $startDate); // Someone is checking in same day you're trying to check-in
+                    });
             })
                 ->where('apartments.max_adults', '>=',  $data['persons'])
                 ->where('apartments.no_of_rooms', '>=', $data['rooms']);
