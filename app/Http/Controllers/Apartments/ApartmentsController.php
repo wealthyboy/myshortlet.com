@@ -9,7 +9,7 @@ use App\Models\Property;
 use App\Models\Apartment;
 use App\Models\Reservation;
 use App\Models\SystemSetting;
-use App\Models\PeakPeriod;
+use App\Models\Attribute;
 use App\Http\Helper;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -34,6 +34,9 @@ class ApartmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+
     public function apartments(Request $request)
     {
         $types =  [
@@ -46,6 +49,13 @@ class ApartmentsController extends Controller
 
 
         $str = new Str;
+        $date = $request->check_in_checkout;
+        $property_is_not_available = null;
+        $cites = [];
+        $page_title =  "Book from our collection of Apartments | Avenue Montaigne";
+        $page_meta_description = "All apartments  Avenue Montaigne";
+        $date = explode("to", $request->check_in_checkout);
+
 
         $dateRange = $request->check_in_checkout;
         $date = Helper::toAndFromDate($dateRange); // returns ['start_date' => ..., 'end_date' => ...]
