@@ -60,6 +60,7 @@ class ApartmentsController extends Controller
 
 
         $date = explode("to", $request->check_in_checkout);
+        $saved = "";
 
 
         $dateRange = $request->check_in_checkout;
