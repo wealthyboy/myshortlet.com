@@ -9,7 +9,7 @@ use App\Models\Property;
 use App\Models\Apartment;
 use App\Models\Reservation;
 use App\Models\SystemSetting;
-use App\Models\Attribute;
+use App\Models\PeakPeriod;
 use App\Http\Helper;
 
 use Illuminate\Database\Eloquent\Builder;
