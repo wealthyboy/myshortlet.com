@@ -57,6 +57,7 @@ class ApartmentsController extends Controller
         $page_meta_description = "All apartments  Avenue Montaigne";
         $breadcrumb = null;
         $properties = null;
+        $property = null;
 
 
         $date = explode("to", $request->check_in_checkout);
