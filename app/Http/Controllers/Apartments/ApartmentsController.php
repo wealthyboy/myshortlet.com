@@ -46,32 +46,42 @@ class ApartmentsController extends Controller
 
 
         $str = new Str;
-        $date = $request->check_in_checkout;
-        $property_is_not_available = null;
-        $cites = [];
-        $page_title =  "Book from our collection of Apartments | Avenue Montaigne";
-        $page_meta_description = "All apartments  Avenue Montaigne";
-        $date = explode("to", $request->check_in_checkout);
-        $date = Helper::toAndFromDate($request->check_in_checkout);
 
+        $dateRange = $request->check_in_checkout;
+        $date = Helper::toAndFromDate($dateRange); // returns ['start_date' => ..., 'end_date' => ...]
 
-        $property_is_not_available = null;
-        $data = [];
-        $attributes = null;
+        $startDate = Carbon::parse($date['start_date']);
+        $endDate = Carbon::parse($date['end_date']);
+
         $data['persons'] = $request->persons ?? 1;
         $data['rooms'] = $request->rooms ?? 2;
-        $startDate = $date['start_date'];
-        $endDate = $date['end_date'];
-        $properties = null;
-        $breadcrumb = null;
 
+        // 2. Check if request dates fall within a peak period
+        $peak_period = PeakPeriod::first(); // Assuming only one, otherwise filter appropriately
+        $applyPeak = false;
+        $markup = 0;
+
+        if ($peak_period) {
+            $peakStart = Carbon::parse($peak_period->start_date);
+            $peakEnd = Carbon::parse($peak_period->end_date);
+
+            // Check if request range overlaps peak period
+            if (
+                $startDate->between($peakStart, $peakEnd) ||
+                $endDate->between($peakStart, $peakEnd) ||
+                ($startDate->lt($peakStart) && $endDate->gt($peakEnd))
+            ) {
+                $applyPeak = true;
+                $markup = (float) $peak_period->discount; // e.g., 50
+            }
+        }
+
+        // 3. Query apartments
         $query = Apartment::query();
 
         if ($request->check_in_checkout) {
-            // Check if apartment_id is present in the request
             if ($request->has('apartment_id')) {
-                $apartmentId = $request->apartment_id;
-                $query->where('id', $apartmentId)->get(); // Filter by the provided apartment ID
+                $query->where('id', $request->apartment_id);
             }
 
             $query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
@@ -84,36 +94,44 @@ class ApartmentsController extends Controller
                 ->where('apartments.no_of_rooms', '>=', $data['rooms']);
         }
 
+        // Get apartments
+        $apartments = $request->has('apartment_id')
+            ? $query->where('allow', 1)->latest()->first()
+            : $query->where('allow', 1)->latest()->get();
 
-        if ($request->has('apartment_id')) {
-            $apartments = $query->where('allow', 1)->latest()->first();
-            return $apartments;
+        // 4. Apply markup if within peak period
+        if ($applyPeak && $apartments) {
+            $percent = $markup / 100;
+
+            // If single apartment
+            if ($apartments instanceof \App\Models\Apartment) {
+                $apartments->price += $apartments->price * $percent;
+            } else {
+                foreach ($apartments as $apartment) {
+                    $apartment->price += $apartment->price * $percent;
+                }
+            }
         }
 
-
-        $apartments = $query->where('allow', 1)->latest()->get();
-        $saved = null;
-        $property = Property::first();
-        $apartments->load('images', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
-
+        // 5. Load relationships
+        if ($apartments instanceof \Illuminate\Support\Collection) {
+            $apartments->load('images', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
+        } elseif ($apartments) {
+            $apartments->load(['images', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent']);
+        }
 
         if ($request->ajax()) {
-
-            return PropertyLists::collection(
-                $apartments
-            )->additional(['attributes' => $attributes, 'params' => $request->all(), 'search' => false]);
+            return PropertyLists::collection($apartments)->additional([
+                'attributes' => null,
+                'params' => $request->all(),
+                'search' => false,
+            ]);
         }
 
-        $showResult = null;
-        $apr = 0;
+        $showResult = $request->check_in_checkout && $apartments && count($apartments) ? 1 : null;
+        $apr = $showResult ? 1 : 0;
 
-        if ($request->check_in_checkout && $apartments->count()) {
-            $showResult = 1;
-            $apartments[0]->showResult = 1;
-            $apr = 1;
-        }
-
-        return  view('apartments.apartments', compact(
+        return view('apartments.apartments', compact(
             'page_title',
             'breadcrumb',
             'str',
@@ -123,7 +141,6 @@ class ApartmentsController extends Controller
             'page_meta_description',
             'showResult',
             'apr'
-
         ));
     }
 
