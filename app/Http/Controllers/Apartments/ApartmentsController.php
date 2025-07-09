@@ -11,6 +11,7 @@ use App\Models\Reservation;
 use App\Models\SystemSetting;
 use App\Models\Attribute;
 use App\Models\PeakPeriod;
+
 use App\Http\Helper;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -36,10 +37,9 @@ class ApartmentsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
-
     public function apartments(Request $request)
     {
+
         $types =  [
             'extra_services',
             'facilities',
@@ -55,6 +55,10 @@ class ApartmentsController extends Controller
         $cites = [];
         $page_title =  "Book from our collection of Apartments | Avenue Montaigne";
         $page_meta_description = "All apartments  Avenue Montaigne";
+        $breadcrumb = null;
+        $properties = null;
+
+
         $date = explode("to", $request->check_in_checkout);
 
 
