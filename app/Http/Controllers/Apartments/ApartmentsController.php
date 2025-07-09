@@ -53,7 +53,7 @@ class ApartmentsController extends Controller
         $date = $request->check_in_checkout;
         $property_is_not_available = null;
         $cites = [];
-        $page_title =  "Book from our collection of Apartments | Avenue Montaigne";
+        $page_title = "Book from our collection of Apartments | Avenue Montaigne";
         $page_meta_description = "All apartments  Avenue Montaigne";
         $breadcrumb = null;
         $properties = null;
