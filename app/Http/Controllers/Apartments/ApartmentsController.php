@@ -9,7 +9,8 @@ use App\Models\Property;
 use App\Models\Apartment;
 use App\Models\Reservation;
 use App\Models\SystemSetting;
-use App\Models\Attribute;
+use App\Models\PeakPeriod;
+use App\Models\PriceChanged;
 use App\Http\Helper;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -87,8 +88,15 @@ class ApartmentsController extends Controller
 
         if ($request->has('apartment_id')) {
             $apartments = $query->where('allow', 1)->latest()->first();
-            return $apartments;
         }
+
+
+        $apartments = $request->has('apartment_id')
+            ? $query->where('allow', 1)->latest()->first()
+            : $query->where('allow', 1)->latest()->get();
+
+
+
 
 
         $apartments = $query->where('allow', 1)->latest()->get();

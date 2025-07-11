@@ -110,11 +110,11 @@ trait FormatPrice
   {
     $query = request()->all();
 
-    if (isset($query['currency']) && $query['currency'] === 'USD') { 
+    if (isset($query['currency']) && $query['currency'] === 'USD') {
       return "$";
     }
     $rate = Helper::rate();
-  
+
     if ($rate) {
       return $rate->symbol;
     }
@@ -136,17 +136,38 @@ trait FormatPrice
     // }
 
     $currentDate = Carbon::now();
-    $peak_period = PeakPeriod::first();
-    if(null !==  $peak_period ){
+    $queryString = request();
 
-      if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
-        //if ($this->december_prices > 0 ) {
-          return $this->ConvertCurrencyRate($this->december_prices);
-       // }    
-      } 
+    $peak_period = PeakPeriod::first();
+
+
+    if ($peak_period) {
+      $date = Helper::toAndFromDate($queryString->check_in_checkout);
+
+      $peakStart = Carbon::parse($peak_period->start_date);
+      $peakEnd = Carbon::parse($peak_period->end_date);
+
+      $startDate = $date['start_date'];
+      $endDate = $date['end_date'];
+
+      if (
+        $startDate->between($peakStart, $peakEnd) ||
+        $endDate->between($peakStart, $peakEnd) ||
+        ($startDate->lt($peakStart) && $endDate->gt($peakEnd))
+      ) {
+        Helper::updateApartmentPrices($peak_period->start_date, $peak_period->end_date, $peak_period->discount);
+        return $this->ConvertCurrencyRate($this->december_prices);
+      }
     }
 
-    
+
+    if (null !==  $peak_period) {
+      if ($currentDate->between($peak_period->start_date, $peak_period->end_date)) {
+        return $this->ConvertCurrencyRate($this->december_prices);
+      }
+    }
+
+
 
     return $this->ConvertCurrencyRate($this->price);
   }
@@ -157,9 +178,9 @@ trait FormatPrice
     //   return $this->ConvertCurrencyRate(optional(optional($this->apartments)->first())->price);
     // }
 
-    
 
-    
+
+
 
     return $this->ConvertCurrencyRate($this->price);
   }
@@ -169,22 +190,22 @@ trait FormatPrice
   {
     $currentDate = Carbon::now();
     $peak_period = PeakPeriod::first();
-    if(null !==  $peak_period ){
-      if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
-        if ($this->december_prices > 0 ) {
+    if (null !==  $peak_period) {
+      if ($currentDate->between($peak_period->start_date, $peak_period->end_date)) {
+        if ($this->december_prices > 0) {
           return $this->ConvertCurrencyRate($this->december_prices);
-        }    
-      } 
+        }
+      }
     }
 
 
 
-    if(null !==  $peak_period ){
-      if ( $currentDate->between($peak_period->start_date, $peak_period->end_date) ) {
-        if ($this->december_prices > 0 ) {
+    if (null !==  $peak_period) {
+      if ($currentDate->between($peak_period->start_date, $peak_period->end_date)) {
+        if ($this->december_prices > 0) {
           return $this->ConvertCurrencyRate($this->december_prices);
-        }    
-      } 
+        }
+      }
     }
 
     return 0;
@@ -216,10 +237,10 @@ trait FormatPrice
 
   public function ConvertCurrencyRate($price)
   {
-    
+
     $rate = Helper::rate();
     if ($rate) {
-     
+
       return round(($price * $rate->rate), 0);
     }
     return round($price, 0);
