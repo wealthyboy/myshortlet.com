@@ -5,7 +5,7 @@ namespace App\Traits;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\SystemSetting;
 use App\Http\Helper;
-use App\Models\CurrencyRate;
+use App\Models\BookingDetail;
 use App\Models\Property;
 use App\Models\PeakPeriod;
 use Carbon\Carbon;
@@ -138,27 +138,39 @@ trait FormatPrice
     $currentDate = Carbon::now();
     $queryString = request();
 
+
     $peak_period = PeakPeriod::first();
+
+    $property = Property::first();
+
+
 
 
     if ($peak_period) {
-      $date = Helper::toAndFromDate($queryString->check_in_checkout);
 
-      $peakStart = Carbon::parse($peak_period->start_date);
-      $peakEnd = Carbon::parse($peak_period->end_date);
+      $dates = explode("to", $queryString->check_in_checkout);
+      if (count($dates) > 1) {
+        $date = Helper::toAndFromDate($queryString->check_in_checkout);
 
-      $startDate = $date['start_date'];
-      $endDate = $date['end_date'];
 
-      if (
-        $startDate->between($peakStart, $peakEnd) ||
-        $endDate->between($peakStart, $peakEnd) ||
-        ($startDate->lt($peakStart) && $endDate->gt($peakEnd))
-      ) {
-        Helper::updateApartmentPrices($peak_period->start_date, $peak_period->end_date, $peak_period->discount);
-        return $this->ConvertCurrencyRate($this->december_prices);
+        $peakStart = Carbon::parse($peak_period->start_date);
+        $peakEnd = Carbon::parse($peak_period->end_date);
+
+        $startDate = $date['start_date'];
+        $endDate = $date['end_date'];
+
+        if (
+          $startDate->between($peakStart, $peakEnd) ||
+          $endDate->between($peakStart, $peakEnd) ||
+          ($startDate->lt($peakStart) && $endDate->gt($peakEnd))
+        ) {
+          Helper::updateApartmentPrices($peak_period->start_date, $peak_period->end_date, $peak_period->discount);
+          return $this->ConvertCurrencyRate($this->december_prices);
+        }
       }
     }
+
+
 
 
     if (null !==  $peak_period) {
