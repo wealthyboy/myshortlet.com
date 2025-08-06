@@ -204,7 +204,7 @@ class ReservationsController extends Controller
 			$user_reservation->property_id = $property->id;
 			$user_reservation->currency = data_get($input, 'currency');
 			$user_reservation->checked = true;
-			$user_reservation->original_amount = optional($apartment)->price;
+			$user_reservation->original_amount = $totalBeforeDiscount;
 
 			$user_reservation->coupon = null;
 			$user_reservation->coming_from = "checkin";
@@ -259,7 +259,7 @@ class ReservationsController extends Controller
 		} catch (\Throwable $th) {
 			DB::rollBack();
 			\Log::error("Reservation error: " . $th->getMessage());
-			return response()->json(['error' => 'Reservation failed. Try again.'], 500);
+          return redirect()->back()->withErrors(['error' => 'Reservation failed. Apartment not available for those dates.']);
 		}
     }
 
