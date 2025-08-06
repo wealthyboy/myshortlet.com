@@ -14,6 +14,8 @@ use App\Models\Attribute;
 use App\Models\GuestUser;
 use App\Models\Apartment;
 use App\Models\Property;
+use Illuminate\Support\Facades\DB;
+
 
 
 use App\Models\Reservation;
@@ -133,113 +135,113 @@ class ReservationsController extends Controller
 	 public function store(Request $request)
     {
         try {
-    DB::beginTransaction();
+			DB::beginTransaction();
 
-    $input = $request->all();
-    $property = Property::first();
-    $checkin = Carbon::parse($request->checkin);
-    $checkout = Carbon::parse($request->checkout); // fix: you were using checkin twice
-    $date_diff = $checkin->diffInDays($checkout);
-    $attr = Attribute::find($request->apartment_id);
+			$input = $request->all();
+			$property = Property::first();
+			$checkin = Carbon::parse($request->checkin);
+			$checkout = Carbon::parse($request->checkout); // fix: you were using checkin twice
+			$date_diff = $checkin->diffInDays($checkout);
+			$attr = Attribute::find($request->apartment_id);
 
-    $query = Apartment::query();
-    $query->where('id', $request->apartment_id);
+			$query = Apartment::query();
+			$query->where('id', $request->apartment_id);
 
-    $startDate = Carbon::createFromDate($request->checkin);
-    $endDate = Carbon::createFromDate($request->checkout);
+			$startDate = Carbon::createFromDate($request->checkin);
+			$endDate = Carbon::createFromDate($request->checkout);
 
-    $query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
-        $q->where(function ($subQ) use ($startDate) {
-            $subQ->where('checkin', '<', $startDate)
-                ->where('reservations.is_blocked', false)
-                ->where('checkout', '>', $startDate);
-        });
-    });
+			$query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
+				$q->where(function ($subQ) use ($startDate) {
+					$subQ->where('checkin', '<', $startDate)
+						->where('reservations.is_blocked', false)
+						->where('checkout', '>', $startDate);
+				});
+			});
 
-    $apartments = $query->latest()->first();
+			$apartments = $query->latest()->first();
 
-    if (!$request->filled('user_reservation_id') && $apartments === null) {
-        return redirect()->route('your.route.name')->with('error', 'Apartment not available');
-    }
+			if (!$request->filled('user_reservation_id') && $apartments === null) {
+				return redirect()->route('your.route.name')->with('error', 'Apartment not available');
+			}
 
-    $guest = GuestUser::firstOrNew(['id' => data_get($input, 'guest_id')]);
-    $guest->name = $input['first_name'];
-    $guest->last_name = $input['last_name'];
-    $guest->email = $input['email'];
-    $guest->phone_number = $input['phone_number'];
-    $guest->image = '';
-    $guest->save();
+			$guest = GuestUser::firstOrNew(['id' => data_get($input, 'guest_id')]);
+			$guest->name = $input['first_name'];
+			$guest->last_name = $input['last_name'];
+			$guest->email = $input['email'];
+			$guest->phone_number = $input['phone_number'];
+			$guest->image = '';
+			$guest->save();
 
-    $apartment = Apartment::find($request->apartment_id);
+			$apartment = Apartment::find($request->apartment_id);
 
-    if ($request->user_reservation_id) {
-        $user_reservation = UserReservation::find($request->user_reservation_id);
-        ProcessGuestCheckin::dispatch($guest, $user_reservation->reservation, $apartment)->delay(now()->addSeconds(5));
+			if ($request->user_reservation_id) {
+				$user_reservation = UserReservation::find($request->user_reservation_id);
+				ProcessGuestCheckin::dispatch($guest, $user_reservation->reservation, $apartment)->delay(now()->addSeconds(5));
 
-        DB::commit();
-        return response()->json(null, 200);
-    }
+				DB::commit();
+				return response()->json(null, 200);
+			}
 
-    $user_reservation = new UserReservation;
-    $user_reservation->user_id = optional($request->user())->id;
-    $user_reservation->guest_user_id = $guest->id;
-    $user_reservation->currency = null;
-    $user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
-    $user_reservation->payment_type = 'checkin';
-    $user_reservation->property_id = $property->id;
-    $user_reservation->checked = true;
-    $user_reservation->coupon = null;
-    $user_reservation->coming_from = "checkin";
-    $user_reservation->total = (optional($apartment)->price ?? 0) * $date_diff;
-    $user_reservation->ip = $request->ip();
-    $user_reservation->save();
+			$user_reservation = new UserReservation;
+			$user_reservation->user_id = optional($request->user())->id;
+			$user_reservation->guest_user_id = $guest->id;
+			$user_reservation->currency = null;
+			$user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
+			$user_reservation->payment_type = 'checkin';
+			$user_reservation->property_id = $property->id;
+			$user_reservation->checked = true;
+			$user_reservation->coupon = null;
+			$user_reservation->coming_from = "checkin";
+			$user_reservation->total = (optional($apartment)->price ?? 0) * $date_diff;
+			$user_reservation->ip = $request->ip();
+			$user_reservation->save();
 
-    $reservation = new Reservation;
-    $reservation->quantity = 1;
-    $reservation->apartment_id = $request->apartment_id;
-    $reservation->price = $apartment->price;
-    $reservation->sale_price = $apartment->sale_price;
-    $reservation->user_reservation_id = $user_reservation->id;
-    $reservation->property_id = $property->id;
-    $reservation->checkin = $startDate;
-    $reservation->checkout = $endDate;
-    $reservation->save();
+			$reservation = new Reservation;
+			$reservation->quantity = 1;
+			$reservation->apartment_id = $request->apartment_id;
+			$reservation->price = $apartment->price;
+			$reservation->sale_price = $apartment->sale_price;
+			$reservation->user_reservation_id = $user_reservation->id;
+			$reservation->property_id = $property->id;
+			$reservation->checkin = $startDate;
+			$reservation->checkout = $endDate;
+			$reservation->save();
 
-    // Optional PDF logic
-    $guest->image = session('session_link');
-    $reservation->apartment_name = optional($apartment->attribute)->name;
-    $guest->apartment_name = optional($apartment->attribute)->name;
-    $reservation->first_name = $request->first_name;
-    $reservation->last_name = $request->last_name;
-    $reservation->email = $request->email;
-    $reservation->phone_number = $request->phone_number;
+			// Optional PDF logic
+			$guest->image = session('session_link');
+			$reservation->apartment_name = optional($apartment->attribute)->name;
+			$guest->apartment_name = optional($apartment->attribute)->name;
+			$reservation->first_name = $request->first_name;
+			$reservation->last_name = $request->last_name;
+			$reservation->email = $request->email;
+			$reservation->phone_number = $request->phone_number;
 
-    try {
-        \Mail::to($request->email)
-            ->bcc('avenuemontaigneconcierge@gmail.com')
-            ->bcc('info@avenuemontaigne.ng')
-            ->send(new ReservationReceipt($user_reservation, $this->settings));
+			try {
+				\Mail::to($request->email)
+					->bcc('avenuemontaigneconcierge@gmail.com')
+					->bcc('info@avenuemontaigne.ng')
+					->send(new ReservationReceipt($user_reservation, $this->settings));
 
-        $user_reservation->agent = 1;
-        $user_reservation->apname = optional($apartment)->name;
-        $user_reservation->save();
+				$user_reservation->agent = 1;
+				$user_reservation->apname = optional($apartment)->name;
+				$user_reservation->save();
 
-        if (null !== $attr && $attr->apartment_owner) {
-            \Mail::to($attr->apartment_owner)->send(new ReservationReceipt($user_reservation, $this->settings));
-        }
-    } catch (\Throwable $th) {
-        \Log::error("Mail error: " . $th->getMessage());
-        // optionally: continue or throw if mail failure should abort transaction
-    }
+				if (null !== $attr && $attr->apartment_owner) {
+					\Mail::to($attr->apartment_owner)->send(new ReservationReceipt($user_reservation, $this->settings));
+				}
+			} catch (\Throwable $th) {
+				\Log::error("Mail error: " . $th->getMessage());
+				// optionally: continue or throw if mail failure should abort transaction
+			}
 
-    DB::commit();
-    return response()->json("Success", 200);
+			DB::commit();
+			return response()->json("Success", 200);
 
-} catch (\Throwable $th) {
-    DB::rollBack();
-    \Log::error("Reservation error: " . $th->getMessage());
-    return response()->json(['error' => 'Reservation failed. Try again.'], 500);
-}
+		} catch (\Throwable $th) {
+			DB::rollBack();
+			\Log::error("Reservation error: " . $th->getMessage());
+			return response()->json(['error' => 'Reservation failed. Try again.'], 500);
+		}
     }
 
 
