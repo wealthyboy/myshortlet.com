@@ -5,9 +5,14 @@
 <div class="row">
    <div class="col-md-12">
       <div class="text-right">
+        
          <a href="" rel="tooltip" title="Refresh" class="btn btn-primary btn-simple btn-xs">
             <i class="material-icons">refresh</i>
             Refresh
+         </a>
+
+          <a href="/admin/reservations/create?coming_from=checkin" rel="tooltip" title="Add" class="btn btn-primary btn-simple btn-xs">
+            <i class="material-icons">add</i>Add Reservation
          </a>
 
          <a href="javascript:void(0)" onclick="confirm('Are you sure?') ? $('#form-apartments').submit() : false;" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
