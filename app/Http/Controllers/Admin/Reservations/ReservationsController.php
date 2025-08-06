@@ -235,6 +235,8 @@ class ReservationsController extends Controller
 			$reservation->email = $request->email;
 			$reservation->phone_number = $request->phone_number;
 
+			dd(session('rate'));
+
 			try {
 				\Mail::to($request->email)
 					->bcc('avenuemontaigneconcierge@gmail.com')
