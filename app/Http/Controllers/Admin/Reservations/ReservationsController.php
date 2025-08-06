@@ -186,10 +186,16 @@ class ReservationsController extends Controller
 
 			$date_diff = max($checkin->diffInDays($checkout), 1);
 
+			$rate = json_decode(session('rate'), true); // use true to get an associative array
+
+
+
+			$price  = $rate['country'] == 'Nigeria' ?  $rate['rate'] *  $apartment->price :   $apartment->price;
+
 
 			$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
 
-			$totalBeforeDiscount = $apartment->price * $date_diff;
+			$totalBeforeDiscount = $price * $date_diff;
 
 			$discountAmount = ($discountPercentage / 100) * $totalBeforeDiscount;
 
@@ -235,7 +241,7 @@ class ReservationsController extends Controller
 			$reservation->email = $request->email;
 			$reservation->phone_number = $request->phone_number;
 
-			dd(json_decode(session('rate'))['rate']);
+			
 
 			try {
 				\Mail::to($request->email)
