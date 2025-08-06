@@ -196,7 +196,7 @@ class ReservationsController extends Controller
 
 			$totalBeforeDiscount =  $apartment->price * $date_diff;
 
-			$price  = $rate['country'] == 'Nigeria' ?  $rate['rate'] *  $totalBeforeDiscount : $totalBeforeDiscount;
+			$totalBeforeDiscount  = $rate['country'] == 'Nigeria' ?  $rate['rate'] * $totalBeforeDiscount : $totalBeforeDiscount;
 
 
 			$discountAmount = ($discountPercentage / 100) * $totalBeforeDiscount;
