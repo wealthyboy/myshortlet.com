@@ -1,89 +1,106 @@
-
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('content')
 
 <div class="row">
-<div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Add Product </h4>
-                </div>
-                <div class="card-content">
-                @include('errors.errors')
+   <div class="col-md-12">
+      <div class="text-right">
+         <a href="/admin/reservations?coming_from=checkin" rel="tooltip" title="Refresh" class="btn btn-primary btn-simple btn-xs">
+            <i class="material-icons">arrow_back</i>
+            Back
+         </a>
+      </div>
+   </div>
 
-                    <div class="row">
-                        <div class="col-md-3">
-                            <ul class="nav nav-pills nav-pills-rose nav-stacked">
-								@foreach($categories as $category)
-								  <li class=""><a href="#tab{{ $category->id }}" class="category_link" data-id="{{ $category->id }}" data-toggle="tab">{{ $category->name }}</a></li>
-								@endforeach                            
+  <div class="col-md-12">
+   <div class="card">
+      <div class="card-content">
+         <h4 class="card-title">Add Reservation - <small class="category"></small></h4>
 
-                            </ul>
-                        </div>
-                        <div class="col-md-9">
-                        	<div class="tab-content">
-									@foreach($categories as $category)
-										<div  class="tab-pane" id="tab{{ $category->id }}">
-										
-										</div>
-									@endforeach
-                        	    
-                        	</div>
-                        </div>
-                    </div>
-                </div>
+         @if(session('error'))
+            <div class="alert alert-danger">
+               {{ session('error') }}
             </div>
-        </div>
-    </div>
+         @endif
+
+         <form action="/admin/reservations?coming_from=payment" method="POST">
+            @csrf
+            <div class="form-row">
+               <!-- First Name -->
+               <div class="form-group col-md-6">
+                  <label for="first_name">First Name</label>
+                  <input type="text" class="form-control" id="first_name" name="first_name">
+               </div>
+
+               <!-- Last Name -->
+               <div class="form-group col-md-6">
+                  <label for="last_name">Last Name</label>
+                  <input type="text" class="form-control" id="last_name" name="last_name">
+               </div>
+            </div>
+
+            <div class="form-row">
+               <!-- Email -->
+               <div class="form-group col-md-6">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" id="email" name="email">
+               </div>
+
+               <!-- Phone -->
+               <div class="form-group col-md-6">
+                  <label for="phone">Phone</label>
+                  <input type="tel" class="form-control" id="phone" name="phone_number">
+               </div>
+            </div>
+
+            <div class="form-row">
+               <!-- From Date -->
+               <div class="form-group col-md-6">
+                  <label for="from-date">From</label>
+                <input class="form-control  datepicker pull-right" name="checkin" id="datepicker" type="text">
+
+               </div>
+
+               <!-- To Date -->
+               <div class="form-group col-md-6">
+                  <label for="to-date">To</label>
+                <input class="form-control  datepicker pull-right" name="checkout" id="datepicker-to" type="text">
+               </div>
+            </div>
+
+            <div class="form-row">
+               <!-- Apartments -->
+               <div class="form-group col-md-12">
+                  <label for="apartment_id">Apartments</label>
+                  <select name="apartment_id" id="apartment_id" class="form-control">
+                     <option value="">Choose one</option>
+                     @foreach($apartments as $apartment)
+                        <option value="{{ $apartment->id }}">{{ $apartment->name }}</option>
+                     @endforeach
+                  </select>
+               </div>
+            </div>
+
+            <div class="form-row">
+               <div class="form-group col-md-2">
+                  <button type="submit" class="btn btn-primary rounded">Submit</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
 
 
-        
 
+
+ 
+</div> <!-- end row -->
 @endsection
-@section('inline-scripts')    
-function setFormValidation(id){
-            if(jQuery().validate) {
-                $(id).validate({
-                    rules: {
-                        name: {
-                        required: true,
-                        minlength: 3
-                        },
-                        },
-                        highlight: function(element) {
-                            $(element).closest('div').addClass('has-error');
-                        },
-                    
-                });
-            }
-            
-        }
-$(document).ready(function(){
-    setFormValidation('#spare_parts');
-    $(".category_link").on('click',function(){
-	    var self = $(this);
-        $.get("/load_products_form",
-			{
-				id: self.data('id'),
-			},
-			function(data, status){
-				$("div#tab"+self.data('id')).html(data);
-			});
-	    });
-	
-});
-
-
+@section('page-scripts')
+<script src="{{ asset('backend/js/products.js') }}"></script>
+<script src="{{ asset('backend/js/uploader.js') }}"></script>
+@stop
+@section('inline-scripts')
 
 @stop
-
-
-
-
-
-
-
-
-
-
