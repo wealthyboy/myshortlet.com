@@ -212,7 +212,7 @@ class ReservationsController extends Controller
 			$user_reservation->ip = $request->ip();
 			$user_reservation->save();
 
-			$user_reservation->discount = $discountPercentage ?  '%' .$discountPercentage : '---';
+			$user_reservation->discount = $discountPercentage ? $discountPercentage .'%': '---';
 
 
 			$reservation = new Reservation;
