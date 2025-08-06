@@ -62,7 +62,7 @@
                <!-- Phone -->
                <div class="form-group col-md-6">
                   <label for="phone">Phone</label>
-                  <input type="tel" class="form-control" id="phone" name="phone_number" required>
+                  <input type="text" class="form-control" id="phone" name="phone_number" required>
                </div>
             </div>
 
