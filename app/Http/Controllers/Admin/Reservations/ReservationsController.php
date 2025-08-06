@@ -194,12 +194,12 @@ class ReservationsController extends Controller
 
 			$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
 
-			$totalBeforeDiscount =  $apartment->price * $date_diff;
-
-			            dd(($rate['rate'] * $totalBeforeDiscount ));
+			$totalAmount =  $apartment->price * $date_diff;
 
 
-			$totalBeforeDiscount  = $rate['country'] == 'Nigeria' ?  $rate['rate'] * $totalBeforeDiscount : $totalBeforeDiscount;
+			$totalBeforeDiscount  = data_get($input, 'currency') === '₦' ?  $rate['rate'] * $totalAmount : $totalAmount;
+			dd(( $totalBeforeDiscount ));
+
 
 			$discountAmount = ($discountPercentage / 100) * $totalBeforeDiscount;
 
