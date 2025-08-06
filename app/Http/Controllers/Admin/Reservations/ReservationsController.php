@@ -235,7 +235,7 @@ class ReservationsController extends Controller
 			$reservation->email = $request->email;
 			$reservation->phone_number = $request->phone_number;
 
-			dd(session('rate'));
+			dd(json_decode(session('rate')));
 
 			try {
 				\Mail::to($request->email)
