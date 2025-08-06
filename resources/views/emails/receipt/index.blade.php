@@ -405,7 +405,7 @@
                                                       <td class="wz" width="30"></td>
                                                       <td class="RegularTextTD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #000;font-family: sans-serif;font-size: 13px;font-weight: lighter;text-align: left;line-height: 23px;">Dear {{ $user_reservation->guest_user->fullname() }},<br>Thank you for choosing Avenue montaigne for your stay. We are pleased to inform you that your reservation request is CONFIRMED and your reservation details are as follows.
                                                          <br />
-                                                         <b>Note: You’re required to present a valid ID upon arrival to check-in
+                                                         <b>Note: You’re required to present a valid ID upon arrival to check-in. You can also self check-in by clicking the link below to upload your ID
 
                                                             <br />
                                                             <a style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em" class="" href="https://avenuemontaigne.ng/check-in?id={{$user_reservation->id}}">Click here to Check-in</a>
@@ -825,7 +825,10 @@
                                           </tr>
                                           <tr>
                                              <td class="wz2" width="30"><br></td>
-                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>Coupon </td>
+                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>
+                                             {{ $user_reservation->payment_type === 'checkin' ?  'Discount' : 'Coupon' }} 
+                                          
+                                          </td>
                                              <td class="wz2" width="30"><br></td>
                                           </tr>
                                           <tr>
@@ -840,7 +843,13 @@
                                           </tr>
                                           <tr>
                                              <td class="wz2" width="30"><br></td>
-                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a> {{ $user_reservation->coupon ?  $user_reservation->coupon.'  -%'.$user_reservation->voucher()->amount . 'off'  : '---' }} </td>
+                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a> 
+                                                @if ( $user_reservation->payment_type === 'checkin' )
+                                                   {{ $user_reservation->discount  }} 
+                                                @else
+                                                  {{ $user_reservation->coupon ?  $user_reservation->coupon.'  -%'.$user_reservation->voucher()->amount . 'off'  : '---' }} 
+                                                @endif
+                                             </td>
                                              <td class="wz2" width="30"><br></td>
                                           </tr>
                                           <tr>

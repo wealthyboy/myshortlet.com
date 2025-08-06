@@ -53,6 +53,11 @@
                </div>
             </div>
 
+            <!-- Currency Selector -->
+            
+
+          
+
             <div class="form-row">
                <!-- From Date -->
                <div class="form-group col-md-6">
@@ -68,9 +73,24 @@
                </div>
             </div>
 
+               <div class="form-row">
+               <!-- Apartments -->
+                <div class="form-group col-md-6">
+                   <label for="currency">Currency</label>
+                  <select name="currency" id="currency" class="form-control" required>
+                     <option value="₦" selected>Naira (₦)</option>
+                     <option value="$">US Dollar ($)</option>
+                  </select>
+               </div>
+               <div class="form-group col-md-6">
+                   <label for="discount_value">Discount</label>
+                  <input type="text" name="discount_percentage" id="discount_value" class="form-control" placeholder="e.g. 10">
+               </div>
+            </div>
+
             <div class="form-row">
                <!-- Apartments -->
-               <div class="form-group col-md-12">
+                <div class="form-group col-md-6">
                   <label for="apartment_id">Apartments</label>
                   <select name="apartment_id" id="apartment_id" class="form-control">
                      <option value="">Choose one</option>
@@ -79,6 +99,7 @@
                      @endforeach
                   </select>
                </div>
+               
             </div>
 
             <div class="form-row">

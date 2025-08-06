@@ -150,6 +150,8 @@ class ReservationsController extends Controller
 			$startDate = Carbon::createFromDate($request->checkin);
 			$endDate = Carbon::createFromDate($request->checkout);
 
+
+
 			$query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
 				$q->where(function ($subQ) use ($startDate) {
 					$subQ->where('checkin', '<', $startDate)
@@ -182,6 +184,17 @@ class ReservationsController extends Controller
 				return response()->json(null, 200);
 			}
 
+			$date_diff = max($checkin->diffInDays($checkout), 1);
+
+
+			$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
+
+			$totalBeforeDiscount = $apartment->price * $date_diff;
+
+			$discountAmount = ($discountPercentage / 100) * $totalBeforeDiscount;
+
+			$totalAfterDiscount = $totalBeforeDiscount - $discountAmount;
+
 			$user_reservation = new UserReservation;
 			$user_reservation->user_id = optional($request->user())->id;
 			$user_reservation->guest_user_id = $guest->id;
@@ -189,12 +202,18 @@ class ReservationsController extends Controller
 			$user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
 			$user_reservation->payment_type = 'checkin';
 			$user_reservation->property_id = $property->id;
+			$user_reservation->currency = data_get($input, 'currency');
 			$user_reservation->checked = true;
+			$user_reservation->original_amount = optional($apartment)->price;
+
 			$user_reservation->coupon = null;
 			$user_reservation->coming_from = "checkin";
-			$user_reservation->total = (optional($apartment)->price ?? 0) * $date_diff;
+			$user_reservation->total = $totalAfterDiscount;
 			$user_reservation->ip = $request->ip();
 			$user_reservation->save();
+
+			$user_reservation->discount = $discountPercentage ?? '---';
+
 
 			$reservation = new Reservation;
 			$reservation->quantity = 1;
@@ -235,7 +254,7 @@ class ReservationsController extends Controller
 			}
 
 			DB::commit();
-			return response()->json("Success", 200);
+			return redirect()->to('/admin/reservations?coming_from=checkin');
 
 		} catch (\Throwable $th) {
 			DB::rollBack();
