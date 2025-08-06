@@ -25,17 +25,30 @@
 
          <form action="/admin/reservations?coming_from=payment" method="POST">
             @csrf
+              <div class="form-row">
+               <!-- Apartments -->
+                <div class="form-group col-md-12">
+                  <label for="apartment_id">Apartments</label>
+                  <select name="apartment_id" id="apartment_id" class="form-control" required>
+                     <option value="">Choose one</option>
+                     @foreach($apartments as $apartment)
+                        <option value="{{ $apartment->id }}">{{ $apartment->name }}</option>
+                     @endforeach
+                  </select>
+               </div>
+               
+            </div>
             <div class="form-row">
                <!-- First Name -->
                <div class="form-group col-md-6">
                   <label for="first_name">First Name</label>
-                  <input type="text" class="form-control" id="first_name" name="first_name">
+                  <input type="text" class="form-control" id="first_name" name="first_name" required>
                </div>
 
                <!-- Last Name -->
                <div class="form-group col-md-6">
                   <label for="last_name">Last Name</label>
-                  <input type="text" class="form-control" id="last_name" name="last_name">
+                  <input type="text" class="form-control" id="last_name" name="last_name" required>
                </div>
             </div>
 
@@ -43,13 +56,13 @@
                <!-- Email -->
                <div class="form-group col-md-6">
                   <label for="email">Email</label>
-                  <input type="email" class="form-control" id="email" name="email">
+                  <input type="email" class="form-control" id="email" name="email" required>
                </div>
 
                <!-- Phone -->
                <div class="form-group col-md-6">
                   <label for="phone">Phone</label>
-                  <input type="tel" class="form-control" id="phone" name="phone_number">
+                  <input type="tel" class="form-control" id="phone" name="phone_number" required>
                </div>
             </div>
 
@@ -62,14 +75,14 @@
                <!-- From Date -->
                <div class="form-group col-md-6">
                   <label for="from-date">From</label>
-                <input class="form-control  datepicker pull-right" name="checkin" id="datepicker" type="text">
+                <input class="form-control  datepicker pull-right" name="checkin" id="datepicker" type="text" required>
 
                </div>
 
                <!-- To Date -->
                <div class="form-group col-md-6">
                   <label for="to-date">To</label>
-                <input class="form-control  datepicker pull-right" name="checkout" id="datepicker-to" type="text">
+                <input class="form-control  datepicker pull-right" name="checkout" id="datepicker-to" type="text" required>
                </div>
             </div>
 
@@ -88,19 +101,7 @@
                </div>
             </div>
 
-            <div class="form-row">
-               <!-- Apartments -->
-                <div class="form-group col-md-6">
-                  <label for="apartment_id">Apartments</label>
-                  <select name="apartment_id" id="apartment_id" class="form-control">
-                     <option value="">Choose one</option>
-                     @foreach($apartments as $apartment)
-                        <option value="{{ $apartment->id }}">{{ $apartment->name }}</option>
-                     @endforeach
-                  </select>
-               </div>
-               
-            </div>
+          
 
             <div class="form-row">
                <div class="form-group col-md-2">
