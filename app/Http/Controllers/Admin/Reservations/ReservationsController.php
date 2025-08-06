@@ -245,9 +245,7 @@ class ReservationsController extends Controller
 				$user_reservation->apname = optional($apartment)->name;
 				$user_reservation->save();
 
-				if (null !== $attr && $attr->apartment_owner) {
-					\Mail::to($attr->apartment_owner)->send(new ReservationReceipt($user_reservation, $this->settings));
-				}
+				
 			} catch (\Throwable $th) {
 				\Log::error("Mail error: " . $th->getMessage());
 				// optionally: continue or throw if mail failure should abort transaction
