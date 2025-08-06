@@ -198,7 +198,6 @@ class ReservationsController extends Controller
 
 
 			$totalBeforeDiscount  = data_get($input, 'currency') === '₦' ?  $rate['rate'] * $totalAmount : $totalAmount;
-			dd(( $totalBeforeDiscount ));
 
 
 			$discountAmount = ($discountPercentage / 100) * $totalBeforeDiscount;
