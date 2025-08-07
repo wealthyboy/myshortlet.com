@@ -720,7 +720,7 @@
 
                                                                                        <tr>
                                                                                           <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
-                                                                                             {{ $user_reservation->currency ?? '₦' }}{{ $reservation->price * $reservation->rate }} per night X {{ $reservation->quantity }} - {{ $user_reservation->currency }}{{ $reservation->price * $reservation->rate }}
+                                                                                             {{ $user_reservation->currency ?? '₦' }}{{ $reservation->price * $reservation->rate }} per night
                                                                                           </td>
                                                                                        </tr>
                                                                                        <tr>
