@@ -219,7 +219,7 @@ class ReservationsController extends Controller
 			$reservation = new Reservation;
 			$reservation->quantity = 1;
 			$reservation->apartment_id = $request->apartment_id;
-			$reservation->price = data_get($input, 'currency') === '₦' ?  $rate['rate'] * $apartment->price : $apartment->price;;
+			$reservation->price = $apartment->converted_regular_price;
 			$reservation->sale_price = $apartment->sale_price;
 			$reservation->user_reservation_id = $user_reservation->id;
 			$reservation->property_id = $property->id;
