@@ -245,7 +245,7 @@ class ReservationsController extends Controller
 
 			$user_reservation->rate = data_get($input, 'currency') === '₦' ? $rate['rate'] : 1;
 
-			dd($user_reservation);
+			dd($user_reservation->rate);
 
 			try {
 				\Mail::to($request->email)
