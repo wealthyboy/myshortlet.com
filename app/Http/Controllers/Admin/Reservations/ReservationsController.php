@@ -229,6 +229,7 @@ class ReservationsController extends Controller
 			$reservation->property_id = $property->id;
 			$reservation->checkin = $startDate;
 			$reservation->checkout = $endDate;
+			$reservation->rate = data_get($input, 'currency') === '₦' ? $rate['rate'] : 1;
 
 			$reservation->save();
 
@@ -243,9 +244,7 @@ class ReservationsController extends Controller
 			$reservation->email = $request->email;
 			$reservation->phone_number = $request->phone_number;
 
-			$user_reservation->rate = data_get($input, 'currency') === '₦' ? $rate['rate'] : 1;
 
-			dd($user_reservation->rate);
 
 			try {
 				\Mail::to($request->email)
