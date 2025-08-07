@@ -188,17 +188,11 @@ class ReservationsController extends Controller
 
 			$rate = json_decode(session('rate'), true); // use true to get an associative array
 
-
-
-
-
 			$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
 
-			$totalAmount =  $apartment->price * $date_diff;
+			$totalAmount = $apartment->price * $date_diff;
 
-
-			$totalBeforeDiscount  = data_get($input, 'currency') === '₦' ?  $rate['rate'] * $totalAmount : $totalAmount;
-
+			$totalBeforeDiscount = data_get($input, 'currency') === '₦' ?  $rate['rate'] * $totalAmount : $totalAmount;
 
 			$discountAmount = ($discountPercentage / 100) * $totalBeforeDiscount;
 
@@ -214,20 +208,18 @@ class ReservationsController extends Controller
 			$user_reservation->currency = data_get($input, 'currency');
 			$user_reservation->checked = true;
 			$user_reservation->original_amount = $totalBeforeDiscount;
-
 			$user_reservation->coupon = null;
 			$user_reservation->coming_from = "checkin";
 			$user_reservation->total = $totalAfterDiscount;
 			$user_reservation->ip = $request->ip();
 			$user_reservation->save();
-
 			$user_reservation->discount = $discountPercentage ? $discountPercentage .'%': '---';
 
 
 			$reservation = new Reservation;
 			$reservation->quantity = 1;
 			$reservation->apartment_id = $request->apartment_id;
-			$reservation->price = $apartment->price;
+			$reservation->price = data_get($input, 'currency') === '₦' ?  $rate['rate'] * $apartment->price : $apartment->price;;
 			$reservation->sale_price = $apartment->sale_price;
 			$reservation->user_reservation_id = $user_reservation->id;
 			$reservation->property_id = $property->id;
@@ -244,7 +236,7 @@ class ReservationsController extends Controller
 			$reservation->email = $request->email;
 			$reservation->phone_number = $request->phone_number;
 
-			
+
 
 			try {
 				\Mail::to($request->email)
