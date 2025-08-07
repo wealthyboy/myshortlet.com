@@ -200,8 +200,6 @@ class ReservationsController extends Controller
 
 			$totalBeforeDiscount = $totalBeforeDiscount * $date_diff ;
 
-			            dd( $totalBeforeDiscount,  $rate['rate'] ,  $apartmentPrice , $apartmentPrice * $date_diff );
-
 
 
 
