@@ -196,12 +196,7 @@ class ReservationsController extends Controller
 
 			$totalBeforeDiscount = data_get($input, 'currency') === '₦' ?  $rate['rate'] * $apartmentPrice  : $apartmentPrice;
 
-
-
 			$totalBeforeDiscount = $totalBeforeDiscount * $date_diff ;
-
-
-
 
 			$discountAmount = ($discountPercentage / 100) * $totalBeforeDiscount;
 
@@ -248,9 +243,9 @@ class ReservationsController extends Controller
 			$reservation->email = $request->email;
 			$reservation->phone_number = $request->phone_number;
 
-			$user_reservation->rate = data_get($input, 'currency') === '₦' ?  $rate['rate'] : 1;
+			$user_reservation->rate = data_get($input, 'currency') === '₦' ? $rate['rate'] : 1;
 
-
+			dd($user_reservation);
 
 			try {
 				\Mail::to($request->email)
