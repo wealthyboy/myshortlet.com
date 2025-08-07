@@ -194,7 +194,7 @@ class ReservationsController extends Controller
 
 			$totalAmount = $apartmentPrice * $date_diff;
 
-			dd($totalAmount );
+			dd( $totalAmount );
 
 			$totalBeforeDiscount = data_get($input, 'currency') === '₦' ?  $rate['rate'] * $totalAmount : $totalAmount;
 
