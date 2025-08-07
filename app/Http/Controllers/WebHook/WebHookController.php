@@ -100,19 +100,19 @@ class WebHookController extends Controller
             }
 
             $attr = Attribute::find(optional($apartment)->apartment_id);
+
             if ($tracking_id) {
                 $user_tracking = UserTracking::find($tracking_id);
                 $user_tracking->action = 'completed';
                 $user_tracking->save();
             }
 
-
-
             foreach ($bookings as $booking) {
                 $reservation = new Reservation;
                 $reservation->quantity = $booking->quantity;
                 $reservation->apartment_id = $booking->apartment_id;
                 $reservation->price = $booking->price;
+                $reservation->rate = 1;
                 $reservation->sale_price = $booking->sale_price;
                 $reservation->user_reservation_id = $user_reservation->id;
                 $reservation->property_id = $booking->property_id;
