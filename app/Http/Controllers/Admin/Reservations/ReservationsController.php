@@ -190,7 +190,9 @@ class ReservationsController extends Controller
 
 			$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
 
-			$totalAmount = $apartment->price * $date_diff;
+			$apartmentPrice = $apartment->price;
+
+			$totalAmount = $apartmentPrice * $date_diff;
 
 			$totalBeforeDiscount = data_get($input, 'currency') === '₦' ?  $rate['rate'] * $totalAmount : $totalAmount;
 
@@ -219,13 +221,16 @@ class ReservationsController extends Controller
 			$reservation = new Reservation;
 			$reservation->quantity = 1;
 			$reservation->apartment_id = $request->apartment_id;
-			$reservation->price = $apartment->converted_regular_price;
+			$reservation->price = $apartment->price;
 			$reservation->sale_price = $apartment->sale_price;
 			$reservation->user_reservation_id = $user_reservation->id;
 			$reservation->property_id = $property->id;
 			$reservation->checkin = $startDate;
 			$reservation->checkout = $endDate;
+
 			$reservation->save();
+
+
 
 			// Optional PDF logic
 			$guest->image = session('session_link');
@@ -235,6 +240,8 @@ class ReservationsController extends Controller
 			$reservation->last_name = $request->last_name;
 			$reservation->email = $request->email;
 			$reservation->phone_number = $request->phone_number;
+
+			$user_reservation->rate = data_get($input, 'currency') === '₦' ?  $rate['rate'] : 1;
 
 
 
