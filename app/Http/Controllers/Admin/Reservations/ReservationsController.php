@@ -259,15 +259,15 @@ class ReservationsController extends Controller
 
 
 				 $payload = [
-					'to'       => $request->email,
-					'bcc'      => ['avenuemontaigneconcierge@gmail.com', 'info@avenuemontaigne.ng'],
-					'subject'  => 'Reservation Receipt',
-					'template' => 'reservation_receipt', // optional, your receiving server can decide how to render it
-					'data'     => [
+					'to' => $request->email,
+					'bcc' => ['avenuemontaigneconcierge@gmail.com', 'info@avenuemontaigne.ng'],
+					'subject' => 'Reservation Receipt',
+					'template' => 'reservation_receipt', 
+					'data' => [
 						'user_reservation' => $user_reservation,
-						'settings'         => $this->settings,
-						'guest'            => $guest,
-						'reservation'      => $reservation,
+						'settings' => $this->settings,
+						'guest' => $guest,
+						'reservation' => $reservation,
 					]
 				];
 
@@ -276,7 +276,7 @@ class ReservationsController extends Controller
 						'Accept' => 'application/json',
 						'Content-Type' => 'application/json',
 					])
-					->post('https://nollyflix.com/emailapi-service', $payload);
+					->post('https://autofactorng.com/emailapi-service', $payload);
 
 				if ($response->failed()) {
 					\Log::error("Remote email API failed: " . $response->body());
