@@ -15,6 +15,7 @@ use App\Models\GuestUser;
 use App\Models\Apartment;
 use App\Models\Property;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 
 
@@ -135,7 +136,7 @@ class ReservationsController extends Controller
 	 public function store(Request $request)
     {
         try {
-			DB::beginTransaction();
+			//DB::beginTransaction();
 
 			$input = $request->all();
 			$property = Property::first();
@@ -247,17 +248,45 @@ class ReservationsController extends Controller
 
 
 			try {
-				\Mail::to($request->email)
-					->bcc('avenuemontaigneconcierge@gmail.com')
-					->bcc('info@avenuemontaigne.ng')
-					->send(new ReservationReceipt($user_reservation, $this->settings));
+				// \Mail::to($request->email)
+				// 	->bcc('avenuemontaigneconcierge@gmail.com')
+				// 	->bcc('info@avenuemontaigne.ng')
+				// 	->send(new ReservationReceipt($user_reservation, $this->settings));
 
-				$user_reservation->agent = 1;
-				$user_reservation->apname = optional($apartment)->name;
-				$user_reservation->save();
+				// $user_reservation->agent = 1;
+				// $user_reservation->apname = optional($apartment)->name;
+				// $user_reservation->save();
+
+
+				 $payload = [
+					'to'       => $request->email,
+					'bcc'      => ['avenuemontaigneconcierge@gmail.com', 'info@avenuemontaigne.ng'],
+					'subject'  => 'Reservation Receipt',
+					'template' => 'reservation_receipt', // optional, your receiving server can decide how to render it
+					'data'     => [
+						'user_reservation' => $user_reservation,
+						'settings'         => $this->settings,
+						'guest'            => $guest,
+						'reservation'      => $reservation,
+					]
+				];
+
+				// Send POST request to remote mail service
+				$response = Http::withHeaders([
+						'Accept' => 'application/json',
+						'Content-Type' => 'application/json',
+					])
+					->post('https://nollyflix.com/emailapi-service', $payload);
+
+				if ($response->failed()) {
+					\Log::error("Remote email API failed: " . $response->body());
+				} else {
+					\Log::info("Remote email API success: " . $response->body());
+				}
 
 				
 			} catch (\Throwable $th) {
+				dd($th->getMessage());
 				\Log::error("Mail error: " . $th->getMessage());
 				// optionally: continue or throw if mail failure should abort transaction
 			}
