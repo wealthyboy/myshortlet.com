@@ -151,6 +151,8 @@ class ReservationsController extends Controller
 
 
 
+
+
 			$query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
 				$q->where(function ($subQ) use ($startDate) {
 					$subQ->where('checkin', '<', $startDate)
@@ -162,7 +164,7 @@ class ReservationsController extends Controller
 			$apartments = $query->latest()->first();
 
 			if (!$request->filled('user_reservation_id') && $apartments === null) {
-				return back()->with('error', 'Apartment not available');
+				return back()->with('error', 'Apartment not available for your selected dates');
 			}
 
 			$guest = GuestUser::firstOrNew(['id' => data_get($input, 'guest_id')]);
