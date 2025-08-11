@@ -55,7 +55,6 @@ class ProcessGuestCheckin implements ShouldQueue
         $apartment = $this->apartment;
         $g = $this->guest;
 
-        // Save the file to the specified directory
         $pdf = PDF::loadView('pdf.index', compact('g', 'reservation', 'apartment'));
         $pdf->setPaper('a4')->save($directory . '/' . $fileName);
 
