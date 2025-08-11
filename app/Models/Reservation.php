@@ -14,6 +14,12 @@ class Reservation extends Model
     protected $casts = [
         'checkin' => 'datetime:Y-m-d',
         'checkout' => 'datetime:Y-m-d',
+
+    ];
+
+     protected $appends = [
+        'checkin_date',
+        'checkout_date'
     ];
 
 
@@ -43,5 +49,14 @@ class Reservation extends Model
     public function extras()
     {
         return $this->hasMany(Extra::class);
+    }
+
+
+    public function getCheckinDateAttribute() {
+        return optional($this->checkin)->isoFormat('dddd, MMMM Do YYYY');
+    }
+
+    public function getCheckoutDateAttribute() {
+        return optional($this->checkout)->isoFormat('dddd, MMMM Do YYYY');
     }
 }

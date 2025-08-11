@@ -37,11 +37,21 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'host' => env('MAIL_HOST', 'smtp.zeptomail.com'),
             'port' => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
+            'timeout' => null,
+        ], 
+
+        'zeptomail' => [
+            'transport' => 'smtp',
+            'host' => env('AVMAIL_HOST', 'smtp.zeptomail.com'),
+            'port' => env('AVMAIL_PORT', 587),
+            'username' => env('AVMAIL_USERNAME'),
+            'password' => env('AVMAIL_PASSWORD'),
+            'encryption' => env('AVMAIL_ENCRYPTION', 'tls'),
             'timeout' => null,
             'auth_mode' => null,
         ],
@@ -85,7 +95,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'noreply@avenuemontaigne.ng'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@avenuemontaigne.ng'),
         'name' =>  'Avenue Montaigne',
     ],
 

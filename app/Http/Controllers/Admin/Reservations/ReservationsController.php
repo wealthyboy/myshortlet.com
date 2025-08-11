@@ -144,10 +144,8 @@ class ReservationsController extends Controller
 			$checkout = Carbon::parse($request->checkout); // fix: you were using checkin twice
 			$date_diff = $checkin->diffInDays($checkout);
 			$attr = Attribute::find($request->apartment_id);
-
 			$query = Apartment::query();
 			$query->where('id', $request->apartment_id);
-
 			$startDate = Carbon::createFromDate($request->checkin);
 			$endDate = Carbon::createFromDate($request->checkout);
 
@@ -195,7 +193,7 @@ class ReservationsController extends Controller
 
 			$totalAmount =  $apartmentPrice * $date_diff;
 
-			$totalBeforeDiscount = data_get($input, 'currency') === '₦' ?  $rate['rate'] * $apartmentPrice  : $apartmentPrice;
+			$totalBeforeDiscount = data_get($input, 'currency') === '₦' ?  1 * $apartmentPrice  : $apartmentPrice;
 
 			$totalBeforeDiscount = $totalBeforeDiscount * $date_diff ;
 
@@ -220,7 +218,6 @@ class ReservationsController extends Controller
 			$user_reservation->save();
 			$user_reservation->discount = $discountPercentage ? $discountPercentage .'%': '---';
 
-
 			$reservation = new Reservation;
 			$reservation->quantity = 1;
 			$reservation->apartment_id = $request->apartment_id;
@@ -230,10 +227,8 @@ class ReservationsController extends Controller
 			$reservation->property_id = $property->id;
 			$reservation->checkin = $startDate;
 			$reservation->checkout = $endDate;
-			$reservation->rate = data_get($input, 'currency') === '₦' ? $rate['rate'] : 1;
-
+			$reservation->rate = data_get($input, 'currency') === '₦' ? 1: 1;
 			$reservation->save();
-
 
 
 			// Optional PDF logic
@@ -248,10 +243,15 @@ class ReservationsController extends Controller
 
 
 			try {
-				// \Mail::to($request->email)
-				// 	->bcc('avenuemontaigneconcierge@gmail.com')
-				// 	->bcc('info@avenuemontaigne.ng')
-				// 	->send(new ReservationReceipt($user_reservation, $this->settings));
+
+
+			
+
+				//return $response->json();
+				\Mail::to($request->email)
+					->bcc('avenuemontaigneconcierge@gmail.com')
+					->bcc('info@avenuemontaigne.ng')
+					->send(new ReservationReceipt($user_reservation, $this->settings));
 
 				// $user_reservation->agent = 1;
 				// $user_reservation->apname = optional($apartment)->name;
@@ -259,30 +259,30 @@ class ReservationsController extends Controller
 
 
 				 $payload = [
-					'to' => $request->email,
+					'to' => $input['email'],
 					'bcc' => ['avenuemontaigneconcierge@gmail.com', 'info@avenuemontaigne.ng'],
 					'subject' => 'Reservation Receipt',
 					'template' => 'reservation_receipt', 
 					'data' => [
-						'user_reservation' => $user_reservation,
+						'user_reservation' => $user_reservation->load('guest_user','reservations.apartment'),
 						'settings' => $this->settings,
 						'guest' => $guest,
-						'reservation' => $reservation,
+						'reservation' => $reservation->load('apartment'),
 					]
 				];
 
 				// Send POST request to remote mail service
-				$response = Http::withHeaders([
-						'Accept' => 'application/json',
-						'Content-Type' => 'application/json',
-					])
-					->post('https://autofactorng.com/emailapi-service', $payload);
+				// $response = Http::withHeaders([
+				// 		'Accept' => 'application/json',
+				// 		'Content-Type' => 'application/json',
+				// 	])
+				// 	->post('http://avenuemontaigne.ng/emailapi-service', $payload);
 
-				if ($response->failed()) {
-					\Log::error("Remote email API failed: " . $response->body());
-				} else {
-					\Log::info("Remote email API success: " . $response->body());
-				}
+				// if ($response->failed()) {
+				// 	\Log::error("Remote email API failed: " . $response->body());
+				// } else {
+				// 	\Log::info("Remote email API success: " . $response->body());
+				// }
 
 				
 			} catch (\Throwable $th) {
@@ -296,7 +296,11 @@ class ReservationsController extends Controller
 
 		} catch (\Throwable $th) {
 			DB::rollBack();
+			dd($th->getMessage());
+
 			\Log::error("Reservation error: " . $th->getMessage());
+						\Log::error("Reservation payload: " . $request->all());
+
           return redirect()->back()->withErrors(['error' => 'Reservation failed. Apartment not available for those dates.']);
 		}
     }

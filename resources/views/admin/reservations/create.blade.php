@@ -23,7 +23,7 @@
             </div>
          @endif
 
-         <form action="/admin/reservations?coming_from=payment" method="POST">
+         <form class="form" action="/admin/reservations?coming_from=payment" method="POST">
             @csrf
               <div class="form-row">
                <!-- Apartments -->
@@ -124,5 +124,26 @@
 <script src="{{ asset('backend/js/uploader.js') }}"></script>
 @stop
 @section('inline-scripts')
+$(document).ready(function () {
+    $(".form").on("submit", function (e) {
+        let checkin = $("#datepicker").val();
+        let checkout = $("#datepicker-to").val();
 
+        // Convert dates to JS Date objects for comparison
+        let checkinDate = new Date(checkin);
+        let checkoutDate = new Date(checkout);
+
+        // Validate dates
+        if (checkoutDate <= checkinDate) {
+            e.preventDefault();
+            alert("Checkout date must be later than Checkin date.");
+            return false;
+        }
+
+        // Loader on button
+        let btn = $(this).find("button[type='submit']");
+        btn.prop("disabled", true);
+        btn.html('<i class="fa fa-spinner fa-spin"></i> Submitting...');
+    });
+});
 @stop
