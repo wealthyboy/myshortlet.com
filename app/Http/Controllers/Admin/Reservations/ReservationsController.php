@@ -258,31 +258,9 @@ class ReservationsController extends Controller
 				// $user_reservation->save();
 
 
-				 $payload = [
-					'to' => $input['email'],
-					'bcc' => ['avenuemontaigneconcierge@gmail.com', 'info@avenuemontaigne.ng'],
-					'subject' => 'Reservation Receipt',
-					'template' => 'reservation_receipt', 
-					'data' => [
-						'user_reservation' => $user_reservation->load('guest_user','reservations.apartment'),
-						'settings' => $this->settings,
-						'guest' => $guest,
-						'reservation' => $reservation->load('apartment'),
-					]
-				];
+				
 
-				// Send POST request to remote mail service
-				// $response = Http::withHeaders([
-				// 		'Accept' => 'application/json',
-				// 		'Content-Type' => 'application/json',
-				// 	])
-				// 	->post('http://avenuemontaigne.ng/emailapi-service', $payload);
-
-				// if ($response->failed()) {
-				// 	\Log::error("Remote email API failed: " . $response->body());
-				// } else {
-				// 	\Log::info("Remote email API success: " . $response->body());
-				// }
+				
 
 				
 			} catch (\Throwable $th) {
