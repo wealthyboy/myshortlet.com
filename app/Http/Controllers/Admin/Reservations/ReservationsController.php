@@ -187,6 +187,8 @@ class ReservationsController extends Controller
 
 			$rate = json_decode(session('rate'), true); // use true to get an associative array
 
+			
+
 
 
 			$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
