@@ -191,17 +191,11 @@ class ReservationsController extends Controller
 			$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
 
 			$apartmentPrice = $apartment->price;
-
 			$totalAmount =  $apartmentPrice * $date_diff;
-
 			$totalBeforeDiscount = data_get($input, 'currency') === '₦' ? $rate['rate']  * $apartmentPrice  : $apartmentPrice;
-
 			$totalBeforeDiscount = $totalBeforeDiscount * $date_diff ;
-
 			$discountAmount = ($discountPercentage / 100) * $totalBeforeDiscount;
-
 			$totalAfterDiscount = $totalBeforeDiscount - $discountAmount;
-
 			$user_reservation = new UserReservation;
 			$user_reservation->user_id = optional($request->user())->id;
 			$user_reservation->guest_user_id = $guest->id;
