@@ -244,7 +244,7 @@ class ReservationsController extends Controller
 
 			try {
 
-
+                  dd(true);
 		
 
 				//return $response->json();
