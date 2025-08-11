@@ -162,7 +162,7 @@ class ReservationsController extends Controller
 			$apartments = $query->latest()->first();
 
 			if (!$request->filled('user_reservation_id') && $apartments === null) {
-				return redirect()->route('your.route.name')->with('error', 'Apartment not available');
+				return back()->with('error', 'Apartment not available');
 			}
 
 			$guest = GuestUser::firstOrNew(['id' => data_get($input, 'guest_id')]);
@@ -187,10 +187,7 @@ class ReservationsController extends Controller
 
 			$rate = json_decode(session('rate'), true); // use true to get an associative array
 
-			
-
-
-
+		
 			$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
 
 			$apartmentPrice = $apartment->price;
@@ -244,37 +241,13 @@ class ReservationsController extends Controller
 			$reservation->email = $request->email;
 			$reservation->phone_number = $request->phone_number;
 
-
-
 			try {
 
 
-			
-
-				//return $response->json();
 				\Mail::to($request->email)
 					->bcc('avenuemontaigneconcierge@gmail.com')
 					->bcc('info@avenuemontaigne.ng')
 					->send(new ReservationReceipt($user_reservation, $this->settings));
-
-				
-
-
-				
-
-				// Send POST request to remote mail service
-				// $response = Http::withHeaders([
-				// 		'Accept' => 'application/json',
-				// 		'Content-Type' => 'application/json',
-				// 	])
-				// 	->post('http://avenuemontaigne.ng/emailapi-service', $payload);
-
-				// if ($response->failed()) {
-				// 	\Log::error("Remote email API failed: " . $response->body());
-				// } else {
-				// 	\Log::info("Remote email API success: " . $response->body());
-				// }
-
 				
 			} catch (\Throwable $th) {
 				dd($th->getMessage());
