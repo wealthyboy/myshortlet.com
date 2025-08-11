@@ -187,13 +187,15 @@ class ReservationsController extends Controller
 
 			$rate = json_decode(session('rate'), true); // use true to get an associative array
 
+
+
 			$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
 
 			$apartmentPrice = $apartment->price;
 
 			$totalAmount =  $apartmentPrice * $date_diff;
 
-			$totalBeforeDiscount = data_get($input, 'currency') === '₦' ?  1 * $apartmentPrice  : $apartmentPrice;
+			$totalBeforeDiscount = data_get($input, 'currency') === '₦' ? $rate['rate']  * $apartmentPrice  : $apartmentPrice;
 
 			$totalBeforeDiscount = $totalBeforeDiscount * $date_diff ;
 
@@ -227,7 +229,7 @@ class ReservationsController extends Controller
 			$reservation->property_id = $property->id;
 			$reservation->checkin = $startDate;
 			$reservation->checkout = $endDate;
-			$reservation->rate = data_get($input, 'currency') === '₦' ? 1: 1;
+			$reservation->rate = data_get($input, 'currency') === '₦' ?  $rate['rate'] : 1;
 			$reservation->save();
 
 
