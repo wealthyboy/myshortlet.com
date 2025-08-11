@@ -245,8 +245,8 @@ class ReservationsController extends Controller
 			try {
 
 
-			
-                dd(true);
+		
+
 				//return $response->json();
 				\Mail::to($request->email)
 					->bcc('avenuemontaigneconcierge@gmail.com')
