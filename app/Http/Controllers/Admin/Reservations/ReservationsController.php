@@ -246,11 +246,11 @@ class ReservationsController extends Controller
 
 
 			
-
+                dd(true);
 				//return $response->json();
 				\Mail::to($request->email)
 					->bcc('avenuemontaigneconcierge@gmail.com')
-					->bcc('info@avenuemontaigne.ng')
+					->bcc('jacobanusa@gmail.com')
 					->send(new ReservationReceipt($user_reservation, $this->settings));
 
 				// $user_reservation->agent = 1;
