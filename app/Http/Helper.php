@@ -215,10 +215,10 @@ class Helper
                 $data = $response->json();
                 // Get the NGN exchange rate
                 $ngnRate = $data['rates']['NGN'] ?? null;
-                return round($ngnRate - 135, 0);
+                return round($ngnRate - 100, 0);
 
             } else {
-                return round(optional(($currency_rate)->rate-150),0);
+                return round(optional(($currency_rate)->rate-100),0);
             }
         } catch (\Exception $e) {
             \Log::error("Currency API error: " . $e->getMessage());

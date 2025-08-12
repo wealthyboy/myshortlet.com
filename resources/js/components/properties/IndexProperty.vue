@@ -672,7 +672,7 @@ export default {
                 check_in_checkout: this.form.check_in_checkout,
             };
 
-
+            alert("here")
             axios
                 .post("/book/store", form)
                 .then((response) => {

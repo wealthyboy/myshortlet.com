@@ -148,11 +148,7 @@ class ReservationsController extends Controller
 			$query->where('id', $request->apartment_id);
 			$startDate = Carbon::createFromDate($request->checkin);
 			$endDate = Carbon::createFromDate($request->checkout);
-
-
-
-
-
+			
 			$query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
 				$q->where(function ($subQ) use ($startDate) {
 					$subQ->where('checkin', '<', $startDate)
@@ -189,7 +185,6 @@ class ReservationsController extends Controller
 
 			$rate = json_decode(session('rate'), true); // use true to get an associative array
 
-		
 			$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
 
 			$apartmentPrice = $apartment->price;

@@ -121,7 +121,7 @@
             </a>
           </div>
         </div>
-      </div>
+      </div> 
     </div>
 
     <div v-if="stays && stays[1] != null" class="col-md-12 position-relative bg-white"> 

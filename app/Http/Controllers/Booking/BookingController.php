@@ -34,10 +34,19 @@ class BookingController extends Controller
 	 */
 	public function book(Request $request, Property $property)
 	{
+        
 
 		if (!$request->check_in_checkout) {
 			return back();
 		}
+
+		//For now use the first property
+
+		$property = Property::first();
+
+		dd($property);
+
+
 
 		$referer = request()->headers->get('referer');
 		$bookings = BookingDetail::all_items_in_cart($property->id);
