@@ -213,7 +213,6 @@ class Helper
     
             if ($response->successful()) {
                 $data = $response->json();
-                // Get the NGN exchange rate
                 $ngnRate = $data['rates']['NGN'] ?? null;
                 return round($ngnRate - 100, 0);
 
@@ -225,8 +224,6 @@ class Helper
             return 'Unable to retrieve NGN exchange rate.';
         }
         
-    
-        // Handle errors if the request was unsuccessful
         return optional($currency_rate)->rate;;
     }
 

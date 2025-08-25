@@ -44,10 +44,7 @@ class BookingController extends Controller
 
 		$property = Property::first();
 
-		dd($property);
-
-
-
+	
 		$referer = request()->headers->get('referer');
 		$bookings = BookingDetail::all_items_in_cart($property->id);
 

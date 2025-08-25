@@ -40,8 +40,6 @@ class CurrencyByIp
         $startDate = Carbon::createFromDate(null, 12, 1); // December 1
         $endDate = Carbon::createFromDate(null, 12, 31); // December 31
         $peak_period = PeakPeriod::first();
-
-
         $exchaange_rate = Helper::getCurrencyExchangeRate();
 
         if (null !==  $peak_period) {
@@ -66,8 +64,6 @@ class CurrencyByIp
         }
 
 
-
-        // dd($usa->load('rate'));
         if (optional($settings)->allow_multi_currency) {
 
             if (isset($query['currency']) && strtok($query['currency'], '?') === 'USD') {

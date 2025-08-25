@@ -15,6 +15,8 @@ class AbandonedCartsController extends Controller
     {
         $sessionId = session()->getId();
         $input = $request->all();
+
+        //dd($input);
         $path = $input['page_url'];
 
         $user = UserTracking::updateOrCreate(
@@ -28,6 +30,8 @@ class AbandonedCartsController extends Controller
                 'first_name' => data_get($input, 'first_name'),
                 'last_name' => data_get($input, 'last_name'),
                 'email' => data_get($input, 'email'),
+                'from' => data_get($input, 'from'),
+                'to' => data_get($input, 'to'),
                 'code' => data_get($input, 'code'),
                 'phone_number' => data_get($input, 'phone_number'),
                 'currency' => data_get($input, 'currency'),
@@ -69,6 +73,10 @@ class AbandonedCartsController extends Controller
                 'email' => data_get($input, 'email'),
                 'code' => data_get($input, 'code'),
                 'phone_number' => data_get($input, 'phone_number'),
+                'from' => data_get($input, 'from'),
+                'to' => data_get($input, 'to'),
+
+
                 'currency' => data_get($input, 'currency'),
                 'total' => data_get($input, 'total'),
                 'property_id' => data_get($input, 'property_id'),
@@ -77,7 +85,7 @@ class AbandonedCartsController extends Controller
             ]
         );
 
-        \App\Jobs\SendAbandonedBookingNotifications::dispatch()->delay(now()->addMinute(30));
+        \App\Jobs\SendAbandonedBookingNotifications::dispatch()->delay(now()->addMinute(1));
         return response()->json($user);
     }
 

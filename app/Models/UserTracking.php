@@ -33,7 +33,9 @@ class UserTracking extends Model
         'coupon',
         'original_amount',
         'referer',
-        'user_agent'
+        'user_agent',
+        'to',
+        'from'
     ];
 
 

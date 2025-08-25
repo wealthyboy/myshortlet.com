@@ -42,6 +42,8 @@ class AbandonedCartAlert extends Notification
             ->greeting('Hi Admin,')
             ->line('A user has abandoned their booking. Here are the details:')
             ->line('Full Name: ' . ($this->track->first_name ?? 'N/A') . ' ' . ($this->track->last_name ?? ''))
+            ->line('Check-in: ' . ($this->track->from ?? 'N/A'))
+            ->line('Check-out: ' . ($this->track->to ?? 'N/A'))
             ->line('Email: ' . ($this->track->email ?? 'N/A'))
             ->line('Phone Number: ' . ($this->track->phone_number ?? 'N/A'))
             ->line('Source: ' . ($this->track->referrer ?? 'Unknown'))

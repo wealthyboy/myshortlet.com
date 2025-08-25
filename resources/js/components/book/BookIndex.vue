@@ -473,12 +473,14 @@ export default {
     document.getElementById("full-bg").remove();
     let payload = {
         page_url: window.location.href,
-        apartment_id: this.booking_details.apt_id
+        apartment_id: this.booking_details.apt_id,
+        from: this.booking_details.from,
+        to: this.booking_details.to
       }
     axios
       .post('/abandoned-cart', payload)
       .then((res) => {
-        this.tracking_id = res.data.id // 👈 Store tracking ID
+        this.tracking_id = res.data.id
       })
       .catch((err) => {
         console.error('Error sending abandoned cart payload:', err)
@@ -634,6 +636,8 @@ export default {
           context.bookingTotal
         ,
         booking_ids: context.booking_details.booking_ids,
+        from: context.booking_details.from,
+        to: context.booking_details.to,
         property_id: context.property.id,
         coupon: this.coupon_code,
         property_services: this.form.property_services,
