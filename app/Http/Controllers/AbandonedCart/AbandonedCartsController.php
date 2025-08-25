@@ -43,7 +43,7 @@ class AbandonedCartsController extends Controller
             ]
         );
 
-        \App\Jobs\SendAbandonedBookingNotifications::dispatch()->delay(now()->addMinute(1));
+        \App\Jobs\SendAbandonedBookingNotifications::dispatch()->delay(now()->addMinute(30));
         return response()->json($user);
     }
 
