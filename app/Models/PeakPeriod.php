@@ -37,7 +37,7 @@ class PeakPeriod extends Model
    {
 
         $increase = ($price * $this->discount) / 100;
-        return $price + $increase;
+        return round($price + $increase, 0);
    }
 
     public function getFromDateAttribute()

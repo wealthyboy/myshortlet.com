@@ -71,7 +71,6 @@ class BookingController extends Controller
 		$daysNotInPeakPeriod = $daysNotInPeakPeriod < 0 ? 0 : $daysNotInPeakPeriod;
 		$apt = Apartment::find($request->apartment_id);
 
-
 		$peak_period_price = $apt->converted_peak_price > 0 ? $apt->converted_peak_price : $peak_period->increasePriceByPercentage($apt->converted_price);
 		$isPeakPeriodPresent = $daysInPeakPeriod > 0 ? true : false;
 		$daysInPeakPeriodTotal = $daysInPeakPeriod > 0 ? $daysInPeakPeriod * $peak_period_price : 0;
@@ -110,7 +109,7 @@ class BookingController extends Controller
 			'sessionId' => session()->getId()
 		];
 
-
+		//dd($booking_details);
 		$qs = request()->all();
 		return view('book.index', compact('qs', 'referer', 'phone_codes', 'property', 'bookings', 'booking_details'));
 	}
