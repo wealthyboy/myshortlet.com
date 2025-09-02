@@ -48,9 +48,10 @@ class ApartmentsController extends Controller
 
         $str = new Str;
         $date = $request->check_in_checkout;
+        session(['check_in_checkout' =>   $date]);
         $property_is_not_available = null;
         $cites = [];
-        $page_title =  "Book from our collection of Apartments | Avenue Montaigne";
+        $page_title = "Book from our collection of Apartments | Avenue Montaigne";
         $page_meta_description = "All apartments  Avenue Montaigne";
         $date = explode("to", $request->check_in_checkout);
         $date = Helper::toAndFromDate($request->check_in_checkout);
@@ -67,6 +68,7 @@ class ApartmentsController extends Controller
         $breadcrumb = null;
 
         $query = Apartment::query();
+
 
         if ($request->check_in_checkout) {
             // Check if apartment_id is present in the request
@@ -95,14 +97,11 @@ class ApartmentsController extends Controller
             ? $query->where('allow', 1)->latest()->first()
             : $query->where('allow', 1)->latest()->get();
 
-
-
-
-
         $apartments = $query->where('allow', 1)->latest()->get();
         $saved = null;
         $property = Property::first();
         $apartments->load('images', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
+
 
 
         if ($request->ajax()) {
@@ -149,13 +148,17 @@ class ApartmentsController extends Controller
         ];
         $str = new  Str;
         $date = $request->check_in_checkout;
+
+        session(['check_in_checkout' => $date]);
+
+
         $property_is_not_available = null;
         $cites = [];
 
         $attributes = $location->attributes->groupBy('type');
         $page_title = implode(" ", explode('-', $location->slug));
         $breadcrumb = $location->name;
-        $saved =  $this->saved();
+        $saved = $this->saved();
 
         $properties = Property::where('allow', true)
             ->filter($request,  $this->getFilters($attributes))
@@ -165,14 +168,11 @@ class ApartmentsController extends Controller
         if ($request->ajax()) {
             return PropertyLists::collection(
                 $properties
-
             )->additional(['attributes' => $attributes, 'search' => false]);
         }
+
         $next_page = [];
-
         $next_page[] = $properties->nextPageUrl();
-
-
 
         return  view('apartments.index', compact(
             'location',
@@ -517,6 +517,7 @@ class ApartmentsController extends Controller
         $apartment->load('images', 'free_services', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
 
         $date  = explode("to", $request->check_in_checkout);
+
         $nights = '1 night';
         $sub_total = null;
         $ids = $apartment->property->apartments->pluck('id')->toArray();
@@ -535,6 +536,8 @@ class ApartmentsController extends Controller
         $start_date = !empty($date) ?  $date['start_date'] : null;
         $end_date = !empty($date) ? $date['end_date'] : null;
         $nights = Helper::nights($date);
+
+
 
         return view(
             'apartments.show',

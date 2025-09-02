@@ -88,7 +88,7 @@
         class="card-title bold-2 text-size-1-big mt-sm-3 mt-3"
         itemprop="name"
       >
-        <a :href="`/apartment/${room.slug}`">{{ room.name }}</a>
+        <a :href="`/apartment/${room.slug}/`">{{ room.name }}</a>
       </div>
       <div
         v-if="!room.is_gallery"
@@ -249,7 +249,6 @@
 </template>
 
 <script>
-// optional style for arrows & dots
 export default {
   props: {
     property: Object,
