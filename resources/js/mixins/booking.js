@@ -744,6 +744,21 @@ export default {
                     this.stays = response.data.nights;
                     this.propertyIsLoading = false;
 
+                    const peakPeriod = response.data.peak_periods;
+
+                    if (peakPeriod) {
+                    this.peakPeriodSelected =
+                        `Your selected dates fall within the peak period ` +
+                        `(${peakPeriod.from_date} to ${peakPeriod.to_date}). ` +
+                        ``;
+
+                        this.openNotification = true 
+
+                    // open the modal right away
+                    this.openModal();
+                    } else {
+                    this.peakPeriodSelected = null;
+                    }
                     jQuery(function () {
                         $(".owl-carousel").owlCarousel({
                             margin: 10,
