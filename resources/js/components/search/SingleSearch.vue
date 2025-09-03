@@ -6,7 +6,7 @@
             <input type="hidden" name="apartment_id" :value="apartment_id" />
 
             <div v-if="filter">
-                <h3 class="bold-2">Check availablity {{ apartment.name }}</h3>
+                <h3 class="bold-2">Check availablity {{ apartment.name }}</h3> 
                 <div class="form-row">
                     <div class="form-group   form-border cursor-pointer search col-md-3 bmd-form-group  mb-sm-2 mb-md-0">
                         <label class="pl-2 " for="flatpickr-input-f">Check-in</label>
@@ -59,7 +59,7 @@
                 <div class="position-relative">
                     <div    class="row">
                         <apartment :showReserve="false" :classType="classType" @showImages="showImages"
-                            @showRoom="showRoom" @reserve="reserve" :amenities="amenities" :room="apartment" :stays="stays"
+                            @showRoom="showRoom" @reserve="reserve" :amenities="amenities" :room="roomsAv" :stays="stays"
                             :qty="qty" />
                     </div>
 
@@ -105,7 +105,7 @@
                                     </VueSlickCarousel>
                                 </div>
                                 <div class="container p-0">
-                                    <h4 class="primary-color">Check availablity for {{ room.name }}</h4>
+                                    <h4 class="primary-color">{{ room.name }}</h4>
                                 </div>
 
                                     
@@ -124,7 +124,7 @@
                                             </path>
                                         </svg>
                                         <h3 class="">Highlights</h3>
-                                    </div>
+                                    </div> 
                                     <div class="">
 
                                         <span v-for="(h, index ) in highlights" :key="index" class="ml-2">
@@ -298,6 +298,7 @@ export default {
     mounted() {
         // Get all elements with class 'p-loader'
         let lo = document.getElementById("full-bg")
+
         if (lo) {
             document.getElementById("full-bg").remove();
         }
@@ -348,6 +349,8 @@ export default {
                 div.classList.remove('d-none');
             });
         }
+
+        this.roomsAv =  this.apartment
 
         if (!this.filter) {
             this.classType = ['col-12 col-lg-3 col-md-6']
@@ -486,16 +489,11 @@ export default {
                 return acc;
             }, {});
 
-            console.log(room.apartment_facilities)
         },
-       
-      
-      
-     
-     
+    
         handleAvailabity: function () {
             this.roomsIsAv = null
-            this.showAvailability()  
+            this.showAvailability()
         },
 
       
@@ -759,8 +757,6 @@ class IntersectionObserverHandler {
     observe(targets) {
         targets.forEach(target => {
             const { element, dynamicClasses } = target;
-
-            // Check if the element exists in the DOM before observing
             if (element && document.body.contains(element)) {
                 this.observer.observe(element);
                 this.dynamicClassesMap.set(element, dynamicClasses);

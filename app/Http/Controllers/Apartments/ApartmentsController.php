@@ -531,7 +531,7 @@ class ApartmentsController extends Controller
         $property = $apartment->property;
         $date = Helper::toAndFromDate($request->check_in_checkout);
         $data['max_children'] = $request->children ?? 0;
-        $data['max_adults']   = $request->adults ?? 1;
+        $data['max_adults'] = $request->adults ?? 1;
         $data['rooms'] = $request->rooms ?? 1;
         $start_date = !empty($date) ?  $date['start_date'] : null;
         $end_date = !empty($date) ? $date['end_date'] : null;

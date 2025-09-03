@@ -53,6 +53,20 @@
         </div>
       </div>
 
+      <div class="container">
+        <div class="row">
+            
+      <div role="alert" class="alert alert-success p-3 ml-3" bis_skin_checked="1"><strong>Note:</strong> Due to the peak period, prices from
+      Monday 01 December 2025 to
+      Thursday 15 January 2026 are at
+      <span class="fw-bold">
+        ₦1,061,688</span>
+      per night.
+    </div>
+        </div>
+      </div>
+
+
       <div id="full-" v-if="propertyLoading" class="full-bg position-relative">
         <div class="signup--middle">
           <div class="loading">

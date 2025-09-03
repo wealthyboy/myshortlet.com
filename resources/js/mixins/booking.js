@@ -115,7 +115,7 @@ export default {
             this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
             this.form.persons = document.querySelector("#persons").value;
             this.form.rooms = document.querySelector("#rooms").value;
-            var now = new window.Date().getTime(); // Current timestamp
+            var now = new window.Date().getTime(); 
             const myObject = {
                 rooms: this.form.rooms,
                 check_in_checkout: this.form.check_in_checkout,
@@ -187,8 +187,7 @@ export default {
                 })
                 .then((response) => {
                     this.apartmentIsChecked = true
-
-                    this.roomsAv = response.data;
+                    this.roomsAv = response.data.data[0]
                     this.roomsIsAv = response.data;
                     this.stays = response.data.nights;
                     this.propertyIsLoading = false;
@@ -211,7 +210,7 @@ export default {
                             },
                         });
                     });
-                    return Promise.resolve();
+                    return Promise.resolve(response);
                 })
                 .catch((error) => {
                     this.propertyIsLoading = false
