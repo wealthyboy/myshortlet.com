@@ -55,6 +55,7 @@ class ApartmentsController extends Controller
         $page_meta_description = "All apartments  Avenue Montaigne";
         $date = explode("to", $request->check_in_checkout);
         $date = Helper::toAndFromDate($request->check_in_checkout);
+        $peakPeriodIsSelected = null;
 
 
         $property_is_not_available = null;
@@ -68,9 +69,33 @@ class ApartmentsController extends Controller
         $breadcrumb = null;
 
         $query = Apartment::query();
+        $peak_period = PeakPeriod::first();
+
+        $checkInOut = request()->check_in_checkout ?? session('check_in_checkout');
+
+         $dates = explode("to", $checkInOut);
+
+              
 
 
         if ($request->check_in_checkout) {
+
+            if (count($dates) > 1) {
+
+                  $date = Helper::toAndFromDate($checkInOut);
+                  $peakStart = Carbon::parse($peak_period->start_date);
+                  $peakEnd = Carbon::parse($peak_period->end_date);
+                  $startDate = $date['start_date'];
+                  $endDate = $date['end_date'];
+
+                  $overlapsPeak = (
+                      $startDate->between($peakStart, $peakEnd) ||
+                      $endDate->between($peakStart, $peakEnd) ||
+                      ($startDate->lt($peakStart) && $endDate->gt($peakEnd))
+                  );
+
+                  $peakPeriodIsSelected = $overlapsPeak  ? $peak_period : null;
+            }
             // Check if apartment_id is present in the request
             if ($request->has('apartment_id')) {
                 $apartmentId = $request->apartment_id;
@@ -108,7 +133,7 @@ class ApartmentsController extends Controller
 
             return PropertyLists::collection(
                 $apartments
-            )->additional(['attributes' => $attributes, 'params' => $request->all(), 'search' => false]);
+            )->additional(['attributes' => $attributes, 'peak_periods' => $peakPeriodIsSelected, 'params' => $request->all(), 'search' => false]);
         }
 
         $showResult = null;
@@ -223,7 +248,8 @@ class ApartmentsController extends Controller
         });
 
 
-        if ($request->check_in_checkout) {
+        if ( $request->check_in_checkout ) {
+
             $query->whereHas('apartments', function ($query) use ($data, $date) {
                 $query->where('apartments.max_adults', '>=',  $data['persons']);
                 $query->where('apartments.no_of_rooms', '>=', $data['rooms']);

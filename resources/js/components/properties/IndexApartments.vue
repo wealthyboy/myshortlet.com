@@ -53,7 +53,9 @@
         </div>
       </div>
 
-    
+      
+
+      
 
 
       <div id="full-" v-if="propertyLoading" class="full-bg position-relative">
@@ -116,12 +118,41 @@
       </div>
     </form>
 
+    
+      <transition name="modal-fade">
+  <div
+    v-if="showModal && openNotification"
+    @click.self="closeModal"
+    class="modal-overlay d-flex align-items-center justify-content-center"
+  >
+    <div class="custom-alert-modal">
+      <!-- Header -->
+      <div class="custom-alert-header">
+        <span class="alert-icon">⚠️</span>
+        <h5 class="text-white">Peak Period Notice</h5>
+        <button class="close-btn" @click="closeModal">&times;</button>
+      </div>
+
+      <!-- Body -->
+      <div class="custom-alert-body">
+        <p>{{ peakPeriodSelected }}</p>
+      </div>
+
+      <!-- Footer -->
+      <div class="custom-alert-footer">
+        <button class="ok-btn" @click="closeModal">OK</button>
+      </div>
+    </div>
+  </div>
+</transition>
+
+
+
     <transition name="modal-fade">
       <div
-        v-if="showModal"
+        v-if="showModal && !openNotification"
         @click.self="closeModal"
-        class="modal-overlay d-flex"
-      >
+        class="modal-overlay d-flex" >
         <div class="modal d-block">
           <div
             class="modal-content-header d-flex align-items-center p-3 mt-4 justify-content-between"
@@ -468,6 +499,7 @@ export default {
       apTotal: 0,
       attrPrice: 0,
       apartment_id: null,
+      openNotification: null,
       guests: 0,
       amount: 0,
       apQ: [],
@@ -476,6 +508,7 @@ export default {
       loading: false,
       highlights: [],
       propertyLoading: false,
+      peakPeriodSelected: null,
       propertyIsLoading: false,
       isDateNeedsToToOpen: false,
       singleApartmentIsChecked: false,
@@ -614,6 +647,7 @@ export default {
       this.showModal = !this.showModal;
       this.room = room;
       this.groupData(room);
+      this.openNotification = null
 
       this.highlights = this.parseStringToArray(room.teaser);
 
@@ -674,6 +708,7 @@ export default {
         });
       });
     },
+
 
     openModal() {
       this.showModal = true;
@@ -755,6 +790,24 @@ export default {
         .get(window.location + "?t=" + Math.random())
         .then((response) => {
           let params = response.data.params;
+
+            const peakPeriod = response.data.peak_periods;
+
+            if (peakPeriod) {
+              this.peakPeriodSelected =
+                `Your selected dates fall within the peak period ` +
+                `(${peakPeriod.from_date} to ${peakPeriod.to_date}). ` +
+                ``;
+
+                this.openNotification = true 
+
+              // open the modal right away
+              this.openModal();
+            } else {
+              this.peakPeriodSelected = null;
+            }
+
+
 
           this.form.rooms = params.rooms;
           this.form.persons = params.checkout;
@@ -930,4 +983,101 @@ class IntersectionObserverHandler {
 .bg-opacity-75 {
   background-color: rgba(0, 0, 0, 0.75);
 }
+
+/* Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* darker overlay */
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal Container */
+.custom-alert-modal {
+  background: #4b2e2e; /* coffee brown */
+  border-radius: 12px;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  color: #f5f5f5; /* light text */
+  animation: slideDown 0.3s ease;
+}
+
+/* Header */
+.custom-alert-header {
+  display: flex;
+  align-items: center;
+  background: #3b2424; /* darker coffee for header */
+  color: #f8e6d8; /* creamy text */
+  padding: 15px 20px;
+  font-weight: bold;
+  position: relative;
+}
+
+.alert-icon {
+  margin-right: 10px;
+  font-size: 1.4rem;
+}
+
+.close-btn {
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  cursor: pointer;
+  color: #f8e6d8;
+}
+
+/* Body */
+.custom-alert-body {
+  padding: 20px;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #f5f5f5; /* keep text readable */
+}
+
+/* Footer */
+.custom-alert-footer {
+  text-align: center;
+  padding: 15px;
+  background: #3b2424; /* match header */
+}
+
+.ok-btn {
+  background: #f5f5f5;
+  color: #3b2424;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s, color 0.3s;
+}
+
+.ok-btn:hover {
+  background: #d2b48c; /* lighter coffee */
+  color: #fff;
+}
+
+/* Slide animation */
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 </style>
