@@ -117,7 +117,7 @@
 
 <div style="background-color: rgb(248, 245, 244);" class="ap mb-3">
    <div class="container-fluid">
-      <div id="intro-box2" class="opacity-0 mt-4 mb-4">
+      <div id="intro-box2" class="opacity-0 pt-2 mt-4 mb-4">
          <h2 class="bold-3 text-left" itemprop="name">Luxury Redefined</h2>
          <div class="text-secondary text-left mt-2" itemprop="description">Explore Our Exquisite Collection of Apartments.</div>
       </div>
