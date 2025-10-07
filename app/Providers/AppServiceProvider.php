@@ -26,12 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-         Mail::extend('zeptomail', function () {
-            return new Swift_Mailer(
-                new ZeptoMailTransport(
-                   config('mail.mailers.zeptomail.token') 
-                )
-            );
-        });
+        
     }
 }

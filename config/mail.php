@@ -35,6 +35,11 @@ return [
 
 
     'mailers' => [
+        'zeptomail' => [
+            'transport' => 'zeptomail',
+            'key' => env('ZEPTO_API_KEY'),
+            'url' => env('ZEPTO_API_URL'),
+        ],
         'smtp' => [
             'transport' => 'smtp',
             'host' => env('MAIL_HOST', 'smtp.zeptomail.com'),
@@ -45,13 +50,7 @@ return [
             'timeout' => null,
         ], 
 
-        'zeptomail' => [
-            'transport' => 'zeptomail',
-            'token' => env('ZEPTO_TOKEN'),
-        ],
-
        
-
         'ses' => [
             'transport' => 'ses',
         ],
