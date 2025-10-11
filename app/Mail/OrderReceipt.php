@@ -33,3 +33,6 @@ class OrderReceipt extends Mailable
         return $this->subject('Avenue Montaigne Confirmation')->view('fashion.emails.receipt.index');
     }
 }
+
+
+

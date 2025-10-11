@@ -58,6 +58,7 @@ class AgentCheckingNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->mailer('zeptomail') // 👈 Force this notification to use ZeptoMail
             ->subject('New check-in for ' . optional($this->apartment->attribute)->name)
             ->greeting('Hello Host,')
             ->line('Fullname: ' . $this->guest->name . ' ' . $this->guest->last_name)

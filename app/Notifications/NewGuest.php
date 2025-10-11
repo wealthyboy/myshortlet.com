@@ -44,6 +44,7 @@ class NewGuest extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->mailer('zeptomail') // 👈 Force this notification to use ZeptoMail
             ->greeting("Dear " . $this->guest->name . ',')
             ->subject("Welcome to Avenue Montaigne")
             ->line('Welcome to Avenue Montaigne,   We are thrilled to have you as our guest and hope your stay with us will be comfortable, enjoyable, and memorable.')

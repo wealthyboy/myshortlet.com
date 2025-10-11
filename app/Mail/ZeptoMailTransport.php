@@ -2,77 +2,166 @@
 
 namespace App\Mail;
 
-use Illuminate\Mail\Transport\Transport;
 use Swift_Mime_SimpleMessage;
-use Symfony\Component\Mime\Part\DataPart;
-use Symfony\Component\Mime\Part\File;
-use ZeptoMail\ZeptoMailClient;
+use Swift_Transport;
+use Swift_Events_EventListener;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Log;
 
-class ZeptoMailTransport extends Transport
+class ZeptoMailTransport implements Swift_Transport
 {
+    protected $apikey;
+    protected $host;
     protected $client;
+    protected $started = true;
 
-    public function __construct()
+    public function __construct($apikey, $host)
     {
-        $this->client = new \ZeptoMail\ZeptoMailClient(env('ZEPTO_TOKEN'));
+        $this->apikey = $apikey;
+        $this->host = rtrim($host, '/');
+        $this->client = new Client(['timeout' => 30]);
     }
 
-   public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
-{
-    $this->beforeSendPerformed($message);
+    public function isStarted()
+    {
+        return $this->started;
+    }
 
-    $payload = [
-        'from' => [
-            'address' => env('MAIL_FROM_ADDRESS'),
-            'name' => env('MAIL_FROM_NAME'),
-        ],
-        'subject' => $message->getSubject(),
-        'htmlbody' => $message->getBody(),
-    ];
+    public function start()
+    {
+        $this->started = true;
+    }
 
-    // To, CC, BCC
-    foreach (['to', 'cc', 'bcc'] as $type) {
-        if ($emails = $message->{'get' . ucfirst($type)}()) {
-            $payload[$type] = collect($emails)->map(function ($name, $email) {
-                return ['email_address' => ['address' => $email, 'name' => $name]];
-            })->values()->toArray();
+    public function stop()
+    {
+        $this->started = false;
+    }
+
+    public function ping()
+    {
+        try {
+            $response = $this->client->get('https://api.zeptomail.com/v1.0/email/template', [
+                'headers' => [
+                    'Authorization' => $this->apikey,
+                    'Accept' => 'application/json',
+                ],
+            ]);
+            return $response->getStatusCode() === 200;
+        } catch (\Exception $e) {
+            Log::error('ZeptoMail ping failed: ' . $e->getMessage());
+            return false;
         }
     }
 
-    // Reply-To
-    if ($reply = $message->getReplyTo()) {
-        $payload['reply_to'] = [
-            'address' => key($reply),
-            'name' => reset($reply),
+    public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
+    {
+        $failedRecipients = (array) $failedRecipients;
+        $payload = $this->buildPayload($message);
+
+        
+
+        try {
+            $response = $this->client->post('https://api.zeptomail.com/v1.1/email', [
+                'headers' => [
+                    'Authorization' => 'Zoho-enczapikey ' . $this->apikey,
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => $payload,
+            ]);
+
+            $status = $response->getStatusCode();
+
+            if ($status >= 200 && $status < 300) {
+                return $this->countRecipients($message);
+            }
+
+            Log::error("ZeptoMail API returned status: {$status}");
+            return 0;
+        } catch (RequestException $e) {
+            Log::error('ZeptoMail send failed: ' . $e->getMessage());
+            return 0;
+        }
+    }
+
+    protected function getEndpoint()
+    {
+        return $this->host . '/v1.1/email';
+    }
+
+    protected function countRecipients(Swift_Mime_SimpleMessage $message)
+    {
+        return count((array) $message->getTo())
+            + count((array) $message->getCc())
+            + count((array) $message->getBcc());
+    }
+
+    protected function buildPayload(Swift_Mime_SimpleMessage $email)
+    {
+        $from = $email->getFrom();
+        $to = $email->getTo();
+        $cc = $email->getCc();
+        $bcc = $email->getBcc();
+
+        $payload = [
+            'from' => [
+                'address' => key($from),
+                'name' => reset($from),
+            ],
+            'to' => $this->formatAddresses($to),
+            'cc' => $this->formatAddresses($cc),
+            'bcc' => $this->formatAddresses($bcc),
+            'subject' => $email->getSubject(),
+            'htmlbody' => $email->getBody(),
         ];
-    }
 
-    // Attachments (robust detection)
-    $attachments = [];
-    foreach ($message->getChildren() as $child) {
-        // Skip text/plain or text/html parts
-        if (strpos($child->getContentType(), 'text/') === 0) {
-            continue;
+        // ✅ Attachments (for SwiftMailer)
+        $attachmentJSONArr = [];
+        foreach ($email->getChildren() as $child) {
+            if (method_exists($child, 'getContentType') && $child->getContentType() !== 'text/plain' && $child->getContentType() !== 'text/html') {
+                $filename = $child->getFilename();
+                $att = [
+                    'content' => base64_encode($child->getBody()),
+                    'name' => $filename ?: 'attachment',
+                    'mime_type' => $child->getContentType(),
+                ];
+                $attachmentJSONArr[] = $att;
+            }
         }
 
-        // Handle file attachments
-        if ($child->getFilename()) {
-            $attachments[] = [
-                'name' => $child->getFilename(),
-                'content' => base64_encode($child->getBody()),
-                'mime_type' => $child->getContentType(),
-            ];
+        if (!empty($attachmentJSONArr)) {
+            $payload['attachments'] = $attachmentJSONArr;
         }
+
+        return $payload;
     }
 
-    if (!empty($attachments)) {
-        $payload['attachments'] = $attachments;
+    protected function formatAddresses($contacts)
+    {
+        $formatted = [];
+
+        if (is_array($contacts)) {
+            foreach ($contacts as $email => $name) {
+                $formatted[] = [
+                    'email_address' => [
+                        'address' => $email,
+                        'name' => $name,
+                    ]
+                ];
+            }
+        }
+
+        return $formatted;
     }
 
-    // Send mail via ZeptoMail API
-    $this->client->sendMail($payload);
+    public function registerPlugin(Swift_Events_EventListener $plugin)
+    {
+        // Not used
+    }
 
-    $this->sendPerformed($message);
-}
-
+    public function __toString()
+    {
+        return 'zeptomail';
+    }
 }
