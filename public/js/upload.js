@@ -32,6 +32,7 @@ let checkinPicker = $("#checkin").flatpickr({
 let checkoutPicker = $("#checkout").flatpickr({
   minDate: "today", // Initial minimum date
   dateFormat: "Y-m-d", // Set the desired date format
+  disableMobile: true,
 });
 
 Dropzone.autoDiscover = false;

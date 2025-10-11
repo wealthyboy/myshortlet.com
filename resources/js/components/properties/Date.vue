@@ -42,7 +42,7 @@ export default {
         minDate: "today",
         dateFormat: "Y-m-d",
         showMonths: 1,
-        disableMobile: "true",
+        disableMobile: true,
       },
     };
   },
