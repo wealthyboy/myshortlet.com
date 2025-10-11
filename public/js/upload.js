@@ -15,6 +15,8 @@ function getDynamicMinDate() {
 let checkinPicker = $("#checkin").flatpickr({
   minDate: getDynamicMinDate(),
   dateFormat: "Y-m-d",
+  disableMobile: true,
+
   onChange: function (selectedDates, dateStr, instance) {
     if (selectedDates.length > 0) {
       let checkinDate = new Date(selectedDates[0]);
