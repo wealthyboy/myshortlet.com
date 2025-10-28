@@ -199,7 +199,6 @@ class ReservationsController extends Controller
 
 		$rate = data_get($rate, 'rate', 1);
 
-		dd($rate);
 
 		$totalBeforeDiscount = data_get($input, 'currency') === '₦'
 			? $rate * $apartmentPrice
@@ -218,8 +217,8 @@ class ReservationsController extends Controller
 		$totalAfterDiscount = $totalBeforeDiscount - $discountAmount;
 
 		$cautionFee = data_get($input, 'currency') === '₦'
-			? $rate * $caution_fee
-			: $caution_fee;
+			? $caution_fee
+			: $rate * $caution_fee;
 
 
 		$user_reservation = new UserReservation;
@@ -240,7 +239,6 @@ class ReservationsController extends Controller
 		$user_reservation->ip = $request->ip();
 		$user_reservation->save();
 
-		dd($user_reservation);
 
 
 		$user_reservation->discount = $discountType === 'fixed'
