@@ -282,6 +282,10 @@ class ReservationsController extends Controller
 		}
 
 
+		dd($user_reservation);
+
+
+
 
 		//DB::commit();
 		return redirect()->to('/admin/reservations?coming_from=checkin');
