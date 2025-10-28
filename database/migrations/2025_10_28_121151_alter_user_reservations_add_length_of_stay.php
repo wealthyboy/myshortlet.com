@@ -13,7 +13,7 @@ class AlterUserReservationsAddLengthOfStay extends Migration
      */
     public function up()
     {
-        Schema::table('user_reversations', function (Blueprint $table) {
+        Schema::table('user_reservations', function (Blueprint $table) {
             $table->integer('length_of_stay')->nullable();
         });
     }
