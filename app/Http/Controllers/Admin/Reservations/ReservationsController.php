@@ -238,6 +238,9 @@ class ReservationsController extends Controller
 		$user_reservation->ip = $request->ip();
 		$user_reservation->save();
 
+		dd($user_reservation);
+
+
 		$user_reservation->discount = $discountType === 'fixed'
 			? data_get($input, 'currency') . number_format($discountValue, 2)
 			: $discountValue . '%';
@@ -250,7 +253,6 @@ class ReservationsController extends Controller
 		$reservation->sale_price = $apartment->sale_price;
 		$reservation->user_reservation_id = $user_reservation->id;
 		$reservation->property_id = $property->id;
-		$reservation->caution_fee = $request->caution_fee;
 		$reservation->checkin = $startDate;
 		$reservation->checkout = $endDate;
 		$reservation->rate = data_get($input, 'currency') === '₦' ?  $rate : 1;
