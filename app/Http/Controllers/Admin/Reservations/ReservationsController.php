@@ -35,16 +35,16 @@ class ReservationsController extends Controller
 	public function __construct()
 	{
 
-		$this->middleware('admin'); 
+		$this->middleware('admin');
 		$this->settings =  \DB::table('system_settings')->first();
 	}
 
 	public function index(Request $request)
 	{
-         
 
-		$today = Carbon::today();		
-        $todaysReservations = Reservation::whereDate('checkin', $today)->get();
+
+		$today = Carbon::today();
+		$todaysReservations = Reservation::whereDate('checkin', $today)->get();
 
 		//Check for the coming_from query parameter
 		$comingFrom = $request->input('coming_from');
@@ -65,7 +65,7 @@ class ReservationsController extends Controller
 		$phoneNumber = $request->input('phone');
 		$date = $request->input('date');
 		$startDate = $request->input('from') ? Carbon::parse($request->input('from')) : null;
-        $endDate = $request->input('to') ?  Carbon::parse($request->input('to')) : null;
+		$endDate = $request->input('to') ?  Carbon::parse($request->input('to')) : null;
 		$apartment_id = $request->input('apartment_id');
 		$query = UserReservation::with('guest_user');
 		$apartments = Apartment::orderBy('name', 'asc')->get();
@@ -98,15 +98,13 @@ class ReservationsController extends Controller
 			if ($startDate && $endDate) {
 				$query->whereHas('reservations', function ($q) use ($startDate, $endDate) {
 					$q->whereBetween('checkin', [$startDate, $endDate])
-					->orWhereBetween('checkout', [$startDate, $endDate])
-					->orWhere(function ($query) use ($startDate, $endDate) {
-						$query->where('checkin', '<=', $startDate)
-							->where('checkout', '>=', $endDate);
-					});
-					
+						->orWhereBetween('checkout', [$startDate, $endDate])
+						->orWhere(function ($query) use ($startDate, $endDate) {
+							$query->where('checkin', '<=', $startDate)
+								->where('checkout', '>=', $endDate);
+						});
 				});
 			}
-
 		} else {
 			$query->whereDate('created_at', Carbon::today());
 		}
@@ -126,139 +124,176 @@ class ReservationsController extends Controller
 	}
 
 
-	 public function create(Request $request)
-    {
+	public function create(Request $request)
+	{
 		$apartments = Apartment::orderBy('name', 'asc')->get();
-        return view('admin.reservations.create', compact('apartments'));
-    }
+		return view('admin.reservations.create', compact('apartments'));
+	}
 
 
-	 public function store(Request $request)
-    {
-        try {
-			//DB::beginTransaction();
+	public function store(Request $request)
+	{
+		//try {
+		//DB::beginTransaction();
 
-			$input = $request->all();
-			$property = Property::first();
-			$checkin = Carbon::parse($request->checkin);
-			$checkout = Carbon::parse($request->checkout); // fix: you were using checkin twice
-			$date_diff = $checkin->diffInDays($checkout);
-			$attr = Attribute::find($request->apartment_id);
-			$query = Apartment::query();
-			$query->where('id', $request->apartment_id);
-			$startDate = Carbon::createFromDate($request->checkin);
-			$endDate = Carbon::createFromDate($request->checkout);
-			
-			$query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
-				$q->where(function ($subQ) use ($startDate) {
-					$subQ->where('checkin', '<', $startDate)
-						->where('reservations.is_blocked', false)
-						->where('checkout', '>', $startDate);
-				});
+		$input = $request->all();
+		$property = Property::first();
+		$checkin = Carbon::parse($request->checkin);
+		$checkout = Carbon::parse($request->checkout); // fix: you were using checkin twice
+		$date_diff = $checkin->diffInDays($checkout);
+		$attr = Attribute::find($request->apartment_id);
+		$query = Apartment::query();
+		$query->where('id', $request->apartment_id);
+		$startDate = Carbon::createFromDate($request->checkin);
+		$endDate = Carbon::createFromDate($request->checkout);
+
+		$query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
+			$q->where(function ($subQ) use ($startDate) {
+				$subQ->where('checkin', '<', $startDate)
+					->where('reservations.is_blocked', false)
+					->where('checkout', '>', $startDate);
 			});
+		});
 
-			$apartments = $query->latest()->first();
+		$apartments = $query->latest()->first();
 
-			if (!$request->filled('user_reservation_id') && $apartments === null) {
-				return back()->with('error', 'Apartment not available for your selected dates');
-			}
+		if (!$request->filled('user_reservation_id') && $apartments === null) {
+			return back()->with('error', 'Apartment not available for your selected dates');
+		}
 
-			$guest = GuestUser::firstOrNew(['id' => data_get($input, 'guest_id')]);
-			$guest->name = $input['first_name'];
-			$guest->last_name = $input['last_name'];
-			$guest->email = $input['email'];
-			$guest->phone_number = $input['phone_number'];
-			$guest->image = '';
-			$guest->save();
+		$guest = GuestUser::firstOrNew(['id' => data_get($input, 'guest_id')]);
+		$guest->name = $input['first_name'];
+		$guest->last_name = $input['last_name'];
+		$guest->email = $input['email'];
+		$guest->phone_number = $input['phone_number'];
+		$guest->image = '';
+		$guest->save();
 
-			$apartment = Apartment::find($request->apartment_id);
+		$apartment = Apartment::find($request->apartment_id);
 
-			if ($request->user_reservation_id) {
-				$user_reservation = UserReservation::find($request->user_reservation_id);
-				ProcessGuestCheckin::dispatch($guest, $user_reservation->reservation, $apartment)->delay(now()->addSeconds(5));
-
-				DB::commit();
-				return response()->json(null, 200);
-			}
-
-			$date_diff = max($checkin->diffInDays($checkout), 1);
-
-			$rate = json_decode(session('rate'), true); // use true to get an associative array
-
-			$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
-
-			$apartmentPrice = $apartment->price;
-			$totalAmount =  $apartmentPrice * $date_diff;
-			$totalBeforeDiscount = data_get($input, 'currency') === '₦' ? $rate['rate']  * $apartmentPrice  : $apartmentPrice;
-			$totalBeforeDiscount = $totalBeforeDiscount * $date_diff ;
-			$discountAmount = ($discountPercentage / 100) * $totalBeforeDiscount;
-			$totalAfterDiscount = $totalBeforeDiscount - $discountAmount;
-			$user_reservation = new UserReservation;
-			$user_reservation->user_id = optional($request->user())->id;
-			$user_reservation->guest_user_id = $guest->id;
-			$user_reservation->currency = null;
-			$user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
-			$user_reservation->payment_type = 'checkin';
-			$user_reservation->property_id = $property->id;
-			$user_reservation->currency = data_get($input, 'currency');
-			$user_reservation->checked = true;
-			$user_reservation->original_amount = $totalBeforeDiscount;
-			$user_reservation->coupon = null;
-			$user_reservation->coming_from = "checkin";
-			$user_reservation->total = $totalAfterDiscount;
-			$user_reservation->ip = $request->ip();
-			$user_reservation->save();
-			$user_reservation->discount = $discountPercentage ? $discountPercentage .'%': '---';
-
-			$reservation = new Reservation;
-			$reservation->quantity = 1;
-			$reservation->apartment_id = $request->apartment_id;
-			$reservation->price = $apartment->price;
-			$reservation->sale_price = $apartment->sale_price;
-			$reservation->user_reservation_id = $user_reservation->id;
-			$reservation->property_id = $property->id;
-			$reservation->checkin = $startDate;
-			$reservation->checkout = $endDate;
-			$reservation->rate = data_get($input, 'currency') === '₦' ?  $rate['rate'] : 1;
-			$reservation->save();
-
-
-			// Optional PDF logic
-			$guest->image = session('session_link');
-			$reservation->apartment_name = optional($apartment->attribute)->name;
-			$guest->apartment_name = optional($apartment->attribute)->name;
-			$reservation->first_name = $request->first_name;
-			$reservation->last_name = $request->last_name;
-			$reservation->email = $request->email;
-			$reservation->phone_number = $request->phone_number;
-
-			try {
-
-
-				\Mail::to($request->email)
-					->bcc('avenuemontaigneconcierge@gmail.com')
-					->bcc('info@avenuemontaigne.ng')
-					->send(new ReservationReceipt($user_reservation, $this->settings));
-				
-			} catch (\Throwable $th) {
-				dd($th->getMessage());
-				\Log::error("Mail error: " . $th->getMessage());
-				// optionally: continue or throw if mail failure should abort transaction
-			}
+		if ($request->user_reservation_id) {
+			$user_reservation = UserReservation::find($request->user_reservation_id);
+			ProcessGuestCheckin::dispatch($guest, $user_reservation->reservation, $apartment)->delay(now()->addSeconds(5));
 
 			DB::commit();
-			return redirect()->to('/admin/reservations?coming_from=checkin');
-
-		} catch (\Throwable $th) {
-			DB::rollBack();
-			dd($th->getMessage());
-
-			\Log::error("Reservation error: " . $th->getMessage());
-						\Log::error("Reservation payload: " . $request->all());
-
-          return redirect()->back()->withErrors(['error' => 'Reservation failed. Apartment not available for those dates.']);
+			return response()->json(null, 200);
 		}
-    }
+
+		$date_diff = max($checkin->diffInDays($checkout), 1);
+
+		$rate = json_decode(session('rate'), true); // use true to get an associative array
+
+		$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
+		$discountValue = (float) $request->input('discount_value', 0);
+		$caution_fee =  $request->input('caution_fee', 0); // Defaults to 0 if not provided
+		$apartmentPrice = $apartment->price;
+		$totalAmount =  $apartmentPrice * $date_diff;
+		$discountType  = $request->input('discount_type', 'percent'); // default
+
+		// Discount handling
+		$discountValue = (float) $request->input('discount_value', 0);
+		$discountType  = $request->input('discount_type', 'percent'); // default to percent
+
+		$apartmentPrice = $apartment->price;
+		$totalAmount = $apartmentPrice * $date_diff;
+
+		$rate = data_get($rate, 'rate', 1);
+
+		$totalBeforeDiscount = data_get($input, 'currency') === '₦'
+			? $rate * $apartmentPrice
+			: $apartmentPrice;
+
+		$totalBeforeDiscount = $totalBeforeDiscount * $date_diff;
+
+		if ($discountType === 'fixed') {
+			$discountAmount = $discountValue;
+		} else {
+			$discountAmount = ($discountValue / 100) * $totalBeforeDiscount;
+		}
+
+		$discountAmount = min($discountAmount, $totalBeforeDiscount);
+
+		$totalAfterDiscount = $totalBeforeDiscount - $discountAmount;
+
+		$cautionFee = data_get($input, 'currency') === '₦'
+			? $rate * $caution_fee
+			: $caution_fee;
+
+
+		$user_reservation = new UserReservation;
+		$user_reservation->user_id = optional($request->user())->id;
+		$user_reservation->guest_user_id = $guest->id;
+		$user_reservation->currency = null;
+		$user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
+		$user_reservation->payment_type = 'checkin';
+		$user_reservation->property_id = $property->id;
+		$user_reservation->currency = data_get($input, 'currency');
+		$user_reservation->checked = true;
+		$user_reservation->original_amount = $totalBeforeDiscount;
+		$user_reservation->coupon = null;
+		$user_reservation->coming_from = "checkin";
+		$user_reservation->length_of_stay = $date_diff;
+		$user_reservation->total = $totalAfterDiscount + $cautionFee;
+		$user_reservation->caution_fee = $cautionFee;
+		$user_reservation->ip = $request->ip();
+		$user_reservation->save();
+
+		$user_reservation->discount = $discountType === 'fixed'
+			? data_get($input, 'currency') . number_format($discountValue, 2)
+			: $discountValue . '%';
+
+
+		$reservation = new Reservation;
+		$reservation->quantity = 1;
+		$reservation->apartment_id = $request->apartment_id;
+		$reservation->price = $apartment->price;
+		$reservation->sale_price = $apartment->sale_price;
+		$reservation->user_reservation_id = $user_reservation->id;
+		$reservation->property_id = $property->id;
+		$reservation->caution_fee = $request->caution_fee;
+		$reservation->checkin = $startDate;
+		$reservation->checkout = $endDate;
+		$reservation->rate = data_get($input, 'currency') === '₦' ?  $rate : 1;
+		$reservation->save();
+
+
+		// Optional PDF logic
+		$guest->image = session('session_link');
+		$reservation->apartment_name = optional($apartment->attribute)->name;
+		$guest->apartment_name = optional($apartment->attribute)->name;
+		$reservation->first_name = $request->first_name;
+		$reservation->last_name = $request->last_name;
+		$reservation->email = $request->email;
+		$reservation->phone_number = $request->phone_number;
+
+
+		try {
+			\Mail::to($request->email)
+				->bcc('avenuemontaigneconcierge@gmail.com')
+				->bcc('info@avenuemontaigne.ng')
+
+				->send(new ReservationReceipt($user_reservation, $this->settings));
+		} catch (\Throwable $th) {
+			//dd($th->getMessage());
+			\Log::error("Mail error: " . $th->getMessage());
+			// optionally: continue or throw if mail failure should abort transaction
+		}
+
+
+
+		//DB::commit();
+		return redirect()->to('/admin/reservations?coming_from=checkin');
+		//} catch (\Throwable $th) {
+		//DB::rollBack();
+		dd($th->getMessage());
+
+		\Log::error("Reservation error: " . $th->getMessage());
+		\Log::error("Reservation payload: " . $request->all());
+
+		return redirect()->back()->withErrors(['error' => 'Reservation failed. Apartment not available for those dates.']);
+		//}
+	}
+
 
 
 	public function resendLink(Request $request)
@@ -289,7 +324,7 @@ class ReservationsController extends Controller
 
 		$user_reservation = UserReservation::find($id);
 
-		if ($request->add_update) { 
+		if ($request->add_update) {
 			$checkout = Carbon::createFromDate($request->checkout);
 			$user_reservation = UserReservation::find($id);
 			$stay = Reservation::where('user_reservation_id', $user_reservation->id)->first();

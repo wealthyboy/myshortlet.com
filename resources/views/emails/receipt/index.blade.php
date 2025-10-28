@@ -406,7 +406,6 @@
                                                       <td class="RegularTextTD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #000;font-family: sans-serif;font-size: 13px;font-weight: lighter;text-align: left;line-height: 23px;">Dear {{ $user_reservation->guest_user->fullname() }},<br>Thank you for choosing Avenue montaigne for your stay. We are pleased to inform you that your reservation request is CONFIRMED and your reservation details are as follows.
                                                          <br />
                                                          <b>Note: You’re required to present a valid ID upon arrival to check-in. You can also self check-in by clicking the link below to upload your ID
-
                                                             <br />
                                                             <a style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em" class="" href="https://avenuemontaigne.ng/check-in?id={{$user_reservation->id}}">Click here to Check-in</a>
                                                          </b>
@@ -626,7 +625,7 @@
 
                                                    <tr>
                                                       <td class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="padding: 4px;color: #ffffff;font-family: sans-serif;font-size: 15px;text-align: left;line-height: 27px;font-weight: bold;"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>Reservation Details
-</td>
+                                                      </td>
                                                    </tr>
 
                                                 </table>
@@ -677,7 +676,6 @@
                                                                            <tr>
                                                                               <td align="right" class="container-image">
                                                                                  <img class="p-img" src="{{ optional($reservation->apartment)->image_g }}" width="100%" height="auto" alt="locl" style="width: 100%; max-width: 150px; display: block; border: 0px;">
-
                                                                               </td>
                                                                            </tr>
                                                                         </tbody>
@@ -697,7 +695,7 @@
                                                                                           </td>
                                                                                        </tr>
                                                                                        <tr>
-                                                                                          <td height="9"></td>
+                                                                                          <td height="3"></td>
                                                                                        </tr>
                                                                                        <tr>
                                                                                           <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
@@ -705,7 +703,7 @@
                                                                                           </td>
                                                                                        </tr>
                                                                                        <tr>
-                                                                                          <td height="9"></td>
+                                                                                          <td height="3"></td>
                                                                                        </tr>
 
                                                                                        <tr>
@@ -714,7 +712,16 @@
                                                                                           </td>
                                                                                        </tr>
                                                                                        <tr>
-                                                                                          <td height="9"></td>
+                                                                                          <td height="3"></td>
+                                                                                       </tr>
+
+                                                                                       <tr>
+                                                                                          <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
+                                                                                             <b>Length of stay</b>: {{ $user_reservation->length_of_stay }}
+                                                                                          </td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                          <td height="3"></td>
                                                                                        </tr>
 
 
@@ -724,9 +731,9 @@
                                                                                           </td>
                                                                                        </tr>
                                                                                        <tr>
-                                                                                          <td height="9"></td>
+                                                                                          <td height="3"></td>
                                                                                        </tr>
-                                                                                     
+
                                                                                     </tbody>
                                                                                  </table>
                                                                               </td>
@@ -772,7 +779,7 @@
                            <td align="left">
                               <table cellspacing="0" cellpadding="0" border="0" align="center">
                                  <tr>
-                                    <th rowspan="4" class="stack4" data-bgcolor="CalculationsBGColor" data-border-bottom-color="borderColor" style="margin: 0px; padding: 0px; vertical-align: top; border-bottom: 1px solid rgb(200, 198, 198);" width="349" height="100" bgcolor="#ffffff">
+                                    <th rowspan="5" class="stack4" data-bgcolor="CalculationsBGColor" data-border-bottom-color="borderColor" style="margin: 0px; padding: 0px; vertical-align: top; border-bottom: 1px solid rgb(200, 198, 198);" width="349" height="100" bgcolor="#ffffff">
                                        <table class="table60034" width="349" cellspacing="0" cellpadding="0" border="0" align="center">
 
                                           <tr>
@@ -825,9 +832,9 @@
                                           <tr>
                                              <td class="wz2" width="30"><br></td>
                                              <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>
-                                             {{ $user_reservation->payment_type === 'checkin' ?  'Discount' : 'Coupon' }} 
-                                          
-                                          </td>
+                                                {{ $user_reservation->payment_type === 'checkin' ?  'Discount' : 'Coupon' }}
+
+                                             </td>
                                              <td class="wz2" width="30"><br></td>
                                           </tr>
                                           <tr>
@@ -842,11 +849,11 @@
                                           </tr>
                                           <tr>
                                              <td class="wz2" width="30"><br></td>
-                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a> 
+                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>
                                                 @if ( $user_reservation->payment_type === 'checkin' )
-                                                   {{ $user_reservation->discount ?  $user_reservation->discount : "" }} 
+                                                {{ $user_reservation->discount ?  $user_reservation->discount : "" }}
                                                 @else
-                                                  {{ $user_reservation->coupon ?  $user_reservation->coupon.'  -%'.$user_reservation->voucher()->amount . 'off'  : '---' }} 
+                                                {{ $user_reservation->coupon ?  $user_reservation->coupon.'  -%'.$user_reservation->voucher()->amount . 'off'  : '---' }}
                                                 @endif
                                              </td>
                                              <td class="wz2" width="30"><br></td>
@@ -857,6 +864,54 @@
                                        </table>
                                     </th>
                                  </tr>
+
+
+
+
+
+
+                                 <tr>
+                                    <th class="stack3" data-bgcolor="CalculationsBGColor" data-border-bottom-color="borderColor" data-border-left-color="borderColor" style="border-left: 1px solid rgb(200, 198, 198); margin: 0px; padding: 0px; vertical-align: top; border-bottom: 1px solid rgb(200, 198, 198);" width="139" valign="top" bgcolor="#ffffff">
+                                       <table class="table60033" width="139" cellspacing="0" cellpadding="0" border="0" align="center">
+                                          <tr>
+                                             <td class="wz2" height="10" width="30"></td>
+                                          </tr>
+                                          <tr>
+                                             <td class="wz2" width="30"><br></td>
+                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>
+                                                Caution Fee
+
+                                             </td>
+                                             <td class="wz2" width="30"><br></td>
+                                          </tr>
+                                          <tr>
+                                             <td class="wz2" height="10" width="30"></td>
+                                          </tr>
+                                       </table>
+                                    </th>
+                                    <th class="stack3" data-bgcolor="CalculationsBGColor" data-border-bottom-color="borderColor" data-border-left-color="borderColor" style="border-left: 1px solid rgb(200, 198, 198); margin: 0px; padding: 0px; vertical-align: top; border-bottom: 1px solid rgb(200, 198, 198);" width="139" valign="top" bgcolor="#ffffff">
+                                       <table class="table60033" width="139" cellspacing="0" cellpadding="0" border="0" align="center">
+                                          <tr>
+                                             <td class="wz2" height="10" width="30"></td>
+                                          </tr>
+                                          <tr>
+                                             <td class="wz2" width="30"><br></td>
+                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>
+                                                {{ $user_reservation->caution_fee }}
+
+                                             </td>
+                                             <td class="wz2" width="30"><br></td>
+                                          </tr>
+                                          <tr>
+                                             <td class="wz2" height="10" width="30"></td>
+                                          </tr>
+                                       </table>
+                                    </th>
+                                 </tr>
+
+
+
+
 
 
                                  <tr>
@@ -917,7 +972,6 @@
                                     <td class="catd" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="FooterCaptionLink" data-color="FooterCaptionTXT" style="color: rgb(12, 13, 13); font-family: sans-serif; font-size: 13px; text-align: center; font-weight: bold; line-height: 190%;">
                                        <a href="https://avenuemontaigne.ng/pages/cancellation-policy" target="_blank" style="text-decoration: none;color: #67bffd;font-weight: bold;" data-color="FooterCaptionLink">
                                           Click here read about our cancellation policy.
-
                                        </a>
                                        <br /> Thank you for using our service.
                                     </td>

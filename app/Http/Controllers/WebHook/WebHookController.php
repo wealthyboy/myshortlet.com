@@ -78,6 +78,8 @@ class WebHookController extends Controller
             $user_reservation->property_id = data_get($input, 'property_id');
             $user_reservation->coupon = data_get($input, 'coupon');
             $user_reservation->total = data_get($input, 'total');
+            $user_reservation->length_of_stay = data_get($input, 'length_of_stay');;
+
             $user_reservation->original_amount = data_get($input, 'original_amount');
             $user_reservation->coming_from = 'payment';
             $user_reservation->ip = $request->ip();

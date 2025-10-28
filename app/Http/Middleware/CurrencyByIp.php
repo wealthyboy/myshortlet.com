@@ -126,7 +126,6 @@ class CurrencyByIp
             } else {
 
 
-
                 try {
 
                     $country = Currency::where('country', $position->countryName)->first();
