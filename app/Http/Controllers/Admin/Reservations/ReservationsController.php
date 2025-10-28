@@ -199,6 +199,8 @@ class ReservationsController extends Controller
 
 		$rate = data_get($rate, 'rate', 1);
 
+		dd($rate);
+
 		$totalBeforeDiscount = data_get($input, 'currency') === '₦'
 			? $rate * $apartmentPrice
 			: $apartmentPrice;
