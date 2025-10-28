@@ -273,7 +273,6 @@ class ReservationsController extends Controller
 			\Mail::to($request->email)
 				->bcc('avenuemontaigneconcierge@gmail.com')
 				->bcc('info@avenuemontaigne.ng')
-
 				->send(new ReservationReceipt($user_reservation, $this->settings));
 		} catch (\Throwable $th) {
 			//dd($th->getMessage());
@@ -282,7 +281,6 @@ class ReservationsController extends Controller
 		}
 
 
-		dd($user_reservation);
 
 
 
