@@ -699,7 +699,7 @@
                                                                                        </tr>
                                                                                        <tr>
                                                                                           <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
-                                                                                             <b>Check-in</b> : {{ optional($reservation->checkin)->isoFormat('dddd, MMMM Do YYYY') }} - <b>Check-out</b>: {{ optional($reservation->checkout)->isoFormat('dddd, MMMM Do YYYY') }}
+                                                                                             <b>Check-in</b> : {{ optional($reservation->checkin)->isoFormat('dddd, MMMM Do YYYY') }}
                                                                                           </td>
                                                                                        </tr>
 
