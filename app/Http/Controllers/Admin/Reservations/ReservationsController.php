@@ -130,12 +130,11 @@ class ReservationsController extends Controller
 		return view('admin.reservations.create', compact('apartments'));
 	}
 
-
 	public function store(Request $request)
 	{
 		//try {
 		//DB::beginTransaction();
-
+		//dd($request->all());
 		$input = $request->all();
 		$property = Property::first();
 		$checkin = Carbon::parse($request->checkin);
@@ -184,14 +183,13 @@ class ReservationsController extends Controller
 		$rate = json_decode(session('rate'), true); // use true to get an associative array
 
 		$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
-		$discountValue = (float) $request->input('discount_value', 0);
 		$caution_fee =  $request->input('caution_fee', 0); // Defaults to 0 if not provided
 		$apartmentPrice = $apartment->price;
 		$totalAmount =  $apartmentPrice * $date_diff;
-		$discountType  = $request->input('discount_type', 'percent'); // default
+		$discountType  = $request->input('discount_type', ''); // default
 
 		// Discount handling
-		$discountValue = (float) $request->input('discount_value', 0);
+		$discountValue = (float) $request->input('discount', 0);
 		$discountType  = $request->input('discount_type', 'percent'); // default to percent
 
 		$apartmentPrice = $apartment->price;
@@ -279,7 +277,6 @@ class ReservationsController extends Controller
 			\Log::error("Mail error: " . $th->getMessage());
 			// optionally: continue or throw if mail failure should abort transaction
 		}
-
 
 
 

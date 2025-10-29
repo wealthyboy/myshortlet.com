@@ -686,7 +686,7 @@
                                                                         <tbody>
                                                                            <tr>
                                                                               <td align="left" class="pn" style="padding-left:10px;">
-                                                                                 <table width="260" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:260px;">
+                                                                                 <table width="260" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
                                                                                     <tbody>
 
                                                                                        <tr>
@@ -715,11 +715,9 @@
                                                                                        <tr>
                                                                                           <td height="3"></td>
                                                                                        </tr>
-
-
                                                                                        <tr>
                                                                                           <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
-                                                                                             {{ $user_reservation->currency ?? '₦' }}{{ number_format(($reservation->price * $reservation->rate), 2) }} per night
+                                                                                             <b>{{ $user_reservation->currency ?? '₦' }}{{ number_format(($reservation->price * $reservation->rate), 2) }} per night</b>
                                                                                           </td>
                                                                                        </tr>
                                                                                        <tr>
@@ -884,7 +882,7 @@
                                           <tr>
                                              <td class="wz2" width="30"><br></td>
                                              <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>
-                                                {{ $user_reservation->caution_fee }}
+                                                {{ $user_reservation->currency ?? '₦'}}{{ $user_reservation->caution_fee ? $user_reservation->caution_fee : '0.00' }}
 
                                              </td>
                                              <td class="wz2" width="30"><br></td>
