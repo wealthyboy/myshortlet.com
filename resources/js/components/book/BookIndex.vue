@@ -161,9 +161,7 @@
 
              <div class="primary-color p-3">
               
-              <div class="text-info bold-2">
-                A mandatory, refundable Caution Fee Deposit of  is collected upon check-in.</div> 
-            </div>
+             
             <p class="form-group mt-3">
               <button type="buttom" @click.prevent="makePayment()" data-total=""
                 class=" ml-1 btn btn-primary btn-round  btn-block  auth-form-button">
