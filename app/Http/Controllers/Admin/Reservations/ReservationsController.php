@@ -215,8 +215,8 @@ class ReservationsController extends Controller
 		$totalAfterDiscount = $totalBeforeDiscount - $discountAmount;
 
 		$cautionFee = data_get($input, 'currency') === '₦'
-			? $caution_fee
-			: $rate * $caution_fee;
+			? $rate * $caution_fee
+			: $caution_fee;
 
 
 		$user_reservation = new UserReservation;
