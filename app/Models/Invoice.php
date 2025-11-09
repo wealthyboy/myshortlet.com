@@ -37,4 +37,17 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoiceItem::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($invoice) {
+            if (empty($invoice->invoice_number)) {
+                $lastInvoice = static::orderBy('id', 'desc')->first();
+                $nextNumber = $lastInvoice ? ((int) filter_var($lastInvoice->invoice_number, FILTER_SANITIZE_NUMBER_INT)) + 1 : 1;
+                $invoice->invoice_number = 'INV-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+            }
+        });
+    }
 }
