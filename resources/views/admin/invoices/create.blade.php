@@ -42,10 +42,14 @@
 <body>
     <div class="container mt-4 mb-5">
         <div class="d-flex align-items-center mb-4">
-            <a href="https://avenuemontaigne.ng/admin/invoices" class="logo mr-3">
+            <a href="https://avenuemontaigne.ng/admin/invoices" class="logo mr-3 bg-dark">
                 <img src="https://drive.google.com/thumbnail?id=1eQ_hLe9Th_2Oew3Qoew_qQKhuGBpHGZm&sz=w2000" alt="Logo" />
             </a>
             <h4 class="m-0">Create Invoice</h4>
+
+
+            <small class="m-0"><a href="/admin/invoices">Back</a></small>
+
         </div>
 
         <form
