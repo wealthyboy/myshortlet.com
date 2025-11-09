@@ -223,7 +223,6 @@ Caution deposit will be refunded within 5 working days after checkout.
             <div class="text-right mt-4">
                 <button type="button" id="previewBtn" class="btn btn-info bg-dark">Preview</button>
                 <button type="button" class="btn btn-primary bg-dark" data-action="save">Save</button>
-                <button type="button" class="btn btn-success bg-dark" data-action="save_download">Save & Download</button>
                 <button type="button" class="btn btn-dark bg-dark" data-action="save_send">Save & Send</button>
             </div>
         </form>
