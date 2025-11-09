@@ -216,11 +216,7 @@
 
         <!-- TERMS -->
         <div class="terms">
-            Check-in time is 2pm
-            Check-out time is 12 noon
-            Apartment is non-smoking; smoking in the apartment will result in forfeiture of the caution fee.
-            Payment confirms reservation. 50% cancellation fee applies 48 hours after confirmation.
-            Caution deposit will be refunded within 5 working days after checkout.
+            {!! nl2br(e($invoice->description)) !!}
         </div>
 
     </div>
