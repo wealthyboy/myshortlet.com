@@ -48,7 +48,7 @@
             <h4 class="m-0">Create Invoice</h4>
 
 
-            <small class="m-0"><a href="/admin/invoices">Back</a></small>
+            <small class="m-0 ml-4"><a href="/admin/invoices">Back</a></small>
 
         </div>
 

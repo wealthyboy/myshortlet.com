@@ -21,7 +21,6 @@ class CreateInvoiceItemsTable extends Migration
             $table->string('name')->nullable;;
             $table->integer('quantity')->default(1);
             $table->integer('apartment_id')->default(1);
-
             $table->decimal('unit_price', 15, 2)->default(0);
             $table->decimal('total', 15, 2)->default(0);
             $table->timestamps();
