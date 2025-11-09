@@ -16,9 +16,7 @@
         <a style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em" class="" href="https://avenuemontaigne.ng/check-in?id={{$user_reservation->id}}">Click here to Check-in</a>
     </b>
 
-    <ul>
-        <li><strong>Total:</strong> {{ $invoice->currency }}{{ number_format($invoice->total, 2) }}</li>
-    </ul>
+
 
     <p>If you have any questions, feel free to reach out to <a href="mailto:info@avenuemontaigne.ng">info@avenuemontaigne.ng</a>.</p>
 
