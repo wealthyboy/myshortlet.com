@@ -14,7 +14,7 @@ class AlterInvoiceInvoice extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->string('invoice')->nullable;;
+            //$table->string('invoice')->nullable;;
         });
     }
 
