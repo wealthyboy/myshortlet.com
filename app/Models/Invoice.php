@@ -30,7 +30,8 @@ class Invoice extends Model
         'full_name',
         'description',
         'sent',
-        'resent'
+        'resent',
+        'payment_info'
     ];
 
     public function invoice_items()
