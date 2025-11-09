@@ -300,9 +300,9 @@ class InvoicesController extends Controller
         foreach ($request->selected as $selectedId) {
             $invoice = Invoice::find($selectedId);
 
-            //if ($invoice && empty($invoice->sent)) { // delete only unsent invoices
-            $invoice->delete();
-            //}
+            if ($invoice && empty($invoice->sent)) { // delete only unsent invoices
+                $invoice->delete();
+            }
         }
 
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
