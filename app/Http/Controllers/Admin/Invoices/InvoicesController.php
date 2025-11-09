@@ -199,14 +199,17 @@ class InvoicesController extends Controller
             // Create each invoice item
             foreach ($validated['items'] as $item) {
 
+                $startDate = Carbon::createFromDate($item['checkin']);
+                $endDate = Carbon::createFromDate($item['checkout']);
+
                 $invoice->invoice_items()->create([
                     'name' => $item['name'],
                     'quantity' => $item['qty'],
                     'price' => $item['price'],
                     'apartment_id' => $item['apartment_id'],
                     'total' => $item['total'],
-                    'checkin' => $item['checkin'] ?? null,
-                    'checkout' => $item['checkout'] ?? null,
+                    'checkin' =>  $startDate,
+                    'checkout' => $endDate,
                 ]);
             }
 
