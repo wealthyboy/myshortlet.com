@@ -126,7 +126,7 @@ class InvoicesController extends Controller
         $user_reservation = new UserReservation();
         $user_reservation->user_id = 1;
         $user_reservation->guest_user_id = $guest->id;
-        $user_reservation->invoice = $invoice->invoice;
+        $user_reservation->invoice = $invoice->invoice_number;
         $user_reservation->payment_type = 'checkin';
         $user_reservation->property_id = $property->id;
         $user_reservation->currency = $invoice->currency;
@@ -176,8 +176,6 @@ class InvoicesController extends Controller
         $nextNumber = $latest ? $latest->id + 1 : 1;
         $invoiceNumber = "INV-" . date('Y') . "-" . rand(10000, time());
         //dd($validated);
-
-
 
         try {
             // Create the invoice record
