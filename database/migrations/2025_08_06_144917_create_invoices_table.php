@@ -15,6 +15,23 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('address')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
+            $table->string('invoice_number')->unique();
+            $table->date('invoice_date')->nullable();
+            $table->string('currency', 10)->nullable();
+            $table->decimal('subtotal', 15, 2)->default(0);
+            $table->decimal('discount', 15, 2)->default(0);
+            $table->decimal('caution_fee', 15, 2)->default(0);
+            $table->decimal('tax', 15, 2)->default(0);
+            $table->decimal('total', 15, 2)->default(0);
+            $table->boolean('sent')->default(false);
+            $table->boolean('resent')->default(false);
             $table->timestamps();
         });
     }

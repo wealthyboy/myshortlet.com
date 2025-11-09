@@ -36,7 +36,7 @@ class ReservationsController extends Controller
 	{
 
 		$this->middleware('admin');
-		$this->settings =  \DB::table('system_settings')->first();
+		$this->settings = \DB::table('system_settings')->first();
 	}
 
 	public function index(Request $request)
@@ -173,7 +173,6 @@ class ReservationsController extends Controller
 		if ($request->user_reservation_id) {
 			$user_reservation = UserReservation::find($request->user_reservation_id);
 			ProcessGuestCheckin::dispatch($guest, $user_reservation->reservation, $apartment)->delay(now()->addSeconds(5));
-
 			DB::commit();
 			return response()->json(null, 200);
 		}
@@ -183,10 +182,10 @@ class ReservationsController extends Controller
 		$rate = json_decode(session('rate'), true); // use true to get an associative array
 
 		$discountPercentage = (float) $request->input('discount_percentage', 0); // Defaults to 0 if not provided
-		$caution_fee =  $request->input('caution_fee', 0); // Defaults to 0 if not provided
+		$caution_fee = $request->input('caution_fee', 0); // Defaults to 0 if not provided
 		$apartmentPrice = $apartment->price;
-		$totalAmount =  $apartmentPrice * $date_diff;
-		$discountType  = $request->input('discount_type', ''); // default
+		$totalAmount = $apartmentPrice * $date_diff;
+		$discountType = $request->input('discount_type', ''); // default
 
 		// Discount handling
 		$discountValue = (float) $request->input('discount', 0);
@@ -194,7 +193,6 @@ class ReservationsController extends Controller
 
 		$apartmentPrice = $apartment->price;
 		$totalAmount = $apartmentPrice * $date_diff;
-
 		$rate = data_get($rate, 'rate', 1);
 
 
@@ -211,11 +209,8 @@ class ReservationsController extends Controller
 		}
 
 		$discountAmount = min($discountAmount, $totalBeforeDiscount);
-
 		$totalAfterDiscount = $totalBeforeDiscount - $discountAmount;
-
 		$cautionFee = $caution_fee;
-
 
 		$user_reservation = new UserReservation;
 		$user_reservation->user_id = optional($request->user())->id;
@@ -235,12 +230,9 @@ class ReservationsController extends Controller
 		$user_reservation->ip = $request->ip();
 		$user_reservation->save();
 
-
-
 		$user_reservation->discount = $discountType === 'fixed'
 			? data_get($input, 'currency') . number_format($discountValue, 2)
 			: $discountValue . '%';
-
 
 		$reservation = new Reservation;
 		$reservation->quantity = 1;

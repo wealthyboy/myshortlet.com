@@ -21,6 +21,9 @@
         <a href="/admin/visits" class="px-4 py-2 border">Reservations</a>
     </h6>
     <h6>
+        <a href="/admin/invoices" class="px-4 py-2 border">Invoice</a>
+    </h6>
+    <h6>
         <a href="/admin/reservations?coming_from=payment" class="px-4 py-2 border">Visits</a>
     </h6>
     <h6>

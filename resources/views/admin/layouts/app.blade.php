@@ -205,6 +205,12 @@
                                         <span class="sidebar-normal"> Check-in </span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('admin.invoices.index') }}">
+                                        <span class="sidebar-mini"> I </span>
+                                        <span class="sidebar-normal"> Invoice </span>
+                                    </a>
+                                </li>
 
                                 <li>
                                     <a href="{{ route('admin.abandoned_carts.index', ['coming_from' => 'abandoned_carts']) }}">

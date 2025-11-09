@@ -23,9 +23,17 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('visits', 'Admin\Visits\VisitsController', ['names' => 'admin.visits']);
     Route::resource('abandoned-carts', 'Admin\AbandonedCarts\AbandonedCartsController', ['names' => 'admin.abandoned_carts']);
 
-
-
     Route::resource('check-in', 'Admin\Reservations\ReservationsController', ['names' => 'admin.check-in']);
+    Route::get('invoices/preview', 'Admin\Invoices\InvoicesController@preview')->name('admin.invoices.preview');
+
+    Route::resource('invoices', 'Admin\Invoices\InvoicesController', ['names' => 'admin.invoices']);
+    Route::post('/apartments/check-availability', 'Admin\Invoices\InvoicesController@checkAvailability')
+        ->name('admin.apartments.checkAvailability');
+    Route::get('invoices/{id}/download', 'Admin\Invoices\InvoicesController@download')->name('admin.nvoices.download');
+    Route::get('invoices/{id}/send', 'Admin\Invoices\InvoicesController@dsend')->name('admin.invoices.send');
+    Route::get('/invoices/{id}/download', 'Admin\Invoices\InvoicesController@download');
+    Route::get('/invoices/{id}/send-receipt', 'Admin\Invoices\InvoicesController@sendReceipt');
+    Route::get('/invoices/{id}/resend', 'Admin\Invoices\InvoicesController@resend');
 
 
     Route::resource('agents', 'Admin\Agents\AgentsController', ['names' => 'admin.agents']);
@@ -56,8 +64,6 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('galleries', 'Admin\Gallery\GalleryController', ['names' => 'admin.galleries']);
     Route::get('block', 'Admin\Block\BlockApartmentsController@block');
     Route::resource('blocks', 'Admin\Block\BlockApartmentsController', ['names' => 'admin.blocks']);
-
-
 
     Route::resource('attributes', 'Admin\Attributes\AttributesController', ['names' => 'attributes']);
     Route::resource('rates', 'Admin\CurrencyRates\CurrencyRatesController', ['name' => 'rates']);
