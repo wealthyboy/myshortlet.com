@@ -316,9 +316,8 @@ Caution deposit will be refunded within 5 working days after checkout.
                     },
                     success: function(response) {
                         if (!response.available) {
-                            const warning = $('<small class="text-red-500 availability-warning block mt-1">⚠️ ' + response.message + '</small>');
-                            row.find('.checkout').after(warning);
-                            row.find('.qty, .price, .item-total').val('');
+                            const warning = $('');
+                            alert("Apartment is not available for that date.")
                         }
                     },
                     error: function(xhr) {
