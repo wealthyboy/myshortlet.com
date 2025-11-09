@@ -14,7 +14,7 @@ class AlterInvoiceItemstableAddApartmentId extends Migration
     public function up()
     {
         Schema::table('invoice_items', function (Blueprint $table) {
-            $table->integer('apartment_id')->nullable();
+            //$table->integer('apartment_id')->nullable();
         });
     }
 
