@@ -280,4 +280,34 @@ class InvoicesController extends Controller
         $data = $request->all();
         return view('admin.invoices.preview', compact('data'));
     }
+
+    public function destroy(Request $request, $id)
+    {
+        \App\Models\User::canTakeAction(5);
+        $rules = array(
+            '_token' => 'required'
+        );
+        $validator = \Validator::make($request->all(), $rules);
+        if (empty($request->selected)) {
+            $validator->getMessageBag()->add('Selected', 'Nothing to Delete');
+            return \Redirect::back()->withErrors($validator)->withInput();
+        }
+        $count = count($request->selected);
+        // (new Activity)->Log("Deleted  {$count} Products");
+        \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+
+        foreach ($request->selected as $selectedId) {
+            $invoice = Invoice::find($selectedId);
+
+            if ($invoice && empty($invoice->sent)) { // delete only unsent invoices
+                $invoice->delete();
+            }
+        }
+
+        \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+
+        return redirect()->back();
+    }
 }

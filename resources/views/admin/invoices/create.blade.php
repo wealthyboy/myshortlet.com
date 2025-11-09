@@ -234,6 +234,24 @@ Caution deposit will be refunded within 5 working days after checkout.
             const exchangeRate = 1470; // 1 USD = ₦1470
             let index = 1;
 
+            // 🌀 Loader HTML
+            const loader = `
+      <div id="pageLoader" style="
+          display:none;
+          position:fixed;
+          inset:0;
+          background:rgba(0,0,0,0.5);
+          z-index:9999;
+          color:white;
+          font-size:1.5rem;
+          text-align:center;
+          padding-top:20%;
+      ">
+        <div class="spinner-border text-light" style="width:3rem;height:3rem;" role="status"></div>
+        <div class="mt-3">Processing... please wait</div>
+      </div>`;
+            $('body').append(loader);
+
             // Add new item row
             $('#addItem').on('click', function() {
                 const newRow = $('#invoiceItems .invoice-item-row:first').clone();
@@ -262,11 +280,10 @@ Caution deposit will be refunded within 5 working days after checkout.
                 updateRow($(this).closest('.invoice-item-row'));
             });
 
-            // 🧮 Currency switch — recalculate all instantly
+            // Currency switch
             $('#currency').on('change', function() {
-                const newCurrency = $(this).val();
                 $('.invoice-item-row').each(function() {
-                    updateRow($(this)); // recalculates each item
+                    updateRow($(this));
                 });
                 calculateTotals();
             });
@@ -282,7 +299,6 @@ Caution deposit will be refunded within 5 working days after checkout.
 
                 const checkinVal = row.find('.checkin').val();
                 const checkoutVal = row.find('.checkout').val();
-
                 row.find('.date-warning').remove();
 
                 if (!checkinVal || !checkoutVal) {
@@ -298,7 +314,7 @@ Caution deposit will be refunded within 5 working days after checkout.
                 if (checkout <= checkin) {
                     row.find('.qty, .price, .item-total').val('');
                     row.find('.item-name').val('');
-                    const warning = $('<small class="text-red-500 date-warning block mt-1">⚠️ Check-out date must be greater than check-in date.</small>');
+                    const warning = $('<small class="text-danger date-warning d-block mt-1">⚠️ Check-out must be after check-in</small>');
                     row.find('.checkout').after(warning);
                     calculateTotals();
                     return;
@@ -316,13 +332,8 @@ Caution deposit will be refunded within 5 working days after checkout.
                     },
                     success: function(response) {
                         if (!response.available) {
-                            const warning = $('');
-                            row.find('.checkout').after('').after(warning);
-                            //row.find('.qty, .price, .item-total').val('');
+                            alert("⚠️ This apartment is not available for the selected dates.");
                         }
-                    },
-                    error: function(xhr) {
-                        console.error('Error checking availability:', xhr.responseText);
                     }
                 });
 
@@ -338,7 +349,7 @@ Caution deposit will be refunded within 5 working days after checkout.
                 calculateTotals();
             }
 
-            // 🧾 Totals calculation
+            // Totals
             function calculateTotals() {
                 const currency = $('#currency').val() || '';
                 let subTotal = 0;
@@ -358,47 +369,39 @@ Caution deposit will be refunded within 5 working days after checkout.
                 $('#subTotal').val(currency + subTotal.toFixed(2));
                 $('#grandTotal').val(currency + grandTotal.toFixed(2));
 
-                // Hidden fields for backend numeric values
-                if (!$('#subTotalNumeric').length) {
-                    $('<input>').attr({
-                        type: 'hidden',
-                        id: 'subTotalNumeric',
-                        name: 'sub_total'
-                    }).appendTo('#invoiceForm');
-                }
-                if (!$('#grandTotalNumeric').length) {
-                    $('<input>').attr({
-                        type: 'hidden',
-                        id: 'grandTotalNumeric',
-                        name: 'total'
-                    }).appendTo('#invoiceForm');
-                }
-
                 $('#subTotalNumeric').val(subTotal.toFixed(2));
                 $('#grandTotalNumeric').val(grandTotal.toFixed(2));
             }
 
-            // Preview invoice
+            // Preview
             $('#previewBtn').on('click', function() {
+                const confirmPreview = confirm("✅ Please confirm all details are correct before previewing.");
+                if (!confirmPreview) return;
+
                 const formData = $('#invoiceForm').serialize();
                 const previewUrl = `/admin/invoices/preview?${formData}`;
                 window.open(previewUrl, '_blank');
             });
 
-
+            // Recalculate on change
             $('#discount, #discountType, #cautionFee').on('input change', function() {
                 calculateTotals();
             });
 
-            // Save buttons (draft/final)
+            // Save buttons — confirm + loader
             $('[data-action]').on('click', function() {
                 const action = $(this).data('action');
+                const confirmed = confirm("⚠️ Please review all invoice details before proceeding. Continue?");
+                if (!confirmed) return;
+
+                $('#pageLoader').fadeIn(200);
                 $('<input>').attr({
                     type: 'hidden',
                     name: 'action',
                     value: action
                 }).appendTo('#invoiceForm');
-                $('#invoiceForm').submit();
+
+                setTimeout(() => $('#invoiceForm').submit(), 400); // short delay to show loader
             });
         });
     </script>
