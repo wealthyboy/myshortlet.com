@@ -140,8 +140,13 @@ class InvoicesController extends Controller
         $user_reservation->ip = $request->ip();
         $user_reservation->save();
 
+
+
         // Create Reservation records for each invoice item
         foreach ($invoice->invoice_items as $item) {
+
+            $startDate = Carbon::createFromDate($invoice->checkin);
+            $endDate = Carbon::createFromDate($invoice->checkout);
             $apartment = Apartment::find($item->apartment_id);
             $reservation = new Reservation();
             $reservation->quantity = $item->quantity;
@@ -149,8 +154,8 @@ class InvoicesController extends Controller
             $reservation->price = $item->price;
             $reservation->user_reservation_id = $user_reservation->id;
             $reservation->property_id = $property->id;
-            $reservation->checkin = $invoice->checkin;
-            $reservation->checkout =  $invoice->checkout;
+            $reservation->checkin = $startDate;
+            $reservation->checkout = $endDate;
             $reservation->rate = 1;
             $reservation->save();
         }
@@ -208,8 +213,8 @@ class InvoicesController extends Controller
                     'price' => $item['price'],
                     'apartment_id' => $item['apartment_id'],
                     'total' => $item['total'],
-                    'checkin' =>  $startDate,
-                    'checkout' => $endDate,
+                    'checkin' =>  $item['checkin'] ?? null,
+                    'checkout' => $item['checkout'] ?? null,
                 ]);
             }
 
