@@ -13,6 +13,24 @@ class UserReservation extends Model
     protected $dates = ['checkin', 'checkout'];
 
 
+    protected $fillable = [
+        'invoice_id',
+        'user_id',
+        'invoice',
+        'payment_type',
+        'property_id',
+        'currency',
+        'checked',
+        'original_amount',
+        'coupon',
+        'coming_from',
+        'length_of_stay',
+        'total',
+        'caution_fee',
+        'ip',
+    ];
+
+
 
 
     public function registered_user()

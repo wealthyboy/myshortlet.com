@@ -17,7 +17,17 @@ class Reservation extends Model
 
     ];
 
-     protected $appends = [
+    protected $fillable = [
+        'user_reservation_id',
+        'apartment_id',
+        'quantity',
+        'price',
+        'property_id',
+        'checkin',
+        'checkout'
+    ];
+
+    protected $appends = [
         'checkin_date',
         'checkout_date'
     ];
@@ -28,7 +38,7 @@ class Reservation extends Model
         return $this->belongsTo(UserReservation::class);
     }
 
-    
+
 
     public function apartment()
     {
@@ -52,11 +62,13 @@ class Reservation extends Model
     }
 
 
-    public function getCheckinDateAttribute() {
+    public function getCheckinDateAttribute()
+    {
         return optional($this->checkin)->isoFormat('dddd, MMMM Do YYYY');
     }
 
-    public function getCheckoutDateAttribute() {
+    public function getCheckoutDateAttribute()
+    {
         return optional($this->checkout)->isoFormat('dddd, MMMM Do YYYY');
     }
 }

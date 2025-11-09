@@ -9,7 +9,16 @@ class GuestUser extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id'];
+    protected $fillable = [
+        'id',
+        'invoice_id',
+        'name',
+        'last_name',
+        'phone_number',
+        'image'
+    ];
+
+
 
 
     public function fullname()

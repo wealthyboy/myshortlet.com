@@ -99,72 +99,69 @@ class InvoicesController extends Controller
     public function sendReceipt(Request $request)
     {
         $invoice = Invoice::with('invoice_items')->findOrFail($request->id);
-
         $property = Property::first();
 
+        // ✅ Guest user linked to this invoice
+        $guest = GuestUser::firstOrCreate(
+            [
+                'invoice_id' => $invoice->id,
+            ],
+            [
+                'name' => $invoice->full_name,
+                'last_name' => $invoice->full_name,
+                'phone_number' => $invoice->phone ?? '',
+                'image' => '',
+            ]
+        );
 
-        if ($invoice->sent) {
-        }
+        // ✅ UserReservation (unique by invoice_id + guest_user_id)
+        $user_reservation = UserReservation::firstOrCreate(
+            [
+                'invoice_id' => $invoice->id,
+                'guest_user_id' => $guest->id,
+            ],
+            [
+                'user_id' => 1,
+                'invoice' => $invoice->invoice_number,
+                'payment_type' => 'checkin',
+                'property_id' => $property->id,
+                'currency' => $invoice->currency,
+                'checked' => true,
+                'original_amount' => $invoice->invoice_items->sum('price'),
+                'coupon' => $invoice->discount ?? 0,
+                'coming_from' => 'checkin',
+                'length_of_stay' => 1,
+                'total' => $invoice->total,
+                'caution_fee' => $invoice->caution_fee ?? 0,
+                'ip' => $request->ip(),
+            ]
+        );
 
-
-        // Create Guest User from invoice
-        $guest = new GuestUser();
-        $guest->name = $invoice->full_name;
-        $guest->last_name = $invoice->full_name;
-        $guest->email = $invoice->email;
-        $guest->phone_number = $invoice->phone ?? '';
-        $guest->image = '';
-        $guest->save();
-
-        // Calculate totals
-        $totalBeforeDiscount = $invoice->invoice_items->sum('price');
-        $discountValue = $invoice->discount ?? 0;
-        $discountType = $invoice->discount_type ?? 'fixed';
-        $cautionFee = $invoice->caution_fee ?? 0;
-
-        // Create UserReservation
-        $user_reservation = new UserReservation();
-        $user_reservation->user_id = 1;
-        $user_reservation->guest_user_id = $guest->id;
-        $user_reservation->invoice = $invoice->invoice_number;
-        $user_reservation->payment_type = 'checkin';
-        $user_reservation->property_id = $property->id;
-        $user_reservation->currency = $invoice->currency;
-        $user_reservation->checked = true;
-        $user_reservation->original_amount = $totalBeforeDiscount;
-        $user_reservation->coupon = $invoice->discount;
-        $user_reservation->coming_from = "checkin";
-        $user_reservation->length_of_stay = 1;
-        $user_reservation->total = $invoice->total;
-        $user_reservation->caution_fee = $cautionFee;
-        $user_reservation->ip = $request->ip();
-        $user_reservation->save();
-
-
-
-        // Create Reservation records for each invoice item
+        // ✅ Reservation items (firstOrCreate to prevent duplicates)
         foreach ($invoice->invoice_items as $item) {
-
-            $startDate = Carbon::createFromDate($invoice->checkin);
-            $endDate = Carbon::createFromDate($invoice->checkout);
-            $apartment = Apartment::find($item->apartment_id);
-            $reservation = new Reservation();
-            $reservation->quantity = $item->quantity;
-            $reservation->apartment_id = $item->apartment_id;
-            $reservation->price = $item->price;
-            $reservation->user_reservation_id = $user_reservation->id;
-            $reservation->property_id = $property->id;
-            $reservation->checkin = $startDate;
-            $reservation->checkout = $endDate;
-            $reservation->rate = 1;
-            $reservation->save();
+            Reservation::firstOrCreate(
+                [
+                    'user_reservation_id' => $user_reservation->id,
+                    'apartment_id' => $item->apartment_id,
+                    'checkin' => Carbon::parse($item['checkin']),
+                    'checkout' => Carbon::parse($item['checkout']),
+                ],
+                [
+                    'quantity' => $item->quantity,
+                    'price' => $item->price,
+                    'property_id' => $property->id,
+                    'rate' => 1,
+                ]
+            );
         }
 
+        // ✅ Dispatch email job (can safely resend anytime)
         dispatch(new SendInvoiceReceiptJob($invoice, $user_reservation));
 
+        // ✅ Mark invoice as sent
         $invoice->update(['sent' => true]);
 
-        return back()->with('success', 'Receipt sent and reservation created successfully!');
+        return back()->with('success', 'Receipt sent successfully! You can resend anytime.');
     }
 
 
@@ -204,8 +201,8 @@ class InvoicesController extends Controller
             // Create each invoice item
             foreach ($validated['items'] as $item) {
 
-                $startDate = Carbon::createFromDate($item['checkin']);
-                $endDate = Carbon::createFromDate($item['checkout']);
+                $startDate = Carbon::parse($item['checkin']);
+                $endDate = Carbon::parse($item['checkout']);
 
                 $invoice->invoice_items()->create([
                     'name' => $item['name'],

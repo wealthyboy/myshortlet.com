@@ -17,6 +17,7 @@ class InvoiceItem extends Model
         'total',
         'checkin',
         'checkout',
+        'apartment_id'
     ];
 
     public function invoice()
