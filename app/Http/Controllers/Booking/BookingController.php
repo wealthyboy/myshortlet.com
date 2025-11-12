@@ -34,7 +34,7 @@ class BookingController extends Controller
 	 */
 	public function book(Request $request, Property $property)
 	{
-        
+
 
 		if (!$request->check_in_checkout) {
 			return back();
@@ -62,9 +62,15 @@ class BookingController extends Controller
 		$days = $booking->checkin->diffInDays($booking->checkout);
 
 		$peak_period = PeakPeriod::first();
-		$daysInPeakPeriod = $peak_period->calculateDaysWithinPeak($booking->checkin, $booking->checkout);
+		$daysInPeakPeriod = 	$days;
+
 		$daysNotInPeakPeriod = $peak_period->calculateDaysOutsidePeak($booking->checkin, $booking->checkout);
-		$daysNotInPeakPeriod = $daysNotInPeakPeriod < 0 ? 0 : $daysNotInPeakPeriod;
+
+		$daysNotInPeakPeriod = $daysNotInPeakPeriod <= 0 ? 0 : $daysNotInPeakPeriod;
+		$daysInPeakPeriod =  $days - $daysNotInPeakPeriod;
+
+
+
 		$apt = Apartment::find($request->apartment_id);
 		$peak_period_price = $apt->converted_peak_price > 0 ? $apt->converted_peak_price : $peak_period->increasePriceByPercentage($apt->converted_price);
 		$isPeakPeriodPresent = $daysInPeakPeriod > 0 ? true : false;
@@ -79,8 +85,8 @@ class BookingController extends Controller
 		$property->load('free_services', 'facilities', 'extra_services');
 		$total = BookingDetail::sum_items_in_cart($property->id);
 		$total = $daysInPeakPeriodTotal + $daysNotInPeakPeriodTotal;
-		$from = $booking->checkin->format('l') . ' ' .$booking->checkin->format('d') . ' ' . $booking->checkin->format('F') . ' ' . $booking->checkin->isoFormat('Y');
-		$to = $booking->checkout->format('l') . ' ' .$booking->checkout->format('d') . ' ' . $booking->checkout->format('F') . ' ' . $booking->checkout->isoFormat('Y');
+		$from = $booking->checkin->format('l') . ' ' . $booking->checkin->format('d') . ' ' . $booking->checkin->format('F') . ' ' . $booking->checkin->isoFormat('Y');
+		$to = $booking->checkout->format('l') . ' ' . $booking->checkout->format('d') . ' ' . $booking->checkout->format('F') . ' ' . $booking->checkout->isoFormat('Y');
 		$booking_details = [
 			'peak_period' => PeakPeriod::first(),
 			'is_peak_period_present' => $daysInPeakPeriod > 0 ? true : false,
@@ -254,7 +260,7 @@ class BookingController extends Controller
 		}
 
 
-		if ( $coupon->limits && $request->limit > $coupon->limits) {
+		if ($coupon->limits && $request->limit > $coupon->limits) {
 			$error['error'] = 'Coupon can only be used for  ' . $coupon->limits . ' night(s)';
 			return response()->json($error, 422);
 		}
