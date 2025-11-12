@@ -646,7 +646,6 @@ export default {
         from: context.booking_details.from,
         to: context.booking_details.to,
         property_id: context.property.id,    
-        length_of_stay: context.booking_details.nights[1],
         coupon: this.coupon_code,
         property_services: this.form.property_services,
         original_amount: context.bookingPropertyServicesTotal +
