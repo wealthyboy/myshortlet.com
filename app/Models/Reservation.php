@@ -24,7 +24,9 @@ class Reservation extends Model
         'price',
         'property_id',
         'checkin',
-        'checkout'
+        'checkout',
+        'rate',
+        'length_of_stay'
     ];
 
     protected $appends = [

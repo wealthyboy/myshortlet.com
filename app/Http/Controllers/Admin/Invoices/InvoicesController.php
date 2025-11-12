@@ -13,21 +13,32 @@ use App\Models\UserReservation;
 use App\Models\Reservation;
 use App\Models\GuestUser;
 use App\Models\Property;
+
 use App\Jobs\SendInvoiceReceiptJob;
+use App\Mail\ReservationReceipt;
+
 
 
 use Carbon\Carbon;
 
 
 use PDF;
+use App\Models\SystemSetting;
+
 
 class InvoicesController extends Controller
 {
+    public $settings;
+    public function __construct()
+    {
+
+        // $this->middleware('admin');
+        $this->settings = \DB::table('system_settings')->first();
+    }
+
     public function index(Request $request)
     {
         $query = Invoice::query();
-
-
 
         if ($request->filled('full_name')) {
             $query->where('full_name', 'like', '%' . $request->full_name . '%');
@@ -41,11 +52,31 @@ class InvoicesController extends Controller
         return view('admin.invoices.index', compact('invoices'));
     }
 
+
     public function create()
     {
         $apartments = \App\Models\Apartment::select('id', 'name', 'price')->get();
-        return view('admin.invoices.create', compact('apartments'));
+        $rate = json_decode(session('rate'), true);
+        $rate = data_get($rate, 'rate', 1);
+
+        // 🧭 Check for active PeakPeriod
+        $today = now();
+        $peak = \App\Models\PeakPeriod::first();
+
+        // If active, prepare data
+        $peakActive = false;
+        $peakDiscount = 0;
+        $peakDaysLimit = null;
+
+        if ($peak) {
+            $peakActive = true;
+            $peakDiscount = $peak->discount; // percentage
+            $peakDaysLimit = $peak->days_limit;
+        }
+
+        return view('admin.invoices.create', compact('apartments', 'rate', 'peak', 'peakActive', 'peakDiscount', 'peakDaysLimit'));
     }
+
 
 
     public function checkAvailability(Request $request)
@@ -91,6 +122,9 @@ class InvoicesController extends Controller
         $invoice = Invoice::findOrFail($id);
         // Generate or fetch existing PDF
         $invoice->load('invoice_items');
+        $invoice->discount = $invoice->discount_type === 'fixed'
+            ? '-' . $invoice->currency . number_format($invoice->discount)
+            : '-' . number_format($invoice->discount) . '%';
         $pdf = Pdf::loadView('admin.invoices.pdf', compact('invoice'));
 
         return $pdf->download('invoice-' . $invoice->id . '.pdf');
@@ -99,20 +133,36 @@ class InvoicesController extends Controller
     public function sendReceipt(Request $request)
     {
         $invoice = Invoice::with('invoice_items')->findOrFail($request->id);
+
         $property = Property::first();
 
-        // ✅ Guest user linked to this invoice
+        $fullName = trim($invoice->full_name);
+
+        // Split into parts by space
+        $nameParts = explode(' ', $fullName);
+
+        // First name = first part
+        $firstName = $nameParts[0] ?? '';
+
+        // Last name = everything after the first
+        $lastName = isset($nameParts[1])
+            ? implode(' ', array_slice($nameParts, 1))
+            : '';
+        $rate = json_decode(session('rate'), true); // 
+        $rate = data_get($rate, 'rate', 1);
+
         $guest = GuestUser::firstOrCreate(
             [
                 'invoice_id' => $invoice->id,
             ],
             [
-                'name' => $invoice->full_name,
-                'last_name' => $invoice->full_name,
+                'name' => $firstName,
+                'last_name' => $lastName,
                 'phone_number' => $invoice->phone ?? '',
                 'image' => '',
             ]
         );
+
 
         // ✅ UserReservation (unique by invoice_id + guest_user_id)
         $user_reservation = UserReservation::firstOrCreate(
@@ -127,7 +177,7 @@ class InvoicesController extends Controller
                 'property_id' => $property->id,
                 'currency' => $invoice->currency,
                 'checked' => true,
-                'original_amount' => $invoice->invoice_items->sum('price'),
+                'original_amount' => $invoice->subtotal,
                 'coupon' => $invoice->discount ?? 0,
                 'coming_from' => 'checkin',
                 'length_of_stay' => 1,
@@ -137,26 +187,56 @@ class InvoicesController extends Controller
             ]
         );
 
-        // ✅ Reservation items (firstOrCreate to prevent duplicates)
+        //dd($invoice->invoice_items);
         foreach ($invoice->invoice_items as $item) {
+
             Reservation::firstOrCreate(
                 [
                     'user_reservation_id' => $user_reservation->id,
                     'apartment_id' => $item->apartment_id,
-                    'checkin' => Carbon::parse($item['checkin']),
-                    'checkout' => Carbon::parse($item['checkout']),
                 ],
                 [
                     'quantity' => $item->quantity,
                     'price' => $item->price,
                     'property_id' => $property->id,
-                    'rate' => 1,
+                    'length_of_stay' => $item->quantity,
+                    'checkin' => Carbon::parse($item->checkin),
+                    'rate' => $rate,
+                    'checkout' => Carbon::parse($item->checkout)
+
                 ]
             );
         }
 
+
+
+        try {
+
+            if ($invoice->email) {
+
+                $user_reservation->load('reservation');
+
+                $user_reservation->discount = $invoice->discount_type === 'fixed'
+                    ? '-' . $invoice->currency . number_format($invoice->discount)
+                    : '-' . number_format($invoice->discount) . '%';
+                $user_reservation->payment_type =  'checkin';
+
+                $user_reservation->showCheckLink = $user_reservation->reservations->count() > 1 ? false : true;
+
+                // dd($user_reservation->load('reservations'));
+                //dd(true);
+                \Mail::to($invoice->email)
+                    ->bcc('avenuemontaigneconcierge@gmail.com')
+                    ->bcc('info@avenuemontaigne.ng')
+                    ->send(new ReservationReceipt($user_reservation, $this->settings));
+            }
+        } catch (\Throwable $th) {
+            \Log::error("Mail error: " . $th->getMessage());
+            // optionally: continue or throw if mail failure should abort transaction
+        }
+
         // ✅ Dispatch email job (can safely resend anytime)
-        dispatch(new SendInvoiceReceiptJob($invoice, $user_reservation));
+        //dispatch(new SendInvoiceReceiptJob($invoice, $user_reservation));
 
         // ✅ Mark invoice as sent
         $invoice->update(['sent' => true]);
@@ -171,13 +251,15 @@ class InvoicesController extends Controller
 
 
         $validated = $request->all();
-
         DB::beginTransaction();
+
 
         $latest = Invoice::latest('id')->first();
         $nextNumber = $latest ? $latest->id + 1 : 1;
         $invoiceNumber = "INV-" . date('Y') . "-" . rand(10000, time());
-        //dd($validated);
+        $rate = json_decode(session('rate'), true); // use true to get an associative array
+        $rate = data_get($rate, 'rate', 1);
+
 
         try {
             // Create the invoice record
@@ -196,13 +278,17 @@ class InvoicesController extends Controller
                 'total' => $validated['total'],
                 'payment_info' => $validated['payment_info'] ?? null,
                 'description' => $validated['description'] ?? null,
+                'rate' => $rate
             ]);
+
 
             // Create each invoice item
             foreach ($validated['items'] as $item) {
 
                 $startDate = Carbon::parse($item['checkin']);
                 $endDate = Carbon::parse($item['checkout']);
+
+                $apartment = Apartment::find($item['apartment_id']);
 
                 $invoice->invoice_items()->create([
                     'name' => $item['name'],
@@ -212,6 +298,7 @@ class InvoicesController extends Controller
                     'total' => $item['total'],
                     'checkin' =>  $item['checkin'] ?? null,
                     'checkout' => $item['checkout'] ?? null,
+                    'rate' => $rate
                 ]);
             }
 
@@ -233,6 +320,9 @@ class InvoicesController extends Controller
 
             if ($action === 'save_send') {
                 if (!empty($invoice->email)) {
+                    $invoice->discount = $invoice->discount_type === 'fixed'
+                        ? '-' . $invoice->currency . number_format($invoice->discount)
+                        : '-' . number_format($invoice->discount) . '%';
                     \App\Jobs\SendInvoiceJob::dispatch($invoice);
                 }
 
@@ -262,11 +352,16 @@ class InvoicesController extends Controller
 
         $invoice->load('invoice_items');
 
-        $pdf = Pdf::loadView('admin.invoices.pdf', compact('invoice'));
+        $invoice->discount = $invoice->discount_type === 'fixed'
+            ? '-' . $invoice->currency . number_format($invoice->discount)
+            : '' . number_format($invoice->discount) . '%';
+
+
 
         if (!empty($invoice->email)) {
             \App\Jobs\SendInvoiceJob::dispatch($invoice);
         }
+
 
         $invoice->update(['resent' => true]);
 
@@ -297,12 +392,13 @@ class InvoicesController extends Controller
         \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
 
+
         foreach ($request->selected as $selectedId) {
             $invoice = Invoice::find($selectedId);
 
-            if ($invoice && empty($invoice->sent)) { // delete only unsent invoices
-                $invoice->delete();
-            }
+            //if ($invoice && empty($invoice->sent)) { // delete only unsent invoices
+            $invoice->delete();
+            //}
         }
 
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');

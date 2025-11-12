@@ -1,6 +1,6 @@
 <template>
     <div class="container container light-background pb-4 pt-1 primary-border rounded shadow">
-        <h4 class="primary-color">BOOK YOUR STAY</h4>
+        <h4 class="primary-color ">BOOK YOUR STAY</h4>
 
         <div class="form-row">
 

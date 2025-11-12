@@ -183,9 +183,7 @@
         </table>
 
         @php
-        $discount = floatval($invoice->discount ?? 0);
         $cautionFee = floatval($invoice->caution_fee ?? 0);
-        $grandTotal = $subTotal - $discount + $cautionFee;
         @endphp
 
         <!-- PAYMENT + SUMMARY SIDE BY SIDE -->
@@ -206,15 +204,17 @@
                         </tr>
                         <tr>
                             <td><b>Discount:</b></td>
-                            <td align="right">-{{ $invoice->currency }}{{ number_format($discount, 2) }}</td>
+                            <td align="right">
+                                {{ $invoice->discount }}
+                            </td>
                         </tr>
                         <tr>
                             <td><b>Caution Fee:</b></td>
-                            <td align="right">{{ $invoice->currency }}{{ number_format($cautionFee, 2) }}</td>
+                            <td align="right">{{ $invoice->currency }}{{ number_format($invoice->caution_fee, 2) }}</td>
                         </tr>
                         <tr>
                             <td><b>Total:</b></td>
-                            <td align="right"><b>{{ $invoice->currency }}{{ number_format($grandTotal, 2) }}</b></td>
+                            <td align="right"><b>{{ $invoice->currency }}{{ number_format($invoice->total, 2) }}</b></td>
                         </tr>
                     </table>
                 </td>

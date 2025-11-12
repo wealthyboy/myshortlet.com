@@ -177,6 +177,7 @@
             </div>
             </p>
           </div>
+           </div>
         </div>
       </form>
     </div>
@@ -212,6 +213,7 @@ export default {
       codes: [
         { UK: "44" },
         { USA: "1" },
+        { Nigeria: "234" },
         { Algeria: "213" },
         { Andorra: "376" },
         { Angola: "244" },

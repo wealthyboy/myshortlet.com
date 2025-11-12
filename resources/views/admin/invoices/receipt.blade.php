@@ -207,7 +207,7 @@
                         </tr>
                         <tr>
                             <td><b>Total:</b></td>
-                            <td align="right"><b>{{ $invoice->currency }}{{ number_format($grandTotal, 2) }}</b></td>
+                            <td align="right"><b>{{ $invoice->currency }}{{ number_format($invoice->total, 2) }}</b></td>
                         </tr>
                     </table>
                 </td>

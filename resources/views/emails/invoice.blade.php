@@ -12,7 +12,6 @@
 
     <ul>
         <li><strong>Invoice Number:</strong> {{ $invoice->invoice }}</li>
-        <li><strong>Total:</strong> {{ $invoice->currency }}{{ number_format($invoice->total, 2) }}</li>
     </ul>
 
     <p>If you have any questions, feel free to reach out to <a href="mailto:info@avenuemontaigne.ng">info@avenuemontaigne.ng</a>.</p>

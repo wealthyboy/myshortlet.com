@@ -59,8 +59,6 @@ class WebHookController extends Controller
             $guest->email = data_get($input, 'email');
             $sessionId = data_get($input, 'sessionId');
 
-
-
             if (!empty(data_get($input, 'code'))) {
                 $guest->phone_number = '+' . data_get($input, 'code') . ' ' . data_get($input, 'phone_number');
             } else {
@@ -79,7 +77,6 @@ class WebHookController extends Controller
             $user_reservation->coupon = data_get($input, 'coupon');
             $user_reservation->total = data_get($input, 'total');
             $user_reservation->length_of_stay = data_get($input, 'length_of_stay');;
-
             $user_reservation->original_amount = data_get($input, 'original_amount');
             $user_reservation->coming_from = 'payment';
             $user_reservation->ip = $request->ip();
@@ -120,6 +117,8 @@ class WebHookController extends Controller
                 $reservation->property_id = $booking->property_id;
                 $reservation->checkin = $booking->checkin;
                 $reservation->checkout = $booking->checkout;
+                $reservation->length_of_stay = data_get($input, 'length_of_stay');;
+
                 $reservation->save();
 
                 if (!empty($e_services)) {

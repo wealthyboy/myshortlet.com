@@ -189,24 +189,28 @@
 
             <!-- Summary -->
             <div class="col-md-6 summary">
-                <table class="table table-borderless">
-                    <tr>
-                        <td><b>Subtotal:</b></td>
-                        <td>{{ $data['currency'] ?? '' }}{{ number_format($subTotal, 2) }}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Discount:</b></td>
-                        <td>-{{ $data['currency'] ?? '' }}{{ number_format($discountValue, 2) }}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Caution Fee:</b></td>
-                        <td>{{ $data['currency'] ?? '' }}{{ number_format($cautionFee, 2) }}</td>
-                    </tr>
-                    <tr class="border-top font-weight-bold">
-                        <td><b>Total:</b></td>
-                        <td>{{ $data['currency'] ?? '' }}{{ number_format($grandTotal, 2) }}</td>
-                    </tr>
-                </table>
+
+
+                <td valign="top" align="right">
+                    <table class="summary-table" align="right" style="width:100%;">
+                        <tr>
+                            <td><b>Subtotal:</b></td>
+                            <td align="right">{{ $invoice->currency }}{{ number_format($subTotal, 2) }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Discount:</b></td>
+                            <td align="right">-{{ $invoice->currency }}{{ $invoice->discount }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Caution Fee:</b></td>
+                            <td align="right">{{ $invoice->currency }}{{ number_format($invoice->caution_fee, 2) }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total:</b></td>
+                            <td align="right"><b>{{ $invoice->currency }}{{ number_format($invoice->total, 2) }}</b></td>
+                        </tr>
+                    </table>
+                </td>
             </div>
         </div>
 

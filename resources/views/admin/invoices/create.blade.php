@@ -36,6 +36,19 @@
         .logo img {
             height: 60px;
         }
+
+        .bg-peak {
+            background-color: #b91c1c !important;
+            /* deep red tone */
+            transition: background-color 0.4s ease;
+        }
+
+        .bg-peak input,
+        .bg-peak select {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            color: #fff !important;
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
     </style>
 </head>
 
@@ -51,6 +64,17 @@
             <small class="m-0 ml-4"><a href="/admin/invoices">Back</a></small>
 
         </div>
+
+
+        @if($peakActive)
+        <div class="alert alert-warning text-dark font-weight-bold">
+            🌴 Peak Period Active! Prices increased by {{ $peakDiscount }}%
+            @if($peakDaysLimit)
+            — Minimum stay: {{ $peakDaysLimit }} nights
+            @endif
+        </div>
+        @endif
+
 
         <form
             id="invoiceForm"
@@ -150,6 +174,8 @@
                 </div>
             </div>
 
+
+
             <!-- Summary -->
             <div class="card mb-4">
                 <div class="card-header bg-dark text-white">Summary</div>
@@ -165,7 +191,7 @@
                             <div class="input-group">
                                 <input type="number" id="discount" name="discount" class="form-control" value="0" />
                                 <div class="input-group-append">
-                                    <select id="discountType" class="form-control">
+                                    <select id="discountType" name="discount_type" class="form-control">
                                         <option value="fixed" selected>F</option>
                                         <option value="percent">%</option>
                                     </select>
@@ -202,6 +228,7 @@ Providus Bank
                 </div>
             </div>
 
+
             <!-- Description / Notes -->
             <div class="card mb-4">
                 <div class="card-header bg-dark text-white">Additional Information</div>
@@ -221,35 +248,45 @@ Caution deposit will be refunded within 5 working days after checkout.
 
             <!-- Buttons -->
             <div class="text-right mt-4">
-                <button type="button" id="previewBtn" class="btn btn-info bg-dark">Preview</button>
                 <button type="button" class="btn btn-primary bg-dark" data-action="save">Save</button>
-                <button type="button" class="btn btn-dark bg-dark" data-action="save_send">Save & Send</button>
             </div>
         </form>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
+        const PEAK_START = "{{ optional($peak)->start_date }}";
+        const PEAK_END = "{{ optional($peak)->end_date }}";
+        const PEAK_DISCOUNT = "{{ optional($peak)->discount ?? 0 }}";
+        const peakDiscount = parseFloat(PEAK_DISCOUNT) || 0;
+
         $(function() {
-            const exchangeRate = 1470; // 1 USD = ₦1470
+            const peakStartDate = "{{ $peak->start_date ?? '' }}";
+            const peakEndDate = "{{ $peak->end_date ?? '' }}";
+            const peakPercentage = parseFloat("{{ $peak->discount ?? 0 }}"); // it's an addition %
+            const peakDaysLimit = parseInt("{{ $peak->days_limit ?? 0 }}");
+
+            const rate = "{{ $rate }}";
+            const exchangeRate = parseFloat(rate);
+
             let index = 1;
 
             // 🌀 Loader HTML
             const loader = `
-      <div id="pageLoader" style="
-          display:none;
-          position:fixed;
-          inset:0;
-          background:rgba(0,0,0,0.5);
-          z-index:9999;
-          color:white;
-          font-size:1.5rem;
-          text-align:center;
-          padding-top:20%;
-      ">
-        <div class="spinner-border text-light" style="width:3rem;height:3rem;" role="status"></div>
-        <div class="mt-3">Processing... please wait</div>
-      </div>`;
+  <div id="pageLoader" style="
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:9999;
+      color:white;
+      font-size:1.5rem;
+      text-align:center;
+      padding-top:20%;
+  ">
+    <div class="spinner-border text-light" style="width:3rem;height:3rem;" role="status"></div>
+    <div class="mt-3">Processing... please wait</div>
+  </div>`;
             $('body').append(loader);
 
             // Add new item row
@@ -295,10 +332,9 @@ Caution deposit will be refunded within 5 working days after checkout.
                 const basePrice = parseFloat(apartment.data('price')) || 0;
                 const aptName = apartment.data('name') || '';
                 const currency = $('#currency').val();
-                const price = currency === '₦' ? basePrice * exchangeRate : basePrice;
-
                 const checkinVal = row.find('.checkin').val();
                 const checkoutVal = row.find('.checkout').val();
+
                 row.find('.date-warning').remove();
 
                 if (!checkinVal || !checkoutVal) {
@@ -320,7 +356,7 @@ Caution deposit will be refunded within 5 working days after checkout.
                     return;
                 }
 
-                // Check apartment availability
+                // Check availability
                 $.ajax({
                     url: "{{ route('admin.apartments.checkAvailability') }}",
                     type: "POST",
@@ -337,17 +373,57 @@ Caution deposit will be refunded within 5 working days after checkout.
                     }
                 });
 
-                // Calculate nights
+                // --- PEAK period setup ---
+                const peakStart = PEAK_START ? new Date(PEAK_START) : null;
+                const peakEnd = PEAK_END ? new Date(PEAK_END) : null;
+                const peakDiscount = parseFloat(PEAK_DISCOUNT) || 0;
+                const exchangeRate = parseFloat("{{ $rate }}") || 1;
+
+                // --- Calculate price per night
+                const pricePerNight = currency === '₦' ? basePrice * exchangeRate : basePrice;
+
+                // --- Calculate total nights ---
                 const nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
-                const total = nights * price;
+
+                let total = 0;
+                let peakNights = 0;
+                let regularNights = 0;
+
+                // Loop through each night to check if it's in the peak period
+                for (let d = new Date(checkin); d < checkout; d.setDate(d.getDate() + 1)) {
+                    const current = new Date(d);
+                    if (peakStart && peakEnd && current >= peakStart && current <= peakEnd) {
+                        total += pricePerNight * (1 + peakDiscount / 100);
+                        peakNights++;
+                    } else {
+                        total += pricePerNight;
+                        regularNights++;
+                    }
+                }
+
+                console.log(`🗓️ Nights: ${nights}, Peak: ${peakNights}, Regular: ${regularNights}`);
+
+                const avgPrice = total / nights;
 
                 row.find('.qty').val(nights);
-                row.find('.price').val(price.toFixed(2));
+                row.find('.price').val(avgPrice.toFixed(2));
                 row.find('.item-total').val(total.toFixed(2));
                 row.find('.item-name').val(aptName);
 
+                // Optional visual cue
+                if (peakNights > 0) {
+                    row.addClass('bg-peak');
+                } else {
+                    row.removeClass('bg-peak');
+                }
+
                 calculateTotals();
             }
+
+
+
+
+
 
             // Totals
             function calculateTotals() {
@@ -366,9 +442,11 @@ Caution deposit will be refunded within 5 working days after checkout.
                 let discountAmount = discountType === 'percent' ? (subTotal * discountVal) / 100 : discountVal;
                 let grandTotal = subTotal - discountAmount + cautionFee;
 
+                // Display totals with currency symbol (for user)
                 $('#subTotal').val(currency + subTotal.toFixed(2));
                 $('#grandTotal').val(currency + grandTotal.toFixed(2));
 
+                // Hidden numeric fields (for backend)
                 $('#subTotalNumeric').val(subTotal.toFixed(2));
                 $('#grandTotalNumeric').val(grandTotal.toFixed(2));
             }
@@ -393,6 +471,11 @@ Caution deposit will be refunded within 5 working days after checkout.
                 const action = $(this).data('action');
                 const confirmed = confirm("⚠️ Please review all invoice details before proceeding. Continue?");
                 if (!confirmed) return;
+
+                // 🧹 Clean currency symbols before submission
+                $('#subTotal, #grandTotal').each(function() {
+                    $(this).val($(this).val().replace(/[^\d.]/g, ''));
+                });
 
                 $('#pageLoader').fadeIn(200);
                 $('<input>').attr({

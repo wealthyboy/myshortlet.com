@@ -243,9 +243,9 @@ class ReservationsController extends Controller
 		$reservation->property_id = $property->id;
 		$reservation->checkin = $startDate;
 		$reservation->checkout = $endDate;
+		$reservation->length_of_stay = $date_diff;
 		$reservation->rate = data_get($input, 'currency') === '₦' ?  $rate : 1;
 		$reservation->save();
-
 
 		// Optional PDF logic
 		$guest->image = session('session_link');

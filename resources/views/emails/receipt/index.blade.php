@@ -407,7 +407,9 @@
                                                          <br />
                                                          <b>Note: You’re required to present a valid ID upon arrival to check-in. You can also self check-in by clicking the link below to upload your ID
                                                             <br />
+                                                            @if ($user_reservation->showCheckLink)
                                                             <a style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em" class="" href="https://avenuemontaigne.ng/check-in?id={{$user_reservation->id}}">Click here to Check-in</a>
+                                                            @endif
                                                          </b>
 
                                                       </td>
@@ -718,7 +720,7 @@
 
                                                                                        <tr>
                                                                                           <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
-                                                                                             <b>Length of stay</b>: {{ $user_reservation->length_of_stay }} night(s)
+                                                                                             <b>Length of stay</b>: {{ $reservation->length_of_stay }} night(s)
                                                                                           </td>
                                                                                        </tr>
                                                                                        <tr>
@@ -726,7 +728,7 @@
                                                                                        </tr>
                                                                                        <tr>
                                                                                           <td class="text" data-color="#000000" data-fontsize="13" data-fontweight="400" data-letterspacing="0.05" data-lineheight="20" data-color="" data-align="left" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height: 20px; text-decoration: none; color: #444444; font-weight:400;" data-size="img-left-text-size" data-color="img-left-text-color" data-link-color="img-left-link-color" data-link-style="color: blue;">
-                                                                                             <b>{{ $user_reservation->currency ?? '₦' }}{{ number_format(($reservation->price * $reservation->rate), 2) }} per night</b>
+                                                                                             <b>{{ $user_reservation->currency ?? '₦' }}{{ $reservation->price * $reservation->rate }} per night</b>
                                                                                           </td>
                                                                                        </tr>
                                                                                        <tr>
