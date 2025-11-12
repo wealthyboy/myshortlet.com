@@ -256,6 +256,9 @@ class ReservationsController extends Controller
 		$reservation->email = $request->email;
 		$reservation->phone_number = $request->phone_number;
 
+		$user_reservation->showCheckLink = true;
+
+
 
 		try {
 			\Mail::to($request->email)

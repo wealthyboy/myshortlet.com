@@ -82,6 +82,8 @@ class WebHookController extends Controller
             $user_reservation->ip = $request->ip();
             $user_reservation->save();
 
+            $user_reservation->showCheckLink = true;
+
             $e_services = [];
             $services = data_get($input, 'services', []);
             $aq = [];
