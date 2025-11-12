@@ -62,14 +62,11 @@ class BookingController extends Controller
 		$days = $booking->checkin->diffInDays($booking->checkout);
 
 		$peak_period = PeakPeriod::first();
-		$daysInPeakPeriod = 	$days;
+		$daysInPeakPeriod = $days;
 
 		$daysNotInPeakPeriod = $peak_period->calculateDaysOutsidePeak($booking->checkin, $booking->checkout);
-
 		$daysNotInPeakPeriod = $daysNotInPeakPeriod <= 0 ? 0 : $daysNotInPeakPeriod;
 		$daysInPeakPeriod =  $days - $daysNotInPeakPeriod;
-
-
 
 		$apt = Apartment::find($request->apartment_id);
 		$peak_period_price = $apt->converted_peak_price > 0 ? $apt->converted_peak_price : $peak_period->increasePriceByPercentage($apt->converted_price);
