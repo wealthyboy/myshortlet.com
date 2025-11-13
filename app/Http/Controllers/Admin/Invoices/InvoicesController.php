@@ -63,6 +63,12 @@ class InvoicesController extends Controller
         $today = now();
         $peak = \App\Models\PeakPeriod::first();
 
+        $isInPeak = $peak
+            && $today->between(
+                $peak->start_date->startOfDay(),
+                $peak->end_date->endOfDay()
+            );
+
         // If active, prepare data
         $peakActive = false;
         $peakDiscount = 0;
@@ -74,7 +80,7 @@ class InvoicesController extends Controller
             $peakDaysLimit = $peak->days_limit;
         }
 
-        return view('admin.invoices.create', compact('apartments', 'rate', 'peak', 'peakActive', 'peakDiscount', 'peakDaysLimit'));
+        return view('admin.invoices.create', compact('isInPeak', 'apartments', 'rate', 'peak', 'peakActive', 'peakDiscount', 'peakDaysLimit'));
     }
 
 
