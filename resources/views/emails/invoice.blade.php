@@ -14,7 +14,7 @@
         <p>
             Thank you for choosing <strong>Avenue Montaigne</strong> for your stay.
             Further to your enquiry, and in accordance with your request,
-            please find attached the invoice for your residence.
+            please find attached the invoice for your reservation.
         </p>
 
         <ul style="list-style:none; padding:0;">
