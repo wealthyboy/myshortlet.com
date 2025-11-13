@@ -403,7 +403,13 @@
                                                    </tr>
                                                    <tr>
                                                       <td class="wz" width="30"></td>
-                                                      <td class="RegularTextTD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #000;font-family: sans-serif;font-size: 13px;font-weight: lighter;text-align: left;line-height: 23px;">Dear {{ optional($user_reservation->guest_user)->name }} {{optional($user_reservation->guest_user)->last_name}},<br>Thank you for choosing Avenue montaigne for your stay. We are pleased to inform you that your reservation request is CONFIRMED and your reservation details are as follows.
+                                                      <td class="RegularTextTD" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #000;font-family: sans-serif;font-size: 13px;font-weight: lighter;text-align: left;line-height: 23px;">Dear {{ optional($user_reservation->guest_user)->name }} {{optional($user_reservation->guest_user)->last_name}},<br>
+                                                         Thank you for choosing <strong>Avenue Montaigne</strong> for your stay.
+                                                         We are pleased to inform you that your payment has been received and your reservation request is
+                                                         <strong style="color:green;">CONFIRMED</strong>.
+                                                         <br />
+                                                         <p>Your reservation details are as follows:</p>
+
                                                          <br />
                                                          <b>Note: You’re required to present a valid ID upon arrival to check-in. You can also self check-in by clicking the link below to upload your ID
                                                             <br />

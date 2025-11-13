@@ -12,7 +12,7 @@
         <h3 style="color:#444;">Dear {{ $invoice->full_name }},</h3>
 
         <p>
-            Thank you for choosing us as your preferred place of residence.
+            Thank you for choosing <strong>Avenue Montaigne</strong> for your stay.
             Further to your enquiry, and in accordance with your request,
             please find attached the invoice for your residence.
         </p>
