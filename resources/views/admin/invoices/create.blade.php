@@ -66,7 +66,7 @@
         </div>
 
 
-        @if($peakActive)
+        @if($isInPeak)
         <div class="alert alert-warning text-dark font-weight-bold">
             🌴 Peak Period Active! Prices increased by {{ $peakDiscount }}%
             @if($peakDaysLimit)
