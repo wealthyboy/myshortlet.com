@@ -104,7 +104,7 @@
                                         <th>Invoice</th>
                                         <th>Customer</th>
                                         <th>Receipt Sent</th>
-                                        <th>Invoice Resent</th>
+                                        <th>Invoice Sent</th>
                                         <th>Date Added</th>
                                         <th>Total</th>
                                         <th class="text-right">Actions</th>
