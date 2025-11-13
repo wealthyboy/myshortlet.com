@@ -105,6 +105,7 @@
                                         <th>Customer</th>
                                         <th>Receipt Sent</th>
                                         <th>Invoice Sent</th>
+                                        <th>Status</th>
                                         <th>Date Added</th>
                                         <th>Total</th>
                                         <th class="text-right">Actions</th>
@@ -138,6 +139,14 @@
                                             <span style="background-color: green;" class="badge badge-warning">Yes</span>
                                             @else
                                             <span class="badge badge-secondary">No</span>
+                                            @endif
+                                        </td>
+
+                                        <td>
+                                            @if($invoice->sent)
+                                            <span style="background-color: green;" class="badge badge-warning">Paid</span>
+                                            @else
+                                            <span class="badge badge-secondary">Not Paid</span>
                                             @endif
                                         </td>
 
