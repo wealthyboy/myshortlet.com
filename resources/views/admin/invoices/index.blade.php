@@ -151,8 +151,8 @@
                                             </a>
 
                                             <a href="{{ url("/admin/invoices/{$invoice->id}/resend") }}"
-                                                class="btn btn-warning btn-simple" title="Resend Invoice">
-                                                Resend Invoice
+                                                class="btn btn-warning btn-simple" title="Send Invoice">
+                                                Send Invoice
                                             </a>
 
                                             <a href="{{ url("/admin/invoices/{$invoice->id}/download") }}"
