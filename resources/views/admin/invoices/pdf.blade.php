@@ -123,7 +123,7 @@
                     </div>
                 </td>
                 <td align="right">
-                    <h4 style="margin-bottom: 0px;">Invoice #{{ $invoice->invoice ?? 'INV-0001' }}</h4>
+                    <h4 style="margin-bottom: 0px;">Invoice #{{ $invoice->invoice }}</h4>
                     <small>Date: {{ $invoice->created_at->format('D, M d, Y') }}</small>
                 </td>
             </tr>
@@ -205,7 +205,7 @@
                         <tr>
                             <td><b>Discount:</b></td>
                             <td align="right">
-                                {{ $invoice->discount }}
+                                {{ $invoice->formatted_discount }}
                             </td>
                         </tr>
                         <tr>

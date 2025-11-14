@@ -128,17 +128,17 @@ class InvoicesController extends Controller
         $invoice = Invoice::findOrFail($id);
         // Generate or fetch existing PDF
         $invoice->load('invoice_items');
-        $invoice->discount = $invoice->discount_type === 'fixed'
-            ? '-' . $invoice->currency . number_format($invoice->discount)
-            : '-' . number_format($invoice->discount) . '%';
+
         $pdf = Pdf::loadView('admin.invoices.pdf', compact('invoice'));
 
         return $pdf->download('invoice-' . $invoice->id . '.pdf');
     }
 
+
     public function sendReceipt(Request $request)
     {
         $invoice = Invoice::with('invoice_items')->findOrFail($request->id);
+
 
         $property = Property::first();
 
@@ -178,13 +178,14 @@ class InvoicesController extends Controller
             ],
             [
                 'user_id' => 1,
-                'invoice' => $invoice->invoice_number,
+                'invoice' => $invoice->invoice,
                 'payment_type' => 'checkin',
                 'property_id' => $property->id,
                 'currency' => $invoice->currency,
                 'checked' => true,
                 'original_amount' => $invoice->subtotal,
                 'coupon' => $invoice->discount ?? 0,
+                'formatted_discount' => $invoice->formatted_discount,
                 'coming_from' => 'checkin',
                 'length_of_stay' => 1,
                 'total' => $invoice->total,
@@ -255,17 +256,17 @@ class InvoicesController extends Controller
     public function store(Request $request)
     {
 
-
         $validated = $request->all();
+
         DB::beginTransaction();
 
-
         $latest = Invoice::latest('id')->first();
-        $nextNumber = $latest ? $latest->id + 1 : 1;
-        $invoiceNumber = "INV-" . date('Y') . "-" . rand(10000, time());
+        $nextId = $latest ? $latest->id + 1 : 1;
+        $random = rand(1000, 9999);
+
+        $invoiceNumber = "INV-" . date('Y') . "-" . $nextId . $random;
         $rate = json_decode(session('rate'), true); // use true to get an associative array
         $rate = data_get($rate, 'rate', 1);
-
 
         try {
             // Create the invoice record
@@ -357,11 +358,6 @@ class InvoicesController extends Controller
         $invoice = Invoice::findOrFail($id);
 
         $invoice->load('invoice_items');
-
-        $invoice->discount = $invoice->discount_type === 'fixed'
-            ? '-' . $invoice->currency . number_format($invoice->discount)
-            : '' . number_format($invoice->discount) . '%';
-
 
 
         if (!empty($invoice->email)) {

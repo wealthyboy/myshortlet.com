@@ -325,6 +325,50 @@ Caution deposit will be refunded within 5 working days after checkout.
                 calculateTotals();
             });
 
+
+            function validateInvoiceForm() {
+                let valid = true;
+                let errorMsg = '';
+
+                // Validate main fields
+                const name = $('input[name="name"]').val().trim();
+                const email = $('input[name="email"]').val().trim();
+                const phone = $('input[name="phone"]').val().trim();
+
+                if (!name) {
+                    valid = false;
+                    errorMsg += '⚠️ Full Name is required.\n';
+                }
+                if (!email) {
+                    valid = false;
+                    errorMsg += '⚠️ Email is required.\n';
+                }
+                if (!phone) {
+                    valid = false;
+                    errorMsg += '⚠️ Phone is required.\n';
+                }
+
+                // Validate each item row
+                $('.invoice-item-row').each(function(index) {
+                    const apartment = $(this).find('.apartment-select').val();
+                    if (!apartment) {
+                        valid = false;
+                        errorMsg += `⚠️ Apartment is required for item row ${index + 1}.\n`;
+                    }
+
+                    const checkin = $(this).find('.checkin').val();
+                    const checkout = $(this).find('.checkout').val();
+                    if (!checkin || !checkout) {
+                        valid = false;
+                        errorMsg += `⚠️ Check-in and Check-out are required for item row ${index + 1}.\n`;
+                    }
+                });
+
+                if (!valid) alert(errorMsg);
+                return valid;
+            }
+
+
             // Function: Update each row
             function updateRow(row) {
                 const apartment = row.find('.apartment-select option:selected');
@@ -468,6 +512,8 @@ Caution deposit will be refunded within 5 working days after checkout.
 
             // Save buttons — confirm + loader
             $('[data-action]').on('click', function() {
+                if (!validateInvoiceForm()) return; // stop submission if invalid
+
                 const action = $(this).data('action');
                 const confirmed = confirm("⚠️ Please review all invoice details before proceeding. Continue?");
                 if (!confirmed) return;

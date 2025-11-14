@@ -33,14 +33,10 @@ class SendInvoiceJob implements ShouldQueue
 
         // Generate PDF from your Blade view
 
-        $this->invoice->discount = $this->invoice->discount_type === 'fixed'
-            ? '-' . $this->invoice->currency . number_format($this->invoice->discount)
-            : '-' . number_format($this->invoice->discount) . '%';
+
 
         $pdf = PDF::loadView('admin.invoices.pdf', ['invoice' => $this->invoice]);
         $pdfContent = $pdf->output();
-
-
 
         // Send the mail with PDF attachment
         Mail::send('emails.invoice', ['invoice' => $this->invoice], function ($message) use ($pdfContent) {

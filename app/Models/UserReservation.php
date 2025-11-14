@@ -28,6 +28,7 @@ class UserReservation extends Model
         'total',
         'caution_fee',
         'ip',
+        'guest_user_id'
     ];
 
 
