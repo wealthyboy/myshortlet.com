@@ -215,7 +215,7 @@ class ApartmentsController extends Controller
                 }
 
                 // Save the public URL (not local path)
-                $apartment->images()->create(['image' => $url]);
+                // $apartment->images()->create(['image' => $url]);
             }
         }
 
