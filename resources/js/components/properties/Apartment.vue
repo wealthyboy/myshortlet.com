@@ -10,12 +10,78 @@
       itemscope
       itemtype="https://schema.org/ImageGallery"
     >
-
-    {{  room.google_drive_image_link }}
+    {{ room }}
       <div class="owl-carousel owl-theme">
-      
+        <div
+          class="item rounded-top"
+          :key="index"
+          v-for="(image, index) in room.google_drive_image_link"
+          itemprop="photo"
+          itemscope
+          itemtype="https://schema.org/ImageObject"
+        >
+          <img
+            :alt="room.name"
+            :title="'book ' + room.name + '  Avenue Montaigne'"
+            @click.prevent="showRoom(room)"
+            :src="image"
+            class="img cursor-pointer img-fluid"
+            itemprop="contentUrl"
+          />
+          <div class="images-count">
+            <button
+              role="button"
+              type="button"
+              class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button"
+            >
+              <svg
+                class="uitk-icon uitk-icon-leading uitk-icon-medium"
+                aria-label="Show all images "
+                role="img"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
+                <title
+                  id="photo_library-property-offers-media-carousel-1-title"
+                >
+                  Show all
+                  {{
+                    room.images.length + room.google_drive_image_links.length
+                  }}
+                  images
+                </title>
+                <path
+                  fill-rule="evenodd"
+                  d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z"
+                  clip-rule="evenodd"
+                ></path></svg
+              ><span
+                @click.prevent="showRoom(room)"
+                class="cursor-pointer"
+                role="button"
+                aria-hidden="true"
+                >{{
+                  room.images.length + room.google_drive_image_links.length
+                }}
+                View All</span
+              >
+            </button>
+          </div>
+        </div>
 
-      
+        <div v-if="room.google_drive_video_link" class="item">
+          <iframe
+            title="watch apartment video avenue montaigne"
+            class="rounded"
+            style="width: 100%"
+            height="235"
+            :src="room.google_drive_video_link"
+            itemprop="video"
+            itemscope
+            itemtype="https://schema.org/VideoObject"
+          ></iframe>
+        </div>
       </div>
     </div>
     <div class="col-md-12 bg-white aprt-content pt-3 pb-2">
@@ -23,7 +89,7 @@
         class="card-title bold-2 text-size-1-big mt-sm-3 mt-3"
         itemprop="name"
       >
-        <a :href="`/apartment/${room.slug}`">{{ room.name }}</a>
+        <a :href="`/apartment/${room.slug}/`">{{ room.name }}</a>
       </div>
       <div
         v-if="!room.is_gallery"
