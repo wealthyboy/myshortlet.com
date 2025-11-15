@@ -107,20 +107,14 @@ class Apartment extends Model
     {
         $images = [];
         // If the attribute exists and is not empty
-        if ($this->image_link) {
-            // Split the comma-separated links into an array
-            $links  = explode(',', trim($this->image_link));
+        $clean = str_replace('"', '', $this->image_link);
+        $links = array_map('trim', explode(',', $clean));
 
-            foreach ($links as $link) {
-                $images[] = self::generateThumbnailUrl($link);
-            }
-
-            return $images;
-        }
+        return  $links;
 
         // Return an empty array if the attribute is empty
         return [];
-    }
+    
 
 
     public function getGoogleDriveImageLinkAttribute()
