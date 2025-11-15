@@ -114,7 +114,8 @@ class Apartment extends Model
 
         // Return an empty array if the attribute is empty
         return [];
-    
+    }
+
 
 
     public function getGoogleDriveImageLinkAttribute()
