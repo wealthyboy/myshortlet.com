@@ -4,7 +4,7 @@
 
 <section id="content" class="" style="">
    <div class="container ">
-      <div class="row no-gutters bg-white ">
+      <div class="row no-gutters bg-white">
          <div class="col-lg-8 py-3 px-2">
             <div class="bg-white">
                <h3 class="bold-3">{{ $apartment->name }}</h3>
@@ -12,16 +12,17 @@
          </div>
 
          <div class="clearfix"></div>
+         @
          <div class="col-md-8  d-none d-md-block d-lg-block  d-xxl-block  position-relative bg-white ">
-            <a href="#" class="img card-img galleries" style="background-image: url('{{ $apartment->google_drive_image_links[0] }}')"></a>
+            <a href="#" class="img card-img galleries" style="background-image: url('{{ isset($apartment->google_drive_image_links[0]) ? $apartment->google_drive_image_links[0]: null  }}')"></a>
          </div>
-         <div class="col-md-4   d-none d-md-block d-lg-block  d-xxl-block ">
+         <div class="col-md-4 d-none d-md-block d-lg-block  d-xxl-block ">
             <div class="row no-gutters">
                <div class="col-6 pl-1  pb-1 pr-1">
-                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ $apartment->google_drive_image_links[1] }}')"></a>
+                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ isset($apartment->google_drive_image_links[1]) ? $apartment->google_drive_image_links[1]: null }}')"></a>
                </div>
                <div class="col-6 ">
-                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $apartment->google_drive_image_links[2] }}')"></a>
+                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ isset($apartment->google_drive_image_links[2]) ? $apartment->google_drive_image_links[2]: null }}')"></a>
                   <a href="#" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
                      <p class="fs-48 font-weight-600 text-white lh-1 mb-1">
                         <svg id="" class="mt-2">
@@ -31,7 +32,7 @@
                   </a>
                </div>
                <div class="col-6 pl-1  pr-1">
-                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ $apartment->google_drive_image_links[3] }}')"></a>
+                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ isset($apartment->google_drive_image_links[3]) ? $apartment->google_drive_image_links[3]: null }}')"></a>
                </div>
                <div class="col-6 pb-2 position-relative">
                   <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $apartment->google_drive_image_links[4] }}')"></a>
