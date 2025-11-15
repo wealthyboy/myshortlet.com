@@ -579,7 +579,6 @@ class ApartmentsController extends Controller
         $end_date = !empty($date) ? $date['end_date'] : null;
         $nights = Helper::nights($date);
 
-        dd($apartment->image_link);
 
 
 

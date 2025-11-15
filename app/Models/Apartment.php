@@ -109,8 +109,6 @@ class Apartment extends Model
         // If the attribute exists and is not empty
         $clean = str_replace('"', '', $this->image_link);
 
-        return $this->image_link;
-
         $links = array_filter(
             array_map('trim', explode(',', $clean)),
             fn($v) => !empty($v)
