@@ -8863,70 +8863,54 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "owl-carousel owl-theme"
-  }, [_vm._l(_vm.room.google_drive_image_link, function (image, index) {
-    return _c("div", {
-      key: index,
-      staticClass: "item rounded-top",
-      attrs: {
-        itemprop: "photo",
-        itemscope: "",
-        itemtype: "https://schema.org/ImageObject"
+  }, [_c("div", {
+    key: _vm.index,
+    staticClass: "item rounded-top",
+    attrs: {
+      itemprop: "photo",
+      itemscope: "",
+      itemtype: "https://schema.org/ImageObject"
+    }
+  }, [_c("div", {
+    staticClass: "images-count"
+  }, [_c("button", {
+    staticClass: "uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button",
+    attrs: {
+      role: "button",
+      type: "button"
+    }
+  }, [_c("svg", {
+    staticClass: "uitk-icon uitk-icon-leading uitk-icon-medium",
+    attrs: {
+      "aria-label": "Show all images ",
+      role: "img",
+      viewBox: "0 0 24 24",
+      xmlns: "http://www.w3.org/2000/svg",
+      "xmlns:xlink": "http://www.w3.org/1999/xlink"
+    }
+  }, [_c("title", {
+    attrs: {
+      id: "photo_library-property-offers-media-carousel-1-title"
+    }
+  }, [_vm._v("\n                Show all\n                " + _vm._s(_vm.room.images.length + _vm.room.google_drive_image_links.length) + "\n                images\n              ")]), _vm._v(" "), _c("path", {
+    attrs: {
+      "fill-rule": "evenodd",
+      d: "M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z",
+      "clip-rule": "evenodd"
+    }
+  })]), _c("span", {
+    staticClass: "cursor-pointer",
+    attrs: {
+      role: "button",
+      "aria-hidden": "true"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.showRoom(_vm.room);
       }
-    }, [_c("img", {
-      staticClass: "img cursor-pointer img-fluid",
-      attrs: {
-        alt: _vm.room.name,
-        title: "book " + _vm.room.name + "  Avenue Montaigne",
-        src: image,
-        itemprop: "contentUrl"
-      },
-      on: {
-        click: function click($event) {
-          $event.preventDefault();
-          return _vm.showRoom(_vm.room);
-        }
-      }
-    }), _vm._v(" "), _c("div", {
-      staticClass: "images-count"
-    }, [_c("button", {
-      staticClass: "uitk-button uitk-button-medium uitk-button-has-text uitk-button-overlay uitk-gallery-button",
-      attrs: {
-        role: "button",
-        type: "button"
-      }
-    }, [_c("svg", {
-      staticClass: "uitk-icon uitk-icon-leading uitk-icon-medium",
-      attrs: {
-        "aria-label": "Show all images ",
-        role: "img",
-        viewBox: "0 0 24 24",
-        xmlns: "http://www.w3.org/2000/svg",
-        "xmlns:xlink": "http://www.w3.org/1999/xlink"
-      }
-    }, [_c("title", {
-      attrs: {
-        id: "photo_library-property-offers-media-carousel-1-title"
-      }
-    }, [_vm._v("\n                Show all\n                " + _vm._s(_vm.room.images.length + _vm.room.google_drive_image_links.length) + "\n                images\n              ")]), _vm._v(" "), _c("path", {
-      attrs: {
-        "fill-rule": "evenodd",
-        d: "M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2zm-11-4 2.03 2.71L16 11l4 5H8l3-4zm-9 8V6h2v14h14v2H4a2 2 0 0 1-2-2z",
-        "clip-rule": "evenodd"
-      }
-    })]), _c("span", {
-      staticClass: "cursor-pointer",
-      attrs: {
-        role: "button",
-        "aria-hidden": "true"
-      },
-      on: {
-        click: function click($event) {
-          $event.preventDefault();
-          return _vm.showRoom(_vm.room);
-        }
-      }
-    }, [_vm._v(_vm._s(_vm.room.images.length + _vm.room.google_drive_image_links.length) + "\n              View All")])])])]);
-  }), _vm._v(" "), _vm.room.google_drive_video_link ? _c("div", {
+    }
+  }, [_vm._v(_vm._s(_vm.room.images.length + _vm.room.google_drive_image_links.length) + "\n              View All")])])])]), _vm._v(" "), _vm.room.google_drive_video_link ? _c("div", {
     staticClass: "item"
   }, [_c("iframe", {
     staticClass: "rounded",
@@ -8941,7 +8925,7 @@ var render = function render() {
       itemscope: "",
       itemtype: "https://schema.org/VideoObject"
     }
-  })]) : _vm._e()], 2)]), _vm._v(" "), _c("div", {
+  })]) : _vm._e()])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12 bg-white aprt-content pt-3 pb-2"
   }, [_c("div", {
     staticClass: "card-title bold-2 text-size-1-big mt-sm-3 mt-3",
@@ -8950,7 +8934,7 @@ var render = function render() {
     }
   }, [_c("a", {
     attrs: {
-      href: "/apartment/".concat(_vm.room.slug, "/")
+      href: "/apartment/".concat(_vm.room.slug)
     }
   }, [_vm._v(_vm._s(_vm.room.name))])]), _vm._v(" "), !_vm.room.is_gallery ? _c("div", {
     staticClass: "text-size-2 text-gold",
@@ -11831,7 +11815,7 @@ var render = function render() {
     staticClass: "position-relative"
   }, [_c("div", {
     staticClass: "row"
-  }, [_vm._v("\n                    " + _vm._s(_vm.roomsAv) + "\n                    "), _c("apartment", {
+  }, [_c("apartment", {
     attrs: {
       showReserve: false,
       classType: _vm.classType,
