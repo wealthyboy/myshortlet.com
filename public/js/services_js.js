@@ -8863,7 +8863,7 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "owl-carousel owl-theme"
-  }, [_c("div", {
+  }, [_vm._v("\n      " + _vm._s(_vm.room.google_drive_image_link) + "\n      "), _c("div", {
     key: _vm.index,
     staticClass: "item rounded-top",
     attrs: {

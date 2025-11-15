@@ -11,6 +11,7 @@
       itemtype="https://schema.org/ImageGallery"
     >
       <div class="owl-carousel owl-theme">
+        {{ room.google_drive_image_link }}
         <div
           class="item rounded-top"
           :key="index"
