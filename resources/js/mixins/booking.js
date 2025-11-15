@@ -191,6 +191,8 @@ export default {
                     this.apartmentIsChecked = true
                     this.roomsAv = response.data.apartments
 
+                    console.log(response.data.apartments)
+
                    // this.stays = response.data.nights;
                     this.propertyIsLoading = false;
 

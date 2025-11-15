@@ -12286,6 +12286,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
         _this.apartmentIsChecked = true;
         _this.roomsAv = response.data.apartments;
+        console.log(response.data.apartments);
 
         // this.stays = response.data.nights;
         _this.propertyIsLoading = false;
