@@ -8863,22 +8863,7 @@ var render = function render() {
     }
   }, [_vm._v("\n\n  " + _vm._s(_vm.room.google_drive_image_link) + "\n    "), _c("div", {
     staticClass: "owl-carousel owl-theme"
-  }, [_vm.room.google_drive_video_link ? _c("div", {
-    staticClass: "item"
-  }, [_c("iframe", {
-    staticClass: "rounded",
-    staticStyle: {
-      width: "100%"
-    },
-    attrs: {
-      title: "watch apartment video avenue montaigne",
-      height: "235",
-      src: _vm.room.google_drive_video_link,
-      itemprop: "video",
-      itemscope: "",
-      itemtype: "https://schema.org/VideoObject"
-    }
-  })]) : _vm._e()])]), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12 bg-white aprt-content pt-3 pb-2"
   }, [_c("div", {
     staticClass: "card-title bold-2 text-size-1-big mt-sm-3 mt-3",
