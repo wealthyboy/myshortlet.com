@@ -8861,7 +8861,7 @@ var render = function render() {
       itemscope: "",
       itemtype: "https://schema.org/ImageGallery"
     }
-  }, [_vm._v("\n  " + _vm._s(_vm.room) + "\n    "), _c("div", {
+  }, [_vm._v("\n  " + _vm._s(_vm.room.google_drive_image_link) + "\n    "), _c("div", {
     staticClass: "owl-carousel owl-theme"
   }, [_vm._l(_vm.room.google_drive_image_link, function (image, index) {
     return _c("div", {
