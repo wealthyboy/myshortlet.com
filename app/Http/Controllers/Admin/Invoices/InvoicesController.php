@@ -128,11 +128,11 @@ class InvoicesController extends Controller
         $invoice = Invoice::findOrFail($id);
         // Generate or fetch existing PDF
         $invoice->load('invoice_items');
-
         $pdf = Pdf::loadView('admin.invoices.pdf', compact('invoice'));
 
         return $pdf->download('invoice-' . $invoice->invoice . '.pdf');
     }
+
 
 
     public function sendReceipt(Request $request)
@@ -258,8 +258,6 @@ class InvoicesController extends Controller
 
         $validated = $request->all();
 
-
-
         DB::beginTransaction();
 
         $latest = Invoice::latest('id')->first();
@@ -290,22 +288,6 @@ class InvoicesController extends Controller
                 'rate' => $rate
             ]);
 
-
-
-
-
-            // Create each invoice item
-            foreach ($validated['extra_items'] as $item) {
-
-                $invoice->invoice_items()->create([
-                    'name' => $item['description'],
-                    'quantity' => $item['qty'],
-                    'price' => $item['rate'],
-                    'total' => $item['total'],
-                    'rate' => $rate
-                ]);
-            }
-
             foreach ($validated['items'] as $item) {
 
                 $startDate = !empty($item['checkin']) ? Carbon::parse($item['checkin']) : null;
@@ -333,6 +315,19 @@ class InvoicesController extends Controller
                     'rate' => $rate
                 ]);
             }
+
+            // Create each invoice item
+            foreach ($validated['extra_items'] as $item) {
+                $invoice->invoice_items()->create([
+                    'name' => $item['description'],
+                    'quantity' => $item['qty'],
+                    'price' => $item['rate'],
+                    'total' => $item['total'],
+                    'rate' => $rate
+                ]);
+            }
+
+
 
             DB::commit();
 

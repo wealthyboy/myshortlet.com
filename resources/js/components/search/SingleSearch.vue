@@ -363,7 +363,7 @@ export default {
            // this.getApartments()
         }
 
-       this.showAvailability()
+        this.showAvailability()
     },
     components: {
         Pickr,
@@ -577,8 +577,7 @@ export default {
                     this.roomsIsAv = response.data.apartments
                     this.apartmentIsChecked = true
                     if (null !== response.data.apartments) {
-                        this.roomsAv = response.data
-
+                        this.roomsAv = response.data.apartments
                     }
                     //this.stays = response.data.nights;
                     this.propertyIsLoading = false;
