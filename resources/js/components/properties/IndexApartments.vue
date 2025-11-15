@@ -81,7 +81,7 @@
       </div>
 
       <div
-        v-if="!propertyLoading && apr"
+        v-if="!propertyLoading"
         id="results-available"
         class="bold-2 mt-4 alert alert-success"
         role="alert"
@@ -579,6 +579,7 @@ export default {
     } else {
     }
 
+
     jQuery(function () {
       $(".owl-carousel").owlCarousel({
         margin: 0,
@@ -613,6 +614,9 @@ export default {
       });
     }
 
+    console.log(this.room)
+
+
     if (!this.filter) {
       this.classType = ["col-12 col-lg-3 col-md-6"];
       this.roomsAv = this.apartments;
@@ -620,6 +624,7 @@ export default {
       this.classType = ["col-12 col-lg-4 col-md-6"];
       this.getApartments();
     }
+
 
     console.log(this.form.checkin);
   },
@@ -650,6 +655,8 @@ export default {
       this.openNotification = null
 
       this.highlights = this.parseStringToArray(room.teaser);
+
+      this.checkApartmentAvailabity(room)
 
       jQuery(function () {
         // Add touch event listeners to centered images

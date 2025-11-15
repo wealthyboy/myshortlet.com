@@ -57,7 +57,7 @@ class ApartmentsController extends Controller
      * return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {   
+    {
         //$this->updateBedrooms();
         $apartments = Apartment::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.apartments.index', compact('apartments'));
@@ -70,6 +70,11 @@ class ApartmentsController extends Controller
      */
     public function create(Request $request)
     {
+
+
+
+
+
         User::canTakeAction(2);
         $counter = rand(1, 500);
         $locations = Location::parents()->get();
@@ -190,10 +195,31 @@ class ApartmentsController extends Controller
             $apartment->attributes()->sync(array_filter($request->apartment_facilities_id));
         }
 
-        
 
 
-        $this->syncImages($room_images, $apartment);
+
+        // $this->syncImages($room_images, $apartment);
+
+
+        if (!empty($room_images)) {
+            foreach ($room_images as $image) {
+                // Detect environment
+                if (app()->environment('production')) {
+                    // Upload to DigitalOcean Spaces
+                    $path = Storage::disk('spaces')->putFile('apartments', $image, 'public');
+                    $url = Storage::disk('spaces')->url($path);
+                } else {
+                    // Store locally for development
+                    $path = $image->store('images/apartments', 'public');
+                    $url = asset('storage/' . $path);
+                }
+
+                // Save the public URL (not local path)
+                $apartment->images()->create(['image' => $url]);
+            }
+        }
+
+
 
 
         /**
@@ -233,16 +259,26 @@ class ApartmentsController extends Controller
 
     public function syncImages($images, $attr, $property = null)
     {
-        if (count($images)  > 0) {
-            $images = array_filter($images);
-            foreach ($images  as $image) {
-                $imgs = new Image(['image' => $image]);
-                $attr->images()->save($imgs);
+
+
+
+        if (!empty($images)) {
+            foreach ($images as $image) {
+                // Upload file to DigitalOcean Spaces
+                $path = Storage::disk('spaces')->putFile('apartments', $image, 'public');
+
+                // Get the public URL
+                $url = Storage::disk('spaces')->url($path);
+
+                // Save to DB
+                $attr->images()->create(['image' => $url]);
             }
+
             if ($property) {
-                foreach ($images  as $image) {
-                    $imgs = new Image(['image' => $image]);
-                    $property->images()->save($imgs);
+                foreach ($images as $image) {
+                    $path = Storage::disk('spaces')->putFile('properties', $image, 'public');
+                    $url = Storage::disk('spaces')->url($path);
+                    $property->images()->create(['image' => $url]);
                 }
             }
         }

@@ -58,6 +58,7 @@ class ApartmentsController extends Controller
         $peakPeriodIsSelected = null;
 
 
+
         $property_is_not_available = null;
         $data = [];
         $attributes = null;
@@ -70,19 +71,15 @@ class ApartmentsController extends Controller
 
         $query = Apartment::query();
         $peak_period = PeakPeriod::first();
-
         $checkInOut = request()->check_in_checkout ?? session('check_in_checkout');
 
         $dates = explode("to", $checkInOut);
 
 
-
-
-
-
         if ($request->check_in_checkout) {
 
             if (count($dates) > 1) {
+
 
                 $date = Helper::toAndFromDate($checkInOut);
 
@@ -102,7 +99,7 @@ class ApartmentsController extends Controller
             // Check if apartment_id is present in the request
             if ($request->has('apartment_id')) {
                 $apartmentId = $request->apartment_id;
-                $query->where('id', $apartmentId)->get(); // Filter by the provided apartment ID
+                $query->where('id', $apartmentId); // Filter by the provided apartment ID
             }
 
 
@@ -121,16 +118,31 @@ class ApartmentsController extends Controller
             $apartments = $query->where('allow', 1)->latest()->first();
         }
 
+        if (!$request->has('apartment_id')) {
+            $apartments = $query->where('allow', 1)->latest()->get();
+        }
 
-        $apartments = $request->has('apartment_id')
-            ? $query->where('allow', 1)->latest()->first()
-            : $query->where('allow', 1)->latest()->get();
-
-        $apartments = $query->where('allow', 1)->latest()->get();
 
         $saved = null;
         $property = Property::first();
-        $apartments->load('images', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
+
+        if ($apartments) {
+            $apartments->load('images', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
+        }
+
+
+
+        if ($request->has('apartment_id')) {
+            return response()->json([
+                'apartments' => $apartments,
+                'peak_periods' => $peakPeriodIsSelected,
+                'params' => $request->all(),
+                'search' => false
+            ]);
+        }
+
+
+
 
 
 

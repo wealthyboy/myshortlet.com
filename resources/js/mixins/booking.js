@@ -186,9 +186,9 @@ export default {
                     }
                 })
                 .then((response) => {
+                    this.apartmentIsAvailable.push(response.data);
+
                     this.apartmentIsChecked = true
-                    this.roomsAv = response.data.data[0]
-                    this.roomsIsAv = response.data;
                     this.stays = response.data.nights;
                     this.propertyIsLoading = false;
 
@@ -508,10 +508,9 @@ export default {
                     }
                 })
                 .then((response) => {
-                    console.log(response.data)
                     this.singleApartmentIsChecked = true
                     this.loading = false
-                    this.singleApartmentIsAvailable = response.data
+                    this.singleApartmentIsAvailable = response.data.apartments
                     return Promise.resolve();
                 })
                 .catch((error) => {
