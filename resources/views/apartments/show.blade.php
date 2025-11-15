@@ -47,7 +47,7 @@
       <div class="row">
          <div class="col-12 ">
             <div class="d-">
-               <single-search  :peak_period="{{$peak_period}}" :apartment="{{$apartment}}" :property="{{$property}}" />
+               <single-search :peak_period="{{$peak_period}}" :apartment="{{$apartment}}" :property="{{$property}}" />
             </div>
          </div>
       </div>
@@ -157,40 +157,5 @@ $('.gallery-images').addClass('d-none')
 
 
 })
-var geocoder;
-var map, big_map;
-function initialize() {
-geocoder = new google.maps.Geocoder();
-var latlng = new google.maps.LatLng(-34.397, 150.644);
-var mapOptions = {
-zoom: 17,
-center: latlng,
-mapTypeControl: false,
-streetViewControl: false
-};
-big_map = new google.maps.Map(document.getElementById("map"), mapOptions);
-map = new google.maps.Map(document.getElementById("map2"), mapOptions);
-}
-function codeAddress(address = "{{ $apartment->city }}, {{ $apartment->state }}") {
-geocoder.geocode({ address: address }, function(results, status) {
-if (status == "OK") {
-map.setCenter(results[0].geometry.location);
-var marker = new google.maps.Marker({
-map: map,
-position: results[0].geometry.location,
-});
-big_map.setCenter(results[0].geometry.location);
-var marker = new google.maps.Marker({
-map: big_map,
-position: results[0].geometry.location,
-});
-} else {
-alert("Geocode was not successful for the following reason: " + status);
-}
-});
-}
-window.onload = function() {
-initialize();
-codeAddress();
-};
+
 @stop
