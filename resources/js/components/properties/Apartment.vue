@@ -11,15 +11,16 @@
       itemtype="https://schema.org/ImageGallery"
     >
       <div class="owl-carousel owl-theme">
-        {{ room.google_drive_image_link }}
+        
         <div
           class="item rounded-top"
           :key="index"
+          v-for="(image, index) in room.google_drive_image_link"
           itemprop="photo"
           itemscope
           itemtype="https://schema.org/ImageObject"
         >
-          
+           {{ image }}
           <div class="images-count">
             <button
               role="button"
@@ -39,7 +40,6 @@
                 >
                   Show all
                   {{
-                    room.images.length + room.google_drive_image_links.length
                   }}
                   images
                 </title>
@@ -54,7 +54,6 @@
                 role="button"
                 aria-hidden="true"
                 >{{
-                  room.images.length + room.google_drive_image_links.length
                 }}
                 View All</span
               >
