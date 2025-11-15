@@ -55,6 +55,11 @@ class LoginController extends Controller
         // $user->password = bcrypt(11223344);
         // $user->save();
 
+        if ($request->has('invoice')) {
+            session(['login_invoice' => true]);
+        }
+
+
         if ($request->is('admin/*')) {
             return view('admin.auth.login');
         }
@@ -153,6 +158,14 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         //
+
+
+        if (session('login_invoice') && $user->users_permission) {
+            session()->forget('login_invoice'); // cleanup
+            return redirect('/admin/invoices');
+        }
+
+
         if ($request->is('admin/*')) {
             return \Redirect::to('/admin');
         }
