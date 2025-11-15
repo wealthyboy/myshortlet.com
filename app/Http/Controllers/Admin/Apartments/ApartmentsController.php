@@ -206,8 +206,8 @@ class ApartmentsController extends Controller
                 // Detect environment
                 if (app()->environment('production')) {
                     // Upload to DigitalOcean Spaces
-                    $path = Storage::disk('spaces')->putFile('apartments', $image, 'public');
-                    $url = Storage::disk('spaces')->url($path);
+                    //$path = Storage::disk('spaces')->putFile('apartments', $image, 'public');
+                    //$url = Storage::disk('spaces')->url($path);
                 } else {
                     // Store locally for development
                     $path = $image->store('images/apartments', 'public');
