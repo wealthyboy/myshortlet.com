@@ -60,6 +60,7 @@
             <div :class="{ 'header-filter': propertyIsLoading }" id="" class="name mt-1 rounded p-2">
                 <div class="position-relative">
                     <div    class="row">
+                        {{ roomsAv }}
                         <apartment :showReserve="false" :classType="classType" @showImages="showImages"
                             @showRoom="showRoom" @reserve="reserve" :amenities="amenities" :room="roomsAv" :stays="stays"
                             :qty="qty" />
