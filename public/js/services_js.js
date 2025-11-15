@@ -5917,8 +5917,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       // this.getApartments()
     }
 
-    this.showAvailability();
+    //this.showAvailability()
   },
+
   components: {
     Pickr: (vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_3___default()),
     Guests: _properties_Guests_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
