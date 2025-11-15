@@ -509,7 +509,8 @@ export default {
                 })
                 .then((response) => {
                     this.singleApartmentIsChecked = true
-                    this.loading = false
+                    this.showApartmentCount = true
+                    //this.loading = false
                     this.singleApartmentIsAvailable = response.data.apartments
                     return Promise.resolve();
                 })
@@ -742,7 +743,7 @@ export default {
                     this.roomsAv = response.data.data;
                     this.stays = response.data.nights;
                     this.propertyIsLoading = false;
-
+                    this.showApartmentCount = true;
                     const peakPeriod = response.data.peak_periods;
 
                     if (peakPeriod) {
