@@ -319,16 +319,20 @@ class InvoicesController extends Controller
             // Create each invoice item
             if (!empty($validated['extra_items']) && is_array($validated['extra_items'])) {
 
-                foreach ($validated['extra_items'] as $item) {
+                if ($validated['extra_items'] as $item) {
 
-
-                    $invoice->invoice_items()->create([
-                        'name' => $item['description'] ?? 'Extra Item',
+                    if ($item['description']) {
+                        $invoice->invoice_items()->create([
+                        'name' => $item['description'],
                         'quantity' => $item['qty'] ?? 1,
                         'price' => $item['rate'] ?? 0,
                         'total' => $item['total'] ?? 0,
                         'rate'  => $rate
-                    ]);
+                      ]);
+                    }
+
+
+                    
                 }
             }
 
