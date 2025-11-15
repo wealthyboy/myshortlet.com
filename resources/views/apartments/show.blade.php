@@ -35,7 +35,7 @@
                   <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ isset($apartment->google_drive_image_links[3]) ? $apartment->google_drive_image_links[3]: null }}')"></a>
                </div>
                <div class="col-6 pb-2 position-relative">
-                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ $apartment->google_drive_image_links[4] }}')"></a>
+                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ isset($apartment->google_drive_image_links[4]) ? $apartment->google_drive_image_links[4]: null  }}')"></a>
                   <a href="#" id="full-image" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
                      <p class="fs-48 bold-2  text-white lh-1 mb-1">+{{ count($apartment->google_drive_image_links) }}</p>
                      <p class="fs-16 bold-2 text-white lh-1625 text-uppercase">View Gallery</p>
