@@ -3591,7 +3591,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     };
   },
   mounted: function mounted() {
-    console.log(this.room);
     // Example usage with multiple elements and dynamic classes
     var targetConfigs = [{
       id: "product-0",
@@ -5917,9 +5916,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       // this.getApartments()
     }
 
-    //this.showAvailability()
+    this.showAvailability();
   },
-
   components: {
     Pickr: (vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_3___default()),
     Guests: _properties_Guests_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -12284,9 +12282,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           apartment_id: this.apartment.id
         }
       }).then(function (response) {
-        _this.apartmentIsAvailable.push(response.data);
+        //this.apartmentIsAvailable.push(response.data);
+
         _this.apartmentIsChecked = true;
-        _this.stays = response.data.nights;
+        _this.roomsAv = response.data.apartments;
+
+        // this.stays = response.data.nights;
         _this.propertyIsLoading = false;
         jQuery(function () {
           $(".owl-carousel").owlCarousel({

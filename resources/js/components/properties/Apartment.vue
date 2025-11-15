@@ -294,7 +294,6 @@ export default {
   },
   mounted() {
 
-    console.log(this.room)
     // Example usage with multiple elements and dynamic classes
     const targetConfigs = [
       {

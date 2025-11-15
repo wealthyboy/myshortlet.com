@@ -186,10 +186,12 @@ export default {
                     }
                 })
                 .then((response) => {
-                    this.apartmentIsAvailable.push(response.data);
+                    //this.apartmentIsAvailable.push(response.data);
 
                     this.apartmentIsChecked = true
-                    this.stays = response.data.nights;
+                    this.roomsAv = response.data.apartments
+
+                   // this.stays = response.data.nights;
                     this.propertyIsLoading = false;
 
                     jQuery(function () {
