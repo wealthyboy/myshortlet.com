@@ -53,11 +53,6 @@
         </div>
       </div>
 
-      
-
-      
-
-
       <div id="full-" v-if="propertyLoading" class="full-bg position-relative">
         <div class="signup--middle">
           <div class="loading">
@@ -836,6 +831,7 @@ export default {
         check_in_checkout: this.form.check_in_checkout,
       });
 
+      const hasValidDateRange = query.includes("check_in_checkout=");
       // 3. SEND TO API
       axios
         .get(window.location.pathname + "?" + query + "&t=" + Math.random())
@@ -843,7 +839,10 @@ export default {
 
           let params = response.data.params;
 
-          this.showApartmentCount = true;
+          console.log(hasValidDateRange)
+
+          this.showApartmentCount = hasValidDateRange;
+
           const peakPeriod = response.data.peak_periods;
 
           if (peakPeriod) {
