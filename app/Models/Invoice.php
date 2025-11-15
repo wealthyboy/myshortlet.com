@@ -14,6 +14,10 @@ class Invoice extends Model
         'resent' => 'boolean',
     ];
 
+    public $appends = [
+        'formatted_discount',
+    ];
+
 
     protected $fillable = [
         'name',
@@ -38,6 +42,13 @@ class Invoice extends Model
     public function invoice_items()
     {
         return $this->hasMany(InvoiceItem::class);
+    }
+
+    public function getFormattedDiscountAttribute()
+    {
+        return $this->discount_type === 'fixed'
+            ? '-' . $this->currency . number_format($this->discount)
+            : '-' . number_format($this->discount) . '%';
     }
 
     protected static function boot()
