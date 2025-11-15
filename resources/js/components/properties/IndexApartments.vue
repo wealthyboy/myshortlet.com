@@ -81,7 +81,7 @@
       </div>
 
       <div
-        v-if="!propertyLoading"
+        v-if="!propertyLoading && showApartmentCount"
         id="results-available"
         class="bold-2 mt-4 alert alert-success"
         role="alert"
@@ -507,7 +507,8 @@ export default {
       stays: null,
       loading: false,
       highlights: [],
-      propertyLoading: false,
+      propertyLoading: false, 
+      showApartmentCount: null,
       peakPeriodSelected: null,
       propertyIsLoading: false,
       isDateNeedsToToOpen: false,
@@ -548,6 +549,8 @@ export default {
       document.getElementById("full-bg").remove();
     }
 
+    this.showApartmentCount = this.apr;
+
     const retrievedJsonString = localStorage.getItem("searchParams");
     console.log(retrievedJsonString);
     // Check if the retrieved JSON string is not null
@@ -557,6 +560,8 @@ export default {
       if (retrievedObject.checkin !== null) {
         this.form.checkin = retrievedObject.checkin;
         this.form.checkout = retrievedObject.checkout;
+
+
       } else {
         const urlParams = new URLSearchParams(window.location.search);
         console.log(urlParams);
@@ -785,62 +790,80 @@ export default {
     },
 
     checkSingleAvailabity(room) {
+
       this.checkApartmentAvailabity(room);
     },
+    buildQuery(obj) {
+      const params = new URLSearchParams();
+      Object.keys(obj).forEach((key) => {
+        const value = obj[key];
+
+        if (value !== null && value !== undefined && value !== "") {
+          params.append(key, value);
+        }
+      });
+      return params.toString();
+    },
+
 
     getApartments() {
       this.propertyLoading = true;
-      const urlParams = new URLSearchParams(window.location.search);
-      const queryString = urlParams.toString();
 
+      // restore from localStorage
+      const retrieved = localStorage.getItem("searchParams");
+      if (retrieved) {
+        try {
+          const saved = JSON.parse(retrieved);
+
+          if (saved.rooms) this.form.rooms = saved.rooms;
+          if (saved.persons) this.form.persons = saved.persons;
+          if (saved.checkin) this.form.checkin = saved.checkin;
+          if (saved.checkout) this.form.checkout = saved.checkout;
+          if (saved.check_in_checkout)
+            this.form.check_in_checkout = saved.check_in_checkout;
+
+        } catch (e) {
+          console.error("Invalid stored JSON", e);
+        }
+      }
+
+      // build query from NON-EMPTY values
+      const query = this.buildQuery({
+        rooms: this.form.rooms,
+        persons: this.form.persons,
+        checkin: this.form.checkin,
+        checkout: this.form.checkout,
+        check_in_checkout: this.form.check_in_checkout,
+      });
+
+      // 3. SEND TO API
       axios
-        .get(window.location + "?t=" + Math.random())
+        .get(window.location.pathname + "?" + query + "&t=" + Math.random())
         .then((response) => {
+
           let params = response.data.params;
 
-            const peakPeriod = response.data.peak_periods;
+          this.showApartmentCount = true;
+          const peakPeriod = response.data.peak_periods;
 
-            if (peakPeriod) {
-              this.peakPeriodSelected =
-                `Your selected dates fall within the peak period ` +
-                `(${peakPeriod.from_date} to ${peakPeriod.to_date}). ` +
-                ``;
-
-                this.openNotification = true 
-
-              // open the modal right away
-              this.openModal();
-            } else {
-              this.peakPeriodSelected = null;
-            }
-
-
+          if (peakPeriod) {
+            this.peakPeriodSelected = `Your selected dates fall within the peak period (${peakPeriod.from_date} to ${peakPeriod.to_date}).`;
+            this.openNotification = true;
+            this.openModal();
+          }
 
           this.form.rooms = params.rooms;
-          this.form.persons = params.checkout;
+          this.form.persons = params.persons;
           this.roomsAv = response.data.data;
           this.stays = response.data.nights;
-          this.propertyLoading = false;
-          const paramNameToGet = "check_in_checkout";
-          const { key, value } = this.getQueryParam(paramNameToGet);
 
-          if (value && this.isValidDateRange(value)) {
-            console.log(value, this.isValidDateRange(value));
+          if (this.form.checkin && this.form.checkout &&
+              this.isValidDate(this.form.checkin) &&
+              this.isValidDate(this.form.checkout)) {
             this.apartmentIsChecked = true;
           }
 
-          if (this.form.checkin && this.form.checkout) {
-            if (
-              this.isValidDate(this.form.checkin) &&
-              this.isValidDate(this.form.checkout)
-            ) {
-              this.apartmentIsChecked = true;
-            }
-          }
-
-          this.roomsAv = response.data.data;
-          this.stays = response.data.nights;
-          this.propertyIsLoading = false;
+          this.propertyLoading = false;
 
           jQuery(function () {
             $(".owl-carousel").owlCarousel({
@@ -848,47 +871,15 @@ export default {
               nav: true,
               dots: true,
               responsive: {
-                0: {
-                  items: 1,
-                },
-                600: {
-                  items: 1,
-                },
-                1000: {
-                  items: 1,
-                },
+                0: { items: 1 },
+                600: { items: 1 },
+                1000: { items: 1 },
               },
             });
           });
 
-          //document.getElementById("full-bg").remove();
-          // jQuery(function () {
-          //     $(".owl-carousel").owlCarousel({
-          //         margin: 0,
-          //         dots: true,
-          //         nav: true,
-          //         navText: [
-          //             '<div class="nav-btn prev-slide d-flex justify-content-center align-items-center mr-1"><svg  viewBox="0 0 21 40" xmlns="http://www.w3.org/2000/svg"><path d="M19.9 40L1.3 20 19.9 0"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-          //             '<div class="nav-btn next-slide d-flex justify-content-center align-items-center ml-1"><svg  viewBox="0 0 19 40" xmlns="http://www.w3.org/2000/svg"><path d="M.1 0l18.6 20L.1 40"  fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>',
-          //         ],
-          //         responsive: {
-          //             0: {
-          //                 items: 1,
-          //             },
-          //             600: {
-          //                 items: 1,
-          //             },
-          //             1000: {
-          //                 items: 1,
-          //             },
-          //         },
-          //     });
-          // });
-          return Promise.resolve();
         })
         .catch((error) => {
-          // commit("setPropertyLoading", false);
-          // commit("setProperties", []);
           console.log(error);
         });
     },

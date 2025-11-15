@@ -31,6 +31,7 @@
                 </div>
             </div>
 
+
             <div v-if="roomsIsAv" class="mt-3">
                 <div class="alert alert-success">
                     This apartment is available 
@@ -45,6 +46,7 @@
 
 
             <div >
+              
                 <div id="" v-if="!propertyIsLoading && apartmentIsChecked && !roomsIsAv"  class="name mt-1 rounded bg-white p-2">
                     <div class="text-muted text-danger">
                         {{
@@ -251,8 +253,9 @@ export default {
                 swipe: true,
                 touchMove: true
             },
-            roomsAv: [],
+            roomsAv: {},
             roomsIsAv: null,
+            apartmentIsAvailable: [],
             total: 0,
             aps: 0,
             apTotal: 0,
@@ -360,7 +363,7 @@ export default {
            // this.getApartments()
         }
 
-       // this.checkAvailabity()
+       this.showAvailability()
     },
     components: {
         Pickr,
@@ -494,6 +497,99 @@ export default {
         handleAvailabity: function () {
             this.roomsIsAv = null
             this.showAvailability()
+        },
+
+        showAvailability: function () {
+            this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
+            this.form.persons = document.querySelector("#persons").value;
+            this.form.rooms = document.querySelector("#rooms").value;
+            var now = new window.Date().getTime(); 
+            const myObject = {
+                rooms: this.form.rooms,
+                check_in_checkout: this.form.check_in_checkout,
+                checkin: this.form.checkin,
+                checkout: this.form.checkout,
+                persons: this.form.persons,
+                expiry: now + 3600000,
+                apartment_id: this.apartment.id
+            };
+
+            const storageKey = 'searchParams';
+            const jsonString = JSON.stringify(myObject);
+            const currentValue = localStorage.getItem(storageKey);
+
+            if (currentValue !== null) {
+                localStorage.setItem(storageKey, jsonString);
+            } else {
+                localStorage.setItem(storageKey, jsonString);
+            }
+
+
+            if ( !this.form.check_in_checkout ||
+                this.form.check_in_checkout.split(" ").length < 2
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+
+            if (
+                !this.isValidDate(this.form.checkin)
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (
+                !this.isValidDate(this.form.checkout)
+            ) {
+                alert("Please select your check-in and check-out dates")
+                return;
+            }
+
+            if (this.isCheckinGreaterThanCheckout(this.form.checkin, this.form.checkout)) {
+                alert("Set your check-in and check-out dates correctly")
+                return;
+            }
+
+            const { start_date, end_date, days_limit } = this.peak_period;
+
+            if ( !this.validateBooking() ) {
+                this.apartmentIsChecked = false
+                alert(`Bookings from ${start_date.split("T")[0]} to ${end_date.split("T")[0]} require a minimum stay of ${days_limit} days.`);                
+                return false;
+            }
+
+            // Now 'retrievedObject' contains the object retrieved from localStorage
+            this.propertyIsLoading = true
+
+            axios
+                .get('/apartments', {
+                    params: {
+                        rooms: this.form.rooms,
+                        check_in_checkout: this.form.check_in_checkout,
+                        children: this.form.children,
+                        adults: this.form.adults,
+                        apartment_id: this.apartment.id
+                    }
+                })
+                .then((response) => {
+                    this.roomsIsAv = response.data.apartments
+                    this.apartmentIsChecked = true
+                    if (null !== response.data.apartments) {
+                        this.roomsAv = response.data
+
+                    }
+                    //this.stays = response.data.nights;
+                    this.propertyIsLoading = false;
+                })
+                .catch((error) => {
+                    this.propertyIsLoading = false
+                    // commit("setPropertyLoading", false);
+                    // commit("setProperties", []);
+                });
+
+            // this.getProperties(window.location);
         },
 
       
