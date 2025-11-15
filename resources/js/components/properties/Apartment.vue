@@ -14,19 +14,11 @@
         <div
           class="item rounded-top"
           :key="index"
-          v-for="(image, index) in room.google_drive_image_link"
           itemprop="photo"
           itemscope
           itemtype="https://schema.org/ImageObject"
         >
-          <img
-            :alt="room.name"
-            :title="'book ' + room.name + '  Avenue Montaigne'"
-            @click.prevent="showRoom(room)"
-            :src="image"
-            class="img cursor-pointer img-fluid"
-            itemprop="contentUrl"
-          />
+          
           <div class="images-count">
             <button
               role="button"
@@ -88,7 +80,7 @@
         class="card-title bold-2 text-size-1-big mt-sm-3 mt-3"
         itemprop="name"
       >
-        <a :href="`/apartment/${room.slug}/`">{{ room.name }}</a>
+        <a :href="`/apartment/${room.slug}`">{{ room.name }}</a>
       </div>
       <div
         v-if="!room.is_gallery"
