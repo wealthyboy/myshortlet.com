@@ -130,8 +130,6 @@ class ApartmentsController extends Controller
             $apartments->load('images', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
         }
 
-
-
         if ($request->has('apartment_id')) {
             return response()->json([
                 'apartments' => $apartments,
@@ -561,6 +559,7 @@ class ApartmentsController extends Controller
 
         $date  = explode("to", $request->check_in_checkout);
 
+
         $nights = '1 night';
         $sub_total = null;
         $ids = $apartment->property->apartments->pluck('id')->toArray();
@@ -579,6 +578,9 @@ class ApartmentsController extends Controller
         $start_date = !empty($date) ?  $date['start_date'] : null;
         $end_date = !empty($date) ? $date['end_date'] : null;
         $nights = Helper::nights($date);
+
+        dd($apartment->google_drive_image_links);
+
 
 
 
