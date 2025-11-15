@@ -301,7 +301,7 @@ class InvoicesController extends Controller
                 $name = 'Booking for ' . $item['name'] .
                     ($checkin ? ' from ' . $checkin : '') .
                     ($checkout ? ' to ' . $checkout : '') .
-                    ' (' . $item['qty'] . ')';
+                    ' (' . $item['qty'] . 'night(s))';
 
 
                 $invoice->invoice_items()->create([
