@@ -108,14 +108,22 @@ class Apartment extends Model
         $images = [];
         // If the attribute exists and is not empty
         $clean = str_replace('"', '', $this->image_link);
-        $links = array_map('trim', explode(',', $clean));
 
-        return  $links;
+        $links = array_filter(
+            array_map('trim', explode(',', $clean)),
+            fn($v) => !empty($v)
+        );
+
+        // apply your formatter
+        $formatted = array_map(function ($link) {
+            return self::generateThumbnailUrl($link);
+        }, $links);
+
+        return $formatted;
 
         // Return an empty array if the attribute is empty
         return [];
     }
-
 
 
     public function getGoogleDriveImageLinkAttribute()
