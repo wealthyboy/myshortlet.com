@@ -136,6 +136,7 @@
                     <strong>Client</strong><br>
                     {{ $invoice->full_name }}<br>
                     {{ $invoice->address }}<br>
+                    {{ $invoice->email }}<br>
                     {{ $invoice->phone }}
                 </td>
                 <td width="50%" align="right">
