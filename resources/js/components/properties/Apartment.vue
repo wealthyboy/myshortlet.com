@@ -10,7 +10,6 @@
       itemscope
       itemtype="https://schema.org/ImageGallery"
     >
-    {{ room.google_drive_image_link }}
       <div class="owl-carousel owl-theme">
         <div
           class="item rounded-top"
@@ -294,6 +293,8 @@ export default {
     };
   },
   mounted() {
+
+    console.log(this.room)
     // Example usage with multiple elements and dynamic classes
     const targetConfigs = [
       {

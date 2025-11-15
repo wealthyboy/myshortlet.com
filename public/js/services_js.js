@@ -3591,6 +3591,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     };
   },
   mounted: function mounted() {
+    console.log(this.room);
     // Example usage with multiple elements and dynamic classes
     var targetConfigs = [{
       id: "product-0",
@@ -8861,7 +8862,7 @@ var render = function render() {
       itemscope: "",
       itemtype: "https://schema.org/ImageGallery"
     }
-  }, [_vm._v("\n  " + _vm._s(_vm.room.google_drive_image_link) + "\n    "), _c("div", {
+  }, [_c("div", {
     staticClass: "owl-carousel owl-theme"
   }, [_vm._l(_vm.room.google_drive_image_link, function (image, index) {
     return _c("div", {
