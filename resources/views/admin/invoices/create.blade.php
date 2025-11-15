@@ -174,6 +174,43 @@
                 </div>
             </div>
 
+            <!-- Extra Charges / Invoice Items -->
+            <div class="card mb-4">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <span>Additional Invoice Items</span>
+                    <button type="button" id="addExtraItem" class="btn btn-sm btn-success">+ Add Item</button>
+                </div>
+
+                <div class="card-body" id="extraItems">
+                    <div class="form-row extra-item-row">
+                        <div class="form-group col-md-5">
+                            <label>Description</label>
+                            <input type="text" name="extra_items[0][description]" class="form-control description" placeholder="Item description" required>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label>Qty</label>
+                            <input type="number" name="extra_items[0][qty]" class="form-control extra-qty" value="1" min="1">
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label>Rate</label>
+                            <input type="number" name="extra_items[0][rate]" class="form-control extra-rate" value="0">
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label>Total</label>
+                            <input type="number" name="extra_items[0][total]" class="form-control extra-total" readonly>
+                        </div>
+
+                        <div class="form-group col-md-1 d-flex align-items-end">
+                            <button type="button" class="btn btn-danger btn-sm removeExtraItem">delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
 
             <!-- Summary -->
@@ -309,6 +346,45 @@ Caution deposit will be refunded within 5 working days after checkout.
                 if ($('.invoice-item-row').length > 1) {
                     $(this).closest('.invoice-item-row').remove();
                 }
+                calculateTotals();
+            });
+
+            let extraIndex = 1;
+
+            // Add Extra Item
+            $('#addExtraItem').on('click', function() {
+                const newRow = $('#extraItems .extra-item-row:first').clone();
+
+                newRow.find('input').val('');
+                newRow.find('.extra-qty').val(1);
+                newRow.find('.extra-rate').val(0);
+                newRow.find('.extra-total').val('');
+
+                newRow.find('input').each(function() {
+                    const name = $(this).attr('name');
+                    $(this).attr('name', name.replace(/\[\d+\]/, `[${extraIndex}]`));
+                });
+
+                $('#extraItems').append(newRow);
+                extraIndex++;
+            });
+
+            // Remove row
+            $(document).on('click', '.removeExtraItem', function() {
+                if ($('.extra-item-row').length > 1) {
+                    $(this).closest('.extra-item-row').remove();
+                }
+                calculateTotals();
+            });
+
+            // Recalculate total for each row
+            $(document).on('input', '.extra-qty, .extra-rate', function() {
+                const row = $(this).closest('.extra-item-row');
+                const qty = parseFloat(row.find('.extra-qty').val()) || 0;
+                const rate = parseFloat(row.find('.extra-rate').val()) || 0;
+
+                row.find('.extra-total').val((qty * rate).toFixed(2));
+
                 calculateTotals();
             });
 
@@ -474,26 +550,39 @@ Caution deposit will be refunded within 5 working days after checkout.
                 const currency = $('#currency').val() || '';
                 let subTotal = 0;
 
+                // ---- Main apartment items ----
                 $('.invoice-item-row').each(function() {
                     const total = parseFloat($(this).find('.item-total').val()) || 0;
                     subTotal += total;
                 });
 
+                // ---- Extra invoice items ----
+                $('.extra-item-row').each(function() {
+                    const total = parseFloat($(this).find('.extra-total').val()) || 0;
+                    subTotal += total;
+                });
+
+                // Discount
                 const discountVal = parseFloat($('#discount').val()) || 0;
                 const discountType = $('#discountType').val();
                 const cautionFee = parseFloat($('#cautionFee').val()) || 0;
 
-                let discountAmount = discountType === 'percent' ? (subTotal * discountVal) / 100 : discountVal;
+                let discountAmount =
+                    discountType === 'percent' ?
+                    (subTotal * discountVal) / 100 :
+                    discountVal;
+
                 let grandTotal = subTotal - discountAmount + cautionFee;
 
-                // Display totals with currency symbol (for user)
+                // Display totals with currency symbol
                 $('#subTotal').val(currency + subTotal.toFixed(2));
                 $('#grandTotal').val(currency + grandTotal.toFixed(2));
 
-                // Hidden numeric fields (for backend)
+                // Hidden numeric values for backend (if needed)
                 $('#subTotalNumeric').val(subTotal.toFixed(2));
                 $('#grandTotalNumeric').val(grandTotal.toFixed(2));
             }
+
 
             // Preview
             $('#previewBtn').on('click', function() {

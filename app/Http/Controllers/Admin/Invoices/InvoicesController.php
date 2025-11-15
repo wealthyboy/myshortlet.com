@@ -258,6 +258,8 @@ class InvoicesController extends Controller
 
         $validated = $request->all();
 
+
+
         DB::beginTransaction();
 
         $latest = Invoice::latest('id')->first();
@@ -289,16 +291,39 @@ class InvoicesController extends Controller
             ]);
 
 
+
+
+
             // Create each invoice item
+            foreach ($validated['extra_items'] as $item) {
+
+                $invoice->invoice_items()->create([
+                    'name' => $item['description'],
+                    'quantity' => $item['qty'],
+                    'price' => $item['rate'],
+                    'total' => $item['total'],
+                    'rate' => $rate
+                ]);
+            }
+
             foreach ($validated['items'] as $item) {
 
-                $startDate = Carbon::parse($item['checkin']);
-                $endDate = Carbon::parse($item['checkout']);
+                $startDate = !empty($item['checkin']) ? Carbon::parse($item['checkin']) : null;
+                $endDate   = !empty($item['checkout']) ? Carbon::parse($item['checkout']) : null;
 
                 $apartment = Apartment::find($item['apartment_id']);
 
+                $checkin  = $startDate ? $startDate->format('D, M d, Y') : '';
+                $checkout = $endDate ? $endDate->format('D, M d, Y') : '';
+
+                $name = 'Booking for ' . $item['name'] .
+                    ($checkin ? ' from ' . $checkin : '') .
+                    ($checkout ? ' to ' . $checkout : '') .
+                    ' (' . $item['qty'] . ')';
+
+
                 $invoice->invoice_items()->create([
-                    'name' => $item['name'],
+                    'name' => $name,
                     'quantity' => $item['qty'],
                     'price' => $item['price'],
                     'apartment_id' => $item['apartment_id'],
@@ -320,6 +345,9 @@ class InvoicesController extends Controller
                     ->route('admin.invoices.index')
                     ->with('success', 'Invoice saved successfully.');
             }
+
+            dd($validated);
+
 
             // Load invoice with relations for PDF
             $invoice->load('invoice_items');

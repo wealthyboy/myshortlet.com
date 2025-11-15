@@ -46,7 +46,7 @@ class SendInvoiceJob implements ShouldQueue
                     'oluwa.tosin@avenuemontaigne.ng',
                 ])
                 ->subject('Your Invoice from Avenue Montaigne')
-                ->attachData($pdfContent, 'invoice-' . $this->invoice->invoice_number . '.pdf');
+                ->attachData($pdfContent, 'invoice-' . $this->invoice->invoice . '.pdf');
         });
     }
 }

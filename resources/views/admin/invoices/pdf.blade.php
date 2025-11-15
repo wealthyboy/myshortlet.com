@@ -171,8 +171,7 @@
                 @endphp
                 <tr>
                     <td>
-                        Booking for {{ $item->name }} from {{ $checkin }} to {{ $checkout }} ({{ $nights }})
-
+                        {{ $item->name }}
                     </td>
                     <td>{{ $qty }}</td>
                     <td>{{ $invoice->currency }}{{ number_format($price, 2) }}</td>
