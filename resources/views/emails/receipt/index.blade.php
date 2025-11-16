@@ -407,7 +407,6 @@
                                                          Thank you for choosing <strong>Avenue Montaigne</strong> for your stay.
                                                          We are pleased to inform you that your payment has been received and your reservation request is
                                                          <strong style="color:green;">CONFIRMED</strong>.
-                                                         <p>Your reservation details are as follows:</p>
                                                          <b>Note: You’re required to present a valid ID upon arrival to check-in. You can also self check-in by clicking the link below to upload your ID
                                                             <br />
                                                             @if ($user_reservation->showCheckLink)
