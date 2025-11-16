@@ -43,6 +43,7 @@ class SendInvoiceJob implements ShouldQueue
             $message->to($this->invoice->email)
                 ->cc([
                     'info@avenuemontaigne.ng',
+                    'frontdesk@avenuemontaigne.ng'
                 ])
                 ->subject('Your Invoice from Avenue Montaigne')
                 ->attachData($pdfContent, 'invoice-' . $this->invoice->invoice . '.pdf');
