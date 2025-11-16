@@ -15,7 +15,8 @@ class GuestUser extends Model
         'name',
         'last_name',
         'phone_number',
-        'image'
+        'image',
+        'email'
     ];
 
 

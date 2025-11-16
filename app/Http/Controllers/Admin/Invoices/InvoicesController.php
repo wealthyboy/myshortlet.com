@@ -164,6 +164,7 @@ class InvoicesController extends Controller
             [
                 'name' => $firstName,
                 'last_name' => $lastName,
+                'email' => $invoice->email,
                 'phone_number' => $invoice->phone ?? '',
                 'image' => '',
             ]
@@ -348,7 +349,6 @@ class InvoicesController extends Controller
                     ->with('success', 'Invoice saved successfully.');
             }
 
-            dd($validated);
 
 
             // Load invoice with relations for PDF
