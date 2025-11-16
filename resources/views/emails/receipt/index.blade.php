@@ -844,7 +844,6 @@
                                                                         <tbody>
                                                                            <tr>
                                                                               <td align="right" class="container-image">
-                                                                                 <img class="p-img" src="{{ optional($reservation->apartment)->image_g }}" width="100%" height="auto" alt="locl" style="width: 100%; max-width: 150px; display: block; border: 0px;">
                                                                               </td>
                                                                            </tr>
                                                                         </tbody>
