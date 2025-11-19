@@ -772,7 +772,10 @@
    <?php  } ?>
 
 
+
+
    @if(null !== $user_reservation->extra_reservations)
+
    <table data-bgcolor="tbc" style="table-layout: fixed; margin: 0px auto; position: relative; opacity: 1; top: 0px; left: 0px; background-color: rgb(234, 235, 235);" data-module="MainInvoiceCaptionsModule" class="" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#384855" align="center">
       <tr>
          <td align="center">
@@ -782,7 +785,7 @@
                      <table class="table600Min" style="min-width:629px;" width="629" cellspacing="0" cellpadding="0" border="0" align="center">
                         <tr>
                            <td class="table600st" style="min-width:629px;">
-                              <table data-bgcolor="ThemeColorBG" class="table600" style="background-color: #342c27;" width="629" cellspacing="0" cellpadding="0" border="0" bgcolor="#67bffd" align="left">
+                              <table data-bgcolor="ThemeColorBG" class="table600" style="background-color: #fff;" width="629" cellspacing="0" cellpadding="0" border="0" bgcolor="#67bffd" align="left">
                                  <tr>
                                     <td class="" align="left">
                                        <table cellspacing="0" cellpadding="0" border="0" align="center">
@@ -792,7 +795,8 @@
                                                 <table class="table60032" width="600" cellspacing="0" cellpadding="0" border="0" align="center">
 
                                                    <tr>
-                                                      <td class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="padding: 4px;color: #ffffff;font-family: sans-serif;font-size: 15px;text-align: left;line-height: 27px;font-weight: bold;"><a href="#" target="_blank" data-color="InvoiceCaptionsLink" style="text-decoration: none;color: #ffffff;"></a>Extras
+                                                      <td class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="padding: 4px;color: #000;font-family: sans-serif;font-size: 15px;text-align: left;line-height: 27px;font-weight: bold;">
+                                                         Extras
                                                       </td>
                                                    </tr>
 
@@ -814,39 +818,98 @@
       </tr>
    </table>
 
+   <table data-bgcolor="tbc" style="table-layout: fixed; margin: 0 auto; background-color:#eaebeb;" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+      <tr>
+         <td align="center">
 
-   <table width="" cellspacing="0" cellpadding="8" border="0" style="border-collapse: collapse; margin-top: 20px; font-family: Arial; font-size: 14px;">
-      <thead>
-         <tr style="background:#eaeaea; border-bottom:1px solid #ccc; text-transform:uppercase; font-weight:bold;">
-            <th align="left">Item</th>
-            <th align="left">Description</th>
-            <th align="right">Price</th>
-            <th align="center">Qty</th>
-            <th align="right">Total</th>
-         </tr>
-      </thead>
+            <table class="table600Min" style="margin: 0 auto; min-width: 668px; background-color:#eaebeb;" width="668" cellspacing="0" cellpadding="0" border="0" align="center">
+               <tr>
+                  <td align="center">
 
-      <tbody>
-         <?php foreach ($user_reservation->extra_reservations as $reservation) { ?>
-            <tr style="border-bottom:1px solid #ddd;">
-               <td>{{ $reservation->name }}</td>
-               <td>{{ $reservation->description }}</td>
+                     <table class="table600Min" style="min-width:629px;" width="629" cellspacing="0" cellpadding="0" border="0" align="center">
+                        <tr>
+                           <td>
 
-               <td align="right">
-                  {{ $user_reservation->currency ?? '₦' }}
-                  {{ number_format($reservation->price) }}
-               </td>
+                              <!-- MAIN CONTAINER -->
+                              <table class="table600" width="629" cellspacing="0" cellpadding="0" border="0" bgcolor="#FFF" align="left" style="background-color:#342c27;">
 
-               <td align="center">{{ $reservation->quantity }}</td>
+                                 <tr>
+                                    <td align="left">
 
-               <td align="right">
-                  {{ $user_reservation->currency ?? '₦' }}
-                  {{ number_format($reservation->total ?? ($reservation->price * $reservation->quantity)) }}
-               </td>
-            </tr>
-         <?php } ?>
-      </tbody>
+                                       <!-- 4 COLUMN HEADER -->
+                                       <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                                          <tr>
+
+                                             <th width="40%" style="padding: 8px 18px; border-bottom:1px solid #c8c6c6; text-align:left; color:#ffffff; font-family:sans-serif; font-size:15px; font-weight:bold;">
+                                                Item Description
+                                             </th>
+
+                                             <th width="20%" style="padding: 8px 18px; border-bottom:1px solid #c8c6c6; text-align:left; color:#ffffff; font-family:sans-serif; font-size:15px; font-weight:bold;">
+                                                Price
+                                             </th>
+
+                                             <th width="20%" style="padding: 8px 18px; border-bottom:1px solid #c8c6c6; text-align:center; color:#ffffff; font-family:sans-serif; font-size:15px; font-weight:bold;">
+                                                Qty
+                                             </th>
+
+                                             <th width="20%" style="padding: 8px 18px; border-bottom:1px solid #c8c6c6; text-align:right; color:#ffffff; font-family:sans-serif; font-size:15px; font-weight:bold;">
+                                                Total
+                                             </th>
+
+                                          </tr>
+                                       </table>
+
+                                       <!-- LOOP ROWS -->
+                                       <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="background-color: #fff;color:#000; font-family:sans-serif; font-size:14px;">
+                                          @foreach($user_reservation->extra_reservations as $item)
+                                          <tr>
+
+                                             <!-- Description -->
+                                             <td width="40%" style="padding: 8px 18px; border-bottom:1px solid #444;">
+                                                {{ $item->name }} {{$item->description}}
+                                             </td>
+
+                                             <!-- Price -->
+                                             <td width="20%" style="padding: 8px 18px; border-bottom:1px solid #444; text-align:left;">
+                                                ₦{{ number_format($item->price, 2) }}
+                                             </td>
+
+                                             <!-- Qty -->
+                                             <td width="20%" style="padding: 8px 18px; border-bottom:1px solid #444; text-align:center;">
+                                                {{ $item->quantity }}
+                                             </td>
+
+                                             <!-- Total -->
+                                             <td width="20%" style="padding: 8px 18px; border-bottom:1px solid #444; text-align:right;">
+                                                ₦{{ number_format($item->price * $item->quantity, 2) }}
+                                             </td>
+
+                                          </tr>
+                                          @endforeach
+                                       </table>
+                                       <!-- END LOOP ROWS -->
+
+                                    </td>
+                                 </tr>
+
+                              </table>
+                              <!-- END MAIN CONTAINER -->
+
+                           </td>
+                        </tr>
+                     </table>
+
+                  </td>
+               </tr>
+            </table>
+
+         </td>
+      </tr>
    </table>
+
+
+
+
 
    @endif
 
@@ -989,10 +1052,6 @@
                                        </table>
                                     </th>
                                  </tr>
-
-
-
-
 
 
                                  <tr>
