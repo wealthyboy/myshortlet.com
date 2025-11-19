@@ -50,16 +50,24 @@ class UserReservation extends Model
         return $this->hasOne(Reservation::class, 'user_reservation_id');
     }
 
+
+    public function extra_reservations()
+    {
+        return $this->hasMany(Reservation::class, 'user_reservation_id')
+            ->where(function ($q) {
+                $q->whereNull('apartment_id')
+                    ->orWhere('apartment_id', '')
+                    ->orWhere('apartment_id', 0);
+            });
+    }
+
     public function reservations()
     {
         return $this->hasMany(Reservation::class, 'user_reservation_id')->whereNotNull('apartment_id');
     }
 
 
-    public function additional_reservations()
-    {
-        return $this->hasMany(Reservation::class, 'user_reservation_id')->whereNull('apartment_id');
-    }
+
 
 
     public function guest_user()
