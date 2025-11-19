@@ -381,14 +381,16 @@ class Helper
     public static function toAndFromDate($date)
     {
         $date  = $date ?  explode("to", $date)  : explode("to", "2012-10-21 to 2012-10-23");
-        if ($date) {
-            $date1 = trim($date[0]);
-            $date2 = trim($date[1]);
-            $start_date = Carbon::createFromDate($date1);
-            $end_date = Carbon::createFromDate($date2);
-            return ['start_date' => $start_date, 'end_date' => $end_date];
+        if (isset($date[0]) && $date[0]) {
+            if ($date) {
+                $date1 = trim($date[0]);
+                $date2 = trim($date[1]);
+                $start_date = Carbon::createFromDate($date1);
+                $end_date = Carbon::createFromDate($date2);
+                return ['start_date' => $start_date, 'end_date' => $end_date];
+            }
+            return [];
         }
-        return [];
     }
 
 
