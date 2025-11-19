@@ -211,6 +211,8 @@ class InvoicesController extends Controller
                     'description' => $item->name,
                     'length_of_stay' => $item->quantity,
                     'checkin' => Carbon::parse($item->checkin),
+                    'apartment_id' => $item->apartment_id,
+
                     'rate' => $rate,
                     'checkout' => Carbon::parse($item->checkout)
 
@@ -342,7 +344,6 @@ class InvoicesController extends Controller
             }
 
 
-            dd($invoice->invoice_items);
 
             DB::commit();
 
