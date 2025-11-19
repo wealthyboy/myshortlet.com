@@ -245,6 +245,7 @@ class InvoicesController extends Controller
             // optionally: continue or throw if mail failure should abort transaction
         }
 
+        dd($user_reservation->extra_reservations);
 
 
         // ✅ Dispatch email job (can safely resend anytime)

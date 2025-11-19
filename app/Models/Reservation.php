@@ -23,6 +23,7 @@ class Reservation extends Model
         'quantity',
         'price',
         'property_id',
+        'description',
         'checkin',
         'checkout',
         'rate',
