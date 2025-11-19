@@ -47,7 +47,7 @@ class UserReservation extends Model
 
     public function reservation()
     {
-        return $this->hasOne(Reservation::class, 'user_reservation_id');
+        return $this->hasOne(Reservation::class, 'user_reservation_id')->where('apartment_id', '!=', 0);;
     }
 
 
