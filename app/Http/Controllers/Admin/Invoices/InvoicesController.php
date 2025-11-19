@@ -211,8 +211,6 @@ class InvoicesController extends Controller
                     'description' => $item->name,
                     'length_of_stay' => $item->quantity,
                     'checkin' => Carbon::parse($item->checkin),
-                    'apartment_id' => $item->apartment_id,
-
                     'rate' => $rate,
                     'checkout' => Carbon::parse($item->checkout)
 
@@ -235,7 +233,7 @@ class InvoicesController extends Controller
 
                 $user_reservation->showCheckLink = $user_reservation->reservations->count() > 1 ? false : true;
 
-                // dd($user_reservation->load('reservations'));
+                dd($user_reservation->load('reservations', 'extra_reservations'));
                 //dd(true);
                 \Mail::to($invoice->email)
                     ->bcc('frontdesk@avenuemontaigne.ng')
