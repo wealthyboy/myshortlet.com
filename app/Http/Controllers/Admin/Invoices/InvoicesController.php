@@ -273,6 +273,7 @@ class InvoicesController extends Controller
         $invoiceNumber = "INV-" . date('Y') . "-" . $nextId . $random;
         $rate = json_decode(session('rate'), true); // use true to get an associative array
         $rate = data_get($rate, 'rate', 1);
+        dd($validated);
 
         try {
             // Create the invoice record
