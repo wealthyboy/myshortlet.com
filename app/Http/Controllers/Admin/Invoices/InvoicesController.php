@@ -207,6 +207,8 @@ class InvoicesController extends Controller
                     'quantity' => $item->quantity,
                     'price' => $item->price,
                     'property_id' => $property->id,
+                    'property_id' => $property->id,
+                    'description' => $item->name,
                     'length_of_stay' => $item->quantity,
                     'checkin' => Carbon::parse($item->checkin),
                     'rate' => $rate,
@@ -234,7 +236,7 @@ class InvoicesController extends Controller
                 // dd($user_reservation->load('reservations'));
                 //dd(true);
                 \Mail::to($invoice->email)
-                    ->bcc('avenuemontaigneconcierge@gmail.com')
+                    ->bcc('frontdesk@avenuemontaigne.ng')
                     ->bcc('info@avenuemontaigne.ng')
                     ->send(new ReservationReceipt($user_reservation, $this->settings));
             }
@@ -242,6 +244,8 @@ class InvoicesController extends Controller
             \Log::error("Mail error: " . $th->getMessage());
             // optionally: continue or throw if mail failure should abort transaction
         }
+
+
 
         // ✅ Dispatch email job (can safely resend anytime)
         //dispatch(new SendInvoiceReceiptJob($invoice, $user_reservation));
@@ -293,7 +297,6 @@ class InvoicesController extends Controller
 
                 $startDate = !empty($item['checkin']) ? Carbon::parse($item['checkin']) : null;
                 $endDate   = !empty($item['checkout']) ? Carbon::parse($item['checkout']) : null;
-
                 $apartment = Apartment::find($item['apartment_id']);
 
                 $checkin  = $startDate ? $startDate->format('D, M d, Y') : '';
