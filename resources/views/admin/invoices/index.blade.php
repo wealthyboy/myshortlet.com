@@ -154,7 +154,7 @@
                                         <td>{{ $invoice->currency ?? '₦' }}{{ number_format($invoice->total) }}</td>
 
                                         <td class="td-actions text-right">
-                                            <a target="_blank" href="/check-in?id={{$invoice->user_reservation->id}}"
+                                            <a target="_blank" href="/check-in?id={{optional($invoice->user_reservation)->id}}"
                                                 class="btn btn-success btn-simple" title="Check in link">
                                                 Check in
                                             </a>
