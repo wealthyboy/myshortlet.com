@@ -334,7 +334,7 @@ class InvoicesController extends Controller
                             'price' => $item['rate'] ?? 0,
                             'total' => $item['total'] ?? 0,
                             'rate' => $rate,
-                            'apartment_id' => 0,
+                            'apartment_id' => null,
 
                         ]);
                     }
