@@ -655,8 +655,10 @@ export default {
       this.openNotification = null
 
       this.highlights = this.parseStringToArray(room.teaser);
+      if (  this.form.checkin  &&  this.form.checkout ) {
+        this.checkApartmentAvailabity(room)
 
-      this.checkApartmentAvailabity(room)
+      }
 
       jQuery(function () {
         // Add touch event listeners to centered images
@@ -834,7 +836,7 @@ export default {
       const hasValidDateRange = query.includes("check_in_checkout=");
       // 3. SEND TO API
       axios
-        .get(window.location.pathname + "?" + query + "&t=" + Math.random())
+        .get(window.location.pathname + "?t=" + Math.random())
         .then((response) => {
 
           let params = response.data.params;
