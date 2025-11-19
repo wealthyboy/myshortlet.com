@@ -332,7 +332,9 @@ class InvoicesController extends Controller
                             'quantity' => $item['qty'] ?? 1,
                             'price' => $item['rate'] ?? 0,
                             'total' => $item['total'] ?? 0,
-                            'rate'  => $rate
+                            'rate'  => $rate,
+                            'apartment_id' => null,
+
                         ]);
                     }
                 }
