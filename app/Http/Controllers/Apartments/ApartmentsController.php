@@ -56,7 +56,6 @@ class ApartmentsController extends Controller
         $date = explode("to", $request->check_in_checkout);
         $date = Helper::toAndFromDate($request->check_in_checkout);
 
-        dd($request->check_in_checkout);
 
         $peakPeriodIsSelected = null;
 
