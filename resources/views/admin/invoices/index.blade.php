@@ -158,7 +158,7 @@
 
                                             <a target="_blank" href="/check-in?id={{optional($invoice->user_reservation)->id}}"
                                                 class="btn btn-success btn-simple" title="Check in link">
-                                                Send Check in
+                                                Check in
                                             </a>
                                             @endif
                                             <a href="{{ url("/admin/invoices/{$invoice->id}/send-receipt") }}"
