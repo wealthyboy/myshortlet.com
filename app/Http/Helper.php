@@ -380,6 +380,7 @@ class Helper
 
     public static function toAndFromDate($date)
     {
+        return [];
         $date  = $date ?  explode("to", $date)  : explode("to", "2012-10-21 to 2012-10-23");
         if ($date) {
             $date1 = trim($date[0]);
