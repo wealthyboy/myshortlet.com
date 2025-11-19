@@ -44,6 +44,11 @@ class Invoice extends Model
         return $this->hasMany(InvoiceItem::class);
     }
 
+    public function user_reservation()
+    {
+        return $this->hasOne(UserReservation::class);
+    }
+
     public function getFormattedDiscountAttribute()
     {
         return $this->discount_type === 'fixed'
