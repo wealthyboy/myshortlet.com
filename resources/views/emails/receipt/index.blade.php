@@ -774,7 +774,7 @@
 
 
 
-   @if(null !== $user_reservation->extra_reservations)
+   @if($user_reservation->extra_reservations->count())
 
    <table data-bgcolor="tbc" style="table-layout: fixed; margin: 0px auto; position: relative; opacity: 1; top: 0px; left: 0px; background-color: rgb(234, 235, 235);" data-module="MainInvoiceCaptionsModule" class="" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#384855" align="center">
       <tr>
