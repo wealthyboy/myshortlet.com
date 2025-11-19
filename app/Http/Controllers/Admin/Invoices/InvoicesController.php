@@ -233,7 +233,6 @@ class InvoicesController extends Controller
 
                 $user_reservation->showCheckLink = $user_reservation->reservations->count() > 1 ? false : true;
 
-                dd($user_reservation->load('reservations', 'extra_reservations'));
                 //dd(true);
                 \Mail::to($invoice->email)
                     ->bcc('frontdesk@avenuemontaigne.ng')
