@@ -154,10 +154,13 @@
                                         <td>{{ $invoice->currency ?? '₦' }}{{ number_format($invoice->total) }}</td>
 
                                         <td class="td-actions text-right">
+                                            @if($invoice->sent)
+
                                             <a target="_blank" href="/check-in?id={{optional($invoice->user_reservation)->id}}"
                                                 class="btn btn-success btn-simple" title="Check in link">
-                                                Check in
+                                                Send Check in
                                             </a>
+                                            @endif
                                             <a href="{{ url("/admin/invoices/{$invoice->id}/send-receipt") }}"
                                                 class="btn btn-success btn-simple" title="Send Receipt">
                                                 Send Receipt
