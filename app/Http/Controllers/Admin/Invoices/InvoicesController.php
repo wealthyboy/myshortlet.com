@@ -273,7 +273,6 @@ class InvoicesController extends Controller
         $invoiceNumber = "INV-" . date('Y') . "-" . $nextId . $random;
         $rate = json_decode(session('rate'), true); // use true to get an associative array
         $rate = data_get($rate, 'rate', 1);
-        dd($validated);
 
         try {
             // Create the invoice record
@@ -328,13 +327,14 @@ class InvoicesController extends Controller
                 foreach ($validated['extra_items'] as $item) {
                     // Skip invalid items
                     if (!empty($item['description'])) {
+
                         $invoice->invoice_items()->create([
                             'name' => $item['description'],
                             'quantity' => $item['qty'] ?? 1,
                             'price' => $item['rate'] ?? 0,
                             'total' => $item['total'] ?? 0,
-                            'rate'  => $rate,
-                            'apartment_id' => null,
+                            'rate' => $rate,
+                            'apartment_id' => 0,
 
                         ]);
                     }
@@ -342,7 +342,7 @@ class InvoicesController extends Controller
             }
 
 
-
+            dd($invoice->invoice_items);
 
             DB::commit();
 
