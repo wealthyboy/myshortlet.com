@@ -274,6 +274,10 @@ class InvoicesController extends Controller
         $rate = json_decode(session('rate'), true); // use true to get an associative array
         $rate = data_get($rate, 'rate', 1);
 
+        $extraTotal = collect($validated['extra_items'] ?? [])
+            ->sum(fn($item) => $item['total'] ?? 0);
+
+
         try {
             // Create the invoice record
             $invoice = Invoice::create([
@@ -284,7 +288,7 @@ class InvoicesController extends Controller
                 'address' => $validated['address'] ?? null,
                 'country' => $validated['country'] ?? null,
                 'currency' => $validated['currency'],
-                'subtotal' => $validated['sub_total'],
+                'subtotal' => $validated['sub_total'] -  $extraTotal,
                 'discount' => $validated['discount'] ?? 0,
                 'discount_type' => $validated['discount_type'] ?? 'fixed',
                 'caution_fee' => $validated['caution_fee'] ?? 0,
