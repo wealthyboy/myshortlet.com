@@ -41,7 +41,12 @@ class Invoice extends Model
 
     public function invoice_items()
     {
-        return $this->hasMany(InvoiceItem::class);
+        return $this->hasMany(InvoiceItem::class)->whereNotNull('apartment_id');
+    }
+
+    public function extra_items()
+    {
+        return $this->hasMany(InvoiceItem::class)->whereNull('apartment_id');
     }
 
     public function user_reservation()
