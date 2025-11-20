@@ -1,8 +1,8 @@
 <template>
     <div class="container container light-background pb-4 pt-1 primary-border rounded shadow">
-        <h4 class="primary-color ">BOOK YOUR STAY</h4>
+        <h4 class="primary-color ml-lg-1">BOOK YOUR STAY</h4>
 
-        <div class="form-row">
+        <div class="form-row ml-lg-1">
 
             <div class="orm-group   form-border cursor-pointer search col-lg-3 col-md-5 bmd-form-group  mb-sm-2 mb-md-0">
                 <label class=" pl-2 ml-4" for="flatpickr-input-f">Check-in</label>
