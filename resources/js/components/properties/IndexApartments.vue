@@ -75,24 +75,25 @@
         </div>
       </div>
 
+
       <div
-        v-if="!propertyLoading && showApartmentCount"
+        v-if="!propertyLoading  && showNotification"
         id="results-available"
         class="bold-2 mt-4 alert alert-success"
         role="alert"
       >
         <strong></strong> We found {{ roomsAv.length }} apartment(s) available
-        for your chosen dates. <span class="fw-bold"></span>.
+        for your chosen dates... <span class="fw-bold"></span>.
       </div>
       <div
-        :class="{ 'header-filter': propertyIsLoading }"
         id=""
         class="name mt-1 rounded p-2"
       >
         <div class="position-relative">
           <input type="hidden" name="property_id" value="217" />
           <template v-if="roomsAv.length">
-            <div class="row">
+
+            <div         :class="{ 'header-filter': propertyIsLoading }" class="row">
               <apartment
                 :showReserve="apartmentIsChecked"
                 :classType="classType"
@@ -507,6 +508,7 @@ export default {
       peakPeriodSelected: null,
       propertyIsLoading: false,
       isDateNeedsToToOpen: false,
+      showNotification: null,
       singleApartmentIsChecked: false,
       singleApartmentIsAvailable: false,
       apartment_facilities: null,
@@ -539,6 +541,7 @@ export default {
   },
   mounted() {
     let lo = document.getElementById("full-bg");
+
 
     if (lo) {
       document.getElementById("full-bg").remove();
@@ -806,6 +809,7 @@ export default {
     getApartments() {
       this.propertyLoading = true;
 
+
       // restore from localStorage
       const retrieved = localStorage.getItem("searchParams");
       if (retrieved) {
@@ -836,13 +840,12 @@ export default {
       const hasValidDateRange = query.includes("check_in_checkout=");
       // 3. SEND TO API
       axios
-        .get(window.location.pathname + "?t=" + Math.random())
+        .get(window.location.pathname + "?" + query + "&t=" + Math.random())
         .then((response) => {
 
           let params = response.data.params;
 
-          console.log(hasValidDateRange)
-
+          this.showNotification = true;
           this.showApartmentCount = hasValidDateRange;
 
           const peakPeriod = response.data.peak_periods;

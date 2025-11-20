@@ -57,9 +57,9 @@
                 </div>
             </div> 
 
-            <div :class="{ 'header-filter': propertyIsLoading }" id="" class="name mt-1 rounded p-2">
+            <div id="" class="name mt-1 rounded p-2">
                 <div class="position-relative">
-                    <div    class="row">
+                    <div    :class="{ 'header-filter': propertyIsLoading }"  class="row">
                         <apartment :showReserve="false" :classType="classType" @showImages="showImages"
                             @showRoom="showRoom" @reserve="reserve" :amenities="amenities" :room="roomsAv" :stays="stays"
                             :qty="qty" />
@@ -362,8 +362,9 @@ export default {
             this.classType = ['col-12 col-lg-4 col-md-6']
            // this.getApartments()
         }
-
-        this.showAvailability()
+        if (retrievedJsonString !== null) {
+          this.showAvailability()
+        }
     },
     components: {
         Pickr,

@@ -191,7 +191,7 @@ export default {
                     this.apartmentIsChecked = true
                     this.roomsAv = response.data.apartments
 
-                    console.log(response.data.apartments)
+                    console.log(response.data)
 
                    // this.stays = response.data.nights;
                     this.propertyIsLoading = false;
@@ -423,7 +423,6 @@ export default {
         },
         checkApartmentAvailabity: function (apartment) {
 
-            console.log(this.form.checkin + ' to ' + this.form.checkout)
 
             this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
             this.form.persons = document.querySelector("#persons").value;
@@ -501,6 +500,8 @@ export default {
 
             this.loading = true
 
+
+
             axios
                 .get('/apartments', {
                     params: {
@@ -514,7 +515,9 @@ export default {
                 .then((response) => {
                     this.singleApartmentIsChecked = true
                     this.showApartmentCount = true
-                    //this.loading = false
+                    this.loading = false
+                    this.showNotification  = false
+
                     this.singleApartmentIsAvailable = response.data.apartments
                     return Promise.resolve();
                 })
@@ -748,7 +751,9 @@ export default {
                     this.stays = response.data.nights;
                     this.propertyIsLoading = false;
                     this.showApartmentCount = true;
+                    this.showNotification = true
                     const peakPeriod = response.data.peak_periods;
+
 
                     if (peakPeriod) {
                     this.peakPeriodSelected =
