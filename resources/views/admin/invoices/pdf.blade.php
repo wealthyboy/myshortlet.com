@@ -185,9 +185,8 @@
 
         @if($invoice->extra_items->count())
 
-        <h3>Extras</h3>
 
-        <table class="table">
+        <table style="margin-top: 10px;" class="table">
             <thead>
                 <tr>
                     <th>Extra(s) - Item Description</th>
