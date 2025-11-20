@@ -408,7 +408,9 @@
                                                          We are pleased to inform you that your payment has been received and your reservation request is
                                                          <strong style="color:green;">CONFIRMED</strong>.
                                                          <br />
-                                                         <b>Note: You’re required to present a valid ID upon arrival to check-in. You can also self check-in by clicking the link below to upload your ID
+                                                         <b>Note: You’re required to present a valid ID upon arrival to check-in. @if ($user_reservation->showCheckLink)
+                                                            You can also self check-in by clicking the link below to upload your ID @endif
+
                                                             <br />
                                                             @if ($user_reservation->showCheckLink)
                                                             <a style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em" class="" href="https://avenuemontaigne.ng/check-in?id={{$user_reservation->id}}">Click here to Check-in</a>
