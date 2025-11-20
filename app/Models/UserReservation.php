@@ -45,6 +45,13 @@ class UserReservation extends Model
     }
 
 
+
+    public function userinvoice()
+    {
+        return $this->belongsTo(Invoice::class, 'invoice_id', 'id');
+    }
+
+
     public function reservation()
     {
         return $this->hasOne(Reservation::class, 'user_reservation_id')->whereNotNull('apartment_id');

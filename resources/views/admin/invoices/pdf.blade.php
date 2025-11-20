@@ -182,6 +182,37 @@
             </tbody>
         </table>
 
+
+        @if($invoice->extra_items->count())
+
+        <h3>Extras</h3>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Extra(s) - Item Description</th>
+                    <th width="10%">Price</th>
+                    <th width="20%">Quantity</th>
+                    <th width="20%">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($invoice->extra_items as $item)
+                <tr>
+                    <td>
+                        {{ $item->name }}
+                    </td>
+                    <td>{{ $item->price }}</td>
+                    <td>{{ $item->quantity }}</td>
+                    <td>{{ $invoice->currency }}{{ number_format(($item->quantity * $item->price), 2) }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        @endif
+
+
         @php
         $cautionFee = floatval($invoice->caution_fee ?? 0);
         @endphp
@@ -213,6 +244,10 @@
                             <td align="right">{{ $invoice->currency }}{{ number_format($invoice->caution_fee, 2) }}</td>
                         </tr>
                         <tr>
+                            <td><b>Extras:</b></td>
+                            <td align="right">{{ $invoice->currency }}{{ number_format($invoice->extra_items->sum('total'), 2) }}</td>
+                        </tr>
+                        <tr>
                             <td><b>Total:</b></td>
                             <td align="right"><b>{{ $invoice->currency }}{{ number_format($invoice->total, 2) }}</b></td>
                         </tr>
@@ -222,7 +257,11 @@
         </table>
 
         <!-- TERMS -->
-        <div class="terms">
+        <div>
+            <strong>Terms & Conditions</strong>
+        </div>
+
+        <div class="">
             {!! nl2br(e($invoice->description)) !!}
         </div>
 

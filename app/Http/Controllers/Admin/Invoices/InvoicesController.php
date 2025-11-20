@@ -195,6 +195,9 @@ class InvoicesController extends Controller
             ]
         );
 
+
+        $user_reservation->load('userinvoice');
+
         //dd($invoice->invoice_items);
         foreach ($invoice->invoice_items as $item) {
 

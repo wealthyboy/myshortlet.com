@@ -774,144 +774,12 @@
 
 
 
-   @if($user_reservation->extra_reservations->count())
-
-   <table data-bgcolor="tbc" style="table-layout: fixed; margin: 0px auto; position: relative; opacity: 1; top: 0px; left: 0px; background-color: rgb(234, 235, 235);" data-module="MainInvoiceCaptionsModule" class="" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#384855" align="center">
-      <tr>
-         <td align="center">
-            <table data-bgcolor="tbc" class="table600Min" style="table-layout: fixed; margin: 0px auto; min-width: 668px; background-color: rgb(234, 235, 235);" width="668" cellspacing="0" cellpadding="0" border="0" bgcolor="#384855" align="center">
-               <tr>
-                  <td class="table600st" style="min-width:668px;" align="center">
-                     <table class="table600Min" style="min-width:629px;" width="629" cellspacing="0" cellpadding="0" border="0" align="center">
-                        <tr>
-                           <td class="table600st" style="min-width:629px;">
-                              <table data-bgcolor="ThemeColorBG" class="table600" style="background-color: #fff;" width="629" cellspacing="0" cellpadding="0" border="0" bgcolor="#67bffd" align="left">
-                                 <tr>
-                                    <td class="" align="left">
-                                       <table cellspacing="0" cellpadding="0" border="0" align="center">
-                                          <tr>
-
-                                             <th class="stack2" style="margin: 0px; padding: 0px; vertical-align: top; border-bottom: 1px solid rgb(200, 198, 198);" data-border-bottom-color="borderColor" width="209">
-                                                <table class="table60032" width="600" cellspacing="0" cellpadding="0" border="0" align="center">
-
-                                                   <tr>
-                                                      <td class="header5TD" data-link-style="text-decoration:none; color:#ffffff;" data-link-color="InvoiceCaptionsLink" data-color="InvoiceCaptionsTXT" style="padding: 4px;color: #000;font-family: sans-serif;font-size: 15px;text-align: left;line-height: 27px;font-weight: bold;">
-                                                         Extras
-                                                      </td>
-                                                   </tr>
-
-                                                </table>
-                                             </th>
-
-                                          </tr>
-                                       </table>
-                                    </td>
-                                 </tr>
-                              </table>
-                           </td>
-                        </tr>
-                     </table>
-                  </td>
-               </tr>
-            </table>
-         </td>
-      </tr>
-   </table>
-
-   <table data-bgcolor="tbc" style="table-layout: fixed; margin: 0 auto; background-color:#eaebeb;" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
-      <tr>
-         <td align="center">
-
-            <table class="table600Min" style="margin: 0 auto; min-width: 668px; background-color:#eaebeb;" width="668" cellspacing="0" cellpadding="0" border="0" align="center">
-               <tr>
-                  <td align="center">
-
-                     <table class="table600Min" style="min-width:629px;" width="629" cellspacing="0" cellpadding="0" border="0" align="center">
-                        <tr>
-                           <td>
-
-                              <!-- MAIN CONTAINER -->
-                              <table class="table600" width="629" cellspacing="0" cellpadding="0" border="0" bgcolor="#FFF" align="left" style="background-color:#342c27;">
-
-                                 <tr>
-                                    <td align="left">
-
-                                       <!-- 4 COLUMN HEADER -->
-                                       <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
-                                          <tr>
-
-                                             <th width="40%" style="padding: 8px 18px; border-bottom:1px solid #c8c6c6; text-align:left; color:#ffffff; font-family:sans-serif; font-size:15px; font-weight:bold;">
-                                                Item Description
-                                             </th>
-
-                                             <th width="20%" style="padding: 8px 18px; border-bottom:1px solid #c8c6c6; text-align:left; color:#ffffff; font-family:sans-serif; font-size:15px; font-weight:bold;">
-                                                Price
-                                             </th>
-
-                                             <th width="20%" style="padding: 8px 18px; border-bottom:1px solid #c8c6c6; text-align:center; color:#ffffff; font-family:sans-serif; font-size:15px; font-weight:bold;">
-                                                Qty
-                                             </th>
-
-                                             <th width="20%" style="padding: 8px 18px; border-bottom:1px solid #c8c6c6; text-align:right; color:#ffffff; font-family:sans-serif; font-size:15px; font-weight:bold;">
-                                                Total
-                                             </th>
-
-                                          </tr>
-                                       </table>
-
-                                       <!-- LOOP ROWS -->
-                                       <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="background-color: #fff;color:#000; font-family:sans-serif; font-size:14px;">
-                                          @foreach($user_reservation->extra_reservations as $item)
-                                          <tr>
-
-                                             <!-- Description -->
-                                             <td width="40%" style="padding: 8px 18px; border-bottom:1px solid #444;">
-                                                {{ $item->name }} {{$item->description}}
-                                             </td>
-
-                                             <!-- Price -->
-                                             <td width="20%" style="padding: 8px 18px; border-bottom:1px solid #444; text-align:left;">
-                                                ₦{{ number_format($item->price, 2) }}
-                                             </td>
-
-                                             <!-- Qty -->
-                                             <td width="20%" style="padding: 8px 18px; border-bottom:1px solid #444; text-align:center;">
-                                                {{ $item->quantity }}
-                                             </td>
-
-                                             <!-- Total -->
-                                             <td width="20%" style="padding: 8px 18px; border-bottom:1px solid #444; text-align:right;">
-                                                ₦{{ number_format($item->price * $item->quantity, 2) }}
-                                             </td>
-
-                                          </tr>
-                                          @endforeach
-                                       </table>
-                                       <!-- END LOOP ROWS -->
-
-                                    </td>
-                                 </tr>
-
-                              </table>
-                              <!-- END MAIN CONTAINER -->
-
-                           </td>
-                        </tr>
-                     </table>
-
-                  </td>
-               </tr>
-            </table>
-
-         </td>
-      </tr>
-   </table>
 
 
 
 
 
-   @endif
+
 
    <table data-bgcolor="tbc" style="table-layout: fixed; margin: 0px auto; background-color: rgb(234, 235, 235);" data-module="FinalCalculationsModule-4ROWS" class="" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#384855" align="center">
       <tr>
@@ -924,7 +792,7 @@
                            <td align="left">
                               <table cellspacing="0" cellpadding="0" border="0" align="center">
                                  <tr>
-                                    <th rowspan="5" class="stack4" data-bgcolor="CalculationsBGColor" data-border-bottom-color="borderColor" style="margin: 0px; padding: 0px; vertical-align: top; border-bottom: 1px solid rgb(200, 198, 198);" width="349" height="100" bgcolor="#ffffff">
+                                    <th rowspan="6" class="stack4" data-bgcolor="CalculationsBGColor" data-border-bottom-color="borderColor" style="margin: 0px; padding: 0px; vertical-align: top; border-bottom: 1px solid rgb(200, 198, 198);" width="349" height="100" bgcolor="#ffffff">
                                        <table class="table60034" width="349" cellspacing="0" cellpadding="0" border="0" align="center">
 
                                           <tr>
@@ -1042,6 +910,45 @@
                                              <td class="wz2" width="30"><br></td>
                                              <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>
                                                 {{ $user_reservation->currency ?? '₦'}}{{ $user_reservation->caution_fee ? number_format($user_reservation->caution_fee) : '0.00' }}
+
+                                             </td>
+                                             <td class="wz2" width="30"><br></td>
+                                          </tr>
+                                          <tr>
+                                             <td class="wz2" height="10" width="30"></td>
+                                          </tr>
+                                       </table>
+                                    </th>
+                                 </tr>
+
+                                 <tr>
+                                    <th class="stack3" data-bgcolor="CalculationsBGColor" data-border-bottom-color="borderColor" data-border-left-color="borderColor" style="border-left: 1px solid rgb(200, 198, 198); margin: 0px; padding: 0px; vertical-align: top; border-bottom: 1px solid rgb(200, 198, 198);" width="139" valign="top" bgcolor="#ffffff">
+                                       <table class="table60033" width="139" cellspacing="0" cellpadding="0" border="0" align="center">
+                                          <tr>
+                                             <td class="wz2" height="10" width="30"></td>
+                                          </tr>
+                                          <tr>
+                                             <td class="wz2" width="30"><br></td>
+                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>
+                                                Extras
+
+                                             </td>
+                                             <td class="wz2" width="30"><br></td>
+                                          </tr>
+                                          <tr>
+                                             <td class="wz2" height="10" width="30"></td>
+                                          </tr>
+                                       </table>
+                                    </th>
+                                    <th class="stack3" data-bgcolor="CalculationsBGColor" data-border-bottom-color="borderColor" data-border-left-color="borderColor" style="border-left: 1px solid rgb(200, 198, 198); margin: 0px; padding: 0px; vertical-align: top; border-bottom: 1px solid rgb(200, 198, 198);" width="139" valign="top" bgcolor="#ffffff">
+                                       <table class="table60033" width="139" cellspacing="0" cellpadding="0" border="0" align="center">
+                                          <tr>
+                                             <td class="wz2" height="10" width="30"></td>
+                                          </tr>
+                                          <tr>
+                                             <td class="wz2" width="30"><br></td>
+                                             <td class="rt5td" data-link-style="text-decoration:none; color:#67bffd;" data-link-color="RegularLink" data-color="RegularTXT" style="color: #425065;font-family: sans-serif;font-size: 14px;font-weight: lighter;text-align: center;line-height: 23px;"><a href="#" target="_blank" data-color="RegularLink" style="text-decoration: none;color: #67bffd;"></a>
+                                                {{ $user_reservation->currency ?? '₦' }}{{ null !== $user_reservation->userinvoice ? number_format($user_reservation->userinvoice->extra_items->sum('total')) : '0.00' }}
 
                                              </td>
                                              <td class="wz2" width="30"><br></td>
