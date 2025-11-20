@@ -93,7 +93,7 @@
           <input type="hidden" name="property_id" value="217" />
           <template v-if="roomsAv.length">
 
-            <div         :class="{ 'header-filter': propertyIsLoading }" class="row">
+            <div    :class="{ 'header-filter': propertyIsLoading }" class="row">
               <apartment
                 :showReserve="apartmentIsChecked"
                 :classType="classType"
@@ -845,7 +845,6 @@ export default {
 
           let params = response.data.params;
 
-          this.showNotification = true;
           this.showApartmentCount = hasValidDateRange;
 
           const peakPeriod = response.data.peak_periods;
@@ -864,6 +863,8 @@ export default {
           if (this.form.checkin && this.form.checkout &&
               this.isValidDate(this.form.checkin) &&
               this.isValidDate(this.form.checkout)) {
+              this.showNotification = true;
+
             this.apartmentIsChecked = true;
           }
 
