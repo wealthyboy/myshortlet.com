@@ -55,10 +55,8 @@
                      <select name="apartment_id" id="" required="true" class="form-control">
                         <option value="">Apartment</option>
                         @foreach($room_ids as $key => $room_id)
-
                         @if($room_id->id == $apartment->apartment_id)
                         <option value="{{ $room_id->id }}" selected>{{ $room_id->name }}</option>
-
                         @else
                         <option value="{{ $room_id->id }}">{{ $room_id->name }}</option>
                         @endif
@@ -125,7 +123,7 @@
                   <div class="form-group">
                      <select name="room_number" name="bedrooms" id="bedrooms-update" class="form-control">
                         <option value="" selected>Choose Bedrooms</option>
-                         @for ($i = 1; $i< 11; $i++) @if($apartment->no_of_rooms == $i)
+                        @for ($i = 1; $i< 11; $i++) @if($apartment->no_of_rooms == $i)
                            <option value="{{ $i }}" selected>{{ $i }}</option>
                            @else
                            <option value="{{ $i }}">{{ $i }}</option>
@@ -135,7 +133,7 @@
                   </div>
                </div>
 
-           
+
 
                <div class="col-md-2">
                   <div class="form-group">
@@ -174,7 +172,7 @@
                      <input name="room_sale_price" value="{{ $apartment->sale_price }}" class="form-control variation_sale_price variation" type="number">
                   </div>
                </div>
-             
+
 
 
                <div class="col-md-4">
@@ -218,7 +216,7 @@
                   </div>
                </div>
 
-             
+
 
 
                <div class="col-md-12 bed mb-5">
@@ -242,21 +240,15 @@
                      <div class="form-group col-md-2 ">
                         <label for="bedroom_{{ $i }}">Bedroom {{ $i }}</label>
                         <select name="bedroom_{{ $i }}" id="bedroom_{{ $i }}" class="form-control">
-                              <option value="" selected>Choose bed type</option>
-                              <option value="Extra-large double bed" {{ $apartment->{'bedroom_'.$i} == 'Extra-large double bed' ? 'selected' : '' }}>Extra-large double bed</option>
-                              <option value="Single bed" {{ $apartment->{'bedroom_'.$i} == 'Single bed' ? 'selected' : '' }}>Single bed</option>
-                              <option value="Large bed" {{ $apartment->{'bedroom_'.$i} == 'Large bed' ? 'selected' : '' }}>Large bed</option>
+                           <option value="" selected>Choose bed type</option>
+                           <option value="Extra-large double bed" {{ $apartment->{'bedroom_'.$i} == 'Extra-large double bed' ? 'selected' : '' }}>Extra-large double bed</option>
+                           <option value="Single bed" {{ $apartment->{'bedroom_'.$i} == 'Single bed' ? 'selected' : '' }}>Single bed</option>
+                           <option value="Large bed" {{ $apartment->{'bedroom_'.$i} == 'Large bed' ? 'selected' : '' }}>Large bed</option>
                         </select>
                      </div>
-                  @endfor
+                     @endfor
                </div>
-               <div class="col-md-12">
-                  <div class="form-group label-floating">
-                     <label class="control-label">Image Links</label>
-                     <textarea rows="20" name="room_image_links" class="form-control  variation" type="text">{{ $apartment->image_link }}</textarea>
 
-                  </div>
-               </div>
                <div class="col-md-12">
                   <div class="form-group label-floating">
                      <label class="control-label">Video Links</label>
@@ -265,16 +257,13 @@
                </div>
 
 
-
-
-
                <div class="clearfix"></div>
 
 
 
                <div class="col-sm-12">
                   <div id="j-drop" class="j-drop">
-                     <input accept="image/*" data-msg="Upload  at least 5 images" onchange="getFile(this,'images[]')" class="upload_input" multiple="true" type="file" id="upload_file_input" name="product_image" />
+                     <input accept="image/*" onchange="handleFiles(this,'images[]')" class="upload_input" multiple="true" type="file" id="upload_file_input" name="product_image" />
                      <div class=" upload-text {{ $apartment->images->count() ||  $apartment->image ? 'hide' : ''}}">
                         <a class="" href="#">
                            <img class="" src="/backend/img/upload_icon.png">
@@ -344,11 +333,8 @@
                   @endforeach
                </div>
 
-
-
                <div class="row">
-                  <div class="col-md-6">
-
+                  <div class="col-md-6 ml-4">
                      <div class="">
                         <label role="button">
                            <input name="apartment_allow" {{ isset($apartment) && $apartment->allow == 1 ? 'checked' : ''}} value="1" type="checkbox">
@@ -356,10 +342,7 @@
                            Enable/Disabled
                         </label>
                      </div>
-
-
                   </div>
-
                </div>
             </div>
 

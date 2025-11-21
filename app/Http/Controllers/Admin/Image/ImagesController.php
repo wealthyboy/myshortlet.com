@@ -8,6 +8,9 @@ use App\Models\Image;
 use App\Models\SystemSetting;
 use Illuminate\Support\Facades\Storage;
 
+use Intervention\Image\Facades\Image as Img;
+
+
 
 class ImagesController extends Controller
 {
@@ -26,9 +29,7 @@ class ImagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
 
     /**
@@ -87,62 +88,46 @@ class ImagesController extends Controller
     }
 
 
+
+
     public function uploadImage(Request $request)
     {
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,webp,jpg,gif',
+            'folder' => 'required'
+        ]);
 
-        if ($request->hasFile('file')) {
-
-            // dd(true);
-
-            //when the user clicks change remove the previuos image
-            request()->validate([
-                'file' => 'required|image|mimes:jpeg,png,webp,jpg,gif,webp',
-                'folder' => 'required'
-            ]);
-
-            if (!in_array($request->folder, $this->folders)) {
-                return response()->json([
-                    'error' => $request->folder . ' Not allowed'
-                ], 500);
-            }
-
-
-            $path    =  public_path('images/' . $request->folder);
-            $path_m  =  public_path('images/' . $request->folder . '/m');
-            $path_tn =  public_path('images/' . $request->folder . '/tn');
-
-
-            if (!\File::exists($path)) {
-                \File::makeDirectory(public_path('images/' . $request->folder), 0755, true);
-            }
-
-            if (!\File::exists($path_m)) {
-                \File::makeDirectory(public_path('images/' . $request->folder . '/m'), 0755, true);
-            }
-
-            if (!\File::exists($path_tn)) {
-                \File::makeDirectory(public_path('images/' . $request->folder . '/tn'), 0755, true);
-            }
-
-            $path = $request->file('file')->store('images/' . $request->folder);
-
-            $file = basename($path);
-            $path =  public_path('images/' . $request->folder . '/' . $file);
-
-            $img  = \Image::make($path)->fit(400, 400)->save(
-                public_path('images/' . $request->folder . '/m/' . $file)
-            );
-            $canvas = \Image::canvas(106, 145);
-            $image  = \Image::make($path)->resize(150, 250, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $canvas->insert($image, 'center');
-            $canvas->save(
-                public_path('images/' . $request->folder . '/tn/' . $file)
-            );
-            return $path = asset('images/' . $request->folder . '/' . $file);
+        if (!in_array($request->folder, $this->folders)) {
+            return response()->json(['error' => $request->folder . ' not allowed'], 403);
         }
+
+        $file = $request->file('file');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $folder = $request->folder;
+
+        // Original
+        $originalPath = 'images/' . $folder . '/' . $fileName;
+        Storage::disk('spaces')->put($originalPath, file_get_contents($file), 'public');
+
+        // Medium (400x400)
+        $mediumImage = Img::make($file)->fit(400, 400)->encode();
+        $mediumPath = 'images/' . $folder . '/m/' . $fileName;
+        Storage::disk('spaces')->put($mediumPath, $mediumImage, 'public');
+
+        // Thumbnail (106x145 canvas)
+        $canvas = Img::canvas(106, 145);
+        $thumbImage = Img::make($file)->resize(150, 250, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $canvas->insert($thumbImage, 'center');
+        $thumbnailPath = 'images/' . $folder . '/tn/' . $fileName;
+        Storage::disk('spaces')->put($thumbnailPath, $canvas->encode(), 'public');
+
+        $path = Storage::disk('spaces')->url($originalPath);
+
+        return  $path;
     }
+
 
 
     public static function undo(Request $request)
@@ -150,29 +135,37 @@ class ImagesController extends Controller
         $file = basename($request->image_url);
 
         $class = '\\App\\Models\\' . $request->model;
-        if (file_exists(public_path('images/' . $request->folder . '/' . $file))) {
-            unlink(public_path('images/' . $request->folder . '/' . $file));
-            unlink(public_path('images/' . $request->folder . '/m/' . $file));
-            unlink(public_path('images/' . $request->folder . '/tn/' . $file));
-            if ($request->filled('model')) {
 
-                if ($request->image_id && $request->filled('type')) {
-                    $model = $class::find($request->image_id);
-                    if ($model) {
-                        $model->delete();
-                    }
-                    return response(null, 200);
-                } else {
-                    $model = $class::find($request->image_id);
-                    if ($model) {
-                        $model->image = null;
-                        $model->save();
-                    }
-                    return response(null, 200);
+
+        $folder = $request->folder;
+
+        // Build paths for DO Spaces
+        $original = "images/{$folder}/{$file}";
+        $medium = "images/{$folder}/m/{$file}";
+        $thumbnail = "images/{$folder}/tn/{$file}";
+        Storage::disk('spaces')->delete([$original, $medium, $thumbnail]);
+
+
+        // Delete from Spaces
+
+        if ($request->filled('model')) {
+
+            if ($request->image_id && $request->filled('type')) {
+                $model = $class::find($request->image_id);
+                if ($model) {
+                    $model->delete();
                 }
+                return response(null, 200);
+            } else {
+                $model = $class::find($request->image_id);
+                if ($model) {
+                    $model->image = null;
+                    $model->save();
+                }
+                return response(null, 200);
             }
-            return response(null, 200);
         }
+        return response(null, 200);
     }
 
     /**
