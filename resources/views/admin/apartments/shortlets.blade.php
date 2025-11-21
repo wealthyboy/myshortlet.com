@@ -21,7 +21,7 @@
          <div class="row p-attr mb-2 variation-panel">
             <div class="col-md-9 col-xs-9 col-sm-9">
             </div>
-            <div class="col-md-3 col-xs-12 text-right border col-sm-12 pt-2 pb-4">
+            <div class="col-md-3 col-xs-12 text-right col-sm-12 pt-2 pb-4">
                <a href="#" title="open/close panel" class="open-close-panel"><i class="fa fa-plus"></i> Expand</a>
             </div>
 
@@ -142,7 +142,7 @@
                         <input name="room_sale_price" value="" class="form-control variation_sale_price variation" type="number">
                      </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                      <div class="form-group label-floating">
                         <label class="control-label">End Date</label>
                         <input class="form-control  datepicker pull-right" name="room_sale_price_expires" id="datepicker" type="text">
@@ -150,28 +150,12 @@
                   </div>
 
 
-                  <div class="col-md-12 bed mb-5">
-                     <div id="bedroom-dropdowns-container">  
-
-               
-
-
-                 
-
+                  <div class="col-md-12 bed p-0">
+                     <div id="bedroom-dropdowns-container">
                      </div>
                   </div>
-                  <div class="col-md-12">
-                     <div class="form-group label-floating">
-                        <label class="control-label">Image Links</label>
-                        <textarea rows="20" name="room_image_links" class="form-control  variation" type="text"></textarea>
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <div class="form-group label-floating">
-                        <label class="control-label">Video Links</label>
-                        <input class="form-control   pull-right" name="room_video_links" type="text">
-                     </div>
-                  </div>
+
+
                   <div class="col-md-4">
                      <div class="form-group label-floating is-ty">
                         <label class="control-label">Agent Email</label>
@@ -195,7 +179,8 @@
                         <span class="material-input"></span>
                      </div>
                   </div>
-                  <div class="col-md-4">
+
+                  <div class="col-md-12">
                      <div class="form-group label-floating is-ty">
                         <label class="control-label">Teaser</label>
                         <textarea name="teaser" row="20" class="form-control  variation"></textarea>
@@ -203,15 +188,17 @@
                      </div>
                   </div>
 
+
+
                   <div class="clearfix"></div>
 
                   <div class="col-sm-12">
                      <div id="j-drop" class="j-drop">
-                        <input accept="image/*" required="true" data-msg="Upload  at least 5 images" onchange="getFile(this,'images[]')" class="upload_input" multiple="true" type="file" id="upload_file_input" name="product_image" />
+                        <input accept="image/*" data-msg="Upload  at least 5 images" onchange="handleFiles(this,'images[]')" class="upload_input" multiple="true" type="file" id="upload_file_input" name="product_image" />
                         <div class=" upload-text">
                            <a class="" href="#">
                               <img class="" src="/backend/img/upload_icon.png">
-                              <b>Click on anywhere to upload image</b>
+                              <b>Click on anywhere to upload image..</b>
                            </a>
                         </div>
                         <div id="j-details" class="j-details"></div>
@@ -262,7 +249,7 @@
                   </div>
 
                   <div class="row">
-                     <div class="col-md-6">
+                     <div class="col-md-6 ml-4">
 
                         <div class="">
                            <label role="button">
