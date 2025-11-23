@@ -15,7 +15,7 @@
         <div
           class="item rounded-top"
           :key="index"
-          v-for="(image, index) in room.images.slice(0, 10)"
+          v-for="(image, index) in room.images.slice(0, 9)"
           itemprop="photo"
           itemscope
           itemtype="https://schema.org/ImageObject"
