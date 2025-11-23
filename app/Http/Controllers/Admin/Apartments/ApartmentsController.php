@@ -156,7 +156,6 @@ class ApartmentsController extends Controller
         //     'address' => "required",
         //     "description" => "required"
         // ]);
-        // dd($request->all());
         $apartment = new Apartment;
         $room_images = !empty($request->images) ? $request->images : [];
         $apartment_allow = !empty($request->apartment_allow) ? $request->apartment_allow : 0;
@@ -202,20 +201,10 @@ class ApartmentsController extends Controller
 
 
         if (!empty($room_images)) {
+            $images = [];
             foreach ($room_images as $image) {
-                // Detect environment
-                if (app()->environment('production')) {
-                    // Upload to DigitalOcean Spaces
-                    //$path = Storage::disk('spaces')->putFile('apartments', $image, 'public');
-                    //$url = Storage::disk('spaces')->url($path);
-                } else {
-                    // Store locally for development
-                    $path = $image->store('images/apartments', 'public');
-                    $url = asset('storage/' . $path);
-                }
 
-                // Save the public URL (not local path)
-                // $apartment->images()->create(['image' => $url]);
+                $apartment->images()->create(['image' => $image]);
             }
         }
 
@@ -300,6 +289,8 @@ class ApartmentsController extends Controller
         if ($request->mode == 'house') {
             $house_attributes = Attribute::parents()->whereIn('type', $this->house_attrs)->get()->groupBy('type');
         }
+
+
 
         $attributes = Attribute::parents()->whereIn('type', $this->types)->get()->groupBy('type');
         $apartment_facilities  = Attribute::parents()->where('type', 'apartment facilities')->orderBy('sort_order', 'asc')->get();
@@ -406,8 +397,13 @@ class ApartmentsController extends Controller
         }
 
 
-        $this->syncImages($room_images, $apartment);
+        if (!empty($room_images)) {
+            $images = [];
+            foreach ($room_images as $image) {
 
+                $apartment->images()->create(['image' => $image]);
+            }
+        }
 
         /**
          * Rooms with have includes
