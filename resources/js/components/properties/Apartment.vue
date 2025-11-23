@@ -10,11 +10,12 @@
       itemscope
       itemtype="https://schema.org/ImageGallery"
     >
+
       <div class="owl-carousel owl-theme">
         <div
           class="item rounded-top"
           :key="index"
-          v-for="(image, index) in room.google_drive_image_link"
+          v-for="(image, index) in room.images"
           itemprop="photo"
           itemscope
           itemtype="https://schema.org/ImageObject"
@@ -23,7 +24,7 @@
             :alt="room.name"
             :title="'book ' + room.name + '  Avenue Montaigne'"
             @click.prevent="showRoom(room)"
-            :src="image"
+            :src="image.image"
             class="img cursor-pointer img-fluid"
             itemprop="contentUrl"
           />
