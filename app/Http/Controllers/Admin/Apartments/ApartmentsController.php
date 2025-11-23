@@ -398,9 +398,7 @@ class ApartmentsController extends Controller
 
 
         if (!empty($room_images)) {
-            $images = [];
             foreach ($room_images as $image) {
-
                 $apartment->images()->create(['image' => $image]);
             }
         }
