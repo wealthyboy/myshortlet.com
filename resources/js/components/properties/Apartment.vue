@@ -15,7 +15,7 @@
         <div
           class="item rounded-top"
           :key="index"
-          v-for="(image, index) in room.images"
+          v-for="(image, index) in room.images.slice(0, 10)"
           itemprop="photo"
           itemscope
           itemtype="https://schema.org/ImageObject"
@@ -47,7 +47,7 @@
                 >
                   Show all
                   {{
-                    room.images.length + room.google_drive_image_links.length
+                    room.images.length 
                   }}
                   images
                 </title>
@@ -62,7 +62,7 @@
                 role="button"
                 aria-hidden="true"
                 >{{
-                  room.images.length + room.google_drive_image_links.length
+                  room.images.length 
                 }}
                 View All</span
               >
