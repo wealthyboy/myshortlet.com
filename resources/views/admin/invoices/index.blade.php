@@ -50,25 +50,63 @@
             <div class="card-content">
                 <h4 class="card-title">Filter Invoices</h4>
 
-                <form action="{{ route('admin.invoices.index') }}" method="GET">
+                <form action="{{ route('admin.invoices.index') }}" method="GET" class="mb-3">
+
                     <div class="form-row">
+
                         <div class="form-group col-md-3">
-                            <label for="full_name">Full Name</label>
-                            <input type="text" class="form-control" id="full_name" name="full_name"
-                                placeholder="Search by full name" value="{{ request('full_name') }}">
+                            <label>Full Name</label>
+                            <input type="text" class="form-control" name="full_name" value="{{ request('full_name') }}">
                         </div>
 
                         <div class="form-group col-md-3">
-                            <label for="phone">Phone Number</label>
-                            <input type="text" class="form-control" id="phone" name="phone"
-                                placeholder="Search by phone" value="{{ request('phone') }}">
+                            <label>Phone</label>
+                            <input type="text" class="form-control" name="phone" value="{{ request('phone') }}">
                         </div>
 
-                        <div class="form-group col-md-2 mt-4">
-                            <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                        <div class="form-group col-md-2">
+                            <label>Start Date</label>
+                            <input type="date" class="form-control" name="start_date" value="{{ request('start_date') }}">
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label>End Date</label>
+                            <input type="date" class="form-control" name="end_date" value="{{ request('end_date') }}">
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label>Status</label>
+                            <select name="status" class="form-control">
+                                <option value="">Any</option>
+                                <option value="paid" {{ request('status') == 'paid' ? 'selected' : '' }}>Paid</option>
+                                <option value="not_paid" {{ request('status') == 'not_paid' ? 'selected' : '' }}>Not Paid</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-primary btn-block rounded">Filter</button>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <a href="{{ route('admin.invoices.export', request()->query()) }}"
+                                class="btn btn-info btn-simple">
+                                Download PDF Report
+                            </a>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <a href="{{ route('admin.invoices.emailReport', request()->query()) }}"
+                                class="btn btn-info btn-simple">
+                                Email Report
+                            </a>
                         </div>
                     </div>
+
                 </form>
+
 
             </div>
         </div>

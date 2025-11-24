@@ -34,7 +34,8 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('/invoices/{id}/download', 'Admin\Invoices\InvoicesController@download');
     Route::get('/invoices/{id}/send-receipt', 'Admin\Invoices\InvoicesController@sendReceipt');
     Route::get('/invoices/{id}/resend', 'Admin\Invoices\InvoicesController@resend');
-
+    Route::get('/admin/invoices/export',  'Admin\Invoices\InvoicesController@export')->name('admin.invoices.export');
+    Route::get('/admin/invoices/email-report', 'Admin\Invoices\InvoicesController@emailReport')->name('admin.invoices.emailReport');
 
     Route::resource('agents', 'Admin\Agents\AgentsController', ['names' => 'admin.agents']);
 

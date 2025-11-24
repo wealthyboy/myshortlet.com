@@ -36,6 +36,57 @@ class InvoicesController extends Controller
         $this->settings = \DB::table('system_settings')->first();
     }
 
+    public function export(Request $request)
+    {
+        $invoices = $this->filterInvoices($request)->get();
+
+        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices'));
+
+        return $pdf->download('invoice-report.pdf');
+    }
+
+    private function filterInvoices(Request $request)
+    {
+        $query = Invoice::query();
+
+        if ($request->filled('full_name')) {
+            $query->where('full_name', 'like', '%' . $request->full_name . '%');
+        }
+
+        if ($request->filled('phone')) {
+            $query->where('phone', 'like', '%' . $request->phone . '%');
+        }
+
+        if ($request->filled('start_date')) {
+            $query->whereDate('created_at', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->whereDate('created_at', '<=', $request->end_date);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('sent', $request->status === 'paid');
+        }
+
+        return $query;
+    }
+
+
+
+    public function emailReport(Request $request)
+    {
+        $invoices = $this->filterInvoices($request)->get();
+
+        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices'))->output();
+
+        \Mail::to("oluwa.tosin@avenuemontaigne.ng")
+            ->send(new \App\Mail\InvoiceReportMail($pdf));
+
+        return back()->with('success', 'Report emailed successfully!');
+    }
+
+
     public function index(Request $request)
     {
         $query = Invoice::query();
@@ -46,6 +97,18 @@ class InvoicesController extends Controller
 
         if ($request->filled('phone')) {
             $query->where('phone', 'like', '%' . $request->phone . '%');
+        }
+
+        if ($request->filled('start_date')) {
+            $query->whereDate('created_at', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->whereDate('created_at', '<=', $request->end_date);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('sent', $request->status === 'paid');
         }
 
         $invoices = $query->latest()->paginate(20);
