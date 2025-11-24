@@ -14,15 +14,15 @@
          <div class="clearfix"></div>
          @
          <div class="col-md-8  d-none d-md-block d-lg-block  d-xxl-block  position-relative bg-white ">
-            <a href="#" class="img card-img galleries" style="background-image: url('{{ isset($apartment->google_drive_image_links[0]) ? $apartment->google_drive_image_links[0]: null  }}')"></a>
+            <a href="#" class="img card-img galleries" style="background-image: url('{{ isset($apartment->images[0]) ? $apartment->images[0]->image: null  }}')"></a>
          </div>
          <div class="col-md-4 d-none d-md-block d-lg-block  d-xxl-block ">
             <div class="row no-gutters">
                <div class="col-6 pl-1  pb-1 pr-1">
-                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ isset($apartment->google_drive_image_links[1]) ? $apartment->google_drive_image_links[1]: null }}')"></a>
+                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ isset($apartment->images[1]) ? $apartment->images[1]->image : null }}')"></a>
                </div>
                <div class="col-6 ">
-                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ isset($apartment->google_drive_image_links[2]) ? $apartment->google_drive_image_links[2]: null }}')"></a>
+                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ isset($apartment->images[2]) ?  $apartment->images[2]->image : null }}')"></a>
                   <a href="#" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
                      <p class="fs-48 font-weight-600 text-white lh-1 mb-1">
                         <svg id="" class="mt-2">
@@ -32,12 +32,12 @@
                   </a>
                </div>
                <div class="col-6 pl-1  pr-1">
-                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ isset($apartment->google_drive_image_links[3]) ? $apartment->google_drive_image_links[3]: null }}')"></a>
+                  <a href="#" class="img  card-img-tn img-fluid galleries" style="background-image: url('{{ isset($apartment->images[3]) ? $apartment->images[3]->image: null }}')"></a>
                </div>
                <div class="col-6 pb-2 position-relative">
-                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ isset($apartment->google_drive_image_links[4]) ? $apartment->google_drive_image_links[4]: null  }}')"></a>
+                  <a class="img  card-img-tn header-filter img-fluid galleries" style="background-image: url('{{ isset($apartment->images[4]) ? $apartment->images[4]->image: null  }}')"></a>
                   <a href="#" id="full-image" class="card-img-overlay  d-flex flex-column align-items-center justify-content-center hover-image bg-dark-opacity-04">
-                     <p class="fs-48 bold-2  text-white lh-1 mb-1">+{{ count($apartment->google_drive_image_links) }}</p>
+                     <p class="fs-48 bold-2  text-white lh-1 mb-1">+{{ $apartment->images->count() }}</p>
                      <p class="fs-16 bold-2 text-white lh-1625 text-uppercase">View Gallery</p>
                   </a>
                </div>
