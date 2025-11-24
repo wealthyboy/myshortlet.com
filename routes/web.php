@@ -105,8 +105,10 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
 
 Route::group(['middleware' => ['currencyByIp', 'tracking']], function () {
     Route::get('/', 'HomeController@home');
-    Route::get('/luxury-service-apartments-in-lagos', 'HomeController@home');
+
     Route::get('/luxury-service-apartments-in-ikoyi', 'Apartments\ApartmentsController@apartments');
+    Route::get('/luxury-service-apartments-in-lagos', 'HomeController@home');
+
     Route::get('home', 'HomeController@index');
     Route::get('account', 'Account\AccountController@index');
     Route::post('password/reset/link', 'Auth\ForgotPasswordController@sendResetLinkEmail');
@@ -159,6 +161,8 @@ Route::group(['middleware' => ['currencyByIp', 'tracking']], function () {
     Route::get('/gallery',   'Pages\PageController@index');
     Route::get('/download-images',  'DownLoad\DownLoadController@index');
     Route::get('/download-images/{id}',  'DownLoad\DownLoadController@downloadImages');
+    Route::get('/apartment/{id}/download-images', 'DownLoad\DownLoadController@downloadImages');
+
 
     Route::get('/about-us',  'Pages\PageController@index');
     Route::get('/contact-us', 'Pages\PageController@index');
