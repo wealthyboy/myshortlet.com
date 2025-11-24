@@ -86,10 +86,19 @@
     </div>
     <div class="col-md-12 bg-white aprt-content pt-3 pb-2">
       <div
-        class="card-title bold-2 text-size-1-big mt-sm-3 mt-3"
+        class="card-title d-flex justify-content-between align-items-center bold-2 text-size-1-big mt-sm-3 mt-3"
         itemprop="name"
       >
         <a :href="`/apartment/${room.slug}/`">{{ room.name }}</a>
+
+        <a  
+          v-if="room.is_gallery"
+          target="_blank"
+          :href="`/apartment/${room.id}/download-images`"
+          class="btn btn-round btn-primary py-2 bold-2 text-white"
+        >
+          Download
+        </a>
       </div>
       <div
         v-if="!room.is_gallery"
