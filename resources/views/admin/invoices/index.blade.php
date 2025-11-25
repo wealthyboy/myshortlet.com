@@ -86,6 +86,22 @@
                     </div>
 
                     <div class="form-row">
+
+                        <!-- ⭐ NEW: Apartments Filter -->
+                        <div class="form-group col-md-3">
+                            <label>Apartment</label>
+                            <select name="apartment_id" class="form-control">
+                                <option value="">Any</option>
+
+                                @foreach($apartments as $apartment)
+                                <option value="{{ $apartment->id }}"
+                                    {{ request('apartment_id') == $apartment->id ? 'selected' : '' }}>
+                                    {{ $apartment->name ?? $apartment->apartment_name ?? 'Apartment '.$apartment->id }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="form-group col-md-2">
                             <button type="submit" class="btn btn-primary btn-block rounded">Filter</button>
                         </div>
@@ -103,14 +119,14 @@
                                 Email Report
                             </a>
                         </div>
+
                     </div>
 
                 </form>
-
-
             </div>
         </div>
     </div>
+
 
     {{-- ✅ Invoices Table --}}
     <div class="col-md-12">

@@ -38,12 +38,64 @@ class InvoicesController extends Controller
 
     public function export(Request $request)
     {
+        $apartmentId = $request->apartment_id;
+
+
         $invoices = $this->filterInvoices($request)->get();
 
-        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices'));
+        if (!$apartmentId) {
+            $invoices = $this->filterInvoices($request)->get();
+            $pdf = \PDF::loadView('admin.invoices.report', compact('invoices'));
+            return $pdf->download('invoice-report.pdf');
+        }
 
-        return $pdf->download('invoice-report.pdf');
+        if ($invoices->isEmpty()) {
+            return back()->with('error', 'No invoices found for the selected filter.');
+        }
+
+        $zipName = 'invoice-report.zip';
+        $zipPath = storage_path('app/' . $zipName);
+
+        $zip = new \ZipArchive();
+        $zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+        foreach ($invoices as $invoice) {
+
+            // 1. Get only items for selected apartment
+            $filteredItems = $invoice->invoice_items()
+                ->where('apartment_id', $apartmentId)
+                ->get();
+
+            if ($filteredItems->isEmpty()) {
+                continue;
+            }
+
+            // 2. Override relationship so PDF sees ONLY filtered items
+            $invoice->setRelation('invoice_items', $filteredItems);
+
+            // 3. Recalculate totals based only on filtered items
+            $invoice->filtered_subtotal = $filteredItems->sum('total');
+            $invoice->filtered_total = $invoice->filtered_subtotal + ($invoice->caution_fee ?? 0);
+
+            // 4. Generate the invoice PDF
+            $pdf = \PDF::loadView('admin.invoices.pdf', [
+                'invoice' => $invoice,
+                'filtered' => true
+            ])->output();
+
+            // ⭐ 5. Use the REAL invoice number as filename
+            $fileName = $invoice->invoice . '.pdf';
+
+            // Add to ZIP
+            $zip->addFromString($fileName, $pdf);
+        }
+
+        $zip->close();
+
+        return response()->download($zipPath)->deleteFileAfterSend(true);
     }
+
+
 
     private function filterInvoices(Request $request)
     {
@@ -69,8 +121,16 @@ class InvoicesController extends Controller
             $query->where('sent', $request->status === 'paid');
         }
 
+        // ⭐ ADD THIS
+        if ($request->filled('apartment_id')) {
+            $query->whereHas('invoice_items', function ($q) use ($request) {
+                $q->where('apartment_id', $request->apartment_id);
+            });
+        }
+
         return $query;
     }
+
 
 
 
@@ -111,8 +171,15 @@ class InvoicesController extends Controller
             $query->where('sent', $request->status === 'paid');
         }
 
+        if ($request->filled('apartment_id')) {
+            $query->whereHas('invoice_items', function ($q) use ($request) {
+                $q->where('apartment_id', $request->apartment_id);
+            });
+        }
+
         $invoices = $query->latest()->paginate(20);
-        return view('admin.invoices.index', compact('invoices'));
+        $apartments = Apartment::orderBy('name', 'asc')->get();
+        return view('admin.invoices.index', compact('invoices', 'apartments'));
     }
 
 
