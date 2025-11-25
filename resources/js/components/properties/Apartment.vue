@@ -11,6 +11,7 @@
       itemtype="https://schema.org/ImageGallery"
     >
 
+
       <div class="owl-carousel owl-theme">
         <div
           class="item rounded-top"
@@ -24,7 +25,7 @@
             :alt="room.name"
             :title="'book ' + room.name + '  Avenue Montaigne'"
             @click.prevent="showRoom(room)"
-            :src="image.image"
+            :src="image"
             class="img cursor-pointer img-fluid"
             itemprop="contentUrl"
           />
@@ -47,7 +48,7 @@
                 >
                   Show all
                   {{
-                    room.images.length 
+                    room.images_count 
                   }}
                   images
                 </title>
@@ -62,7 +63,7 @@
                 role="button"
                 aria-hidden="true"
                 >{{
-                  room.images.length 
+                  room.images_count 
                 }}
                 View All</span
               >

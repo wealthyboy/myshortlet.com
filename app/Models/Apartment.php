@@ -36,6 +36,7 @@ class Apartment extends Model
         'google_drive_image_links',
         'google_drive_image_link',
         'google_drive_video_link',
+        'images_count',
         'image_links',
         'hightlights',
         'converted_peak_price',
@@ -115,8 +116,15 @@ class Apartment extends Model
         // Ensure it's an array and return first 9
         return collect($this->images)
             ->take(9)
+            ->pluck('image')   // get only the image column
             ->values()
             ->toArray();
+    }
+
+
+    public function getImagesCountAttribute()
+    {
+        return collect($this->images)->count();
     }
 
 
