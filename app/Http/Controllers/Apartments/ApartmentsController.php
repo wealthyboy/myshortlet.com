@@ -12,6 +12,8 @@ use App\Models\SystemSetting;
 use App\Models\PeakPeriod;
 use App\Models\PriceChanged;
 use App\Http\Helper;
+use Illuminate\Support\Facades\Cache;
+
 
 use Illuminate\Database\Eloquent\Builder;
 use App\Filters\PropertyFilter\AttributesFilter;
@@ -37,7 +39,7 @@ class ApartmentsController extends Controller
      */
     public function apartments(Request $request)
     {
-        $types =  [
+        $types = [
             'extra_services',
             'facilities',
             'rules',
@@ -45,66 +47,43 @@ class ApartmentsController extends Controller
             'other' => 'other'
         ];
 
-
         $str = new Str;
         $date = $request->check_in_checkout;
-        session(['check_in_checkout' =>   $date]);
-        $property_is_not_available = null;
-        $cites = [];
+        session(['check_in_checkout' => $date]);
+
         $page_title = "Book from our collection of Apartments | Avenue Montaigne";
         $page_meta_description = "All apartments  Avenue Montaigne";
-        $date = explode("to", $request->check_in_checkout);
-        $date = Helper::toAndFromDate($request->check_in_checkout);
-
 
         $peakPeriodIsSelected = null;
-
-
-
-        $property_is_not_available = null;
         $data = [];
-        $attributes = null;
         $data['persons'] = $request->persons ?? 1;
         $data['rooms'] = $request->rooms ?? 2;
-        $startDate = $date['start_date'];
-        $endDate = $date['end_date'];
-        $properties = null;
-        $breadcrumb = null;
 
         $query = Apartment::query();
         $peak_period = PeakPeriod::first();
         $checkInOut = request()->check_in_checkout ?? session('check_in_checkout');
-
         $dates = explode("to", $checkInOut);
 
+        // --- DATE LOGIC ---
+        if ($request->check_in_checkout && count($dates) > 1) {
+            $date = Helper::toAndFromDate($checkInOut);
+            $startDate = $date['start_date'];
+            $endDate = $date['end_date'];
 
-        if ($request->check_in_checkout) {
+            $peakStart = Carbon::parse($peak_period->start_date);
+            $peakEnd   = Carbon::parse($peak_period->end_date);
 
-            if (count($dates) > 1) {
+            $overlapsPeak = (
+                $startDate->between($peakStart, $peakEnd) ||
+                $endDate->between($peakStart, $peakEnd) ||
+                ($startDate->lt($peakStart) && $endDate->gt($peakEnd))
+            );
 
-
-                $date = Helper::toAndFromDate($checkInOut);
-
-                $peakStart = Carbon::parse($peak_period->start_date);
-                $peakEnd = Carbon::parse($peak_period->end_date);
-                $startDate = $date['start_date'];
-                $endDate = $date['end_date'];
-
-                $overlapsPeak = (
-                    $startDate->between($peakStart, $peakEnd) ||
-                    $endDate->between($peakStart, $peakEnd) ||
-                    ($startDate->lt($peakStart) && $endDate->gt($peakEnd))
-                );
-
-                $peakPeriodIsSelected = $overlapsPeak  ? $peak_period : null;
-            }
-            // Check if apartment_id is present in the request
-            if ($request->has('apartment_id')) {
-                $apartmentId = $request->apartment_id;
-                $query->where('id', $apartmentId); // Filter by the provided apartment ID
+            if ($overlapsPeak) {
+                $peakPeriodIsSelected = $peak_period;
             }
 
-
+            // Apartment availability logic
             $query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
                 $q->where(function ($subQ) use ($startDate, $endDate) {
                     $subQ->where('checkin', '<', $endDate)
@@ -115,66 +94,83 @@ class ApartmentsController extends Controller
                 ->where('apartments.no_of_rooms', '>=', $data['rooms']);
         }
 
-
+        // Filter for a single apartment
         if ($request->has('apartment_id')) {
-            $apartments = $query->where('allow', 1)->latest()->first();
+            $query->where('id', $request->apartment_id);
         }
 
-        if (!$request->has('apartment_id')) {
-            $apartments = $query->where('allow', 1)->latest()->get();
+        // ----------------------------
+        // 🔥 CACHE THE QUERY RESULTS
+        // ----------------------------
+        $cacheKey = 'apartments_' . md5(json_encode([
+            'apartment_id'       => $request->apartment_id,
+            'check_in_checkout'  => $request->check_in_checkout,
+            'persons'            => $data['persons'],
+            'rooms'              => $data['rooms']
+        ]));
+
+        $apartments = Cache::remember($cacheKey, now()->addMinutes(10), function () use ($query, $request) {
+            if ($request->has('apartment_id')) {
+                return $query->where('allow', 1)->latest()->first();
+            }
+            return $query->where('allow', 1)->latest()->get();
+        });
+
+        // Load relationships even on cached results
+        if ($apartments) {
+            $apartments->load(
+                'images',
+                'bedrooms',
+                'bedrooms.parent',
+                'property',
+                'apartment_facilities',
+                'apartment_facilities.parent'
+            );
         }
 
-
-        $saved = null;
         $property = Property::first();
 
-        if ($apartments) {
-            $apartments->load('images', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
-        }
-
+        // Return JSON for a single apartment
         if ($request->has('apartment_id')) {
             return response()->json([
-                'apartments' => $apartments,
+                'apartments'   => $apartments,
                 'peak_periods' => $peakPeriodIsSelected,
-                'params' => $request->all(),
-                'search' => false
+                'params'       => $request->all(),
+                'search'       => false
             ]);
         }
 
-
-
-
-
-
+        // Ajax response for search
         if ($request->ajax()) {
-
-            return PropertyLists::collection(
-                $apartments
-            )->additional(['attributes' => $attributes, 'peak_periods' => $peakPeriodIsSelected, 'params' => $request->all(), 'search' => false]);
+            return PropertyLists::collection($apartments)
+                ->additional([
+                    'attributes'   => null,
+                    'peak_periods' => $peakPeriodIsSelected,
+                    'params'       => $request->all(),
+                    'search'       => false
+                ]);
         }
 
+        // Web page load
         $showResult = null;
         $apr = 0;
-
-        if ($request->check_in_checkout && $apartments->count()) {
+        if ($request->check_in_checkout && $apartments && $apartments->count()) {
             $showResult = 1;
             $apartments[0]->showResult = 1;
             $apr = 1;
         }
 
-        return  view('apartments.apartments', compact(
+        return view('apartments.apartments', compact(
             'page_title',
-            'breadcrumb',
             'str',
-            'saved',
             'apartments',
             'property',
             'page_meta_description',
             'showResult',
             'apr'
-
         ));
     }
+
 
 
     public function index(Request $request, Location $location)
