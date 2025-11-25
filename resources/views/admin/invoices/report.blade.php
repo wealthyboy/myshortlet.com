@@ -124,7 +124,7 @@
                     <th>Customer</th>
                     <th>Status</th>
                     <th>Date Added</th>
-                    <th>Total</th>
+                    <th>Amount</th> <!-- CHANGED -->
                 </tr>
             </thead>
             <tbody>
@@ -147,6 +147,22 @@
                 @endforeach
             </tbody>
         </table>
+
+        <!-- TOTAL AMOUNT BOX -->
+        <div style="
+            margin-top: 25px;
+            padding: 12px 15px;
+            text-align: right;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background: #fff;
+            font-size: 15px;
+            font-weight: bold;
+        ">
+            Total Amount:
+            {{ $invoices->first()->currency ?? '₦' }}
+            {{ number_format($invoices->sum('total'), 2) }}
+        </div>
 
     </div>
 
