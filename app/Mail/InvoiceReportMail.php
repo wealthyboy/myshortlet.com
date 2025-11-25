@@ -21,7 +21,7 @@ class InvoiceReportMail extends Mailable
     public function build()
     {
         return $this->subject('Invoice Report')
-            ->view('emails.invoice-report')
+            ->view('emails.invoice_report')
             ->attachData($this->pdf, 'invoice-report.pdf', [
                 'mime' => 'application/pdf',
             ]);
