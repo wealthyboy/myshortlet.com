@@ -12,7 +12,7 @@
          </div>
 
          <div class="clearfix"></div>
-         @
+
          <div class="col-md-8  d-none d-md-block d-lg-block  d-xxl-block  position-relative bg-white ">
             <a href="#" class="img card-img galleries" style="background-image: url('{{ isset($apartment->images[0]) ? $apartment->images[0]->image: null  }}')"></a>
          </div>
