@@ -91,10 +91,10 @@
                                 <div class=" ">
 
                                     <VueSlickCarousel v-bind="settings" :arrows="true" :dots="true">
-                                        <template v-if="room.google_drive_image_links">
+                                        <template v-if="room.images">
 
                                             <div class="item" :key="index"
-                                                v-for="(image, index) in room.google_drive_image_links">
+                                                v-for="(image, index) in room.images">
                                                 <img :src="image" class="img room-image  img-fluid rounded" />
                                             </div>
                                         </template>
@@ -111,7 +111,6 @@
                                 </div>
 
                                     
-
                                 <div class="card-title bold-2 text-size-1-big  mt-lg-0 mt-sm-3 ">
                                     {{ room.name }}
                                 </div>
