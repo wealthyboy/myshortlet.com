@@ -150,7 +150,7 @@
                         </div>
 
                         <div class="col-md-3">
-                            <a href="{{ route('admin.invoices.emailReport', request()->query()) }}"
+                            <a href="{{ route('admin.invoices.invoices', request()->query()) }}"
                                 class="btn btn-info btn-block">
                                 Email Report & Invoices
                             </a>
