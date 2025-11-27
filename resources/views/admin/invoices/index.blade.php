@@ -44,79 +44,115 @@
     {{-- ✅ Filter Card --}}
     <div class="col-md-12">
         <div class="card">
+
+            <!-- Header Icon -->
             <div class="card-header card-header-icon" data-background-color="rose">
                 <i class="material-icons">filter_list</i>
             </div>
+
             <div class="card-content">
                 <h4 class="card-title">Filter Invoices</h4>
 
-                <form action="{{ route('admin.invoices.index') }}" method="GET" class="mb-3">
+                <form action="{{ route('admin.invoices.index') }}" method="GET">
 
-                    <div class="form-row">
+                    <!-- FILTER FIELDS -->
+                    <div class="row">
 
-                        <div class="form-group col-md-3">
-                            <label>Full Name</label>
-                            <input type="text" class="form-control" name="full_name" value="{{ request('full_name') }}">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" class="form-control" name="full_name" value="{{ request('full_name') }}">
+                            </div>
                         </div>
 
-                        <div class="form-group col-md-3">
-                            <label>Phone</label>
-                            <input type="text" class="form-control" name="phone" value="{{ request('phone') }}">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="text" class="form-control" name="phone" value="{{ request('phone') }}">
+                            </div>
                         </div>
 
-                        <div class="form-group col-md-2">
-                            <label>Start Date</label>
-                            <input type="date" class="form-control" name="start_date" value="{{ request('start_date') }}">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Start Date</label>
+                                <input type="date" class="form-control" name="start_date" value="{{ request('start_date') }}">
+                            </div>
                         </div>
 
-                        <div class="form-group col-md-2">
-                            <label>End Date</label>
-                            <input type="date" class="form-control" name="end_date" value="{{ request('end_date') }}">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>End Date</label>
+                                <input type="date" class="form-control" name="end_date" value="{{ request('end_date') }}">
+                            </div>
                         </div>
 
-                        <div class="form-group col-md-2">
-                            <label>Status</label>
-                            <select name="status" class="form-control">
-                                <option value="">Any</option>
-                                <option value="paid" {{ request('status') == 'paid' ? 'selected' : '' }}>Paid</option>
-                                <option value="not_paid" {{ request('status') == 'not_paid' ? 'selected' : '' }}>Not Paid</option>
-                            </select>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select name="status" class="form-control">
+                                    <option value="">Any</option>
+                                    <option value="paid" {{ request('status')=='paid' ? 'selected' : '' }}>Paid</option>
+                                    <option value="not_paid" {{ request('status')=='not_paid' ? 'selected' : '' }}>Not Paid</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Apartment</label>
+                                <select name="apartment_id" class="form-control">
+                                    <option value="">Any</option>
+                                    @foreach($apartments as $apartment)
+                                    <option value="{{ $apartment->id }}"
+                                        {{ request('apartment_id') == $apartment->id ? 'selected' : '' }}>
+                                        {{ $apartment->name ?? $apartment->apartment_name ?? 'Apartment '.$apartment->id }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                     </div>
 
-                    <div class="form-row">
-
-                        <!-- ⭐ NEW: Apartments Filter -->
-                        <div class="form-group col-md-3">
-                            <label>Apartment</label>
-                            <select name="apartment_id" class="form-control">
-                                <option value="">Any</option>
-
-                                @foreach($apartments as $apartment)
-                                <option value="{{ $apartment->id }}"
-                                    {{ request('apartment_id') == $apartment->id ? 'selected' : '' }}>
-                                    {{ $apartment->name ?? $apartment->apartment_name ?? 'Apartment '.$apartment->id }}
-                                </option>
-                                @endforeach
-                            </select>
+                    <!-- FILTER BUTTON -->
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                Apply Filter
+                            </button>
                         </div>
+                    </div>
 
-                        <div class="form-group col-md-2">
-                            <button type="submit" class="btn btn-primary btn-block rounded">Filter</button>
-                        </div>
+                    <hr>
 
-                        <div class="form-group col-md-2">
+                    <!-- DOWNLOAD / EMAIL ACTIONS -->
+                    <div class="row">
+
+                        <div class="col-md-3">
                             <a href="{{ route('admin.invoices.export', request()->query()) }}"
-                                class="btn btn-info btn-simple">
+                                class="btn btn-info btn-block">
                                 Download PDF Report
                             </a>
                         </div>
 
-                        <div class="form-group col-md-2">
+                        <div class="col-md-3">
+                            <a href="{{ route('admin.invoices.export', request()->query()) }}"
+                                class="btn btn-info btn-block">
+                                Download Invoices (ZIP)
+                            </a>
+                        </div>
+
+                        <div class="col-md-3">
                             <a href="{{ route('admin.invoices.emailReport', request()->query()) }}"
-                                class="btn btn-info btn-simple">
+                                class="btn btn-info btn-block">
                                 Email Report
+                            </a>
+                        </div>
+
+                        <div class="col-md-3">
+                            <a href="{{ route('admin.invoices.emailReport', request()->query()) }}"
+                                class="btn btn-info btn-block">
+                                Email Report & Invoices
                             </a>
                         </div>
 
@@ -126,6 +162,7 @@
             </div>
         </div>
     </div>
+
 
 
     {{-- ✅ Invoices Table --}}
