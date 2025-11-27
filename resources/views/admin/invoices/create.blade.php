@@ -548,40 +548,50 @@ Caution deposit will be refunded within 5 working days after checkout.
             // Totals
             function calculateTotals() {
                 const currency = $('#currency').val() || '';
-                let subTotal = 0;
+
+                let apartmentSubtotal = 0;
+                let extraItemsSubtotal = 0;
 
                 // ---- Main apartment items ----
                 $('.invoice-item-row').each(function() {
                     const total = parseFloat($(this).find('.item-total').val()) || 0;
-                    subTotal += total;
+                    apartmentSubtotal += total;
                 });
 
                 // ---- Extra invoice items ----
                 $('.extra-item-row').each(function() {
                     const total = parseFloat($(this).find('.extra-total').val()) || 0;
-                    subTotal += total;
+                    extraItemsSubtotal += total;
                 });
 
-                // Discount
+                // Get discount + caution fee
                 const discountVal = parseFloat($('#discount').val()) || 0;
                 const discountType = $('#discountType').val();
                 const cautionFee = parseFloat($('#cautionFee').val()) || 0;
 
+                // Discount ONLY on apartments
                 let discountAmount =
                     discountType === 'percent' ?
-                    (subTotal * discountVal) / 100 :
+                    (apartmentSubtotal * discountVal) / 100 :
                     discountVal;
 
-                let grandTotal = subTotal - discountAmount + cautionFee;
+                if (discountAmount > apartmentSubtotal) {
+                    discountAmount = apartmentSubtotal; // safety
+                }
 
-                // Display totals with currency symbol
-                $('#subTotal').val(currency + subTotal.toFixed(2));
+                // final formula
+                const grandTotal =
+                    (apartmentSubtotal - discountAmount) + extraItemsSubtotal + cautionFee;
+
+                // Display totals
+                $('#subTotal').val(currency + (apartmentSubtotal + extraItemsSubtotal).toFixed(2));
                 $('#grandTotal').val(currency + grandTotal.toFixed(2));
 
-                // Hidden numeric values for backend (if needed)
-                $('#subTotalNumeric').val(subTotal.toFixed(2));
+                // Optional numeric fields
+                $('#subTotalNumeric').val((apartmentSubtotal + extraItemsSubtotal).toFixed(2));
                 $('#grandTotalNumeric').val(grandTotal.toFixed(2));
             }
+
 
 
             // Preview
