@@ -88,6 +88,8 @@
 <body>
     <div class="report-box">
 
+
+
         @php
         $firstDate = $invoices->min('created_at')->format('Y-m-d');
         $lastDate = $invoices->max('created_at')->format('Y-m-d');
@@ -102,6 +104,24 @@
 
         // find apartment name if selected
 
+        @endphp
+
+        @php
+        use Carbon\Carbon;
+
+        // Determine the start and end dates
+        $startDate = request('start_date')
+        ? Carbon::parse(request('start_date'))
+        : ($invoices->min('created_at') ? Carbon::parse($invoices->min('created_at')) : null);
+
+        $endDate = request('end_date')
+        ? Carbon::parse(request('end_date'))
+        : ($invoices->max('created_at') ? Carbon::parse($invoices->max('created_at')) : null);
+
+        // Human-readable range
+        $rangeText = $startDate && $endDate
+        ? $startDate->isoFormat('ddd, MMM D, YYYY') . ' → ' . $endDate->isoFormat('ddd, MMM D, YYYY')
+        : 'N/A';
         @endphp
 
         <!-- HEADER -->
