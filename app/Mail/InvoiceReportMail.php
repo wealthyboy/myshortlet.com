@@ -9,21 +9,25 @@ use Illuminate\Queue\SerializesModels;
 
 class InvoiceReportMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    public $reportPdf;
+    public $zipPath;
 
-    public $pdf;
-
-    public function __construct($pdf)
+    public function __construct($reportPdf, $zipPath)
     {
-        $this->pdf = $pdf;
+        $this->reportPdf = $reportPdf;
+        $this->zipPath = $zipPath;
     }
 
     public function build()
     {
-        return $this->subject('Invoice Report')
+        return $this->subject("Invoice Report & Invoices ZIP")
             ->view('emails.invoice_report')
-            ->attachData($this->pdf, 'invoice-report.pdf', [
-                'mime' => 'application/pdf',
+            ->attachData($this->reportPdf, "invoice-report.pdf", [
+                'mime' => 'application/pdf'
+            ])
+            ->attach($this->zipPath, [
+                'as' => basename($this->zipPath),
+                'mime' => 'application/zip'
             ]);
     }
 }

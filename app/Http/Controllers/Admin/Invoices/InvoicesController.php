@@ -31,23 +31,26 @@ class InvoicesController extends Controller
     public $settings;
     public function __construct()
     {
-
-        // $this->middleware('admin');
         $this->settings = \DB::table('system_settings')->first();
     }
 
     public function export(Request $request)
     {
         $apartmentId = $request->apartment_id;
+        $invoices = $this->filterInvoices($request)->get();
+        $invoices = $this->filterInvoices($request)->get();
+        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices'));
+        return $pdf->download('invoice-report.pdf');
+    }
 
 
+
+
+    public function downloadInvoice(Request $request)
+    {
+        $apartmentId = $request->apartment_id;
         $invoices = $this->filterInvoices($request)->get();
 
-        if (!$apartmentId) {
-            $invoices = $this->filterInvoices($request)->get();
-            $pdf = \PDF::loadView('admin.invoices.report', compact('invoices'));
-            return $pdf->download('invoice-report.pdf');
-        }
 
         if ($invoices->isEmpty()) {
             return back()->with('error', 'No invoices found for the selected filter.');
@@ -96,6 +99,50 @@ class InvoicesController extends Controller
     }
 
 
+    public function emailReport(Request $request)
+    {
+        $apartmentId = $request->apartment_id;
+
+        $invoices = $this->filterInvoices($request)->get();
+        $email = "oluwa.tosin@avenuemontaigne.ng";
+
+        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices'))->output();
+
+        \Mail::to("jacob.atam@gmail.com")
+            ->send(new \App\Mail\InvoiceReportMail($pdf));
+
+        return back()->with('success', 'Report emailed successfully!');
+    }
+
+
+
+    public function emailReportInvoices(Request $request)
+    {
+        $apartmentId = $request->apartment_id;
+        $email = "jacob.atam@gmail.com";
+        $ccEmail = "oluwa.tosin@avenuemontaigne.ng";
+
+        $invoices = $this->filterInvoices($request)->get();
+
+        if ($invoices->isEmpty()) {
+            return back()->with('error', 'No invoices found for the selected filter.');
+        }
+
+        dispatch(new \App\Jobs\SendInvoiceZipReportJob(
+            $invoices,
+            $apartmentId,
+            $email,
+            $ccEmail
+        ));
+
+        return back()->with('success', 'Report is being generated and will be emailed shortly!');
+    }
+
+
+
+
+
+
 
     private function filterInvoices(Request $request)
     {
@@ -118,7 +165,7 @@ class InvoicesController extends Controller
         }
 
         if ($request->filled('status')) {
-            $query->where('sent', $request->status === 'paid');
+            $query->where('sent', $request->status === 'paid' ? 1 : 0);
         }
 
         // ⭐ ADD THIS
@@ -129,21 +176,6 @@ class InvoicesController extends Controller
         }
 
         return $query;
-    }
-
-
-
-
-    public function emailReport(Request $request)
-    {
-        $invoices = $this->filterInvoices($request)->get();
-
-        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices'))->output();
-
-        \Mail::to("oluwa.tosin@avenuemontaigne.ng")
-            ->send(new \App\Mail\InvoiceReportMail($pdf));
-
-        return back()->with('success', 'Report emailed successfully!');
     }
 
 
@@ -214,7 +246,6 @@ class InvoicesController extends Controller
     }
 
 
-
     public function checkAvailability(Request $request)
     {
         $request->validate([
@@ -262,7 +293,6 @@ class InvoicesController extends Controller
 
         return $pdf->download('invoice-' . $invoice->invoice . '.pdf');
     }
-
 
 
     public function sendReceipt(Request $request)
@@ -428,32 +458,36 @@ class InvoicesController extends Controller
                 'rate' => $rate
             ]);
 
-            foreach ($validated['items'] as $item) {
 
-                $startDate = !empty($item['checkin']) ? Carbon::parse($item['checkin']) : null;
-                $endDate   = !empty($item['checkout']) ? Carbon::parse($item['checkout']) : null;
-                $apartment = Apartment::find($item['apartment_id']);
+            if (!empty($validated['items'])) {
+                foreach ($validated['items'] as $item) {
 
-                $checkin  = $startDate ? $startDate->format('D, M d, Y') : '';
-                $checkout = $endDate ? $endDate->format('D, M d, Y') : '';
+                    $startDate = !empty($item['checkin']) ? Carbon::parse($item['checkin']) : null;
+                    $endDate   = !empty($item['checkout']) ? Carbon::parse($item['checkout']) : null;
+                    $apartment = Apartment::find($item['apartment_id']);
 
-                $name = 'Booking for ' . $item['name'] .
-                    ($checkin ? ' from ' . $checkin : '') .
-                    ($checkout ? ' to ' . $checkout : '') .
-                    ' - ' . $item['qty'] . ' night(s)';
+                    $checkin  = $startDate ? $startDate->format('D, M d, Y') : '';
+                    $checkout = $endDate ? $endDate->format('D, M d, Y') : '';
+
+                    $name = 'Booking for ' . $item['name'] .
+                        ($checkin ? ' from ' . $checkin : '') .
+                        ($checkout ? ' to ' . $checkout : '') .
+                        ' - ' . $item['qty'] . ' night(s)';
 
 
-                $invoice->invoice_items()->create([
-                    'name' => $name,
-                    'quantity' => $item['qty'],
-                    'price' => $item['price'],
-                    'apartment_id' => $item['apartment_id'],
-                    'total' => $item['total'],
-                    'checkin' =>  $item['checkin'] ?? null,
-                    'checkout' => $item['checkout'] ?? null,
-                    'rate' => $rate
-                ]);
+                    $invoice->invoice_items()->create([
+                        'name' => $name,
+                        'quantity' => $item['qty'],
+                        'price' => $item['price'],
+                        'apartment_id' => $item['apartment_id'],
+                        'total' => $item['total'],
+                        'checkin' =>  $item['checkin'] ?? null,
+                        'checkout' => $item['checkout'] ?? null,
+                        'rate' => $rate
+                    ]);
+                }
             }
+
 
             // Create each invoice item
             if (!empty($validated['extra_items']) && is_array($validated['extra_items'])) {
