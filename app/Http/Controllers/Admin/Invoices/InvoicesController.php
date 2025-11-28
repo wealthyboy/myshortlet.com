@@ -41,6 +41,7 @@ class InvoicesController extends Controller
 
         $apartmentName =  $apartmentId ? Apartment::find($apartmentId)->name : null;
 
+
         $pdf = \PDF::loadView('admin.invoices.report', compact('invoices', 'apartmentName'));
         return $pdf->download('invoice-report.pdf');
     }
