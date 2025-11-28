@@ -40,9 +40,11 @@ class InvoicesController extends Controller
         $invoices = $this->filterInvoices($request)->get();
 
         $apartmentName =  $apartmentId ? Apartment::find($apartmentId)->name : null;
+        $rangeText = $this->getHumanDateRange($request, $invoices);
 
 
-        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices', 'apartmentName'));
+
+        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices', 'apartmentName', 'rangeText'));
         return $pdf->download('invoice-report.pdf');
     }
 
@@ -55,6 +57,8 @@ class InvoicesController extends Controller
         $invoices = $this->filterInvoices($request)->get();
 
         $apartmentName =  $apartmentId ? Apartment::find($apartmentId)->name : null;
+        $rangeText = $this->getHumanDateRange($request, $invoices);
+
 
 
 
@@ -90,7 +94,8 @@ class InvoicesController extends Controller
             $pdf = \PDF::loadView('admin.invoices.pdf', [
                 'invoice' => $invoice,
                 'filtered' => true,
-                'apartmentName' => $apartmentName
+                'apartmentName' => $apartmentName,
+                'rangeText' => $rangeText
             ])->output();
 
             // ⭐ 5. Use the REAL invoice number as filename
@@ -114,9 +119,11 @@ class InvoicesController extends Controller
         $email = "oluwa.tosin@avenuemontaigne.ng";
 
         $apartmentName =  $apartmentId ? Apartment::find($apartmentId)->name : null;
+        $rangeText = $this->getHumanDateRange($request, $invoices);
 
 
-        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices', 'apartmentName'))->output();
+
+        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices', 'apartmentName', 'rangeText'))->output();
 
         \Mail::to($email)
             ->cc("jacob.atam@gmail.com")
@@ -126,14 +133,34 @@ class InvoicesController extends Controller
     }
 
 
+    protected function getHumanDateRange(Request $request, $invoices)
+    {
+        $startDate = $request->filled('start_date')
+            ? Carbon::parse($request->start_date)
+            : ($invoices->min('created_at') ? Carbon::parse($invoices->min('created_at')) : null);
+
+        $endDate = $request->filled('end_date')
+            ? Carbon::parse($request->end_date)
+            : ($invoices->max('created_at') ? Carbon::parse($invoices->max('created_at')) : null);
+
+        if ($startDate && $endDate) {
+            return $startDate->isoFormat('MMM D, YYYY') . ' → ' . $endDate->isoFormat('MMM D, YYYY');
+        }
+
+        return 'N/A';
+    }
+
+
+
 
     public function emailReportInvoices(Request $request)
     {
         $apartmentId = $request->apartment_id;
-        $email = "jacob.atam@gmail.com";
-        $ccEmail = "oluwa.tosin@avenuemontaigne.ng";
+        $email = "oluwa.tosin@avenuemontaigne.ng";
+        $ccEmail = "jacob.atam@gmail.com";
 
         $invoices = $this->filterInvoices($request)->get();
+        $rangeText = $this->getHumanDateRange($request, $invoices);
 
         if ($invoices->isEmpty()) {
             return back()->with('error', 'No invoices found for the selected filter.');
@@ -143,7 +170,8 @@ class InvoicesController extends Controller
             $invoices,
             $apartmentId,
             $email,
-            $ccEmail
+            $ccEmail,
+            $rangeText
         ));
 
         return back()->with('success', 'Report is being generated and will be emailed shortly!');

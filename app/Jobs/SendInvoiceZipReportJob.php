@@ -18,13 +18,15 @@ class SendInvoiceZipReportJob implements ShouldQueue
     protected $apartmentId;
     protected $email;
     protected $ccEmail;
+    protected $rangeText;
 
-    public function __construct($invoices, $apartmentId, $email, $ccEmail = null)
+    public function __construct($invoices, $apartmentId, $email, $ccEmail = null, $rangeText)
     {
         $this->invoices = $invoices;
         $this->apartmentId = $apartmentId;
         $this->email = $email;
         $this->ccEmail = $ccEmail;
+        $this->rangeText = $rangeText;
     }
 
     public function handle()
@@ -52,8 +54,6 @@ class SendInvoiceZipReportJob implements ShouldQueue
         $zipName = "{$apartmentName}-{$date}-invoices.zip";
         $zipPath = storage_path("app/{$zipName}");
 
-
-
         /**
          * ---------------------------------------------------
          *  GENERATE SUMMARY REPORT PDF
@@ -61,7 +61,8 @@ class SendInvoiceZipReportJob implements ShouldQueue
          */
         $reportPdf = \PDF::loadView('admin.invoices.report', [
             'invoices' => $this->invoices,
-            'apartmentName' => $apartmentName
+            'apartmentName' => $apartmentName,
+            'rangeText' => $this->rangeText
         ])->output();
 
 
@@ -91,7 +92,9 @@ class SendInvoiceZipReportJob implements ShouldQueue
 
             $pdf = \PDF::loadView('admin.invoices.pdf', [
                 'invoice' => $invoice,
-                'filtered' => true
+                'filtered' => true,
+                'apartmentName' => $apartmentName,
+                'rangeText' => $this->rangeText
             ])->output();
 
             $zip->addFromString($invoice->invoice . '.pdf', $pdf);
