@@ -101,13 +101,7 @@
         : "$firstDate → $lastDate";
 
         // find apartment name if selected
-        $apartmentName = null;
-        if(request('apartment_id') && isset($apartments)) {
-        $apartment = $apartments->firstWhere('id', request('apartment_id'));
-        if($apartment) {
-        $apartmentName = $apartment->name ?? $apartment->apartment_name ?? null;
-        }
-        }
+
         @endphp
 
         <!-- HEADER -->
@@ -124,10 +118,8 @@
 
                     <small>Generated on: {{ now()->format('D, M d Y') }}</small><br>
                     <small>Date Range: {{ $rangeText }}</small><br>
-
-
                     @if($apartmentName)
-                    <h4>Apartment: <strong>{{ $apartmentName }}</strong></h4>
+                    <small>Apartment: {{ $apartmentName }}</small><br>
                     @endif
 
                     @if(request('status'))
