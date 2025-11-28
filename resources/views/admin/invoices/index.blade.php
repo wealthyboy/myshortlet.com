@@ -130,28 +130,28 @@
 
                         <div class="col-md-3">
                             <a href="{{ route('admin.invoices.export', request()->query()) }}"
-                                class="btn btn-info btn-block">
+                                class="btn btn-success btn-block">
                                 Download PDF Report
                             </a>
                         </div>
 
                         <div class="col-md-3">
-                            <a href="{{ route('admin.invoices.export', request()->query()) }}"
-                                class="btn btn-info btn-block">
+                            <a href="{{ route('admin.invoices.invoices', request()->query()) }}"
+                                class="btn btn-success btn-block">
                                 Download Invoices (ZIP)
                             </a>
                         </div>
 
                         <div class="col-md-3">
                             <a href="{{ route('admin.invoices.emailReport', request()->query()) }}"
-                                class="btn btn-info btn-block">
+                                class="btn btn-success btn-block">
                                 Email Report
                             </a>
                         </div>
 
                         <div class="col-md-3">
-                            <a href="{{ route('admin.invoices.invoices', request()->query()) }}"
-                                class="btn btn-info btn-block">
+                            <a href="{{ route('admin.invoices.emailReportInvoices', request()->query()) }}"
+                                class="btn btn-success btn-block">
                                 Email Report & Invoices
                             </a>
                         </div>
