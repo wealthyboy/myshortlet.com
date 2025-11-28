@@ -39,7 +39,7 @@ class SendInvoiceZipReportJob implements ShouldQueue
         if ($apartment) {
             // Prefer name → apartment_name → fallback
             $rawName = $apartment->name
-                ?? $apartment->apartment_name
+                ?? $apartment->name
                 ?? "Apartment_" . $apartment->id;
         } else {
             $rawName = "Apartment";
@@ -60,7 +60,8 @@ class SendInvoiceZipReportJob implements ShouldQueue
          * ---------------------------------------------------
          */
         $reportPdf = \PDF::loadView('admin.invoices.report', [
-            'invoices' => $this->invoices
+            'invoices' => $this->invoices,
+            'apartmentName' => $apartmentName
         ])->output();
 
 
