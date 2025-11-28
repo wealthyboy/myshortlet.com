@@ -90,21 +90,7 @@
 
 
 
-        @php
-        $firstDate = $invoices->min('created_at')->format('Y-m-d');
-        $lastDate = $invoices->max('created_at')->format('Y-m-d');
 
-        $start = request('start_date');
-        $end = request('end_date');
-
-        // determine range text
-        $rangeText = ($start && $end)
-        ? "$start → $end"
-        : "$firstDate → $lastDate";
-
-        // find apartment name if selected
-
-        @endphp
 
 
 
