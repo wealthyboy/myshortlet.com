@@ -120,7 +120,7 @@
 
         // Human-readable range
         $rangeText = $startDate && $endDate
-        ? $startDate->isoFormat('ddd, MMM D, YYYY') . ' → ' . $endDate->isoFormat('ddd, MMM D, YYYY')
+        ? $startDate->isoFormat('MMM D, YYYY') . ' → ' . $endDate->isoFormat('MMM D, YYYY')
         : 'N/A';
         @endphp
 
