@@ -144,11 +144,13 @@ class InvoicesController extends Controller
             : ($invoices->max('created_at') ? Carbon::parse($invoices->max('created_at')) : null);
 
         if ($startDate && $endDate) {
+            // Use human-readable format: Month Day, Year
             return $startDate->isoFormat('MMM D, YYYY') . ' → ' . $endDate->isoFormat('MMM D, YYYY');
         }
 
         return 'N/A';
     }
+
 
 
 
