@@ -29,26 +29,47 @@ class SendInvoiceZipReportJob implements ShouldQueue
 
     public function handle()
     {
-        /** ---------------------------------------------------
+        /**
+         * ---------------------------------------------------
          *  GET APARTMENT NAME FOR ZIP FILENAME
-         * ---------------------------------------------------*/
+         * ---------------------------------------------------
+         */
         $apartment = \App\Models\Apartment::find($this->apartmentId);
-        $apartmentName = $apartment ? str_replace(' ', '_', $apartment->name) : 'apartment';
+
+        if ($apartment) {
+            // Prefer name → apartment_name → fallback
+            $rawName = $apartment->name
+                ?? $apartment->apartment_name
+                ?? "Apartment_" . $apartment->id;
+        } else {
+            $rawName = "Apartment";
+        }
+
+        // Clean: replace spaces & remove invalid filename characters
+        $apartmentName = preg_replace('/[^A-Za-z0-9_\-]/', '', str_replace(' ', '_', $rawName));
 
         $date = now()->format('Y-m-d');
         $zipName = "{$apartmentName}-{$date}-invoices.zip";
         $zipPath = storage_path("app/{$zipName}");
 
-        /** ---------------------------------------------------
+
+
+        /**
+         * ---------------------------------------------------
          *  GENERATE SUMMARY REPORT PDF
-         * ---------------------------------------------------*/
+         * ---------------------------------------------------
+         */
         $reportPdf = \PDF::loadView('admin.invoices.report', [
             'invoices' => $this->invoices
         ])->output();
 
-        /** ---------------------------------------------------
+
+
+        /**
+         * ---------------------------------------------------
          *  GENERATE ZIP OF FILTERED INVOICES
-         * ---------------------------------------------------*/
+         * ---------------------------------------------------
+         */
         $zip = new \ZipArchive();
         $zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
 
@@ -79,17 +100,25 @@ class SendInvoiceZipReportJob implements ShouldQueue
 
         $zip->close();
 
-        /** ---------------------------------------------------
+
+
+        /**
+         * ---------------------------------------------------
          *  EMPTY ZIP SAFETY CHECK
-         * ---------------------------------------------------*/
+         * ---------------------------------------------------
+         */
         if ($fileCount === 0) {
             \Log::warning("ZIP empty for apartment {$this->apartmentId}");
-            return; // no mail sent, quietly exits
+            return; // exit quietly — no email sent
         }
 
-        /** ---------------------------------------------------
+
+
+        /**
+         * ---------------------------------------------------
          *  SEND EMAIL WITH 2 ATTACHMENTS
-         * ---------------------------------------------------*/
+         * ---------------------------------------------------
+         */
         $mail = new InvoiceReportMail($reportPdf, $zipPath);
 
         if ($this->ccEmail) {

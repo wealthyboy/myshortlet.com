@@ -38,8 +38,10 @@ class InvoicesController extends Controller
     {
         $apartmentId = $request->apartment_id;
         $invoices = $this->filterInvoices($request)->get();
-        $invoices = $this->filterInvoices($request)->get();
-        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices'));
+
+        $apartmentName =  $apartmentId ? Apartment::find($apartmentId)->name : null;
+
+        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices', 'apartmentName'));
         return $pdf->download('invoice-report.pdf');
     }
 
@@ -50,6 +52,9 @@ class InvoicesController extends Controller
     {
         $apartmentId = $request->apartment_id;
         $invoices = $this->filterInvoices($request)->get();
+
+        $apartmentName =  $apartmentId ? Apartment::find($apartmentId)->name : null;
+
 
 
         if ($invoices->isEmpty()) {
@@ -83,7 +88,8 @@ class InvoicesController extends Controller
             // 4. Generate the invoice PDF
             $pdf = \PDF::loadView('admin.invoices.pdf', [
                 'invoice' => $invoice,
-                'filtered' => true
+                'filtered' => true,
+                'apartmentName' => $apartmentName
             ])->output();
 
             // ⭐ 5. Use the REAL invoice number as filename
@@ -106,7 +112,10 @@ class InvoicesController extends Controller
         $invoices = $this->filterInvoices($request)->get();
         $email = "oluwa.tosin@avenuemontaigne.ng";
 
-        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices'))->output();
+        $apartmentName =  $apartmentId ? Apartment::find($apartmentId)->name : null;
+
+
+        $pdf = \PDF::loadView('admin.invoices.report', compact('invoices', 'apartmentName'))->output();
 
         \Mail::to("jacob.atam@gmail.com")
             ->send(new \App\Mail\InvoiceReportMail($pdf));

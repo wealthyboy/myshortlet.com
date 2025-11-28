@@ -125,8 +125,9 @@
                     <small>Generated on: {{ now()->format('D, M d Y') }}</small><br>
                     <small>Date Range: {{ $rangeText }}</small><br>
 
+
                     @if($apartmentName)
-                    <small>Apartment: {{ $apartmentName }}</small><br>
+                    <h4>Apartment: <strong>{{ $apartmentName }}</strong></h4>
                     @endif
 
                     @if(request('status'))
