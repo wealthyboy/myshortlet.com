@@ -20,14 +20,23 @@ class InvoiceReportMail extends Mailable
 
     public function build()
     {
-        return $this->subject("Invoice Report & Invoices ZIP")
-            ->view('emails.invoice_report')
-            ->attachData($this->reportPdf, "invoice-report.pdf", [
+        $subject = $this->zipPath !== null ? "Invoice Report & Invoices ZIP" : "Invoice Report";
+        $mail = $this->subject($subject)
+            ->view('emails.invoice_report');
+
+        if ($this->reportPdf !== null) {
+            $mail->attachData($this->reportPdf, "invoice-report.pdf", [
                 'mime' => 'application/pdf'
-            ])
-            ->attach($this->zipPath, [
+            ]);
+        }
+
+        if ($this->zipPath !== null) {
+            $mail->attach($this->zipPath, [
                 'as' => basename($this->zipPath),
                 'mime' => 'application/zip'
             ]);
+        }
+
+        return $mail;
     }
 }

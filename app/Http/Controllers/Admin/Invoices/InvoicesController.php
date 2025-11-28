@@ -118,8 +118,9 @@ class InvoicesController extends Controller
 
         $pdf = \PDF::loadView('admin.invoices.report', compact('invoices', 'apartmentName'))->output();
 
-        \Mail::to("jacob.atam@gmail.com")
-            ->send(new \App\Mail\InvoiceReportMail($pdf));
+        \Mail::to($email)
+            ->cc("jacob.atam@gmail.com")
+            ->send(new \App\Mail\InvoiceReportMail($pdf, null));
 
         return back()->with('success', 'Report emailed successfully!');
     }
