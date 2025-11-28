@@ -136,20 +136,21 @@ class InvoicesController extends Controller
     protected function getHumanDateRange(Request $request, $invoices)
     {
         $startDate = $request->filled('start_date')
-            ? Carbon::parse($request->start_date)
-            : ($invoices->min('created_at') ? Carbon::parse($invoices->min('created_at')) : null);
+            ? Carbon::createFromFormat('Y-m-d', $request->start_date)
+            : ($invoices->min('created_at') ? Carbon::parse($invoices->min('created_at'))->startOfDay() : null);
 
         $endDate = $request->filled('end_date')
-            ? Carbon::parse($request->end_date)
-            : ($invoices->max('created_at') ? Carbon::parse($invoices->max('created_at')) : null);
+            ? Carbon::createFromFormat('Y-m-d', $request->end_date)
+            : ($invoices->max('created_at') ? Carbon::parse($invoices->max('created_at'))->endOfDay() : null);
 
         if ($startDate && $endDate) {
-            // Use human-readable format: Month Day, Year
-            return $startDate->isoFormat('MMM D, YYYY') . ' → ' . $endDate->isoFormat('MMM D, YYYY');
+            // Use simple human-readable format
+            return $startDate->format('M j, Y') . ' → ' . $endDate->format('M j, Y');
         }
 
         return 'N/A';
     }
+
 
 
 
