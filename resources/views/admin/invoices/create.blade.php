@@ -89,35 +89,56 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Full Name / Company Name</label>
-                            <input type="text" name="name" class="form-control" placeholder="Enter name or company" required />
+
+
+                            <input type="text" name="name" class="form-control"
+                                value="{{ old('name', $invoiceData->full_name ?? '') }}"
+                                placeholder="Enter name or company" required />
                         </div>
                         <div class="form-group col-md-6">
                             <label>Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Enter email" />
+                            <input type="email" name="email" class="form-control"
+                                value="{{ old('email', $invoiceData->email ?? '') }}"
+                                placeholder="Enter email" />
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Phone</label>
-                            <input type="text" name="phone" class="form-control" placeholder="Enter phone" />
+                            <input type="text" name="phone" class="form-control"
+                                value="{{ old('phone', $invoiceData->phone ?? '') }}"
+                                placeholder="Enter phone" />
                         </div>
                         <div class="form-group col-md-6">
                             <label>Currency</label>
                             <select name="currency" id="currency" class="form-control" required>
                                 <option value="">Select currency</option>
-                                <option value="₦">NGN (₦)</option>
-                                <option value="$">USD ($)</option>
+
+                                <option value="₦"
+                                    {{ old('currency', $invoiceData->currency ?? '') == '₦' ? 'selected' : '' }}>
+                                    NGN (₦)
+                                </option>
+
+                                <option value="$"
+                                    {{ old('currency', $invoiceData->currency ?? '') == '$' ? 'selected' : '' }}>
+                                    USD ($)
+                                </option>
                             </select>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-8">
                             <label>Address</label>
-                            <input type="text" name="address" class="form-control" placeholder="Enter address" />
+                            <input type="text" name="address" class="form-control"
+                                value="{{ old('address', $invoiceData->address ?? '') }}"
+                                placeholder="Enter address" />
                         </div>
                         <div class="form-group col-md-4">
                             <label>Country</label>
-                            <input type="text" name="country" class="form-control" placeholder="Enter country" />
+
+                            <input type="text" name="country" class="form-control"
+                                value="{{ old('country', $invoiceData->country ?? '') }}"
+                                placeholder="Country" />
                         </div>
                     </div>
                 </div>

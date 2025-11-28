@@ -257,11 +257,15 @@ class InvoicesController extends Controller
     }
 
 
-    public function create()
+    public function create(Request $request)
     {
         $apartments = \App\Models\Apartment::select('id', 'name', 'price')->get();
         $rate = json_decode(session('rate'), true);
         $rate = data_get($rate, 'rate', 1);
+        $invoiceData = null;
+        if ($request->has('copy_id')) {
+            $invoiceData = Invoice::find($request->query('copy_id'));
+        }
 
         // 🧭 Check for active PeakPeriod
         $today = now();
@@ -284,7 +288,7 @@ class InvoicesController extends Controller
             $peakDaysLimit = $peak->days_limit;
         }
 
-        return view('admin.invoices.create', compact('isInPeak', 'apartments', 'rate', 'peak', 'peakActive', 'peakDiscount', 'peakDaysLimit'));
+        return view('admin.invoices.create', compact('isInPeak', 'invoiceData', 'apartments', 'rate', 'peak', 'peakActive', 'peakDiscount', 'peakDaysLimit'));
     }
 
 

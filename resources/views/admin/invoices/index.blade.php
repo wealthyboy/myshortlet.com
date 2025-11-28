@@ -256,6 +256,11 @@
                                         <td>{{ $invoice->currency ?? '₦' }}{{ number_format($invoice->total) }}</td>
 
                                         <td class="td-actions text-right">
+                                            <a href="{{ route('admin.invoices.create', ['copy_id' => $invoice->id]) }}"
+                                                class="btn btn-primary btn-simple"
+                                                title="Create Invoice">
+                                                Create Invoice
+                                            </a>
                                             @if($invoice->sent)
 
                                             <a target="_blank" href="/check-in?id={{optional($invoice->user_reservation)->id}}"
@@ -267,6 +272,8 @@
                                                 class="btn btn-success btn-simple" title="Send Receipt">
                                                 Send Receipt
                                             </a>
+
+
 
                                             <a href="{{ url("/admin/invoices/{$invoice->id}/resend") }}"
                                                 class="btn btn-warning btn-simple" title="Send Invoice">
