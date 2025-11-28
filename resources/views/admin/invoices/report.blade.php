@@ -15,7 +15,6 @@
             font-size: 13px;
             color: #333;
             background-color: rgb(248, 245, 244);
-            position: relative;
         }
 
         .report-box {
@@ -24,7 +23,6 @@
             border-radius: 8px;
         }
 
-        /* HEADER */
         .header {
             width: 100%;
             margin-bottom: 30px;
@@ -44,7 +42,6 @@
             height: 60px;
         }
 
-        /* TABLE */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -63,7 +60,7 @@
             color: #fff;
         }
 
-        /* Center numeric columns */
+        /* center numeric columns */
         .table th:nth-child(3),
         .table th:nth-child(4),
         .table th:nth-child(5),
@@ -73,7 +70,6 @@
             text-align: center;
         }
 
-        /* FOOTER */
         .footer {
             position: fixed;
             bottom: 0;
@@ -81,7 +77,6 @@
             right: 0;
             text-align: center;
             font-size: 11.5px;
-            color: #000;
             border-top: 1px solid #ccc;
             padding: 8px 0;
             background-color: rgb(248, 245, 244);
@@ -93,6 +88,28 @@
 <body>
     <div class="report-box">
 
+        @php
+        $firstDate = $invoices->min('created_at')->format('Y-m-d');
+        $lastDate = $invoices->max('created_at')->format('Y-m-d');
+
+        $start = request('start_date');
+        $end = request('end_date');
+
+        // determine range text
+        $rangeText = ($start && $end)
+        ? "$start → $end"
+        : "$firstDate → $lastDate";
+
+        // find apartment name if selected
+        $apartmentName = null;
+        if(request('apartment_id') && isset($apartments)) {
+        $apartment = $apartments->firstWhere('id', request('apartment_id'));
+        if($apartment) {
+        $apartmentName = $apartment->name ?? $apartment->apartment_name ?? null;
+        }
+        }
+        @endphp
+
         <!-- HEADER -->
         <table class="header">
             <tr>
@@ -101,12 +118,15 @@
                         <img src="https://avenuemontaigne.ng/images/logo/avm_new.png" alt="Logo">
                     </div>
                 </td>
+
                 <td align="right">
                     <h3 style="margin: 0;">Invoice Report</h3>
-                    <small>Generated on: {{ now()->format('D, M d Y') }}</small><br>
 
-                    @if(request('start_date') && request('end_date'))
-                    <small>Range: {{ request('start_date') }} → {{ request('end_date') }}</small><br>
+                    <small>Generated on: {{ now()->format('D, M d Y') }}</small><br>
+                    <small>Date Range: {{ $rangeText }}</small><br>
+
+                    @if($apartmentName)
+                    <small>Apartment: {{ $apartmentName }}</small><br>
                     @endif
 
                     @if(request('status'))
@@ -124,9 +144,10 @@
                     <th>Customer</th>
                     <th>Status</th>
                     <th>Date Added</th>
-                    <th>Amount</th> <!-- CHANGED -->
+                    <th>Amount</th>
                 </tr>
             </thead>
+
             <tbody>
                 @foreach($invoices as $invoice)
                 <tr>
@@ -142,13 +163,14 @@
                     </td>
 
                     <td>{{ $invoice->created_at->format('Y-m-d') }}</td>
+
                     <td>{{ $invoice->currency ?? '₦' }}{{ number_format($invoice->total) }}</td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
 
-        <!-- TOTAL AMOUNT BOX -->
+        <!-- TOTAL AMOUNT -->
         <div style="
             margin-top: 25px;
             padding: 12px 15px;
