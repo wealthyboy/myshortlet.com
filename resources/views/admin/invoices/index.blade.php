@@ -125,7 +125,15 @@
 
                     <hr>
 
-                    <!-- DOWNLOAD / EMAIL ACTIONS -->
+                    @php
+                    $allowedEmails = [
+                    'jacob.atam@gmail.com',
+                    'oluwa.tosin@avenuemontaigne.ng'
+                    ];
+                    @endphp
+
+                    @if(in_array(Auth::user()->email, $allowedEmails))
+
                     <div class="row">
 
                         <div class="col-md-3">
@@ -157,6 +165,9 @@
                         </div>
 
                     </div>
+
+                    @endif
+
 
                 </form>
             </div>
