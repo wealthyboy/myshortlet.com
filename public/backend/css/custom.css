@@ -388,7 +388,7 @@ p.loading {
 
 .j-complete .remove_image {
   position: absolute;
-  bottom: 0;
+  bottom: 40px;
   background: rgb(0, 0, 0);
   background: rgba(0, 0, 0, 0.7);
   /* Black see-through */
@@ -405,6 +405,13 @@ p.loading {
 
 .j-complete .remove_image a {
   color: #ffffff !important;
+}
+
+#j-details .j-complete {
+    cursor: move;
+}
+.sortable-ghost {
+    opacity: 0.4;
 }
 
 .j-preview:hover .remove_image {
