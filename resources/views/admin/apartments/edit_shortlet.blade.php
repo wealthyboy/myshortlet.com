@@ -21,7 +21,7 @@
       <div class="row p-attr mb-2 variation-panel">
          <div class="col-md-9 col-xs-9 col-sm-9">
          </div>
-         <div class="col-md-3 col-xs-12 text-right border col-sm-12 pt-2 pb-4">
+         <div class="col-md-3 col-xs-12 text-right col-sm-12 pt-2 pb-4">
             <a href="#" title="open/close panel" class="open-close-panel"><i class="fa fa-plus"></i> Expand</a>
          </div>
 
@@ -250,10 +250,6 @@
                </div>
 
                <div class="col-md-12">
-                  <div class="form-group label-floating">
-                     <label class="control-label">Video Links</label>
-                     <input class="form-control   pull-right" name="room_video_links" value="{{ $apartment->video_link }}" type="text">
-                  </div>
                </div>
 
 
@@ -271,18 +267,43 @@
                         </a>
                      </div>
                      <div id="j-details" class="j-details">
+                        <input type="hidden"
+                           name="images_count"
+                           value="{{ $apartment->images->count() }}">
                         @if($apartment->images->count())
                         @foreach($apartment->images as $image)
-                        <div id="{{ $image->id }}" class="j-complete">
+                        <div id="{{ $image->id }}" draggable="true" class="j-complete j-sort">
                            <div class="j-preview">
                               <img class="img-thumnail" src="{{ $image->image }}">
+
                               <div id="remove_image" class="remove_image remove-image">
-                                 <a class="remove-image" data-id="{{ $image->id }}" data-randid="{{ $image->id }}" data-model="Image" data-type="complete" data-url="{{ $image->image }}" href="#">Remove</a>
-                                 <input type="hidden" class="file_upload_input stored_image_url" value="{{ $apartment->image }}" name="edit_room_images[{{ $apartment->id }}][]">
+                                 <a class="remove-image"
+                                    data-id="{{ $image->id }}"
+                                    data-randid="{{ $image->id }}"
+                                    data-model="Image"
+                                    data-type="complete"
+                                    data-url="{{ $image->image }}"
+                                    href="#">Remove</a>
                               </div>
+
+
+                              <input type="hidden"
+                                 name="images[]"
+                                 value="{{ $image->image ?? '' }}">
+
+
+
+                              <!-- ⭐ caption input -->
+                              <input type="text"
+                                 class="image-caption-input"
+                                 name="captions[]"
+                                 placeholder="Enter caption"
+                                 value="{{ $image->caption ?? '' }}"
+                                 style="margin-top:8px; width:100%; padding:6px; border:1px solid #ccc;">
                            </div>
                         </div>
                         @endforeach
+
                         @endif
                      </div>
                   </div>

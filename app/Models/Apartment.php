@@ -116,8 +116,6 @@ class Apartment extends Model
         // Ensure it's an array and return first 9
         return collect($this->images)
             ->take(9)
-            ->pluck('image')   // get only the image column
-            ->values()
             ->toArray();
     }
 

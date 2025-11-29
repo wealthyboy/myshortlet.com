@@ -19,6 +19,8 @@
 </div>
 @endsection
 @section('page-scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('backend/js/products.js') }}"></script>
 <script src="{{ asset('backend/js/uploader.js') }}"></script>

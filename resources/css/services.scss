@@ -1831,8 +1831,26 @@ svg.uitk-icon-medium {
 }
 
 #load-products .owl-theme .owl-dots {
-  top: -24px !important;
+  top: -18px !important;
 }
+
+.image-caption {
+    bottom: 23px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    max-width: 57%;
+    background: rgba(12, 14, 28, 0.56);
+    padding: 1px 14px;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    z-index: 20;
+}
+
 
 #load-products-2 .owl-theme .owl-dots {
   top: -19px !important;

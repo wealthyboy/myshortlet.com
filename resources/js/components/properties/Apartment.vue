@@ -25,10 +25,17 @@
             :alt="room.name"
             :title="'book ' + room.name + '  Avenue Montaigne'"
             @click.prevent="showRoom(room)"
-            :src="image"
+            :src="image.image"
             class="img cursor-pointer img-fluid"
             itemprop="contentUrl"
           />
+
+          <div
+              class="image-caption position-absolute"
+              v-if="image.caption"
+            >
+              {{ image.caption}}
+          </div>
           <div class="images-count">
             <button
               role="button"

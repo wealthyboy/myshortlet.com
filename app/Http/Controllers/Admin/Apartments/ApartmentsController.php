@@ -156,8 +156,11 @@ class ApartmentsController extends Controller
         //     'address' => "required",
         //     "description" => "required"
         // ]);
+
         $apartment = new Apartment;
         $room_images = !empty($request->images) ? $request->images : [];
+        $captions = !empty($request->captions) ? $request->captions : [];
+
         $apartment_allow = !empty($request->apartment_allow) ? $request->apartment_allow : 0;
         $apartment->name = $request->room_name;
         $apartment->price = $request->room_price;
@@ -202,11 +205,14 @@ class ApartmentsController extends Controller
 
         if (!empty($room_images)) {
             $images = [];
-            foreach ($room_images as $image) {
-
-                $apartment->images()->create(['image' => $image]);
+            foreach ($room_images as $key => $image) {
+                $caption = isset($captions[$key]) ? $captions[$key] : null;
+                $apartment->images()->create(['image' => $image, 'caption' => $caption]);
             }
         }
+
+        dd($request->all());
+
 
 
 
@@ -350,7 +356,9 @@ class ApartmentsController extends Controller
     {
 
         $apartment = Apartment::find($id);
+        //dd($request->all());
         $room_images = !empty($request->images) ? $request->images : [];
+        $captions = !empty($request->captions) ? $request->captions : [];
         $apartment_allow = !empty($request->apartment_allow) ? $request->apartment_allow : 0;
         $apartment->name = $request->room_name;
         $apartment->price = $request->room_price;
@@ -397,10 +405,16 @@ class ApartmentsController extends Controller
         }
 
 
+
         if (!empty($room_images)) {
-            foreach ($room_images as $image) {
-                $apartment->images()->create(['image' => $image]);
+
+            // if (count($room_images) > $request->images_count) {
+            $apartment->images()->delete();
+            foreach ($room_images as $key => $image) {
+                $caption = isset($captions[$key]) ? $captions[$key] : null;
+                $apartment->images()->create(['image' => $image, 'caption' => $caption]);
             }
+            //}
         }
 
         /**

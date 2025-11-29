@@ -93,7 +93,7 @@ class ImagesController extends Controller
     public function uploadImage(Request $request)
     {
         $request->validate([
-            'file' => 'required|image|mimes:jpeg,png,webp,jpg,gif',
+            //'file' => 'required|image|mimes:jpeg,png,webp,jpg,gif',
             'folder' => 'required'
         ]);
 
@@ -102,31 +102,55 @@ class ImagesController extends Controller
         }
 
         $file = $request->file('file');
-        $fileName = time() . '_' . $file->getClientOriginalName();
+
+        // Convert filename to .webp ALWAYS to save space
+        $fileName = time() . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.webp';
         $folder = $request->folder;
 
-        // Original
-        $originalPath = 'images/' . $folder . '/' . $fileName;
-        Storage::disk('spaces')->put($originalPath, file_get_contents($file), 'public');
+        /*
+    |--------------------------------------------------------------------------
+    | ORIGINAL IMAGE (Optimized WebP, reduced size, same quality)
+    |--------------------------------------------------------------------------
+    */
+        $optimized = Img::make($file)
+            ->resize(1600, null, function ($c) {
+                $c->aspectRatio();
+            })
+            ->encode('webp', 80); // ✔ high quality | very small size
 
-        // Medium (400x400)
-        $mediumImage = Img::make($file)->fit(400, 400)->encode();
-        $mediumPath = 'images/' . $folder . '/m/' . $fileName;
-        Storage::disk('spaces')->put($mediumPath, $mediumImage, 'public');
+        $originalPath = "images/$folder/$fileName";
+        Storage::disk('spaces')->put($originalPath, $optimized, 'public');
 
-        // Thumbnail (106x145 canvas)
+        /*
+    |--------------------------------------------------------------------------
+    | MEDIUM (400x400)
+    |--------------------------------------------------------------------------
+    */
+        $medium = Img::make($file)
+            ->fit(400, 400)
+            ->encode('webp', 80);
+
+        $mediumPath = "images/$folder/m/$fileName";
+        Storage::disk('spaces')->put($mediumPath, $medium, 'public');
+
+        /*
+    |--------------------------------------------------------------------------
+    | THUMBNAIL (Canvas 106×145)
+    |--------------------------------------------------------------------------
+    */
         $canvas = Img::canvas(106, 145);
-        $thumbImage = Img::make($file)->resize(150, 250, function ($constraint) {
-            $constraint->aspectRatio();
+        $thumb = Img::make($file)->resize(150, 250, function ($c) {
+            $c->aspectRatio();
         });
-        $canvas->insert($thumbImage, 'center');
-        $thumbnailPath = 'images/' . $folder . '/tn/' . $fileName;
-        Storage::disk('spaces')->put($thumbnailPath, $canvas->encode(), 'public');
 
-        $path = Storage::disk('spaces')->url($originalPath);
+        $canvas->insert($thumb, 'center');
+        $thumbnailPath = "images/$folder/tn/$fileName";
 
-        return  $path;
+        Storage::disk('spaces')->put($thumbnailPath, $canvas->encode('webp', 80), 'public');
+
+        return Storage::disk('spaces')->url($originalPath);
     }
+
 
 
 

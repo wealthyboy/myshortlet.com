@@ -19,11 +19,11 @@ let checkinPicker = $("#checkin").flatpickr({
 
   onChange: function (selectedDates, dateStr, instance) {
     if (selectedDates.length > 0) {
-      let checkinDate = new Date(selectedDates[0]);
+      let checkinDate = new Date(selectedDates[0]); 
       let minCheckoutDate = new Date(checkinDate);
       minCheckoutDate.setDate(checkinDate.getDate() + 1);
       if (checkoutPicker) {
-        checkoutPicker.set("minDate", minCheckoutDate);
+        checkoutPicker.set("minDate", minCheckoutDate); 
       }
     }
   },
