@@ -274,7 +274,7 @@
                         @foreach($apartment->images as $image)
                         <div id="{{ $image->id }}" draggable="true" class="j-complete j-sort">
                            <div class="j-preview">
-                              <img class="img-thumnail select-main-image" src="{{ $image->image }}">
+                              <img class="img-thumnail select-main-image {{ $apartment->image ? 'active-main' :  '' }}" src="{{ $image->image }}">
                               <div id="remove_image" class="remove_image remove-image">
                                  <a class="remove-image"
                                     data-id="{{ $image->id }}"
