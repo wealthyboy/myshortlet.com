@@ -390,7 +390,7 @@ class ApartmentsController extends Controller
         $apartment->toilets = $request->room_toilets;
         $apartment->save();
 
-        Cache::tags(['apartments'])->flush();
+        \Illuminate\Support\Facades\Artisan::call('cache:clear');
 
 
         // dd($apartment);
