@@ -403,6 +403,12 @@ p.loading {
   cursor: pointer;
 }
 
+.select-main-image.active-main {
+    border: 5px solid #28a745;
+    padding: 2px;
+    border-radius: 5px;
+}
+
 .j-complete .remove_image a {
   color: #ffffff !important;
 }
