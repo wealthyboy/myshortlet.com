@@ -96,7 +96,16 @@
                                             <div class="item" :key="index"
                                                 v-for="(image, index) in room.images">
                                                 <img :src="image.image" class="img room-image  img-fluid rounded" />
+
+                                                 <div
+                                                        class="image-caption position-absolute"
+                                                        v-if="image.caption"
+                                                        >
+                                                        {{ image.caption}}
+                                                    </div>
+                                                
                                             </div>
+                                              
                                         </template>
 
                                         <div v-if="room.google_drive_video_link" class="item">
