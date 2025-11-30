@@ -92,11 +92,12 @@
 
                                     <VueSlickCarousel v-bind="settings" :arrows="true" :dots="true">
 
-                                        <div class="item">
+                                        <div 
+                                            v-if="room.image" 
+                                            class="item">
 
                                             <img
                                                 :alt="room.name"
-                                                v-if="room.image"
 
                                                 :title="'book ' + room.name + '  Avenue Montaigne'"
                                                 :src="room.image"
