@@ -95,7 +95,7 @@
 
                                             <div class="item" :key="index"
                                                 v-for="(image, index) in room.images">
-                                                <img :src="image" class="img room-image  img-fluid rounded" />
+                                                <img :src="image.image" class="img room-image  img-fluid rounded" />
                                             </div>
                                         </template>
 
