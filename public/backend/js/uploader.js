@@ -38,6 +38,27 @@ function updateImageOrder() {
     });
 }
 
+document.addEventListener('click', function (e) {
+    const img = e.target.closest('.select-main-image');
+    if (!img) return;
+
+    const container = img.closest('.j-drop');
+    if (!container) return;
+
+    const mainInput = container.querySelector('input[name="main_image"]');
+    
+    if (!mainInput) return;
+
+    console.log(img.src)
+
+    // 1. Update hidden input
+    mainInput.value = img.src;
+
+    // 2. Visual highlight (optional)
+    document.querySelectorAll('.select-main-image').forEach(i => i.classList.remove('active-main'));
+    img.classList.add('active-main');
+});
+
 /* -----------------------------
    UPLOAD SINGLE FILE
 ------------------------------ */
@@ -76,7 +97,7 @@ function uploadSingleFile(oneFile, inputEl, name) {
                 const html = `
                 <div id="${rand}" class="j-complete j-sort">
                     <div class="j-preview j-no-multiple">
-                        <img class="img-thumnail" src="${data.path}">
+<img class="img-thumnail select-main-image" src="${data.path}">
                         <div id="remove_image" class="remove_image remove-image">
                             <a class="remove-image"
                                data-randid="${rand}"
@@ -95,6 +116,8 @@ function uploadSingleFile(oneFile, inputEl, name) {
                                class="stored_image_url"
                                name="${name}"
                                value="${data.path}">
+
+                            
                     </div>
                 </div>
                 `;

@@ -55,7 +55,7 @@ $('#bedrooms-update').on('change', function () {
   for (let i = 1; i <= selectedValue; i++) {
     if ($(`#bedroom_${i}`).length === 0) {
       const dropdown = `
-        <div class="form-group col-md-2 bedroom-group mb-5">
+        <div class="form-group col-md-2 bedroom-group ">
             <label for="bedroom_${i}">Bedroom ${i}</label>
             <select name="bedroom_${i}" id="bedroom_${i}" class="form-control bedroom-select">
               <option value="" selected="">Choose bed type</option>
@@ -141,6 +141,12 @@ $('.resend-link').on('click', function (event) {
 $(document).on("click", ".remove-image", function (e) {
   e.preventDefault();
   e.stopPropagation();
+
+
+   if (!confirm("Are you sure you want to delete this image?")) {
+        return; // ⛔ Stop if user cancels
+  }
+
   let self = $(this);
   let randid = self.data("randid");
   self.text("Deleting....");

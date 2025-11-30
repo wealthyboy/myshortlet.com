@@ -274,8 +274,7 @@
                         @foreach($apartment->images as $image)
                         <div id="{{ $image->id }}" draggable="true" class="j-complete j-sort">
                            <div class="j-preview">
-                              <img class="img-thumnail" src="{{ $image->image }}">
-
+                              <img class="img-thumnail select-main-image" src="{{ $image->image }}">
                               <div id="remove_image" class="remove_image remove-image">
                                  <a class="remove-image"
                                     data-id="{{ $image->id }}"
@@ -294,15 +293,22 @@
 
 
                               <!-- ⭐ caption input -->
-                              <input type="text"
+                              <input
+                                 type="text"
                                  class="image-caption-input"
                                  name="captions[]"
                                  placeholder="Enter caption"
                                  value="{{ $image->caption ?? '' }}"
                                  style="margin-top:8px; width:100%; padding:6px; border:1px solid #ccc;">
+
+
                            </div>
                         </div>
                         @endforeach
+
+                        <input type="hidden"
+                           name="main_image"
+                           value="">
 
                         @endif
                      </div>

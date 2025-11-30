@@ -185,8 +185,7 @@ class ApartmentsController extends Controller
         $apartment->wifi_password = $request->wifi_password;
         $apartment->wifi_ssid = $request->wifi_ssid;
         $apartment->teaser = $request->teaser;
-
-
+        $apartment->image = $request->main_image;
         $apartment->no_of_rooms = $request->room_number;
         $apartment->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires, true);
         $apartment->property_id = $request->property_id;
@@ -196,9 +195,6 @@ class ApartmentsController extends Controller
         if (isset($request->apartment_facilities_id)) {
             $apartment->attributes()->sync(array_filter($request->apartment_facilities_id));
         }
-
-
-
 
         // $this->syncImages($room_images, $apartment);
 
@@ -383,6 +379,8 @@ class ApartmentsController extends Controller
         $apartment->price_mode = $request->price_mode;
         $apartment->apartment_id = $request->apartment_id;
         $apartment->allow = $apartment_allow;
+        $apartment->image = $request->main_image;;
+
         $apartment->no_of_rooms = $request->room_number;
         $apartment->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires, true);
         $apartment->property_id = $request->property_id;

@@ -95,6 +95,14 @@
 
                                             <div class="item" :key="index"
                                                 v-for="(image, index) in room.images">
+
+                                                    <img
+                                                        :alt="room.name"
+                                                        :title="'book ' + room.name + '  Avenue Montaigne'"
+                                                        :src="room.image"
+                                                        class="img room-image img-fluid rounded"
+                                                        itemprop="contentUrl"
+                                                        />
                                                 <img :src="image.image" class="img room-image  img-fluid rounded" />
 
                                                  <div

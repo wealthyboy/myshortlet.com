@@ -21,6 +21,15 @@
           itemscope
           itemtype="https://schema.org/ImageObject"
         >
+
+         <img
+            :alt="room.name"
+            :title="'book ' + room.name + '  Avenue Montaigne'"
+            @click.prevent="showRoom(room)"
+            :src="room.image"
+            class="img cursor-pointer img-fluid"
+            itemprop="contentUrl"
+          />
           <img
             :alt="room.name"
             :title="'book ' + room.name + '  Avenue Montaigne'"

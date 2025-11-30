@@ -202,6 +202,9 @@
                            </a>
                         </div>
                         <div id="j-details" class="j-details"></div>
+                        <input type="hidden"
+                           name="main_image"
+                           value="">
                      </div>
                   </div>
 
