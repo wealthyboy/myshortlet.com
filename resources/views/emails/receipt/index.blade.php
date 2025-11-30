@@ -682,7 +682,7 @@
                                                                         <tbody>
                                                                            <tr>
                                                                               <td align="right" class="container-image">
-                                                                                 <img class="p-img" src="{{ isset(optional($reservation->apartment)->images[0]) ? optional($reservation->apartment)->images[0]->image : 'https://avevuemontaigne-ng.lon1.cdn.digitaloceanspaces.com/images/apartments/1764494339_29.webp'  }}" width="100%" height="auto" alt="locl" style="width: 100%; max-width: 150px; display: block; border: 0px;">
+                                                                                 <img class="p-img" src="{{ isset(optional($reservation->apartment)->images[0]) ? optional($reservation->apartment)->images[0]->image : 'https://avevuemontaigne-ng.lon1.cdn.digitaloceanspaces.com/images/apartments/1764494799_PHOTO-2025-11-30-10-24-37.webp'  }}" width="100%" height="auto" alt="locl" style="width: 100%; max-width: 150px; display: block; border: 0px;">
                                                                               </td>
                                                                            </tr>
                                                                         </tbody>
