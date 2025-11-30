@@ -22,6 +22,8 @@
         >
           <img
             :alt="room.name"
+             v-if="room.image"
+
             :title="'book ' + room.name + '  Avenue Montaigne'"
             @click.prevent="showRoom(room)"
             :src="room.image"

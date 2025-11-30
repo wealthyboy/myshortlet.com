@@ -96,6 +96,8 @@
 
                                             <img
                                                 :alt="room.name"
+                                                v-if="room.image"
+
                                                 :title="'book ' + room.name + '  Avenue Montaigne'"
                                                 :src="room.image"
                                                 class="img room-image img-fluid rounded"
