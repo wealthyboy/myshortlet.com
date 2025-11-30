@@ -9,6 +9,8 @@ use App\Models\Property;
 use App\Models\Activity;
 use App\Http\Helper;
 use App\Models\SystemSetting;
+use Illuminate\Support\Facades\Cache;
+
 use App\Models\Service;
 use App\Models\Facility;
 use App\Models\Requirement;
@@ -387,6 +389,9 @@ class ApartmentsController extends Controller
         $apartment->uuid = time();
         $apartment->toilets = $request->room_toilets;
         $apartment->save();
+
+        Cache::tags(['apartments'])->flush();
+
 
         // dd($apartment);
         if (isset($request->apartment_facilities_id)) {
