@@ -15,6 +15,7 @@
       <div class="owl-carousel owl-theme">
 
         <div
+          v-if="room.image"
           class="item rounded-top"
           itemprop="photo"
           itemscope
@@ -22,7 +23,6 @@
         >
           <img
             :alt="room.name"
-             v-if="room.image"
 
             :title="'book ' + room.name + '  Avenue Montaigne'"
             @click.prevent="showRoom(room)"
