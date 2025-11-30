@@ -196,6 +196,13 @@
                           :src="image.image"
                           class="img room-image img-fluid rounded"
                         />
+
+                         <div
+                              class="image-caption position-absolute"
+                              v-if="image.caption"
+                            >
+                              {{ image.caption}}
+                          </div>
                       </div>
                     </template>
 
