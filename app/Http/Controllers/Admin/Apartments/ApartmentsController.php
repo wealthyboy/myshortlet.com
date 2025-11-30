@@ -379,7 +379,7 @@ class ApartmentsController extends Controller
         $apartment->price_mode = $request->price_mode;
         $apartment->apartment_id = $request->apartment_id;
         $apartment->allow = $apartment_allow;
-        $apartment->image = $request->main_image;;
+        $apartment->image = $request->main_image;
 
         $apartment->no_of_rooms = $request->room_number;
         $apartment->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires, true);
@@ -387,6 +387,8 @@ class ApartmentsController extends Controller
         $apartment->uuid = time();
         $apartment->toilets = $request->room_toilets;
         $apartment->save();
+
+        // dd($apartment);
         if (isset($request->apartment_facilities_id)) {
             $apartment->attributes()->sync(array_filter($request->apartment_facilities_id));
         }
