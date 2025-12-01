@@ -73,6 +73,17 @@ class Apartment extends Model
         return $this->hasMany(AttributePrice::class, 'room_id');
     }
 
+    public function videos()
+    {
+        return $this->morphMany(Video::class, 'videoable');
+    }
+
+
+    public function video()
+    {
+        return $this->morphOne(Video::class, 'videoable');
+    }
+
 
     public function property()
     {
@@ -89,6 +100,12 @@ class Apartment extends Model
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable')->orderBy('id', 'asc');
+    }
+
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable')->orderBy('id', 'asc');
     }
 
 
