@@ -28,6 +28,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
+use App\Services\VideoUploader\VideoUploader;
 
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
@@ -61,6 +62,8 @@ class ApartmentsController extends Controller
     public function index(Request $request)
     {
         //$this->updateBedrooms();
+
+
         $apartments = Apartment::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.apartments.index', compact('apartments'));
     }
@@ -354,7 +357,8 @@ class ApartmentsController extends Controller
     {
 
         $apartment = Apartment::find($id);
-        //dd($request->all());
+
+        dd($apartment->videos);
         $room_images = !empty($request->images) ? $request->images : [];
         $captions = !empty($request->captions) ? $request->captions : [];
         $apartment_allow = !empty($request->apartment_allow) ? $request->apartment_allow : 0;
@@ -391,6 +395,20 @@ class ApartmentsController extends Controller
         $apartment->save();
 
         \Illuminate\Support\Facades\Artisan::call('cache:clear');
+
+
+        if ($request->hasFile('video')) {
+            // create or fetch the video model for this apartment
+            $video = $apartment->video()->firstOrCreate([]);
+
+            // send to service for upload + encoding
+            VideoUploader::uploadAndEncode(
+                $request->file('video'),
+                $video,
+                'spaces',
+                'videos'
+            );
+        }
 
 
         // dd($apartment);
