@@ -358,7 +358,7 @@ class ApartmentsController extends Controller
 
         $apartment = Apartment::find($id);
 
-        dd($apartment->videos);
+        // dd($apartment->videos);
         $room_images = !empty($request->images) ? $request->images : [];
         $captions = !empty($request->captions) ? $request->captions : [];
         $apartment_allow = !empty($request->apartment_allow) ? $request->apartment_allow : 0;
