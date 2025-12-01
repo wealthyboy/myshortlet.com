@@ -28,6 +28,7 @@
     "maatwebsite/excel": "*",
     "mailgun/mailgun-php": "^3.3",
     "nao-pon/flysystem-google-drive": "^1.1",
+    "pbmedia/laravel-ffmpeg": "^7.8",
     "resend/resend-php": "^0.12.0",
     "simplesoftwareio/simple-qrcode": "~4",
     "stevebauman/location": "^6.0",

@@ -249,7 +249,10 @@
                      @endfor
                </div>
 
-               <div class="col-md-12">
+               <div class="col-md-12 mb-5 mt-2">
+                  <label for="video">Video</label>
+
+                  <input id="video" type="file" accept="" name="video">
                </div>
 
 
