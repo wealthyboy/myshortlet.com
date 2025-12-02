@@ -14,9 +14,7 @@ use  Illuminate\Support\Str;
 
 class AttributesController extends Controller
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Display a listing of the resource.
@@ -121,14 +119,14 @@ class AttributesController extends Controller
 
         $attribute = Attribute::find($id);
         if ($request->filled('parent_id')) {
-            $this->validate($request, [
-                'name' => [
-                    'required',
-                    Rule::unique('attributes')->where(function ($query) use ($request) {
-                        $query->where('parent_id', '=', $request->parent_id);
-                    })->ignore($id)
-                ],
-            ]);
+            // $this->validate($request, [
+            //     'name' => [
+            //         'required',
+            //         Rule::unique('attributes')->where(function ($query) use ($request) {
+            //             $query->where('parent_id', '=', $request->parent_id);
+            //         })->ignore($id)
+            //     ],
+            // ]);
         }
         $this->validate($request, [
             'name' => [
