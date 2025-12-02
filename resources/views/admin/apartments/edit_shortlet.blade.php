@@ -241,7 +241,7 @@
                         <label for="bedroom_{{ $i }}">Bedroom {{ $i }}</label>
                         <select name="bedroom_{{ $i }}" id="bedroom_{{ $i }}" class="form-control">
                            <option value="" selected>Choose bed type</option>
-                           <option value="Extra-large double bed" {{ $apartment->{'bedroom_'.$i} == 'Extra-large double bed' ? 'selected' : '' }}>Extra-large double bed</option>
+                           <option value="King Size Bed" {{ $apartment->{'bedroom_'.$i} == 'King Size Bed' ? 'selected' : '' }}>King Size Bed</option>
                            <option value="Single bed" {{ $apartment->{'bedroom_'.$i} == 'Single bed' ? 'selected' : '' }}>Single bed</option>
                            <option value="Large bed" {{ $apartment->{'bedroom_'.$i} == 'Large bed' ? 'selected' : '' }}>Large bed</option>
                         </select>
