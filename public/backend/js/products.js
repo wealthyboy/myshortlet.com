@@ -34,7 +34,6 @@ $('#reservationForm').on('submit', function (e) {
 
         $('#add-extension').prop('disabled', false);
 
-
       }
     });
   }
@@ -59,7 +58,7 @@ $('#bedrooms-update').on('change', function () {
             <label for="bedroom_${i}">Bedroom ${i}</label>
             <select name="bedroom_${i}" id="bedroom_${i}" class="form-control bedroom-select">
               <option value="" selected="">Choose bed type</option>
-              <option value="Extra-large double bed">Extra-large double bed</option>
+              <option value="King Size Bed">King Size Bed</option>
               <option value="Single bed">Single bed</option>
               <option value="Large bed">Large bed</option>
             </select>
