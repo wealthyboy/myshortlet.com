@@ -128,12 +128,12 @@ class AttributesController extends Controller
             //     ],
             // ]);
         }
-        $this->validate($request, [
-            'name' => [
-                'required',
-                Rule::unique('attributes')->ignore($id)
-            ],
-        ]);
+        // $this->validate($request, [
+        //     'name' => [
+        //         'required',
+        //         Rule::unique('attributes')->ignore($id)
+        //     ],
+        // ]);
 
         $attribute->name =        $request->name;
         $attribute->sort_order = $request->sort_order;
