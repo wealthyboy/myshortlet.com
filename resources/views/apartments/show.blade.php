@@ -94,9 +94,9 @@
 
          </ol>
          <div class="carousel-inner">
-            @foreach($apartment->google_drive_image_links as $key => $image)
+            @foreach($apartment->images as $key => $image)
             <div class="carousel-item {{ $key == 0 ? 'active' : ''}}">
-               <div class="full-background" style="background-image: url('{{ $image }}');">
+               <div class="full-background" style="background-image: url('{{ $image->image }}');">
                   <div class="container">
                      <div class="row">
                      </div>
