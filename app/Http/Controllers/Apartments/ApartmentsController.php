@@ -67,31 +67,34 @@ class ApartmentsController extends Controller
         // --- DATE LOGIC ---
         if ($request->check_in_checkout && count($dates) > 1) {
             $date = Helper::toAndFromDate($checkInOut);
-            $startDate = $date['start_date'];
-            $endDate = $date['end_date'];
 
-            $peakStart = Carbon::parse($peak_period->start_date);
-            $peakEnd   = Carbon::parse($peak_period->end_date);
+            if (data_get($date, 'end_date') &&  data_get($date, 'start_date')) {
+                $startDate = $date['start_date'];
+                $endDate = $date['end_date'];
 
-            $overlapsPeak = (
-                $startDate->between($peakStart, $peakEnd) ||
-                $endDate->between($peakStart, $peakEnd) ||
-                ($startDate->lt($peakStart) && $endDate->gt($peakEnd))
-            );
+                $peakStart = Carbon::parse($peak_period->start_date);
+                $peakEnd   = Carbon::parse($peak_period->end_date);
 
-            if ($overlapsPeak) {
-                $peakPeriodIsSelected = $peak_period;
+                $overlapsPeak = (
+                    $startDate->between($peakStart, $peakEnd) ||
+                    $endDate->between($peakStart, $peakEnd) ||
+                    ($startDate->lt($peakStart) && $endDate->gt($peakEnd))
+                );
+
+                if ($overlapsPeak) {
+                    $peakPeriodIsSelected = $peak_period;
+                }
+
+                // Apartment availability logic
+                $query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
+                    $q->where(function ($subQ) use ($startDate, $endDate) {
+                        $subQ->where('checkin', '<', $endDate)
+                            ->where('checkout', '>', $startDate);
+                    });
+                })
+                    ->where('apartments.max_adults', '>=', $data['persons'])
+                    ->where('apartments.no_of_rooms', '>=', $data['rooms']);
             }
-
-            // Apartment availability logic
-            $query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
-                $q->where(function ($subQ) use ($startDate, $endDate) {
-                    $subQ->where('checkin', '<', $endDate)
-                        ->where('checkout', '>', $startDate);
-                });
-            })
-                ->where('apartments.max_adults', '>=', $data['persons'])
-                ->where('apartments.no_of_rooms', '>=', $data['rooms']);
         }
 
         // Filter for a single apartment
@@ -109,7 +112,7 @@ class ApartmentsController extends Controller
             'rooms'              => $data['rooms']
         ]));
 
-        $apartments = Cache::remember($cacheKey, now()->addMinutes(10), function () use ($query, $request) {
+        $apartments = Cache::tags(['apartments'])->remember($cacheKey, now()->addMinutes(10), function () use ($query, $request) {
             if ($request->has('apartment_id')) {
                 return $query->where('allow', 1)->latest()->first();
             }
