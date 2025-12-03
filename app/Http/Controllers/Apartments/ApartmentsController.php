@@ -39,6 +39,16 @@ class ApartmentsController extends Controller
      */
     public function apartments(Request $request)
     {
+
+
+        if (
+            $request->check_in_checkout === 'null to null' ||
+            $request->check_in_checkout === 'null to null ' ||
+            $request->check_in_checkout === 'null  to  null' ||
+            str_contains($request->fullUrl(), 'check_in_checkout=null')
+        ) {
+            return redirect()->route('/'); // or '/'
+        }
         $types = [
             'extra_services',
             'facilities',
