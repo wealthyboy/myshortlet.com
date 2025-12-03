@@ -47,7 +47,7 @@ class ApartmentsController extends Controller
             $request->check_in_checkout === 'null  to  null' ||
             str_contains($request->fullUrl(), 'check_in_checkout=null')
         ) {
-            return redirect()->route('/'); // or '/'
+            return redirect('/'); // or '/'
         }
         $types = [
             'extra_services',
