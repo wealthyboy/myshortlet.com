@@ -379,10 +379,17 @@ export default {
 
             const { start_date, end_date, days_limit } = this.peak_period;
 
+            console.log(`Bookings from ${start_date.split("T")[0]} to ${end_date.split("T")[0]} require a minimum stay of ${days_limit} days.`);                
+
+
             if ( !this.validateBooking() ) {
                 alert(`Bookings from ${start_date.split("T")[0]} to ${end_date.split("T")[0]} require a minimum stay of ${days_limit} days.`);                
                 return;
             }
+
+
+
+            return false;
 
             this.apartmentIsChecked = true
 
