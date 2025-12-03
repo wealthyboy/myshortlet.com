@@ -112,12 +112,11 @@ class ApartmentsController extends Controller
             'rooms'              => $data['rooms']
         ]));
 
-        $apartments = Cache::tags(['apartments'])->remember($cacheKey, now()->addMinutes(10), function () use ($query, $request) {
-            if ($request->has('apartment_id')) {
-                return $query->where('allow', 1)->latest()->first();
-            }
-            return $query->where('allow', 1)->latest()->get();
-        });
+        if ($request->has('apartment_id')) {
+            $apartments = $query->where('allow', 1)->latest()->first();
+        } else {
+            $apartments = $query->where('allow', 1)->latest()->get();
+        }
 
         // Load relationships even on cached results
         if ($apartments) {
