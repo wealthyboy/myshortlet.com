@@ -351,6 +351,7 @@ export default {
             this.form.persons = document.querySelector("#persons").value;
             this.form.rooms = document.querySelector("#rooms").value;
 
+
             
             if ( !this.form.checkin && !this.form.checkout ) {
                 alert("Please select your check-in and check-out dates")
@@ -379,17 +380,14 @@ export default {
 
             const { start_date, end_date, days_limit } = this.peak_period;
 
-            console.log(`Bookings from ${start_date.split("T")[0]} to ${end_date.split("T")[0]} require a minimum stay of ${days_limit} days.`);                
-
-
             if ( !this.validateBooking() ) {
                 alert(`Bookings from ${start_date.split("T")[0]} to ${end_date.split("T")[0]} require a minimum stay of ${days_limit} days.`);                
                 return;
             }
 
+            console.log(`Bookings from ${start_date.split("T")[0]} to ${end_date.split("T")[0]} require a minimum stay of ${days_limit} days.`);                
 
 
-            return false;
 
             this.apartmentIsChecked = true
 
