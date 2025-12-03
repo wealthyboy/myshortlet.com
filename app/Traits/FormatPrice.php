@@ -131,56 +131,61 @@ trait FormatPrice
 
   public function getConvertedPriceAttribute()
   {
-      $currentDate = Carbon::now();
-      $peak_period = PeakPeriod::first();
+    $currentDate = Carbon::now();
+    $peak_period = PeakPeriod::first();
 
-      if ($peak_period) {
-          // Get check_in_checkout from request or session
-          $checkInOut = request()->check_in_checkout ?? session('check_in_checkout');
+    if ($peak_period) {
+      // Get check_in_checkout from request or session
+      $checkInOut = request()->check_in_checkout ?? session('check_in_checkout');
 
 
-          if ($checkInOut) {
-              $dates = explode("to", $checkInOut);
+      if ($checkInOut) {
+        $dates = explode("to", $checkInOut);
 
-              if (count($dates) > 1) {
-                  $date      = Helper::toAndFromDate($checkInOut);
-                  $peakStart = Carbon::parse($peak_period->start_date);
-                  $peakEnd   = Carbon::parse($peak_period->end_date);
+        if (count($dates) > 1) {
+          $date      = Helper::toAndFromDate($checkInOut);
+          $peakStart = Carbon::parse($peak_period->start_date);
+          $peakEnd   = Carbon::parse($peak_period->end_date);
 
-                  $startDate = $date['start_date'];
-                  $endDate   = $date['end_date'];
 
-                  // Check if booking overlaps with peak period
-                  $overlapsPeak = (
-                      $startDate->between($peakStart, $peakEnd) ||
-                      $endDate->between($peakStart, $peakEnd) ||
-                      ($startDate->lt($peakStart) && $endDate->gt($peakEnd))
-                  );
 
-                  if ($overlapsPeak) {
-                      Helper::updateApartmentPrices(
-                          $peak_period->start_date,
-                          $peak_period->end_date,
-                          $peak_period->discount
-                      );
-                      return $this->ConvertCurrencyRate($this->december_prices);
-                  }
-              }
-          }
+          if (data_get($date, 'end_date') &&  data_get($date, 'start_date')) {
+            $startDate = $date['start_date'];
+            $endDate   = $date['end_date'];
 
-          // If today itself falls in peak period
-          if ($currentDate->between($peak_period->start_date, $peak_period->end_date)) {
+
+            // Check if booking overlaps with peak period
+            $overlapsPeak = (
+              $startDate->between($peakStart, $peakEnd) ||
+              $endDate->between($peakStart, $peakEnd) ||
+              ($startDate->lt($peakStart) && $endDate->gt($peakEnd))
+            );
+
+            if ($overlapsPeak) {
               Helper::updateApartmentPrices(
-                  $peak_period->start_date,
-                  $peak_period->end_date,
-                  $peak_period->discount
+                $peak_period->start_date,
+                $peak_period->end_date,
+                $peak_period->discount
               );
               return $this->ConvertCurrencyRate($this->december_prices);
+            }
           }
+        }
       }
 
-      // Default: normal price
-      return $this->ConvertCurrencyRate($this->price);
+      // If today itself falls in peak period
+      if ($currentDate->between($peak_period->start_date, $peak_period->end_date)) {
+        Helper::updateApartmentPrices(
+          $peak_period->start_date,
+          $peak_period->end_date,
+          $peak_period->discount
+        );
+        return $this->ConvertCurrencyRate($this->december_prices);
+      }
+    }
+
+    // Default: normal price
+    return $this->ConvertCurrencyRate($this->price);
   }
 
 
