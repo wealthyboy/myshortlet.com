@@ -138,17 +138,33 @@
           </div>
         </div>
 
-        <div v-if="room.google_drive_video_link" class="item">
-          <iframe
-            title="watch apartment video avenue montaigne"
-            class="rounded"
-            style="width: 100%"
-            height="235"
-            :src="room.google_drive_video_link"
-            itemprop="video"
-            itemscope
-            itemtype="https://schema.org/VideoObject"
-          ></iframe>
+
+         <div v-if="room.video" class="item rounded-top video-wrapper">
+            <div 
+                v-if="!isPlaying" 
+                class="video-preview cursor-pointer"
+                @click="initVideo"
+              >
+                <img 
+                  :src="room.image_links[0].image"
+                  class="img-fluid rounded-top w-100"
+                  alt="video preview"
+                />
+
+                <div class="video-play-btn">
+                  ▶
+                </div>
+            </div>
+
+            <video
+              v-show="isPlaying"
+              ref="videoPlayer"
+              playsinline
+              preload="metadata"
+              controls
+              class="w-100 rounded-top custom-video"
+            ></video>
+
         </div>
       </div>
     </div>
@@ -327,6 +343,9 @@
 </template>
 
 <script>
+
+import Hls from "hls.js";
+
 export default {
   props: {
     property: Object,
@@ -353,6 +372,8 @@ export default {
       lunchModal: false,
       showSlider: false,
       propertyQty: [],
+      isPlaying: false,
+      src: "",
       apartment_facilities: [],
       settings: {
         dots: true,
@@ -370,90 +391,42 @@ export default {
       },
     };
   },
+
   mounted() {
 
-    // Example usage with multiple elements and dynamic classes
-    const targetConfigs = [
-      {
-        id: "product-0",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-1",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-2",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-3",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-4",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-5",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-6",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-7",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-8",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-9",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-10",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-11",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-12",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-13",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-14",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-15",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-      {
-        id: "product-16",
-        dynamicClasses: ["opacity-1", "animate__animated", "animate__fadeInUp"],
-      },
-    ];
+    const video = this.$refs.videoPlayer;
 
-    const observerHandler = new IntersectionObserverHandler({ threshold: 0.5 });
+    this.src = "https://avevuemontaigne-ng.lon1.cdn.digitaloceanspaces.com/" + this.room.video.enkoded_path;
 
-    // Get the target elements by ID and associated dynamic classes
-    const targets = targetConfigs.map((config) => ({
-      element: document.getElementById(config.id),
-      dynamicClasses: config.dynamicClasses,
-    }));
+    // if (Hls.isSupported()) {
+    //   const hls = new Hls({
+    //     capLevelToPlayerSize: true, // pick best resolution for screen
+    //     maxBufferLength: 30,        // max buffer length in seconds
+    //     autoStartLoad: true
+    //   });
 
-    // Start observing the target elements
-    observerHandler.observe(targets);
+    //   hls.loadSource(this.src);      // master.m3u8 URL
+    //   hls.attachMedia(video);
+
+    //   hls.on(Hls.Events.MANIFEST_PARSED, () => {
+    //     video.play();
+    //   });
+
+    //   // Optional: log quality levels
+    //   hls.on(Hls.Events.LEVEL_LOADED, (event, data) => {
+    //     console.log('Available qualities:', data.levels.map(l => l.height));
+    //   });
+
+    // } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+    //   // Safari/iOS fallback
+    //   video.src = this.src;
+    //   video.addEventListener("loadedmetadata", () => {
+    //     video.play();
+    //   });
+    // } else {
+    //   console.error("HLS not supported in this browser.");
+    // } 
+
     jQuery(function () {
       $(".room-carousel").owlCarousel({
         margin: 10,
@@ -476,9 +449,76 @@ export default {
         },
       });
     });
+
+    video.addEventListener("pause", () => this.handleVideoStop());
+    video.addEventListener("ended", () => this.handleVideoStop());
+
+
+    $(".owl-carousel").on("changed.owl.carousel", () => {
+      if (this.$refs.videoPlayer) {
+        this.$refs.videoPlayer.pause();
+        this.isPlaying =false
+
+        console.log(this.isPlaying)
+
+        const dots = document.querySelector(".aprts .owl-dots");
+
+          console.log(dots)
+          if (dots) {
+            dots.classList.remove("video-is-playing");
+          }
+      }
+    });
   },
   components: {},
   methods: {
+    handleVideoStop() {
+        this.isPlaying = false;
+
+        // Remove class from dots
+        const dots = document.querySelector(".aprts .owl-dots");
+        if (dots) {
+          dots.classList.remove("video-is-playing");
+        }
+      },
+
+      // existing methods...
+
+    initVideo() {
+      this.isPlaying = true;
+
+      const video = this.$refs.videoPlayer;
+
+      const dots = document.querySelector(".aprts .owl-dots");
+
+      console.log(dots)
+      if (dots) {
+        dots.classList.add("video-is-playing");
+      }
+      
+
+      if (Hls.isSupported()) {
+
+        const hls = new Hls({
+          capLevelToPlayerSize: true,
+          autoStartLoad: true,
+        });
+
+        hls.loadSource(this.src);
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          video.play();
+        });
+
+      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = this.src;
+        video.addEventListener("loadedmetadata", () => {
+          video.play();
+        });
+      }
+    },
+
     sum(arr) {
       return arr.reduce((a, b) => parseInt(a) + parseInt(b), 0);
     },
@@ -527,47 +567,40 @@ export default {
   },
 };
 
-class IntersectionObserverHandler {
-  constructor(options) {
-    this.observer = new IntersectionObserver(
-      this.handleIntersection.bind(this),
-      options
-    );
-    this.dynamicClassesMap = new Map();
-  }
 
-  handleIntersection(entries, observer) {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const dynamicClasses = this.dynamicClassesMap.get(entry.target);
-        if (dynamicClasses) {
-          entry.target.classList.remove("opacity-0");
-          dynamicClasses.forEach((className) =>
-            entry.target.classList.add(className)
-          );
-          observer.unobserve(entry.target);
-        }
-      }
-    });
-  }
-
-  observe(targets) {
-    targets.forEach((target) => {
-      const { element, dynamicClasses } = target;
-
-      // Check if the element exists in the DOM before observing
-      if (element && document.body.contains(element)) {
-        this.observer.observe(element);
-        this.dynamicClassesMap.set(element, dynamicClasses);
-      }
-    });
-  }
-
-  unobserve(targets) {
-    targets.forEach((target) => {
-      this.observer.unobserve(target.element);
-      this.dynamicClassesMap.delete(target.element);
-    });
-  }
-}
 </script>
+<style>
+.video-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.video-preview {
+  position: relative;
+}
+
+.video-play-btn {
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.55);
+    color: white;
+    font-size: 21px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    align-content: center;
+    align-self: center;
+}
+
+.custom-video {
+  object-fit: cover;
+  height: 233px;
+}
+
+</style>
