@@ -2,24 +2,24 @@
 
 namespace App\Jobs;
 
-use FFMpeg\FFMpeg;
+use App\Models\Video;
 use FFMpeg\Format\Video\X264;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Video;
+use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
+use Throwable;
 
 class EncodeVideo implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $video;
-
-    public $timeout = 3600; // 1 hour
-
+    public Video $video;
+    public int $timeout = 3600;
 
     public function __construct(Video $video)
     {
@@ -28,125 +28,96 @@ class EncodeVideo implements ShouldQueue
 
     public function handle()
     {
-        /** -----------------------------------
-         * 1. Build temp paths
-         * -----------------------------------*/
-        $inputFilename = $this->video->filename;
-        $baseName = pathinfo($inputFilename, PATHINFO_FILENAME);
+        $video = $this->video;
 
-        $tempFolder = storage_path("app/temp/hls/{$baseName}");
-        $tempInput  = storage_path("app/temp/{$inputFilename}");
-
-        if (!file_exists(dirname($tempInput))) {
-            mkdir(dirname($tempInput), 0755, true);
+        if (!$video) {
+            Log::error('EncodeVideo: missing video model.');
+            return;
         }
 
-        if (!file_exists($tempFolder)) {
-            mkdir($tempFolder, 0755, true);
+        $disk = $video->disk ?? 'spaces';
+        $remotePath = $video->path;
+
+        if (!$remotePath) {
+            Log::error('EncodeVideo: video->path is empty', [
+                'video_id' => $video->id
+            ]);
+            return;
         }
 
-        /** -----------------------------------
-         * 2. Download original video from Spaces
-         * -----------------------------------*/
-        file_put_contents(
-            $tempInput,
-            Storage::disk('spaces')->get($this->video->path)
-        );
+        if (!Storage::disk($disk)->exists($remotePath)) {
+            Log::error('EncodeVideo: source file not found', [
+                'video_id'   => $video->id,
+                'disk'       => $disk,
+                'remotePath' => $remotePath,
+            ]);
+            return;
+        }
 
-        /** -----------------------------------
-         * 3. Create FFMpeg instance
-         * -----------------------------------*/
-        $ffmpeg = FFMpeg::create([
-            'ffmpeg.binaries'  => '/usr/bin/ffmpeg',
-            'ffprobe.binaries' => '/usr/bin/ffprobe',
-            'timeout'          => 3600,
-            'ffmpeg.threads'   => 4,
-        ]);
+        $baseName = pathinfo($remotePath, PATHINFO_FILENAME);
+        $outputFolder = "videos/hls/{$baseName}";
+        $masterPlaylist = "{$outputFolder}/master.m3u8";
 
-        $video = $ffmpeg->open($tempInput);
+        $segmentPattern = 'segment_%05d.ts';
 
-        /** -----------------------------------
-         * 4. Resolutions (16:9 safe)
-         * -----------------------------------*/
-        $formats = [
-            '1080' => (new X264)->setKiloBitrate(5000),
-            '720'  => (new X264)->setKiloBitrate(2500),
-            '480'  => (new X264)->setKiloBitrate(1000),
-        ];
-
-        $spacesOutputFolder = "videos/hls/{$baseName}";
-
-        /** -----------------------------------
-         * 5. Encode multiple resolutions
-         * -----------------------------------*/
-        foreach ($formats as $res => $format) {
-
-            $resFolder = "{$tempFolder}/{$res}p";
-            mkdir($resFolder, 0755, true);
-
-            $video
+        try {
+            $hls = FFMpeg::fromDisk($disk)
+                ->open($remotePath)
                 ->exportForHLS()
-                ->setSegmentLength(10)
-                ->addFormat($format)
-                ->save("{$resFolder}/index.m3u8");
+                ->setSegmentLength(10);
 
-            // upload .ts segments
-            foreach (glob("{$resFolder}/*.ts") as $file) {
-                Storage::disk('spaces')->put(
-                    "{$spacesOutputFolder}/{$res}p/" . basename($file),
-                    file_get_contents($file)
-                );
-            }
+            /**
+             * MULTI BITRATE — NO RESIZE
+             * Just encoding same dimensions at different bitrates.
+             */
 
-            // upload m3u8
-            Storage::disk('spaces')->put(
-                "{$spacesOutputFolder}/{$res}p/index.m3u8",
-                file_get_contents("{$resFolder}/index.m3u8")
+            $hls->addFormat(
+                (new X264)->setKiloBitrate(5000),
+                null,
+                $segmentPattern
             );
+
+            $hls->addFormat(
+                (new X264)->setKiloBitrate(3000),
+                null,
+                $segmentPattern
+            );
+
+            $hls->addFormat(
+                (new X264)->setKiloBitrate(1500),
+                null,
+                $segmentPattern
+            );
+
+            $hls->addFormat(
+                (new X264)->setKiloBitrate(800),
+                null,
+                $segmentPattern
+            );
+
+            $hls->toDisk($disk)->save($masterPlaylist);
+
+            $video->update([
+                'encoded'      => true,
+                'encoded_path' => $masterPlaylist,
+            ]);
+
+            Log::info('EncodeVideo: encoding complete', [
+                'video_id' => $video->id,
+                'master'   => $masterPlaylist,
+            ]);
+        } catch (Throwable $e) {
+
+            Log::error('EncodeVideo: exception during encoding', [
+                'video_id'  => $video->id,
+                'exception' => $e->getMessage(),
+            ]);
+
+            $video->update([
+                'encoded' => false,
+            ]);
+
+            throw $e;
         }
-
-        /** -----------------------------------
-         * 6. Create master playlist
-         * -----------------------------------*/
-        $master = "#EXTM3U\n#EXT-X-VERSION:3\n";
-
-        foreach ($formats as $res => $format) {
-            $bandwidth = $format->getKiloBitrate() * 1000;
-            $height = $res;
-            $width = intval($res * 16 / 9);
-
-            $master .= "#EXT-X-STREAM-INF:BANDWIDTH={$bandwidth},RESOLUTION={$width}x{$height}\n";
-            $master .= "{$res}p/index.m3u8\n";
-        }
-
-        Storage::disk('spaces')->put("{$spacesOutputFolder}/master.m3u8", $master);
-
-        /** -----------------------------------
-         * 7. Update database
-         * -----------------------------------*/
-        $this->video->update([
-            'encoded' => true,
-            'path' => "{$spacesOutputFolder}/master.m3u8",
-        ]);
-
-        /** -----------------------------------
-         * 8. Cleanup temp
-         * -----------------------------------*/
-        @unlink($tempInput);
-        $this->deleteDirectory($tempFolder);
-    }
-
-    private function deleteDirectory($dir)
-    {
-        if (!is_dir($dir)) return;
-
-        foreach (scandir($dir) as $item) {
-            if ($item == '.' || $item == '..') continue;
-
-            $path = "$dir/$item";
-            is_dir($path) ? $this->deleteDirectory($path) : unlink($path);
-        }
-
-        rmdir($dir);
     }
 }
