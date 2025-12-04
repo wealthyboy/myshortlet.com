@@ -1834,6 +1834,10 @@ svg.uitk-icon-medium {
   top: -16px !important;
 }
 
+#load-products .owl-dots.video-is-playing {
+    top: -23px !important;
+}
+
 .image-caption {
     bottom: 23px;
     left: 50%;
@@ -1902,10 +1906,6 @@ svg.uitk-icon-medium {
 }
 
 .main-banner .small .owl-carousel.owl-theme.owl-loaded.owl-drag {
-  height: 235px;
-}
-
-.owl-carousel .owl-item img {
   height: 235px;
 }
 
