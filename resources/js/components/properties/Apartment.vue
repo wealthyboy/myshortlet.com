@@ -16,8 +16,10 @@
 
         <div
           v-if="room.image"
-          class="item rounded-top"
+          class="item  rounded-top"
           itemprop="photo"
+          
+          :class="{ index: isHomePage }"
           itemscope
           itemtype="https://schema.org/ImageObject"
         >
@@ -471,6 +473,11 @@ export default {
     });
   },
   components: {},
+  computed: {
+    isHomePage() {
+      return window.location.pathname === "/" || window.location.pathname === "";
+    }
+  },
   methods: {
     handleVideoStop() {
         this.isPlaying = false;
