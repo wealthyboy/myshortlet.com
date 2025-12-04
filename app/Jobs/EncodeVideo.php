@@ -64,8 +64,7 @@ class EncodeVideo implements ShouldQueue
             $hls = FFMpeg::fromDisk($disk)
                 ->open($remotePath)
                 ->exportForHLS()
-                ->setSegmentLength(10)
-                ->deBug();
+                ->setSegmentLength(10);
 
             /**
              * MULTI BITRATE — NO RESIZE
