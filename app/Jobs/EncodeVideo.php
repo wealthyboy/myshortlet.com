@@ -61,39 +61,33 @@ class EncodeVideo implements ShouldQueue
         $segmentPattern = 'segment_%05d.ts';
 
         try {
+            /**
+             * Create HLS export builder
+             */
             $hls = FFMpeg::fromDisk($disk)
                 ->open($remotePath)
                 ->exportForHLS()
                 ->setSegmentLength(10);
 
             /**
-             * MULTI BITRATE — NO RESIZE
-             * Just encoding same dimensions at different bitrates.
+             * LOW MEMORY MULTI-BITRATE (only 2 streams)
+             * Using veryfast preset to reduce RAM + CPU
              */
 
-            $hls->addFormat(
-                (new X264)->setKiloBitrate(5000),
-                null,
-                $segmentPattern
-            );
+            $bitrates = [2000, 800];
 
-            $hls->addFormat(
-                (new X264)->setKiloBitrate(3000),
-                null,
-                $segmentPattern
-            );
+            foreach ($bitrates as $kbps) {
+                $format = (new X264)
+                    ->setKiloBitrate($kbps)
+                    ->setAudioCodec('aac')
+                    ->setAdditionalParameters(['-preset', 'veryfast']);
 
-            $hls->addFormat(
-                (new X264)->setKiloBitrate(1500),
-                null,
-                $segmentPattern
-            );
-
-            $hls->addFormat(
-                (new X264)->setKiloBitrate(800),
-                null,
-                $segmentPattern
-            );
+                $hls->addFormat(
+                    $format,
+                    null,
+                    $segmentPattern
+                );
+            }
 
             $hls->toDisk($disk)->save($masterPlaylist);
 
