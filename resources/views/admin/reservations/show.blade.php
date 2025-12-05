@@ -86,7 +86,7 @@
          </div>
       </div>
    </div>
-  
+
    <div class="col-md-12">
       <div class="card">
 
@@ -95,13 +95,13 @@
 
             <form id="UpdateForm" data-url="{{request()->fullUrl()}}?add_update=1" action="?add_update=1" method="GET">
                <div class="form-row">
-                
+
 
                   <div class="form-group col-md-3">
                      <label for="date">Check-out</label>
                      <input class="form-control  datepicker pull-right" name="checkout" id="checkout-update" type="text" required>
                   </div>
-               
+
 
                   <div class="form-group col-md-2">
                      <button id="add-update" type="submit" class="btn btn-primary">
@@ -111,30 +111,30 @@
                   </div>
                </div>
 
-             
+
             </form>
 
-           
+
 
          </div>
-        
-       
+
+
       </div>
-      
+
    </div>
 
    <div class="col-md-12">
 
-   @if($user_reservation->reservations[0]->extension_date)
+      @if($user_reservation->reservations[0]->extension_date)
 
-   <div class="card">
-      <div class="card-content">
-            <div  class="">
-            <h5 class="card-title">{{ $user_reservation->reservations[0]->extension_date }}</h5>
+      <div class="card">
+         <div class="card-content">
+            <div class="">
+               <h5 class="card-title">{{ $user_reservation->reservations[0]->extension_date }}</h5>
             </div>
+         </div>
       </div>
-   </div>
-   @endif
+      @endif
 
    </div>
    <div class="col-md-12">
@@ -229,7 +229,7 @@
                         </tr>
                         <tr>
                            <td colspan="6" class="text-right">Coupon</td>
-                           <td class="text-right"> &nbsp; {{ $user_reservation->coupon ?  $user_reservation->coupon.'  -%'.$user_reservation->voucher()->amount . 'off'  : '---' }}</td>
+                           <td class="text-right"> &nbsp; {{ $user_reservation->coupon ?  $user_reservation->coupon.'  -%'. optional($user_reservation->voucher())->amount . 'off'  : '---' }}</td>
                         </tr>
 
                         <tr>
