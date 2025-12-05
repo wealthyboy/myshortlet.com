@@ -19,7 +19,6 @@
           class="item  rounded-top"
           itemprop="photo"
           
-          :class="{ index: isHomePage }"
           itemscope
           itemtype="https://schema.org/ImageObject"
         >
@@ -360,7 +359,7 @@ export default {
     classType: Array,
     showReserve: Boolean,
     isGallery: Number,
-    index: Number,
+
   },
   data() {
     return {
