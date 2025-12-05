@@ -33,6 +33,7 @@
             itemprop="contentUrl"
           />
 
+
         
           <div class="images-count">
             <button
@@ -310,7 +311,7 @@
               class="font-weight-bold-2 text-success"
               v-if="room.is_refundable"
             >
-              Fully Refundable
+              Fully Refundable 
             </div>
             <a
               target="_blank"
@@ -398,6 +399,8 @@ export default {
 
     const video = this.$refs.videoPlayer;
 
+    console.log(this.room)
+
     this.src = "https://avevuemontaigne-ng.lon1.cdn.digitaloceanspaces.com/" + this.room.video.enkoded_path;
 
     // if (Hls.isSupported()) {
@@ -481,8 +484,6 @@ export default {
   methods: {
     handleVideoStop() {
         this.isPlaying = false;
-
-        // Remove class from dots
         const dots = document.querySelector(".aprts .owl-dots");
         if (dots) {
           dots.classList.remove("video-is-playing");
