@@ -11,7 +11,6 @@
       itemtype="https://schema.org/ImageGallery"
     >
 
-
       <div class="owl-carousel owl-theme">
 
         <div
@@ -70,7 +69,7 @@
                 >{{
                   room.images_count 
                 }}
-                View All</span
+                View </span
               >
             </button>
           </div>
@@ -96,7 +95,7 @@
               class="image-caption position-absolute"
               v-if="image.caption"
             >
-              {{ image.caption}}
+              {{ image.caption}} 
           </div>
           <div class="images-count">
             <button
@@ -132,8 +131,9 @@
                 role="button"
                 aria-hidden="true"
                 >{{
-                  room.images_count 
+                  room.images_count  
                 }}
+
                 View All</span
               >
             </button>
@@ -399,8 +399,9 @@ export default {
     const video = this.$refs.videoPlayer;
 
     console.log(this.room)
+          this.src = "https://avevuemontaigne-ng.lon1.cdn.digitaloceanspaces.com/" + this.room.video.encoded_path;
 
-    this.src = "https://avevuemontaigne-ng.lon1.cdn.digitaloceanspaces.com/" + this.room.video.enkoded_path;
+
 
     // if (Hls.isSupported()) {
     //   const hls = new Hls({
@@ -476,9 +477,9 @@ export default {
   },
   components: {},
   computed: {
-    isHomePage() {
-      return window.location.pathname === "/" || window.location.pathname === "";
-    }
+    // isHomePage() {
+    //   return window.location.pathname === "/" || window.location.pathname === "";
+    // }
   },
   methods: {
     handleVideoStop() {
@@ -495,6 +496,9 @@ export default {
       this.isPlaying = true;
 
       const video = this.$refs.videoPlayer;
+
+
+
 
       const dots = document.querySelector(".aprts .owl-dots");
 
