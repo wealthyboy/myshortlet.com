@@ -132,7 +132,7 @@ class Apartment extends Model
     {
         // Ensure it's an array and return first 9
         return collect($this->images)
-            ->take(9)
+            ->take(8)
             ->toArray();
     }
 
