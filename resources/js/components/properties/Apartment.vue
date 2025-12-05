@@ -269,7 +269,7 @@
               </svg>
             </span>
             <span class="svg-icon-text" itemprop="type"
-              >Bedroom {{ index }}</span
+              >Bedroom </span
             >
             <span class="svg-icon-text">
               <!-- Assuming room has dynamic properties like bedroom_1, bedroom_2 -->
