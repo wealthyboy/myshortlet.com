@@ -102,7 +102,7 @@
                 @reserve="reserve"
                 :amenities="amenities"
                 v-for="(room, index) in roomsAv"
-                :index="index"
+                :isIndex="isIndex"
                 :key="room.id"
                 :room="room"
                 :stays="stays"
@@ -522,6 +522,8 @@ export default {
       type: Object,
       default: {},
     },
+    isIndex: Boolean
+
   },
   data() {
     return {
