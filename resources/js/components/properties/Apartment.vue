@@ -625,7 +625,7 @@ export default {
 
 .custom-video {
   object-fit: cover;
-  height: 233px;
+  height: 245px;
 }
 
 .video-pill {

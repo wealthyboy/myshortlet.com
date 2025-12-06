@@ -9,7 +9,7 @@
 
    <div id="sm-main-banner" class="main-banner owl-carousel owl-theme d-block d-sm-none slider">
       @foreach($images['sliders'] as $key => $image)
-      <div  data-bg-image="{{ $generator::generateThumbnailUrl($image) }}" class=" bg-image-class {{  $key > 0 ? 'd-none' : '' }} item page-header min-vh-75 half-hv position-relative rounded-top">
+      <div data-bg-image="{{ $generator::generateThumbnailUrl($image) }}" class=" bg-image-class {{  $key > 0 ? 'd-none' : '' }} item page-header min-vh-75 half-hv position-relative rounded-top">
          <span class="position-absolute top-0 start-0 w-100 h-100 bg-black-2 opacity-50"></span>
       </div>
       @endforeach
@@ -76,7 +76,7 @@
 
 <div class="container-fluid mb-2">
    <div class="row">
-      <div id="tree"  class="opacity-0" data-image="https://drive.google.com/thumbnail?id=1aP9OVoify71pxLWDV-P33fYb5sopnI2g&sz=w2000" style="background-image: url(https://drive.google.com/thumbnail?id=1aP9OVoify71pxLWDV-P33fYb5sopnI2g&sz=w2000);
+      <div id="tree" class="opacity-0" data-image="https://drive.google.com/thumbnail?id=1aP9OVoify71pxLWDV-P33fYb5sopnI2g&sz=w2000" style="background-image: url(https://drive.google.com/thumbnail?id=1aP9OVoify71pxLWDV-P33fYb5sopnI2g&sz=w2000);
     background-repeat: no-repeat;
     background-position: right -10px top 35px;
     height: 500px;
@@ -132,7 +132,7 @@
       </div>
       <div class="row p-1">
          <div id="load-products" class="col-md-12" itemscope itemtype="https://schema.org/ItemList">
-         <apartments-index  :peak_period="{{$peak_period}}" :isGallery="0" :filter="0" :property="{{$property}}" :apartments="{{ $apartments }}" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" />
+            <apartments-index :isIndex="1" :peak_period="{{$peak_period}}" :isGallery="0" :filter="0" :property="{{$property}}" :apartments="{{ $apartments }}" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" />
          </div>
       </div>
    </div>
