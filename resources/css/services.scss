@@ -641,6 +641,12 @@ button#dropdownIcon {
   margin-top: 10rem;
 }
 
+#main-banner .video-js {
+    height: 75vh;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
 
 /***
    end loaders
@@ -660,7 +666,7 @@ button#dropdownIcon {
 
 .aprts .item {
   overflow: hidden;
-  height: 233px;
+  height: 245px;
 }
 
 
