@@ -221,13 +221,31 @@
                       </div>
                     </template>
 
-                    <div v-if="room.google_drive_video_link" class="item">
-                      <iframe
-                        style="width: 100%"
-                        class="custom-iframe"
-                        :src="room.google_drive_video_link"
-                      >
-                      </iframe>
+                    <div v-if="room.video" class="item">
+                       <div 
+                          v-if="!isPlaying" 
+                          class="video-preview cursor-pointer"
+                          @click="initVideo"
+                        >
+                          <img 
+                            :src="room.image_links[0].image"
+                            class="img-fluid rounded-top w-100"
+                            alt="video preview"
+                          />
+
+                          <div class="video-play-btn">
+                            ▶
+                          </div>
+                      </div>
+
+                      <video
+                        v-show="isPlaying"
+                        ref="videoPlayer"
+                        playsinline
+                        preload="metadata"
+                        controls
+                        class="w-100 rounded-top custom-video"
+                      ></video>
                     </div>
                   </VueSlickCarousel>
                 </div>
@@ -478,6 +496,8 @@ import Pickr from "vue-flatpickr-component";
 import VueSlickCarousel from "vue-slick-carousel";
 import "vue-slick-carousel/dist/vue-slick-carousel.css";
 import booking from "../../mixins/booking";
+import Hls from "hls.js";
+
 
 import axios from "axios";
 
@@ -513,6 +533,8 @@ export default {
       },
       roomsAv: [],
       total: 0,
+      isPlaying: false,
+      src: "",
       aps: 0,
       apTotal: 0,
       attrPrice: 0,
@@ -564,6 +586,9 @@ export default {
   mounted() {
     let lo = document.getElementById("full-bg");
 
+    const video = this.$refs.videoPlayer;
+
+
 
     if (lo) {
       document.getElementById("full-bg").remove();
@@ -603,6 +628,23 @@ export default {
       //this.checkAvailabity()
     } else {
     }
+
+
+    if (video) {
+      video.addEventListener("pause", () => this.handleVideoStop());
+       video.addEventListener("ended", () => this.handleVideoStop());
+    }
+   
+
+
+    $(".owl-carousel").on("changed.owl.carousel", () => {
+      if (this.$refs.videoPlayer) {
+        this.$refs.videoPlayer.pause();
+        this.isPlaying =false
+
+
+      }
+    });
 
 
     jQuery(function () {
@@ -662,6 +704,10 @@ export default {
   },
 
   methods: {
+      handleVideoStop() {
+        this.isPlaying = false;
+        
+      },
     showImages(room) {
       this.showImageModal = !this.showImageModal;
       this.room = room;
@@ -673,6 +719,7 @@ export default {
       }
       return null;
     },
+    
     showRoom(room) {
       this.showModal = !this.showModal;
       this.room = room;
@@ -741,6 +788,44 @@ export default {
           },
         });
       });
+    },
+
+    initVideo() {
+      this.isPlaying = true;
+
+      const video = this.$refs.videoPlayer;
+
+      this.src = "https://avevuemontaigne-ng.lon1.cdn.digitaloceanspaces.com/" + this.room.video.encoded_path;
+
+
+      const dots = document.querySelector(".aprts .owl-dots");
+
+      console.log(dots)
+      if (dots) {
+        dots.classList.add("video-is-playing");
+      }
+      
+
+      if (Hls.isSupported()) {
+
+        const hls = new Hls({
+          capLevelToPlayerSize: true,
+          autoStartLoad: true,
+        });
+
+        hls.loadSource(this.src);
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          video.play();
+        });
+
+      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = this.src;
+        video.addEventListener("loadedmetadata", () => {
+          video.play();
+        });
+      }
     },
 
 
@@ -1104,5 +1189,44 @@ class IntersectionObserverHandler {
     opacity: 1;
   }
 }
+
+
+.video-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.video-preview {
+  position: relative;
+}
+
+.video-play-btn {
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.55);
+    color: white;
+    font-size: 21px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    align-content: center;
+    align-self: center;
+}
+
+@media (min-width: 1024px) { /* desktop screens */
+    .custom-video {
+        height: 603px !important;
+        object-fit: cover;
+
+    }
+}
+
+
 
 </style>

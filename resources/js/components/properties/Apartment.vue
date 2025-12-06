@@ -177,6 +177,23 @@
       >
         <a :href="`/apartment/${room.slug}/`">{{ room.name }}</a>
 
+        <span v-if="room.video" class="video-pill d-flex align-items-center ml-2">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M3 5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l4 4V7l-4 4V7a2 2 0 0 0-2-2H3z"
+              fill="currentColor"
+            />
+            <path d="M10 8.5v7l5-3.5-5-3.5z" fill="#fff" />
+          </svg>
+          <span class="text-small">Video included in the slide</span>
+        </span>
+
         <a  
           v-if="room.is_gallery"
           target="_blank"
@@ -497,9 +514,6 @@ export default {
 
       const video = this.$refs.videoPlayer;
 
-
-
-
       const dots = document.querySelector(".aprts .owl-dots");
 
       console.log(dots)
@@ -580,7 +594,7 @@ export default {
 
 
 </script>
-<style>
+<style scoped>
 .video-wrapper {
   position: relative;
   overflow: hidden;
@@ -612,6 +626,11 @@ export default {
 .custom-video {
   object-fit: cover;
   height: 233px;
+}
+
+.video-pill {
+  font-size: small;
+  color: brown;
 }
 
 </style>
