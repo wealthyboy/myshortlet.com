@@ -29,10 +29,7 @@ export default {
             return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
         },
         isValidDateRange(dateRangeString) {
-            // Split the date range string into two dates
             const [startDateString, endDateString] = dateRangeString.split(' to ');
-
-            // Validate each date individually
             return this.isValidDate(startDateString) && this.isValidDate(endDateString);
         },
 
@@ -166,6 +163,8 @@ export default {
 
             const { start_date, end_date, days_limit } = this.peak_period;
 
+            console.log(start_date, end_date, days_limit)
+
             if ( !this.validateBooking() ) {
                 this.apartmentIsChecked = false
                 alert(`Bookings from ${start_date.split("T")[0]} to ${end_date.split("T")[0]} require a minimum stay of ${days_limit} days.`);                
@@ -294,11 +293,13 @@ export default {
 
             const { start_date, end_date, days_limit } = this.peak_period;
 
+            console.log(start_date, end_date, days_limit)
+
+
             if ( !this.validateBooking() ) {
-                alert(`Bookings from ${start_date.split("T")[0]} to ${end_date.split("T")[0]} require a minimum stay of ${days_limit} days.`);                
+                alert(`Bookings from ${start_date.split("T")[0]} to ${end_date.split("T")[0]} require a minimum stayss of ${days_limit} days.`);                
                 return;
             }
-
 
             this.loading = true
 
@@ -345,6 +346,14 @@ export default {
             return !isNaN(dateObject) && dateString === dateObject.toISOString().split('T')[0];
         },
 
+        formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        },
+
         search: function () {
 
             this.form.check_in_checkout = this.form.checkin + ' to ' + this.form.checkout;
@@ -380,8 +389,12 @@ export default {
 
             const { start_date, end_date, days_limit } = this.peak_period;
 
+
+            const readableStart = this.formatDate(start_date);
+            const readableEnd = this.formatDate(end_date);
+
             if ( !this.validateBooking() ) {
-                alert(`Bookings from ${start_date.split("T")[0]} to ${end_date.split("T")[0]} require a minimum stay of ${days_limit} days.`);                
+                alert(`Bookings from ${readableStart} to ${readableEnd} require a minimum stay of ${days_limit} days.`);
                 return;
             }
 
@@ -497,8 +510,11 @@ export default {
 
             const { start_date, end_date, days_limit } = this.peak_period;
 
+            const readableStart = this.formatDate(start_date);
+            const readableEnd = this.formatDate(end_date);
+
             if ( !this.validateBooking() ) {
-                alert(`Bookings from ${start_date.split("T")[0]} to ${end_date.split("T")[0]} require a minimum stay of ${days_limit} days.`);                
+                alert(`Bookings from ${readableStart} to ${readableEnd} require a minimum stay of ${days_limit} days.`);
                 return;
             }
 
