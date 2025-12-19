@@ -96,14 +96,16 @@ class ReservationsController extends Controller
 			}
 
 			if ($startDate && $endDate) {
-				$query->whereHas('reservations', function ($q) use ($startDate, $endDate) {
-					$q->whereBetween('checkin', [$startDate, $endDate])
-						->orWhereBetween('checkout', [$startDate, $endDate])
-						->orWhere(function ($query) use ($startDate, $endDate) {
-							$query->where('checkin', '<=', $startDate)
-								->where('checkout', '>=', $endDate);
-						});
-				});
+
+				if ($startDate && $endDate) {
+
+					$startDate = Carbon::parse($startDate)->startOfDay();
+					$endDate   = Carbon::parse($endDate)->endOfDay();
+
+					$query->whereHas('reservations', function ($q) use ($startDate, $endDate) {
+						$q->whereBetween('created_at', [$startDate, $endDate]);
+					});
+				}
 			}
 		} else {
 			$query->whereDate('created_at', Carbon::today());
@@ -229,8 +231,9 @@ class ReservationsController extends Controller
 		$user_reservation->caution_fee = $cautionFee;
 		$user_reservation->ip = $request->ip();
 		$user_reservation->save();
+		$user_reservation->discount = $discountValue;
 
-		$user_reservation->discount = $discountType === 'fixed'
+		$user_reservation->percentage_discount = $discountType === 'fixed'
 			? data_get($input, 'currency') . number_format($discountValue, 2)
 			: $discountValue . '%';
 
