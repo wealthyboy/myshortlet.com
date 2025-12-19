@@ -135,7 +135,10 @@ class ApartmentsController extends Controller
 
         $property = Property::first();
 
-        $apartments->load('video');
+        if ($apartments) {
+            $apartments->load('video');
+        }
+
 
         // Return JSON for a single apartment
         if ($request->has('apartment_id')) {
