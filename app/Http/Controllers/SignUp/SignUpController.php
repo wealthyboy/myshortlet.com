@@ -45,7 +45,7 @@ class SignUpController extends Controller
             $user_reservation->checkout = $reservation->apartment_id;
             //dd($user_reservation);
             if ($user_reservation->checkout->isPast()) {
-                // abort(404);
+                //abort(404);
             }
 
             return view('checkin.checkin', compact('rooms', 'user_reservation'));
@@ -92,16 +92,19 @@ class SignUpController extends Controller
             $apartment = Apartment::where('apartment_id', $request->apartment_id)->first();
             $attr = Attribute::find($request->apartment_id);
             $query = Apartment::query();
+
             $apartmentId = $request->apartment_id;
             $query->where('id', $apartmentId);
-            $startDate = Carbon::createFromDate($request->checkin);
-            $endDate = Carbon::createFromDate($request->checkout);
+
+            $startDate = Carbon::parse($request->checkin)->startOfDay();
+            $endDate   = Carbon::parse($request->checkout)->startOfDay();
+
             $query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
-                $q->where(function ($subQ) use ($startDate) {
-                    $subQ->where('checkin', '<', $startDate)
-                        ->where('reservations.is_blocked', false)
-                        ->where('checkout', '>', $startDate);
-                });
+                $q->where('reservations.is_blocked', false)
+                    ->where(function ($subQ) use ($startDate, $endDate) {
+                        $subQ->where('checkin', '<', $endDate)
+                            ->where('checkout', '>', $startDate);
+                    });
             });
 
 

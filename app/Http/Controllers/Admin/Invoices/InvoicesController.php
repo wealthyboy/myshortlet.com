@@ -116,7 +116,7 @@ class InvoicesController extends Controller
         $apartmentId = $request->apartment_id;
 
         $invoices = $this->filterInvoices($request)->get();
-        $email = "oluwa.tosin@avenuemontaigne.ng";
+        $email = "jacob.atam@gmail.com";
 
         $apartmentName =  $apartmentId ? Apartment::find($apartmentId)->name : null;
         $rangeText = $this->getHumanDateRange($request, $invoices);
@@ -159,7 +159,7 @@ class InvoicesController extends Controller
     public function emailReportInvoices(Request $request)
     {
         $apartmentId = $request->apartment_id;
-        $email = "oluwa.tosin@avenuemontaigne.ng";
+        $email = "jacob.atam@gmail.com";
         $ccEmail = "jacob.atam@gmail.com";
 
         $invoices = $this->filterInvoices($request)->get();
@@ -300,18 +300,18 @@ class InvoicesController extends Controller
             'checkout' => 'required|date|after:checkin',
         ]);
 
-        $startDate = Carbon::parse($request->checkin);
-        $endDate = Carbon::parse($request->checkout);
+        $startDate = Carbon::parse($request->checkin)->startOfDay();
+        $endDate   = Carbon::parse($request->checkout)->startOfDay();
 
         $query = Apartment::query();
         $query->where('id', $request->apartment_id);
 
         $query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
-            $q->where(function ($subQ) use ($startDate) {
-                $subQ->where('checkin', '<', $startDate)
-                    ->where('reservations.is_blocked', false)
-                    ->where('checkout', '>', $startDate);
-            });
+            $q->where('reservations.is_blocked', false)
+                ->where(function ($subQ) use ($startDate, $endDate) {
+                    $subQ->where('checkin', '<', $endDate)
+                        ->where('checkout', '>', $startDate);
+                });
         });
 
         $apartments = $query->latest()->first();
