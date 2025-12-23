@@ -444,7 +444,7 @@ class InvoicesController extends Controller
 
                 //dd(true);
                 \Mail::to($invoice->email)
-                    ->bcc('frontdesk@avenuemontaigne.ng')
+                    ->cc('frontdesk@avenuemontaigne.ng')
                     ->bcc('info@avenuemontaigne.ng')
                     ->send(new ReservationReceipt($user_reservation, $this->settings));
             }
