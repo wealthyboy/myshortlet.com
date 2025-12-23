@@ -251,7 +251,10 @@
 
 
                                             @endif
-                                            <a href="{{ url("/admin/invoices/{$invoice->id}/send-receipt") }}"
+                                            <a
+                                                onclick="return confirm('Confirm that payment has been made before sending this receipt.');"
+
+                                                href="{{ url("/admin/invoices/{$invoice->id}/send-receipt") }}"
                                                 class="btn btn-success btn-simple" title="Send Receipt">
                                                 Send Receipt
                                             </a>
