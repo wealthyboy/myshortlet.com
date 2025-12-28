@@ -147,8 +147,6 @@ trait FormatPrice
           $peakStart = Carbon::parse($peak_period->start_date);
           $peakEnd   = Carbon::parse($peak_period->end_date);
 
-
-
           if (data_get($date, 'end_date') &&  data_get($date, 'start_date')) {
             $startDate = $date['start_date'];
             $endDate   = $date['end_date'];
@@ -174,14 +172,14 @@ trait FormatPrice
       }
 
       // If today itself falls in peak period
-      if ($currentDate->between($peak_period->start_date, $peak_period->end_date)) {
-        Helper::updateApartmentPrices(
-          $peak_period->start_date,
-          $peak_period->end_date,
-          $peak_period->discount
-        );
-        return $this->ConvertCurrencyRate($this->december_prices);
-      }
+      // if ($currentDate->between($peak_period->start_date, $peak_period->end_date)) {
+      // Helper::updateApartmentPrices(
+      //   $peak_period->start_date,
+      //   $peak_period->end_date,
+      //   $peak_period->discount
+      // );
+      return $this->ConvertCurrencyRate($this->price);
+      //}
     }
 
     // Default: normal price
