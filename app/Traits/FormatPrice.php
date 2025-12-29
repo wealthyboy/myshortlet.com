@@ -172,14 +172,16 @@ trait FormatPrice
       }
 
       // If today itself falls in peak period
-      // if ($currentDate->between($peak_period->start_date, $peak_period->end_date)) {
-      // Helper::updateApartmentPrices(
-      //   $peak_period->start_date,
-      //   $peak_period->end_date,
-      //   $peak_period->discount
-      // );
-      return $this->ConvertCurrencyRate($this->price);
-      //}
+      if ($currentDate->between($peak_period->start_date, $peak_period->end_date)) {
+        Helper::updateApartmentPrices(
+          $peak_period->start_date,
+          $peak_period->end_date,
+          $peak_period->discount
+        );
+        return $this->ConvertCurrencyRate($this->december_prices);
+      } else {
+        return $this->ConvertCurrencyRate($this->price);
+      }
     }
 
     // Default: normal price
