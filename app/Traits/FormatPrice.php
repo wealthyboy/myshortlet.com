@@ -166,6 +166,8 @@ trait FormatPrice
                 $peak_period->discount
               );
               return $this->ConvertCurrencyRate($this->december_prices);
+            } else {
+              return $this->ConvertCurrencyRate($this->price);
             }
           }
         }
