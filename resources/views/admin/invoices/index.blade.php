@@ -249,7 +249,10 @@
                                             </a>
                                             @if($invoice->sent)
 
-
+                                            <a target="_blank" href="/check-in?id={{optional($invoice->user_reservation)->id}}"
+                                                class="btn btn-success btn-simple" title="Check in link">
+                                                Check in
+                                            </a>
                                             @endif
                                             <a
                                                 onclick="return confirm('Confirm that payment has been made before sending this receipt.');"
