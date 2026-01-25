@@ -170,8 +170,8 @@ Route::group(['middleware' => ['currencyByIp', 'tracking']], function () {
 
 
     Route::get('/about-us',  'Pages\PageController@index');
-    Route::get('/api/mapping_details',  'Pages\PageController@map');
-    Route::post('/api/mapping_details',  'Pages\PageController@map');
+    Route::get('/mapping_details',  'Pages\PageController@map');
+    Route::post('/mapping_details',  'Pages\PageController@map');
 
 
     Route::get('/contact-us', 'Pages\PageController@index');
