@@ -21,6 +21,14 @@ class PageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+
+    public function map()
+    {
+        \Log::info(request()->all());
+    }
+
     public function index()
     {
         $request = request();
@@ -110,9 +118,10 @@ class PageController extends Controller
     }
 
 
-    public function gallery(Request $request) {
+    public function gallery(Request $request)
+    {
         $apartments = Apartment::where('allow', true)->get();
-       return view('pages.gallery', compact('apartments'));
+        return view('pages.gallery', compact('apartments'));
     }
 
 

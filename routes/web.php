@@ -170,6 +170,10 @@ Route::group(['middleware' => ['currencyByIp', 'tracking']], function () {
 
 
     Route::get('/about-us',  'Pages\PageController@index');
+    Route::get('/api/mapping_details',  'Pages\PageController@map');
+    Route::post('/api/mapping_details',  'Pages\PageController@map');
+
+
     Route::get('/contact-us', 'Pages\PageController@index');
     Route::get('/virtual-tour', 'Pages\PageController@index');
     Route::post('file/uploads', 'Uploads\UploadsController@upload');
@@ -178,8 +182,20 @@ Route::group(['middleware' => ['currencyByIp', 'tracking']], function () {
 
 
 
+
+
 Route::get('/mailable', function () {
     $user_reservation = App\Models\UserReservation::find(11);
     $settings = App\Models\SystemSetting::first();
     return new App\Mail\ReservationReceipt($user_reservation, $settings);
 });
+
+Route::get('/video-proxy/{videoPath}', function ($videoPath) {
+    $disk = \Storage::disk('spaces');
+    $videoPath = str_replace('|', '/', $videoPath); // encode slashes
+    if (!$disk->exists($videoPath)) abort(404);
+
+    return response($disk->get($videoPath))
+        ->header('Content-Type', 'application/vnd.apple.mpegurl')
+        ->header('Access-Control-Allow-Origin', '*');
+})->where('videoPath', '.*');
