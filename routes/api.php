@@ -18,5 +18,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/api/mapping_details',  'Pages\PageController@map');
-Route::post('/api/mapping_details',  'Pages\PageController@map');
+Route::get('/mapping_details', function () {
+    return response()->json([
+        "hotel_code" => "AVENUE-MONTAIGNE",
+        "room_types" => [
+            ["id" => "APT-1", "name" => "Apartment 1"],
+            ["id" => "APT-2", "name" => "Apartment 2"]
+        ],
+        "rate_plans" => [
+            ["id" => "STD", "name" => "Standard Rate"]
+        ]
+    ]);
+});
