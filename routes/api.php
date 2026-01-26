@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/api/mapping_details',  'Pages\PageController@map');
+Route::post('/api/mapping_details',  'Pages\PageController@map');
