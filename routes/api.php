@@ -20,9 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 
-Route::get('/mapping_details/', function (\Illuminate\Http\Request $request) {
+Route::get('/mapping_details', function (\Illuminate\Http\Request $request) {
 
     // Optional API key validation (recommended)
+    \Log::info('Channex Changes Payload', $request->all());
+
     $apiKey =
         $request->header('api_key')
         ?? $request->header('api-key');
@@ -53,7 +55,8 @@ Route::get('/mapping_details/', function (\Illuminate\Http\Request $request) {
 });
 
 
-Route::get('/test_connection/', function (\Illuminate\Http\Request $request) {
+Route::get('/test_connection', function (\Illuminate\Http\Request $request) {
+    \Log::info('Channex Changes Payload', $request->all());
 
     $apiKey =
         $request->header('api_key')
@@ -74,7 +77,7 @@ Route::get('/test_connection/', function (\Illuminate\Http\Request $request) {
 });
 
 
-Route::post('/changes/', function (\Illuminate\Http\Request $request) {
+Route::post('/changes', function (\Illuminate\Http\Request $request) {
 
     $apiKey =
         $request->header('api_key')
