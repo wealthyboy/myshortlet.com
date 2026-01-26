@@ -56,24 +56,17 @@ Route::get('/mapping_details', function (\Illuminate\Http\Request $request) {
 
 
 Route::get('/test_connection', function (\Illuminate\Http\Request $request) {
-    \Log::info('Channex Changes Payload', $request->all());
 
-    $apiKey =
-        $request->header('api_key')
-        ?? $request->header('api-key');
+    \Log::info('Channex TEST_CONNECTION hit', [
+        'query' => $request->query(),
+        'headers' => $request->headers->all(),
+    ]);
 
-    if ($apiKey && $apiKey !== config('services.channex.key')) {
-        return response()->json(['error' => 'Unauthorized'], 401);
-    }
-
-    // Channex sends ?hotel_code=XXXX
     if ($request->query('hotel_code') !== 'AVENUE-MONTAIGNE') {
         return response()->json(['success' => false], 404);
     }
 
-    return response()->json([
-        "success" => true
-    ], 200);
+    return response()->json(['success' => true], 200);
 });
 
 
