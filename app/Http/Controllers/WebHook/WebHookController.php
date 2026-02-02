@@ -162,7 +162,6 @@ class WebHookController extends Controller
             try {
                 //$when = now()->addMinutes(5); 
                 Mail::to($guest->email)
-                    ->cc('info@avenuemontaigne.ng')
                     ->bcc('frontdesk@avenuemontaigne.ng')
                     ->send(new ReservationReceipt($user_reservation, $this->settings));
 
