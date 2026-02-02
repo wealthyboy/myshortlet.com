@@ -49,9 +49,7 @@ class WebHookController extends Controller
             $data = $payload['data']['metadata']['custom_fields'][0];
             $input = $data['booking'];
             $tracking_id = $data['tracking_id'];
-
             $apartment = Apartment::find(data_get($input, 'apartment_id'));
-
             $user_reservation = new UserReservation;
             $guest = new GuestUser;
             $guest->name = data_get($input, 'first_name');
@@ -120,7 +118,6 @@ class WebHookController extends Controller
                 $reservation->checkin = $booking->checkin;
                 $reservation->checkout = $booking->checkout;
                 $reservation->length_of_stay = data_get($input, 'length_of_stay');;
-
                 $reservation->save();
 
                 if (!empty($e_services)) {
@@ -165,15 +162,14 @@ class WebHookController extends Controller
             try {
                 //$when = now()->addMinutes(5); 
                 Mail::to($guest->email)
-                    ->bcc('avenuemontaigneconcierge@gmail.com')
-                    ->bcc('info@avenuemontaigne.ng')
+                    ->cc('info@avenuemontaigne.ng')
+                    ->bcc('frontdesk@avenuemontaigne.ng')
                     ->send(new ReservationReceipt($user_reservation, $this->settings));
 
                 $user_reservation->agent = 1;
                 $user_reservation->apname = optional($apartment)->name;
 
                 if (null !== $attr && $attr->apartment_owner) {
-                    Mail::to($attr->apartment_owner)->send(new ReservationReceipt($user_reservation, $this->settings));
                 }
             } catch (\Throwable $th) {
                 //dd($th);
