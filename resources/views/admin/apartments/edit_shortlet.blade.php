@@ -320,15 +320,17 @@
 
 
                <div class="col-md-12 mt-5 pr-5 kkk">
-
-                  @foreach( $apartment_facilities as $apartment_facility )
                   <div class="d-flex ">
+
+                     @foreach( $apartment_facilities as $apartment_facility )
 
                      <div>{{ $apartment_facility->name }}</div>
 
+
+                     @endforeach
+
                   </div>
 
-                  @endforeach
 
                </div>
 
