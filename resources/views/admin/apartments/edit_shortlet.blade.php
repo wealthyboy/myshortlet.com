@@ -322,8 +322,9 @@
                <div class="col-md-12 mt-5 pr-5 kkk">
                   @foreach( $apartment_facilities as $apartment_facility )
                   <div>{{ $apartment_facility->name }}</div>
-                  @foreach($apartment_facility->children->sortBy('name') as $child)
-                  <div class="d-flex justify-content0cen">
+                  <div class="d-flex justify-content-center">
+
+                     @foreach($apartment_facility->children->sortBy('name') as $child)
 
                      <div class="mt-2 mb-2">
                         <div class="togglebutton">
@@ -336,8 +337,9 @@
                            @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $apartment])
                         </div>
                      </div>
+                     @endforeach
                   </div>
-                  @endforeach
+
                   @endforeach
                </div>
 
