@@ -323,15 +323,18 @@
                   @foreach( $apartment_facilities as $apartment_facility )
                   <div>{{ $apartment_facility->name }}</div>
                   @foreach($apartment_facility->children->sortBy('name') as $child)
-                  <div class="mt-2 mb-2">
-                     <div class="togglebutton">
-                        <label>
-                           <input {{ $helper->check($apartment->attributes , $child->id) ? 'checked' : '' }} name="apartment_facilities_id[]" value="{{ $child->id }}" type="checkbox">
+                  <div class="d-flex justify-content0cen">
 
-                           {{ $child->name }}
+                     <div class="mt-2 mb-2">
+                        <div class="togglebutton">
+                           <label>
+                              <input {{ $helper->check($apartment->attributes , $child->id) ? 'checked' : '' }} name="apartment_facilities_id[]" value="{{ $child->id }}" type="checkbox">
 
-                        </label>
-                        @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $apartment])
+                              {{ $child->name }}
+
+                           </label>
+                           @include('includes.loop',['obj'=>$child,'space'=>'&nbsp;&nbsp;','model' => $apartment])
+                        </div>
                      </div>
                   </div>
                   @endforeach
