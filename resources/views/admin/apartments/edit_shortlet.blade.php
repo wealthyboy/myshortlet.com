@@ -320,9 +320,10 @@
 
 
                <div class="col-md-12 mt-5 pr-5 kkk">
-                  @foreach( $apartment_facilities as $apartment_facility )
-                  <div>{{ $apartment_facility->name }}</div>
                   <div class="d-flex justify-content-center">
+
+                     @foreach( $apartment_facilities as $apartment_facility )
+                     <div>{{ $apartment_facility->name }}</div>
 
                      @foreach($apartment_facility->children->sortBy('name') as $child)
 
@@ -338,9 +339,10 @@
                         </div>
                      </div>
                      @endforeach
+
+                     @endforeach
                   </div>
 
-                  @endforeach
                </div>
 
                <div class="col-md-12 mt-1 pr-5 ">
