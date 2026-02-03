@@ -311,7 +311,6 @@
                         <input type="hidden"
                            name="main_image"
                            value="{{ $apartment->image }}">
-
                         @endif
                      </div>
                   </div>
