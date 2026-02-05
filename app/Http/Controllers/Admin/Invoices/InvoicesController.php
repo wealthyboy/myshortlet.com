@@ -16,6 +16,8 @@ use App\Models\Property;
 
 use App\Jobs\SendInvoiceReceiptJob;
 use App\Mail\ReservationReceipt;
+use App\Jobs\SyncBookingToChannex;
+
 
 
 
@@ -42,8 +44,6 @@ class InvoicesController extends Controller
         $apartmentName =  $apartmentId ? Apartment::find($apartmentId)->name : null;
         $rangeText = $this->getHumanDateRange($request, $invoices);
 
-
-
         $pdf = \PDF::loadView('admin.invoices.report', compact('invoices', 'apartmentName', 'rangeText'));
         return $pdf->download('invoice-report.pdf');
     }
@@ -56,59 +56,74 @@ class InvoicesController extends Controller
         $apartmentId = $request->apartment_id;
         $invoices = $this->filterInvoices($request)->get();
 
-        $apartmentName =  $apartmentId ? Apartment::find($apartmentId)->name : null;
-        $rangeText = $this->getHumanDateRange($request, $invoices);
-
-
-
-
         if ($invoices->isEmpty()) {
             return back()->with('error', 'No invoices found for the selected filter.');
         }
 
-        $zipName = 'invoice-report.zip';
+        $apartmentName = $apartmentId
+            ? optional(Apartment::find($apartmentId))->name
+            : null;
+
+        $rangeText = $this->getHumanDateRange($request, $invoices);
+
+        // ✅ Unique zip per request
+        $zipName = 'invoice-report-' . now()->timestamp . '.zip';
         $zipPath = storage_path('app/' . $zipName);
 
         $zip = new \ZipArchive();
-        $zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+        $status = $zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+        if ($status !== true) {
+            return back()->with('error', 'Failed to create ZIP file.');
+        }
+
+        $addedFiles = 0;
 
         foreach ($invoices as $invoice) {
 
-            // 1. Get only items for selected apartment
-            $filteredItems = $invoice->invoice_items()
-                ->where('apartment_id', $apartmentId)
-                ->get();
+            // ✅ Apply apartment filter ONLY if selected
+            $itemsQuery = $invoice->invoice_items();
+
+            if ($apartmentId) {
+                $itemsQuery->where('apartment_id', $apartmentId);
+            }
+
+            $filteredItems = $itemsQuery->get();
 
             if ($filteredItems->isEmpty()) {
                 continue;
             }
 
-            // 2. Override relationship so PDF sees ONLY filtered items
+            // Override relationship for PDF
             $invoice->setRelation('invoice_items', $filteredItems);
 
-            // 3. Recalculate totals based only on filtered items
+            // Recalculate totals
             $invoice->filtered_subtotal = $filteredItems->sum('total');
             $invoice->filtered_total = $invoice->filtered_subtotal + ($invoice->caution_fee ?? 0);
 
-            // 4. Generate the invoice PDF
+            // Generate PDF
             $pdf = \PDF::loadView('admin.invoices.pdf', [
                 'invoice' => $invoice,
-                'filtered' => true,
+                'filtered' => (bool) $apartmentId,
                 'apartmentName' => $apartmentName,
                 'rangeText' => $rangeText
             ])->output();
 
-            // ⭐ 5. Use the REAL invoice number as filename
             $fileName = $invoice->invoice . '.pdf';
-
-            // Add to ZIP
             $zip->addFromString($fileName, $pdf);
+            $addedFiles++;
         }
 
         $zip->close();
 
+        if ($addedFiles === 0 || !file_exists($zipPath)) {
+            return back()->with('error', 'No invoices matched the selected apartment and date range.');
+        }
+
         return response()->download($zipPath)->deleteFileAfterSend(true);
     }
+
+
 
 
     public function emailReport(Request $request)
@@ -120,8 +135,6 @@ class InvoicesController extends Controller
 
         $apartmentName =  $apartmentId ? Apartment::find($apartmentId)->name : null;
         $rangeText = $this->getHumanDateRange($request, $invoices);
-
-
 
         $pdf = \PDF::loadView('admin.invoices.report', compact('invoices', 'apartmentName', 'rangeText'))->output();
 
@@ -345,7 +358,6 @@ class InvoicesController extends Controller
     {
         $invoice = Invoice::with('invoice_items')->findOrFail($request->id);
 
-
         $property = Property::first();
 
         $fullName = trim($invoice->full_name);
@@ -407,7 +419,7 @@ class InvoicesController extends Controller
         //dd($invoice->invoice_items);
         foreach ($invoice->invoice_items as $item) {
 
-            Reservation::firstOrCreate(
+            $reservation = Reservation::firstOrCreate(
                 [
                     'user_reservation_id' => $user_reservation->id,
                     'apartment_id' => $item->apartment_id,
@@ -425,6 +437,8 @@ class InvoicesController extends Controller
 
                 ]
             );
+
+            SyncBookingToChannex::dispatch($reservation);
         }
 
 
@@ -439,23 +453,15 @@ class InvoicesController extends Controller
                     ? '-' . $invoice->currency . number_format($invoice->discount)
                     : '-' . number_format($invoice->discount) . '%';
                 $user_reservation->payment_type =  'checkin';
-
                 $user_reservation->showCheckLink = $user_reservation->reservations->count() > 1 ? false : true;
 
-                //dd(true);
                 \Mail::to($invoice->email)
-                    ->cc('frontdesk@avenuemontaigne.ng')
-                    ->bcc('info@avenuemontaigne.ng')
+                    ->bcc('frontdesk@avenuemontaigne.ng')
                     ->send(new ReservationReceipt($user_reservation, $this->settings));
             }
         } catch (\Throwable $th) {
             \Log::error("Mail error: " . $th->getMessage());
-            // optionally: continue or throw if mail failure should abort transaction
         }
-
-
-        // ✅ Dispatch email job (can safely resend anytime)
-        //dispatch(new SendInvoiceReceiptJob($invoice, $user_reservation));
 
         // ✅ Mark invoice as sent
         $invoice->update(['sent' => true]);
