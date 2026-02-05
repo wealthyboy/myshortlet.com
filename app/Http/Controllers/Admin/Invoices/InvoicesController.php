@@ -16,7 +16,7 @@ use App\Models\Property;
 
 use App\Jobs\SendInvoiceReceiptJob;
 use App\Mail\ReservationReceipt;
-use App\Jobs\SyncBookingToChannex;
+//use App\Jobs\SyncBookingToChannex;
 
 
 
@@ -438,7 +438,7 @@ class InvoicesController extends Controller
                 ]
             );
 
-            SyncBookingToChannex::dispatch($reservation);
+            //SyncBookingToChannex::dispatch($reservation);
         }
 
 
