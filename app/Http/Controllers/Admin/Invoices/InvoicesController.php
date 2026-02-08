@@ -172,8 +172,8 @@ class InvoicesController extends Controller
     public function emailReportInvoices(Request $request)
     {
         $apartmentId = $request->apartment_id;
-        $email = "jacob.atam@gmail.com";
-        $ccEmail = "jacob.atam@gmail.com";
+        $email = "oluwa.tosin@avenuemontaigne.ng";
+        $ccEmail = null;
 
         $invoices = $this->filterInvoices($request)->get();
         $rangeText = $this->getHumanDateRange($request, $invoices);
@@ -457,6 +457,7 @@ class InvoicesController extends Controller
 
                 \Mail::to($invoice->email)
                     ->bcc('frontdesk@avenuemontaigne.ng')
+                    ->cc('info@avenuemontaigne.ng')
                     ->send(new ReservationReceipt($user_reservation, $this->settings));
             }
         } catch (\Throwable $th) {
