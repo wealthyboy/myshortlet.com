@@ -33,8 +33,6 @@ class SendInvoiceJob implements ShouldQueue
 
         // Generate PDF from your Blade view
 
-
-
         $pdf = PDF::loadView('admin.invoices.pdf', ['invoice' => $this->invoice]);
         $pdfContent = $pdf->output();
 
