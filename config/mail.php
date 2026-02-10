@@ -37,6 +37,8 @@ return [
     'mailers' => [
         'zeptomail' => [
             'transport' => 'zeptomail',
+            'timeout'   => 60,  // <-- Add this
+
             'key' => env('ZEPTO_API_KEY'),
             'url' => env('ZEPTO_API_URL'),
         ],
@@ -48,9 +50,9 @@ return [
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
-        ], 
+        ],
 
-       
+
         'ses' => [
             'transport' => 'ses',
         ],

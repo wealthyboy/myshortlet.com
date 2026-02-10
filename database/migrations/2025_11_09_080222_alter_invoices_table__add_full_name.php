@@ -14,7 +14,7 @@ class AlterInvoicesTableAddFullName extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->string('full_name')->nullable;;
+            // $table->string('full_name')->nullable;;
         });
     }
 

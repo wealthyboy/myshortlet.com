@@ -10,13 +10,13 @@
       itemscope
       itemtype="https://schema.org/ImageGallery"
     >
-
       <div class="owl-carousel owl-theme">
 
         <div
           v-if="room.image"
           class="item  rounded-top"
           itemprop="photo"
+          :class="{ index: isIndex == true }"
           
           itemscope
           itemtype="https://schema.org/ImageObject"
@@ -376,6 +376,8 @@ export default {
     classType: Array,
     showReserve: Boolean,
     isGallery: Number,
+    isIndex: Boolean
+
 
   },
   data() {

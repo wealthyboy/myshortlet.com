@@ -339,26 +339,41 @@
                </div>
 
                <div class="col-md-12 mt-1 pr-5 ">
-                  <h4 class="text-capitalize">Apartment Extras</h4>
-                  <!-- include('admin.apartments.extras',[
-                    'obj' => $apartment, 
-                    'name' => 'multiple_apartment_extra_services',
-                    'attribute_name' => 'multiple_apartment_extras',
-                ]) -->
-                  @foreach($extras as $child)
-                  <div class="mt-2 mb-2">
-                     <div class="togglebutton d-flex">
-                        <label>
-                           <input {{ $helper->check($apartment->attributes , $child->id) ? 'checked' : '' }} name="multiple_apartment_extras[{{ $apartment->id }}][]" value="{{ $child->id }}" type="checkbox">
-                           {{ $child->name }}
-                        </label>
-                        @include('includes.loop',['child'=>$child,'space'=>'&nbsp;&nbsp;','model' => 'Attribute','name' => 'attribute_id'])
+                  <h4 class="text-capitalize">Channex Facilities</h4>
+                  <div class="row">
+                     @foreach($facilities->groupBy('category') as $category => $items)
+                     <div class="col-md-4 mb-3">
+                        <h6 class="fw-bold text-uppercase">
+                           {{ ucfirst($category) }}
+                        </h6>
+
+                        <div class="facility-box">
+
+
+                           @foreach($items as $facility)
+                           <div class="form-check">
+                              <input
+                                 class="form-check-input"
+                                 type="checkbox"
+                                 name="facility_ids[]"
+                                 value="{{ $facility->id }}"
+                                 id="facility_{{ $facility->id }}"
+                                 {{ in_array($facility->id, $selectedFacilities ?? []) ? 'checked' : '' }}>
+
+                              <label style="cursor: pointer;" class="form-check-label" for="facility_{{ $facility->id }}">
+                                 {{ $facility->name }}
+                              </label>
+                           </div>
+                           @endforeach
+
+                        </div>
                      </div>
-                     <div class="extras-se  form-group">
-                        <input name="multiple_apartment_extra_services[]" value="{{ $helper->check(optional($apartment)->extra_services, $child->id,'price')   }}" placeholder="Leave blank if you want it free" class="form-control" type="number">
-                     </div>
+                     @endforeach
+
+
                   </div>
-                  @endforeach
+
+
                </div>
 
                <div class="row">

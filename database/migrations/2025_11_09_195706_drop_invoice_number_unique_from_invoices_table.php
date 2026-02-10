@@ -6,11 +6,12 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     public function up(): void
     {
         Schema::table('invoices', function (Blueprint $table) {
             // Drop the unique index
-            $table->dropUnique('invoices_invoice_number_unique');
+            // $table->dropUnique('invoices_invoice_number_unique');
         });
     }
 
@@ -18,7 +19,7 @@ return new class extends Migration
     {
         Schema::table('invoices', function (Blueprint $table) {
             // Restore the unique constraint if rolled back
-            $table->unique('invoice_number');
+            //$table->unique('invoice_number');
         });
     }
 };

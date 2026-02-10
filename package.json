@@ -37,6 +37,7 @@
     "flexslider": "^2.7.2",
     "greensock": "^1.20.2",
     "hc-sticky": "^2.2.7",
+    "hls.js": "^1.6.15",
     "intl-tel-input": "^17.0.13",
     "jquery": "^3.5.1",
     "jquery-validation": "^1.19.3",

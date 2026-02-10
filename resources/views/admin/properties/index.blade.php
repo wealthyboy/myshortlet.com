@@ -95,10 +95,15 @@
                                     <td>
                                         {{ optional(optional($property->categories)->first())->name }}
                                     </td>
-                                    <td class="td-actions ">
+                                    <td class="td-actions d-flex justify-content-between text-right">
                                         <a href="{{ route('admin.properties.edit',['property'=>$property->id,'mode' => $property->mode ] ) }}" rel="tooltip" title="Edit" class="btn btn-primary btn-simple btn-xs">
                                             <i class="material-icons">edit</i>
                                             Edit
+                                        </a>
+
+                                        <a href="/admin/properties/sync?id={{$property->id}}" class="btn btn-primary btn-simple btn-xs">
+                                            <i class="material-icons">refresh</i>
+                                            Sync Property to Channex
                                         </a>
                                     </td>
                                 </tr>

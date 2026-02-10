@@ -5,6 +5,7 @@
 
 <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 
+
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 
 
@@ -40,6 +41,8 @@
    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
 
 
    @yield('page-scripts')

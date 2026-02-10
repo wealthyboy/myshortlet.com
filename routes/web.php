@@ -75,13 +75,13 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('vouchers', 'Admin\Vouchers\VouchersController', ['names' => 'vouchers']);
     Route::resource('peak_periods', 'Admin\PeakPeriod\PeakPeriodController', ['names' => 'peak_periods']);
     Route::get('properties/apartment', 'Admin\Properties\PropertiesController@newRoom');
+    Route::get('properties/sync', 'Admin\Properties\PropertiesController@syncPropertyToCannex');
+
     Route::resource('properties', 'Admin\Properties\PropertiesController', ['names' => 'admin.properties']);
     Route::resource('apartments', 'Admin\Apartments\ApartmentsController', ['names' => 'admin.apartments']);
     Route::delete('room/{id}/delete', 'Admin\Rooms\RoomsController@destroy');
     Route::resource('category', 'Admin\Category\CategoryController', ['names' => 'category']);
     Route::post('category/delete/image', 'Admin\Category\CategoryController@undo');
-
-
 
     /* INFORMATION */
     Route::resource('pages', 'Information\InformationController', ['name' => 'pages']);
@@ -170,8 +170,8 @@ Route::group(['middleware' => ['currencyByIp', 'tracking']], function () {
 
 
     Route::get('/about-us',  'Pages\PageController@index');
-    Route::get('/mapping_details',  'Pages\PageController@map');
-    Route::post('/mapping_details',  'Pages\PageController@map');
+    // Route::get('/mapping_details',  'Pages\PageController@map');
+    // Route::post('/mapping_details',  'Pages\PageController@map');
 
 
     Route::get('/contact-us', 'Pages\PageController@index');

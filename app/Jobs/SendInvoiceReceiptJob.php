@@ -49,7 +49,7 @@ class SendInvoiceReceiptJob implements ShouldQueue
         ], function ($message) use ($pdfContent) {
             $message->to($this->invoice->email)
                 ->cc([
-                    'info@avenuemontaigne.ng',
+                    'info@thecentralavenue.ng',
                     'oluwa.tosin@avenuemontaigne.ng',
                 ])
                 ->subject('Your Receipt from Avenue Montaigne')

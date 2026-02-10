@@ -27,7 +27,7 @@
 
         <p>
             If you have any questions, please do not hesitate to contact us at
-            <a href="mailto:info@avenuemontaigne.ng" style="color:#007bff; text-decoration:none;">info@avenuemontaigne.ng</a>.
+            <a href="mailto:info@thecentralavenue.ng" style="color:#007bff; text-decoration:none;">info@thecentralavenue.ng</a>.
         </p>
 
         <p style="margin-top:30px;">

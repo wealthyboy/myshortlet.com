@@ -25,6 +25,10 @@ return [
         'secret' => env('MAILCHIMP_SECRET'),
         'list' => env('MAILCHIMP_LISTID'),
     ],
+    'channex' => [
+        'base_url' => env('CHANNEX_BASE_URL'),
+        'key' => env('CHANNEX_API_KEY'),
+    ],
 
     'ses' => [
         'key' => env('SES_KEY'),

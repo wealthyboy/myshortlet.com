@@ -41,8 +41,6 @@ class Apartment extends Model
         'hightlights',
         'converted_peak_price',
         'converted_regular_price',
-
-
     ];
 
     protected $fillable = [
@@ -64,7 +62,10 @@ class Apartment extends Model
         'image_link',
         'video_link',
         'allow',
-        'december_prices'
+        'december_prices',
+        'channex_room_type_id',
+        'channex_synced',
+        'channex_rate_plan_id'
     ];
 
 
@@ -72,6 +73,16 @@ class Apartment extends Model
     {
         return $this->hasMany(AttributePrice::class, 'room_id');
     }
+
+
+    public function apartmentfacilities()
+    {
+        return $this->belongsToMany(
+            Facility::class,
+            'apartment_facility'
+        );
+    }
+
 
     public function videos()
     {

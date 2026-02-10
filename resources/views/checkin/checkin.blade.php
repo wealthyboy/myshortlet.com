@@ -76,7 +76,6 @@
                                 <label class="bmd-label-floating">Check-out</label>
                                 <input type="text" class="form-control selector" disabled="true" value="{{$user_reservation->reservations[0]->checkout->format('Y-m-d') }}" name="checkout">
                                 <input type="hidden" value="{{ $user_reservation->checkout }}" name="checkout">
-
                             </div>
 
 

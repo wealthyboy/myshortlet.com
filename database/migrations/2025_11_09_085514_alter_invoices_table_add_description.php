@@ -14,8 +14,8 @@ class AlterInvoicesTableAddDescription extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->longText('description')->nullable;;
-            $table->longText('payment_info')->nullable;;
+            // $table->longText('description')->nullable;;
+            // $table->longText('payment_info')->nullable;;
         });
     }
 

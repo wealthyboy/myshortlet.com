@@ -183,7 +183,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
         App\Providers\MailChimpNewsletterServiceProvider::class,
-        App\Providers\GoogleDriveServiceProvider::class,
+        // App\Providers\GoogleDriveServiceProvider::class,
         Aws\Laravel\AwsServiceProvider::class,
 
 

@@ -43,11 +43,10 @@ return [
         ],
         'google' => [
             'driver' => 'google',
-            'clientId' => env('GOOGLE_DRIVE_CLIENT_ID'),
-            'clientSecret' => env('GOOGLE_DRIVE_CLIENT_SECRET'),
-            'refreshToken' => env('GOOGLE_DRIVE_REFRESH_TOKEN'),
-            'folderId' => env('GOOGLE_DRIVE_FOLDER_ID'),
+            'service_account_credentials_json' => storage_path('app/google/credentials.json'),
+            'folder_id' => env('GOOGLE_DRIVE_FOLDER_ID'),
         ],
+
 
         's3' => [
             'driver' => 's3',

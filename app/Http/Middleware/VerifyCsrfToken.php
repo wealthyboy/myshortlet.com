@@ -15,6 +15,4 @@ class VerifyCsrfToken extends Middleware
         'webhook/*',
         'contact/store'
     ];
-
-    
 }

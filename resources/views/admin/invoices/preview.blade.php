@@ -95,7 +95,7 @@
             <div class="col-md-6 text-md-right">
                 <h6 class="font-weight-bold">Avenue Montaigne Limited</h6>
                 <p class="mb-1">37 Cooper Road, Ikoyi, Lagos</p>
-                <p class="mb-1">info@avenuemontaigne.ng</p>
+                <p class="mb-1">info@thecentralavenue.ng</p>
                 <p class="mb-1">+234 701 897 1322</p>
             </div>
         </div>

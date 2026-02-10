@@ -207,7 +207,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
                             <path d="M0 3.91V13a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V3.91l-8 4.57-8-4.57zm1-.66L8 8.35 15 3.25V4a1 1 0 0 0 1 1 1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1 1 1 0 0 0 1 1v1a1 1 0 0 0 1 1z" />
                         </svg>
-                        <p class="mb-0 display-4 bold-2 text-white">Email: info@avenuemontaigne.ng</p>
+                        <p class="mb-0 display-4 bold-2 text-white">Email: info@thecentralavenue.ng</p>
                     </div>
                 </div>
             </div>

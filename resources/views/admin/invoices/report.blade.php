@@ -99,7 +99,7 @@
             <tr>
                 <td>
                     <div class="logo-block">
-                        <img src="https://avenuemontaigne.ng/images/logo/avm_new.png" alt="Logo">
+                        Logo
                     </div>
                 </td>
 

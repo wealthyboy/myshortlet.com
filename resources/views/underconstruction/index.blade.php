@@ -384,7 +384,7 @@
                     <!-- Address -->
                     <div class="p-t-b-15">
 
-                      <p><a href="mailto:">info@avenuemontaigne.ng</a><br>
+                      <p><a href="mailto:">info@thecentralavenue.ng</a><br>
                     </div>
                     <!-- /End Address -->
 

@@ -93,7 +93,7 @@
 
                     <!-- Email -->
                     <div class="mb-3">
-                        <p class="mb-0 display-4 bold-1 text-white">Email: info@avenuemontaigne.ng</p>
+                        <p class="mb-0 display-4 bold-1 text-white">Email: info@thecentralavenue.ng</p>
                     </div>
                 </div>
             </div>

@@ -29,6 +29,10 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Services\VideoUploader\VideoUploader;
+use App\Services\Channex\ApartmentSyncService;
+use App\Jobs\SyncApartmentToChannex;
+
+
 
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
@@ -64,7 +68,32 @@ class ApartmentsController extends Controller
         //$this->updateBedrooms();
 
 
-        $apartments = Apartment::orderBy('created_at', 'desc')->paginate(10);
+        $search = request('q'); // e.g. "Luxury"
+
+        if ($search) {
+
+            $apartments = Apartment::with('attribute')
+                ->when($search, function ($query) use ($search) {
+                    $query->where(function ($q) use ($search) {
+
+                        // 🔍 Search by apartment name
+                        $q->where('name', 'LIKE', "%{$search}%")
+
+                            // 🔍 OR search by attribute name
+                            ->orWhereHas('attribute', function ($attr) use ($search) {
+                                $attr->where('name', 'LIKE', "%{$search}%");
+                            });
+                    });
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+        } else {
+            $apartments = Apartment::orderBy('created_at', 'desc')->paginate(10);
+        }
+
+
+
+
         return view('admin.apartments.index', compact('apartments'));
     }
 
@@ -75,10 +104,6 @@ class ApartmentsController extends Controller
      */
     public function create(Request $request)
     {
-
-
-
-
 
         User::canTakeAction(2);
         $counter = rand(1, 500);
@@ -97,7 +122,7 @@ class ApartmentsController extends Controller
         $bedrooms = Attribute::parents()->where('type', 'bedrooms')->orderBy('sort_order', 'asc')->get();
         $others = Attribute::where('type', 'other')->orderBy('sort_order', 'asc')->get()->groupBy('parent.name');
         $room_ids = Attribute::parents()->where('type', 'room_id')->orderBy('sort_order', 'asc')->get();
-
+        $facilities = Facility::where('scope', 'room')->get();
         $bedrooms = Attribute::parents()->where('type', 'bedrooms')->orderBy('sort_order', 'asc')->get();
         $attributes = Attribute::parents()->whereIn('type', $this->types)->get();
         $apartment_facilities = Attribute::parents()->where('type', 'apartment facilities')->orderBy('sort_order', 'asc')->get();
@@ -143,7 +168,8 @@ class ApartmentsController extends Controller
                 'house_attributes',
                 'room_ids',
                 'properties',
-                'floors'
+                'floors',
+                'facilities'
             )
         );
     }
@@ -165,7 +191,6 @@ class ApartmentsController extends Controller
         $apartment = new Apartment;
         $room_images = !empty($request->images) ? $request->images : [];
         $captions = !empty($request->captions) ? $request->captions : [];
-
         $apartment_allow = !empty($request->apartment_allow) ? $request->apartment_allow : 0;
         $apartment->name = $request->room_name;
         $apartment->price = $request->room_price;
@@ -211,12 +236,6 @@ class ApartmentsController extends Controller
                 $apartment->images()->create(['image' => $image, 'caption' => $caption]);
             }
         }
-
-        dd($request->all());
-
-
-
-
 
         /**
          * Rooms with have includes
@@ -312,6 +331,7 @@ class ApartmentsController extends Controller
         $apartment = Apartment::find($id);
         $properties = Property::all();
 
+        $facilities = Facility::where('scope', 'room')->get();
 
         $bedrooms = Attribute::parents()->where('type', 'bedrooms')->orderBy('sort_order', 'asc')->get();
         $attributes = Attribute::parents()->whereIn('type', $this->types)->get();
@@ -343,7 +363,7 @@ class ApartmentsController extends Controller
 
         // dd($property->apartments);
 
-        return view('admin.apartments.edit', compact('floors', 'properties', 'apartment', 'room_ids', 'house_attributes', 'categories', 'others', 'property_types', 'extras', 'str', 'bedrooms', 'counter', 'attributes', 'locations', 'property', 'helper', 'apartment_facilities'));
+        return view('admin.apartments.edit', compact('facilities', 'floors', 'properties', 'apartment', 'room_ids', 'house_attributes', 'categories', 'others', 'property_types', 'extras', 'str', 'bedrooms', 'counter', 'attributes', 'locations', 'property', 'helper', 'apartment_facilities'));
     }
 
     /**
@@ -358,7 +378,6 @@ class ApartmentsController extends Controller
 
         $apartment = Apartment::find($id);
 
-        // dd($apartment->videos);
         $room_images = !empty($request->images) ? $request->images : [];
         $captions = !empty($request->captions) ? $request->captions : [];
         $apartment_allow = !empty($request->apartment_allow) ? $request->apartment_allow : 0;
@@ -400,7 +419,6 @@ class ApartmentsController extends Controller
         if ($request->hasFile('video')) {
             // create or fetch the video model for this apartment
             $video = $apartment->video()->firstOrCreate([]);
-
             // send to service for upload + encoding
             VideoUploader::uploadAndEncode(
                 $request->file('video'),
@@ -444,6 +462,15 @@ class ApartmentsController extends Controller
          * Rooms with have includes
          */
 
+        $facilityIds = $request->input('facility_ids', []);
+
+        /*
+            |--------------------------------------------------------------------------
+            | Save locally (pivot table)
+            |--------------------------------------------------------------------------
+            */
+        $apartment->apartmentfacilities()->sync($facilityIds);
+        SyncApartmentToChannex::dispatch($apartment->id)->afterCommit();
         (new Activity)->Log("Created a new apartments {$request->apartment_name}");
         return \Redirect::to('/admin/apartments');
     }

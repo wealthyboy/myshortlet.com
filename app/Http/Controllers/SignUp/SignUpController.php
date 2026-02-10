@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Notification;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\File;
 use App\Jobs\ProcessGuestCheckin;
+use App\Jobs\SyncBookingToChannex;
+
 
 
 
@@ -153,6 +155,9 @@ class SignUpController extends Controller
             $reservation->checkin = $startDate;
             $reservation->checkout = $endDate;
             $reservation->save();
+
+            SyncBookingToChannex::dispatch($reservation);
+
             $fileName = 'guest_' . $guest->name . '_' . $guest->id . '.pdf';
             $fileContent = '';
 

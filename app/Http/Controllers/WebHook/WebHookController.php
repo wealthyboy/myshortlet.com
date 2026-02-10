@@ -11,6 +11,7 @@ use App\Models\Currency;
 use App\Models\Reservation;
 use App\Models\UserReservation;
 use App\Models\UserTracking;
+use App\Services\Channex\HandleOtaBookingService;
 
 
 use Carbon\Carbon;
@@ -25,6 +26,7 @@ use App\Models\ApartmentAttribute;
 use App\Models\Attribute;
 use App\Models\AttributeProperty;
 use Illuminate\Support\Facades\Mail;
+use App\Jobs\SyncBookingToChannex;
 
 class WebHookController extends Controller
 {
@@ -120,6 +122,9 @@ class WebHookController extends Controller
                 $reservation->length_of_stay = data_get($input, 'length_of_stay');;
                 $reservation->save();
 
+                SyncBookingToChannex::dispatch($reservation);
+
+
                 if (!empty($e_services)) {
                     foreach ($e_services as $key => $attributes) {
                         foreach ($attributes as $attribute_id => $qty) {
@@ -195,5 +200,23 @@ class WebHookController extends Controller
         $output = shell_exec('sh /home/forge/avenuemontaigne.ng/deploy.sh');
         echo "Successfull";
         Log::info($output);
+    }
+
+    public function handleChannex(Request $request)
+    {
+        Log::info('Channex Webhook Received', $request->all());
+
+        // Optional: verify signature if Channex provides one
+        $event = $request->input('event');
+
+        if ($event === 'booking.created' || $event === 'booking.modified') {
+            app(HandleOtaBookingService::class)->handle($request->input('data'));
+        }
+
+        if ($event === 'booking.cancelled') {
+            app(HandleOtaBookingService::class)->cancel($request->input('data'));
+        }
+
+        return response()->json(['status' => 'ok']);
     }
 }

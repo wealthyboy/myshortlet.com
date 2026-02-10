@@ -82,7 +82,7 @@ export default {
             getProperties: "getProperties",
         }),
         checkAvailabity() {
-            this.search() 
+           this.search() 
         },
     },
 };

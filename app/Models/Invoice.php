@@ -18,7 +18,6 @@ class Invoice extends Model
         'formatted_discount',
     ];
 
-
     protected $fillable = [
         'name',
         'email',
@@ -63,8 +62,8 @@ class Invoice extends Model
 
     protected static function boot()
     {
-        parent::boot();
 
+        parent::boot();
         static::creating(function ($invoice) {
             if (empty($invoice->invoice_number)) {
                 $lastInvoice = static::orderBy('id', 'desc')->first();

@@ -14,7 +14,7 @@ class AlterInvoiceItemsPrice extends Migration
     public function up()
     {
         Schema::table('invoice_items', function (Blueprint $table) {
-            $table->decimal('price', 15, 2)->default(0);
+            // $table->decimal('price', 15, 2)->default(0);
         });
     }
 

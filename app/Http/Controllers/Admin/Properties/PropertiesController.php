@@ -18,6 +18,8 @@ use App\Models\Location;
 use App\Models\Apartment;
 use App\Models\Category;
 use App\Models\Attribute;
+use App\Services\Channex\GroupPropertyService;
+
 
 use App\Models\AttributePrice;
 use Illuminate\Support\Str;
@@ -61,6 +63,20 @@ class PropertiesController extends Controller
         // dd(ApartmentAttribute::truncate());
         $properties = Property::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.properties.index', compact('properties'));
+    }
+
+
+    public function syncPropertyToCannex()
+    {
+
+        $property = Property::findOrFail(request()->id);
+
+        app(GroupPropertyService::class)->sync($property);
+
+        return redirect()->back()->with(
+            'success',
+            'Property successfully synced to Channex'
+        );
     }
 
     /**

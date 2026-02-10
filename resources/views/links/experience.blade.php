@@ -53,10 +53,11 @@
                            </span> <span class="list-content">
                               Serves: Breakfast, Brunch, Lunch, Dinner, Dessert</span> </li>
                         <li> <span class="">
-                           </span> <span class="list-content">Phone: +234 810 688 7920</span> 
+                           </span> <span class="list-content">Phone: +234 810 688 7920</span>
                            <a class=" bold-2" target="_blank" href="https://wa.me/+2348106887920" bis_skin_checked="1">
-         <i class="fab fa-whatsapp fa-2x  ml-2 text-success"></i></a>
-                           <a class="list-link" href="tel:+234 810 688 7920"></a> </li>
+                              <i class="fab fa-whatsapp fa-2x  ml-2 text-success"></i></a>
+                           <a class="list-link" href="tel:+234 810 688 7920"></a>
+                        </li>
                         <li> <span class="">
                            </span> <span class="list-content">Hours: 24hrs</span> </li>
                      </ul>
@@ -78,12 +79,12 @@
                      <h2 class="mb-4 bold-2">Spa</h2>
                      <div class="lead text-secondary">Done by professionals</div>
                      <p class="mt-4  text-left text-black light-bold">
-                     Enjoy our exclusive in-house spa services designed for ultimate relaxation and rejuvenation. For more information, please contact us!
-                     <a class=" bold-2" target="_blank" href="https://wa.me/+2348106887920" bis_skin_checked="1">
-                     <i class="fab fa-whatsapp fa-2x  ml-2 text-success"></i></a>
+                        Enjoy our exclusive in-house spa services designed for ultimate relaxation and rejuvenation. For more information, please contact us!
+                        <a class=" bold-2" target="_blank" href="https://wa.me/+2348106887920" bis_skin_checked="1">
+                           <i class="fab fa-whatsapp fa-2x  ml-2 text-success"></i></a>
                      </p>
                      <div class="buttons">
-                        
+
                      </div>
                      </p>
                   </div>
@@ -153,11 +154,11 @@
                </div>
                <div class="col-md-5  text-center d-flex justify-content-center align-items-center">
                   <div class="about-panel  bg-right-panel bg-panel-white  bg-panel p-sm-3 p-md-5">
-                  <h2 class="mb-">Shopping</h2>
-                        <div class="lead text-secondary">The boutique is located within the premises of the service apartment.</div>
-                        <p class="mt-4 text-left text-black light-bold">
-                           Discover a curated selection of premium items, offering a unique shopping experience just steps away. Whether you’re looking for fashion, accessories, or souvenirs, our in-house boutique has something for everyone, all in the comfort of your residence.
-                        </p>
+                     <h2 class="mb-">Shopping</h2>
+                     <div class="lead text-secondary">The boutique is located within the premises of the service apartment.</div>
+                     <p class="mt-4 text-left text-black light-bold">
+                        Discover a curated selection of premium items, offering a unique shopping experience just steps away. Whether you’re looking for fashion, accessories, or souvenirs, our in-house boutique has something for everyone, all in the comfort of your residence.
+                     </p>
                   </div>
                </div>
             </div>
@@ -183,7 +184,7 @@
 
                <!-- Email -->
                <div class="mb-3">
-                  <p class="mb-0 display-4 bold-1 text-white">Email: info@avenuemontaigne.ng</p>
+                  <p class="mb-0 display-4 bold-1 text-white">Email: info@thecentralavenue.ng</p>
                </div>
             </div>
          </div>

@@ -53,7 +53,6 @@ class ApartmentsController extends Controller
         $str = new Str;
         $date = $request->check_in_checkout;
         session(['check_in_checkout' => $date]);
-
         $page_title = "Book from our collection of Apartments | Avenue Montaigne";
         $page_meta_description = "All apartments  Avenue Montaigne";
 
@@ -199,8 +198,8 @@ class ApartmentsController extends Controller
 
         session(['check_in_checkout' => $date]);
 
-
         $property_is_not_available = null;
+
         $cites = [];
 
         $attributes = $location->attributes->groupBy('type');
