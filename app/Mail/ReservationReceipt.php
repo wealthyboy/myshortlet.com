@@ -30,7 +30,7 @@ class ReservationReceipt extends Mailable
     {
 
 
-        return $this->from('info@thecentralavenue.ng')
+        return $this->from('info@avenuemontaigne.ng')
             ->subject('Reservation Confirmation: Your Stay at Avenue Montaigne')->view('emails.receipt.index');
     }
 }
