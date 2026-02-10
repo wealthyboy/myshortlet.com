@@ -69,7 +69,7 @@
                 >{{
                   room.images_count 
                 }}
-                View </span
+                View All</span
               >
             </button>
           </div>
