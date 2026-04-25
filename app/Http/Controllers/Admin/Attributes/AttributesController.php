@@ -28,6 +28,11 @@ class AttributesController extends Controller
         $helper = new Helper();
         $str = new  Str;
 
+
+        if ($request->has('type')) {
+            return  $attributes = Attribute::get();
+        }
+
         return view('admin.attributes.index', compact('str', 'attributes', 'parents', 'helper'));
     }
 
