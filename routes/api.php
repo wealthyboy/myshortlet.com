@@ -212,32 +212,13 @@ Route::post('/bookings', function (Request $request) {
     $protection = $booking['protection'] ? 'Included' : 'Not selected';
     $airlineCode = $booking['airline_code'] ? " ({$booking['airline_code']})" : '';
 
-    Mail::raw(
-        "Hello {$booking['name']},\n\nYour Karossy Travels demo booking is confirmed.\n" .
-            "Reference: {$reference}\n" .
-            "Booking: {$booking['listing_id']}\n\n" .
-            "FLIGHT ITINERARY\n" .
-            "Airline: {$booking['airline']}{$airlineCode}\n" .
-            "Route: {$booking['route']}\n" .
-            "Travel dates: {$booking['departure_date']} - {$booking['return_date']}\n" .
-            "Flight time: {$booking['departure_time']} - {$booking['arrival_time']}\n" .
-            "Duration: {$booking['duration']}\n" .
-            "Stops: {$booking['stops']}\n" .
-            "Travelers: {$booking['travelers']}\n" .
-            "Cabin class: {$booking['cabin_class']}\n\n" .
-            "TRAVELER AND PAYMENT\n" .
-            "Traveler: {$booking['name']}\n" .
-            "Email: {$booking['email']}\n" .
-            "Phone: {$booking['phone']}\n" .
-            "Passport country: {$booking['passport_country']}\n" .
-            "Billing city: {$booking['billing_city']}\n" .
-            "Payment: {$booking['payment_method']}\n" .
-            "Flight protection: {$protection}\n" .
-            "Amount paid: {$amount}\n\n" .
-            "Thank you for choosing Karossy.",
-        fn($message) => $message
+    Mail::send(
+        'emails.booking-receipt',
+        compact('booking', 'reference', 'amount', 'protection', 'airlineCode'),
+        fn ($message) => $message
+            ->from(config('mail.from.address'), 'Karossy Travels')
             ->to($booking['email'])
-            ->subject("Karossy booking receipt {$reference}")
+            ->subject("Your Karossy booking is confirmed — {$reference}")
     );
 
     return response()->json([
