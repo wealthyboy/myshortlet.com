@@ -12,7 +12,7 @@
             <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:660px;background:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(16,42,86,.10);">
                 <tr>
                     <td style="padding:26px 34px;background:#ffffff;border-bottom:1px solid #e7eaf0;">
-                        <img src="{{ $message->embed(public_path('karossy-email-logo.png')) }}" alt="Karossy Travels and Tours Limited" width="260" style="display:block;width:260px;max-width:80%;height:auto;border:0;">
+                        <img src="https://avenuemontaigne.ng/images/karossy-email-logo.png" alt="Karossy Travels and Tours Limited" width="260" style="display:block;width:260px;max-width:80%;height:auto;border:0;">
                     </td>
                 </tr>
                 <tr>
