@@ -91,9 +91,6 @@ class ApartmentsController extends Controller
             $apartments = Apartment::orderBy('created_at', 'desc')->paginate(10);
         }
 
-
-
-
         return view('admin.apartments.index', compact('apartments'));
     }
 
@@ -125,7 +122,7 @@ class ApartmentsController extends Controller
         $facilities = Facility::where('scope', 'room')->get();
         $bedrooms = Attribute::parents()->where('type', 'bedrooms')->orderBy('sort_order', 'asc')->get();
         $attributes = Attribute::parents()->whereIn('type', $this->types)->get();
-        $apartment_facilities = Attribute::parents()->where('type', 'apartment facilities')->orderBy('sort_order', 'asc')->get();
+        $apartment_facilities = Attribute::with('children')->parents()->where('type', 'apartment facilities')->orderBy('sort_order', 'asc')->get();
         $room_ids = Attribute::parents()->where('type', 'room_id')->orderBy('sort_order', 'asc')->get();
         $extras = Attribute::parents()->where('type', 'extra services')->orderBy('sort_order', 'asc')->get();
         $floors = [];

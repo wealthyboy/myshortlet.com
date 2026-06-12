@@ -70,6 +70,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('block', 'Admin\Block\BlockApartmentsController@block');
     Route::resource('blocks', 'Admin\Block\BlockApartmentsController', ['names' => 'admin.blocks']);
 
+    Route::post('attributes/import', 'Admin\Attributes\AttributesController@import')->name('attributes.import');
     Route::resource('attributes', 'Admin\Attributes\AttributesController', ['names' => 'attributes']);
     Route::resource('rates', 'Admin\CurrencyRates\CurrencyRatesController', ['name' => 'rates']);
     Route::resource('vouchers', 'Admin\Vouchers\VouchersController', ['names' => 'vouchers']);
