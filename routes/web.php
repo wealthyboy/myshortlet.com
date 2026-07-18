@@ -77,6 +77,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('peak_periods', 'Admin\PeakPeriod\PeakPeriodController', ['names' => 'peak_periods']);
     Route::get('properties/apartment', 'Admin\Properties\PropertiesController@newRoom');
     Route::get('properties/sync', 'Admin\Properties\PropertiesController@syncPropertyToCannex');
+    Route::get('channex/export/apartments', 'Admin\Channex\ExportController@downloadApartmentsSnapshot')->name('admin.channex.export.apartments');
 
     Route::resource('properties', 'Admin\Properties\PropertiesController', ['names' => 'admin.properties']);
     Route::resource('apartments', 'Admin\Apartments\ApartmentsController', ['names' => 'admin.apartments']);
