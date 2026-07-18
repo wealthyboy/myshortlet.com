@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 
+Route::get('integration/apartments/snapshot', 'Admin\\Channex\\ExportController@publicApartmentsSnapshot')
+    ->name('integration.apartments.snapshot');
+
 
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('/', 'Admin\HomeCtrl@index')->name('admin_home');

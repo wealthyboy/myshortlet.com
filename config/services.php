@@ -30,6 +30,10 @@ return [
         'key' => env('CHANNEX_API_KEY'),
     ],
 
+    'live_export' => [
+        'token' => env('LIVE_EXPORT_TOKEN'),
+    ],
+
     'ses' => [
         'key' => env('SES_KEY'),
         'secret' => env('SES_SECRET'),
