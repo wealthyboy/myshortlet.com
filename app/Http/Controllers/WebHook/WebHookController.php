@@ -205,17 +205,60 @@ class WebHookController extends Controller
 
     public function handleChannex(Request $request)
     {
-        Log::info('Channex Webhook Received', $request->all());
+        $expectedSecret = (string) config('services.channex.webhook_secret', '');
+        $secretHeaderName = (string) config('services.channex.webhook_secret_header', 'X-Channex-Webhook-Secret');
+        $providedSecret = (string) $request->header($secretHeaderName, '');
 
-        // Optional: verify signature if Channex provides one
-        $event = $request->input('event');
+        if ($expectedSecret !== '' && !hash_equals($expectedSecret, $providedSecret)) {
+            Log::warning('Channex Webhook Rejected: invalid secret', [
+                'event' => $request->input('event'),
+                'property_id' => $request->input('property_id'),
+                'ip' => $request->ip(),
+                'header' => $secretHeaderName,
+            ]);
 
-        if ($event === 'booking.created' || $event === 'booking.modified') {
-            app(HandleOtaBookingService::class)->handle($request->input('data'));
+            return response()->json(['status' => 'unauthorized'], 401);
         }
 
-        if ($event === 'booking.cancelled') {
-            app(HandleOtaBookingService::class)->cancel($request->input('data'));
+        Log::info('Channex Webhook Received', [
+            'event' => $request->input('event'),
+            'property_id' => $request->input('property_id'),
+            'payload' => $request->input('payload'),
+        ]);
+
+        $event = (string) $request->input('event');
+        $payload = (array) $request->input('payload', []);
+
+        // Backward compatibility for any legacy sender that still posts data.
+        if (empty($payload)) {
+            $payload = (array) $request->input('data', []);
+        }
+
+        // Some senders wrap booking details in data.attributes (docs examples).
+        if (is_array(data_get($payload, 'data.attributes'))) {
+            $payload = (array) data_get($payload, 'data.attributes', []);
+        } elseif (is_array(data_get($payload, 'attributes'))) {
+            $payload = (array) data_get($payload, 'attributes', []);
+        }
+
+        $status = strtolower((string) data_get($payload, 'status', ''));
+
+        if ($event === 'booking') {
+            if (in_array($status, ['cancelled', 'canceled'], true)) {
+                app(HandleOtaBookingService::class)->cancel($payload);
+            } else {
+                app(HandleOtaBookingService::class)->handle($payload);
+            }
+
+            return response()->json(['status' => 'ok']);
+        }
+
+        if (in_array($event, ['booking_new', 'booking_modification', 'booking.created', 'booking.modified'], true)) {
+            app(HandleOtaBookingService::class)->handle($payload);
+        }
+
+        if (in_array($event, ['booking_cancellation', 'booking.cancelled', 'booking.canceled', 'booking_cancelled', 'booking_canceled'], true)) {
+            app(HandleOtaBookingService::class)->cancel($payload);
         }
 
         return response()->json(['status' => 'ok']);

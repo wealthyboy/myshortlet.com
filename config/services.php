@@ -28,6 +28,8 @@ return [
     'channex' => [
         'base_url' => env('CHANNEX_BASE_URL'),
         'key' => env('CHANNEX_API_KEY'),
+        'webhook_secret' => env('CHANNEX_WEBHOOK_SECRET'),
+        'webhook_secret_header' => env('CHANNEX_WEBHOOK_SECRET_HEADER', 'X-Channex-Webhook-Secret'),
     ],
 
     'live_export' => [

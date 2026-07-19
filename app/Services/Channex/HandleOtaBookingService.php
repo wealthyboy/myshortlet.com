@@ -18,15 +18,26 @@ class HandleOtaBookingService
      */
     public function handle(array $payload): void
     {
+        $payload = $this->normalizePayloadShape($payload);
+        $payload = $this->resolvePayloadFromFeedFallback($payload);
+        $payload = $this->resolvePayloadFromRevision($payload);
+
         DB::transaction(function () use ($payload) {
+            $externalId = $this->resolveExternalBookingId($payload);
 
-            /**
-             * 1️⃣ Prevent duplicates (idempotency)
-             */
-            $externalId = data_get($payload, 'id');
+            if (! $externalId) {
+                app(CertificationLogService::class)->log(
+                    'booking_webhook',
+                    'failed',
+                    'test_11_booking_ack',
+                    null,
+                    null,
+                    [],
+                    $payload,
+                    null,
+                    'Missing external booking ID for upsert'
+                );
 
-            $existing = UserReservation::where('external_id', $externalId)->first();
-            if ($existing) {
                 return;
             }
 
@@ -45,17 +56,26 @@ class HandleOtaBookingService
             /**
              * 3️⃣ Create User Reservation (Booking Header)
              */
-            $userReservation = UserReservation::create([
-                'guest_user_id' => $guest->id,
-                'property_id'   => data_get($payload, 'property_id'),
-                'currency' => data_get($payload, 'currency'),
-                'total' => data_get($payload, 'total_price', 0),
-                'payment_type'  => 'ota',
-                'coming_from' => 'ota',
-                'ota_name' => data_get($payload, 'ota_name', 'unknown'),
+            $bookingPropertyId = data_get($payload, 'property_id')
+                ?? data_get($payload, 'property.id');
+
+            $userReservation = UserReservation::firstOrNew([
                 'external_id' => $externalId,
-                'status' => data_get($payload, 'status', 'confirmed'),
             ]);
+
+            $userReservation->guest_user_id = $guest->id;
+            $userReservation->property_id = $bookingPropertyId;
+            $userReservation->currency = data_get($payload, 'currency');
+            $userReservation->total = data_get($payload, 'amount', data_get($payload, 'total_price', 0));
+            $userReservation->payment_type = 'ota';
+            $userReservation->coming_from = 'ota';
+            $userReservation->ota_name = data_get($payload, 'ota_name', 'unknown');
+            $userReservation->external_id = $externalId;
+            $userReservation->status = data_get($payload, 'status', 'confirmed');
+            $userReservation->save();
+
+            // For booking.modified, replace previous room lines with latest revision snapshot.
+            Reservation::where('user_reservation_id', $userReservation->id)->delete();
 
             /**
              * 4️⃣ Create Reservation Items (Apartments)
@@ -78,12 +98,12 @@ class HandleOtaBookingService
                     'price' => array_sum((array) data_get($room, 'days', [])),
                     'rate' => 1,
                     'property_id' => $apartment->property_id,
-                    'checkin' => data_get($payload, 'arrival_date'),
-                    'checkout' => data_get($payload, 'departure_date'),
+                    'checkin' => data_get($room, 'checkin_date', data_get($payload, 'arrival_date')),
+                    'checkout' => data_get($room, 'checkout_date', data_get($payload, 'departure_date')),
                     'length_of_stay' => Carbon::parse(
-                        data_get($payload, 'arrival_date')
+                        data_get($room, 'checkin_date', data_get($payload, 'arrival_date'))
                     )->diffInDays(
-                        data_get($payload, 'departure_date')
+                        data_get($room, 'checkout_date', data_get($payload, 'departure_date'))
                     ),
                 ]);
             }
@@ -91,9 +111,13 @@ class HandleOtaBookingService
             /**
              * 5️⃣ OTA Confirmation Email (NO invoice, NO payment)
              */
-            Mail::to($guest->email)->send(
-                new OtaReservationNotification($userReservation)
-            );
+            if ($userReservation->wasRecentlyCreated) {
+                Mail::to($guest->email)->send(
+                    new OtaReservationNotification($userReservation)
+                );
+            }
+
+            $this->acknowledgeRevision($payload, (int) $userReservation->property_id);
         });
     }
 
@@ -102,9 +126,13 @@ class HandleOtaBookingService
      */
     public function cancel(array $payload): void
     {
+        $payload = $this->normalizePayloadShape($payload);
+        $payload = $this->resolvePayloadFromFeedFallback($payload, 'cancelled');
+        $payload = $this->resolvePayloadFromRevision($payload);
+
         $reservation = UserReservation::where(
             'external_id',
-            data_get($payload, 'id')
+            $this->resolveExternalBookingId($payload)
         )->first();
 
         if (!$reservation) {
@@ -121,5 +149,189 @@ class HandleOtaBookingService
          */
         app(BookingAvailabilityRestoreService::class)
             ->sync($reservation);
+
+        $this->acknowledgeRevision($payload, (int) $reservation->property_id);
+    }
+
+    protected function resolvePayloadFromRevision(array $payload): array
+    {
+        $revisionId = data_get($payload, 'booking_revision_id')
+            ?? data_get($payload, 'revision_id')
+            ?? data_get($payload, 'booking.revision_id')
+            ?? data_get($payload, 'booking_revision.id');
+
+        if (! $revisionId) {
+            return $payload;
+        }
+
+        $revisionResponse = app(BookingRevisionService::class)->fetch((string) $revisionId);
+        if (! is_array($revisionResponse)) {
+            return $payload;
+        }
+
+        $revisionData = data_get($revisionResponse, 'data.attributes')
+            ?? data_get($revisionResponse, 'data')
+            ?? [];
+
+        if (! is_array($revisionData) || empty($revisionData)) {
+            return $payload;
+        }
+
+        $merged = array_replace_recursive($payload, $revisionData);
+        $merged['booking_revision_id'] = $revisionId;
+
+        return $merged;
+    }
+
+    protected function resolveExternalBookingId(array $payload): ?string
+    {
+        $externalId = data_get($payload, 'booking_id')
+            ?? data_get($payload, 'booking.id')
+            ?? data_get($payload, 'reservation_id')
+            ?? data_get($payload, 'id');
+
+        if (! $externalId) {
+            return null;
+        }
+
+        return (string) $externalId;
+    }
+
+    protected function resolvePayloadFromFeedFallback(array $payload, ?string $expectedStatus = null): array
+    {
+        $hasRevisionId = ! empty(
+            data_get($payload, 'booking_revision_id')
+            ?? data_get($payload, 'revision_id')
+            ?? data_get($payload, 'booking.revision_id')
+            ?? data_get($payload, 'booking_revision.id')
+        );
+
+        $hasExternalId = ! empty($this->resolveExternalBookingId($payload));
+
+        if ($hasRevisionId && $hasExternalId) {
+            return $payload;
+        }
+
+        $propertyId = data_get($payload, 'property_id') ?? data_get($payload, 'property.id');
+        if (! $propertyId) {
+            return $payload;
+        }
+
+        $feedResponse = app(BookingRevisionService::class)->fetchFeed((string) $propertyId);
+        $feedRows = (array) data_get($feedResponse, 'data', []);
+        if (empty($feedRows)) {
+            return $payload;
+        }
+
+        $expectedStatus = $expectedStatus ? strtolower($expectedStatus) : null;
+        $expectedUniqueId = (string) data_get($payload, 'unique_id', '');
+        $expectedOtaCode = (string) data_get($payload, 'ota_reservation_code', '');
+
+        $selected = null;
+
+        foreach ($feedRows as $row) {
+            $attrs = (array) data_get($row, 'attributes', []);
+            if (empty($attrs)) {
+                continue;
+            }
+
+            $rowStatus = strtolower((string) data_get($attrs, 'status', ''));
+            if ($expectedStatus !== null && $rowStatus !== $expectedStatus) {
+                continue;
+            }
+
+            if ($expectedUniqueId !== '' && (string) data_get($attrs, 'unique_id', '') !== $expectedUniqueId) {
+                continue;
+            }
+
+            if ($expectedOtaCode !== '' && (string) data_get($attrs, 'ota_reservation_code', '') !== $expectedOtaCode) {
+                continue;
+            }
+
+            $selected = $row;
+            break;
+        }
+
+        if (! is_array($selected)) {
+            return $payload;
+        }
+
+        $selectedAttributes = (array) data_get($selected, 'attributes', []);
+        $selectedRevisionId = (string) (data_get($selected, 'id') ?? data_get($selectedAttributes, 'id') ?? '');
+
+        if ($selectedRevisionId === '') {
+            return $payload;
+        }
+
+        $merged = array_replace_recursive($payload, $selectedAttributes);
+        $merged['booking_revision_id'] = $selectedRevisionId;
+
+        logger()->info('Channex webhook payload recovered from revisions feed', [
+            'property_id' => $propertyId,
+            'revision_id' => $selectedRevisionId,
+            'expected_status' => $expectedStatus,
+        ]);
+
+        return $merged;
+    }
+
+    protected function normalizePayloadShape(array $payload): array
+    {
+        if (is_array(data_get($payload, 'data.attributes'))) {
+            return (array) data_get($payload, 'data.attributes', []);
+        }
+
+        if (is_array(data_get($payload, 'attributes'))) {
+            return (array) data_get($payload, 'attributes', []);
+        }
+
+        return $payload;
+    }
+
+    protected function acknowledgeRevision(array $payload, ?int $propertyId = null): void
+    {
+        $revisionId = data_get($payload, 'booking_revision_id')
+            ?? data_get($payload, 'revision_id')
+            ?? data_get($payload, 'booking.revision_id')
+            ?? data_get($payload, 'booking_revision.id');
+
+        if (! $revisionId) {
+            $id = (string) data_get($payload, 'id', '');
+            $bookingId = (string) data_get($payload, 'booking_id', '');
+
+            if ($id !== '' && ($bookingId === '' || $id !== $bookingId)) {
+                $revisionId = $id;
+            }
+        }
+
+        if (! $revisionId) {
+            app(CertificationLogService::class)->log(
+                'booking_webhook',
+                'failed',
+                'test_11_booking_ack',
+                $propertyId,
+                null,
+                [],
+                $payload,
+                null,
+                'Missing booking revision ID for acknowledge'
+            );
+
+            return;
+        }
+
+        $response = app(BookingRevisionService::class)->acknowledge((string) $revisionId);
+
+        app(CertificationLogService::class)->log(
+            'booking_webhook',
+            $response ? 'success' : 'failed',
+            'test_11_booking_ack',
+            $propertyId,
+            null,
+            [],
+            $payload,
+            $response,
+            $response ? null : 'Acknowledge call failed for booking revision'
+        );
     }
 }
