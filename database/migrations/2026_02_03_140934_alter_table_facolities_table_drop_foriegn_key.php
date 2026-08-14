@@ -14,8 +14,8 @@ class AlterTableFacolitiesTableDropForiegnKey extends Migration
     public function up()
     {
         Schema::table('facilities', function (Blueprint $table) {
-            $table->dropForeign(['facility_id']);
-            $table->dropForeign(['apartment_id']);
+           // $table->dropForeign(['facility_id']);
+            //$table->dropForeign(['apartment_id']);
         });
     }
 

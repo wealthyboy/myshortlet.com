@@ -13,10 +13,10 @@ class AlterTableApartmentFacilitiesTableDropForiegnKey extends Migration
      */
     public function up()
     {
-        Schema::table('apartment_facilities', function (Blueprint $table) {
-            $table->dropForeign(['facility_id']);
-            $table->dropForeign(['apartment_id']);
-        });
+        // Schema::table('apartment_facilities', function (Blueprint $table) {
+        //     $table->dropForeign(['facility_id']);
+        //     $table->dropForeign(['apartment_id']);
+        // });
     }
 
     /**

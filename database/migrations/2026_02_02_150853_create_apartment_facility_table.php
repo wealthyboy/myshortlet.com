@@ -13,10 +13,10 @@ class CreateApartmentFacilityTable extends Migration
      */
     public function up()
     {
-        Schema::create('apartment_facility', function (Blueprint $table) {
-            $table->id();
-            $table->unique(['apartment_id', 'facility_id']);
-        });
+        // Schema::create('apartment_facility', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->unique(['apartment_id', 'facility_id']);
+        // });
     }
 
     /**
@@ -26,6 +26,7 @@ class CreateApartmentFacilityTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('apartment_facility');
+        // This migration does not own the table. It was created by the
+        // 2021_02_26_115125_create_table_apartment_facility migration.
     }
 }

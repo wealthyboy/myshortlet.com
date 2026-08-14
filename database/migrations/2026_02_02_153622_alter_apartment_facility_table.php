@@ -14,7 +14,7 @@ class AlterApartmentFacilityTable extends Migration
     public function up()
     {
         Schema::table('apartment_facility', function (Blueprint $table) {
-            $table->integer('facility_id');
+           // $table->integer('facility_id');
         });
     }
 
