@@ -61,7 +61,9 @@ class ApartmentsController extends Controller
         $data['persons'] = $request->persons ?? 1;
         $data['rooms'] = $request->rooms ?? 2;
 
-        $query = Apartment::query();
+        $query = Apartment::query()->whereHas('property', function ($query) {
+            $query->where('allow', true);
+        });
         $peak_period = PeakPeriod::first();
         $checkInOut = request()->check_in_checkout ?? session('check_in_checkout');
         $dates = explode("to", $checkInOut);
@@ -132,7 +134,7 @@ class ApartmentsController extends Controller
             );
         }
 
-        $property = Property::first();
+        $property = Property::where('allow', true)->first();
 
         if ($apartments) {
             $apartments->load('video');
@@ -561,6 +563,11 @@ class ApartmentsController extends Controller
      */
     public function show(Request $request, Apartment $apartment)
     {
+
+        abort_unless(
+            (bool) $apartment->allow && (bool) optional($apartment->property)->allow,
+            404
+        );
 
         $apartment->load('images', 'free_services', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent');
 

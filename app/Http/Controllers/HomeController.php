@@ -126,11 +126,11 @@ class HomeController
         $site_status = Live::first();
         $states = Location::where('location_type', 'state')->has('properties')->latest()->get();
         $cities = Location::where('location_type', 'city')->has('properties')->latest()->get();
-        $featureds = Property::where('featured', true)->take(4)->get();
+        $featureds = Property::where('allow', true)->where('featured', true)->take(4)->get();
         $posts = Information::orderBy('created_at', 'DESC')->where('blog', true)->take(3)->get();
         $banners = Banner::where('type', 'banner')->orderBy('sort_order', 'asc')->get();
         $sliders = Banner::where('type', 'slider')->orderBy('sort_order', 'asc')->get();
-        $property = Property::first();
+        $property = Property::where('allow', true)->first();
         if ($request->check) {
             dd(
                 $latestTrackings = UserTracking::latest()->take(4)->get()
@@ -166,6 +166,10 @@ class HomeController
         $nights = Helper::nights($date);
         $property_type = null;
         $apartments = Apartment::with('images',  'free_services', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent')
+            ->where('apartments.allow', true)
+            ->whereHas('property', function ($query) {
+                $query->where('allow', true);
+            })
             ->where('apartments.property_id', '!=', null)
             ->where('apartments.max_adults', '>=',  $data['max_adults'])
             ->where('apartments.no_of_rooms', '>=', $data['rooms'])

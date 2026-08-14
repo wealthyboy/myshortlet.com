@@ -77,7 +77,9 @@ class PageController extends Controller
         $properties = null;
         $breadcrumb = null;
 
-        $query = Apartment::query();
+        $query = Apartment::query()->whereHas('property', function ($query) {
+            $query->where('allow', true);
+        });
 
         if ($request->check_in_checkout) {
             // Check if apartment_id is present in the request
@@ -102,7 +104,7 @@ class PageController extends Controller
 
         $apartments = $query->where('allow', 1)->latest()->get();
         $saved = null;
-        $property = Property::first();
+        $property = Property::where('allow', true)->first();
 
         $galleries = Gallery::all();
         $galleries->load('images');
@@ -120,7 +122,11 @@ class PageController extends Controller
 
     public function gallery(Request $request)
     {
-        $apartments = Apartment::where('allow', true)->get();
+        $apartments = Apartment::where('allow', true)
+            ->whereHas('property', function ($query) {
+                $query->where('allow', true);
+            })
+            ->get();
         return view('pages.gallery', compact('apartments'));
     }
 

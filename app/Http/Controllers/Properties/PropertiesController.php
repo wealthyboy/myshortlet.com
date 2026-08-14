@@ -244,7 +244,10 @@ class PropertiesController extends Controller
     {
         $categories = Category::where('name', 'like', '%' . $request->q . '%')->take(5)->get();
         $locations = Location::where('name', 'like', '%' . $request->q . '%')->take(5)->get();
-        $properties = Property::where('name', 'like', '%' . $request->q . '%')->take(5)->get();
+        $properties = Property::where('allow', true)
+            ->where('name', 'like', '%' . $request->q . '%')
+            ->take(5)
+            ->get();
 
         if (!$request->q) {
             return response()->json([
@@ -501,6 +504,8 @@ class PropertiesController extends Controller
      */
     public function show(Request $request, Property $property)
     {
+        abort_unless((bool) $property->allow, 404);
+
         $date  = explode("to", $request->check_in_checkout);
         $nights = '1 night';
         $sub_total = null;
