@@ -201,6 +201,13 @@
                                         <span class="sidebar-normal"> Channex Logs </span>
                                     </a>
                                 </li>
+
+                                <li class="{{ request()->routeIs('admin.channex.live_verification') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.channex.live_verification') }}">
+                                        <span class="sidebar-mini"> LV </span>
+                                        <span class="sidebar-normal"> Live Verification </span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>

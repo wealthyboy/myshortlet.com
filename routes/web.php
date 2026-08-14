@@ -100,6 +100,8 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
         ->name('admin.channex.ari_updates.queue');
     Route::get('channex/export/apartments', 'Admin\Channex\ExportController@downloadApartmentsSnapshot')
         ->name('admin.channex.export.apartments');
+    Route::get('channex/live-verification', 'Admin\Channex\LiveVerificationController@index')
+        ->name('admin.channex.live_verification');
         Route::get('channex/certification/logs', 'Admin\Channex\CertificationController@index')
             ->name('admin.channex.certification.logs');
         Route::get('channex/certification/logs/{log}', 'Admin\Channex\CertificationController@show')
