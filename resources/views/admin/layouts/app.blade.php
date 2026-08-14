@@ -202,8 +202,8 @@
                                     </a>
                                 </li>
 
-                                <li class="{{ request()->routeIs('admin.channex.live_verification') ? 'active' : '' }}">
-                                    <a href="{{ route('admin.channex.live_verification') }}">
+                                <li>
+                                    <a href="{{ route('channex.live_verification') }}" target="_blank" rel="noopener">
                                         <span class="sidebar-mini"> LV </span>
                                         <span class="sidebar-normal"> Live Verification </span>
                                     </a>

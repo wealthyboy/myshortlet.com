@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Property;
 use App\Services\Channex\LiveSetupVerificationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class LiveVerificationController extends Controller
 {
@@ -35,9 +36,17 @@ class LiveVerificationController extends Controller
         }
 
         $report = $property
-            ? $verification->verify($property, $request->query('remote', '1') !== '0')
+            ? Cache::remember(
+                'channex:live-verification:' . $property->id,
+                now()->addMinute(),
+                function () use ($property, $verification) {
+                    return $verification->verify($property, true);
+                }
+            )
             : null;
 
-        return view('admin.channex.live_verification', compact('properties', 'property', 'report'));
+        return response()
+            ->view('channex.live_verification', compact('properties', 'property', 'report'))
+            ->header('X-Robots-Tag', 'noindex, nofollow, noarchive');
     }
 }

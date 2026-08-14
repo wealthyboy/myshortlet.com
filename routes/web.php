@@ -11,6 +11,12 @@ use App\Http\Controllers\UserController;
 Route::get('integration/apartments/snapshot', 'Admin\Channex\ExportController@publicApartmentsSnapshot')
     ->name('integration.apartments.snapshot');
 
+// Public, read-only diagnostic used during Channex go-live verification.
+// The report is cached server-side so refreshes do not repeatedly call Channex.
+Route::get('channex/live-verification', 'Admin\Channex\LiveVerificationController@index')
+    ->middleware('throttle:10,1')
+    ->name('channex.live_verification');
+
 // Channel webhooks must not run through storefront currency/tracking middleware.
 Route::post('webhook/channex', 'WebHook\WebHookController@handleChannex')
     ->middleware('throttle:120,1');
@@ -100,8 +106,6 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
         ->name('admin.channex.ari_updates.queue');
     Route::get('channex/export/apartments', 'Admin\Channex\ExportController@downloadApartmentsSnapshot')
         ->name('admin.channex.export.apartments');
-    Route::get('channex/live-verification', 'Admin\Channex\LiveVerificationController@index')
-        ->name('admin.channex.live_verification');
         Route::get('channex/certification/logs', 'Admin\Channex\CertificationController@index')
             ->name('admin.channex.certification.logs');
         Route::get('channex/certification/logs/{log}', 'Admin\Channex\CertificationController@show')
