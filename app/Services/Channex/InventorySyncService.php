@@ -113,9 +113,15 @@ class InventorySyncService
             app(AriOutboxService::class)->queueApartmentChange($apartment, $payload);
         }
 
+        // Keep the outbox event and its processor job in the same database
+        // transaction as the reservation. A database queue record is not
+        // visible to workers until the transaction commits, and is rolled
+        // back with the reservation if the transaction fails. This also
+        // prevents a failing after-commit callback from making a successful
+        // reservation appear to have failed in the admin UI.
         ProcessChannexAriOutbox::dispatch()
-            ->delay(now()->addSeconds(15))
-            ->afterCommit();
+            ->onConnection('database')
+            ->delay(now()->addSeconds(15));
     }
 
     public function queueUserReservation(UserReservation $userReservation): void
