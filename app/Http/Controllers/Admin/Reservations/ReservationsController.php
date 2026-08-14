@@ -315,17 +315,33 @@ class ReservationsController extends Controller
 			->to('/admin/reservations?coming_from=checkin')
 			->with('success', 'Reservation created successfully.');
 		} catch (\Throwable $th) {
-			DB::rollBack();
+			if (DB::transactionLevel() > 0) {
+				DB::rollBack();
+			}
+
+			$errorReference = (string) \Illuminate\Support\Str::uuid();
 
 			\Log::error('Reservation creation failed.', [
+				'error_reference' => $errorReference,
+				'exception' => get_class($th),
 				'message' => $th->getMessage(),
+				'file' => $th->getFile(),
+				'line' => $th->getLine(),
 				'property_id' => $validated['property_id'],
 				'apartment_id' => $validated['apartment_id'],
+				'checkin' => $validated['checkin'],
+				'checkout' => $validated['checkout'],
+				'currency' => $validated['currency'],
+				'admin_user_id' => optional($request->user())->id,
+				'stack_trace' => $th->getTraceAsString(),
 			]);
 
 			return redirect()->back()
 				->withInput()
-				->with('error', 'Reservation could not be created. Please review the details and try again.');
+				->with(
+					'error',
+					'Reservation could not be created. Error reference: ' . $errorReference
+				);
 		}
 	}
 
