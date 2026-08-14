@@ -14,6 +14,14 @@
                 <i class="material-icons">add</i>
                 Add Property
             </a>
+            <a href="{{ route('admin.channex.certification.logs') }}" rel="tooltip" title="Channex Logs" class="btn btn-primary btn-simple btn-xs">
+                <i class="material-icons">assignment</i>
+                Channex Certification Logs
+            </a>
+            <a href="{{ route('admin.channex.ari_updates.index') }}" rel="tooltip" title="Rates & Availability" class="btn btn-primary btn-simple btn-xs">
+                <i class="material-icons">event_available</i>
+                Rates & Availability
+            </a>
             <a href="javascript:void(0)" onclick="confirm('Are you sure?') ? $('#form-apartments').submit() : false;" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
                 <i class="material-icons">close</i>
                 Remove
@@ -105,12 +113,28 @@
                                             <i class="material-icons">refresh</i>
                                             Sync Property to Channex
                                         </a>
+
+                                        @if($property->channex_property_id)
+                                        <button type="submit" form="channex-full-sync-{{ $property->id }}" class="btn btn-warning btn-simple btn-xs" rel="tooltip" title="Send 500-day availability, rates and restrictions">
+                                            <i class="material-icons">sync</i>
+                                            Full Sync (500 Days)
+                                        </button>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </form>
+
+                    @foreach($properties as $property)
+                        @if($property->channex_property_id)
+                        <form id="channex-full-sync-{{ $property->id }}" action="{{ route('admin.properties.full_sync') }}" method="POST" style="display:none" onsubmit="return confirm('Send a 500-day full sync for this property to Channex?');">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $property->id }}">
+                        </form>
+                        @endif
+                    @endforeach
                 </div>
                 <div class="pull-right">{{ $properties->links() }}</div>
             </div><!-- end content-->

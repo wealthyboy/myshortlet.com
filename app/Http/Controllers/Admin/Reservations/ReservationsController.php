@@ -10,12 +10,12 @@ use App\Models\SystemSetting;
 use App\Models\OrderedProduct;
 use App\Http\Controllers\Controller;
 use App\Http\Helper;
-use App\Models\Attribute;
 use App\Models\GuestUser;
 use App\Models\Apartment;
 use App\Models\Property;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Validation\Rule;
 
 
 
@@ -128,49 +128,82 @@ class ReservationsController extends Controller
 
 	public function create(Request $request)
 	{
-		$apartments = Apartment::orderBy('name', 'asc')->get();
-		return view('admin.reservations.create', compact('apartments'));
+		$properties = Property::query()
+			->whereHas('apartments')
+			->with(['apartments' => function ($query) {
+				$query->orderBy('name', 'asc');
+			}])
+			->orderBy('name', 'asc')
+			->get();
+
+		return view('admin.reservations.create', compact('properties'));
 	}
 
 	public function store(Request $request)
 	{
-		//try {
-		//DB::beginTransaction();
-		//dd($request->all());
+		$validated = $request->validate([
+			'property_id' => ['required', 'integer', 'exists:properties,id'],
+			'apartment_id' => [
+				'required',
+				'integer',
+				Rule::exists('apartments', 'id')->where(function ($query) use ($request) {
+					return $query->where('property_id', $request->property_id);
+				}),
+			],
+			'first_name' => ['required', 'string', 'max:100'],
+			'last_name' => ['required', 'string', 'max:100'],
+			'email' => ['required', 'email', 'max:190'],
+			'phone_number' => ['required', 'string', 'max:40'],
+			'checkin' => ['required', 'date'],
+			'checkout' => ['required', 'date', 'after:checkin'],
+			'currency' => ['required', Rule::in(['₦', '$'])],
+			'discount_type' => ['nullable', Rule::in(['percent', 'fixed'])],
+			'discount' => ['nullable', 'numeric', 'min:0'],
+			'caution_fee' => ['nullable', 'numeric', 'min:0'],
+		]);
+
 		$input = $request->all();
-		$property = Property::first();
-		$checkin = Carbon::parse($request->checkin);
-		$checkout = Carbon::parse($request->checkout); // fix: you were using checkin twice
-		$date_diff = $checkin->diffInDays($checkout);
-		$attr = Attribute::find($request->apartment_id);
-		$query = Apartment::query();
-		$query->where('id', $request->apartment_id);
-		$startDate = Carbon::createFromDate($request->checkin);
-		$endDate = Carbon::createFromDate($request->checkout);
+		$property = Property::findOrFail($validated['property_id']);
+		$apartment = Apartment::query()
+			->whereKey($validated['apartment_id'])
+			->where('property_id', $property->id)
+			->firstOrFail();
+		$startDate = Carbon::parse($validated['checkin'])->startOfDay();
+		$endDate = Carbon::parse($validated['checkout'])->startOfDay();
+		$date_diff = $startDate->diffInDays($endDate);
 
-		$query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {
-			$q->where(function ($subQ) use ($startDate) {
-				$subQ->where('checkin', '<', $startDate)
-					->where('reservations.is_blocked', false)
-					->where('checkout', '>', $startDate);
-			});
-		});
+		$hasConflict = Reservation::query()
+			->where('apartment_id', $apartment->id)
+			->where('is_blocked', false)
+			->where('checkin', '<', $endDate)
+			->where('checkout', '>', $startDate)
+			->whereHas('user_reservation', function ($query) {
+				$query->where(function ($statusQuery) {
+					$statusQuery->whereNull('status')
+						->orWhereNotIn('status', ['cancelled', 'canceled']);
+				})->where(function ($cancelQuery) {
+					$cancelQuery->whereNull('is_cancelled')
+						->orWhere('is_cancelled', false);
+				});
+			})
+			->exists();
 
-		$apartments = $query->latest()->first();
-
-		if (!$request->filled('user_reservation_id') && $apartments === null) {
-			return back()->with('error', 'Apartment not available for your selected dates');
+		if (!$request->filled('user_reservation_id') && $hasConflict) {
+			return back()
+				->withInput()
+				->with('error', 'The selected apartment is not available for those dates.');
 		}
 
-		$guest = GuestUser::firstOrNew(['id' => data_get($input, 'guest_id')]);
-		$guest->name = $input['first_name'];
-		$guest->last_name = $input['last_name'];
-		$guest->email = $input['email'];
-		$guest->phone_number = $input['phone_number'];
-		$guest->image = '';
-		$guest->save();
+		DB::beginTransaction();
 
-		$apartment = Apartment::find($request->apartment_id);
+		try {
+			$guest = GuestUser::firstOrNew(['id' => data_get($input, 'guest_id')]);
+			$guest->name = $input['first_name'];
+			$guest->last_name = $input['last_name'];
+			$guest->email = $input['email'];
+			$guest->phone_number = $input['phone_number'];
+			$guest->image = '';
+			$guest->save();
 
 		if ($request->user_reservation_id) {
 			$user_reservation = UserReservation::find($request->user_reservation_id);
@@ -178,8 +211,6 @@ class ReservationsController extends Controller
 			DB::commit();
 			return response()->json(null, 200);
 		}
-
-		$date_diff = max($checkin->diffInDays($checkout), 1);
 
 		$rate = json_decode(session('rate'), true); // use true to get an associative array
 
@@ -220,7 +251,7 @@ class ReservationsController extends Controller
 		$user_reservation->currency = null;
 		$user_reservation->invoice = "INV-" . date('Y') . "-" . rand(10000, time());
 		$user_reservation->payment_type = 'checkin';
-		$user_reservation->property_id = $property->id;
+		$user_reservation->property_id = $apartment->property_id;
 		$user_reservation->currency = data_get($input, 'currency');
 		$user_reservation->checked = true;
 		$user_reservation->original_amount = $totalBeforeDiscount;
@@ -229,27 +260,28 @@ class ReservationsController extends Controller
 		$user_reservation->length_of_stay = $date_diff;
 		$user_reservation->total = $totalAfterDiscount + $cautionFee;
 		$user_reservation->caution_fee = $cautionFee;
-		$user_reservation->ip = $request->ip();
-		$user_reservation->save();
-		$user_reservation->discount = $discountValue;
-
-		$user_reservation->percentage_discount = $discountType === 'fixed'
+		$user_reservation->formatted_discount = $discountType === 'fixed'
 			? data_get($input, 'currency') . number_format($discountValue, 2)
 			: $discountValue . '%';
+		$user_reservation->ip = $request->ip();
+		$user_reservation->save();
+		$user_reservation->discount = $user_reservation->formatted_discount;
 
 		$rate = data_get($input, 'currency') === '₦' ?  $rate : 1;
 		$reservation = new Reservation;
 		$reservation->quantity = 1;
-		$reservation->apartment_id = $request->apartment_id;
+		$reservation->apartment_id = $apartment->id;
 		$reservation->price = $apartment->price * $rate;
 		$reservation->sale_price = $apartment->sale_price;
 		$reservation->user_reservation_id = $user_reservation->id;
-		$reservation->property_id = $property->id;
+		$reservation->property_id = $apartment->property_id;
 		$reservation->checkin = $startDate;
 		$reservation->checkout = $endDate;
 		$reservation->length_of_stay = $date_diff;
 		$reservation->rate = data_get($input, 'currency') === '₦' ?  $rate : 1;
 		$reservation->save();
+
+		DB::commit();
 
 		// Optional PDF logic
 		$guest->image = session('session_link');
@@ -279,17 +311,22 @@ class ReservationsController extends Controller
 
 
 
-		//DB::commit();
-		return redirect()->to('/admin/reservations?coming_from=checkin');
-		//} catch (\Throwable $th) {
-		//DB::rollBack();
-		dd($th->getMessage());
+		return redirect()
+			->to('/admin/reservations?coming_from=checkin')
+			->with('success', 'Reservation created successfully.');
+		} catch (\Throwable $th) {
+			DB::rollBack();
 
-		\Log::error("Reservation error: " . $th->getMessage());
-		\Log::error("Reservation payload: " . $request->all());
+			\Log::error('Reservation creation failed.', [
+				'message' => $th->getMessage(),
+				'property_id' => $validated['property_id'],
+				'apartment_id' => $validated['apartment_id'],
+			]);
 
-		return redirect()->back()->withErrors(['error' => 'Reservation failed. Apartment not available for those dates.']);
-		//}
+			return redirect()->back()
+				->withInput()
+				->with('error', 'Reservation could not be created. Please review the details and try again.');
+		}
 	}
 
 
@@ -301,6 +338,129 @@ class ReservationsController extends Controller
 		\Notification::route('mail', optional($user->guest_user)->email)
 			->notify(new ResendLink($user));
 		return response()->json(null, 200);
+	}
+
+	public function edit($id)
+	{
+		$userReservation = UserReservation::with([
+			'guest_user',
+			'reservations.apartment.property',
+		])->findOrFail($id);
+
+		$reservation = $userReservation->reservations->first();
+
+		if (!$reservation) {
+			return redirect()
+				->route('admin.reservations.show', ['reservation' => $userReservation->id])
+				->with('error', 'This booking does not contain an apartment reservation.');
+		}
+
+		return view('admin.reservations.edit', compact('userReservation', 'reservation'));
+	}
+
+	public function update(Request $request, $id)
+	{
+		$userReservation = UserReservation::with('reservations.apartment')->findOrFail($id);
+		$reservation = $userReservation->reservations->first();
+
+		if (!$reservation) {
+			return back()->with('error', 'This booking does not contain an apartment reservation.');
+		}
+
+		if ($userReservation->is_cancelled || in_array(strtolower((string) $userReservation->status), ['cancelled', 'canceled'], true)) {
+			return back()->with('error', 'A cancelled booking cannot be modified.');
+		}
+
+		$validated = $request->validate([
+			'checkin' => ['required', 'date'],
+			'checkout' => ['required', 'date', 'after:checkin'],
+		]);
+
+		$checkin = Carbon::parse($validated['checkin'])->startOfDay();
+		$checkout = Carbon::parse($validated['checkout'])->startOfDay();
+		$oldCheckin = Carbon::parse($reservation->checkin)->startOfDay();
+		$oldCheckout = Carbon::parse($reservation->checkout)->startOfDay();
+
+		$hasConflict = Reservation::query()
+			->where('id', '<>', $reservation->id)
+			->where('apartment_id', $reservation->apartment_id)
+			->where(function ($query) {
+				$query->whereNull('is_blocked')->orWhere('is_blocked', false);
+			})
+			->where('checkin', '<', $checkout)
+			->where('checkout', '>', $checkin)
+			->whereHas('user_reservation', function ($query) {
+				$query->where(function ($statusQuery) {
+					$statusQuery->whereNull('status')
+						->orWhereNotIn('status', ['cancelled', 'canceled']);
+				})->where(function ($cancelQuery) {
+					$cancelQuery->whereNull('is_cancelled')
+						->orWhere('is_cancelled', false);
+				});
+			})
+			->exists();
+
+		if ($hasConflict) {
+			return back()
+				->withInput()
+				->with('error', 'The apartment is already reserved for part of the selected dates.');
+		}
+
+		try {
+			DB::transaction(function () use ($userReservation, $reservation, $checkin, $checkout, $oldCheckin, $oldCheckout) {
+				$oldNights = max(1, $oldCheckin->diffInDays($oldCheckout));
+				$newNights = max(1, $checkin->diffInDays($checkout));
+				$oldOriginalAmount = (float) $userReservation->original_amount;
+				$nightlyAmount = $oldOriginalAmount > 0
+					? $oldOriginalAmount / $oldNights
+					: (float) $reservation->price;
+				$newOriginalAmount = round($nightlyAmount * $newNights, 2);
+				$formattedDiscount = trim((string) $userReservation->formatted_discount);
+
+				if (substr($formattedDiscount, -1) === '%') {
+					$discountPercentage = max(0, (float) rtrim($formattedDiscount, "% \t\n\r\0\x0B"));
+					$discountAmount = ($discountPercentage / 100) * $newOriginalAmount;
+				} else {
+					$discountAmount = (float) preg_replace('/[^0-9.]/', '', $formattedDiscount);
+				}
+
+				$discountAmount = min($discountAmount, $newOriginalAmount);
+				$cautionFee = (float) $userReservation->caution_fee;
+
+				$userReservation->checkin = $checkin;
+				$userReservation->checkout = $checkout;
+				$userReservation->length_of_stay = $newNights;
+				$userReservation->original_amount = $newOriginalAmount;
+				$userReservation->total = ($newOriginalAmount - $discountAmount) + $cautionFee;
+				$userReservation->save();
+
+				$reservation->checkin = $checkin;
+				$reservation->checkout = $checkout;
+				$reservation->length_of_stay = $newNights;
+				$reservation->extension_date = sprintf(
+					'Booking dates updated from %s–%s to %s–%s.',
+					$oldCheckin->format('Y-m-d'),
+					$oldCheckout->format('Y-m-d'),
+					$checkin->format('Y-m-d'),
+					$checkout->format('Y-m-d')
+				);
+				$reservation->save();
+			});
+		} catch (\Throwable $exception) {
+			\Log::error('Reservation update failed.', [
+				'user_reservation_id' => $userReservation->id,
+				'reservation_id' => $reservation->id,
+				'message' => $exception->getMessage(),
+			]);
+
+			return back()
+				->withInput()
+				->with('error', 'The booking could not be updated. Please try again.');
+		}
+
+		return redirect()
+			->route('admin.reservations.show', ['reservation' => $userReservation->id])
+			->with('success', 'Booking dates updated. Channex availability is being synchronized for the old and new dates.');
 	}
 
 

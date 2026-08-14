@@ -2,6 +2,15 @@
 @section('content')
 <div class="row">
    <div class="col-md-12">
+      @if(session('success'))
+      <div class="alert alert-success">{{ session('success') }}</div>
+      @endif
+
+      @if(session('error'))
+      <div class="alert alert-danger">{{ session('error') }}</div>
+      @endif
+   </div>
+   <div class="col-md-12">
       <div class="text-right">
 
       </div>
@@ -89,38 +98,26 @@
 
    <div class="col-md-12">
       <div class="card">
-
          <div class="card-content">
-            <h4 class="card-title">Modify Reservation - <small class="category"></small></h4>
-
-            <form id="UpdateForm" data-url="{{request()->fullUrl()}}?add_update=1" action="?add_update=1" method="GET">
-               <div class="form-row">
-
-
-                  <div class="form-group col-md-3">
-                     <label for="date">Check-out</label>
-                     <input class="form-control  datepicker pull-right" name="checkout" id="checkout-update" type="text" required>
-                  </div>
-
-
-                  <div class="form-group col-md-2">
-                     <button id="add-update" type="submit" class="btn btn-primary">
-                        Submit
-                        <span id="spinner-update" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display:none;"></span>
-                     </button>
-                  </div>
+            <div class="row">
+               <div class="col-sm-8">
+                  <h4 class="card-title">Booking dates</h4>
+                  <p class="text-muted" style="margin-bottom: 0;">
+                     {{ optional(optional($user_reservation->reservations->first())->checkin)->format('D, M j Y') }}
+                     &mdash;
+                     {{ optional(optional($user_reservation->reservations->first())->checkout)->format('D, M j Y') }}
+                  </p>
                </div>
-
-
-            </form>
-
-
-
+               <div class="col-sm-4 text-right">
+                  @if(!$user_reservation->is_cancelled)
+                  <a href="{{ route('admin.reservations.edit', ['reservation' => $user_reservation->id]) }}" class="btn btn-rose">
+                     <i class="material-icons">edit_calendar</i> Edit booking
+                  </a>
+                  @endif
+               </div>
+            </div>
          </div>
-
-
       </div>
-
    </div>
 
    <div class="col-md-12">

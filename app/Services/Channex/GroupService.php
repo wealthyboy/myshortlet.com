@@ -32,9 +32,9 @@ class GroupService extends ChannexClient
         ]);
     }
 
-    public function delete(string $groupId)
+    public function deleteGroup(string $groupId)
     {
-        return $this->delete("/groups/{$groupId}");
+        return parent::delete("/groups/{$groupId}");
     }
 
     public function attachProperty(string $groupId, string $propertyId)
@@ -44,6 +44,6 @@ class GroupService extends ChannexClient
 
     public function detachProperty(string $groupId, string $propertyId)
     {
-        return $this->delete("/groups/{$groupId}/properties/{$propertyId}");
+        return parent::delete("/groups/{$groupId}/properties/{$propertyId}");
     }
 }

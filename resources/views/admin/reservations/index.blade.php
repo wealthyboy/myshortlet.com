@@ -133,6 +133,9 @@
                               <span><a href="{{ route('admin.reservations.show',['reservation'=>$reservation->id]) }}" rel="tooltip" class="btn btn-success btn-simple" data-original-title="" title="View">
                                     more details
                                  </a></span>
+                              <span><a href="{{ route('admin.reservations.edit',['reservation'=>$reservation->id]) }}" rel="tooltip" class="btn btn-primary btn-simple" title="Edit booking">
+                                    edit booking
+                                 </a></span>
                               <span>
                                  <a data-url="/admin/reservations/resendLink?id={{ $reservation->id }}" href="#" rel="tooltip" class="btn btn-success  resend-link btn-simple" data-original-title="" title="Link">
                                     Send check-in link
@@ -141,7 +144,7 @@
 
 
                               <span>
-                                 <a href="/admin/reservations?cancel=1&id={{ $reservation->id }}" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel">
+                                 <a href="{{ route('admin.reservations.index', ['coming_from' => request('coming_from', 'payment'), 'cancel' => 1, 'id' => $reservation->id]) }}" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel" onclick="return confirm('Cancel this reservation and restore its Channex availability?');">
                                     cancel
                                  </a>
                               </span>

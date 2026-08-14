@@ -28,7 +28,16 @@ class UserReservation extends Model
         'total',
         'caution_fee',
         'ip',
-        'guest_user_id'
+        'guest_user_id',
+        'external_id',
+        'ota_name',
+        'status',
+        'channex_last_revision_id',
+        'channex_last_revision_at',
+    ];
+
+    protected $casts = [
+        'channex_last_revision_at' => 'datetime',
     ];
 
 

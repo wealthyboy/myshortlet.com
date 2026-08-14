@@ -376,6 +376,8 @@
 
                </div>
 
+               @include('admin.apartments._channex_rate_plans')
+
                <div class="row">
                   <div class="col-md-6 ml-4">
                      <div class="">

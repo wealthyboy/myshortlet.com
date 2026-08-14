@@ -127,7 +127,6 @@
 
             <label>Location </label>
             <div class="well well-sm" style="height: 250px; background-color: #fff; color: black; overflow: auto;">
-               @include('admin.apartments.location')
             </div>
         </div>
     </div>

@@ -18,7 +18,8 @@ use App\Models\Location;
 use App\Models\Apartment;
 use App\Models\Category;
 use App\Models\Attribute;
-use App\Services\Channex\GroupPropertyService;
+use App\Jobs\SyncPropertyToChannex;
+use App\Jobs\RunChannexFullSync;
 
 
 use App\Models\AttributePrice;
@@ -68,14 +69,25 @@ class PropertiesController extends Controller
 
     public function syncPropertyToCannex()
     {
-
         $property = Property::findOrFail(request()->id);
 
-        app(GroupPropertyService::class)->sync($property);
+        SyncPropertyToChannex::dispatch($property->id)->afterCommit();
 
         return redirect()->back()->with(
             'success',
-            'Property successfully synced to Channex'
+            'Property sync queued. It will be processed in the background.'
+        );
+    }
+
+    public function fullSyncToChannex()
+    {
+        $property = Property::findOrFail(request()->id);
+
+        RunChannexFullSync::dispatch($property->id, 500);
+
+        return redirect()->back()->with(
+            'success',
+            '500-day full sync queued. Track task IDs in laravel.log after completion.'
         );
     }
 
@@ -258,43 +270,9 @@ class PropertiesController extends Controller
     public function propertyWithMultipleApartments($request,  $property)
     {
 
-        //  $price = implode(array_values($request->room_price));
-        // dd($request->all());
+        //$price = implode(array_values($request->room_price));
+        //dd($request->all());
 
-        foreach ($request->room_price  as $key => $room) {
-
-            $apartment = new Apartment;
-            $room_images = !empty($request->images[$key]) ? $request->images[$key] : [];
-            $apartment_allow = !empty($request->apartment_allow) ? $request->apartment_allow[$key] : 0;
-            $apartment->name = $request->room_name[$key];
-            $apartment->price = $request->room_price[$key];
-            $apartment->sale_price = $request->room_sale_price[$key];
-            $apartment->slug = str_slug($request->room_name[$key]);
-            $apartment->max_adults = $request->room_max_adults[$key];
-            $apartment->quantity = $request->room_quantity[$key];
-            $apartment->image_link = $request->room_image_links[$key];
-            $apartment->video_link = $request->room_video_links[$key];
-            $apartment->type = $request->type;
-            $apartment->price_mode = $request->price_mode[$key];
-            $apartment->apartment_id = $request->apartment_id[$key];
-            $apartment->allow = $apartment_allow;
-            $apartment->no_of_rooms = $request->room_number[$key];
-            $apartment->sale_price_expires = Helper::getFormatedDate($request->room_sale_price_expires[$key], true);
-            $apartment->property_id = $property->id;
-            $apartment->uuid = time();
-            $apartment->toilets = $request->room_toilets[$key];
-            $apartment->save();
-            if (isset($request->apartment_facilities_id[$key])) {
-                $apartment->attributes()->sync(array_filter($request->apartment_facilities_id[$key]));
-            }
-
-            if (isset($request->multiple_apartment_extras[$key])) {
-                // $this->syncExtras($request->multiple_apartment_extras[$key],  $request->multiple_apartment_extra_services[$key], $apartment);
-            }
-
-            $this->syncImages($room_images, $apartment, $property);
-            //  $this->syncAttributes($request, $apartment, $key);
-        }
 
         // $property->price  =  $price;
         $property->save();

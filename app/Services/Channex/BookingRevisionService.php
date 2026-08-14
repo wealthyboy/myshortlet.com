@@ -32,21 +32,13 @@ class BookingRevisionService extends ChannexClient
 
     public function fetch(string $revisionId): ?array
     {
-        $paths = [
-            '/booking_revisions/' . $revisionId,
-            '/booking_revisions/' . $revisionId . '?include=booking',
-        ];
-
-        foreach ($paths as $path) {
-            try {
-                return $this->get($path);
-            } catch (\Throwable $e) {
-                logger()->warning('Channex booking revision fetch attempt failed', [
-                    'revision_id' => $revisionId,
-                    'path' => $path,
-                    'error' => $e->getMessage(),
-                ]);
-            }
+        try {
+            return $this->get('/booking_revisions/' . $revisionId);
+        } catch (\Throwable $e) {
+            logger()->warning('Channex booking revision fetch failed', [
+                'revision_id' => $revisionId,
+                'error' => $e->getMessage(),
+            ]);
         }
 
         return null;
@@ -54,21 +46,13 @@ class BookingRevisionService extends ChannexClient
 
     public function acknowledge(string $revisionId): ?array
     {
-        $paths = [
-            '/booking_revisions/' . $revisionId . '/acknowledge',
-            '/booking_revisions/' . $revisionId . '/ack',
-        ];
-
-        foreach ($paths as $path) {
-            try {
-                return $this->post($path, []);
-            } catch (\Throwable $e) {
-                logger()->warning('Channex booking acknowledge attempt failed', [
-                    'revision_id' => $revisionId,
-                    'path' => $path,
-                    'error' => $e->getMessage(),
-                ]);
-            }
+        try {
+            return $this->post('/booking_revisions/' . $revisionId . '/ack', []);
+        } catch (\Throwable $e) {
+            logger()->warning('Channex booking acknowledge failed', [
+                'revision_id' => $revisionId,
+                'error' => $e->getMessage(),
+            ]);
         }
 
         return null;

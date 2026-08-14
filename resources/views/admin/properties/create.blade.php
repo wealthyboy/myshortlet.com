@@ -10,7 +10,7 @@
       <div class="card wizard-card" data-color="rose" id="wizardProfile">
             <form enctype="multipart/form-data" id="product-form" action="{{ route('admin.properties.store',request()->all()) }}" method="post">
                @csrf
-               @include('admin.apartments.shortlets')
+               @include('admin.properties.shortlets')
             </form>
          </div>
       </div>
@@ -21,7 +21,7 @@
 @section('page-scripts')
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('backend/js/products.js') }}"></script>
-<script src="{{ asset('backend/js/uploader.js') }}"></script>
+<script src="{{ asset('backend/js/uploader.js') }}?v={{ filemtime(public_path('backend/js/uploader.js')) }}"></script>
 @stop
 @section('inline-scripts')
 $(document).ready(function() {
@@ -30,7 +30,6 @@ height: '400px'
 })       
 });
 @stop
-
 
 
 

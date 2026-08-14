@@ -3,12 +3,17 @@
 namespace App\Services\Channex;
 
 use App\Models\Apartment;
+use RuntimeException;
 
 class ApartmentSyncService
 {
     public function sync(Apartment $apartment): void
     {
         $property = $apartment->property;
+
+        if (! $property) {
+            throw new RuntimeException('Apartment must belong to a property before syncing to Channex.');
+        }
 
         // 1️⃣ Ensure Group + Property exist
         app(GroupPropertyService::class)->sync($property);
@@ -25,10 +30,7 @@ class ApartmentSyncService
         // 5️⃣ Ensure Rate Plans exist
         app(RatePlanService::class)->sync($apartment);
 
-        // 6️⃣ Push Availability
-        app(AvailabilityService::class)->sync($apartment);
-
-        // 7️⃣ Push Prices
-        app(PricingService::class)->sync($apartment);
+        // ARI is intentionally not pushed here. Apartment create/update actions
+        // write ARI events to the outbox so they are batched and rate limited.
     }
 }

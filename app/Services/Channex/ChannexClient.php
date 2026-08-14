@@ -2,6 +2,7 @@
 
 namespace App\Services\Channex;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 
 class ChannexClient
@@ -13,7 +14,11 @@ class ChannexClient
             'user-api-key' => config('services.channex.key'),
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
-        ]);
+        ])
+            ->timeout(30)
+            // Retry transient connection failures here. HTTP errors are retried
+            // by the queued job after Channex's recommended cooldown period.
+            ->retry(2, 1500, fn ($exception) => $exception instanceof ConnectionException);
     }
 
     protected function get($uri, $params = [])

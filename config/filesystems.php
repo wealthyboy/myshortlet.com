@@ -66,6 +66,10 @@ return [
             'bucket' => env('DO_SPACES_BUCKET'),
             'url' => env('DO_SPACES_URL'),
             'visibility' => 'public',
+            'options' => [
+                'connect_timeout' => 5,
+                'timeout' => 20,
+            ],
         ],
 
     ],

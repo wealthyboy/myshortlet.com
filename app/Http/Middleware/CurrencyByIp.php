@@ -27,14 +27,30 @@ class CurrencyByIp
     {
 
         $rate = [];
-        $position = '';
-        $position = Location::get(request()->ip());
+        $position = null;
+        $ip = $request->ip();
+
+        // A local/private address cannot be geolocated by a public IP service.
+        // Avoid blocking the entire request when developing locally.
+        $isPublicIp = filter_var(
+            $ip,
+            FILTER_VALIDATE_IP,
+            FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+        ) !== false;
+
+        if (! app()->environment('local') && $isPublicIp) {
+            try {
+                $position = Location::get($ip) ?: null;
+            } catch (\Throwable $exception) {
+                report($exception);
+            }
+        }
+
         $request->session()->put('country_name', optional($position)->countryName);
 
         $settings = SystemSetting::first();
         $nigeria = Currency::where('country', 'Nigeria')->first();
         $usa = Currency::where('country', 'United States')->first();
-        $position = Location::get(request()->ip());
         $query = request()->all();
         $currentDate = Carbon::now();
         $startDate = Carbon::createFromDate(null, 12, 1); // December 1

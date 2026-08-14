@@ -16,6 +16,7 @@ use App\Models\Facility;
 use App\Models\Requirement;
 use App\Models\Location;
 use App\Models\Apartment;
+use App\Models\ChannexRatePlan;
 use App\Models\Category;
 use App\Models\Attribute;
 use App\Models\UserReservation;
@@ -31,6 +32,8 @@ use Illuminate\Support\Facades\Redirect;
 use App\Services\VideoUploader\VideoUploader;
 use App\Services\Channex\ApartmentSyncService;
 use App\Jobs\SyncApartmentToChannex;
+use App\Jobs\ProcessChannexAriOutbox;
+use App\Services\Channex\AriOutboxService;
 
 
 
@@ -219,6 +222,7 @@ class ApartmentsController extends Controller
         $apartment->uuid = time();
         $apartment->toilets = $request->room_toilets;
         $apartment->save();
+        $changedRatePlans = $this->syncChannexRatePlans($apartment, $request);
         if (isset($request->apartment_facilities_id)) {
             $apartment->attributes()->sync(array_filter($request->apartment_facilities_id));
         }
@@ -237,6 +241,17 @@ class ApartmentsController extends Controller
         /**
          * Rooms with have includes
          */
+
+        if ($apartment->property_id) {
+            SyncApartmentToChannex::dispatch($apartment->id)->afterCommit();
+
+            app(AriOutboxService::class)->queueBaseAriChange($apartment);
+            foreach ($changedRatePlans as $ratePlan) {
+                app(AriOutboxService::class)->queueRatePlanChange($apartment, $ratePlan);
+            }
+        } else {
+            session()->flash('error', 'Apartment was saved locally, but it cannot be synced to Channex until a property is assigned.');
+        }
 
         (new Activity)->Log("Created a new apartments {$request->apartment_name}");
         return \Redirect::to('/admin/apartments');
@@ -409,6 +424,12 @@ class ApartmentsController extends Controller
         $apartment->uuid = time();
         $apartment->toilets = $request->room_toilets;
         $apartment->save();
+        $changedRatePlans = $this->syncChannexRatePlans($apartment, $request);
+
+        $ariChangedFields = collect(['price', 'quantity', 'allow'])
+            ->filter(fn (string $field) => $apartment->wasChanged($field))
+            ->values()
+            ->all();
 
         \Illuminate\Support\Facades\Artisan::call('cache:clear');
 
@@ -467,9 +488,104 @@ class ApartmentsController extends Controller
             |--------------------------------------------------------------------------
             */
         $apartment->apartmentfacilities()->sync($facilityIds);
+        if (! $apartment->property_id) {
+            return redirect()->back()->with('error', 'This apartment cannot be synced to Channex because it has no property assigned.');
+        }
+
         SyncApartmentToChannex::dispatch($apartment->id)->afterCommit();
+
+        if ($ariChangedFields) {
+            app(AriOutboxService::class)->queueBaseAriChange($apartment, $ariChangedFields);
+
+        }
+
+        if ($changedRatePlans->isNotEmpty()) {
+            foreach ($changedRatePlans as $ratePlan) {
+                app(AriOutboxService::class)->queueRatePlanChange($apartment, $ratePlan);
+            }
+
+        }
+
         (new Activity)->Log("Created a new apartments {$request->apartment_name}");
         return \Redirect::to('/admin/apartments');
+    }
+
+    public function syncApartmentToChannex()
+    {
+        $apartment = Apartment::findOrFail(request()->id);
+
+        SyncApartmentToChannex::dispatch($apartment->id)->afterCommit();
+
+        app(AriOutboxService::class)->queueBaseAriChange($apartment);
+        foreach ($apartment->channexRatePlans()->where('is_active', true)->get() as $ratePlan) {
+            app(AriOutboxService::class)->queueRatePlanChange($apartment, $ratePlan);
+        }
+
+        return redirect()->back()->with(
+            'success',
+            'Apartment structure, price, and inventory sync queued. It will be processed in the background.'
+        );
+    }
+
+    protected function syncChannexRatePlans(Apartment $apartment, Request $request)
+    {
+        $rows = collect((array) $request->input('rate_plans', []))
+            ->filter(fn ($row) => trim((string) ($row['name'] ?? '')) !== '')
+            ->values();
+
+        if ($rows->isEmpty()) {
+            $rows = collect([[
+                'name' => 'Best Available Rate',
+                'default_rate' => $apartment->price,
+                'meal_type' => 'room_only',
+            ]]);
+        }
+
+        $defaultIndex = (int) $request->input('rate_plan_default', 0);
+        $changedPlans = collect();
+
+        foreach ($rows as $index => $row) {
+            $name = trim((string) $row['name']);
+            $isDefault = $index === $defaultIndex;
+            $rate = is_numeric($row['default_rate'] ?? null)
+                ? max(0, (float) $row['default_rate'])
+                : (float) $apartment->price;
+            if ($isDefault) {
+                $rate = (float) $apartment->price;
+            }
+            $mealType = in_array(($row['meal_type'] ?? 'room_only'), [
+                'room_only',
+                'bed_and_breakfast',
+                'breakfast',
+                'none',
+            ], true) ? $row['meal_type'] : 'room_only';
+
+            $plan = null;
+            if (! empty($row['id'])) {
+                $plan = $apartment->channexRatePlans()->find($row['id']);
+            }
+
+            $plan = $plan ?: $apartment->channexRatePlans()->firstOrNew(['name' => $name]);
+            $plan->fill([
+                'name' => $name,
+                'default_rate' => $rate,
+                'meal_type' => $mealType,
+                'price_mode' => 'nightly',
+                'is_default' => $isDefault,
+                'is_active' => true,
+            ]);
+
+            if (! $plan->exists || $plan->isDirty(['name', 'default_rate', 'meal_type', 'is_default', 'is_active'])) {
+                $changedPlans->push($plan);
+            }
+            $plan->save();
+        }
+
+        if (! $apartment->channexRatePlans()->where('is_default', true)->exists()) {
+            $apartment->channexRatePlans()->oldest('id')->limit(1)->update(['is_default' => true]);
+        }
+
+        return $changedPlans;
     }
 
     /**

@@ -11,6 +11,12 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+.DS_Store
+*.code-workspace
+public/exports/
+storage/restore_*.php
+docs/learning-handbooks/
+*.pdf
 /public/images/apartments
 /public/images/attribute
 /public/images/locations

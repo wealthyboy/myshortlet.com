@@ -8,8 +8,18 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 
-Route::get('integration/apartments/snapshot', 'Admin\\Channex\\ExportController@publicApartmentsSnapshot')
+Route::get('integration/apartments/snapshot', 'Admin\Channex\ExportController@publicApartmentsSnapshot')
     ->name('integration.apartments.snapshot');
+
+// Channel webhooks must not run through storefront currency/tracking middleware.
+Route::post('webhook/channex', 'WebHook\WebHookController@handleChannex')
+    ->middleware('throttle:120,1');
+
+// OTA guests do not have a storefront account. A temporary signed link lets
+// them add their confirmed stay to Apple/Outlook without exposing bookings.
+Route::get('reservations/{reservation}/calendar', 'Reservation\ReservationCalendarController')
+    ->middleware('signed')
+    ->name('calendar.reservation');
 
 
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
@@ -77,10 +87,25 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('attributes', 'Admin\Attributes\AttributesController', ['names' => 'attributes']);
     Route::resource('rates', 'Admin\CurrencyRates\CurrencyRatesController', ['name' => 'rates']);
     Route::resource('vouchers', 'Admin\Vouchers\VouchersController', ['names' => 'vouchers']);
+        Route::get('/apartments/sync', 'Admin\Apartments\ApartmentsController@syncApartmentToChannex')
+            ->name('admin.apartments.sync');
     Route::resource('peak_periods', 'Admin\PeakPeriod\PeakPeriodController', ['names' => 'peak_periods']);
     Route::get('properties/apartment', 'Admin\Properties\PropertiesController@newRoom');
     Route::get('properties/sync', 'Admin\Properties\PropertiesController@syncPropertyToCannex');
-    Route::get('channex/export/apartments', 'Admin\Channex\ExportController@downloadApartmentsSnapshot')->name('admin.channex.export.apartments');
+    Route::post('properties/full-sync', 'Admin\Properties\PropertiesController@fullSyncToChannex')
+        ->name('admin.properties.full_sync');
+    Route::get('channex/ari-updates', 'Admin\Channex\CertificationController@ariIndex')
+        ->name('admin.channex.ari_updates.index');
+    Route::post('channex/ari-updates', 'Admin\Channex\CertificationController@queueAriUiBatch')
+        ->name('admin.channex.ari_updates.queue');
+    Route::get('channex/export/apartments', 'Admin\Channex\ExportController@downloadApartmentsSnapshot')
+        ->name('admin.channex.export.apartments');
+        Route::get('channex/certification/logs', 'Admin\Channex\CertificationController@index')
+            ->name('admin.channex.certification.logs');
+        Route::get('channex/certification/logs/{log}', 'Admin\Channex\CertificationController@show')
+            ->name('admin.channex.certification.logs.show');
+    Route::post('channex/certification/ari-batch', 'Admin\Channex\CertificationController@queueAriBatch')
+        ->name('admin.channex.certification.ari_batch');
 
     Route::resource('properties', 'Admin\Properties\PropertiesController', ['names' => 'admin.properties']);
     Route::resource('apartments', 'Admin\Apartments\ApartmentsController', ['names' => 'admin.apartments']);
@@ -101,12 +126,12 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('customers', 'Admin\Customers\CustomersController', ['name' => 'customers']);
     //Route::resource('templates', 'Admin\Templates\TemplatesController',['name'=>'templates']);
 
-    Route::resource('promos',             'Admin\Promo\PromoController', ['names' => 'promos']);
-    Route::get('promo-text/create/{id}',      'Admin\PromoText\PromoTextController@create')->name('create_promo_text');
+    Route::resource('promos',  'Admin\Promo\PromoController', ['names' => 'promos']);
+    Route::get('promo-text/create/{id}',  'Admin\PromoText\PromoTextController@create')->name('create_promo_text');
     Route::get('promo-text/edit/{id}',   'Admin\PromoText\PromoTextController@edit')->name('edit_promo_text');
     Route::post('promo-text/edit/{id}',  'Admin\PromoText\PromoTextController@update');
-    Route::post('promo-text/create/{id}',     'Admin\PromoText\PromoTextController@store');
-    Route::get('promo-text/delete/{id}',     'Admin\PromoText\PromoTextController@destroy')->name('delete_promo_text');
+    Route::post('promo-text/create/{id}',   'Admin\PromoText\PromoTextController@store');
+    Route::get('promo-text/delete/{id}',   'Admin\PromoText\PromoTextController@destroy')->name('delete_promo_text');
     //Route::resource('services', 'Admin\Services\ServicesController',['names' =>'services']);
     Route::resource('requirements', 'Admin\Requirements\RequirementsController', ['names' => 'requirements']);
     Route::resource('facilities', 'Admin\Facilities\FacilitiesController', ['names' => 'facilities']);

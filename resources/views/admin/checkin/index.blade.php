@@ -76,7 +76,7 @@
                                     more details
                                  </a></span>
 
-                              <span><a href="/admin/reservations?cancel=1&id={{ $reservation->id }}" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel">
+                              <span><a href="{{ route('admin.reservations.index', ['coming_from' => request('coming_from', 'checkin'), 'cancel' => 1, 'id' => $reservation->id]) }}" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="Cancel" onclick="return confirm('Cancel this reservation and restore its Channex availability?');">
                                     cancel
                                  </a></span>
                               @else

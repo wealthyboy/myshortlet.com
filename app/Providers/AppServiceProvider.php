@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Reservation;
+use App\Models\UserReservation;
+use App\Observers\ReservationObserver;
+use App\Observers\UserReservationObserver;
 use Illuminate\Support\ServiceProvider;
 use Swift_Mailer;
 
@@ -36,5 +40,9 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot() {}
+    public function boot()
+    {
+        Reservation::observe(ReservationObserver::class);
+        UserReservation::observe(UserReservationObserver::class);
+    }
 }

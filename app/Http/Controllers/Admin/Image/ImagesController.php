@@ -119,7 +119,8 @@ class ImagesController extends Controller
             ->encode('webp', 80); // ✔ high quality | very small size
 
         $originalPath = "images/$folder/$fileName";
-        Storage::disk('spaces')->put($originalPath, $optimized, 'public');
+        $disk = config('uploads.disk', 'spaces');
+        Storage::disk($disk)->put($originalPath, $optimized, 'public');
 
         /*
     |--------------------------------------------------------------------------
@@ -131,7 +132,7 @@ class ImagesController extends Controller
             ->encode('webp', 80);
 
         $mediumPath = "images/$folder/m/$fileName";
-        Storage::disk('spaces')->put($mediumPath, $medium, 'public');
+        Storage::disk($disk)->put($mediumPath, $medium, 'public');
 
         /*
     |--------------------------------------------------------------------------
@@ -146,9 +147,11 @@ class ImagesController extends Controller
         $canvas->insert($thumb, 'center');
         $thumbnailPath = "images/$folder/tn/$fileName";
 
-        Storage::disk('spaces')->put($thumbnailPath, $canvas->encode('webp', 80), 'public');
+        Storage::disk($disk)->put($thumbnailPath, $canvas->encode('webp', 80), 'public');
 
-        return Storage::disk('spaces')->url($originalPath);
+        return $disk === 'local'
+            ? asset($originalPath)
+            : Storage::disk($disk)->url($originalPath);
     }
 
 
@@ -167,7 +170,7 @@ class ImagesController extends Controller
         $original = "images/{$folder}/{$file}";
         $medium = "images/{$folder}/m/{$file}";
         $thumbnail = "images/{$folder}/tn/{$file}";
-        Storage::disk('spaces')->delete([$original, $medium, $thumbnail]);
+        Storage::disk(config('uploads.disk', 'spaces'))->delete([$original, $medium, $thumbnail]);
 
 
         // Delete from Spaces

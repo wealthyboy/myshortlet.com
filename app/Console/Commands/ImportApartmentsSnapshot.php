@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Apartment;
+use App\Models\Property;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
@@ -71,13 +72,15 @@ class ImportApartmentsSnapshot extends Command
                 continue;
             }
 
+            $localPropertyId = $this->resolveLocalPropertyIdFromSnapshotRow($row);
+
             $apartmentIds[] = (int) $row['id'];
 
             $apartmentPayload = [
                 'id' => (int) $row['id'],
                 'name' => $row['name'] ?? null,
                 'slug' => $row['slug'] ?? null,
-                'property_id' => $row['property_id'] ?? null,
+                'property_id' => $localPropertyId,
                 'price' => $row['price'] ?? null,
                 'sale_price' => $row['sale_price'] ?? null,
                 'allow' => $row['allow'] ?? null,
@@ -398,5 +401,48 @@ class ImportApartmentsSnapshot extends Command
         } catch (\Throwable $e) {
             return $fallback;
         }
+    }
+
+    private function resolveLocalPropertyIdFromSnapshotRow(array $row): ?int
+    {
+        $snapshotProperty = (array) ($row['property'] ?? []);
+
+        $channexPropertyId = $snapshotProperty['channex_property_id'] ?? null;
+        if (! empty($channexPropertyId)) {
+            $property = Property::query()
+                ->where('channex_property_id', $channexPropertyId)
+                ->first();
+
+            if ($property) {
+                return (int) $property->id;
+            }
+        }
+
+        $slug = $snapshotProperty['slug'] ?? null;
+        if (! empty($slug)) {
+            $property = Property::query()->where('slug', $slug)->first();
+
+            if ($property) {
+                return (int) $property->id;
+            }
+        }
+
+        $name = $snapshotProperty['name'] ?? null;
+        if (! empty($name)) {
+            $property = Property::query()->where('name', $name)->first();
+
+            if ($property) {
+                return (int) $property->id;
+            }
+        }
+
+        if (isset($row['property_id']) && $row['property_id'] !== null) {
+            $existing = Property::query()->find($row['property_id']);
+            if ($existing) {
+                return (int) $existing->id;
+            }
+        }
+
+        return null;
     }
 }

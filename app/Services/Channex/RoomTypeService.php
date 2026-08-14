@@ -4,6 +4,7 @@ namespace App\Services\Channex;
 
 use App\Models\Apartment;
 use App\Models\Image;
+use Illuminate\Http\Client\RequestException;
 
 class RoomTypeService extends ChannexClient
 {
@@ -102,9 +103,19 @@ class RoomTypeService extends ChannexClient
         /** -------------------------
          * UPDATE
          * ------------------------*/
-        $this->put(
-            '/room_types/' . $apartment->channex_room_type_id,
-            $payload
-        );
+        try {
+            $this->put(
+                '/room_types/' . $apartment->channex_room_type_id,
+                $payload
+            );
+        } catch (RequestException $exception) {
+            if ($exception->response?->status() !== 404) {
+                throw $exception;
+            }
+
+            $apartment->update(['channex_room_type_id' => null]);
+
+            $this->sync($apartment);
+        }
     }
 }

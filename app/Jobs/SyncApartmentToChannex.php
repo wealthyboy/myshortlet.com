@@ -20,10 +20,21 @@ class SyncApartmentToChannex implements ShouldQueue, ShouldBeUnique
 
 
     protected int $apartmentId;
+    public int $tries = 3;
+
+    public function backoff(): array
+    {
+        return [60, 180];
+    }
 
     public function __construct(int $apartmentId)
     {
         $this->apartmentId = $apartmentId;
+    }
+
+    public function uniqueId(): string
+    {
+        return 'apartment-' . $this->apartmentId;
     }
 
     public function handle(): void
@@ -32,7 +43,8 @@ class SyncApartmentToChannex implements ShouldQueue, ShouldBeUnique
             'property',
             'images',
             'attributes',
-            'apartmentfacilities'
+            'apartmentfacilities',
+            'channexRatePlans',
         ])->find($this->apartmentId);
 
         if (! $apartment) {
@@ -40,6 +52,10 @@ class SyncApartmentToChannex implements ShouldQueue, ShouldBeUnique
         }
 
         app(ApartmentSyncService::class)->sync($apartment);
+
+        // ARI events can only be processed after the property, room type and
+        // rate plans have received their Channex IDs.
+        ProcessChannexAriOutbox::dispatch()->delay(now()->addSeconds(5));
     }
 
     public function failed(Throwable $exception): void

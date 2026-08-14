@@ -13,7 +13,7 @@
             </div>
             <div class="tab-content">
                <div class="tab-pane" id="ProductData">
-                  @include('admin.apartments.apartment_data')
+                  @include('admin.properties.apartment_data')
                </div>
                <div class="tab-pane" id="Cancelation">
                   <div class="row">

@@ -1,0 +1,72 @@
+/* Shared admin table polish. Kept separate from the vendor bundle. */
+.main-panel .card .table-responsive {
+    border: 1px solid #e8ebef;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.main-panel .card .material-datatables {
+    overflow: visible;
+}
+
+.main-panel .card table.table {
+    border: 1px solid #e8ebef;
+    border-collapse: separate;
+    border-radius: 12px;
+    border-spacing: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+}
+
+.main-panel .card .table-responsive > table.table,
+.main-panel .card .channex-log-table > table.table {
+    border: 0;
+    border-radius: 0;
+}
+
+.main-panel .card table.table > thead {
+    background: #f5f6f8;
+}
+
+.main-panel .card table.table > thead > tr > th {
+    border-bottom: 1px solid #e2e6eb !important;
+    color: #303744 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: .04em;
+    line-height: 1.3;
+    padding: 13px 14px !important;
+    text-transform: uppercase !important;
+    vertical-align: middle;
+}
+
+.main-panel .card table.table > tbody > tr > td {
+    border-color: #edf0f3 !important;
+    color: #4f5866;
+    font-size: 13px;
+    padding: 14px !important;
+    vertical-align: middle;
+}
+
+.main-panel .card table.table.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #fff;
+}
+
+.main-panel .card table.table > tbody > tr {
+    background: #fff;
+    transition: background-color .18s ease;
+}
+
+.main-panel .card table.table > tbody > tr:hover {
+    background: #fafafb !important;
+}
+
+.main-panel .card table.table .btn.btn-simple {
+    border-radius: 999px;
+}
+
+@media (max-width: 767px) {
+    .main-panel .card .table-responsive {
+        overflow-x: auto;
+    }
+}

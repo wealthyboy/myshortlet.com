@@ -19,6 +19,12 @@ $googleCalendarUrl = "https://www.google.com/calendar/render?action=TEMPLATE"
 . "&dates={$start}/{$end}"
 . "&details={$calendarDesc}"
 . "&location={$calendarLocation}";
+
+$calendarDownloadUrl = URL::temporarySignedRoute(
+    'calendar.reservation',
+    now()->addDays(30),
+    ['reservation' => $reservation->id]
+);
 @endphp
 
 <!DOCTYPE html>
@@ -226,7 +232,7 @@ $googleCalendarUrl = "https://www.google.com/calendar/render?action=TEMPLATE"
                             📅 Google Calendar
                         </a>
 
-                        <a href="{{ route('calendar.reservation', $reservation) }}" class="btn btn-apple">
+                        <a href="{{ $calendarDownloadUrl }}" class="btn btn-apple">
                             🍎 Apple / Outlook
                         </a>
 

@@ -26,6 +26,7 @@
 
     <!--  Material Dashboard CSS    -->
     <link href="{{ asset('backend/css/admin.css') }}" rel="stylesheet" />
+    <link href="{{ asset('backend/css/admin-tables.css') }}" rel="stylesheet" />
     @yield('pagespecificstyles')
     <!--     Fonts and icons     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
@@ -171,6 +172,33 @@
                                     <a target="_blank" href="/admin/blocks">
                                         <span class="sidebar-mini"> BA </span>
                                         <span class="sidebar-normal"> Block Apartment </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="{{ request()->routeIs('admin.channex.*') ? 'active' : '' }}">
+                        <a data-toggle="collapse" href="#Integrations">
+                            <i class="fa fa-plug" aria-hidden="true"></i>
+                            <p> Integrations
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+
+                        <div class="collapse {{ request()->routeIs('admin.channex.*') ? 'in' : '' }}" id="Integrations">
+                            <ul class="nav">
+                                <li class="{{ request()->routeIs('admin.channex.ari_updates.*') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.channex.ari_updates.index') }}">
+                                        <span class="sidebar-mini"> ARI </span>
+                                        <span class="sidebar-normal"> Channex ARI Updates </span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.channex.certification.logs') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.channex.certification.logs') }}">
+                                        <span class="sidebar-mini"> CL </span>
+                                        <span class="sidebar-normal"> Channex Logs </span>
                                     </a>
                                 </li>
                             </ul>

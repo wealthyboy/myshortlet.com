@@ -23,7 +23,7 @@
 
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('backend/js/products.js') }}"></script>
-<script src="{{ asset('backend/js/uploader.js') }}"></script>
+<script src="{{ asset('backend/js/uploader.js') }}?v={{ filemtime(public_path('backend/js/uploader.js')) }}"></script>
 @stop
 @section('inline-scripts')
 $(document).ready(function() {

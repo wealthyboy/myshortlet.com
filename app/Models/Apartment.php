@@ -125,6 +125,16 @@ class Apartment extends Model
         return $this->hasMany(Reservation::class);
     }
 
+    public function dailyRates()
+    {
+        return $this->hasMany(ApartmentDailyRate::class);
+    }
+
+    public function channexRatePlans()
+    {
+        return $this->hasMany(ChannexRatePlan::class)->orderByDesc('is_default')->orderBy('name');
+    }
+
 
     public function attributes()
     {

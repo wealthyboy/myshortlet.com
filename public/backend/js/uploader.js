@@ -2,6 +2,12 @@ function handleFiles(input, name) {
     [...input.files].forEach(file => uploadSingleFile(file, input, name));
 }
 
+// Backwards-compatible entry point used by the existing property/apartment
+// Blade templates. Additional legacy arguments are intentionally ignored.
+function getFile(input, name) {
+    handleFiles(input, name);
+}
+
 /* -----------------------------
    SORT IMAGES + UPDATE ORDER
 ------------------------------ */
@@ -129,6 +135,17 @@ function uploadSingleFile(oneFile, inputEl, name) {
             }
         },
 
-        error: () => holder.remove()
+        error: xhr => {
+            holder.remove();
+            parent.querySelector('.upload-text').classList.remove('hide');
+
+            const error = document.createElement('div');
+            error.id = 'img-error';
+            error.className = 'text-danger';
+            error.textContent = xhr.responseJSON && xhr.responseJSON.message
+                ? xhr.responseJSON.message
+                : 'The image could not be uploaded. Please try again.';
+            parent.appendChild(error);
+        }
     });
 }

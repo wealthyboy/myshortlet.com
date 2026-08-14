@@ -27,6 +27,7 @@ use App\Models\Attribute;
 use App\Models\AttributeProperty;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\SyncBookingToChannex;
+use App\Jobs\ProcessChannexBookingWebhook;
 
 class WebHookController extends Controller
 {
@@ -245,22 +246,22 @@ class WebHookController extends Controller
 
         if ($event === 'booking') {
             if (in_array($status, ['cancelled', 'canceled'], true)) {
-                app(HandleOtaBookingService::class)->cancel($payload);
+                ProcessChannexBookingWebhook::dispatch('cancel', $payload);
             } else {
-                app(HandleOtaBookingService::class)->handle($payload);
+                ProcessChannexBookingWebhook::dispatch('upsert', $payload);
             }
 
-            return response()->json(['status' => 'ok']);
+            return response()->json(['status' => 'accepted'], 200);
         }
 
         if (in_array($event, ['booking_new', 'booking_modification', 'booking.created', 'booking.modified'], true)) {
-            app(HandleOtaBookingService::class)->handle($payload);
+            ProcessChannexBookingWebhook::dispatch('upsert', $payload);
         }
 
         if (in_array($event, ['booking_cancellation', 'booking.cancelled', 'booking.canceled', 'booking_cancelled', 'booking_canceled'], true)) {
-            app(HandleOtaBookingService::class)->cancel($payload);
+            ProcessChannexBookingWebhook::dispatch('cancel', $payload);
         }
 
-        return response()->json(['status' => 'ok']);
+        return response()->json(['status' => 'accepted'], 200);
     }
 }

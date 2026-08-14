@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->job(new \App\Jobs\SendAbandonedBookingNotifications)->everyMinute();
+        $schedule->job(new \App\Jobs\ProcessChannexAriOutbox)->everyMinute();
     }
 
     /**
