@@ -216,8 +216,24 @@ class WebHookController extends Controller
         }
 
         $event = strtolower(trim((string) $request->input('event')));
-        $supportedEvents = [
+        $connectionEvents = [
+            '',
             'connection_test',
+            'ping',
+            'test',
+            'webhook_test',
+        ];
+
+        if (in_array($event, $connectionEvents, true)) {
+            Log::info('Channex webhook connection test accepted', [
+                'event' => $event ?: '(empty)',
+                'ip' => $request->ip(),
+            ]);
+
+            return response()->json(['status' => 'ok'], 200);
+        }
+
+        $supportedEvents = [
             'booking',
             'booking_new',
             'booking_modification',
@@ -238,14 +254,6 @@ class WebHookController extends Controller
             ]);
 
             return response()->json(['status' => 'unsupported_event'], 422);
-        }
-
-        if ($event === 'connection_test') {
-            Log::info('Channex webhook connection test accepted', [
-                'ip' => $request->ip(),
-            ]);
-
-            return response()->json(['status' => 'ok'], 200);
         }
 
         $payload = (array) $request->input('payload', []);

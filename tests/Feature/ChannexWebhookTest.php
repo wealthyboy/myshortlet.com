@@ -116,4 +116,34 @@ class ChannexWebhookTest extends TestCase
 
         Bus::assertNothingDispatched();
     }
+
+    public function test_empty_authenticated_test_payload_returns_ok_without_dispatching_a_job(): void
+    {
+        Bus::fake();
+        config([
+            'services.channex.webhook_secret' => 'correct-secret',
+            'services.channex.webhook_secret_header' => 'X-Channex-Webhook-Secret',
+        ]);
+
+        $this->postJson('/webhook/channex', [], [
+            'X-Channex-Webhook-Secret' => 'correct-secret',
+        ])->assertOk()->assertExactJson(['status' => 'ok']);
+
+        Bus::assertNothingDispatched();
+    }
+
+    public function test_generic_authenticated_test_event_returns_ok_without_dispatching_a_job(): void
+    {
+        Bus::fake();
+        config([
+            'services.channex.webhook_secret' => 'correct-secret',
+            'services.channex.webhook_secret_header' => 'X-Channex-Webhook-Secret',
+        ]);
+
+        $this->postJson('/webhook/channex', ['event' => 'test'], [
+            'X-Channex-Webhook-Secret' => 'correct-secret',
+        ])->assertOk()->assertExactJson(['status' => 'ok']);
+
+        Bus::assertNothingDispatched();
+    }
 }
