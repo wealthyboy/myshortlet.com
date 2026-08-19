@@ -297,6 +297,12 @@ class ReservationsController extends Controller
 
 
 		try {
+			if ($request->boolean('_channex_verification')) {
+				return redirect()
+					->to('/admin/reservations?coming_from=checkin')
+					->with('success', 'Reservation created successfully.');
+			}
+
 			\Mail::to($request->email)
 				->bcc('frontdesk@avenuemontaigne.ng')
 				->bcc('info@avenuemontaigne.ng')

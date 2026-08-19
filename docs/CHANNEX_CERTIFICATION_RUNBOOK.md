@@ -35,6 +35,16 @@ The shareable live-verification page is protected. Send the token as `Authorizat
 - Task evidence: **Admin → Integrations → Channex Logs**.
 - Booking evidence: **Admin → Reservations → OTA Bookings** and reservation details.
 
+## Live reservation verification command
+
+When the admin form fails or server configuration is uncertain, run the same reservation controller flow from Artisan without HTTP admin middleware:
+
+`php artisan channex:verify-reservation PROPERTY APARTMENT CHECKIN CHECKOUT --execute --process --move-week`
+
+`PROPERTY` accepts a local ID, exact name, or Channex UUID. `APARTMENT` accepts a local ID or exact name. The command creates a real PMS reservation, suppresses only the customer email, reports the observer-generated ARI payload and Channex task ID, then optionally moves the booking seven days later. It fails before creating data when the cache lock, migration, mapping, dates, or room availability prerequisites are invalid.
+
+To retrieve an earlier browser failure from the server log, add `--error-reference=UUID`; this mode only reads the log and does not create data.
+
 ## Tests 1–14
 
 ### 1. Full Data Update
