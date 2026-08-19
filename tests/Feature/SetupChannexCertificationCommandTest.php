@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use App\Models\Property;
+use App\Services\Channex\AriPushService;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Mockery;
 use Tests\TestCase;
 
 class SetupChannexCertificationCommandTest extends TestCase
@@ -63,6 +65,15 @@ class SetupChannexCertificationCommandTest extends TestCase
 
                 return Http::response(['data' => ['id' => basename($path)]], 200);
             });
+
+            $ari = Mockery::mock(AriPushService::class);
+            $ari->shouldReceive('pushAvailability')
+                ->once()
+                ->andReturn(['data' => [['id' => '99999999-9999-4999-8999-999999999999']]]);
+            $ari->shouldReceive('pushRestrictions')
+                ->once()
+                ->andReturn(['data' => [['id' => 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa']]]);
+            $this->app->instance(AriPushService::class, $ari);
 
             $exitCode = Artisan::call('channex:setup-certification', ['--execute' => true]);
             $this->assertSame(0, $exitCode, Artisan::output());

@@ -6,8 +6,10 @@ use App\Models\Apartment;
 use App\Models\ChannexRatePlan;
 use App\Models\Property;
 use App\Services\Channex\ApartmentSyncService;
+use App\Services\Channex\FullSyncService;
 use App\Services\Channex\GroupPropertyService;
 use App\Services\Channex\LiveSetupVerificationService;
+use App\Support\ChannexTaskIds;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -91,6 +93,9 @@ class SetupChannexCertification extends Command
             });
 
             $report = app(LiveSetupVerificationService::class)->verify($property->fresh(), true);
+            $fullSync = app(FullSyncService::class)->syncProperty($property->fresh(), 500);
+            $availabilityTaskIds = ChannexTaskIds::extract($fullSync['availability'] ?? []);
+            $restrictionTaskIds = ChannexTaskIds::extract($fullSync['restrictions'] ?? []);
 
             $this->table(['Entity', 'Local ID', 'Channex UUID'], collect([
                 ['Property', $property->id, $property->channex_property_id],
@@ -108,6 +113,8 @@ class SetupChannexCertification extends Command
 
             $this->line('Live verification: ' . ($report['ready'] ? 'READY' : 'NOT READY'));
             $this->line('Failures: ' . $report['failures'] . ' | Warnings: ' . $report['warnings']);
+            $this->line('Full sync availability task: ' . implode(', ', $availabilityTaskIds));
+            $this->line('Full sync restrictions task: ' . implode(', ', $restrictionTaskIds));
 
             if (! $report['ready']) {
                 foreach (collect($report['checks'])->where('status', 'fail') as $check) {
