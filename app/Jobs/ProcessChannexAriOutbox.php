@@ -6,7 +6,9 @@ use App\Models\Apartment;
 use App\Models\ChannexAriOutboxEvent;
 use App\Exceptions\ChannexRateLimitException;
 use App\Services\Channex\AriPushService;
+use App\Services\Channex\ApartmentSyncService;
 use App\Services\Channex\CertificationLogService;
+use App\Services\Channex\GroupPropertyService;
 use App\Support\ChannexTaskIds;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -78,6 +80,13 @@ class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUnique
             : ($scenarios->count() > 1 ? 'mixed_ari_batch' : null);
 
         try {
+            $apartments = Apartment::query()
+                ->with(['property', 'channexRatePlans'])
+                ->whereIn('id', $events->pluck('apartment_id')->filter()->unique()->values())
+                ->get()
+                ->keyBy('id');
+
+            $this->repairDeletedMappings($apartments);
             $apartments = Apartment::query()
                 ->with(['property', 'channexRatePlans'])
                 ->whereIn('id', $events->pluck('apartment_id')->filter()->unique()->values())
@@ -308,6 +317,23 @@ class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUnique
     protected function extractTaskIds(array $response): array
     {
         return ChannexTaskIds::extract($response);
+    }
+
+    protected function repairDeletedMappings($apartments): void
+    {
+        foreach ($apartments->pluck('property')->filter()->unique('id') as $property) {
+            $oldPropertyId = $property->channex_property_id;
+            app(GroupPropertyService::class)->sync($property);
+
+            if ($oldPropertyId === $property->channex_property_id) {
+                continue;
+            }
+
+            foreach ($apartments->where('property_id', $property->id) as $apartment) {
+                $apartment->setRelation('property', $property);
+                app(ApartmentSyncService::class)->sync($apartment);
+            }
+        }
     }
 
 }

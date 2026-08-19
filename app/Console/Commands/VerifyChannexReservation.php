@@ -293,15 +293,15 @@ class VerifyChannexReservation extends Command
         $this->warn('Checking remote Channex mappings for property #' . $property->id . '.');
 
         if ($property->channex_group_id && ! $this->remoteEntityExists('/groups/' . $property->channex_group_id)) {
-            $property->updateQuietly(['channex_group_id' => null]);
+            $property->forceFill(['channex_group_id' => null])->saveQuietly();
             $this->warn('Cleared missing Channex group mapping.');
         }
 
         if ($property->channex_property_id && ! $this->remoteEntityExists('/properties/' . $property->channex_property_id)) {
-            $property->updateQuietly([
+            $property->forceFill([
                 'channex_property_id' => null,
                 'channex_synced' => false,
-            ]);
+            ])->saveQuietly();
             $this->warn('Cleared missing Channex property mapping.');
         }
 

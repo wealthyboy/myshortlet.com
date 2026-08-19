@@ -3,12 +3,14 @@
 namespace App\Services\Channex;
 
 use App\Models\Property;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Log;
 
 class GroupPropertyService extends ChannexClient
 {
     public function sync(Property $property): Property
     {
+        $this->clearDeletedRemoteMappings($property);
 
         if (!$property->channex_group_id) {
             $groupResponse = $this->post('/groups', [
@@ -79,5 +81,46 @@ class GroupPropertyService extends ChannexClient
         }
 
         return $property;
+    }
+
+    protected function clearDeletedRemoteMappings(Property $property): void
+    {
+        if ($property->channex_property_id) {
+            try {
+                $this->get('/properties/' . $property->channex_property_id);
+                return;
+            } catch (RequestException $exception) {
+                if ($exception->response?->status() !== 404) {
+                    throw $exception;
+                }
+
+                $property->forceFill([
+                    'channex_property_id' => null,
+                    'channex_synced' => false,
+                ])->saveQuietly();
+
+                logger()->warning('Cleared deleted Channex property mapping', [
+                    'property_id' => $property->id,
+                ]);
+            }
+        }
+
+        if (! $property->channex_group_id) {
+            return;
+        }
+
+        try {
+            $this->get('/groups/' . $property->channex_group_id);
+        } catch (RequestException $exception) {
+            if ($exception->response?->status() !== 404) {
+                throw $exception;
+            }
+
+            $property->forceFill(['channex_group_id' => null])->saveQuietly();
+
+            logger()->warning('Cleared deleted Channex group mapping', [
+                'property_id' => $property->id,
+            ]);
+        }
     }
 }
