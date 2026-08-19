@@ -47,6 +47,8 @@ To retrieve an earlier browser failure from the server log, add `--error-referen
 
 For remote diagnostics without an admin browser session, use the token-protected API. `GET /api/channex/verify-reservation` returns live property/room IDs and environment checks. `POST /api/channex/verify-reservation` accepts `property`, `apartment`, `checkin`, `checkout`, `execute`, `process`, and `move_week`, then returns the synchronous Artisan output. Send `CHANNEX_VERIFICATION_TOKEN` only as an `Authorization: Bearer` header; query-string tokens are not accepted by these API endpoints.
 
+If Channex reports `Not found property for this change` after a property was deleted remotely, pass `repair_mapping=true`. The verifier checks the mapped group and property by ID, clears only mappings that return HTTP 404, recreates the structure synchronously, and then retries the reservation ARI event.
+
 ## Tests 1–14
 
 ### 1. Full Data Update

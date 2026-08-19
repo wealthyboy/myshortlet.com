@@ -116,6 +116,7 @@ class LiveVerificationController extends Controller
             'execute' => ['required', 'accepted'],
             'process' => ['nullable', 'boolean'],
             'move_week' => ['nullable', 'boolean'],
+            'repair_mapping' => ['nullable', 'boolean'],
             'email' => ['nullable', 'email', 'max:190'],
             'phone' => ['nullable', 'string', 'max:40'],
         ]);
@@ -124,6 +125,7 @@ class LiveVerificationController extends Controller
             '--execute' => true,
             '--process' => (bool) ($validated['process'] ?? true),
             '--move-week' => (bool) ($validated['move_week'] ?? false),
+            '--repair-mapping' => (bool) ($validated['repair_mapping'] ?? false),
         ];
 
         if (! empty($validated['reservation_id'])) {

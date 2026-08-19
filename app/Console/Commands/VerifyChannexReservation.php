@@ -10,11 +10,14 @@ use App\Models\ChannexCertificationLog;
 use App\Models\Property;
 use App\Models\Reservation;
 use App\Models\UserReservation;
+use App\Services\Channex\ApartmentSyncService;
+use App\Services\Channex\GroupPropertyService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\ValidationException;
 
@@ -29,6 +32,7 @@ class VerifyChannexReservation extends Command
         {--process : Process its Channex ARI events immediately}
         {--move-week : Move the reservation exactly seven days later and process that update}
         {--resume= : Resume an existing PMS reservation and its pending ARI event}
+        {--repair-mapping : Recreate Channex mappings only when their remote IDs return 404}
         {--error-reference= : Find a previous reservation failure in laravel.log without creating data}
         {--email=channex-certification@invalid.local : Guest email stored on the test booking}
         {--phone=+2340000000000 : Guest phone stored on the test booking}';
@@ -57,6 +61,11 @@ class VerifyChannexReservation extends Command
             }
 
             [$property, $apartment, $checkin, $checkout] = $this->resolveInputs();
+            if ($this->option('repair-mapping')) {
+                $this->repairMapping($property);
+                $property->refresh();
+                $apartment->refresh();
+            }
             $this->preflight($property, $apartment, $checkin, $checkout);
 
             $this->table(['Field', 'Value'], [
@@ -260,6 +269,11 @@ class VerifyChannexReservation extends Command
         $checkin = Carbon::parse($stay->checkin)->startOfDay();
         $checkout = Carbon::parse($stay->checkout)->startOfDay();
 
+        if ($this->option('repair-mapping')) {
+            $this->repairMapping($apartment->property);
+            $apartment->refresh();
+        }
+
         $this->info("Resuming PMS reservation #{$reservation->id} ({$reservation->invoice}).");
         $this->recoverFailedCreateEvent($apartment, $checkin);
         $this->reportAri('Create retry', $apartment, 'test_9_booking_create');
@@ -272,6 +286,53 @@ class VerifyChannexReservation extends Command
         $this->line('PMS details: ' . url('/admin/reservations/' . $reservation->id));
         $this->line('Channex logs: ' . url('/admin/channex/certification/logs'));
         return self::SUCCESS;
+    }
+
+    protected function repairMapping(Property $property): void
+    {
+        $this->warn('Checking remote Channex mappings for property #' . $property->id . '.');
+
+        if ($property->channex_group_id && ! $this->remoteEntityExists('/groups/' . $property->channex_group_id)) {
+            $property->updateQuietly(['channex_group_id' => null]);
+            $this->warn('Cleared missing Channex group mapping.');
+        }
+
+        if ($property->channex_property_id && ! $this->remoteEntityExists('/properties/' . $property->channex_property_id)) {
+            $property->updateQuietly([
+                'channex_property_id' => null,
+                'channex_synced' => false,
+            ]);
+            $this->warn('Cleared missing Channex property mapping.');
+        }
+
+        app(GroupPropertyService::class)->sync($property);
+        $property->refresh()->load('apartments');
+
+        foreach ($property->apartments as $apartment) {
+            app(ApartmentSyncService::class)->sync($apartment);
+            $apartment->refresh();
+            $this->info("Mapped apartment #{$apartment->id} to room type {$apartment->channex_room_type_id}.");
+        }
+
+        $this->info('Mapped property to Channex property ' . $property->channex_property_id . '.');
+    }
+
+    protected function remoteEntityExists(string $path): bool
+    {
+        $response = Http::withHeaders([
+            'user-api-key' => config('services.channex.key'),
+            'Accept' => 'application/json',
+        ])->timeout(30)->get(rtrim(config('services.channex.base_url'), '/') . $path);
+
+        if ($response->successful()) {
+            return true;
+        }
+
+        if ($response->status() === 404) {
+            return false;
+        }
+
+        throw new \RuntimeException("Remote mapping check failed for {$path} with HTTP {$response->status()}.");
     }
 
     protected function recoverFailedCreateEvent(Apartment $apartment, Carbon $checkin): void
