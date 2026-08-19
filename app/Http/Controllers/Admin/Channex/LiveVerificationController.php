@@ -155,6 +155,31 @@ class LiveVerificationController extends Controller
         ], $exitCode === 0 ? 200 : 422)->header('Cache-Control', 'private, no-store');
     }
 
+    public function setupCertification(Request $request)
+    {
+        if (! $this->isAuthorized($request)) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $validated = $request->validate([
+            'execute' => ['required', 'accepted'],
+            'name' => ['nullable', 'string', 'max:190', 'regex:/^Test Property/'],
+        ]);
+
+        $arguments = ['--execute' => true];
+        if (! empty($validated['name'])) {
+            $arguments['--name'] = $validated['name'];
+        }
+
+        $exitCode = Artisan::call('channex:setup-certification', $arguments);
+
+        return response()->json([
+            'success' => $exitCode === 0,
+            'exit_code' => $exitCode,
+            'output' => Artisan::output(),
+        ], $exitCode === 0 ? 200 : 422)->header('Cache-Control', 'private, no-store');
+    }
+
     protected function isAuthorized(Request $request, bool $allowQueryToken = false): bool
     {
         $expectedToken = trim((string) config('services.channex.verification_token', ''));

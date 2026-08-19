@@ -49,6 +49,8 @@ For remote diagnostics without an admin browser session, use the token-protected
 
 If Channex reports `Not found property for this change` after a property was deleted remotely, pass `repair_mapping=true`. The verifier checks the mapped group and property by ID, clears only mappings that return HTTP 404, recreates the structure synchronously, and then retries the reservation ARI event.
 
+To create the isolated final certification setup, run `php artisan channex:setup-certification --execute` or call the bearer-token protected `POST /api/channex/setup-certification` endpoint with `{"execute":true}`. It creates only `Test Property - Channex Final Certification`, Twin Room, Double Room, Best Available Rate, and Bed & Breakfast Rate, then verifies every mapping remotely. Existing properties are never selected or modified.
+
 ## Tests 1–14
 
 ### 1. Full Data Update

@@ -61,4 +61,18 @@ class ChannexLiveVerificationTest extends TestCase
             ->assertStatus(403)
             ->assertExactJson(['message' => 'Unauthorized']);
     }
+
+    public function test_certification_setup_fails_closed_before_database_access(): void
+    {
+        config([
+            'services.channex.verification_token' => '',
+            'database.default' => 'intentionally-unconfigured',
+        ]);
+
+        $this->postJson('/api/channex/setup-certification', [
+            'execute' => true,
+        ], [
+            'Authorization' => 'Bearer attacker-controlled-token',
+        ])->assertStatus(403)->assertExactJson(['message' => 'Unauthorized']);
+    }
 }

@@ -26,6 +26,8 @@ Route::get('/channex/verify-reservation', 'Admin\Channex\LiveVerificationControl
     ->middleware('throttle:10,1');
 Route::post('/channex/verify-reservation', 'Admin\Channex\LiveVerificationController@reservation')
     ->middleware('throttle:5,1');
+Route::post('/channex/setup-certification', 'Admin\Channex\LiveVerificationController@setupCertification')
+    ->middleware('throttle:2,1');
 
 
 
