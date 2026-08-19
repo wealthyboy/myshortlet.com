@@ -3,6 +3,7 @@
 namespace App\Services\Channex;
 
 use App\Models\Property;
+use App\Support\ChannexTaskIds;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
@@ -202,11 +203,9 @@ class FullSyncService
 
     protected function assertTaskIdsReturned(array $response, string $endpoint): void
     {
-        $taskIds = collect($response['data'] ?? [])
-            ->pluck('id')
-            ->filter();
+        $taskIds = ChannexTaskIds::extract($response);
 
-        if ($taskIds->isEmpty()) {
+        if (empty($taskIds)) {
             throw new \RuntimeException(
                 "Channex {$endpoint} update was accepted without a task ID."
             );

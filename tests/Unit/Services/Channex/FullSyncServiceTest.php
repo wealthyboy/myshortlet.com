@@ -27,6 +27,15 @@ class FullSyncServiceTest extends TestCase
 
         $this->addToAssertionCount(1);
     }
+
+    public function test_it_accepts_a_single_task_object_response(): void
+    {
+        $service = new TestableFullSyncService(Mockery::mock(AriPushService::class));
+
+        $service->assertTaskIds(['data' => ['id' => 'task-uuid-1']], 'availability');
+
+        $this->addToAssertionCount(1);
+    }
 }
 
 class TestableFullSyncService extends FullSyncService

@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\Property;
 use App\Services\Channex\CertificationLogService;
 use App\Services\Channex\FullSyncService;
+use App\Support\ChannexTaskIds;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -94,16 +95,6 @@ class RunChannexFullSync implements ShouldQueue
 
     protected function extractTaskIds(array $response): array
     {
-        $data = $response['data'] ?? [];
-
-        if (! is_array($data)) {
-            return [];
-        }
-
-        return collect($data)
-            ->pluck('id')
-            ->filter()
-            ->values()
-            ->all();
+        return ChannexTaskIds::extract($response);
     }
 }

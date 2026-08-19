@@ -108,10 +108,11 @@ class LiveVerificationController extends Controller
         }
 
         $validated = $request->validate([
-            'property' => ['required', 'string', 'max:255'],
-            'apartment' => ['required', 'string', 'max:255'],
-            'checkin' => ['required', 'date_format:Y-m-d'],
-            'checkout' => ['required', 'date_format:Y-m-d', 'after:checkin'],
+            'property' => ['required_without:reservation_id', 'nullable', 'string', 'max:255'],
+            'apartment' => ['required_without:reservation_id', 'nullable', 'string', 'max:255'],
+            'checkin' => ['required_without:reservation_id', 'nullable', 'date_format:Y-m-d'],
+            'checkout' => ['required_without:reservation_id', 'nullable', 'date_format:Y-m-d', 'after:checkin'],
+            'reservation_id' => ['nullable', 'integer', 'exists:user_reservations,id'],
             'execute' => ['required', 'accepted'],
             'process' => ['nullable', 'boolean'],
             'move_week' => ['nullable', 'boolean'],
@@ -120,14 +121,21 @@ class LiveVerificationController extends Controller
         ]);
 
         $arguments = [
-            'property' => $validated['property'],
-            'apartment' => $validated['apartment'],
-            'checkin' => $validated['checkin'],
-            'checkout' => $validated['checkout'],
             '--execute' => true,
             '--process' => (bool) ($validated['process'] ?? true),
             '--move-week' => (bool) ($validated['move_week'] ?? false),
         ];
+
+        if (! empty($validated['reservation_id'])) {
+            $arguments['--resume'] = (int) $validated['reservation_id'];
+        } else {
+            $arguments += [
+                'property' => $validated['property'],
+                'apartment' => $validated['apartment'],
+                'checkin' => $validated['checkin'],
+                'checkout' => $validated['checkout'],
+            ];
+        }
 
         if (! empty($validated['email'])) {
             $arguments['--email'] = $validated['email'];

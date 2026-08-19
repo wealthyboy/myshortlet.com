@@ -18,4 +18,22 @@ class ProcessChannexAriOutboxTest extends TestCase
         $this->assertSame(300, $job->uniqueFor);
         $this->assertSame('process-channex-ari-outbox', $job->uniqueId());
     }
+
+    public function test_task_id_extractor_accepts_a_single_task_object(): void
+    {
+        $job = new TestableProcessChannexAriOutbox();
+
+        $this->assertSame(
+            ['task-uuid-1'],
+            $job->taskIds(['data' => ['type' => 'task', 'id' => 'task-uuid-1']])
+        );
+    }
+}
+
+class TestableProcessChannexAriOutbox extends ProcessChannexAriOutbox
+{
+    public function taskIds(array $response): array
+    {
+        return $this->extractTaskIds($response);
+    }
 }

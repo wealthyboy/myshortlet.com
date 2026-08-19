@@ -21,13 +21,14 @@ use Illuminate\Validation\ValidationException;
 class VerifyChannexReservation extends Command
 {
     protected $signature = 'channex:verify-reservation
-        {property : Local property ID, exact name, or Channex property UUID}
-        {apartment : Local apartment ID or exact name}
-        {checkin : Check-in date (YYYY-MM-DD)}
-        {checkout : Check-out date (YYYY-MM-DD)}
+        {property? : Local property ID, exact name, or Channex property UUID}
+        {apartment? : Local apartment ID or exact name}
+        {checkin? : Check-in date (YYYY-MM-DD)}
+        {checkout? : Check-out date (YYYY-MM-DD)}
         {--execute : Create a real PMS reservation}
         {--process : Process its Channex ARI events immediately}
         {--move-week : Move the reservation exactly seven days later and process that update}
+        {--resume= : Resume an existing PMS reservation and its pending ARI event}
         {--error-reference= : Find a previous reservation failure in laravel.log without creating data}
         {--email=channex-certification@invalid.local : Guest email stored on the test booking}
         {--phone=+2340000000000 : Guest phone stored on the test booking}';
@@ -51,6 +52,10 @@ class VerifyChannexReservation extends Command
         }
 
         try {
+            if ($this->option('resume')) {
+                return $this->resumeReservation((int) $this->option('resume'));
+            }
+
             [$property, $apartment, $checkin, $checkout] = $this->resolveInputs();
             $this->preflight($property, $apartment, $checkin, $checkout);
 
@@ -100,6 +105,14 @@ class VerifyChannexReservation extends Command
     protected function resolveInputs(): array
     {
         $propertyIdentifier = (string) $this->argument('property');
+        $apartmentIdentifier = (string) $this->argument('apartment');
+        $checkinInput = (string) $this->argument('checkin');
+        $checkoutInput = (string) $this->argument('checkout');
+
+        if ($propertyIdentifier === '' || $apartmentIdentifier === '' || $checkinInput === '' || $checkoutInput === '') {
+            throw new \InvalidArgumentException('Property, apartment, check-in, and checkout are required unless --resume is used.');
+        }
+
         $property = Property::query()
             ->when(ctype_digit($propertyIdentifier), fn ($query) => $query->whereKey((int) $propertyIdentifier))
             ->when(! ctype_digit($propertyIdentifier), function ($query) use ($propertyIdentifier) {
@@ -110,14 +123,13 @@ class VerifyChannexReservation extends Command
             })
             ->firstOrFail();
 
-        $apartmentIdentifier = (string) $this->argument('apartment');
         $apartment = $property->apartments()
             ->when(ctype_digit($apartmentIdentifier), fn ($query) => $query->whereKey((int) $apartmentIdentifier))
             ->when(! ctype_digit($apartmentIdentifier), fn ($query) => $query->where('name', $apartmentIdentifier))
             ->firstOrFail();
 
-        $checkin = Carbon::createFromFormat('Y-m-d', (string) $this->argument('checkin'))->startOfDay();
-        $checkout = Carbon::createFromFormat('Y-m-d', (string) $this->argument('checkout'))->startOfDay();
+        $checkin = Carbon::createFromFormat('Y-m-d', $checkinInput)->startOfDay();
+        $checkout = Carbon::createFromFormat('Y-m-d', $checkoutInput)->startOfDay();
 
         if ($checkout->lte($checkin)) {
             throw new \InvalidArgumentException('Checkout must be after check-in.');
@@ -209,6 +221,35 @@ class VerifyChannexReservation extends Command
         $reservation->refresh();
         $this->info('Moved reservation to ' . $checkin->copy()->addWeek()->toDateString()
             . ' through ' . $checkout->copy()->addWeek()->toDateString() . '.');
+    }
+
+    protected function resumeReservation(int $reservationId): int
+    {
+        if (! $this->option('process')) {
+            throw new \RuntimeException('--resume requires --process.');
+        }
+
+        $reservation = UserReservation::with('reservations.apartment.property')->findOrFail($reservationId);
+        $stay = $reservation->reservations->first();
+        if (! $stay || ! $stay->apartment) {
+            throw new \RuntimeException('The reservation has no mapped apartment stay.');
+        }
+
+        $apartment = $stay->apartment;
+        $checkin = Carbon::parse($stay->checkin)->startOfDay();
+        $checkout = Carbon::parse($stay->checkout)->startOfDay();
+
+        $this->info("Resuming PMS reservation #{$reservation->id} ({$reservation->invoice}).");
+        $this->reportAri('Create retry', $apartment, 'test_9_booking_create');
+
+        if ($this->option('move-week')) {
+            $this->moveReservationOneWeek($reservation, $checkin, $checkout);
+            $this->reportAri('Move +7 days', $apartment, 'test_9_booking_move');
+        }
+
+        $this->line('PMS details: ' . url('/admin/reservations/' . $reservation->id));
+        $this->line('Channex logs: ' . url('/admin/channex/certification/logs'));
+        return self::SUCCESS;
     }
 
     protected function request(array $input, string $method = 'POST'): Request

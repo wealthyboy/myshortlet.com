@@ -7,6 +7,7 @@ use App\Models\ChannexAriOutboxEvent;
 use App\Exceptions\ChannexRateLimitException;
 use App\Services\Channex\AriPushService;
 use App\Services\Channex\CertificationLogService;
+use App\Support\ChannexTaskIds;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -278,7 +279,10 @@ class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUnique
                 [
                     'event_ids' => $eventIds,
                 ],
-                null,
+                [
+                    'availability' => $availabilityResponse ?? [],
+                    'restrictions' => $restrictionsResponse ?? [],
+                ],
                 $e->getMessage()
             );
 
@@ -303,17 +307,7 @@ class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUnique
 
     protected function extractTaskIds(array $response): array
     {
-        $data = $response['data'] ?? [];
-
-        if (! is_array($data)) {
-            return [];
-        }
-
-        return collect($data)
-            ->pluck('id')
-            ->filter()
-            ->values()
-            ->all();
+        return ChannexTaskIds::extract($response);
     }
 
 }
