@@ -15,6 +15,7 @@ use App\Services\Channex\GroupPropertyService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -97,6 +98,9 @@ class VerifyChannexReservation extends Command
             }
         } catch (\Throwable $exception) {
             $this->error(get_class($exception) . ': ' . $exception->getMessage());
+            if ($exception instanceof RequestException && $exception->response) {
+                $this->line('Channex API response: ' . json_encode($exception->response->json(), JSON_UNESCAPED_SLASHES));
+            }
             $this->reportLatestAriFailure();
             logger()->error('Channex reservation verification failed', [
                 'exception' => $exception,
