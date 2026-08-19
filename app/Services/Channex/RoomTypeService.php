@@ -40,7 +40,8 @@ class RoomTypeService extends ChannexClient
             ->values()
             ->toArray();
 
-        \Log::info($facilityIds);
+        $adultOccupancy = max(1, (int) ($apartment->max_adults ?? 2));
+        $childOccupancy = max(0, (int) ($apartment->max_children ?? 0));
 
         $payload = [
             'room_type' => [
@@ -48,18 +49,17 @@ class RoomTypeService extends ChannexClient
                 'title' => $apartment->name,
 
                 // Inventory
-                'count_of_rooms' => 1,
+                'count_of_rooms' => max(1, (int) ($apartment->quantity ?? 1)),
 
                 // Occupancy
-                'occ_adults' => 7,
-                'occ_children' => 1,
-                'occ_infants' => 1,
-                'default_occupancy' => min($apartment->max_adults ?? 2, 2),
+                'occ_adults' => $adultOccupancy,
+                'occ_children' => $childOccupancy,
+                'occ_infants' => 0,
+                'default_occupancy' => min($adultOccupancy, 2),
 
                 // Metadata
                 'facilities' => $facilityIds,
                 'room_kind'  => 'room',
-                'capacity'   => null,
 
                 // Content
                 'content' => [

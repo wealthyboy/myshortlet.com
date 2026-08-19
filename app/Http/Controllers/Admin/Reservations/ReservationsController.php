@@ -48,7 +48,7 @@ class ReservationsController extends Controller
 
 		//Check for the coming_from query parameter
 		$comingFrom = $request->input('coming_from');
-		if (!in_array($comingFrom, ['payment', 'checkin'])) {
+		if (!in_array($comingFrom, ['payment', 'checkin', 'ota'], true)) {
 			abort(404);
 		}
 

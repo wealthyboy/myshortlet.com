@@ -48,7 +48,7 @@ class ExportController extends Controller
     public function publicApartmentsSnapshot(Request $request)
     {
         $expectedToken = (string) config('services.live_export.token');
-        $providedToken = (string) $request->query('token');
+        $providedToken = (string) ($request->bearerToken() ?: $request->query('token', ''));
 
         if ($expectedToken === '' || ! hash_equals($expectedToken, $providedToken)) {
             return response()->json([

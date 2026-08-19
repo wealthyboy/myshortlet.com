@@ -17,6 +17,10 @@ class LiveSetupVerificationService
         $this->check($checks, filled(config('services.channex.base_url')), 'Channex API URL is configured.', 'Channex API URL is missing.');
         $this->check($checks, filled(config('services.channex.key')), 'Channex API credentials are configured.', 'Channex API credentials are missing.');
         $this->check($checks, filled(config('services.channex.webhook_secret')), 'Webhook secret is configured.', 'Webhook secret is missing.');
+        $this->check($checks, filled(config('services.channex.verification_token')), 'Live verification token is configured.', 'CHANNEX_VERIFICATION_TOKEN is missing.');
+        $this->check($checks, config('cache.default') === 'redis', 'Shared Redis cache is enabled.', 'CACHE_DRIVER must be redis for distributed ARI limits and locks.');
+        $this->check($checks, (int) config('services.channex.ari_limit_per_minute') === 20, 'Global ARI limit is 20/minute.', 'CHANNEX_ARI_LIMIT_PER_MINUTE must be 20.');
+        $this->check($checks, (int) config('services.channex.ari_endpoint_limit_per_property') === 10, 'Property/endpoint ARI limit is 10/minute.', 'CHANNEX_ARI_ENDPOINT_LIMIT_PER_PROPERTY must be 10.');
         $this->check(
             $checks,
             config('services.channex.webhook_secret_header') === 'X-Channex-Webhook-Secret',
@@ -35,6 +39,7 @@ class LiveSetupVerificationService
 
         $rooms = $property->apartments->sortBy('name')->values();
         $this->check($checks, $rooms->isNotEmpty(), $rooms->count() . ' room type(s) found.', 'No room types were found under this property.');
+        $this->check($checks, $rooms->count() >= 2, 'At least two certification room types were found.', 'Certification requires Twin and Double room types.');
 
         foreach ($rooms as $room) {
             $prefix = $room->name . ': ';
@@ -44,6 +49,18 @@ class LiveSetupVerificationService
 
             $plans = $room->channexRatePlans->where('is_active', true);
             $this->check($checks, $plans->isNotEmpty(), $prefix . $plans->count() . ' active rate plan(s) found.', $prefix . 'has no active rate plans.');
+            $this->check(
+                $checks,
+                $plans->contains(fn ($plan) => stripos($plan->name, 'Best Available Rate') !== false),
+                $prefix . 'Best Available Rate exists.',
+                $prefix . 'Best Available Rate is missing.'
+            );
+            $this->check(
+                $checks,
+                $plans->contains(fn ($plan) => stripos($plan->name, 'Breakfast') !== false),
+                $prefix . 'Bed & Breakfast rate exists.',
+                $prefix . 'Bed & Breakfast rate is missing.'
+            );
 
             foreach ($plans as $plan) {
                 $this->check(

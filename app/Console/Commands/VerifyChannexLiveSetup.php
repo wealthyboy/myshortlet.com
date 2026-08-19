@@ -119,6 +119,18 @@ class VerifyChannexLiveSetup extends Command
         );
 
         $this->check(
+            filled(config('services.channex.verification_token')),
+            'CHANNEX_VERIFICATION_TOKEN is configured (value hidden).',
+            'CHANNEX_VERIFICATION_TOKEN is missing.'
+        );
+
+        $this->check(
+            config('cache.default') === 'redis',
+            'CACHE_DRIVER uses shared Redis.',
+            'CACHE_DRIVER must be redis for distributed ARI limits and locks.'
+        );
+
+        $this->check(
             config('services.channex.webhook_secret_header') === 'X-Channex-Webhook-Secret',
             'The Channex webhook secret header is correct.',
             'CHANNEX_WEBHOOK_SECRET_HEADER must be X-Channex-Webhook-Secret.'

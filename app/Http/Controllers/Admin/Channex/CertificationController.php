@@ -145,7 +145,7 @@ class CertificationController extends Controller
                     $payload
                 );
 
-                $event = $outboxService->queueApartmentChange($apartment, $payload);
+                $event = $outboxService->queueApartmentChange($apartment, $payload, $scenario);
                 $eventIds[] = $event->id;
 
                 if (! $firstPropertyId) {
@@ -360,7 +360,7 @@ class CertificationController extends Controller
                     $payload
                 );
 
-                $event = $outboxService->queueApartmentChange($apartment, $payload);
+                $event = $outboxService->queueApartmentChange($apartment, $payload, $scenario);
                 $eventIds[] = $event->id;
 
                 if (! $firstPropertyId) {

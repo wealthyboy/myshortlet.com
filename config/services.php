@@ -32,6 +32,7 @@ return [
         'webhook_secret_header' => env('CHANNEX_WEBHOOK_SECRET_HEADER', 'X-Channex-Webhook-Secret'),
         'ari_limit_per_minute' => env('CHANNEX_ARI_LIMIT_PER_MINUTE', 20),
         'ari_endpoint_limit_per_property' => env('CHANNEX_ARI_ENDPOINT_LIMIT_PER_PROPERTY', 10),
+        'verification_token' => env('CHANNEX_VERIFICATION_TOKEN'),
     ],
 
     'live_export' => [

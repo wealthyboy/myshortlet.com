@@ -30,9 +30,8 @@ class ChannexClient
         if ($response->failed()) {
             logger()->error('CHANNEX API GET ERROR', [
                 'url' => $url,
-                'params' => $params,
                 'status' => $response->status(),
-                'response_body' => $response->body(),
+                'error_code' => data_get($response->json(), 'errors.code'),
             ]);
 
             $response->throw();
@@ -55,9 +54,8 @@ class ChannexClient
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
                 ],
-                'request_body' => $payload,
                 'status' => $response->status(),
-                'response_body' => $response->body(),
+                'error_code' => data_get($response->json(), 'errors.code'),
             ]);
 
             $response->throw();
@@ -75,9 +73,8 @@ class ChannexClient
         if ($response->failed()) {
             logger()->error('CHANNEX API PUT ERROR', [
                 'url' => $url,
-                'request_body' => $payload,
                 'status' => $response->status(),
-                'response_body' => $response->body(),
+                'error_code' => data_get($response->json(), 'errors.code'),
             ]);
 
             $response->throw();
@@ -96,7 +93,7 @@ class ChannexClient
             logger()->error('CHANNEX API DELETE ERROR', [
                 'url' => $url,
                 'status' => $response->status(),
-                'response_body' => $response->body(),
+                'error_code' => data_get($response->json(), 'errors.code'),
             ]);
 
             $response->throw();

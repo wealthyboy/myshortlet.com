@@ -8,12 +8,17 @@ use App\Models\ChannexRatePlan;
 
 class AriOutboxService
 {
-    public function queueApartmentChange(Apartment $apartment, array $payload = []): ChannexAriOutboxEvent
+    public function queueApartmentChange(
+        Apartment $apartment,
+        array $payload = [],
+        ?string $scenario = null
+    ): ChannexAriOutboxEvent
     {
         return ChannexAriOutboxEvent::create([
             'property_id' => $apartment->property_id,
             'apartment_id' => $apartment->id,
             'event_type' => 'apartment_updated',
+            'scenario' => $scenario,
             'payload' => $payload,
             'status' => 'pending',
         ]);

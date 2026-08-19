@@ -106,6 +106,8 @@
                            </th>
                            <th>Invoice</th>
                            <th>Customer</th>
+                           <th>Source</th>
+                           <th>Status</th>
                            <th>Date Added</th>
                            <th>Total</th>
                            <th class="text-right"></th>
@@ -114,6 +116,10 @@
 
                      <tbody>
                         @foreach ($reservations as $reservation )
+                        @php
+                           $isCancelled = (bool) $reservation->is_cancelled
+                              || in_array(strtolower((string) $reservation->status), ['cancelled', 'canceled'], true);
+                        @endphp
                         <tr>
                            <td>
                               <div class="checkbox">
@@ -123,13 +129,15 @@
                               </div>
                            </td>
 
-                           <td class="text-left">{{ $reservation->invoice }}</td>
+                           <td class="text-left">{{ $reservation->invoice ?: $reservation->external_id }}</td>
                            <td>{{ $reservation->guest_user?->fullname() }}</td>
+                           <td>{{ $reservation->coming_from === 'ota' ? strtoupper($reservation->ota_name ?: 'OTA') : ucfirst($reservation->coming_from) }}</td>
+                           <td>{{ $isCancelled ? 'Cancelled' : ucfirst($reservation->status ?: 'Confirmed') }}</td>
                            <td>{{ $reservation->created_at }}</td>
                            <td class="text-left">{{ $reservation->currency  ?? '₦'}}{{ number_format($reservation->total) }}</td>
 
                            <td class="td-actions ">
-                              @if(!$reservation->is_cancelled)
+                              @if(!$isCancelled)
                               <span><a href="{{ route('admin.reservations.show',['reservation'=>$reservation->id]) }}" rel="tooltip" class="btn btn-success btn-simple" data-original-title="" title="View">
                                     more details
                                  </a></span>

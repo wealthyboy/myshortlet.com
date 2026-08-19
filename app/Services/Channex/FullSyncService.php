@@ -29,13 +29,25 @@ class FullSyncService
 
         foreach ($property->apartments as $apartment) {
             if (! $apartment->channex_room_type_id) {
-                continue;
+                throw new \RuntimeException(
+                    "Apartment {$apartment->id} is missing its Channex room-type mapping."
+                );
             }
 
-            $ratePlans = $apartment->channexRatePlans
+            $activeRatePlans = $apartment->channexRatePlans
                 ->where('is_active', true)
-                ->filter(fn ($plan) => ! empty($plan->channex_rate_plan_id))
                 ->values();
+
+            $unmappedRatePlans = $activeRatePlans
+                ->filter(fn ($plan) => empty($plan->channex_rate_plan_id));
+            if ($unmappedRatePlans->isNotEmpty()) {
+                throw new \RuntimeException(
+                    "Apartment {$apartment->id} has active rate plans without Channex mappings: "
+                    . $unmappedRatePlans->pluck('name')->implode(', ')
+                );
+            }
+
+            $ratePlans = $activeRatePlans;
 
             if ($ratePlans->isEmpty() && $apartment->channex_rate_plan_id) {
                 $ratePlans = collect([(object) [
@@ -46,7 +58,9 @@ class FullSyncService
             }
 
             if ($ratePlans->isEmpty()) {
-                continue;
+                throw new \RuntimeException(
+                    "Apartment {$apartment->id} has no active mapped Channex rate plan."
+                );
             }
 
             $dailyRates = $apartment->dailyRates()
@@ -138,13 +152,19 @@ class FullSyncService
             }
         }
 
+        if (empty($availabilityValues) || empty($restrictionValues)) {
+            throw new \RuntimeException('Full sync produced an incomplete Channex ARI payload.');
+        }
+
+        $availabilityResponse = $this->ariPushService->pushAvailability($availabilityValues);
+        $restrictionsResponse = $this->ariPushService->pushRestrictions($restrictionValues);
+
+        $this->assertTaskIdsReturned($availabilityResponse, 'availability');
+        $this->assertTaskIdsReturned($restrictionsResponse, 'restrictions');
+
         return [
-            'availability' => empty($availabilityValues)
-                ? []
-                : $this->ariPushService->pushAvailability($availabilityValues),
-            'restrictions' => empty($restrictionValues)
-                ? []
-                : $this->ariPushService->pushRestrictions($restrictionValues),
+            'availability' => $availabilityResponse,
+            'restrictions' => $restrictionsResponse,
         ];
     }
 
@@ -178,5 +198,18 @@ class FullSyncService
                 $range['state']
             );
         }, $ranges);
+    }
+
+    protected function assertTaskIdsReturned(array $response, string $endpoint): void
+    {
+        $taskIds = collect($response['data'] ?? [])
+            ->pluck('id')
+            ->filter();
+
+        if ($taskIds->isEmpty()) {
+            throw new \RuntimeException(
+                "Channex {$endpoint} update was accepted without a task ID."
+            );
+        }
     }
 }

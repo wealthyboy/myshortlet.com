@@ -3,6 +3,7 @@
 namespace App\Services\Channex;
 
 use App\Exceptions\ChannexRateLimitException;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\RateLimiter;
 
 class AriPushService extends ChannexClient
@@ -43,14 +44,23 @@ class AriPushService extends ChannexClient
             'limit' => $globalLimit,
         ]);
 
-        foreach ($keys as $limiter) {
-            if (RateLimiter::tooManyAttempts($limiter['key'], $limiter['limit'])) {
-                throw new ChannexRateLimitException(RateLimiter::availableIn($limiter['key']));
-            }
+        $claimLock = Cache::lock('channex:ari:limiter-claim:' . $credentialKey, 10);
+        if (! $claimLock->get()) {
+            throw new ChannexRateLimitException(1);
         }
 
-        foreach ($keys as $limiter) {
-            RateLimiter::hit($limiter['key'], 60);
+        try {
+            foreach ($keys as $limiter) {
+                if (RateLimiter::tooManyAttempts($limiter['key'], $limiter['limit'])) {
+                    throw new ChannexRateLimitException(RateLimiter::availableIn($limiter['key']));
+                }
+            }
+
+            foreach ($keys as $limiter) {
+                RateLimiter::hit($limiter['key'], 60);
+            }
+        } finally {
+            $claimLock->release();
         }
     }
 }

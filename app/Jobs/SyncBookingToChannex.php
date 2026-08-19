@@ -9,7 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Reservation;
-use App\Services\Channex\BookingAvailabilityService;
+use App\Services\Channex\InventorySyncService;
 
 
 class SyncBookingToChannex implements ShouldQueue
@@ -21,7 +21,8 @@ class SyncBookingToChannex implements ShouldQueue
 
     public function handle()
     {
-        app(BookingAvailabilityService::class)
-            ->sync($this->reservation);
+        // Backward-compatible safety path. All availability must flow through
+        // the calculated, batched and rate-limited ARI outbox.
+        app(InventorySyncService::class)->queueReservation($this->reservation);
     }
 }

@@ -11,9 +11,6 @@ use App\Models\Currency;
 use App\Models\Reservation;
 use App\Models\UserReservation;
 use App\Models\UserTracking;
-use App\Services\Channex\HandleOtaBookingService;
-
-
 use Carbon\Carbon;
 
 use App\Models\Apartment;
@@ -26,7 +23,6 @@ use App\Models\ApartmentAttribute;
 use App\Models\Attribute;
 use App\Models\AttributeProperty;
 use Illuminate\Support\Facades\Mail;
-use App\Jobs\SyncBookingToChannex;
 use App\Jobs\ProcessChannexBookingWebhook;
 
 class WebHookController extends Controller
@@ -34,14 +30,9 @@ class WebHookController extends Controller
 
     public  $settings;
 
-    public function __construct()
-    {
-        $this->settings =  SystemSetting::first();
-    }
-
-
     public function payment(Request $request)
     {
+        $this->settings = SystemSetting::first();
 
         Log::info($request->all());
 
@@ -123,9 +114,6 @@ class WebHookController extends Controller
                 $reservation->length_of_stay = data_get($input, 'length_of_stay');;
                 $reservation->save();
 
-                SyncBookingToChannex::dispatch($reservation);
-
-
                 if (!empty($e_services)) {
                     foreach ($e_services as $key => $attributes) {
                         foreach ($attributes as $attribute_id => $qty) {
@@ -206,11 +194,17 @@ class WebHookController extends Controller
 
     public function handleChannex(Request $request)
     {
-        $expectedSecret = (string) config('services.channex.webhook_secret', '');
+        $expectedSecret = trim((string) config('services.channex.webhook_secret', ''));
         $secretHeaderName = (string) config('services.channex.webhook_secret_header', 'X-Channex-Webhook-Secret');
         $providedSecret = (string) $request->header($secretHeaderName, '');
 
-        if ($expectedSecret !== '' && !hash_equals($expectedSecret, $providedSecret)) {
+        if ($expectedSecret === '') {
+            Log::critical('Channex webhook is disabled because its secret is not configured');
+
+            return response()->json(['status' => 'webhook_unavailable'], 503);
+        }
+
+        if (! hash_equals($expectedSecret, $providedSecret)) {
             Log::warning('Channex Webhook Rejected: invalid secret', [
                 'event' => $request->input('event'),
                 'property_id' => $request->input('property_id'),
@@ -221,13 +215,30 @@ class WebHookController extends Controller
             return response()->json(['status' => 'unauthorized'], 401);
         }
 
-        Log::info('Channex Webhook Received', [
-            'event' => $request->input('event'),
-            'property_id' => $request->input('property_id'),
-            'payload' => $request->input('payload'),
-        ]);
+        $event = strtolower(trim((string) $request->input('event')));
+        $supportedEvents = [
+            'booking',
+            'booking_new',
+            'booking_modification',
+            'booking_cancellation',
+            'booking.created',
+            'booking.modified',
+            'booking.cancelled',
+            'booking.canceled',
+            'booking_cancelled',
+            'booking_canceled',
+        ];
 
-        $event = (string) $request->input('event');
+        if (! in_array($event, $supportedEvents, true)) {
+            Log::warning('Channex webhook ignored: unsupported event', [
+                'event' => $event,
+                'property_id' => $request->input('property_id'),
+                'ip' => $request->ip(),
+            ]);
+
+            return response()->json(['status' => 'unsupported_event'], 422);
+        }
+
         $payload = (array) $request->input('payload', []);
 
         // Backward compatibility for any legacy sender that still posts data.
@@ -241,6 +252,23 @@ class WebHookController extends Controller
         } elseif (is_array(data_get($payload, 'attributes'))) {
             $payload = (array) data_get($payload, 'attributes', []);
         }
+
+        // With send_data disabled Channex deliberately sends only event,
+        // user_id and property_id. Preserve those trigger fields so the
+        // queued worker can pull the oldest unacknowledged revision.
+        foreach (['property_id', 'user_id', 'booking_revision_id', 'revision_id'] as $field) {
+            if (! array_key_exists($field, $payload) && $request->filled($field)) {
+                $payload[$field] = $request->input($field);
+            }
+        }
+
+        Log::info('Channex webhook accepted', [
+            'event' => $event,
+            'property_id' => data_get($payload, 'property_id'),
+            'revision_id' => data_get($payload, 'booking_revision_id')
+                ?? data_get($payload, 'revision_id'),
+            'booking_id' => data_get($payload, 'booking_id'),
+        ]);
 
         $status = strtolower((string) data_get($payload, 'status', ''));
 

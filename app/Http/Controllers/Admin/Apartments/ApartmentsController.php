@@ -431,9 +431,6 @@ class ApartmentsController extends Controller
             ->values()
             ->all();
 
-        \Illuminate\Support\Facades\Artisan::call('cache:clear');
-
-
         if ($request->hasFile('video')) {
             // create or fetch the video model for this apartment
             $video = $apartment->video()->firstOrCreate([]);
@@ -543,6 +540,7 @@ class ApartmentsController extends Controller
 
         $defaultIndex = (int) $request->input('rate_plan_default', 0);
         $changedPlans = collect();
+        $retainedPlanIds = [];
 
         foreach ($rows as $index => $row) {
             $name = trim((string) $row['name']);
@@ -579,10 +577,24 @@ class ApartmentsController extends Controller
                 $changedPlans->push($plan);
             }
             $plan->save();
+            $retainedPlanIds[] = $plan->id;
         }
 
-        if (! $apartment->channexRatePlans()->where('is_default', true)->exists()) {
-            $apartment->channexRatePlans()->oldest('id')->limit(1)->update(['is_default' => true]);
+        // Rows removed from the form must stop participating in ARI/full sync.
+        // Keep the mapping record for audit/history instead of deleting it.
+        $apartment->channexRatePlans()
+            ->whereNotIn('id', $retainedPlanIds)
+            ->update([
+                'is_active' => false,
+                'is_default' => false,
+            ]);
+
+        if (! $apartment->channexRatePlans()->where('is_active', true)->where('is_default', true)->exists()) {
+            $apartment->channexRatePlans()
+                ->where('is_active', true)
+                ->oldest('id')
+                ->limit(1)
+                ->update(['is_default' => true]);
         }
 
         return $changedPlans;

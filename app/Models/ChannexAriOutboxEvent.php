@@ -10,6 +10,7 @@ class ChannexAriOutboxEvent extends Model
         'property_id',
         'apartment_id',
         'event_type',
+        'scenario',
         'payload',
         'status',
         'attempts',

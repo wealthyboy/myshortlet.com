@@ -18,6 +18,7 @@ class InventorySyncService
         }
 
         $dailyCapacity = $apartment->dailyRates()
+            ->whereNull('channex_rate_plan_id')
             ->whereDate('date', $date)
             ->value('availability');
 

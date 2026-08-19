@@ -15,6 +15,9 @@
         <a href="/admin/reservations?coming_from=checkin" class="px-4 py-2 border">Check-in</a>
     </h6>
     <h6>
+        <a href="/admin/reservations?coming_from=ota" class="px-4 py-2 border">OTA Bookings</a>
+    </h6>
+    <h6>
         <a href="/admin/peak_periods" class="px-4 py-2 border">Peak Periods</a>
     </h6>
     <h6>

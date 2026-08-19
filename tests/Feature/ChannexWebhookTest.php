@@ -8,6 +8,42 @@ use Tests\TestCase;
 
 class ChannexWebhookTest extends TestCase
 {
+    public function test_it_fails_closed_when_the_webhook_secret_is_missing(): void
+    {
+        Bus::fake();
+        config()->offsetUnset('services.channex.webhook_secret');
+        config([
+            'services.channex.webhook_secret_header' => 'X-Channex-Webhook-Secret',
+        ]);
+
+        $this->postJson('/webhook/channex', [
+            'event' => 'booking_new',
+            'payload' => ['booking_revision_id' => 'revision-1'],
+        ], [
+            'X-Channex-Webhook-Secret' => 'attacker-controlled-secret',
+        ])->assertStatus(503);
+
+        Bus::assertNothingDispatched();
+    }
+
+    public function test_it_fails_closed_when_the_webhook_secret_is_blank(): void
+    {
+        Bus::fake();
+        config([
+            'services.channex.webhook_secret' => '   ',
+            'services.channex.webhook_secret_header' => 'X-Channex-Webhook-Secret',
+        ]);
+
+        $this->postJson('/webhook/channex', [
+            'event' => 'booking_new',
+            'payload' => ['booking_revision_id' => 'revision-1'],
+        ], [
+            'X-Channex-Webhook-Secret' => 'attacker-controlled-secret',
+        ])->assertStatus(503);
+
+        Bus::assertNothingDispatched();
+    }
+
     public function test_it_rejects_an_invalid_webhook_secret(): void
     {
         config([
@@ -39,5 +75,28 @@ class ChannexWebhookTest extends TestCase
         ])->assertOk()->assertJson(['status' => 'accepted']);
 
         Bus::assertDispatched(ProcessChannexBookingWebhook::class);
+    }
+
+    public function test_it_preserves_the_top_level_property_id_for_the_queued_worker(): void
+    {
+        Bus::fake();
+        config([
+            'services.channex.webhook_secret' => 'correct-secret',
+            'services.channex.webhook_secret_header' => 'X-Channex-Webhook-Secret',
+        ]);
+
+        $this->postJson('/webhook/channex', [
+            'event' => 'booking_new',
+            'property_id' => 'property-uuid-1',
+        ], [
+            'X-Channex-Webhook-Secret' => 'correct-secret',
+        ])->assertOk()->assertJson(['status' => 'accepted']);
+
+        Bus::assertDispatched(ProcessChannexBookingWebhook::class, function ($job) {
+            $payload = new \ReflectionProperty($job, 'payload');
+            $payload->setAccessible(true);
+
+            return $payload->getValue($job)['property_id'] === 'property-uuid-1';
+        });
     }
 }

@@ -12,6 +12,13 @@ class LiveVerificationController extends Controller
 {
     public function index(Request $request, LiveSetupVerificationService $verification)
     {
+        $expectedToken = trim((string) config('services.channex.verification_token', ''));
+        $providedToken = (string) ($request->bearerToken() ?: $request->query('token', ''));
+
+        if ($expectedToken === '' || ! hash_equals($expectedToken, $providedToken)) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $properties = Property::query()
             ->where(function ($query) {
                 $query->whereNotNull('channex_property_id')
@@ -47,6 +54,7 @@ class LiveVerificationController extends Controller
 
         return response()
             ->view('channex.live_verification', compact('properties', 'property', 'report'))
+            ->header('Cache-Control', 'private, no-store')
             ->header('X-Robots-Tag', 'noindex, nofollow, noarchive');
     }
 }

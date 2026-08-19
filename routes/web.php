@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 
 Route::get('integration/apartments/snapshot', 'Admin\Channex\ExportController@publicApartmentsSnapshot')
+    ->middleware('throttle:10,1')
     ->name('integration.apartments.snapshot');
 
 // Public, read-only diagnostic used during Channex go-live verification.

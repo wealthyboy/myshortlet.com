@@ -240,6 +240,13 @@
                                         <span class="sidebar-normal"> Check-in </span>
                                     </a>
                                 </li>
+
+                                <li>
+                                    <a href="{{ route('admin.reservations.index', ['coming_from' => 'ota']) }}">
+                                        <span class="sidebar-mini"> O </span>
+                                        <span class="sidebar-normal"> OTA Bookings </span>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="{{ route('admin.invoices.index') }}">
                                         <span class="sidebar-mini"> I </span>

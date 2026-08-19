@@ -16,13 +16,16 @@ For the certification property, create Best Available Rate and Bed & Breakfast R
 
 ## Required deployment state
 
-1. Deploy the `2026_07_26` migrations and `2026_07_28_000001_extend_channex_rate_plans_for_multiple_plans`.
-2. Configure staging `CHANNEX_BASE_URL`, `CHANNEX_API_KEY`, `CHANNEX_WEBHOOK_SECRET`, and `CHANNEX_WEBHOOK_SECRET_HEADER`.
+1. Back up the database, run every pending migration through `2026_08_19_000001_add_scenario_to_channex_ari_outbox_events`, and verify `jobs`, `failed_jobs`, `channex_ari_outbox_events`, and `channex_certification_logs` exist.
+2. Configure staging `CHANNEX_BASE_URL`, `CHANNEX_API_KEY`, `CHANNEX_WEBHOOK_SECRET`, `CHANNEX_WEBHOOK_SECRET_HEADER`, and a separate high-entropy `CHANNEX_VERIFICATION_TOKEN`.
 3. Set `CHANNEX_ARI_LIMIT_PER_MINUTE=20` and `CHANNEX_ARI_ENDPOINT_LIMIT_PER_PROPERTY=10`.
-4. Use a shared production cache such as Redis for cross-worker rate limiting.
-5. Run a persistent Laravel queue worker and the Laravel scheduler every minute.
+4. Use `CACHE_DRIVER=redis` for cross-worker rate limiting and locks. Confirm the Redis PHP client and connectivity before switching; file cache is not production-ready for this integration.
+5. Run a persistent database queue worker and exactly one Laravel scheduler every minute. Confirm the worker timeout is greater than the 240-second full-sync timeout and `retry_after` is greater than the worker timeout.
 6. Expose `POST /webhook/channex` over HTTPS and configure the same secret in Channex.
 7. Confirm every test apartment has local-to-Channex property, room-type and rate-plan IDs.
+8. After deployment run `php artisan migrate:status`, `php artisan queue:failed`, and `php artisan channex:verify-live --remote`. Restart persistent queue workers after refreshing cached configuration.
+
+The shareable live-verification page is protected. Send the token as `Authorization: Bearer <CHANNEX_VERIFICATION_TOKEN>`; a `?token=` query is supported for a temporary reviewer link but should be rotated after use.
 
 ## PMS paths used during certification
 
@@ -30,7 +33,7 @@ For the certification property, create Best Available Rate and Bed & Breakfast R
 - Daily prices, availability and restrictions: **Admin → Integrations → Channex ARI Updates** (`/admin/channex/ari-updates`).
 - Full sync: **Admin → Properties → Full Sync (500 Days)**. The button submits a CSRF-protected `POST /admin/properties/full-sync` request.
 - Task evidence: **Admin → Integrations → Channex Logs**.
-- Booking evidence: normal admin reservation screens and reservation details.
+- Booking evidence: **Admin → Reservations → OTA Bookings** and reservation details.
 
 ## Tests 1–14
 
@@ -85,7 +88,7 @@ Create a Booking CRS or Booking.com test booking in Channex, then modify and can
 - `POST /booking_revisions/{id}/ack` succeeds;
 - the certification log records a successful booking acknowledgment.
 
-Capture screenshots of the reservation list/details and retain the received booking ID.
+Capture screenshots from **Admin → Reservations → OTA Bookings**, including the OTA source and cancellation status, and retain the received booking ID.
 
 ### 12. Rate Limits
 

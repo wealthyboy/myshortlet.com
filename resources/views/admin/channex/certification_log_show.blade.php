@@ -99,7 +99,7 @@
                             @endforeach
                         </div>
                     @elseif($log->source === 'full_sync')
-                        <p class="text-muted">{{ data_get($requestPayload, 'days', 500) }}-day full sync request.</p>
+                        <p class="text-muted">{{ data_get($submittedData, 'days', 500) }}-day full sync request.</p>
                     @else
                         <p class="text-muted">No individual ARI values were recorded for this activity.</p>
                     @endif

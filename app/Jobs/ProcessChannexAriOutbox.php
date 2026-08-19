@@ -8,22 +8,24 @@ use App\Exceptions\ChannexRateLimitException;
 use App\Services\Channex\AriPushService;
 use App\Services\Channex\CertificationLogService;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
-class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUniqueUntilProcessing
+class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $timeout = 120;
-    public int $tries = 3;
+    public int $tries = 20;
     public int $uniqueFor = 300;
 
     protected array $processingEventIds = [];
+    protected int $maxDeliveryAttempts = 3;
 
     public function backoff(): array
     {
@@ -45,11 +47,23 @@ class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUniqueUntilProcess
             ->where('updated_at', '<', now()->subMinutes(10))
             ->update(['status' => 'pending']);
 
-        $events = ChannexAriOutboxEvent::query()
-            ->where('status', 'pending')
-            ->orderBy('id')
-            ->limit(250)
-            ->get();
+        $events = DB::transaction(function () {
+            $events = ChannexAriOutboxEvent::query()
+                ->where('status', 'pending')
+                ->orderBy('id')
+                ->limit(250)
+                ->lockForUpdate()
+                ->get();
+
+            if ($events->isNotEmpty()) {
+                ChannexAriOutboxEvent::query()
+                    ->whereIn('id', $events->pluck('id'))
+                    ->where('status', 'pending')
+                    ->update(['status' => 'processing']);
+            }
+
+            return $events;
+        });
 
         if ($events->isEmpty()) {
             return;
@@ -57,12 +71,10 @@ class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUniqueUntilProcess
 
         $eventIds = $events->pluck('id')->all();
         $this->processingEventIds = $eventIds;
-
-        ChannexAriOutboxEvent::query()
-            ->whereIn('id', $eventIds)
-            ->update([
-                'status' => 'processing',
-            ]);
+        $scenarios = $events->pluck('scenario')->filter()->unique()->values();
+        $scenario = $scenarios->count() === 1
+            ? (string) $scenarios->first()
+            : ($scenarios->count() > 1 ? 'mixed_ari_batch' : null);
 
         try {
             $apartments = Apartment::query()
@@ -126,8 +138,17 @@ class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUniqueUntilProcess
                 $ratePlan = $localRatePlanId
                     ? $apartment->channexRatePlans->firstWhere('id', (int) $localRatePlanId)
                     : $apartment->channexRatePlans->firstWhere('is_default', true);
-                $channexRatePlanId = $ratePlan?->channex_rate_plan_id
-                    ?: $apartment->channex_rate_plan_id;
+
+                if ($localRatePlanId && (! $ratePlan || ! $ratePlan->channex_rate_plan_id)) {
+                    throw new \RuntimeException(
+                        "Selected local rate plan {$localRatePlanId} is not mapped to Channex."
+                    );
+                }
+
+                $channexRatePlanId = $ratePlan?->channex_rate_plan_id;
+                if (! $localRatePlanId && ! $channexRatePlanId) {
+                    $channexRatePlanId = $apartment->channex_rate_plan_id;
+                }
 
                 if (! $channexRatePlanId) {
                     throw new \RuntimeException("Apartment {$apartment->id} has no Channex rate plan mapping.");
@@ -180,16 +201,20 @@ class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUniqueUntilProcess
 
             $propertyIds = $events->pluck('property_id')->filter()->unique()->values();
             $primaryPropertyId = $propertyIds->isNotEmpty() ? (int) $propertyIds->first() : null;
+            $availabilityTaskIds = $this->extractTaskIds($availabilityResponse);
+            $restrictionTaskIds = $this->extractTaskIds($restrictionsResponse);
 
-            $taskIds = array_merge(
-                $this->extractTaskIds($availabilityResponse),
-                $this->extractTaskIds($restrictionsResponse)
-            );
+            if ((! empty($availabilityValues) && empty($availabilityTaskIds))
+                || (! empty($restrictionValues) && empty($restrictionTaskIds))) {
+                throw new \RuntimeException('Channex accepted an ARI update without returning every required task ID.');
+            }
+
+            $taskIds = array_merge($availabilityTaskIds, $restrictionTaskIds);
 
             $certificationLogService->log(
                 'ari_outbox',
                 'success',
-                null,
+                $scenario,
                 $primaryPropertyId,
                 null,
                 $taskIds,
@@ -214,8 +239,23 @@ class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUniqueUntilProcess
                     'last_error' => null,
                 ]);
         } catch (\Throwable $e) {
+            if ($e instanceof ChannexRateLimitException) {
+                ChannexAriOutboxEvent::query()
+                    ->whereIn('id', $eventIds)
+                    ->update([
+                        'status' => 'pending',
+                        'last_error' => $e->getMessage(),
+                    ]);
+
+                // A local throttle is a deferral, not a failed Channex delivery.
+                // Do not consume the event's three real delivery attempts.
+                $this->processingEventIds = [];
+                $this->release($e->retryAfter());
+                return;
+            }
+
             $attempts = (int) $events->max('attempts') + 1;
-            $willRetry = $attempts < $this->tries;
+            $willRetry = $attempts < $this->maxDeliveryAttempts;
 
             ChannexAriOutboxEvent::query()
                 ->whereIn('id', $eventIds)
@@ -231,7 +271,7 @@ class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUniqueUntilProcess
             $certificationLogService->log(
                 'ari_outbox',
                 'failed',
-                null,
+                $scenario,
                 $primaryPropertyId,
                 null,
                 [],
@@ -241,11 +281,6 @@ class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUniqueUntilProcess
                 null,
                 $e->getMessage()
             );
-
-            if ($e instanceof ChannexRateLimitException && $willRetry) {
-                $this->release($e->retryAfter());
-                return;
-            }
 
             throw $e;
         }
