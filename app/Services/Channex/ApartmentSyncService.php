@@ -7,6 +7,19 @@ use RuntimeException;
 
 class ApartmentSyncService
 {
+    public function resetMappings(Apartment $apartment): void
+    {
+        $apartment->forceFill([
+            'channex_room_type_id' => null,
+            'channex_rate_plan_id' => null,
+            'channex_synced' => false,
+        ])->saveQuietly();
+
+        $apartment->channexRatePlans()->update([
+            'channex_rate_plan_id' => null,
+        ]);
+    }
+
     public function sync(Apartment $apartment): void
     {
         $property = $apartment->property;

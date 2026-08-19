@@ -331,7 +331,9 @@ class ProcessChannexAriOutbox implements ShouldQueue, ShouldBeUnique
 
             foreach ($apartments->where('property_id', $property->id) as $apartment) {
                 $apartment->setRelation('property', $property);
-                app(ApartmentSyncService::class)->sync($apartment);
+                $apartmentSync = app(ApartmentSyncService::class);
+                $apartmentSync->resetMappings($apartment);
+                $apartmentSync->sync($apartment);
             }
         }
     }

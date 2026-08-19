@@ -3,6 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\Property;
+use App\Models\Apartment;
+use App\Models\ChannexRatePlan;
+use App\Services\Channex\ApartmentSyncService;
 use App\Services\Channex\GroupPropertyService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -46,6 +49,54 @@ class ChannexDeletedPropertyRecoveryTest extends TestCase
             $this->assertSame('33333333-3333-4333-8333-333333333333', $property->channex_group_id);
             $this->assertSame('44444444-4444-4444-8444-444444444444', $property->channex_property_id);
             $this->assertTrue((bool) $property->channex_synced);
+        } finally {
+            DB::rollBack();
+        }
+    }
+
+    public function test_reset_mappings_clears_room_and_rate_plan_ids(): void
+    {
+        DB::beginTransaction();
+
+        try {
+            $property = new Property();
+            $property->name = 'Child mapping reset test';
+            $property->address = '1 Test Street';
+            $property->description = 'Temporary recovery test';
+            $property->type = 'multiple';
+            $property->mode = 'shortlet';
+            $property->slug = 'child-mapping-reset-test';
+            $property->token = 567890;
+            $property->save();
+
+            $apartment = new Apartment();
+            $apartment->name = 'Test Room';
+            $apartment->slug = 'test-room';
+            $apartment->property_id = $property->id;
+            $apartment->channex_room_type_id = '11111111-1111-4111-8111-111111111111';
+            $apartment->channex_rate_plan_id = '22222222-2222-4222-8222-222222222222';
+            $apartment->channex_synced = true;
+            $apartment->save();
+
+            $plan = ChannexRatePlan::create([
+                'apartment_id' => $apartment->id,
+                'channex_rate_plan_id' => '33333333-3333-4333-8333-333333333333',
+                'name' => 'Best Available Rate',
+                'default_rate' => 100,
+                'meal_type' => 'room_only',
+                'price_mode' => 'nightly',
+                'is_default' => true,
+                'is_active' => true,
+            ]);
+
+            app(ApartmentSyncService::class)->resetMappings($apartment);
+            $apartment->refresh();
+            $plan->refresh();
+
+            $this->assertNull($apartment->channex_room_type_id);
+            $this->assertNull($apartment->channex_rate_plan_id);
+            $this->assertFalse((bool) $apartment->channex_synced);
+            $this->assertNull($plan->channex_rate_plan_id);
         } finally {
             DB::rollBack();
         }

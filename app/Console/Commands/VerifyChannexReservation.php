@@ -313,12 +313,47 @@ class VerifyChannexReservation extends Command
         $property->refresh()->load('apartments');
 
         foreach ($property->apartments as $apartment) {
-            app(ApartmentSyncService::class)->sync($apartment);
+            $apartmentSync = app(ApartmentSyncService::class);
+            if (! $this->roomBelongsToProperty($apartment, $property)) {
+                $apartmentSync->resetMappings($apartment);
+                $this->warn("Cleared stale room/rate mappings for apartment #{$apartment->id}.");
+            }
+
+            $apartmentSync->sync($apartment);
             $apartment->refresh();
             $this->info("Mapped apartment #{$apartment->id} to room type {$apartment->channex_room_type_id}.");
         }
 
         $this->info('Mapped property to Channex property ' . $property->channex_property_id . '.');
+    }
+
+    protected function roomBelongsToProperty(Apartment $apartment, Property $property): bool
+    {
+        if (! $apartment->channex_room_type_id) {
+            return false;
+        }
+
+        $response = Http::withHeaders([
+            'user-api-key' => config('services.channex.key'),
+            'Accept' => 'application/json',
+        ])->timeout(30)->get(
+            rtrim(config('services.channex.base_url'), '/') . '/room_types/' . $apartment->channex_room_type_id
+        );
+
+        if ($response->status() === 404) {
+            return false;
+        }
+
+        if (! $response->successful()) {
+            throw new \RuntimeException(
+                "Remote room mapping check failed for apartment {$apartment->id} with HTTP {$response->status()}."
+            );
+        }
+
+        $remotePropertyId = data_get($response->json(), 'data.attributes.property_id')
+            ?? data_get($response->json(), 'data.relationships.property.data.id');
+
+        return (string) $remotePropertyId === (string) $property->channex_property_id;
     }
 
     protected function remoteEntityExists(string $path): bool
