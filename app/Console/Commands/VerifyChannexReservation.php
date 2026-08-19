@@ -63,7 +63,7 @@ class VerifyChannexReservation extends Command
 
             [$property, $apartment, $checkin, $checkout] = $this->resolveInputs();
             if ($this->option('repair-mapping')) {
-                $this->repairMapping($property);
+                $this->repairMapping($property, $apartment);
                 $property->refresh();
                 $apartment->refresh();
             }
@@ -274,7 +274,7 @@ class VerifyChannexReservation extends Command
         $checkout = Carbon::parse($stay->checkout)->startOfDay();
 
         if ($this->option('repair-mapping')) {
-            $this->repairMapping($apartment->property);
+            $this->repairMapping($apartment->property, $apartment);
             $apartment->refresh();
         }
 
@@ -292,7 +292,7 @@ class VerifyChannexReservation extends Command
         return self::SUCCESS;
     }
 
-    protected function repairMapping(Property $property): void
+    protected function repairMapping(Property $property, Apartment $targetApartment): void
     {
         $this->warn('Checking remote Channex mappings for property #' . $property->id . '.');
 
@@ -310,9 +310,10 @@ class VerifyChannexReservation extends Command
         }
 
         app(GroupPropertyService::class)->sync($property);
-        $property->refresh()->load('apartments');
+        $property->refresh();
+        $apartments = $property->apartments()->whereKey($targetApartment->id)->get();
 
-        foreach ($property->apartments as $apartment) {
+        foreach ($apartments as $apartment) {
             $apartmentSync = app(ApartmentSyncService::class);
             if (! $this->roomBelongsToProperty($apartment, $property)) {
                 $apartmentSync->resetMappings($apartment);
