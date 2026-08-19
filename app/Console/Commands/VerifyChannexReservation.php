@@ -88,6 +88,7 @@ class VerifyChannexReservation extends Command
             }
         } catch (\Throwable $exception) {
             $this->error(get_class($exception) . ': ' . $exception->getMessage());
+            $this->reportLatestAriFailure();
             logger()->error('Channex reservation verification failed', [
                 'exception' => $exception,
                 'property' => $this->argument('property'),
@@ -100,6 +101,26 @@ class VerifyChannexReservation extends Command
         $this->line('Recent reservation errors:');
         $this->line($this->recentReservationErrors());
         return self::FAILURE;
+    }
+
+    protected function reportLatestAriFailure(): void
+    {
+        $log = ChannexCertificationLog::query()
+            ->where('source', 'ari_outbox')
+            ->where('status', 'failed')
+            ->latest('id')
+            ->first();
+
+        if (! $log) {
+            return;
+        }
+
+        $this->line('Latest failed ARI log #' . $log->id . ':');
+        $this->line(json_encode([
+            'notes' => $log->notes,
+            'request' => $log->request_payload,
+            'response' => $log->response_payload,
+        ], JSON_UNESCAPED_SLASHES));
     }
 
     protected function resolveInputs(): array
