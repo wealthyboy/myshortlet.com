@@ -31,4 +31,34 @@ class ChannexLiveVerificationTest extends TestCase
             ->assertStatus(403)
             ->assertExactJson(['message' => 'Unauthorized']);
     }
+
+    public function test_reservation_verifier_fails_closed_before_database_access(): void
+    {
+        config([
+            'services.channex.verification_token' => '',
+            'database.default' => 'intentionally-unconfigured',
+        ]);
+
+        $this->postJson('/api/channex/verify-reservation', [
+            'property' => '1',
+            'apartment' => '1',
+            'checkin' => '2027-09-10',
+            'checkout' => '2027-09-11',
+            'execute' => true,
+        ], [
+            'Authorization' => 'Bearer attacker-controlled-token',
+        ])->assertStatus(403)->assertExactJson(['message' => 'Unauthorized']);
+    }
+
+    public function test_reservation_options_require_a_bearer_token(): void
+    {
+        config([
+            'services.channex.verification_token' => 'correct-token',
+            'database.default' => 'intentionally-unconfigured',
+        ]);
+
+        $this->getJson('/api/channex/verify-reservation')
+            ->assertStatus(403)
+            ->assertExactJson(['message' => 'Unauthorized']);
+    }
 }

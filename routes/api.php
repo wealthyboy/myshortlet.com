@@ -22,6 +22,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/channex/verify-reservation', 'Admin\Channex\LiveVerificationController@reservationOptions')
+    ->middleware('throttle:10,1');
+Route::post('/channex/verify-reservation', 'Admin\Channex\LiveVerificationController@reservation')
+    ->middleware('throttle:5,1');
+
 
 
 Route::get('/mapping_details', function (\Illuminate\Http\Request $request) {

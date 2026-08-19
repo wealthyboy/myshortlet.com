@@ -45,6 +45,8 @@ When the admin form fails or server configuration is uncertain, run the same res
 
 To retrieve an earlier browser failure from the server log, add `--error-reference=UUID`; this mode only reads the log and does not create data.
 
+For remote diagnostics without an admin browser session, use the token-protected API. `GET /api/channex/verify-reservation` returns live property/room IDs and environment checks. `POST /api/channex/verify-reservation` accepts `property`, `apartment`, `checkin`, `checkout`, `execute`, `process`, and `move_week`, then returns the synchronous Artisan output. Send `CHANNEX_VERIFICATION_TOKEN` only as an `Authorization: Bearer` header; query-string tokens are not accepted by these API endpoints.
+
 ## Tests 1–14
 
 ### 1. Full Data Update
