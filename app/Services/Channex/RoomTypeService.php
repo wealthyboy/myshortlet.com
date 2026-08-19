@@ -64,7 +64,7 @@ class RoomTypeService extends ChannexClient
                 // Content
                 'content' => [
                     'description' => $apartment->teaser ?? $apartment->name,
-                    'photos' => $images->take(20)->map(function ($image, $index) {
+                    'photos' => $images->take(10)->map(function ($image, $index) {
                         return [
                             'author'      => 'Avenue Montaigne',
                             'description' => $image->caption ?? 'Apartment photo',
