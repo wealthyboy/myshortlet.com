@@ -172,7 +172,14 @@ class PropertiesController extends Controller
          */
 
         (new Activity)->Log("Created a new property {$request->apartment_name}");
+        $this->queueChannexSync($property);
+
         return \Redirect::to('/admin/properties');
+    }
+
+    protected function queueChannexSync(Property $property): void
+    {
+        SyncPropertyToChannex::dispatch($property->id)->afterCommit();
     }
 
     public function property($request, $id = null, $update = false)
