@@ -27,9 +27,17 @@ class SyncPropertyToChannex implements ShouldQueue
 
     public function handle(): void
     {
-        $property = Property::findOrFail($this->propertyId);
+        $property = Property::with('apartments')->findOrFail($this->propertyId);
 
         app(GroupPropertyService::class)->sync($property);
+        $this->queueApartmentSyncs($property);
+    }
+
+    protected function queueApartmentSyncs(Property $property): void
+    {
+        foreach ($property->apartments as $apartment) {
+            SyncApartmentToChannex::dispatch($apartment->id);
+        }
     }
 
     public function failed(Throwable $exception): void

@@ -276,12 +276,50 @@ class PropertiesController extends Controller
 
     public function propertyWithMultipleApartments($request,  $property)
     {
+        foreach ((array) $request->room_price as $key => $price) {
+            $apartment = new Apartment;
+            $roomImages = !empty($request->images[$key]) ? $request->images[$key] : [];
+            $apartmentAllow = !empty($request->apartment_allow[$key])
+                ? $request->apartment_allow[$key]
+                : 0;
 
-        //$price = implode(array_values($request->room_price));
-        //dd($request->all());
+            $apartment->name = $request->room_name[$key];
+            $apartment->price = $price;
+            $apartment->sale_price = $request->room_sale_price[$key] ?? null;
+            $apartment->slug = str_slug($request->room_name[$key]);
+            $apartment->max_adults = $request->room_max_adults[$key] ?? null;
+            $apartment->quantity = $request->room_quantity[$key] ?? 1;
+            $apartment->image_link = $request->room_image_links[$key] ?? null;
+            $apartment->video_link = $request->room_video_links[$key] ?? null;
+            $apartment->type = $request->type;
+            $apartment->price_mode = $request->price_mode[$key] ?? null;
+            $apartment->apartment_id = $request->apartment_id[$key] ?? null;
+            $apartment->allow = $apartmentAllow;
+            $apartment->no_of_rooms = $request->room_number[$key] ?? null;
+            $apartment->sale_price_expires = !empty($request->room_sale_price_expires[$key])
+                ? Helper::getFormatedDate($request->room_sale_price_expires[$key], true)
+                : null;
+            $apartment->property_id = $property->id;
+            $apartment->uuid = time();
+            $apartment->toilets = $request->room_toilets[$key] ?? null;
+            $apartment->save();
 
+            if (isset($request->apartment_facilities_id[$key])) {
+                $apartment->attributes()->sync(array_filter($request->apartment_facilities_id[$key]));
+            }
 
-        // $property->price  =  $price;
+            if (isset($request->multiple_apartment_extras[$key])) {
+                $this->syncExtras(
+                    $request->multiple_apartment_extras[$key],
+                    $request->multiple_apartment_extra_services[$key] ?? [],
+                    $apartment
+                );
+            }
+
+            $this->syncImages($roomImages, $apartment, $property);
+            $this->syncAttributes($request, $apartment, $key);
+        }
+
         $property->save();
     }
 
