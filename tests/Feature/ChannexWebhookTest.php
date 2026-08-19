@@ -99,4 +99,21 @@ class ChannexWebhookTest extends TestCase
             return $payload->getValue($job)['property_id'] === 'property-uuid-1';
         });
     }
+
+    public function test_connection_test_returns_ok_without_dispatching_a_job(): void
+    {
+        Bus::fake();
+        config([
+            'services.channex.webhook_secret' => 'correct-secret',
+            'services.channex.webhook_secret_header' => 'X-Channex-Webhook-Secret',
+        ]);
+
+        $this->postJson('/webhook/channex', [
+            'event' => 'connection_test',
+        ], [
+            'X-Channex-Webhook-Secret' => 'correct-secret',
+        ])->assertOk()->assertExactJson(['status' => 'ok']);
+
+        Bus::assertNothingDispatched();
+    }
 }

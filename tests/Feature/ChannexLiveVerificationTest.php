@@ -75,4 +75,16 @@ class ChannexLiveVerificationTest extends TestCase
             'Authorization' => 'Bearer attacker-controlled-token',
         ])->assertStatus(403)->assertExactJson(['message' => 'Unauthorized']);
     }
+
+    public function test_webhook_status_fails_closed_before_database_access(): void
+    {
+        config([
+            'services.channex.verification_token' => '',
+            'database.default' => 'intentionally-unconfigured',
+        ]);
+
+        $this->getJson('/api/channex/webhook-status', [
+            'Authorization' => 'Bearer attacker-controlled-token',
+        ])->assertStatus(403)->assertExactJson(['message' => 'Unauthorized']);
+    }
 }

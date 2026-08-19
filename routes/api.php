@@ -28,6 +28,10 @@ Route::post('/channex/verify-reservation', 'Admin\Channex\LiveVerificationContro
     ->middleware('throttle:5,1');
 Route::post('/channex/setup-certification', 'Admin\Channex\LiveVerificationController@setupCertification')
     ->middleware('throttle:2,1');
+Route::get('/channex/webhook-status', 'Admin\Channex\LiveVerificationController@webhookStatus')
+    ->middleware('throttle:10,1');
+Route::post('/channex/test-webhook', 'Admin\Channex\LiveVerificationController@testWebhook')
+    ->middleware('throttle:5,1');
 
 
 

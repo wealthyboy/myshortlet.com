@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin\Channex;
 
 use App\Http\Controllers\Controller;
 use App\Models\Property;
+use App\Models\ChannexCertificationLog;
 use App\Services\Channex\LiveSetupVerificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
 
 class LiveVerificationController extends Controller
@@ -178,6 +180,51 @@ class LiveVerificationController extends Controller
             'exit_code' => $exitCode,
             'output' => Artisan::output(),
         ], $exitCode === 0 ? 200 : 422)->header('Cache-Control', 'private, no-store');
+    }
+
+    public function webhookStatus(Request $request)
+    {
+        if (! $this->isAuthorized($request)) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        return response()->json([
+            'url' => rtrim(config('app.url'), '/') . '/webhook/channex',
+            'secret_configured' => filled(config('services.channex.webhook_secret')),
+            'header' => config('services.channex.webhook_secret_header'),
+            'pending_jobs' => Schema::hasTable('jobs') ? DB::table('jobs')->count() : null,
+            'failed_jobs' => Schema::hasTable('failed_jobs') ? DB::table('failed_jobs')->count() : null,
+            'recent_booking_webhooks' => ChannexCertificationLog::query()
+                ->where('source', 'booking_webhook')
+                ->latest('id')
+                ->limit(10)
+                ->get(['id', 'scenario', 'property_id', 'status', 'task_ids', 'notes', 'created_at']),
+        ])->header('Cache-Control', 'private, no-store');
+    }
+
+    public function testWebhook(Request $request)
+    {
+        if (! $this->isAuthorized($request)) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $secret = trim((string) config('services.channex.webhook_secret'));
+        if ($secret === '') {
+            return response()->json(['success' => false, 'message' => 'Webhook secret is missing.'], 422);
+        }
+
+        $response = Http::withHeaders([
+            config('services.channex.webhook_secret_header') => $secret,
+            'Accept' => 'application/json',
+        ])->timeout(20)->post(rtrim(config('app.url'), '/') . '/webhook/channex', [
+            'event' => 'connection_test',
+        ]);
+
+        return response()->json([
+            'success' => $response->successful(),
+            'http_status' => $response->status(),
+            'response' => $response->json(),
+        ], $response->successful() ? 200 : 422)->header('Cache-Control', 'private, no-store');
     }
 
     protected function isAuthorized(Request $request, bool $allowQueryToken = false): bool
