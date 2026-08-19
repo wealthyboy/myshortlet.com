@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\HasChildren;
 use App\AttributeCategory;
 
@@ -12,7 +13,7 @@ use App\AttributeCategory;
 class Attribute extends Model
 {
 
-    use HasChildren;
+    use HasChildren, SoftDeletes;
 
     protected $fillable = [
         'name', 'parent_id', 'apartment_owner'

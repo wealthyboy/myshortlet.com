@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\ImageFiles  as Img;
 
 
 
 class Image extends Model
 {
+    use SoftDeletes;
 
     protected $fillable = ['parent_id', 'image', 'imageable_type', 'imageable_id', 'property_id', 'caption'];
 

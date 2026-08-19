@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 use App\Traits\FormatPrice;
@@ -11,7 +12,7 @@ use App\Traits\ImageFiles;
 
 class Apartment extends Model
 {
-    use HasFactory, FormatPrice, ImageFiles; //,SoftDeletes,CascadeSoftDeletes;
+    use HasFactory, FormatPrice, ImageFiles, SoftDeletes;
 
 
     protected $dates = ['available_from', 'sale_price_expires'];

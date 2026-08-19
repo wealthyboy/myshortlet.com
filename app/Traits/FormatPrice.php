@@ -19,8 +19,9 @@ trait FormatPrice
   protected $setting;
 
 
-  public function __construct()
+  public function __construct(array $attributes = [])
   {
+    parent::__construct($attributes);
     $this->setting = SystemSetting::first();
   }
 

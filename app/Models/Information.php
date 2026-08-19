@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\HasChildren;
 use App\Traits\ImageFiles;
 
@@ -12,7 +13,7 @@ use App\Traits\ImageFiles;
 
 class Information extends Model
 {
-	use HasChildren,ImageFiles;//,SoftDeletes,CascadeSoftDeletes;
+    use HasChildren, ImageFiles, SoftDeletes;
 
 	
     protected $fillable=['user_id','title','description'];

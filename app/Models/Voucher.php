@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Helper;
 use App\Traits\FormatPrice;
 
 class Voucher extends Model
 {
-    use FormatPrice;
+    use FormatPrice, SoftDeletes;
 
 
     public $appends = [

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Traits\HasChildren;
 use App\Traits\FormatPrice;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Property extends Model
 {
-    use HasFactory, FormatPrice, ImageFiles; //,SoftDeletes,CascadeSoftDeletes;
+    use HasFactory, FormatPrice, ImageFiles, SoftDeletes;
 
     public $folder = 'apartments';
 
