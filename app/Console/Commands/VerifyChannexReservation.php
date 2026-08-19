@@ -240,6 +240,7 @@ class VerifyChannexReservation extends Command
         $checkout = Carbon::parse($stay->checkout)->startOfDay();
 
         $this->info("Resuming PMS reservation #{$reservation->id} ({$reservation->invoice}).");
+        $this->recoverFailedCreateEvent($apartment, $checkin);
         $this->reportAri('Create retry', $apartment, 'test_9_booking_create');
 
         if ($this->option('move-week')) {
@@ -250,6 +251,46 @@ class VerifyChannexReservation extends Command
         $this->line('PMS details: ' . url('/admin/reservations/' . $reservation->id));
         $this->line('Channex logs: ' . url('/admin/channex/certification/logs'));
         return self::SUCCESS;
+    }
+
+    protected function recoverFailedCreateEvent(Apartment $apartment, Carbon $checkin): void
+    {
+        $hasPending = ChannexAriOutboxEvent::query()
+            ->where('apartment_id', $apartment->id)
+            ->where('status', 'pending')
+            ->exists();
+
+        if ($hasPending) {
+            return;
+        }
+
+        $date = $checkin->toDateString();
+        $event = ChannexAriOutboxEvent::query()
+            ->where('apartment_id', $apartment->id)
+            ->where('status', 'failed')
+            ->latest('id')
+            ->limit(20)
+            ->get()
+            ->first(function ($candidate) use ($date) {
+                $payload = (array) $candidate->payload;
+                return data_get($payload, 'date_from') === $date
+                    && data_get($payload, 'date_to') === $date
+                    && array_key_exists('availability', $payload);
+            });
+
+        if (! $event) {
+            return;
+        }
+
+        $event->update([
+            'status' => 'pending',
+            'attempts' => 0,
+            'last_error' => null,
+            'processed_at' => null,
+            'scenario' => 'test_9_booking_create',
+        ]);
+
+        $this->warn("Recovered failed ARI event #{$event->id} for {$date}.");
     }
 
     protected function request(array $input, string $method = 'POST'): Request
