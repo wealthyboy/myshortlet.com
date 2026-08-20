@@ -2,12 +2,18 @@
 
 namespace Tests\Unit\Services\Channex;
 
+use App\Models\Apartment;
 use App\Models\ChannexCertificationLog;
+use App\Models\GuestUser;
 use App\Models\Property;
+use App\Models\Reservation;
+use App\Models\UserReservation;
 use App\Services\Channex\BookingRevisionService;
 use App\Services\Channex\CertificationLogService;
 use App\Services\Channex\HandleOtaBookingService;
+use App\Services\Channex\InventorySyncService;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Mockery;
 use Tests\TestCase;
 
@@ -141,6 +147,143 @@ class HandleOtaBookingServiceTest extends TestCase
         $this->assertSame(['revision-1'], $service->acknowledged);
     }
 
+    public function test_modification_restores_old_dates_before_acknowledgement(): void
+    {
+        DB::beginTransaction();
+
+        try {
+            $uuid = (string) Str::uuid();
+            $property = new Property();
+            $property->forceFill([
+                'name' => 'Test Property - OTA Modification ' . $uuid,
+                'type' => 'multiple',
+                'slug' => 'test-ota-modification-' . $uuid,
+                'token' => $uuid,
+                'allow' => false,
+                'channex_property_id' => $uuid,
+                'channex_group_id' => (string) Str::uuid(),
+                'channex_synced' => true,
+            ])->save();
+
+            $apartment = new Apartment();
+            $apartment->forceFill([
+                'property_id' => $property->id,
+                'name' => 'Test Room ' . $uuid,
+                'slug' => 'test-room-' . $uuid,
+                'type' => 'multiple',
+                'price' => 100,
+                'quantity' => 1,
+                'allow' => true,
+                'uuid' => $uuid,
+                'channex_room_type_id' => (string) Str::uuid(),
+                'channex_synced' => true,
+            ])->save();
+
+            $guest = GuestUser::create([
+                'name' => 'OTA',
+                'last_name' => 'Guest',
+                'email' => 'ota-' . $uuid . '@example.com',
+                'phone_number' => '08000000000',
+                'image' => '',
+            ]);
+
+            $header = UserReservation::withoutEvents(function () use ($property, $guest, $uuid) {
+                $header = new UserReservation();
+                $header->forceFill([
+                    'property_id' => $property->id,
+                    'guest_user_id' => $guest->id,
+                    'external_id' => 'booking-' . $uuid,
+                    'status' => 'confirmed',
+                    'is_cancelled' => false,
+                    'payment_type' => 'ota',
+                    'coming_from' => 'ota',
+                ])->save();
+
+                return $header;
+            });
+
+            $oldLine = Reservation::withoutEvents(function () use ($header, $property, $apartment) {
+                return Reservation::create([
+                    'user_reservation_id' => $header->id,
+                    'property_id' => $property->id,
+                    'apartment_id' => $apartment->id,
+                    'quantity' => 1,
+                    'price' => 200,
+                    'rate' => 1,
+                    'checkin' => '2026-09-01',
+                    'checkout' => '2026-09-03',
+                    'length_of_stay' => 2,
+                ]);
+            });
+
+            $events = [];
+            $inventory = Mockery::mock(InventorySyncService::class);
+            $inventory->shouldReceive('queueUserReservation')->zeroOrMoreTimes();
+            $inventory->shouldReceive('queueReservation')
+                ->twice()
+                ->andReturnUsing(function (Reservation $reservation) use (&$events): void {
+                    $events[] = ($reservation->trashed() ? 'deleted:' : 'created:')
+                        . $reservation->checkin->toDateString();
+                });
+            $this->app->instance(InventorySyncService::class, $inventory);
+
+            $service = new AcknowledgementOrderHandleOtaBookingService();
+            $service->onAcknowledge = function () use (&$events): void {
+                $events[] = 'ack';
+            };
+
+            $service->handle([
+                'property_id' => $property->channex_property_id,
+                'booking_id' => $header->external_id,
+                'booking_revision_id' => (string) Str::uuid(),
+                'inserted_at' => '2026-08-20T12:00:00Z',
+                'status' => 'confirmed',
+                'currency' => 'NGN',
+                'amount' => 200,
+                'customer' => [
+                    'name' => 'OTA',
+                    'surname' => 'Guest',
+                    'mail' => $guest->email,
+                    'phone' => $guest->phone_number,
+                ],
+                'rooms' => [[
+                    'room_type_id' => $apartment->channex_room_type_id,
+                    'checkin_date' => '2026-09-10',
+                    'checkout_date' => '2026-09-12',
+                    'days' => [100, 100],
+                ]],
+            ]);
+
+            $this->assertSame([
+                'deleted:2026-09-01',
+                'created:2026-09-10',
+                'ack',
+            ], $events);
+            $this->assertSoftDeleted('reservations', ['id' => $oldLine->id]);
+            $this->assertDatabaseHas('reservations', [
+                'user_reservation_id' => $header->id,
+                'apartment_id' => $apartment->id,
+                'checkin' => '2026-09-10 00:00:00',
+                'deleted_at' => null,
+            ]);
+        } finally {
+            DB::rollBack();
+        }
+    }
+
+    public function test_active_revision_reinstates_a_cancelled_booking(): void
+    {
+        $reservation = new UserReservation();
+        $reservation->status = 'cancelled';
+        $reservation->is_cancelled = true;
+
+        (new TestableHandleOtaBookingService())
+            ->markReservationActiveForTest($reservation, ['status' => 'modified']);
+
+        $this->assertSame('modified', $reservation->status);
+        $this->assertFalse((bool) $reservation->is_cancelled);
+    }
+
     public function test_absent_cancellation_is_audited_as_an_idempotent_success(): void
     {
         $logs = Mockery::mock(CertificationLogService::class);
@@ -221,6 +364,11 @@ class TestableHandleOtaBookingService extends HandleOtaBookingService
         Property $property
     ): void {
         $this->recordAbsentCancellation($payload, $externalId, $property);
+    }
+
+    public function markReservationActiveForTest(UserReservation $reservation, array $payload): void
+    {
+        $this->markReservationActive($reservation, $payload);
     }
 }
 

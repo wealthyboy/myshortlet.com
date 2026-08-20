@@ -43,6 +43,21 @@ class BookingRevisionServiceTest extends TestCase
         Http::assertSentCount(1);
     }
 
+    public function test_non_200_response_is_not_treated_as_an_acknowledgement(): void
+    {
+        config([
+            'services.channex.base_url' => 'https://staging.channex.test/api/v1',
+            'services.channex.key' => 'test-key',
+        ]);
+        Http::fake([
+            'https://staging.channex.test/api/v1/booking_revisions/revision-1/ack' =>
+                Http::response('', 204),
+        ]);
+
+        $this->assertNull((new BookingRevisionService())->acknowledge('revision-1'));
+        Http::assertSentCount(1);
+    }
+
     public function test_feed_requests_one_large_oldest_first_page_for_the_property(): void
     {
         config([

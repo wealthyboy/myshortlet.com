@@ -8,6 +8,7 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use Mockery;
 use Tests\TestCase;
 
@@ -18,6 +19,8 @@ class SetupChannexCertificationCommandTest extends TestCase
         DB::beginTransaction();
 
         try {
+            $propertyName = 'Test Property - Channex PHPUnit ' . Str::uuid();
+
             config([
                 'cache.default' => 'redis',
                 'queue.default' => 'database',
@@ -75,11 +78,14 @@ class SetupChannexCertificationCommandTest extends TestCase
                 ->andReturn(['data' => [['id' => 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa']]]);
             $this->app->instance(AriPushService::class, $ari);
 
-            $exitCode = Artisan::call('channex:setup-certification', ['--execute' => true]);
+            $exitCode = Artisan::call('channex:setup-certification', [
+                '--execute' => true,
+                '--name' => $propertyName,
+            ]);
             $this->assertSame(0, $exitCode, Artisan::output());
 
             $property = Property::with('apartments.channexRatePlans')
-                ->where('name', 'Test Property - Channex Final Certification')
+                ->where('name', $propertyName)
                 ->firstOrFail();
 
             $this->assertFalse((bool) $property->allow);
@@ -92,7 +98,7 @@ class SetupChannexCertificationCommandTest extends TestCase
                     'Best Available Rate',
                 ];
             }));
-            $this->assertSame(1, Property::where('name', 'Test Property - Channex Final Certification')->count());
+            $this->assertSame(1, Property::where('name', $propertyName)->count());
         } finally {
             DB::rollBack();
         }

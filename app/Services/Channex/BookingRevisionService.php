@@ -41,7 +41,7 @@ class BookingRevisionService extends ChannexClient
                 . '/booking_revisions/' . $revisionId . '/ack';
             $response = $this->client()->post($url, []);
 
-            if ($response->failed()) {
+            if ($response->status() !== 200) {
                 logger()->warning('Channex booking acknowledge failed', [
                     'revision_id' => $revisionId,
                     'status' => $response->status(),

@@ -138,13 +138,13 @@ class HandleOtaBookingService
             $userReservation->coming_from = 'ota';
             $userReservation->ota_name = data_get($payload, 'ota_name', 'unknown');
             $userReservation->external_id = $externalId;
-            $userReservation->status = data_get($payload, 'status', 'confirmed');
+            $this->markReservationActive($userReservation, $payload);
             $userReservation->channex_last_revision_id = $this->resolveRevisionId($payload);
             $userReservation->channex_last_revision_at = data_get($payload, 'inserted_at');
             $userReservation->save();
 
             // For booking.modified, replace previous room lines with latest revision snapshot.
-            Reservation::where('user_reservation_id', $userReservation->id)->delete();
+            $this->deleteExistingReservationLines($userReservation);
 
             /**
              * 4️⃣ Create Reservation Items (Apartments)
@@ -212,6 +212,25 @@ class HandleOtaBookingService
                 ]);
             }
         }
+    }
+
+    /**
+     * Delete room lines as models so ReservationObserver::deleted can restore
+     * Channex availability for dates removed by a booking modification.
+     */
+    protected function deleteExistingReservationLines(UserReservation $userReservation): void
+    {
+        Reservation::query()
+            ->where('user_reservation_id', $userReservation->id)
+            ->get()
+            ->each
+            ->delete();
+    }
+
+    protected function markReservationActive(UserReservation $userReservation, array $payload): void
+    {
+        $userReservation->status = data_get($payload, 'status', 'confirmed');
+        $userReservation->is_cancelled = false;
     }
 
     /**
