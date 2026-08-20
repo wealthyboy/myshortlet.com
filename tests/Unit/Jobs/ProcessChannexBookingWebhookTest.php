@@ -3,6 +3,8 @@
 namespace Tests\Unit\Jobs;
 
 use App\Jobs\ProcessChannexBookingWebhook;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use PHPUnit\Framework\TestCase;
 
@@ -25,5 +27,12 @@ class ProcessChannexBookingWebhookTest extends TestCase
         $this->assertSame($firstMiddleware->key, $secondMiddleware->key);
         $this->assertSame(10, $firstMiddleware->releaseAfter);
         $this->assertSame(180, $firstMiddleware->expiresAfter);
+        $this->assertInstanceOf(ShouldBeUnique::class, $first);
+        $this->assertInstanceOf(ShouldBeUniqueUntilProcessing::class, $first);
+        $this->assertSame('channex-booking-feed-property-1', $first->uniqueId());
+        $this->assertSame($first->uniqueId(), $second->uniqueId());
+        $this->assertSame(1800, $first->uniqueFor);
+        $this->assertSame(25, $first->tries);
+        $this->assertSame(5, $first->maxExceptions);
     }
 }

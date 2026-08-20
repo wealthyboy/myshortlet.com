@@ -15,33 +15,66 @@ use App\Mail\OtaReservationNotification;
 class HandleOtaBookingService
 {
     /**
-     * Handle NEW or MODIFIED OTA booking
+     * Treat the webhook as a property-level trigger. Pull the ordered feed one
+     * time, persist every returned revision, and acknowledge each only after
+     * its local database transaction commits.
      */
-    public function handle(array $payload): void
+    public function processFeed(array $triggerPayload): int
     {
-        $payload = $this->normalizePayloadShape($payload);
-        $payload = $this->resolvePayloadFromFeedFallback($payload);
-        $payload = $this->resolvePayloadFromRevision($payload);
+        $triggerPayload = $this->normalizePayloadShape($triggerPayload);
+        $propertyId = data_get($triggerPayload, 'property_id')
+            ?? data_get($triggerPayload, 'property.id');
 
-        // A repeated property notification can arrive after another worker has
-        // already pulled and acknowledged the only pending revision. That is a
-        // successful no-op, not a malformed booking that should be retried.
-        if (data_get($payload, '_channex_no_pending_revision') === true) {
-            logger()->info('Channex booking notification ignored; no pending revision remains in the feed', [
-                'property_id' => data_get($payload, 'property_id') ?? data_get($payload, 'property.id'),
-            ]);
-            return;
+        if (! $propertyId) {
+            throw new \RuntimeException('Missing Channex property ID for booking feed pull.');
         }
 
-        // Channex notifications can arrive out of order. The revision feed is
-        // authoritative, so route by the status of the revision we actually
-        // pulled rather than by the webhook event that woke the worker.
+        $feedResponse = app(BookingRevisionService::class)->fetchFeed((string) $propertyId);
+        if (! is_array($feedResponse)) {
+            throw new \RuntimeException("Could not pull the Channex booking feed for property {$propertyId}.");
+        }
+
+        $rows = (array) data_get($feedResponse, 'data', []);
+        $processed = 0;
+
+        foreach ($rows as $row) {
+            $payload = $this->payloadFromFeedRow((array) $row, (string) $propertyId);
+            $this->processFeedRevision($payload);
+
+            $processed++;
+        }
+
+        logger()->info('Channex booking feed processed', [
+            'property_id' => $propertyId,
+            'revision_count' => $processed,
+        ]);
+
+        return $processed;
+    }
+
+    protected function processFeedRevision(array $payload): void
+    {
         if ($this->isCancellationPayload($payload)) {
             $this->cancel($payload);
             return;
         }
 
-        DB::transaction(function () use ($payload) {
+        $this->handle($payload);
+    }
+
+    /**
+     * Handle NEW or MODIFIED OTA booking
+     */
+    public function handle(array $payload): void
+    {
+        $payload = $this->normalizePayloadShape($payload);
+
+        if ($this->isCancellationPayload($payload)) {
+            $this->cancel($payload);
+            return;
+        }
+
+        $result = DB::transaction(function () use ($payload) {
             $externalId = $this->resolveExternalBookingId($payload);
             if (! $externalId) {
                 app(CertificationLogService::class)->log(
@@ -59,9 +92,14 @@ class HandleOtaBookingService
                 throw new \RuntimeException('Missing external booking ID for upsert.');
             }
 
-            /**
-             * 2️⃣ Create or find Guest
-             */
+            $channexPropertyId = data_get($payload, 'property_id')
+                ?? data_get($payload, 'property.id');
+            $property = Property::where('channex_property_id', $channexPropertyId)->first();
+
+            if (! $property) {
+                throw new \RuntimeException("No local property mapping for Channex property {$channexPropertyId}.");
+            }
+
             $guestDetails = $this->guestDetails($payload, $externalId);
             $guest = GuestUser::firstOrCreate(
                 ['email' => $guestDetails['email']],
@@ -72,18 +110,8 @@ class HandleOtaBookingService
                 ]
             );
 
-            /**
-             * 3️⃣ Create User Reservation (Booking Header)
-             */
-            $channexPropertyId = data_get($payload, 'property_id')
-                ?? data_get($payload, 'property.id');
-            $property = Property::where('channex_property_id', $channexPropertyId)->first();
-
-            if (! $property) {
-                throw new \RuntimeException("No local property mapping for Channex property {$channexPropertyId}.");
-            }
-
             $userReservation = UserReservation::firstOrNew([
+                'property_id' => $property->id,
                 'external_id' => $externalId,
             ]);
 
@@ -92,7 +120,14 @@ class HandleOtaBookingService
                     'revision_id' => $this->resolveRevisionId($payload),
                     'external_id' => $externalId,
                 ]);
-                return;
+
+                return [
+                    'property_id' => (int) $property->id,
+                    'send_email' => false,
+                    'guest' => null,
+                    'reservation' => null,
+                    'external_id' => $externalId,
+                ];
             }
 
             $userReservation->guest_user_id = $guest->id;
@@ -151,25 +186,32 @@ class HandleOtaBookingService
                 ]);
             }
 
-            /**
-             * 5️⃣ OTA Confirmation Email (NO invoice, NO payment)
-             */
-            if ($userReservation->wasRecentlyCreated && $guestDetails['can_email']) {
-                try {
-                    Mail::to($guest->email)->send(
-                        new OtaReservationNotification($userReservation)
-                    );
-                } catch (\Throwable $e) {
-                    logger()->warning('OTA confirmation email could not be sent', [
-                        'reservation_id' => $userReservation->id,
-                        'external_id' => $externalId,
-                        'error' => $e->getMessage(),
-                    ]);
-                }
-            }
-
-            $this->acknowledgeRevision($payload, (int) $userReservation->property_id);
+            return [
+                'property_id' => (int) $userReservation->property_id,
+                'send_email' => $userReservation->wasRecentlyCreated && $guestDetails['can_email'],
+                'guest' => $guest,
+                'reservation' => $userReservation,
+                'external_id' => $externalId,
+            ];
         });
+
+        // The booking is now committed locally. Only now is it safe to remove
+        // this revision from Channex's feed.
+        $this->acknowledgeRevision($payload, $result['property_id']);
+
+        if ($result['send_email']) {
+            try {
+                Mail::to($result['guest']->email)->send(
+                    new OtaReservationNotification($result['reservation'])
+                );
+            } catch (\Throwable $e) {
+                logger()->warning('OTA confirmation email could not be sent', [
+                    'reservation_id' => $result['reservation']->id,
+                    'external_id' => $result['external_id'],
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
     }
 
     /**
@@ -178,21 +220,6 @@ class HandleOtaBookingService
     public function cancel(array $payload): void
     {
         $payload = $this->normalizePayloadShape($payload);
-        $payload = $this->resolvePayloadFromFeedFallback($payload);
-        $payload = $this->resolvePayloadFromRevision($payload);
-
-        if (data_get($payload, '_channex_no_pending_revision') === true) {
-            logger()->info('Channex cancellation notification ignored; no pending revision remains in the feed', [
-                'property_id' => data_get($payload, 'property_id') ?? data_get($payload, 'property.id'),
-            ]);
-            return;
-        }
-
-        $status = strtolower(trim((string) data_get($payload, 'status', '')));
-        if ($status !== '' && ! $this->isCancellationPayload($payload)) {
-            $this->handle($payload);
-            return;
-        }
 
         $externalId = $this->resolveExternalBookingId($payload);
         if (! $externalId) {
@@ -206,14 +233,20 @@ class HandleOtaBookingService
             throw new \RuntimeException("No local property mapping for Channex property {$channexPropertyId}.");
         }
 
-        DB::transaction(function () use ($payload, $externalId, $property) {
+        $propertyId = DB::transaction(function () use ($payload, $externalId, $property) {
             $reservation = UserReservation::query()
                 ->where('property_id', $property->id)
                 ->where('external_id', $externalId)
                 ->first();
 
             if (!$reservation) {
-                throw new \RuntimeException('Cannot cancel OTA booking because the local reservation was not found.');
+                // A cancellation is idempotent: if the local booking is
+                // already absent, the desired local state has been reached.
+                // Persist that fact before ACK so this revision cannot poison
+                // the feed and block later bookings indefinitely.
+                $this->recordAbsentCancellation($payload, $externalId, $property);
+
+                return (int) $property->id;
             }
 
             if ($this->isAlreadyProcessed($reservation, $payload)) {
@@ -221,7 +254,8 @@ class HandleOtaBookingService
                     'revision_id' => $this->resolveRevisionId($payload),
                     'external_id' => $externalId,
                 ]);
-                return;
+
+                return (int) $property->id;
             }
 
             $reservation->status = 'cancelled';
@@ -230,49 +264,34 @@ class HandleOtaBookingService
             $reservation->channex_last_revision_at = data_get($payload, 'inserted_at');
             $reservation->save();
 
-            // Keep the local update and the acknowledgment retryable together. If
-            // acknowledgment fails, the transaction rolls back and the job retry
-            // can safely process and acknowledge the revision again.
-            $this->acknowledgeRevision($payload, (int) $reservation->property_id);
+            return (int) $reservation->property_id;
         });
+
+        $this->acknowledgeRevision($payload, $propertyId);
     }
 
-    protected function resolvePayloadFromRevision(array $payload): array
-    {
-        // The revisions feed already returns the complete revision. Fetching the
-        // same ID again is both redundant and contrary to pull-once/ack-once flow.
-        if (data_get($payload, '_channex_revision_loaded') === true) {
-            return $payload;
-        }
+    protected function recordAbsentCancellation(
+        array $payload,
+        string $externalId,
+        Property $property
+    ): void {
+        app(CertificationLogService::class)->log(
+            'booking_webhook',
+            'success',
+            'booking_cancellation_absent',
+            (int) $property->id,
+            null,
+            [],
+            $this->certificationPayload($payload),
+            ['local_state' => 'already_absent'],
+            "Cancellation recorded for absent local OTA booking {$externalId}"
+        );
 
-        $revisionId = data_get($payload, 'booking_revision_id')
-            ?? data_get($payload, 'revision_id')
-            ?? data_get($payload, 'booking.revision_id')
-            ?? data_get($payload, 'booking_revision.id');
-
-        if (! $revisionId) {
-            return $payload;
-        }
-
-        $revisionResponse = app(BookingRevisionService::class)->fetch((string) $revisionId);
-        if (! is_array($revisionResponse)) {
-            return $payload;
-        }
-
-        $revisionData = data_get($revisionResponse, 'data.attributes')
-            ?? data_get($revisionResponse, 'data')
-            ?? [];
-
-        if (! is_array($revisionData) || empty($revisionData)) {
-            return $payload;
-        }
-
-        $merged = array_replace_recursive($payload, $revisionData);
-        $merged['booking_revision_id'] = $revisionId;
-        $merged['_channex_revision_loaded'] = true;
-        $merged['_channex_revision_source'] = 'id';
-
-        return $merged;
+        logger()->info('Channex cancellation recorded; local reservation was already absent', [
+            'property_id' => $property->id,
+            'revision_id' => $this->resolveRevisionId($payload),
+            'external_id' => $externalId,
+        ]);
     }
 
     protected function resolveExternalBookingId(array $payload): ?string
@@ -318,94 +337,22 @@ class HandleOtaBookingService
         return Carbon::parse($insertedAt)->lte($reservation->channex_last_revision_at);
     }
 
-    protected function resolvePayloadFromFeedFallback(array $payload, ?string $expectedStatus = null): array
+    protected function payloadFromFeedRow(array $row, string $propertyId): array
     {
-        $hasRevisionId = ! empty(
-            data_get($payload, 'booking_revision_id')
-            ?? data_get($payload, 'revision_id')
-            ?? data_get($payload, 'booking.revision_id')
-            ?? data_get($payload, 'booking_revision.id')
-        );
+        $revisionId = (string) data_get($row, 'id', '');
+        $attributes = (array) data_get($row, 'attributes', []);
 
-        $hasExternalId = ! empty($this->resolveExternalBookingId($payload));
-
-        if ($hasRevisionId && $hasExternalId) {
-            return $payload;
+        if ($revisionId === '' || empty($attributes)) {
+            throw new \RuntimeException('Channex returned an invalid booking revision feed row.');
         }
 
-        $propertyId = data_get($payload, 'property_id') ?? data_get($payload, 'property.id');
-        if (! $propertyId) {
-            return $payload;
+        if (! data_get($attributes, 'property_id')) {
+            $attributes['property_id'] = $propertyId;
         }
 
-        $feedResponse = app(BookingRevisionService::class)->fetchFeed((string) $propertyId);
+        $attributes['booking_revision_id'] = $revisionId;
 
-        // A failed request must remain retryable. Only a valid, empty feed means
-        // a duplicate notification whose revision was already acknowledged.
-        if (! is_array($feedResponse)) {
-            return $payload;
-        }
-
-        $feedRows = (array) data_get($feedResponse, 'data', []);
-        if (empty($feedRows)) {
-            $payload['_channex_no_pending_revision'] = true;
-            return $payload;
-        }
-
-        $expectedStatus = $expectedStatus ? strtolower($expectedStatus) : null;
-        $expectedUniqueId = (string) data_get($payload, 'unique_id', '');
-        $expectedOtaCode = (string) data_get($payload, 'ota_reservation_code', '');
-
-        $selected = null;
-
-        foreach ($feedRows as $row) {
-            $attrs = (array) data_get($row, 'attributes', []);
-            if (empty($attrs)) {
-                continue;
-            }
-
-            $rowStatus = strtolower((string) data_get($attrs, 'status', ''));
-            if ($expectedStatus !== null && $rowStatus !== $expectedStatus) {
-                continue;
-            }
-
-            if ($expectedUniqueId !== '' && (string) data_get($attrs, 'unique_id', '') !== $expectedUniqueId) {
-                continue;
-            }
-
-            if ($expectedOtaCode !== '' && (string) data_get($attrs, 'ota_reservation_code', '') !== $expectedOtaCode) {
-                continue;
-            }
-
-            $selected = $row;
-            break;
-        }
-
-        if (! is_array($selected)) {
-            throw new \RuntimeException(
-                'Channex revisions feed was not empty, but no revision matched this booking trigger.'
-            );
-        }
-
-        $selectedAttributes = (array) data_get($selected, 'attributes', []);
-        $selectedRevisionId = (string) (data_get($selected, 'id') ?? data_get($selectedAttributes, 'id') ?? '');
-
-        if ($selectedRevisionId === '') {
-            return $payload;
-        }
-
-        $merged = array_replace_recursive($payload, $selectedAttributes);
-        $merged['booking_revision_id'] = $selectedRevisionId;
-        $merged['_channex_revision_loaded'] = true;
-        $merged['_channex_revision_source'] = 'feed';
-
-        logger()->info('Channex webhook payload recovered from revisions feed', [
-            'property_id' => $propertyId,
-            'revision_id' => $selectedRevisionId,
-            'expected_status' => $expectedStatus,
-        ]);
-
-        return $merged;
+        return $attributes;
     }
 
     protected function normalizePayloadShape(array $payload): array

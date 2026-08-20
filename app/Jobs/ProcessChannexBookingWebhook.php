@@ -4,18 +4,24 @@ namespace App\Jobs;
 
 use App\Services\Channex\HandleOtaBookingService;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 
-class ProcessChannexBookingWebhook implements ShouldQueue
+class ProcessChannexBookingWebhook implements ShouldQueue, ShouldBeUniqueUntilProcessing
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $tries = 5;
+    // Overlap middleware releases also count as attempts. Allow enough attempts
+    // for a follow-up property trigger to wait behind the full 180-second lock,
+    // while still limiting genuine processing exceptions to five.
+    public int $tries = 25;
+    public int $maxExceptions = 5;
     public int $timeout = 120;
+    public int $uniqueFor = 1800;
 
     protected string $action;
     protected array $payload;
@@ -29,6 +35,14 @@ class ProcessChannexBookingWebhook implements ShouldQueue
     public function backoff(): array
     {
         return [60, 180, 300, 600];
+    }
+
+    public function uniqueId(): string
+    {
+        $propertyId = data_get($this->payload, 'property_id')
+            ?? data_get($this->payload, 'property.id');
+
+        return 'channex-booking-feed-' . ($propertyId ?: sha1(json_encode($this->payload)));
     }
 
     /**
@@ -58,11 +72,6 @@ class ProcessChannexBookingWebhook implements ShouldQueue
 
     public function handle(HandleOtaBookingService $service): void
     {
-        if ($this->action === 'cancel') {
-            $service->cancel($this->payload);
-            return;
-        }
-
-        $service->handle($this->payload);
+        $service->processFeed($this->payload);
     }
 }

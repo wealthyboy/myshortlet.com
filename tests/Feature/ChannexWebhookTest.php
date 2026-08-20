@@ -68,13 +68,24 @@ class ChannexWebhookTest extends TestCase
         ]);
 
         $this->postJson('/webhook/channex', [
-            'event' => 'booking_new',
-            'payload' => ['booking_revision_id' => 'revision-1'],
+            'event' => 'booking',
+            'payload' => [
+                'property_id' => 'property-uuid-1',
+                'booking_revision_id' => 'revision-1',
+            ],
         ], [
             'X-Channex-Webhook-Secret' => 'correct-secret',
         ])->assertOk()->assertJson(['status' => 'accepted']);
 
-        Bus::assertDispatched(ProcessChannexBookingWebhook::class);
+        Bus::assertDispatched(ProcessChannexBookingWebhook::class, function ($job) {
+            $action = new \ReflectionProperty($job, 'action');
+            $action->setAccessible(true);
+            $payload = new \ReflectionProperty($job, 'payload');
+            $payload->setAccessible(true);
+
+            return $action->getValue($job) === 'feed'
+                && $payload->getValue($job)['property_id'] === 'property-uuid-1';
+        });
     }
 
     public function test_it_preserves_the_top_level_property_id_for_the_queued_worker(): void
@@ -97,6 +108,29 @@ class ChannexWebhookTest extends TestCase
             $payload->setAccessible(true);
 
             return $payload->getValue($job)['property_id'] === 'property-uuid-1';
+        });
+    }
+
+    public function test_cancellation_webhook_is_also_only_a_feed_trigger(): void
+    {
+        Bus::fake();
+        config([
+            'services.channex.webhook_secret' => 'correct-secret',
+            'services.channex.webhook_secret_header' => 'X-Channex-Webhook-Secret',
+        ]);
+
+        $this->postJson('/webhook/channex', [
+            'event' => 'booking_cancellation',
+            'property_id' => 'property-uuid-1',
+        ], [
+            'X-Channex-Webhook-Secret' => 'correct-secret',
+        ])->assertOk();
+
+        Bus::assertDispatched(ProcessChannexBookingWebhook::class, function ($job) {
+            $action = new \ReflectionProperty($job, 'action');
+            $action->setAccessible(true);
+
+            return $action->getValue($job) === 'feed';
         });
     }
 

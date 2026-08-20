@@ -287,25 +287,11 @@ class WebHookController extends Controller
             'booking_id' => data_get($payload, 'booking_id'),
         ]);
 
-        $status = strtolower((string) data_get($payload, 'status', ''));
-
-        if ($event === 'booking') {
-            if (in_array($status, ['cancelled', 'canceled'], true)) {
-                ProcessChannexBookingWebhook::dispatch('cancel', $payload);
-            } else {
-                ProcessChannexBookingWebhook::dispatch('upsert', $payload);
-            }
-
-            return response()->json(['status' => 'accepted'], 200);
-        }
-
-        if (in_array($event, ['booking_new', 'booking_modification', 'booking.created', 'booking.modified'], true)) {
-            ProcessChannexBookingWebhook::dispatch('upsert', $payload);
-        }
-
-        if (in_array($event, ['booking_cancellation', 'booking.cancelled', 'booking.canceled', 'booking_cancelled', 'booking_canceled'], true)) {
-            ProcessChannexBookingWebhook::dispatch('cancel', $payload);
-        }
+        // A webhook is only a signal that the property's ordered revisions
+        // feed has work. The worker pulls that feed once and routes each row by
+        // its actual status, so duplicate/out-of-order webhooks cannot make us
+        // fetch the same revision again by ID.
+        ProcessChannexBookingWebhook::dispatch('feed', $payload);
 
         return response()->json(['status' => 'accepted'], 200);
     }
