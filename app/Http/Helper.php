@@ -175,6 +175,7 @@ class Helper
     {
 
         $currency_rate = CurrencyRate::first();
+        $fallbackRate = optional($currency_rate)->rate;
         // $apiKey = 'cur_live_vhjIPU5LPxA5neoR1kRFgUd9HrGDwRzBWJtxHJc2';
         // $url = "https://api.currencyapi.com/v3/latest";
         // try {
@@ -209,21 +210,30 @@ class Helper
 
         try {
             $url = "https://api.exchangerate-api.com/v4/latest/USD";
-            $response = Http::get($url);
+            $response = Http::timeout(8)->get($url);
 
             if ($response->successful()) {
                 $data = $response->json();
                 $ngnRate = $data['rates']['NGN'] ?? null;
-                return round($ngnRate, 0);
-            } else {
-                return round(optional(($currency_rate)->rate), 0);
+
+                if (is_numeric($ngnRate) && (float) $ngnRate > 0) {
+                    return round((float) $ngnRate, 0);
+                }
             }
-        } catch (\Exception $e) {
+
+            if (is_numeric($fallbackRate) && (float) $fallbackRate > 0) {
+                return round((float) $fallbackRate, 0);
+            }
+        } catch (\Throwable $e) {
             \Log::error("Currency API error: " . $e->getMessage());
-            return 'Unable to retrieve NGN exchange rate.';
+
+            if (is_numeric($fallbackRate) && (float) $fallbackRate > 0) {
+                return round((float) $fallbackRate, 0);
+            }
         }
 
-        return optional($currency_rate)->rate;;
+        // Keep this return numeric so price conversion never receives an error string.
+        return 1;
     }
 
     public static function updateApartmentPrices($startDate, $endDate, $percentageIncrease = 20)
