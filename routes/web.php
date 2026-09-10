@@ -145,6 +145,14 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
 });
 
 
+// Browser-side country detection fallback. This route is intentionally
+// outside CurrencyByIp so it can repair the session when the origin server
+// cannot see the visitor's real public IP behind a reverse proxy.
+Route::post('currency/location', 'CurrencyLocation\CurrencyLocationController@store')
+    ->middleware('throttle:30,1')
+    ->name('currency.location');
+
+
 Route::group(['middleware' => ['currencyByIp', 'tracking']], function () {
     Route::get('/', 'HomeController@home');
 

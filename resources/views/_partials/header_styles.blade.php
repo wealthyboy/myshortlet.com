@@ -60,4 +60,6 @@
    </script>
 
 
+   @include('_partials.browser_currency_detection')
+
 </head>

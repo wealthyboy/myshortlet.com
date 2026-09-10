@@ -208,13 +208,45 @@ class Helper
 
         // Version the cache key so a failed/1:1 result cached by older code
         // cannot keep a newly deployed location-currency fix stuck on USD.
-        $cacheKey = 'currency-exchange-rate:v2:' . $baseCurrency . ':' . $targetCurrency;
+        $cacheKey = 'currency-exchange-rate:v3:' . $baseCurrency . ':' . $targetCurrency;
 
         return Cache::remember($cacheKey, now()->addMinutes(30), function () use (
             $baseCurrency,
             $targetCurrency,
             $fallbackRate
         ) {
+            // Prefer the API key that was already part of this project when it
+            // is configured. This keeps production on its intended provider
+            // instead of relying only on anonymous public endpoints.
+            $apiKey = config('services.currency_api.key');
+
+            if ($apiKey) {
+                try {
+                    $response = Http::timeout(8)->acceptJson()->get(
+                        'https://api.currencyapi.com/v3/latest',
+                        [
+                            'apikey' => $apiKey,
+                            'base_currency' => $baseCurrency,
+                            'currencies' => $targetCurrency,
+                        ]
+                    );
+
+                    if ($response->successful()) {
+                        $rate = data_get($response->json(), 'data.' . $targetCurrency . '.value');
+
+                        if (is_numeric($rate) && (float) $rate > 0) {
+                            return (float) $rate;
+                        }
+                    }
+                } catch (\Throwable $e) {
+                    \Log::warning('Configured currency API error', [
+                        'base' => $baseCurrency,
+                        'target' => $targetCurrency,
+                        'message' => $e->getMessage(),
+                    ]);
+                }
+            }
+
             $providers = [
                 'https://api.exchangerate-api.com/v4/latest/' . urlencode($baseCurrency),
                 'https://open.er-api.com/v6/latest/' . urlencode($baseCurrency),

@@ -18,7 +18,7 @@ class CurrencyByIp
      * sessions are then re-detected instead of remaining pinned to a country
      * or currency resolved by older middleware code.
      */
-    private const DETECTION_VERSION = '20260910-v3';
+    private const DETECTION_VERSION = '20260910-v4';
 
     /**
      * Resolve storefront currency before Apartment accessors serialize prices.
@@ -79,7 +79,7 @@ class CurrencyByIp
             $request->session()->put('currency_manual_selected_at', now()->timestamp);
             $request->session()->put('currency_detection_source', 'manual');
 
-            return $next($request);
+            return $this->continueRequest($request, $next);
         }
 
         // Preserve only a manual selection created by this version. This is
@@ -91,7 +91,26 @@ class CurrencyByIp
             && $request->session()->has('rate')
             && $request->session()->has('switch')
         ) {
-            return $next($request);
+            return $this->continueRequest($request, $next);
+        }
+
+        // The browser fallback is authoritative when the origin server cannot
+        // see the real visitor IP (for example behind an unconfigured proxy).
+        // It stores only a country code; prices and exchange rates are still
+        // calculated server-side and never accepted from the browser.
+        $browserCountryCode = strtoupper(trim((string) $request->session()->get('currency_browser_country_code', '')));
+        $browserDetectedAt = (int) $request->session()->get('currency_browser_detected_at', 0);
+        $browserDetectionIsFresh = $browserDetectedAt > 0
+            && $browserDetectedAt >= now()->subHours(12)->timestamp;
+
+        if ($browserDetectionIsFresh && $this->isCountryCode($browserCountryCode)) {
+            $this->applyDetectedCurrency($request, $settings, [
+                'code' => $browserCountryCode,
+                'name' => $browserCountryCode === 'NG' ? 'Nigeria' : null,
+                'source' => 'browser',
+            ], $ip);
+
+            return $this->continueRequest($request, $next);
         }
 
         $request->session()->forget([
@@ -112,7 +131,7 @@ class CurrencyByIp
 
             $this->applyDetectedCurrency($request, $settings, $country, $ip);
 
-            return $next($request);
+            return $this->continueRequest($request, $next);
         }
 
         // Reuse a successful detection for a short period, but only when it
@@ -128,13 +147,13 @@ class CurrencyByIp
             && $request->session()->has('currency_detected_country_code')
             && $detectedRecently
         ) {
-            return $next($request);
+            return $this->continueRequest($request, $next);
         }
 
         $country = $this->resolveCountry($request, $ip);
         $this->applyDetectedCurrency($request, $settings, $country, $ip);
 
-        return $next($request);
+        return $this->continueRequest($request, $next);
     }
 
     private function applyDetectedCurrency($request, $settings, array $country, $ip)
@@ -421,4 +440,21 @@ class CurrencyByIp
 
         return $rate;
     }
+    /**
+     * Currency-specific pages must not be shared from an intermediary cache.
+     * The displayed price depends on the visitor session/country.
+     */
+    private function continueRequest($request, Closure $next)
+    {
+        $response = $next($request);
+
+        if (isset($response->headers)) {
+            $response->headers->set('Cache-Control', 'private, no-store, no-cache, must-revalidate, max-age=0');
+            $response->headers->set('Pragma', 'no-cache');
+            $response->headers->set('Expires', '0');
+        }
+
+        return $response;
+    }
+
 }
