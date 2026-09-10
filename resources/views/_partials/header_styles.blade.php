@@ -60,6 +60,56 @@
    </script>
 
 
+   <style>
+      #currencyDropdown .currency-selector {
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         gap: 0.55rem;
+         min-width: 106px;
+         text-transform: none;
+         white-space: nowrap;
+      }
+
+      #currencyDropdown .currency-flag {
+         width: 24px;
+         height: 16px;
+         object-fit: cover;
+         border-radius: 2px;
+         flex: 0 0 auto;
+         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+      }
+
+      #currencyDropdown .currency-code {
+         font-size: 1rem;
+         font-weight: 700;
+         letter-spacing: 0.02em;
+      }
+
+      #currencyDropdown .currency-menu {
+         min-width: 230px;
+         padding: 0.35rem 0.5rem;
+      }
+
+      #currencyDropdown .currency-option {
+         display: flex;
+         align-items: center;
+         gap: 0.7rem;
+         padding: 0.65rem 0.5rem !important;
+      }
+
+      #currencyDropdown .currency-option > span {
+         display: flex;
+         flex-direction: column;
+         line-height: 1.15;
+      }
+
+      #currencyDropdown .currency-option small {
+         margin-top: 0.2rem;
+         opacity: 0.72;
+      }
+   </style>
+
    @include('_partials.browser_currency_detection')
 
 </head>

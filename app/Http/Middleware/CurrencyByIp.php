@@ -18,7 +18,7 @@ class CurrencyByIp
      * sessions are then re-detected instead of remaining pinned to a country
      * or currency resolved by older middleware code.
      */
-    private const DETECTION_VERSION = '20260910-v4';
+    private const DETECTION_VERSION = '20260910-v5';
 
     /**
      * Resolve storefront currency before Apartment accessors serialize prices.
@@ -53,6 +53,8 @@ class CurrencyByIp
                 'currency_detected_country_code',
                 'currency_detected_at',
                 'currency_detection_source',
+                'currency_browser_country_code',
+                'currency_browser_detected_at',
             ]);
         }
 
@@ -94,48 +96,28 @@ class CurrencyByIp
             return $this->continueRequest($request, $next);
         }
 
-        // The browser fallback is authoritative when the origin server cannot
-        // see the real visitor IP (for example behind an unconfigured proxy).
-        // It stores only a country code; prices and exchange rates are still
-        // calculated server-side and never accepted from the browser.
-        $browserCountryCode = strtoupper(trim((string) $request->session()->get('currency_browser_country_code', '')));
-        $browserDetectedAt = (int) $request->session()->get('currency_browser_detected_at', 0);
-        $browserDetectionIsFresh = $browserDetectedAt > 0
-            && $browserDetectedAt >= now()->subHours(12)->timestamp;
-
-        if ($browserDetectionIsFresh && $this->isCountryCode($browserCountryCode)) {
-            $this->applyDetectedCurrency($request, $settings, [
-                'code' => $browserCountryCode,
-                'name' => $browserCountryCode === 'NG' ? 'Nigeria' : null,
-                'source' => 'browser',
-            ], $ip);
-
-            return $this->continueRequest($request, $next);
-        }
-
         $request->session()->forget([
             'currency_manual_selection',
             'currency_manual_ip',
             'currency_manual_selected_at',
         ]);
 
-        // Cloudflare country information is cheap and request-specific. If it
-        // is available, do not let an older session value override it.
+        // A request-specific edge country is the strongest automatic signal.
+        // It must win over any browser country saved before a VPN/proxy change.
         $edgeCountryCode = strtoupper(trim((string) $request->header('CF-IPCountry', '')));
         if ($this->isCountryCode($edgeCountryCode)) {
-            $country = [
+            $this->applyDetectedCurrency($request, $settings, [
                 'code' => $edgeCountryCode,
                 'name' => $edgeCountryCode === 'NG' ? 'Nigeria' : null,
                 'source' => 'cloudflare',
-            ];
-
-            $this->applyDetectedCurrency($request, $settings, $country, $ip);
+            ], $ip);
 
             return $this->continueRequest($request, $next);
         }
 
-        // Reuse a successful detection for a short period, but only when it
-        // was created by this exact implementation and for this exact IP.
+        // Reuse a successful server-side detection only while the apparent
+        // visitor IP is unchanged. Switching a VPN changes the IP and forces
+        // an immediate country/currency re-evaluation.
         $detectedAt = (int) $request->session()->get('currency_detected_at', 0);
         $detectedRecently = $detectedAt > 0 && $detectedAt >= now()->subMinutes(30)->timestamp;
 
@@ -150,8 +132,41 @@ class CurrencyByIp
             return $this->continueRequest($request, $next);
         }
 
+        // Prefer server-side lookup for a real public visitor IP. This keeps
+        // the browser fallback from pinning a currency after the visitor turns
+        // a VPN on/off or changes VPN country.
         $country = $this->resolveCountry($request, $ip);
-        $this->applyDetectedCurrency($request, $settings, $country, $ip);
+        if ($this->isCountryCode($country['code'] ?? null)) {
+            $this->applyDetectedCurrency($request, $settings, $country, $ip);
+
+            return $this->continueRequest($request, $next);
+        }
+
+        // Browser detection is only a fallback when the origin cannot resolve
+        // the visitor. Keep it short-lived because a VPN can change the
+        // browser's apparent country without changing the Laravel session.
+        $browserCountryCode = strtoupper(trim((string) $request->session()->get('currency_browser_country_code', '')));
+        $browserDetectedAt = (int) $request->session()->get('currency_browser_detected_at', 0);
+        $browserDetectionIsFresh = $browserDetectedAt > 0
+            && $browserDetectedAt >= now()->subMinutes(5)->timestamp;
+
+        if ($browserDetectionIsFresh && $this->isCountryCode($browserCountryCode)) {
+            $this->applyDetectedCurrency($request, $settings, [
+                'code' => $browserCountryCode,
+                'name' => $browserCountryCode === 'NG' ? 'Nigeria' : null,
+                'source' => 'browser',
+            ], $ip);
+
+            return $this->continueRequest($request, $next);
+        }
+
+        // No reliable location is available. Preserve the configured/base
+        // currency rather than guessing NGN.
+        $this->applyDetectedCurrency($request, $settings, [
+            'code' => null,
+            'name' => null,
+            'source' => 'unresolved',
+        ], $ip);
 
         return $this->continueRequest($request, $next);
     }
@@ -220,9 +235,10 @@ class CurrencyByIp
             }
         }
 
-        // Local development can still deliberately use LOCATION_TEST_IP, but
-        // a live request with a real public address never uses the test IP.
-        $testingIp = config('location.testing.enabled')
+        // LOCATION_TEST_IP is development-only. A production request must
+        // never inherit a configured test country when the real client IP is
+        // hidden by a proxy.
+        $testingIp = app()->environment('local', 'testing') && config('location.testing.enabled')
             ? config('location.testing.ip')
             : null;
 

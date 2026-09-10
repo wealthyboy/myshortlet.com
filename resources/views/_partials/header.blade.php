@@ -17,13 +17,35 @@
             @endauth
             @if ( auth()->check() && auth()->user()->isAdmin() )
             @if(isset($show_book) && !$show_book)
+            @php
+                $currencyOptions = [
+                    'USD' => [
+                        'name' => 'United States Dollar',
+                        'flag' => asset('images/flags/us.svg'),
+                    ],
+                    'NGN' => [
+                        'name' => 'Nigerian Naira',
+                        'flag' => asset('images/flags/ng.svg'),
+                    ],
+                ];
+                $activeCurrencyCode = strtoupper((string) (session('switch') ?: \App\Http\Helper::getIsoCode() ?: 'USD'));
+                $activeCurrency = $currencyOptions[$activeCurrencyCode] ?? $currencyOptions['USD'];
+            @endphp
             <div id="currencyDropdown" class="dropdown">
-                <button class="btn bold-2 btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                    ({{ session('switch') !== null ? session('switch') : 'USD' }}) Currency
+                <button class="btn bold-2 btn-secondary dropdown-toggle currency-selector" type="button" data-toggle="dropdown" aria-expanded="false" aria-label="Change currency">
+                    <img class="currency-flag" src="{{ $activeCurrency['flag'] }}" alt="">
+                    <span class="currency-code">{{ $activeCurrencyCode }}</span>
                 </button>
-                <div class="dropdown-menu bg-white">
-                    <a class="dropdown-item my-1 px-0 border-bottom" href="?currency=USD">(USD) United States Dollar</a>
-                    <a class="dropdown-item my-1 px-0 border-bottom" href="?currency=NGN">(NGN) Nigerian Naira</a>
+                <div class="dropdown-menu bg-white currency-menu">
+                    @foreach($currencyOptions as $currencyCode => $currencyOption)
+                    <a class="dropdown-item currency-option my-1 border-bottom" href="?currency={{ $currencyCode }}">
+                        <img class="currency-flag" src="{{ $currencyOption['flag'] }}" alt="">
+                        <span>
+                            <strong>{{ $currencyCode }}</strong>
+                            <small>{{ $currencyOption['name'] }}</small>
+                        </span>
+                    </a>
+                    @endforeach
                 </div>
             </div>
             @endif

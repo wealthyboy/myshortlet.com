@@ -1,5 +1,6 @@
 @php
     $serverCurrencyCode = strtoupper((string) (\App\Http\Helper::getIsoCode() ?: 'USD'));
+    $serverBrowserCountryCode = strtoupper((string) session('currency_browser_country_code', ''));
     $manualCurrencySelection = (bool) session('currency_manual_selection', false);
 @endphp
 
@@ -14,11 +15,12 @@
     }
 
     var currentCurrency = @json($serverCurrencyCode);
+    var serverBrowserCountry = @json($serverBrowserCountryCode);
     var syncUrl = @json(route('currency.location'));
-    var cacheKey = 'avm_browser_country_v2';
-    var reloadKey = 'avm_currency_reload_v2';
+    var cacheKey = 'avm_browser_country_v3';
+    var reloadKey = 'avm_currency_reload_v3';
     var refreshParam = '_currency_refresh';
-    var cacheLifetime = 30 * 60 * 1000;
+    var cacheLifetime = 5 * 60 * 1000;
 
     function validCountryCode(value) {
         return typeof value === 'string' && /^[A-Z]{2}$/.test(value.trim().toUpperCase());
@@ -53,23 +55,20 @@
     }
 
     async function detectCountry() {
-        var cached = readCachedCountry();
-        if (cached) {
-            return cached;
-        }
-
-        // This request is made by the visitor's browser, so ipapi sees the
-        // visitor's public IP directly even when Laravel is behind a proxy.
+        // Always try a live browser-side IP lookup first. This is intentional:
+        // turning a VPN on/off or changing VPN country must be reflected on the
+        // next page load rather than being pinned to an old NGN/USD session.
         try {
-            var countryResponse = await fetch('https://ipapi.co/country/', {
+            var locationResponse = await fetch('https://ipwho.is/', {
                 cache: 'no-store',
                 credentials: 'omit',
                 mode: 'cors'
             });
 
-            if (countryResponse.ok) {
-                var countryCode = (await countryResponse.text()).trim().toUpperCase();
-                if (validCountryCode(countryCode)) {
+            if (locationResponse.ok) {
+                var location = await locationResponse.json();
+                var countryCode = String(location.country_code || '').trim().toUpperCase();
+                if (location.success !== false && validCountryCode(countryCode)) {
                     cacheCountry(countryCode);
                     return countryCode;
                 }
@@ -79,25 +78,24 @@
         }
 
         try {
-            var fallbackResponse = await fetch('https://ipwho.is/', {
+            var countryResponse = await fetch('https://ipapi.co/country/', {
                 cache: 'no-store',
                 credentials: 'omit',
                 mode: 'cors'
             });
 
-            if (fallbackResponse.ok) {
-                var location = await fallbackResponse.json();
-                var fallbackCode = String(location.country_code || '').trim().toUpperCase();
-                if (location.success !== false && validCountryCode(fallbackCode)) {
+            if (countryResponse.ok) {
+                var fallbackCode = (await countryResponse.text()).trim().toUpperCase();
+                if (validCountryCode(fallbackCode)) {
                     cacheCountry(fallbackCode);
                     return fallbackCode;
                 }
             }
         } catch (error) {
-            // Server-side CurrencyByIp remains the final fallback.
+            // Use the short browser cache only if both live lookups fail.
         }
 
-        return null;
+        return readCachedCountry();
     }
 
     async function syncCountry(countryCode) {
@@ -108,7 +106,10 @@
         countryCode = countryCode.trim().toUpperCase();
         var desiredCurrency = countryCode === 'NG' ? 'NGN' : 'USD';
 
-        if (currentCurrency === desiredCurrency) {
+        // Even when the rendered currency is already correct, update Laravel
+        // if the browser country changed. This clears stale NGN state after a
+        // VPN switches to another country (and vice versa).
+        if (currentCurrency === desiredCurrency && serverBrowserCountry === countryCode) {
             try {
                 sessionStorage.removeItem(reloadKey);
             } catch (error) {}
@@ -143,10 +144,17 @@
                 return;
             }
 
-            // Reload exactly once so all server-rendered apartment objects are
-            // serialized with the same currency. The cache-busting parameter
-            // also prevents an intermediary from serving a previously cached
-            // USD copy of the page to a Nigerian visitor.
+            serverBrowserCountry = countryCode;
+
+            // Reload only when the visible currency has to change. If only the
+            // stored browser country needed refreshing, no reload is necessary.
+            if (currentCurrency === desiredCurrency) {
+                try {
+                    sessionStorage.removeItem(reloadKey);
+                } catch (error) {}
+                return;
+            }
+
             var alreadyReloaded = false;
             try {
                 alreadyReloaded = sessionStorage.getItem(reloadKey) === desiredCurrency;
@@ -167,10 +175,10 @@
     }
 
     // Remove the internal cache-busting marker from the address bar after the
-    // server has rendered the correct currency.
+    // server has rendered the expected currency.
     try {
         var cleanUrl = new URL(window.location.href);
-        if (cleanUrl.searchParams.has(refreshParam) && currentCurrency !== 'USD') {
+        if (cleanUrl.searchParams.has(refreshParam)) {
             cleanUrl.searchParams.delete(refreshParam);
             window.history.replaceState({}, document.title, cleanUrl.toString());
         }
