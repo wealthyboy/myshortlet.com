@@ -8,37 +8,57 @@ use App\Models\SystemSetting;
 use Closure;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Stevebauman\Location\Facades\Location;
 
 class CurrencyByIp
 {
     /**
-     * Resolve the storefront currency before prices are serialized.
+     * Bump this whenever the automatic-location rules change. Old browser
+     * sessions are then re-detected instead of remaining pinned to a country
+     * or currency resolved by older middleware code.
+     */
+    private const DETECTION_VERSION = '20260910-v3';
+
+    /**
+     * Resolve storefront currency before Apartment accessors serialize prices.
      *
-     * Location-aware pricing and manual multi-currency switching are two
-     * different concerns. A visitor in Nigeria must still be shown NGN when
-     * location awareness is enabled, even when allow_multi_currency is false.
+     * Business rule:
+     * - Nigeria => NGN automatically.
+     * - Other resolved countries => USD.
+     * - An explicit supported currency selection wins for the current session
+     *   when manual multi-currency is enabled.
+     *
+     * Automatic location pricing is intentionally independent from the legacy
+     * allow_multi_currency flag. That flag controls the manual switcher only.
      */
     public function handle($request, Closure $next)
     {
         $settings = SystemSetting::first();
-        $locationAware = $settings ? (bool) $settings->location_aware : true;
         $allowManualCurrency = $settings ? (bool) $settings->allow_multi_currency : false;
-
         $ip = $this->resolveVisitorIp($request);
 
-        // Do not let an accidentally enabled local testing IP override a real
-        // production visitor. The config can still be used while developing.
-        if (! app()->environment('local') && config('location.testing.enabled')) {
-            config(['location.testing.enabled' => false]);
+        // Currency state written by earlier versions of this middleware must
+        // not survive a deployment and keep a Nigerian visitor stuck on USD.
+        if ($request->session()->get('currency_detection_version') !== self::DETECTION_VERSION) {
+            $request->session()->forget([
+                'rate',
+                'switch',
+                'userLocation',
+                'country_name',
+                'currency_manual_selection',
+                'currency_manual_ip',
+                'currency_manual_selected_at',
+                'currency_detected_ip',
+                'currency_detected_country_code',
+                'currency_detected_at',
+                'currency_detection_source',
+            ]);
         }
 
         $requestedCurrency = strtoupper(trim((string) $request->query('currency', '')));
         $requestedCurrency = strtok($requestedCurrency, '?');
 
-        // An explicit currency choice is respected when multi-currency is
-        // enabled. Mark it with the IP and timestamp so old/stale session flags
-        // from previous code cannot permanently pin a visitor to USD.
         if (
             $allowManualCurrency
             && $requestedCurrency
@@ -53,25 +73,20 @@ class CurrencyByIp
                 $ip
             );
 
+            $request->session()->put('currency_detection_version', self::DETECTION_VERSION);
             $request->session()->put('currency_manual_selection', true);
             $request->session()->put('currency_manual_ip', $ip);
             $request->session()->put('currency_manual_selected_at', now()->timestamp);
+            $request->session()->put('currency_detection_source', 'manual');
 
             return $next($request);
         }
 
-        // If location awareness is disabled, preserve an already selected
-        // currency but do not perform automatic geolocation.
-        if (! $locationAware) {
-            return $next($request);
-        }
-
-        // Preserve a genuine current-session manual choice. Legacy manual flags
-        // (which did not store an IP/timestamp) are deliberately ignored once
-        // so automatic country detection can repair stale USD sessions.
+        // Preserve only a manual selection created by this version. This is
+        // deliberately checked after the version reset above.
         if (
             (bool) $request->session()->get('currency_manual_selection', false)
-            && $request->session()->has('currency_manual_selected_at')
+            && $request->session()->get('currency_detection_version') === self::DETECTION_VERSION
             && $request->session()->get('currency_manual_ip') === $ip
             && $request->session()->has('rate')
             && $request->session()->has('switch')
@@ -85,32 +100,54 @@ class CurrencyByIp
             'currency_manual_selected_at',
         ]);
 
-        // Reuse only a successful country detection. The previous implementation
-        // also cached an unresolved lookup as USD, which could leave a Nigerian
-        // visitor stuck in dollars for the rest of the session.
+        // Cloudflare country information is cheap and request-specific. If it
+        // is available, do not let an older session value override it.
+        $edgeCountryCode = strtoupper(trim((string) $request->header('CF-IPCountry', '')));
+        if ($this->isCountryCode($edgeCountryCode)) {
+            $country = [
+                'code' => $edgeCountryCode,
+                'name' => $edgeCountryCode === 'NG' ? 'Nigeria' : null,
+                'source' => 'cloudflare',
+            ];
+
+            $this->applyDetectedCurrency($request, $settings, $country, $ip);
+
+            return $next($request);
+        }
+
+        // Reuse a successful detection for a short period, but only when it
+        // was created by this exact implementation and for this exact IP.
+        $detectedAt = (int) $request->session()->get('currency_detected_at', 0);
+        $detectedRecently = $detectedAt > 0 && $detectedAt >= now()->subMinutes(30)->timestamp;
+
         if (
-            $request->session()->has('rate')
+            $request->session()->get('currency_detection_version') === self::DETECTION_VERSION
+            && $request->session()->has('rate')
             && $request->session()->has('switch')
             && $request->session()->get('currency_detected_ip') === $ip
             && $request->session()->has('currency_detected_country_code')
+            && $detectedRecently
         ) {
             return $next($request);
         }
 
         $country = $this->resolveCountry($request, $ip);
+        $this->applyDetectedCurrency($request, $settings, $country, $ip);
+
+        return $next($request);
+    }
+
+    private function applyDetectedCurrency($request, $settings, array $country, $ip)
+    {
         $countryCode = strtoupper((string) ($country['code'] ?? ''));
         $countryName = strtolower(trim((string) ($country['name'] ?? '')));
         $isNigeria = $countryCode === 'NG' || $countryName === 'nigeria';
 
-        // The present business rule is Nigeria => NGN, everywhere else => USD.
-        // If country lookup is temporarily unavailable, use the configured
-        // default but do not mark detection as successful; a later request can
-        // retry and correct the currency automatically.
         $currencyCode = $isNigeria
             ? 'NGN'
             : ($countryCode !== '' ? 'USD' : $this->defaultCurrencyCode($settings));
 
-        $this->applyCurrency(
+        $rate = $this->applyCurrency(
             $request,
             $currencyCode,
             $country['name'] ?? null,
@@ -118,27 +155,34 @@ class CurrencyByIp
             $ip
         );
 
-        if ($countryCode !== '') {
+        $request->session()->put('currency_detection_version', self::DETECTION_VERSION);
+        $request->session()->put('currency_detection_source', $country['source'] ?? 'unknown');
+
+        // Mark the country lookup as reusable only when geolocation really
+        // succeeded and the requested country currency was safely applied.
+        if ($countryCode !== '' && strtoupper((string) $rate['iso_code3']) === $currencyCode) {
             $request->session()->put('currency_detected_ip', $ip);
             $request->session()->put('currency_detected_country_code', $countryCode);
+            $request->session()->put('currency_detected_at', now()->timestamp);
         } else {
             $request->session()->forget([
                 'currency_detected_ip',
                 'currency_detected_country_code',
+                'currency_detected_at',
             ]);
         }
-
-        return $next($request);
     }
 
     /**
-     * Prefer the original client address supplied by the common edge proxies
-     * used by the application, then fall back to Laravel's request address.
+     * Prefer original-client headers used by common reverse proxies, then
+     * Laravel's request address. The public-IP check prevents private proxy
+     * addresses from being sent to a geolocation provider.
      */
     private function resolveVisitorIp($request)
     {
         $candidates = [
             $request->header('CF-Connecting-IP'),
+            $request->header('True-Client-IP'),
             $request->header('X-Real-IP'),
         ];
 
@@ -157,30 +201,30 @@ class CurrencyByIp
             }
         }
 
-        // Localhost has no public client address. This fallback is restricted
-        // to the local environment so production never geolocates the server.
-        if (app()->environment('local')) {
-            return Cache::remember('local-public-ip', now()->addMinutes(10), function () use ($request) {
-                try {
-                    $response = Http::timeout(3)->get('https://api64.ipify.org', [
-                        'format' => 'json',
-                    ]);
-                    $publicIp = $response->successful() ? data_get($response->json(), 'ip') : null;
+        // Local development can still deliberately use LOCATION_TEST_IP, but
+        // a live request with a real public address never uses the test IP.
+        $testingIp = config('location.testing.enabled')
+            ? config('location.testing.ip')
+            : null;
 
-                    return $this->isPublicIp($publicIp) ? $publicIp : $request->ip();
-                } catch (\Throwable $e) {
-                    return $request->ip();
-                }
-            });
+        if ($this->isPublicIp($testingIp)) {
+            return $testingIp;
         }
 
         return $request->ip();
     }
 
     /**
-     * Resolve country from Cloudflare first, then the installed Location
-     * package / MaxMind database, with an HTTPS IP API as the final fallback.
-     * Only successful results are cached as a country detection.
+     * Country resolution order:
+     * 1. Cloudflare country header.
+     * 2. Versioned local cache.
+     * 3. Existing Stevebauman/MaxMind location stack.
+     * 4. ipwho.is.
+     * 5. ipapi.co.
+     *
+     * The package testing override is disabled while resolving a real public
+     * visitor IP. This matters even if a production .env accidentally has
+     * APP_ENV=local or LOCATION_TESTING=true.
      */
     private function resolveCountry($request, $ip)
     {
@@ -189,53 +233,52 @@ class CurrencyByIp
             return [
                 'code' => $cloudflareCode,
                 'name' => $cloudflareCode === 'NG' ? 'Nigeria' : null,
-                'position' => null,
+                'source' => 'cloudflare',
             ];
         }
 
         if (! $this->isPublicIp($ip)) {
-            return ['code' => null, 'name' => null, 'position' => null];
+            return ['code' => null, 'name' => null, 'source' => 'unresolved'];
         }
 
-        $cacheKey = 'visitor-country:' . sha1((string) $ip);
+        $cacheKey = 'visitor-country:' . self::DETECTION_VERSION . ':' . sha1((string) $ip);
         $cached = Cache::get($cacheKey);
         if (is_array($cached) && $this->isCountryCode($cached['code'] ?? null)) {
-            return $cached + ['position' => null];
+            return $cached + ['source' => 'cache'];
         }
 
+        $testingWasEnabled = (bool) config('location.testing.enabled');
+
         try {
+            // Always honor the public IP passed to Location::get(). The package
+            // test address must never replace an actual visitor address.
+            if ($testingWasEnabled) {
+                config(['location.testing.enabled' => false]);
+            }
+
             $position = Location::get($ip) ?: null;
             $positionCode = strtoupper(trim((string) optional($position)->countryCode));
             $positionName = trim((string) optional($position)->countryName);
 
-            if ($this->isCountryCode($positionCode) || $positionName !== '') {
-                $result = [
-                    'code' => $this->isCountryCode($positionCode) ? $positionCode : null,
+            if (! $this->isCountryCode($positionCode) && strtolower($positionName) === 'nigeria') {
+                $positionCode = 'NG';
+            }
+
+            if ($this->isCountryCode($positionCode)) {
+                return $this->cacheCountry($cacheKey, [
+                    'code' => $positionCode,
                     'name' => $positionName !== '' ? $positionName : null,
-                    'position' => $position,
-                ];
-
-                // Nigeria can also be identified safely by country name if an
-                // older MaxMind database does not populate countryCode.
-                if (! $result['code'] && strtolower($positionName) === 'nigeria') {
-                    $result['code'] = 'NG';
-                }
-
-                if ($result['code']) {
-                    Cache::put($cacheKey, [
-                        'code' => $result['code'],
-                        'name' => $result['name'],
-                    ], now()->addHours(6));
-                }
-
-                return $result;
+                    'source' => 'location',
+                ]);
             }
         } catch (\Throwable $exception) {
             report($exception);
+        } finally {
+            if ($testingWasEnabled) {
+                config(['location.testing.enabled' => true]);
+            }
         }
 
-        // Final provider fallback. This prevents one failed/stale local GeoIP
-        // lookup from silently becoming a permanent USD session.
         try {
             $response = Http::timeout(5)
                 ->acceptJson()
@@ -246,25 +289,50 @@ class CurrencyByIp
                 $apiName = trim((string) data_get($response->json(), 'country'));
 
                 if ($this->isCountryCode($apiCode)) {
-                    $result = [
+                    return $this->cacheCountry($cacheKey, [
                         'code' => $apiCode,
                         'name' => $apiName !== '' ? $apiName : null,
-                        'position' => null,
-                    ];
-
-                    Cache::put($cacheKey, [
-                        'code' => $result['code'],
-                        'name' => $result['name'],
-                    ], now()->addHours(6));
-
-                    return $result;
+                        'source' => 'ipwho.is',
+                    ]);
                 }
             }
         } catch (\Throwable $exception) {
             report($exception);
         }
 
-        return ['code' => null, 'name' => null, 'position' => null];
+        try {
+            $response = Http::timeout(5)
+                ->acceptJson()
+                ->get('https://ipapi.co/' . rawurlencode((string) $ip) . '/json/');
+
+            if ($response->successful() && ! data_get($response->json(), 'error', false)) {
+                $apiCode = strtoupper(trim((string) data_get($response->json(), 'country_code')));
+                $apiName = trim((string) data_get($response->json(), 'country_name'));
+
+                if ($this->isCountryCode($apiCode)) {
+                    return $this->cacheCountry($cacheKey, [
+                        'code' => $apiCode,
+                        'name' => $apiName !== '' ? $apiName : null,
+                        'source' => 'ipapi.co',
+                    ]);
+                }
+            }
+        } catch (\Throwable $exception) {
+            report($exception);
+        }
+
+        Log::warning('Storefront country detection failed', [
+            'ip' => $ip,
+        ]);
+
+        return ['code' => null, 'name' => null, 'source' => 'unresolved'];
+    }
+
+    private function cacheCountry($cacheKey, array $country)
+    {
+        Cache::put($cacheKey, $country, now()->addHours(6));
+
+        return $country;
     }
 
     private function isPublicIp($ip)
@@ -296,6 +364,11 @@ class CurrencyByIp
         return $configured !== '' ? $configured : 'USD';
     }
 
+    /**
+     * Store one canonical rate object used by FormatPrice, checkout and the
+     * booking-price snapshot. For a non-USD currency, never use a fake 1:1
+     * exchange rate: falling back to USD is safer than undercharging.
+     */
     private function applyCurrency($request, $currencyCode, $countryName, $countryCode, $ip)
     {
         $currencyCode = strtoupper((string) $currencyCode);
@@ -305,18 +378,29 @@ class CurrencyByIp
             'NGN' => ['country' => 'Nigeria', 'symbol' => '₦'],
             'USD' => ['country' => 'United States', 'symbol' => '$'],
         ];
-        $fallback = $fallbacks[$currencyCode] ?? [
-            'country' => $countryName ?: $currencyCode,
-            'symbol' => $currencyCode . ' ',
-        ];
 
         $exchangeRate = $currencyCode === 'USD'
             ? 1.0
             : Helper::getCurrencyExchangeRate($currencyCode, 'USD');
 
-        if (! is_numeric($exchangeRate) || (float) $exchangeRate <= 0) {
+        if (
+            $currencyCode !== 'USD'
+            && (! is_numeric($exchangeRate) || (float) $exchangeRate <= 1)
+        ) {
+            Log::warning('Storefront exchange rate unavailable; using USD safely', [
+                'requested_currency' => $currencyCode,
+                'rate' => $exchangeRate,
+            ]);
+
+            $currencyCode = 'USD';
+            $currency = Currency::where('iso_code3', 'USD')->first();
             $exchangeRate = 1.0;
         }
+
+        $fallback = $fallbacks[$currencyCode] ?? [
+            'country' => $countryName ?: $currencyCode,
+            'symbol' => $currencyCode . ' ',
+        ];
 
         $rate = [
             'rate' => (float) $exchangeRate,
@@ -329,12 +413,12 @@ class CurrencyByIp
         $request->session()->put('rate', json_encode($rate));
         $request->session()->put('switch', $rate['iso_code3']);
         $request->session()->put('country_name', $countryName ?: ($countryCode ?: $rate['country']));
-
-        $location = [
+        $request->session()->put('userLocation', json_encode([
             'ip' => $ip,
             'countryName' => $countryName,
             'countryCode' => $countryCode,
-        ];
-        $request->session()->put('userLocation', json_encode($location));
+        ]));
+
+        return $rate;
     }
 }

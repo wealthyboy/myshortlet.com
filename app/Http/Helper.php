@@ -206,38 +206,48 @@ class Helper
             $fallbackRate = optional(CurrencyRate::first())->rate;
         }
 
-        $cacheKey = 'currency-exchange-rate:' . $baseCurrency . ':' . $targetCurrency;
+        // Version the cache key so a failed/1:1 result cached by older code
+        // cannot keep a newly deployed location-currency fix stuck on USD.
+        $cacheKey = 'currency-exchange-rate:v2:' . $baseCurrency . ':' . $targetCurrency;
 
         return Cache::remember($cacheKey, now()->addMinutes(30), function () use (
             $baseCurrency,
             $targetCurrency,
             $fallbackRate
         ) {
-            try {
-                $url = 'https://api.exchangerate-api.com/v4/latest/' . urlencode($baseCurrency);
-                $response = Http::timeout(8)->get($url);
+            $providers = [
+                'https://api.exchangerate-api.com/v4/latest/' . urlencode($baseCurrency),
+                'https://open.er-api.com/v6/latest/' . urlencode($baseCurrency),
+            ];
 
-                if ($response->successful()) {
-                    $data = $response->json();
-                    $rate = data_get($data, 'rates.' . $targetCurrency);
+            foreach ($providers as $url) {
+                try {
+                    $response = Http::timeout(8)->acceptJson()->get($url);
 
-                    if (is_numeric($rate) && (float) $rate > 0) {
-                        return (float) $rate;
+                    if ($response->successful()) {
+                        $data = $response->json();
+                        $rate = data_get($data, 'rates.' . $targetCurrency);
+
+                        if (is_numeric($rate) && (float) $rate > 0) {
+                            return (float) $rate;
+                        }
                     }
+                } catch (\Throwable $e) {
+                    \Log::warning('Currency API error', [
+                        'base' => $baseCurrency,
+                        'target' => $targetCurrency,
+                        'provider' => $url,
+                        'message' => $e->getMessage(),
+                    ]);
                 }
-            } catch (\Throwable $e) {
-                \Log::warning('Currency API error', [
-                    'base' => $baseCurrency,
-                    'target' => $targetCurrency,
-                    'message' => $e->getMessage(),
-                ]);
             }
 
             if (is_numeric($fallbackRate) && (float) $fallbackRate > 0) {
                 return (float) $fallbackRate;
             }
 
-            // A numeric fallback keeps storefront price serialization safe.
+            // Callers that request a non-USD currency must treat 1.0 as a
+            // failed conversion rather than charging the same number of units.
             return 1.0;
         });
     }
