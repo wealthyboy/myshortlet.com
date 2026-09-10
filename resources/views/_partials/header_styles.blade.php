@@ -94,8 +94,8 @@
 
       #currencyDropdown .currency-menu {
          min-width: 0;
-         width: 245px !important;
-         min-width: 245px !important;
+         width: 220px !important;
+         min-width: 220px !important;
          max-width: calc(100vw - 24px) !important;
          margin-top: 0.45rem;
          padding: 0.25rem 0.35rem;
@@ -142,8 +142,8 @@
          }
 
          #currencyDropdown .currency-menu {
-            width: min(245px, calc(100vw - 24px)) !important;
-            min-width: min(245px, calc(100vw - 24px)) !important;
+            width: min(220px, calc(100vw - 24px)) !important;
+            min-width: min(220px, calc(100vw - 24px)) !important;
             max-width: calc(100vw - 24px) !important;
          }
       }
