@@ -87,7 +87,7 @@
                     extra_service.id
                     " :class="'extra_services_' + booking.apartment.id" :value="extra_service.id"
                     class="filter-attribute" type="radio" @click="addServices($event)" :data-quantity="parseInt(x)"
-                    :data-price="extra_service.pivot.price * parseInt(x)" :data-apartment="booking.apartment.id" />
+                    :data-price="convertedExtraPrice(extra_service.pivot.price) * parseInt(x)" :data-apartment="booking.apartment.id" />
                   <span class="checkbox-custom rectangular"></span>
                   <span class="checkbox-label-text mt-1">{{ extra_service.name }}
                   </span>
@@ -98,9 +98,8 @@
                 </p>
               </div>
               <span class="fs-32 mt-4 font-weight-bold-2 text-heading total-price">
-                {{ property.currency
-                }}{{
-  (parseInt(x) * extra_service.pivot.price) | priceFormat
+                {{ currencySymbol }}{{
+  (parseInt(x) * convertedExtraPrice(extra_service.pivot.price)) | priceFormat
 }}</span>
             </div>
           </div>
@@ -123,6 +122,9 @@ export default {
     return { amount: 0, checkboxesChecked: [], extras: [], isChecked: false };
   },
   computed: {
+    currencySymbol() {
+      return (this.booking_details && this.booking_details.currency_symbol) || this.property.currency;
+    },
     ...mapGetters({
       bookingTotal: "bookingTotal",
       bookingSubTotal: "bookingSubTotal",
@@ -227,8 +229,12 @@ export default {
         this.$emit("addExtraService", { extras: extras });
       });
     },
+    convertedExtraPrice(price) {
+      const rate = parseFloat(this.booking_details && this.booking_details.exchange_rate) || 1;
+      return Math.round((parseFloat(price) || 0) * rate);
+    },
     sum(arr) {
-      return arr.reduce((a, b) => parseInt(a) + parseInt(b), 0);
+      return arr.reduce((a, b) => Number(a) + Number(b), 0);
     },
   },
 };

@@ -3,89 +3,25 @@
 namespace App\Http\Middleware;
 
 use App\Http\Helper;
-use App\Models\Apartment;
 use App\Models\Currency;
-use App\Models\PeakPeriod;
-use App\Models\PriceChanged;
 use App\Models\SystemSetting;
-use Carbon\Carbon;
 use Closure;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Stevebauman\Location\Facades\Location;
 
 class CurrencyByIp
 {
     /**
-     * Handle an incoming request.
+     * Keep the storefront currency tied to the visitor, while preserving a
+     * manual currency choice for the rest of the session.
      *
-     * Currency rules:
-     * - Visitors detected in Nigeria default to NGN.
-     * - Visitors outside Nigeria default to USD.
-     * - An explicit ?currency=NGN/USD choice always wins and remains in session.
-     * - If location lookup fails, fall back safely to USD instead of the system currency.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
+     * Nigeria => NGN. Other locations => USD. The exchange rate is stored in
+     * session and is later frozen onto a booking so checkout, payment,
+     * reservation and receipt cannot drift if the live rate changes.
      */
     public function handle($request, Closure $next)
     {
-        $position = null;
-        $ip = $request->ip();
-
-        // A local/private address cannot be geolocated by a public IP service.
-        // Avoid blocking the request if location detection is unavailable.
-        $isPublicIp = filter_var(
-            $ip,
-            FILTER_VALIDATE_IP,
-            FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
-        ) !== false;
-
-        if (! app()->environment('local') && $isPublicIp) {
-            try {
-                $position = Location::get($ip) ?: null;
-            } catch (\Throwable $exception) {
-                report($exception);
-            }
-        }
-
-        $request->session()->put('country_name', optional($position)->countryName);
-
-        /*
-         * Keep the existing peak-period behaviour unchanged. Peak prices are based
-         * on the requested stay dates elsewhere in the app; this block only keeps
-         * the legacy December price snapshot in sync during the configured period.
-         */
-        $currentDate = Carbon::now();
-        $peakPeriod = PeakPeriod::first();
-
-        if (null !== $peakPeriod) {
-            if ($currentDate->between($peakPeriod->start_date, $peakPeriod->end_date)) {
-                Helper::updateApartmentPrices(
-                    $peakPeriod->start_date,
-                    $peakPeriod->end_date,
-                    $peakPeriod->discount
-                );
-
-                $priceUpdate = new PriceChanged;
-                $priceUpdate->is_updated = 1;
-                $priceUpdate->save();
-            } else {
-                $priceUpdate = PriceChanged::first();
-
-                if (null !== $priceUpdate && $priceUpdate->is_updated === true) {
-                    $yesterday = Carbon::yesterday();
-
-                    if ($yesterday->eq(Carbon::parse($peakPeriod->end_date))) {
-                        Helper::reverseApartmentPrices($peakPeriod->discount);
-                    }
-
-                    $priceUpdate = PriceChanged::first();
-                    $priceUpdate->is_updated = 0;
-                    $priceUpdate->save();
-                }
-            }
-        }
-
         $settings = SystemSetting::first();
 
         if (! optional($settings)->allow_multi_currency) {
@@ -95,27 +31,28 @@ class CurrencyByIp
                 'currency_manual_selection',
                 'currency_detected_ip',
                 'userLocation',
+                'country_name',
             ]);
 
             return $next($request);
         }
 
-        $nigeria = Currency::where('country', 'Nigeria')->first();
-        $usa = Currency::where('country', 'United States')->first();
+        $ip = $this->resolveVisitorIp($request);
+        $position = $this->resolvePosition($request, $ip);
+        $request->session()->put('country_name', optional($position)->countryName);
 
-        // A direct currency selection is a user preference and must override IP.
-        $requestedCurrency = strtoupper((string) $request->query('currency', ''));
+        // A direct currency selection is a user preference and must win over IP.
+        $requestedCurrency = strtoupper(trim((string) $request->query('currency', '')));
         $requestedCurrency = strtok($requestedCurrency, '?');
 
-        if (in_array($requestedCurrency, ['USD', 'NGN'], true)) {
-            $this->applyCurrency($request, $requestedCurrency, $nigeria, $usa, $position, $ip);
+        if ($requestedCurrency && $this->currencyExists($requestedCurrency)) {
+            $this->applyCurrency($request, $requestedCurrency, $position, $ip);
             $request->session()->put('currency_manual_selection', true);
 
             return $next($request);
         }
 
-        // Once the visitor chooses a currency manually, do not fight that choice
-        // with IP detection on every subsequent page request.
+        // Never overwrite an explicit choice with automatic IP detection.
         if (
             (bool) $request->session()->get('currency_manual_selection', false)
             && $request->session()->has('rate')
@@ -124,8 +61,7 @@ class CurrencyByIp
             return $next($request);
         }
 
-        // If this session has already been auto-detected for the same IP, keep it.
-        // This also avoids making a geolocation/rate request on every page load.
+        // Do not call the location and exchange-rate services on every request.
         if (
             $request->session()->has('rate')
             && $request->session()->has('switch')
@@ -134,51 +70,135 @@ class CurrencyByIp
             return $next($request);
         }
 
-        $countryCode = strtoupper((string) optional($position)->countryCode);
+        $countryCode = strtoupper((string) (
+            $request->header('CF-IPCountry')
+            ?: optional($position)->countryCode
+        ));
         $countryName = strtolower(trim((string) optional($position)->countryName));
         $isNigeria = $countryCode === 'NG' || $countryName === 'nigeria';
 
-        // USD is intentionally the safe fallback when geolocation fails.
-        $defaultCurrency = $isNigeria ? 'NGN' : 'USD';
-
-        $this->applyCurrency($request, $defaultCurrency, $nigeria, $usa, $position, $ip);
+        $this->applyCurrency($request, $isNigeria ? 'NGN' : 'USD', $position, $ip);
         $request->session()->forget('currency_manual_selection');
 
         return $next($request);
     }
 
     /**
-     * Store a complete, consistent currency payload in the session.
+     * Prefer the original client address supplied by common trusted edge
+     * proxies. This fixes currency detection when Laravel sees a private proxy
+     * address instead of the visitor's public address.
      */
-    private function applyCurrency($request, $currency, $nigeria, $usa, $position, $ip)
+    private function resolveVisitorIp($request)
     {
-        if ($currency === 'NGN') {
-            $exchangeRate = Helper::getCurrencyExchangeRate();
-            $exchangeRate = is_numeric($exchangeRate) && (float) $exchangeRate > 0
-                ? (float) $exchangeRate
-                : 1.0;
+        $candidates = [
+            $request->header('CF-Connecting-IP'),
+            $request->header('X-Real-IP'),
+        ];
 
-            $isoCode = optional($nigeria)->iso_code3 ?: 'NGN';
-            $rate = [
-                'rate' => $exchangeRate,
-                'country' => 'Nigeria',
-                'code' => $isoCode,
-                'iso_code3' => $isoCode,
-                'symbol' => optional($nigeria)->symbol ?: '₦',
-            ];
-        } else {
-            $isoCode = optional($usa)->iso_code3 ?: 'USD';
-            $rate = [
-                'rate' => 1,
-                'country' => optional($usa)->country ?: 'United States',
-                'code' => $isoCode,
-                'iso_code3' => $isoCode,
-                'symbol' => optional($usa)->symbol ?: '$',
-            ];
+        $forwardedFor = (string) $request->header('X-Forwarded-For', '');
+        if ($forwardedFor !== '') {
+            foreach (explode(',', $forwardedFor) as $forwardedIp) {
+                $candidates[] = trim($forwardedIp);
+            }
         }
 
-        $request->session()->put('rate', json_encode(collect($rate)));
-        $request->session()->put('switch', $currency);
+        $candidates[] = $request->ip();
+
+        foreach ($candidates as $candidate) {
+            if ($this->isPublicIp($candidate)) {
+                return $candidate;
+            }
+        }
+
+        // On a developer machine request()->ip() is normally 127.0.0.1. In
+        // that case only, resolve the machine's public IP so Nigeria can still
+        // be tested locally. Never do this fallback in production because it
+        // would detect the web server rather than the visitor.
+        if (app()->environment('local')) {
+            return Cache::remember('local-public-ip', now()->addMinutes(10), function () use ($request) {
+                try {
+                    $response = Http::timeout(3)->get('https://api64.ipify.org', [
+                        'format' => 'json',
+                    ]);
+                    $publicIp = $response->successful() ? data_get($response->json(), 'ip') : null;
+
+                    return $this->isPublicIp($publicIp) ? $publicIp : $request->ip();
+                } catch (\Throwable $e) {
+                    return $request->ip();
+                }
+            });
+        }
+
+        return $request->ip();
+    }
+
+    private function resolvePosition($request, $ip)
+    {
+        // Cloudflare already supplies an ISO country header when enabled. We
+        // still run the existing Location package where possible for the
+        // country name and non-Cloudflare deployments.
+        if (! $this->isPublicIp($ip)) {
+            return null;
+        }
+
+        try {
+            return Location::get($ip) ?: null;
+        } catch (\Throwable $exception) {
+            report($exception);
+
+            return null;
+        }
+    }
+
+    private function isPublicIp($ip)
+    {
+        return filter_var(
+            $ip,
+            FILTER_VALIDATE_IP,
+            FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+        ) !== false;
+    }
+
+    private function currencyExists($code)
+    {
+        // Preserve USD/NGN even on an installation whose seed data is missing,
+        // while allowing any other configured ISO currency in future.
+        return in_array($code, ['USD', 'NGN'], true)
+            || Currency::where('iso_code3', $code)->exists();
+    }
+
+    private function applyCurrency($request, $currencyCode, $position, $ip)
+    {
+        $currencyCode = strtoupper((string) $currencyCode);
+        $currency = Currency::where('iso_code3', $currencyCode)->first();
+
+        $fallbacks = [
+            'NGN' => ['country' => 'Nigeria', 'symbol' => '₦'],
+            'USD' => ['country' => 'United States', 'symbol' => '$'],
+        ];
+        $fallback = $fallbacks[$currencyCode] ?? [
+            'country' => optional($position)->countryName ?: $currencyCode,
+            'symbol' => $currencyCode . ' ',
+        ];
+
+        $exchangeRate = $currencyCode === 'USD'
+            ? 1.0
+            : Helper::getCurrencyExchangeRate($currencyCode, 'USD');
+
+        if (! is_numeric($exchangeRate) || (float) $exchangeRate <= 0) {
+            $exchangeRate = 1.0;
+        }
+
+        $rate = [
+            'rate' => (float) $exchangeRate,
+            'country' => optional($currency)->country ?: $fallback['country'],
+            'code' => optional($currency)->iso_code3 ?: $currencyCode,
+            'iso_code3' => optional($currency)->iso_code3 ?: $currencyCode,
+            'symbol' => optional($currency)->symbol ?: $fallback['symbol'],
+        ];
+
+        $request->session()->put('rate', json_encode($rate));
+        $request->session()->put('switch', $rate['iso_code3']);
         $request->session()->put('currency_detected_ip', $ip);
 
         if ($position) {

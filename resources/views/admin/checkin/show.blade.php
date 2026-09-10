@@ -170,13 +170,13 @@
 
 
                            <td class="td-number text-right">
-                              {{ $user_reservation->currency  ?? '₦' }}{{ number_format(optional($reservation->apartment)->converted_price)   }}
+                              {{ $user_reservation->currency ?? $reservation->currency ?? '₦' }}{{ number_format($reservation->price) }}
                            </td>
                            <td class="td-number">
                               {{ $reservation->checkin->diffInDays($reservation->checkout); }}
                            </td>
                            <td class="td-number">
-                              <small>{{ $user_reservation->currency  ?? '₦' }}</small>{{ number_format(optional($reservation->apartment)->converted_price) }}
+                              <small>{{ $user_reservation->currency ?? $reservation->currency ?? '₦' }}</small>{{ number_format(data_get($reservation->pricing_snapshot, 'accommodation_total', data_get($user_reservation->pricing_snapshot, 'accommodation_total', $reservation->price * max(1, (int) $reservation->length_of_stay)))) }}
                            </td>
                         </tr>
                         @endforeach
@@ -186,7 +186,7 @@
                      <tfoot>
                         <tr>
                            <td colspan="6" class="text-right">Sub-Total</td>
-                           <td class="text-right"><small>{{ $reservation->currency  ?? '₦' }}</small>{{ number_format($user_reservation->original_amount)  }}</td>
+                           <td class="text-right"><small>{{ $user_reservation->currency ?? $reservation->currency ?? '₦' }}</small>{{ number_format($user_reservation->original_amount)  }}</td>
                         </tr>
                         <tr>
                            <td colspan="6" class="text-right">Coupon</td>
@@ -195,7 +195,7 @@
 
                         <tr>
                            <td colspan="6" class="text-right">Total</td>
-                           <td class="text-right">{{ $reservation->currency  ?? '₦'  }}{{ number_format($user_reservation->total) }}</td>
+                           <td class="text-right">{{ $user_reservation->currency ?? $reservation->currency ?? '₦' }}{{ number_format($user_reservation->total) }}</td>
                         </tr>
                      </tfoot>
                   </table>

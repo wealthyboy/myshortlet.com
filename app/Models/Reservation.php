@@ -15,6 +15,8 @@ class Reservation extends Model
     protected $casts = [
         'checkin' => 'datetime:Y-m-d',
         'checkout' => 'datetime:Y-m-d',
+        'rate' => 'float',
+        'pricing_snapshot' => 'array',
 
     ];
 
@@ -27,7 +29,10 @@ class Reservation extends Model
         'description',
         'checkin',
         'checkout',
+        'currency',
+        'currency_code',
         'rate',
+        'pricing_snapshot',
         'length_of_stay'
     ];
 

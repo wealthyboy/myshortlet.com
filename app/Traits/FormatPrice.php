@@ -2,13 +2,10 @@
 
 namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Builder;
 use App\Models\SystemSetting;
+use App\Models\Apartment;
+use App\Services\BookingPricingService;
 use App\Http\Helper;
-use App\Models\BookingDetail;
-use App\Models\Property;
-use App\Models\PeakPeriod;
-use Carbon\Carbon;
 
 
 
@@ -132,62 +129,37 @@ trait FormatPrice
 
   public function getConvertedPriceAttribute()
   {
-    $currentDate = Carbon::now();
-    $peak_period = PeakPeriod::first();
-
-    if ($peak_period) {
-      // Get check_in_checkout from request or session
-      $checkInOut = request()->check_in_checkout ?? session('check_in_checkout');
-
+    // Peak pricing belongs to the requested stay dates, never to today's
+    // calendar date. Only apartments are date-priced; Property, Voucher and
+    // extra-service models that share this trait keep their normal conversion.
+    if ($this instanceof Apartment) {
+      $checkInOut = request()->get('check_in_checkout') ?: session('check_in_checkout');
 
       if ($checkInOut) {
-        $dates = explode("to", $checkInOut);
+        try {
+          $dates = Helper::toAndFromDate($checkInOut);
+          $startDate = data_get($dates, 'start_date');
+          $endDate = data_get($dates, 'end_date');
 
-        if (count($dates) > 1) {
-          $date      = Helper::toAndFromDate($checkInOut);
-          $peakStart = Carbon::parse($peak_period->start_date);
-          $peakEnd   = Carbon::parse($peak_period->end_date);
-
-          if (data_get($date, 'end_date') &&  data_get($date, 'start_date')) {
-            $startDate = $date['start_date'];
-            $endDate   = $date['end_date'];
-
-
-            // Check if booking overlaps with peak period
-            $overlapsPeak = (
-              $startDate->between($peakStart, $peakEnd) ||
-              $endDate->between($peakStart, $peakEnd) ||
-              ($startDate->lt($peakStart) && $endDate->gt($peakEnd))
+          if ($startDate && $endDate && $endDate->gt($startDate)) {
+            $quote = app(BookingPricingService::class)->quote(
+              $this,
+              $startDate,
+              $endDate,
+              $this->getExchangeRateAttribute(),
+              Helper::getIsoCode(),
+              Helper::getCurrency()
             );
 
-            if ($overlapsPeak) {
-              Helper::updateApartmentPrices(
-                $peak_period->start_date,
-                $peak_period->end_date,
-                $peak_period->discount
-              );
-              return $this->ConvertCurrencyRate($this->december_prices);
-            } else {
-              return $this->ConvertCurrencyRate($this->price);
-            }
+            return $quote['average_nightly'];
           }
+        } catch (\Throwable $e) {
+          // A malformed search range must never break listing serialization.
+          report($e);
         }
-      }
-
-      // If today itself falls in peak period
-      if ($currentDate->between($peak_period->start_date, $peak_period->end_date)) {
-        Helper::updateApartmentPrices(
-          $peak_period->start_date,
-          $peak_period->end_date,
-          $peak_period->discount
-        );
-        return $this->ConvertCurrencyRate($this->december_prices);
-      } else {
-        return $this->ConvertCurrencyRate($this->price);
       }
     }
 
-    // Default: normal price
     return $this->ConvertCurrencyRate($this->price);
   }
 
@@ -209,24 +181,35 @@ trait FormatPrice
 
   public function getConvertedPeakPriceAttribute()
   {
-    $currentDate = Carbon::now();
-    $peak_period = PeakPeriod::first();
-    if (null !==  $peak_period) {
-      if ($currentDate->between($peak_period->start_date, $peak_period->end_date)) {
-        if ($this->december_prices > 0) {
-          return $this->ConvertCurrencyRate($this->december_prices);
-        }
-      }
+    if (! ($this instanceof Apartment)) {
+      return 0;
     }
 
+    $checkInOut = request()->get('check_in_checkout') ?: session('check_in_checkout');
 
+    if (! $checkInOut) {
+      return 0;
+    }
 
-    if (null !==  $peak_period) {
-      if ($currentDate->between($peak_period->start_date, $peak_period->end_date)) {
-        if ($this->december_prices > 0) {
-          return $this->ConvertCurrencyRate($this->december_prices);
-        }
+    try {
+      $dates = Helper::toAndFromDate($checkInOut);
+      $startDate = data_get($dates, 'start_date');
+      $endDate = data_get($dates, 'end_date');
+
+      if ($startDate && $endDate && $endDate->gt($startDate)) {
+        $quote = app(BookingPricingService::class)->quote(
+          $this,
+          $startDate,
+          $endDate,
+          $this->getExchangeRateAttribute(),
+          Helper::getIsoCode(),
+          Helper::getCurrency()
+        );
+
+        return $quote['peak_nights'] > 0 ? $quote['peak_nightly'] : 0;
       }
+    } catch (\Throwable $e) {
+      report($e);
     }
 
     return 0;

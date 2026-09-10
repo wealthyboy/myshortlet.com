@@ -68,13 +68,13 @@
                               <br><small></small>
                            </td>
                            <td class="td-number text-right">
-                              {{  $reservation->currency }}{{  optional($reservation->apartment)->converted_price   }}
+                              {{ $user_reservation->currency ?? $reservation->currency }}{{ number_format($reservation->price) }}
                            </td>
                            <td class="td-number">
                               {{ $reservation->quantity }}
                            </td>
                            <td class="td-number">
-                              <small>{{  $reservation->currency }}</small>{{ optional($reservation->apartment)->converted_price }}
+                              <small>{{ $user_reservation->currency ?? $reservation->currency }}</small>{{ number_format(data_get($reservation->pricing_snapshot, 'accommodation_total', data_get($user_reservation->pricing_snapshot, 'accommodation_total', $reservation->price * max(1, (int) $reservation->length_of_stay)))) }}
                            </td>
                         </tr>
                         @endforeach                               

@@ -696,6 +696,12 @@
                                                                                  <table width="260" align="left" class="container" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
                                                                                     <tbody>
 
+                                                                                       @php
+                                                                                          $linePricing = is_array($reservation->pricing_snapshot)
+                                                                                             ? $reservation->pricing_snapshot
+                                                                                             : $user_reservation->pricing_snapshot;
+                                                                                       @endphp
+
                                                                                        <tr>
                                                                                           <td class="text" style="text-align:left; font-family: 'Montserrat', Arial, Helvetica, sans-serif; font-size:14px; line-height: 14px; text-decoration: none; color: #27af9a; font-weight:600; text-transform: uppercase; letter-spacing: 0.05em">
                                                                                              {{ optional($reservation->apartment)->name ?? optional($reservation->property)->name }}
@@ -737,6 +743,35 @@
                                                                                              <b>{{ $user_reservation->currency ?? '₦' }}{{ number_format($reservation->price) }} per night</b>
                                                                                           </td>
                                                                                        </tr>
+
+                                                                                       @if((int) data_get($linePricing, 'peak_nights', 0) > 0)
+                                                                                       <tr>
+                                                                                          <td height="3"></td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                          <td class="text" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height:20px; color:#444444; font-weight:400;">
+                                                                                             <b>Peak period:</b>
+                                                                                             {{ data_get($linePricing, 'peak_nights', 0) }} night(s)
+                                                                                             @if(data_get($linePricing, 'peak_percentage'))
+                                                                                                at +{{ data_get($linePricing, 'peak_percentage') }}%
+                                                                                             @endif
+                                                                                             — {{ $user_reservation->currency ?? '₦' }}{{ number_format(data_get($linePricing, 'peak_total', 0)) }}
+                                                                                          </td>
+                                                                                       </tr>
+                                                                                       @endif
+
+                                                                                       @if((int) data_get($linePricing, 'regular_nights', 0) > 0 && (int) data_get($linePricing, 'peak_nights', 0) > 0)
+                                                                                       <tr>
+                                                                                          <td height="3"></td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                          <td class="text" style="text-align:left; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size:13px; line-height:20px; color:#444444; font-weight:400;">
+                                                                                             <b>Regular period:</b>
+                                                                                             {{ data_get($linePricing, 'regular_nights', 0) }} night(s)
+                                                                                             — {{ $user_reservation->currency ?? '₦' }}{{ number_format(data_get($linePricing, 'regular_total', 0)) }}
+                                                                                          </td>
+                                                                                       </tr>
+                                                                                       @endif
 
 
                                                                                        <tr>

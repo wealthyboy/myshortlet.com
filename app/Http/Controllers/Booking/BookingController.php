@@ -11,8 +11,7 @@ use App\Models\Voucher;
 use App\Models\SystemSetting;
 use App\Http\Helper;
 use App\Models\BookingDetail;
-use App\Models\PeakPeriod;
-use App\Models\UserTracking;
+use App\Services\BookingPricingService;
 
 
 
@@ -34,80 +33,89 @@ class BookingController extends Controller
 	 */
 	public function book(Request $request, Property $property)
 	{
-
-
 		if (!$request->check_in_checkout) {
 			return back();
 		}
 
-		//For now use the first property
-
-		$property = Property::first();
 		$referer = request()->headers->get('referer');
 		$bookings = BookingDetail::all_items_in_cart($property->id);
 		$user = auth()->user();
-		if (!$bookings->count()) {
+
+		if (!$bookings->count() || !$bookings->first()) {
 			return redirect()->to('/');
 		}
 
-		$ids = $bookings->pluck('id')->toArray();
-		$ids = $ids;
-		$booking = $bookings[0];
+		$booking = $bookings->first();
+		$property = Property::find($booking->property_id) ?: $property;
+		$apt = $booking->apartment ?: Apartment::find($request->apartment_id);
 
-
-		if (!$booking) {
+		if (!$apt) {
 			return redirect()->to('/');
 		}
 
-		$days = $booking->checkin->diffInDays($booking->checkout);
+		$quote = $booking->pricing_snapshot;
 
-		$peak_period = PeakPeriod::first();
-		$daysInPeakPeriod = $days;
+		if (!is_array($quote) || empty($quote['nights'])) {
+			$quote = app(BookingPricingService::class)->quote(
+				$apt,
+				$booking->checkin,
+				$booking->checkout,
+				$booking->exchange_rate ?: optional(Helper::rate())->rate,
+				$booking->currency_code ?: Helper::getIsoCode(),
+				$booking->currency_symbol ?: Helper::getCurrency()
+			);
 
-		$daysNotInPeakPeriod = $peak_period->calculateDaysOutsidePeak($booking->checkin, $booking->checkout);
-		$daysNotInPeakPeriod = $daysNotInPeakPeriod <= 0 ? 0 : $daysNotInPeakPeriod;
-		$daysInPeakPeriod =  $days - $daysNotInPeakPeriod;
+			// Freeze the quote so every later step uses the same currency/rate and
+			// the same peak-period calculation, even if either changes afterwards.
+			$booking->currency_code = $quote['currency_code'];
+			$booking->currency_symbol = $quote['currency_symbol'];
+			$booking->exchange_rate = $quote['exchange_rate'];
+			$booking->pricing_snapshot = $quote;
+			$booking->price = $quote['average_nightly'];
+			$booking->regular_price = $quote['regular_nightly'];
+			$booking->total = $quote['accommodation_total'];
+			$booking->save();
+		}
 
-		$apt = Apartment::find($request->apartment_id);
-		$peak_period_price = $apt->converted_peak_price > 0 ? $apt->converted_peak_price : $peak_period->increasePriceByPercentage($apt->converted_price);
-		$isPeakPeriodPresent = $daysInPeakPeriod > 0 ? true : false;
-		$daysInPeakPeriodTotal = $daysInPeakPeriod > 0 ? $daysInPeakPeriod * $peak_period_price : 0;
-		$daysNotInPeakPeriodTotal = $daysNotInPeakPeriod > 0 ? $daysNotInPeakPeriod * $apt->converted_regular_price : 0;
-
-		$nights = [];
+		$days = (int) $quote['nights'];
+		$nights = [$days, $days === 1 ? 'night' : 'nights'];
 		$phone_codes = Helper::phoneCodes();
-		$stays = $days == 1 ? "night" : " nights";
-		$nights[] = $days;
-		$nights[] = $stays;
 		$property->load('free_services', 'facilities', 'extra_services');
-		$total = BookingDetail::sum_items_in_cart($property->id);
-		$total = $daysInPeakPeriodTotal + $daysNotInPeakPeriodTotal;
-		$from = $booking->checkin->format('l') . ' ' . $booking->checkin->format('d') . ' ' . $booking->checkin->format('F') . ' ' . $booking->checkin->isoFormat('Y');
-		$to = $booking->checkout->format('l') . ' ' . $booking->checkout->format('d') . ' ' . $booking->checkout->format('F') . ' ' . $booking->checkout->isoFormat('Y');
+		$ids = $bookings->pluck('id')->toArray();
+
+		$from = $booking->checkin->format('l d F Y');
+		$to = $booking->checkout->format('l d F Y');
+		$peakPeriod = data_get($quote, 'peak_periods.0');
+
 		$booking_details = [
-			'peak_period' => PeakPeriod::first(),
-			'is_peak_period_present' => $daysInPeakPeriod > 0 ? true : false,
-			'days_in_peak_period' => $daysInPeakPeriod,
-			'days_not_in_peak_period' => $daysNotInPeakPeriod,
-			'peak_period_total' => $daysInPeakPeriodTotal,
-			'days_not_in_peak_period_total' => $daysNotInPeakPeriodTotal,
-			'peak_price' => $peak_period_price,
-			'regular_price' => $apt->converted_regular_price,
-			'currency' => session('switch'),
+			'peak_period' => $peakPeriod,
+			'peak_periods' => data_get($quote, 'peak_periods', []),
+			'is_peak_period_present' => (int) $quote['peak_nights'] > 0,
+			'days_in_peak_period' => (int) $quote['peak_nights'],
+			'days_not_in_peak_period' => (int) $quote['regular_nights'],
+			'peak_period_total' => $quote['peak_total'],
+			'days_not_in_peak_period_total' => $quote['regular_total'],
+			'peak_price' => $quote['peak_nightly'],
+			'peak_percentage' => $quote['peak_percentage'],
+			'regular_price' => $quote['regular_nightly'],
+			'currency' => $quote['currency_code'], // Paystack expects the ISO code.
+			'currency_code' => $quote['currency_code'],
+			'currency_symbol' => $quote['currency_symbol'],
+			'exchange_rate' => $quote['exchange_rate'],
+			'pricing_snapshot' => $quote,
 			'loggedIn' => auth()->check(),
 			'user' => auth()->user(),
 			'days' => $days,
 			'from' => $from,
 			'to' => $to,
 			'nights' => $nights,
-			'total' => $total,
+			'total' => $quote['accommodation_total'],
 			'booking_ids' => $ids,
 			'is_agent' => optional($user)->isAgent(),
-			'apt_id' => optional($apt)->id,
-			'sessionId' => session()->getId()
+			'apt_id' => $apt->id,
+			'sessionId' => session()->getId(),
 		];
 
-		//dd($booking_details);
 		$qs = request()->all();
 		return view('book.index', compact('qs', 'referer', 'phone_codes', 'property', 'bookings', 'booking_details'));
 	}
@@ -153,56 +161,72 @@ class BookingController extends Controller
 	 */
 	public function store(Request $request)
 	{
+		$apId = $request->apID ?: $request->apartment_id;
 
-		//dd($request->all());
-		$booking = new BookingDetail;
-		$apartment_quantity = $request->apartment_quantity;
-		$apId = $request->apID;
-		$date  = explode("to", $request->check_in_checkout);
-		$date1 = trim($date[0]);
-		$date2 = trim($date[1]);
-		$data  = [];
-		$nights = [];
-		$start_date = null;
-		if ($date1 || $date2) {
-			$start_date = Carbon::createFromDate($date1);
-			$end_date = Carbon::createFromDate($date2);
+		// Some existing single-apartment forms only send the apartment as the
+		// first key in apartment_quantity. Keep those forms working.
+		if (!$apId && is_array($request->apartment_quantity)) {
+			$first = collect($request->apartment_quantity)->first();
+			if (is_array($first) && !empty($first)) {
+				$apId = array_key_first($first);
+			}
 		}
 
-		$ap_ids = [];
-		$value = bcrypt('^%&#*$((j1a2c3o4b5@+-40');
-		session()->put('booking', $value);
-		$cookie = null;
-		$booking = new BookingDetail;
-		$ap = Apartment::find($request->apID);
-		$price = optional($ap)->converted_price;
-		$sale_price = optional($ap)->discounted_price;
-		$sp = $sale_price ?? $price;
+		$apartment = Apartment::find($apId);
+		$dates = Helper::toAndFromDate($request->check_in_checkout);
+		$startDate = data_get($dates, 'start_date');
+		$endDate = data_get($dates, 'end_date');
 
+		if (!$apartment || !$startDate || !$endDate || !$endDate->gt($startDate)) {
+			return response()->json([
+				'msg' => 'Please choose a valid apartment and check-in/check-out date.',
+			], 422);
+		}
 
+		$sessionRate = Helper::rate();
+		$exchangeRate = is_numeric(optional($sessionRate)->rate) && (float) optional($sessionRate)->rate > 0
+			? (float) optional($sessionRate)->rate
+			: 1.0;
+		$currencyCode = Helper::getIsoCode() ?: 'USD';
+		$currencySymbol = Helper::getCurrency() ?: '$';
 
+		$quote = app(BookingPricingService::class)->quote(
+			$apartment,
+			$startDate,
+			$endDate,
+			$exchangeRate,
+			$currencyCode,
+			$currencySymbol
+		);
+
+		// Keep the selected dates available to apartment price accessors on the
+		// following page, but use the frozen quote for all booking totals.
+		session()->put('check_in_checkout', $request->check_in_checkout);
 		$value = bcrypt('^%&#*$((j1a2c3o4b5@+-40');
 		session()->put('booking', $value);
 		$cookie = cookie('booking', session()->get('booking'), time() + 86400);
-		$booking->apartment_id = $apId;
+
+		$booking = new BookingDetail;
+		$booking->apartment_id = $apartment->id;
 		$booking->quantity = 1;
-		$booking->property_id = $request->propertyId;
-		$booking->price = $price;
-		$booking->sale_price = optional($ap)->discounted_price;
-		$booking->regular_price = optional($ap)->converted_regular_price;
-		$booking->total = $sp * 1;
+		$booking->property_id = $request->propertyId ?: $request->property_id ?: $apartment->property_id;
+		$booking->price = $quote['average_nightly'];
+		$booking->sale_price = $apartment->discounted_price;
+		$booking->regular_price = $quote['regular_nightly'];
+		$booking->total = $quote['accommodation_total'];
+		$booking->currency_code = $quote['currency_code'];
+		$booking->currency_symbol = $quote['currency_symbol'];
+		$booking->exchange_rate = $quote['exchange_rate'];
+		$booking->pricing_snapshot = $quote;
 		$booking->user_id = optional($request->user())->id;
-		$booking->checkin = $start_date;
-		$booking->checkout = $end_date;
+		$booking->checkin = $startDate;
+		$booking->checkout = $endDate;
 		$booking->token = $cookie->getValue();
 		$booking->save();
-		if ($cookie == null) {
-			return response()->json([
-				'msg' => 'Reservation sucessfully added'
-			], 200);
-		}
+
 		return response()->json([
-			'msg' => 'Reservation sucessfully added'
+			'msg' => 'Reservation sucessfully added',
+			'pricing' => $quote,
 		], 200)->withCookie($cookie);
 	}
 
@@ -212,7 +236,23 @@ class BookingController extends Controller
 
 		$cart_total  = $request->total;
 
-		$symbol = optional(optional($this->settings)->currency)->symbol;
+		$bookingIds = array_values(array_filter((array) $request->booking_ids));
+		$frozenBooking = !empty($bookingIds)
+			? BookingDetail::whereIn('id', $bookingIds)
+				->where('token', \Cookie::get('booking'))
+				->first()
+			: null;
+
+		$symbol = optional($frozenBooking)->currency_symbol
+			?: Helper::getCurrency()
+			?: optional(optional($this->settings)->currency)->symbol;
+
+		$sessionRate = Helper::rate();
+		$exchangeRate = is_numeric(optional($frozenBooking)->exchange_rate) && (float) optional($frozenBooking)->exchange_rate > 0
+			? (float) optional($frozenBooking)->exchange_rate
+			: (is_numeric(optional($sessionRate)->rate) && (float) optional($sessionRate)->rate > 0
+				? (float) optional($sessionRate)->rate
+				: 1.0);
 
 		if (!$cart_total) {
 			$error['error'] = 'We cannot process your voucher';
@@ -251,8 +291,10 @@ class BookingController extends Controller
 		}
 
 
-		if ($cart_total < $coupon->from_value) {
-			$error['error'] = 'You can only use this coupon when your purchase is above  ' . $symbol . $coupon->from_value;
+		$minimumValue = round(((float) $coupon->from_value) * $exchangeRate, 0);
+
+		if ($cart_total < $minimumValue) {
+			$error['error'] = 'You can only use this coupon when your purchase is above  ' . $symbol . number_format($minimumValue);
 			return response()->json($error, 422);
 		}
 
@@ -271,7 +313,7 @@ class BookingController extends Controller
 		$total = [];
 		$total['currency'] = $symbol;
 
-		if (!empty($coupon->from_value) && $cart_total >= $coupon->from_value) {
+		if (!empty($coupon->from_value) && $cart_total >= $minimumValue) {
 			$new_total = ($coupon->amount * $cart_total) / 100;
 			$new_total = $cart_total - $new_total;
 			$total['sub_total'] = round($new_total, 0);
@@ -280,7 +322,7 @@ class BookingController extends Controller
 			$request->session()->put(['coupon' => $request->coupon]);
 			$total['percent'] = $coupon->amount . '%  percent off';
 			return response()->json($total, 200);
-		} else if (!empty($coupon->from_value) && $cart_total < $coupon->from_value) {
+		} else if (!empty($coupon->from_value) && $cart_total < $minimumValue) {
 			$error['error'] = 'Coupon is invalid ';
 			return response()->json($error, 422);
 		} else {

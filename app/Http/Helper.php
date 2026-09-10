@@ -7,8 +7,9 @@ use Carbon\Carbon;
 use App\Models\SystemSetting;
 use App\Models\Category;
 use App\Models\CurrencyRate;
+use App\Models\Currency;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Client\RequestException;
 use App\Models\Apartment;
 
 
@@ -171,69 +172,74 @@ class Helper
     }
 
 
-    public static function getCurrencyExchangeRate()
+    public static function getCurrencyExchangeRate($targetCurrency = 'NGN', $baseCurrency = 'USD')
     {
+        $targetCurrency = strtoupper(trim((string) $targetCurrency));
+        $baseCurrency = strtoupper(trim((string) $baseCurrency));
 
-        $currency_rate = CurrencyRate::first();
-        $fallbackRate = optional($currency_rate)->rate;
-        // $apiKey = 'cur_live_vhjIPU5LPxA5neoR1kRFgUd9HrGDwRzBWJtxHJc2';
-        // $url = "https://api.currencyapi.com/v3/latest";
-        // try {
-        //     $url = "https://api.currencyapi.com/v3/latest";
-        //     $response = Http::get($url, [
-        //         'apikey' => env('EXCHANGE_RATE_API_KEY'),
-        //         'currencies' => 'NGN',
-        //     ]);
-
-        //     // Check if the request was successful
-        //     if ($response->successful()) {
-        //         $data = $response->json();
-        //         // Extract the exchange rate for NGN or use a fallback value
-        //         $exchangeRate = $data['data']['NGN']['value'] ?? optional($currency_rate)->rate;
-
-        //         return round($exchangeRate - 150, 0);
-        //     } else {
-        //         // Handle non-200 responses
-        //         return optional($currency_rate)->rate;;
-
-        //     }
-        // } catch (RequestException $e) {
-        //     // Handle specific HTTP request exceptions
-        //     \Log::error("Currency API request error: " . $e->getMessage());
-        //     return optional($currency_rate)->rate;;
-        // } catch (Exception $e) {
-        //     // Handle general exceptions
-        //     \Log::error("An error occurred: " . $e->getMessage());
-        //     return optional($currency_rate)->rate;;
-        // }
-        // Make the GET request with the required parameters
-
-        try {
-            $url = "https://api.exchangerate-api.com/v4/latest/USD";
-            $response = Http::timeout(8)->get($url);
-
-            if ($response->successful()) {
-                $data = $response->json();
-                $ngnRate = $data['rates']['NGN'] ?? null;
-
-                if (is_numeric($ngnRate) && (float) $ngnRate > 0) {
-                    return round((float) $ngnRate, 0);
-                }
-            }
-
-            if (is_numeric($fallbackRate) && (float) $fallbackRate > 0) {
-                return round((float) $fallbackRate, 0);
-            }
-        } catch (\Throwable $e) {
-            \Log::error("Currency API error: " . $e->getMessage());
-
-            if (is_numeric($fallbackRate) && (float) $fallbackRate > 0) {
-                return round((float) $fallbackRate, 0);
-            }
+        if ($targetCurrency === '' || $targetCurrency === $baseCurrency) {
+            return 1.0;
         }
 
-        // Keep this return numeric so price conversion never receives an error string.
-        return 1;
+        $target = Currency::where('iso_code3', $targetCurrency)->first();
+        $base = Currency::where('iso_code3', $baseCurrency)->first();
+
+        $fallbackQuery = CurrencyRate::query();
+
+        if ($target) {
+            $fallbackQuery->where('currency2_id', $target->id);
+        }
+
+        if ($base) {
+            $fallbackQuery->where('currency1_id', $base->id);
+        }
+
+        $fallbackRate = optional($fallbackQuery->first())->rate;
+
+        // Backward compatibility with the original USD -> NGN installation,
+        // which may only have a single CurrencyRate row. Do not reuse that
+        // NGN rate for a different currency.
+        if (
+            $targetCurrency === 'NGN'
+            && (! is_numeric($fallbackRate) || (float) $fallbackRate <= 0)
+        ) {
+            $fallbackRate = optional(CurrencyRate::first())->rate;
+        }
+
+        $cacheKey = 'currency-exchange-rate:' . $baseCurrency . ':' . $targetCurrency;
+
+        return Cache::remember($cacheKey, now()->addMinutes(30), function () use (
+            $baseCurrency,
+            $targetCurrency,
+            $fallbackRate
+        ) {
+            try {
+                $url = 'https://api.exchangerate-api.com/v4/latest/' . urlencode($baseCurrency);
+                $response = Http::timeout(8)->get($url);
+
+                if ($response->successful()) {
+                    $data = $response->json();
+                    $rate = data_get($data, 'rates.' . $targetCurrency);
+
+                    if (is_numeric($rate) && (float) $rate > 0) {
+                        return (float) $rate;
+                    }
+                }
+            } catch (\Throwable $e) {
+                \Log::warning('Currency API error', [
+                    'base' => $baseCurrency,
+                    'target' => $targetCurrency,
+                    'message' => $e->getMessage(),
+                ]);
+            }
+
+            if (is_numeric($fallbackRate) && (float) $fallbackRate > 0) {
+                return (float) $fallbackRate;
+            }
+
+            // A numeric fallback keeps storefront price serialization safe.
+            return 1.0;
+        });
     }
 
     public static function updateApartmentPrices($startDate, $endDate, $percentageIncrease = 20)

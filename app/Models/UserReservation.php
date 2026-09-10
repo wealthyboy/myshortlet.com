@@ -21,6 +21,9 @@ class UserReservation extends Model
         'payment_type',
         'property_id',
         'currency',
+        'currency_code',
+        'exchange_rate',
+        'pricing_snapshot',
         'checked',
         'original_amount',
         'coupon',
@@ -39,6 +42,8 @@ class UserReservation extends Model
 
     protected $casts = [
         'channex_last_revision_at' => 'datetime',
+        'exchange_rate' => 'float',
+        'pricing_snapshot' => 'array',
     ];
 
 

@@ -89,7 +89,7 @@
             <div class="card-body pt-0">
 
               <property-extras :extra_service="extra_service" v-for="extra_service in property.extra_services"
-                :key="extra_service.id" :property="property" @addExtraPropertyService="addExtraPropertyService" />
+                :key="extra_service.id" :property="property" :booking_details="booking_details" @addExtraPropertyService="addExtraPropertyService" />
             </div>
           </div>
         </template>
@@ -579,6 +579,7 @@ export default {
           coupon: this.coupon,
           total: this.bookingTotal,
           limit: this.booking_details.days,
+          booking_ids: this.booking_details.booking_ids,
         })
         .then((response) => {
           this.submiting = false;
@@ -636,12 +637,13 @@ export default {
         code: this.form.code,
         phone_number: this.form.phone_number,
         services: this.form.services,
-        currency: this.booking_details.currency,
+        currency: this.booking_details.currency_code || this.booking_details.currency,
+        currency_symbol: this.booking_details.currency_symbol,
+        exchange_rate: this.booking_details.exchange_rate,
         length_of_stay: this.booking_details.days,
-        total: context.voucher.length ? context.voucher[0].sub_total : context.bookingPropertyServicesTotal +
-          context.bookingServicesTotal +
-          context.bookingTotal
-        ,
+        total: (context.voucher.length ? parseFloat(context.voucher[0].sub_total) : context.bookingTotal) +
+          context.bookingPropertyServicesTotal +
+          context.bookingServicesTotal,
         booking_ids: context.booking_details.booking_ids,
         from: context.booking_details.from,
         to: context.booking_details.to,
@@ -665,8 +667,8 @@ export default {
       var handler = PaystackPop.setup({
         key: "pk_live_c5fd554e0bc5c39d5f8f14b5f2a6263a403b9e55", //'pk_live_c5fd554e0bc5c39d5f8f14b5f2a6263a403b9e55',//'pk_test_844112398c9a22ef5ca147e85860de0b55a14e7c',
         email: payload.email,
-        amount: payload.total * 100,
-        currency: context.booking_details.currency,
+        amount: Math.round(payload.total * 100),
+        currency: context.booking_details.currency_code || context.booking_details.currency,
         first_name: payload.first_name,
         metadata: {
           custom_fields: [

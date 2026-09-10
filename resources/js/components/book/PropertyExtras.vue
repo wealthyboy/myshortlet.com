@@ -3,14 +3,14 @@
     <div class="checkbox">
       <label id="box50" class="checkbox-label">
         <input for="box50" name="prices[]" :value="extra_service.id" class="property-filter-attribute" type="checkbox"
-          @change="addServices()" :data-price="extra_service.pivot.price" />
+          @change="addServices()" :data-price="convertedPrice" />
         <span class="checkbox-custom rectangular"></span>
         <span class="checkbox-label-text mt-1">{{
           extra_service.name
         }}</span>
       </label>
     </div>
-    <span class="fs-32 mt-4 bold-2 text-heading total-price">{{ property.currency }}{{ extra_service.pivot.price |
+    <span class="fs-32 mt-4 bold-2 text-heading total-price">{{ currencySymbol }}{{ convertedPrice |
       priceFormat }}
     </span>
   </div>
@@ -22,8 +22,16 @@ export default {
   props: {
     extra_service: Object,
     property: Object,
+    booking_details: Object,
   },
   computed: {
+    convertedPrice() {
+      const rate = parseFloat(this.booking_details && this.booking_details.exchange_rate) || 1;
+      return Math.round((parseFloat(this.extra_service.pivot.price) || 0) * rate);
+    },
+    currencySymbol() {
+      return (this.booking_details && this.booking_details.currency_symbol) || this.property.currency;
+    },
     ...mapGetters({
       bookingTotal: "bookingTotal",
       bookingSubTotal: "bookingSubTotal",
@@ -56,7 +64,7 @@ export default {
       this.$emit("addExtraPropertyService", { extras: checked_ids });
     },
     sum(arr) {
-      return arr.reduce((a, b) => parseInt(a) + parseInt(b), 0);
+      return arr.reduce((a, b) => Number(a) + Number(b), 0);
     },
   },
 };

@@ -64,9 +64,8 @@ class ApartmentsController extends Controller
         $query = Apartment::query()->whereHas('property', function ($query) {
             $query->where('allow', true);
         });
-        $peak_period = PeakPeriod::first();
         $checkInOut = request()->check_in_checkout ?? session('check_in_checkout');
-        $dates = explode("to", $checkInOut);
+        $dates = $checkInOut ? explode("to", $checkInOut) : [];
 
         // --- DATE LOGIC ---
         if ($request->check_in_checkout && count($dates) > 1) {
@@ -76,18 +75,16 @@ class ApartmentsController extends Controller
                 $startDate = $date['start_date'];
                 $endDate = $date['end_date'];
 
-                $peakStart = Carbon::parse($peak_period->start_date);
-                $peakEnd   = Carbon::parse($peak_period->end_date);
-
-                $overlapsPeak = (
-                    $startDate->between($peakStart, $peakEnd) ||
-                    $endDate->between($peakStart, $peakEnd) ||
-                    ($startDate->lt($peakStart) && $endDate->gt($peakEnd))
-                );
-
-                if ($overlapsPeak) {
-                    $peakPeriodIsSelected = $peak_period;
-                }
+                // Hotel stays are check-in inclusive and check-out exclusive.
+                // Find the actual configured peak period overlapping one of the
+                // booked nights instead of assuming PeakPeriod::first() is the
+                // relevant period.
+                $lastNight = $endDate->copy()->subDay();
+                $peakPeriodIsSelected = PeakPeriod::query()
+                    ->whereDate('end_date', '>=', $startDate->toDateString())
+                    ->whereDate('start_date', '<=', $lastNight->toDateString())
+                    ->orderBy('start_date')
+                    ->first();
 
                 // Apartment availability logic
                 $query->whereDoesntHave('reservations', function ($q) use ($startDate, $endDate) {

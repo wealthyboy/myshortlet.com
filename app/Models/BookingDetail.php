@@ -12,6 +12,11 @@ class BookingDetail extends Model
 
   protected $dates = ['checkin', 'checkout'];
 
+  protected $casts = [
+    'exchange_rate' => 'float',
+    'pricing_snapshot' => 'array',
+  ];
+
 
   protected $fillable = [
     'id',
@@ -24,7 +29,12 @@ class BookingDetail extends Model
     'token',
     'checkin',
     'checkout',
-    'sale_price'
+    'sale_price',
+    'regular_price',
+    'currency_code',
+    'currency_symbol',
+    'exchange_rate',
+    'pricing_snapshot'
   ];
 
   public static function all_items_in_cart($property_id)
