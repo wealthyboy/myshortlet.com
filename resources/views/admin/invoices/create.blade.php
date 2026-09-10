@@ -111,19 +111,20 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>Currency</label>
+                            @php
+                                $selectedCurrency = old('currency', $invoiceData->currency ?? '$');
+                            @endphp
                             <select name="currency" id="currency" class="form-control" required>
-                                <option value="">Select currency</option>
-
-                                <option value="₦"
-                                    {{ old('currency', $invoiceData->currency ?? '') == '₦' ? 'selected' : '' }}>
+                                <option value="₦" {{ $selectedCurrency == '₦' ? 'selected' : '' }}>
                                     NGN (₦)
                                 </option>
 
-                                <option value="$"
-                                    {{ old('currency', $invoiceData->currency ?? '') == '$' ? 'selected' : '' }}>
+                                <option value="$" {{ $selectedCurrency == '$' ? 'selected' : '' }}>
                                     USD ($)
                                 </option>
                             </select>
+                            <small id="currencyRateNote" class="form-text text-muted"></small>
+                            <input type="hidden" name="exchange_rate" id="exchangeRate" value="1">
                         </div>
                     </div>
                     <div class="form-row">
@@ -324,10 +325,21 @@ Caution deposit will be refunded within 5 working days after checkout.
             const peakPercentage = parseFloat("{{ $peak->discount ?? 0 }}"); // it's an addition %
             const peakDaysLimit = parseInt("{{ $peak->days_limit ?? 0 }}");
 
-            const rate = "{{ $rate }}";
-            const exchangeRate = parseFloat(rate);
+            const NGN_EXCHANGE_RATE = parseFloat(@json($ngnRate)) || 1;
 
             let index = 1;
+
+            function syncExchangeRateState() {
+                const currency = $('#currency').val();
+                const rate = currency === '₦' ? NGN_EXCHANGE_RATE : 1;
+
+                $('#exchangeRate').val(rate);
+                $('#currencyRateNote').text(
+                    currency === '₦'
+                        ? `Apartment base prices are in USD. 1 USD = ₦${NGN_EXCHANGE_RATE.toLocaleString()}.`
+                        : 'Apartment base prices are in USD.'
+                );
+            }
 
             // 🌀 Loader HTML
             const loader = `
@@ -416,11 +428,14 @@ Caution deposit will be refunded within 5 working days after checkout.
 
             // Currency switch
             $('#currency').on('change', function() {
+                syncExchangeRateState();
                 $('.invoice-item-row').each(function() {
                     updateRow($(this));
                 });
                 calculateTotals();
             });
+
+            syncExchangeRateState();
 
 
             function validateInvoiceForm() {
@@ -518,10 +533,10 @@ Caution deposit will be refunded within 5 working days after checkout.
                 const peakStart = PEAK_START ? new Date(PEAK_START) : null;
                 const peakEnd = PEAK_END ? new Date(PEAK_END) : null;
                 const peakDiscount = parseFloat(PEAK_DISCOUNT) || 0;
-                const exchangeRate = parseFloat("{{ $rate }}") || 1;
 
-                // --- Calculate price per night
-                const pricePerNight = currency === '₦' ? basePrice * exchangeRate : basePrice;
+                // Apartment prices are stored in USD. NGN always uses the live
+                // USD -> NGN rate fetched for this invoice page.
+                const pricePerNight = currency === '₦' ? basePrice * NGN_EXCHANGE_RATE : basePrice;
 
                 // --- Calculate total nights ---
                 const nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Invoices;
 
 use App\Http\Controllers\Controller;
+use App\Http\Helper;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
@@ -273,8 +274,19 @@ class InvoicesController extends Controller
     public function create(Request $request)
     {
         $apartments = \App\Models\Apartment::select('id', 'name', 'price')->get();
-        $rate = json_decode(session('rate'), true);
-        $rate = data_get($rate, 'rate', 1);
+        // Apartment prices are stored in USD. The invoice currency selector must
+        // therefore use the live USD -> NGN rate directly instead of relying on
+        // the visitor/session currency, which can legitimately be USD (rate = 1).
+        $ngnRate = Helper::getCurrencyExchangeRate();
+
+        if (! is_numeric($ngnRate) || (float) $ngnRate <= 0) {
+            $ngnRate = optional(\App\Models\CurrencyRate::first())->rate;
+        }
+
+        $ngnRate = is_numeric($ngnRate) && (float) $ngnRate > 0
+            ? (float) $ngnRate
+            : 1;
+
         $invoiceData = null;
         if ($request->has('copy_id')) {
             $invoiceData = Invoice::find($request->query('copy_id'));
@@ -301,7 +313,7 @@ class InvoicesController extends Controller
             $peakDaysLimit = $peak->days_limit;
         }
 
-        return view('admin.invoices.create', compact('isInPeak', 'invoiceData', 'apartments', 'rate', 'peak', 'peakActive', 'peakDiscount', 'peakDaysLimit'));
+        return view('admin.invoices.create', compact('isInPeak', 'invoiceData', 'apartments', 'ngnRate', 'peak', 'peakActive', 'peakDiscount', 'peakDaysLimit'));
     }
 
 
@@ -484,8 +496,23 @@ class InvoicesController extends Controller
         $random = rand(1000, 9999);
 
         $invoiceNumber = "INV-" . date('Y') . "-" . $nextId . $random;
-        $rate = json_decode(session('rate'), true); // use true to get an associative array
-        $rate = data_get($rate, 'rate', 1);
+        // Keep the exchange rate stored with the invoice consistent with the
+        // values shown to the admin. New invoice prices are based in USD.
+        $rate = isset($validated['exchange_rate']) && is_numeric($validated['exchange_rate'])
+            ? (float) $validated['exchange_rate']
+            : 1;
+
+        if ($validated['currency'] === '₦' && $rate <= 1) {
+            $fallbackRate = Helper::getCurrencyExchangeRate();
+
+            if (! is_numeric($fallbackRate) || (float) $fallbackRate <= 0) {
+                $fallbackRate = optional(\App\Models\CurrencyRate::first())->rate;
+            }
+
+            $rate = is_numeric($fallbackRate) && (float) $fallbackRate > 0
+                ? (float) $fallbackRate
+                : 1;
+        }
 
         $extraTotal = collect($validated['extra_items'] ?? [])
             ->sum(fn($item) => $item['total'] ?? 0);
