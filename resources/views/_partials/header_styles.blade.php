@@ -61,14 +61,20 @@
 
 
    <style>
+      #currencyDropdown {
+         position: relative;
+      }
+
       #currencyDropdown .currency-selector {
          display: inline-flex;
          align-items: center;
          justify-content: center;
          gap: 0.55rem;
-         min-width: 106px;
+         min-width: 122px;
+         padding: 0.9rem 1rem;
          text-transform: none;
          white-space: nowrap;
+         border-radius: 10px;
       }
 
       #currencyDropdown .currency-flag {
@@ -87,15 +93,26 @@
       }
 
       #currencyDropdown .currency-menu {
-         min-width: 230px;
+         min-width: 0;
+         width: 280px;
+         max-width: calc(100vw - 32px);
+         margin-top: 0.65rem;
          padding: 0.35rem 0.5rem;
+         border-radius: 12px;
+         border: 1px solid rgba(0, 0, 0, 0.08);
+         box-shadow: 0 18px 36px rgba(0, 0, 0, 0.16);
+         left: 0 !important;
+         right: auto !important;
+         top: 100% !important;
+         transform: none !important;
+         z-index: 1060;
       }
 
       #currencyDropdown .currency-option {
          display: flex;
          align-items: center;
          gap: 0.7rem;
-         padding: 0.65rem 0.5rem !important;
+         padding: 0.7rem 0.5rem !important;
       }
 
       #currencyDropdown .currency-option > span {
@@ -105,8 +122,21 @@
       }
 
       #currencyDropdown .currency-option small {
+         display: block;
          margin-top: 0.2rem;
          opacity: 0.72;
+      }
+
+      @media (max-width: 575.98px) {
+         #currencyDropdown .currency-selector {
+            min-width: 118px;
+            padding: 0.85rem 0.95rem;
+         }
+
+         #currencyDropdown .currency-menu {
+            width: min(280px, calc(100vw - 32px));
+            max-width: calc(100vw - 32px);
+         }
       }
    </style>
 
