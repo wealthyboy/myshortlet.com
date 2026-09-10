@@ -70,8 +70,8 @@
          align-items: center;
          justify-content: center;
          gap: 0.55rem;
-         min-width: 122px;
-         padding: 0.9rem 1rem;
+         min-width: 108px;
+         padding: 0.55rem 0.75rem;
          text-transform: none;
          white-space: nowrap;
          border-radius: 10px;
@@ -94,10 +94,11 @@
 
       #currencyDropdown .currency-menu {
          min-width: 0;
-         width: 280px;
-         max-width: calc(100vw - 32px);
-         margin-top: 0.65rem;
-         padding: 0.35rem 0.5rem;
+         width: 245px !important;
+         min-width: 245px !important;
+         max-width: calc(100vw - 24px) !important;
+         margin-top: 0.45rem;
+         padding: 0.25rem 0.35rem;
          border-radius: 12px;
          border: 1px solid rgba(0, 0, 0, 0.08);
          box-shadow: 0 18px 36px rgba(0, 0, 0, 0.16);
@@ -106,13 +107,20 @@
          top: 100% !important;
          transform: none !important;
          z-index: 1060;
+         overflow: hidden !important;
+         box-sizing: border-box;
       }
 
       #currencyDropdown .currency-option {
          display: flex;
          align-items: center;
-         gap: 0.7rem;
-         padding: 0.7rem 0.5rem !important;
+         gap: 0.65rem;
+         width: 100% !important;
+         max-width: 100% !important;
+         margin-left: 0 !important;
+         margin-right: 0 !important;
+         padding: 0.5rem 0.45rem !important;
+         box-sizing: border-box;
       }
 
       #currencyDropdown .currency-option > span {
@@ -129,13 +137,14 @@
 
       @media (max-width: 575.98px) {
          #currencyDropdown .currency-selector {
-            min-width: 118px;
-            padding: 0.85rem 0.95rem;
+            min-width: 104px;
+            padding: 0.5rem 0.7rem;
          }
 
          #currencyDropdown .currency-menu {
-            width: min(280px, calc(100vw - 32px));
-            max-width: calc(100vw - 32px);
+            width: min(245px, calc(100vw - 24px)) !important;
+            min-width: min(245px, calc(100vw - 24px)) !important;
+            max-width: calc(100vw - 24px) !important;
          }
       }
    </style>
