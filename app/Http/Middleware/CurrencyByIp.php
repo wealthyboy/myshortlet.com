@@ -117,7 +117,7 @@ class CurrencyByIp
         // Once the visitor chooses a currency manually, do not fight that choice
         // with IP detection on every subsequent page request.
         if (
-            $request->session()->boolean('currency_manual_selection')
+            (bool) $request->session()->get('currency_manual_selection', false)
             && $request->session()->has('rate')
             && $request->session()->has('switch')
         ) {
