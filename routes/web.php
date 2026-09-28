@@ -12,6 +12,11 @@ Route::get('integration/apartments/snapshot', 'Admin\Channex\ExportController@pu
     ->middleware('throttle:10,1')
     ->name('integration.apartments.snapshot');
 
+// Clean inventory feed for ChannexPro. This is separate from the legacy AVM/Channex export.
+Route::get('integration/channexpro/inventory', 'Integration\ChannexProInventoryController@index')
+    ->middleware('throttle:10,1')
+    ->name('integration.channexpro.inventory');
+
 // Public, read-only diagnostic used during Channex go-live verification.
 // The report is cached server-side so refreshes do not repeatedly call Channex.
 Route::get('channex/live-verification', 'Admin\Channex\LiveVerificationController@index')

@@ -1,0 +1,156 @@
+<?php
+
+namespace App\Http\Controllers\Integration;
+
+use App\Http\Controllers\Controller;
+use App\Models\Property;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+
+class ChannexProInventoryController extends Controller
+{
+    /**
+     * Expose MyShortlet inventory in the generic JSON format consumed by ChannexPro.
+     *
+     * This endpoint deliberately does NOT expose the old MyShortlet/AVM Channex IDs
+     * as active distribution mappings. Those IDs are retained only under the
+     * non-actionable `reference.legacy_channex` key so they can be inspected later.
+     */
+    public function index(Request $request): JsonResponse
+    {
+        $expectedToken = trim((string) config('services.live_export.token'));
+        $providedToken = trim((string) ($request->bearerToken() ?: $request->query('token', '')));
+
+        if ($expectedToken === '') {
+            return response()->json([
+                'message' => 'ChannexPro inventory export is not configured. Set LIVE_EXPORT_TOKEN first.',
+            ], 503);
+        }
+
+        if ($providedToken === '' || ! hash_equals($expectedToken, $providedToken)) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+
+        $appUrl = rtrim((string) config('app.url'), '/');
+        $domain = parse_url($appUrl, PHP_URL_HOST) ?: null;
+
+        $properties = Property::query()
+            ->with([
+                'locations',
+                'apartments' => function ($query) {
+                    $query->orderBy('id');
+                },
+            ])
+            ->where('allow', true)
+            ->whereHas('apartments')
+            ->orderBy('id')
+            ->get();
+
+        $payload = $properties->map(function (Property $property) use ($domain) {
+            $roomTypes = $property->apartments->map(function ($apartment) use ($property) {
+                $sourceId = (string) $apartment->id;
+                $isActive = (bool) $apartment->allow;
+                $baseRate = is_numeric($apartment->price) ? (float) $apartment->price : null;
+                $inventoryCount = max(1, (int) ($apartment->quantity ?: 1));
+                $maxAdults = max(1, (int) ($apartment->max_adults ?: 2));
+                $maxChildren = max(0, (int) ($apartment->max_children ?: 0));
+
+                return [
+                    'id' => $sourceId,
+                    'name' => (string) $apartment->name,
+                    'code' => $apartment->slug ?: 'APT-' . $sourceId,
+                    'description' => $apartment->teaser ?: null,
+                    'max_adults' => $maxAdults,
+                    'max_children' => $maxChildren,
+                    'base_rate' => $baseRate,
+                    'currency' => 'USD',
+                    'inventory_count' => $inventoryCount,
+                    'is_active' => $isActive,
+                    'rate_plans' => [
+                        [
+                            'id' => 'standard:' . $sourceId,
+                            'name' => 'Standard Rate',
+                            'code' => 'STD-' . $sourceId,
+                            'currency' => 'USD',
+                            'default_rate' => $baseRate,
+                            'meal_plan' => 'room_only',
+                            'min_stay' => 1,
+                            'is_default' => true,
+                            'is_active' => $isActive,
+                        ],
+                    ],
+                    'reference' => [
+                        'source_model' => 'apartments',
+                        'source_property_id' => (string) $property->id,
+                        'legacy_channex' => [
+                            'room_type_id' => $apartment->channex_room_type_id ?: null,
+                            'rate_plan_id' => $apartment->channex_rate_plan_id ?: null,
+                        ],
+                    ],
+                ];
+            })->values()->all();
+
+            return [
+                'id' => (string) $property->id,
+                'name' => (string) $property->name,
+                'domain' => $domain,
+                'timezone' => 'Africa/Lagos',
+                'currency' => 'USD',
+                'type' => 'serviced_apartments',
+                'email' => data_get($property, 'email'),
+                'phone' => data_get($property, 'phone'),
+                'country_code' => $this->countryCode($property->country),
+                'city' => $property->city ?: null,
+                'address' => $property->address ?: $property->location_full_name ?: null,
+                'room_types' => $roomTypes,
+                'reference' => [
+                    'source_model' => 'properties',
+                    'slug' => $property->slug ?: null,
+                    'legacy_channex' => [
+                        'group_id' => $property->channex_group_id ?: null,
+                        'property_id' => $property->channex_property_id ?: null,
+                    ],
+                ],
+            ];
+        })->values();
+
+        return response()->json([
+            'schema' => 'channexpro.inventory.v1',
+            'generated_at' => now()->toIso8601String(),
+            'source' => [
+                'driver' => 'myshortlet',
+                'name' => (string) config('app.name', 'MyShortlet'),
+                'url' => $appUrl,
+            ],
+            'properties_count' => $payload->count(),
+            'room_types_count' => $payload->sum(function ($property) {
+                return count($property['room_types'] ?? []);
+            }),
+            'properties' => $payload->all(),
+        ])->withHeaders([
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+            'X-Robots-Tag' => 'noindex, nofollow',
+        ]);
+    }
+
+    private function countryCode(?string $country): string
+    {
+        $country = strtoupper(trim((string) $country));
+
+        if (strlen($country) === 2) {
+            return $country;
+        }
+
+        return match ($country) {
+            'NIGERIA' => 'NG',
+            'GHANA' => 'GH',
+            'UNITED KINGDOM', 'UK' => 'GB',
+            'UNITED STATES', 'UNITED STATES OF AMERICA', 'USA' => 'US',
+            'UNITED ARAB EMIRATES', 'UAE' => 'AE',
+            'FRANCE' => 'FR',
+            default => 'NG',
+        };
+    }
+}
