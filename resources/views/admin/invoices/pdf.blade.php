@@ -274,8 +274,27 @@
             <strong>Terms & Conditions</strong>
         </div>
 
+        @php
+            $invoiceDescription = $invoice->description ?? '';
+
+            // Keep older invoices consistent with the current cancellation wording.
+            $invoiceDescription = preg_replace(
+                '/^Apartment is non-smoking; smoking in the apartment will result in forfeiture of the caution fee\.\R?/m',
+                '',
+                $invoiceDescription
+            );
+
+            $invoiceDescription = str_replace(
+                'Payment confirms reservation. 50% cancellation fee applies 48 hours after confirmation.',
+                'If you choose to cancel your reservation and opt for a cash refund, a cancellation fee of 50 percent of the total booking amount will apply.',
+                $invoiceDescription
+            );
+
+            $invoiceDescription = trim($invoiceDescription);
+        @endphp
+
         <div class="">
-            {!! nl2br(e($invoice->description)) !!}
+            {!! nl2br(e($invoiceDescription)) !!}
         </div>
 
         <div class="policy-agreement">
