@@ -95,6 +95,19 @@
             padding: 0;
         }
 
+        .policy-agreement {
+            margin-top: 10px;
+            font-size: 11px;
+            line-height: 1.45;
+            color: #333;
+        }
+
+        .policy-agreement a {
+            color: #342c27;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
         /* FOOTER */
         .footer {
             position: fixed;
@@ -262,6 +275,14 @@
 
         <div class="">
             {!! nl2br(e($invoice->description)) !!}
+        </div>
+
+        <div class="policy-agreement">
+            By making payment, you acknowledge that you have read and agree to Avenue Montaigne's
+            <a href="https://avenuemontaigne.ng/pages/cancellation-policy">Cancellation Policy</a>,
+            <a href="https://avenuemontaigne.ng/pages/privacy-policy">Privacy Policy</a>,
+            <a href="https://avenuemontaigne.ng/pages/terms-conditions">Terms &amp; Conditions</a>, and
+            <a href="https://avenuemontaigne.ng/pages/house-rules">House Rules</a>.
         </div>
 
     </div>
