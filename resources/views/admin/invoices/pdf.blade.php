@@ -286,7 +286,7 @@
 
             $invoiceDescription = str_replace(
                 'Payment confirms reservation. 50% cancellation fee applies 48 hours after confirmation.',
-                'If you choose to cancel your reservation and opt for a cash refund, a cancellation fee of 50 percent of the total booking amount will apply.',
+                "Payment confirms reservation.\nIf you choose to cancel your reservation and opt for a cash refund, a cancellation fee of 50 percent of the total booking amount will apply.",
                 $invoiceDescription
             );
 

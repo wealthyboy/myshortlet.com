@@ -297,6 +297,7 @@ Providus Bank
                         <textarea name="description" class="form-control" rows="4" placeholder="Add any details such as bank account info, payment instructions, or special notes">
 Check-in time is 2pm
 Check-out time is 12 noon
+Payment confirms reservation.
 If you choose to cancel your reservation and opt for a cash refund, a cancellation fee of 50 percent of the total booking amount will apply.
 Caution deposit will be refunded within 5 working days after checkout.
                         </textarea>
