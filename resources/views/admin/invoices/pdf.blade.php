@@ -103,9 +103,10 @@
         }
 
         .policy-agreement a {
-            color: #342c27;
+            color: #2a231f;
             text-decoration: underline;
-            font-weight: bold;
+            font-size: 12px;
+            font-weight: 800;
         }
 
         /* FOOTER */
