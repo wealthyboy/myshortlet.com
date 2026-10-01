@@ -297,8 +297,7 @@ Providus Bank
                         <textarea name="description" class="form-control" rows="4" placeholder="Add any details such as bank account info, payment instructions, or special notes">
 Check-in time is 2pm
 Check-out time is 12 noon
-Apartment is non-smoking; smoking in the apartment will result in forfeiture of the caution fee.
-Payment confirms reservation. 50% cancellation fee applies 48 hours after confirmation.
+If you choose to cancel your reservation and opt for a cash refund, a cancellation fee of 50 percent of the total booking amount will apply.
 Caution deposit will be refunded within 5 working days after checkout.
                         </textarea>
                     </div>
