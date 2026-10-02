@@ -284,11 +284,25 @@
                 $invoiceDescription
             );
 
+            $paymentConfirmationText = 'Payment confirms reservation.';
+            $cashRefundText = 'If you choose to cancel your reservation and opt for a cash refund, a cancellation fee of 50 percent of the total booking amount will apply.';
+
             $invoiceDescription = str_replace(
                 'Payment confirms reservation. 50% cancellation fee applies 48 hours after confirmation.',
-                "Payment confirms reservation.\nIf you choose to cancel your reservation and opt for a cash refund, a cancellation fee of 50 percent of the total booking amount will apply.",
+                $paymentConfirmationText."\n".$cashRefundText,
                 $invoiceDescription
             );
+
+            // Always keep the payment confirmation immediately before the current cancellation wording.
+            if (str_contains($invoiceDescription, $cashRefundText)) {
+                $invoiceDescription = str_replace($paymentConfirmationText, '', $invoiceDescription);
+                $invoiceDescription = preg_replace('/\n{3,}/', "\n\n", $invoiceDescription);
+                $invoiceDescription = str_replace(
+                    $cashRefundText,
+                    $paymentConfirmationText."\n".$cashRefundText,
+                    $invoiceDescription
+                );
+            }
 
             $invoiceDescription = trim($invoiceDescription);
         @endphp
