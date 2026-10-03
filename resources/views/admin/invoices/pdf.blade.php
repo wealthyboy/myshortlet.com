@@ -95,26 +95,43 @@
             padding: 0;
         }
 
-        .policy-agreement {
-            margin-top: 12px;
+        .reservation-policy-copy {
+            margin-top: 10px;
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 13px;
+            line-height: 1.55;
+            color: #333;
+        }
+
+        .reservation-policy-copy p {
+            margin: 0 0 4px 0;
+            padding: 0;
+        }
+
+        .important-notice {
+            margin-top: 14px;
             font-family: DejaVu Sans, sans-serif;
             font-size: 13px;
             line-height: 1.5;
             color: #333;
+        }
+
+        .important-notice-title {
+            margin: 0 0 5px 0;
             font-weight: 700;
         }
 
-        .policy-agreement p {
-            margin: 0;
-            padding: 0;
-            font-family: DejaVu Sans, sans-serif;
+        .important-notice-copy {
+            margin: 0 0 8px 0;
         }
 
-        .policy-agreement .policy-links {
-            margin-top: 8px;
+        .policy-links {
+            margin-top: 6px;
         }
 
-        .policy-agreement a {
+        .policy-links a {
+            display: block;
+            margin: 0 0 4px 0;
             color: #2a231f;
             text-decoration: underline;
             font-family: DejaVu Sans, sans-serif;
@@ -290,48 +307,46 @@
         @php
             $invoiceDescription = $invoice->description ?? '';
 
-            // Keep older invoices consistent with the current cancellation wording.
-            $invoiceDescription = preg_replace(
-                '/^Apartment is non-smoking; smoking in the apartment will result in forfeiture of the caution fee\.\R?/m',
-                '',
-                $invoiceDescription
-            );
-
-            $paymentConfirmationText = 'Payment confirms reservation.';
-            $cashRefundText = 'If you choose to cancel your reservation and opt for a cash refund, a cancellation fee of 50 percent of the total booking amount will apply.';
-
-            $invoiceDescription = str_replace(
+            // These fixed reservation-policy lines are rendered below in one consistent order.
+            $linesToRemove = [
+                'Payment confirms reservation.',
                 'Payment confirms reservation. 50% cancellation fee applies 48 hours after confirmation.',
-                $paymentConfirmationText."\n".$cashRefundText,
-                $invoiceDescription
-            );
+                'If you choose to cancel your reservation and opt for a cash refund, a cancellation fee of 50 percent of the total booking amount will apply.',
+                'Caution deposit will be refunded within 5 working days after checkout.',
+                'Caution deposit will be refunded within 5-10 working days after checkout.',
+                'Please read our house rules and cancellation policy',
+            ];
 
-            // Always keep the payment confirmation immediately before the current cancellation wording.
-            if (str_contains($invoiceDescription, $cashRefundText)) {
-                $invoiceDescription = str_replace($paymentConfirmationText, '', $invoiceDescription);
-                $invoiceDescription = preg_replace('/\n{3,}/', "\n\n", $invoiceDescription);
-                $invoiceDescription = str_replace(
-                    $cashRefundText,
-                    $paymentConfirmationText."\n".$cashRefundText,
-                    $invoiceDescription
-                );
+            foreach ($linesToRemove as $lineToRemove) {
+                $invoiceDescription = str_replace($lineToRemove, '', $invoiceDescription);
             }
 
+            $invoiceDescription = preg_replace('/^Apartment is non-smoking; smoking in the apartment will result in forfeiture of the caution fee\.\R?/m', '', $invoiceDescription);
+            $invoiceDescription = preg_replace('/\n{3,}/', "\n\n", $invoiceDescription);
             $invoiceDescription = trim($invoiceDescription);
         @endphp
 
-        <div class="">
-            {!! nl2br(e($invoiceDescription)) !!}
+        @if($invoiceDescription !== '')
+            <div>
+                {!! nl2br(e($invoiceDescription)) !!}
+            </div>
+        @endif
+
+        <div class="reservation-policy-copy">
+            <p><strong>Payment confirms reservation.</strong></p>
+            <p>Caution deposit will be refunded within 5-10 working days after checkout.</p>
+            <p>Please read our house rules and cancellation policy</p>
         </div>
 
-        <div class="policy-agreement">
-            <p>By making payment, you acknowledge that you have read and agree to Avenue Montaigne's</p>
-            <p class="policy-links">
-                <a href="https://avenuemontaigne.ng/pages/cancellation-policy">Cancellation Policy</a>,
-                <a href="https://avenuemontaigne.ng/pages/privacy-policy">Privacy Policy</a>,
-                <a href="https://avenuemontaigne.ng/pages/terms-conditions">Terms &amp; Conditions</a>, and
-                <a href="https://avenuemontaigne.ng/pages/house-rules">House Rules</a>.
-            </p>
+        <div class="important-notice">
+            <p class="important-notice-title">Important notice</p>
+            <p class="important-notice-copy">By making payment you acknowledge that you have read and agree to Avenue Montaigne's outlined policies below</p>
+            <div class="policy-links">
+                <a href="https://avenuemontaigne.ng/pages/cancellation-policy">Cancellation Policy</a>
+                <a href="https://avenuemontaigne.ng/pages/house-rules">House Rules</a>
+                <a href="https://avenuemontaigne.ng/pages/privacy-policy">Privacy Policy</a>
+                <a href="https://avenuemontaigne.ng/pages/terms-conditions">Terms &amp; conditions</a>
+            </div>
         </div>
 
     </div>
