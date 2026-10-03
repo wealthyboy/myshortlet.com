@@ -40,7 +40,7 @@
         .invoice-due-note {
             margin-top: 2px;
             font-size: 11.5px;
-            font-weight: 400;
+            font-weight: 700;
             line-height: 1.3;
             color: #333;
         }
@@ -195,7 +195,7 @@
                 </td>
                 <td align="right" class="invoice-meta">
                     <h4>Invoice #{{ $invoice->invoice }}</h4>
-                    <div class="invoice-due-note">This invoice is due immediately</div>
+                    <div class="invoice-due-note">Due: Immediately</div>
                     <small class="invoice-date">Date: {{ $invoice->created_at->format('D, M d, Y') }}</small>
                 </td>
             </tr>
@@ -342,6 +342,7 @@
                 'Payment confirms reservation. 50% cancellation fee applies 48 hours after confirmation.',
                 '50% cancellation fee applies 48 hours after confirmation.',
                 '50% Cancellation fee may apply, Please read our cancellation policy house rules outlined below',
+                '50% Cancellation fee may apply, Please read our cancellation policy & house rules outlined below',
                 'If you choose to cancel your reservation and opt for a cash refund, a cancellation fee of 50 percent of the total booking amount will apply.',
                 'Caution deposit will be refunded within 5 working days after checkout.',
                 'Caution deposit will be refunded within 5-10 working days after checkout.',
@@ -367,7 +368,7 @@
 
             $termItems[] = 'Payment confirms reservation.';
             $termItems[] = 'Caution deposit will be refunded within 5-10 working days after checkout.';
-            $termItems[] = '50% Cancellation fee may apply, Please read our cancellation policy house rules outlined below';
+            $termItems[] = '50% Cancellation fee may apply, Please read our cancellation policy & house rules outlined below';
         @endphp
 
         <ul class="terms-list">
