@@ -96,17 +96,30 @@
         }
 
         .policy-agreement {
-            margin-top: 10px;
+            margin-top: 12px;
+            font-family: DejaVu Sans, sans-serif;
             font-size: 13px;
             line-height: 1.5;
             color: #333;
+            font-weight: 700;
+        }
+
+        .policy-agreement p {
+            margin: 0;
+            padding: 0;
+            font-family: DejaVu Sans, sans-serif;
+        }
+
+        .policy-agreement .policy-links {
+            margin-top: 8px;
         }
 
         .policy-agreement a {
             color: #2a231f;
             text-decoration: underline;
+            font-family: DejaVu Sans, sans-serif;
             font-size: 13px;
-            font-weight: 800;
+            font-weight: 700;
         }
 
         /* FOOTER */
@@ -312,11 +325,13 @@
         </div>
 
         <div class="policy-agreement">
-            By making payment, you acknowledge that you have read and agree to Avenue Montaigne's
-            <a href="https://avenuemontaigne.ng/pages/cancellation-policy">Cancellation Policy</a>,
-            <a href="https://avenuemontaigne.ng/pages/privacy-policy">Privacy Policy</a>,
-            <a href="https://avenuemontaigne.ng/pages/terms-conditions">Terms &amp; Conditions</a>, and
-            <a href="https://avenuemontaigne.ng/pages/house-rules">House Rules</a>.
+            <p>By making payment, you acknowledge that you have read and agree to Avenue Montaigne's</p>
+            <p class="policy-links">
+                <a href="https://avenuemontaigne.ng/pages/cancellation-policy">Cancellation Policy</a>,
+                <a href="https://avenuemontaigne.ng/pages/privacy-policy">Privacy Policy</a>,
+                <a href="https://avenuemontaigne.ng/pages/terms-conditions">Terms &amp; Conditions</a>, and
+                <a href="https://avenuemontaigne.ng/pages/house-rules">House Rules</a>.
+            </p>
         </div>
 
     </div>
