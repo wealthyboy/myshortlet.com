@@ -33,6 +33,23 @@
             vertical-align: top;
         }
 
+        .invoice-meta h4 {
+            margin: 0;
+        }
+
+        .invoice-due-note {
+            margin-top: 2px;
+            font-size: 11.5px;
+            font-weight: 400;
+            line-height: 1.3;
+            color: #333;
+        }
+
+        .invoice-date {
+            display: block;
+            margin-top: 1px;
+        }
+
         .logo-block {
             background-color: #342c27;
             width: 95px;
@@ -95,17 +112,21 @@
             padding: 0;
         }
 
-        .reservation-policy-copy {
-            margin-top: 10px;
+        .terms-list {
+            margin: 3px 0 0 0;
+            padding: 0 0 0 18px;
+            list-style-type: disc;
             font-family: DejaVu Sans, sans-serif;
             font-size: 13px;
-            line-height: 1.55;
+            line-height: 1.35;
             color: #333;
+            font-weight: 400;
         }
 
-        .reservation-policy-copy p {
-            margin: 0 0 4px 0;
+        .terms-list li {
+            margin: 0;
             padding: 0;
+            font-weight: 400;
         }
 
         .important-notice {
@@ -126,12 +147,18 @@
         }
 
         .policy-links {
-            margin-top: 6px;
+            margin: 6px 0 0 0;
+            padding: 0 0 0 18px;
+            list-style-type: disc;
+            line-height: 1.35;
+        }
+
+        .policy-links li {
+            margin: 0;
+            padding: 0;
         }
 
         .policy-links a {
-            display: block;
-            margin: 0 0 4px 0;
             color: #2a231f;
             text-decoration: underline;
             font-family: DejaVu Sans, sans-serif;
@@ -166,9 +193,10 @@
                         <img src="https://avenuemontaigne.ng/images/logo/avm_new.png" alt="Logo">
                     </div>
                 </td>
-                <td align="right">
-                    <h4 style="margin-bottom: 0px;">Invoice #{{ $invoice->invoice }}</h4>
-                    <small>Date: {{ $invoice->created_at->format('D, M d, Y') }}</small>
+                <td align="right" class="invoice-meta">
+                    <h4>Invoice #{{ $invoice->invoice }}</h4>
+                    <div class="invoice-due-note">This invoice is due immediately</div>
+                    <small class="invoice-date">Date: {{ $invoice->created_at->format('D, M d, Y') }}</small>
                 </td>
             </tr>
         </table>
@@ -329,28 +357,34 @@
             $invoiceDescription = trim($invoiceDescription);
         @endphp
 
-        @if($invoiceDescription !== '')
-            <div>
-                {!! nl2br(e($invoiceDescription)) !!}
-            </div>
-        @endif
+        @php
+            $termItems = [];
 
-        <div class="reservation-policy-copy">
-            <p><strong>This invoice is due immediately</strong></p>
-            <p><strong>Payment confirms reservation.</strong></p>
-            <p>Caution deposit will be refunded within 5-10 working days after checkout.</p>
-            <p>50% Cancellation fee may apply, Please read our cancellation policy house rules outlined below</p>
-        </div>
+            if ($invoiceDescription !== '') {
+                $termItems = preg_split('/\R+/', $invoiceDescription, -1, PREG_SPLIT_NO_EMPTY);
+                $termItems = array_values(array_filter(array_map('trim', $termItems)));
+            }
+
+            $termItems[] = 'Payment confirms reservation.';
+            $termItems[] = 'Caution deposit will be refunded within 5-10 working days after checkout.';
+            $termItems[] = '50% Cancellation fee may apply, Please read our cancellation policy house rules outlined below';
+        @endphp
+
+        <ul class="terms-list">
+            @foreach($termItems as $termItem)
+                <li>{{ $termItem }}</li>
+            @endforeach
+        </ul>
 
         <div class="important-notice">
             <p class="important-notice-title">Important notice</p>
             <p class="important-notice-copy">By making payment you acknowledge that you have read and agree to Avenue Montaigne's outlined policies below</p>
-            <div class="policy-links">
-                <a href="https://avenuemontaigne.ng/pages/cancellation-policy">Cancellation Policy</a>
-                <a href="https://avenuemontaigne.ng/pages/house-rules">House Rules</a>
-                <a href="https://avenuemontaigne.ng/pages/privacy-policy">Privacy Policy</a>
-                <a href="https://avenuemontaigne.ng/pages/terms-conditions">Terms &amp; conditions</a>
-            </div>
+            <ul class="policy-links">
+                <li><a href="https://avenuemontaigne.ng/pages/cancellation-policy">Cancellation Policy</a></li>
+                <li><a href="https://avenuemontaigne.ng/pages/house-rules">House Rules</a></li>
+                <li><a href="https://avenuemontaigne.ng/pages/privacy-policy">Privacy Policy</a></li>
+                <li><a href="https://avenuemontaigne.ng/pages/terms-conditions">Terms &amp; conditions</a></li>
+            </ul>
         </div>
 
     </div>
