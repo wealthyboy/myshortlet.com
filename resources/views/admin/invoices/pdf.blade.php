@@ -97,15 +97,15 @@
 
         .policy-agreement {
             margin-top: 10px;
-            font-size: 11px;
-            line-height: 1.45;
+            font-size: 13px;
+            line-height: 1.5;
             color: #333;
         }
 
         .policy-agreement a {
             color: #2a231f;
             text-decoration: underline;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 800;
         }
 
