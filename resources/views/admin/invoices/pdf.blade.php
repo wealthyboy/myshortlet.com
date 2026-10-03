@@ -309,8 +309,11 @@
 
             // These fixed reservation-policy lines are rendered below in one consistent order.
             $linesToRemove = [
+                'This invoice is due immediately',
                 'Payment confirms reservation.',
                 'Payment confirms reservation. 50% cancellation fee applies 48 hours after confirmation.',
+                '50% cancellation fee applies 48 hours after confirmation.',
+                '50% Cancellation fee may apply, Please read our cancellation policy house rules outlined below',
                 'If you choose to cancel your reservation and opt for a cash refund, a cancellation fee of 50 percent of the total booking amount will apply.',
                 'Caution deposit will be refunded within 5 working days after checkout.',
                 'Caution deposit will be refunded within 5-10 working days after checkout.',
@@ -333,9 +336,10 @@
         @endif
 
         <div class="reservation-policy-copy">
+            <p><strong>This invoice is due immediately</strong></p>
             <p><strong>Payment confirms reservation.</strong></p>
             <p>Caution deposit will be refunded within 5-10 working days after checkout.</p>
-            <p>Please read our house rules and cancellation policy</p>
+            <p>50% Cancellation fee may apply, Please read our cancellation policy house rules outlined below</p>
         </div>
 
         <div class="important-notice">
