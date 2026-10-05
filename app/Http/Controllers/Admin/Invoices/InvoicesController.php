@@ -616,6 +616,7 @@ class InvoicesController extends Controller
                         : '-' . number_format($invoice->discount) . '%';
 
                     $invoice->forceFill([
+                        'resent' => true,
                         'invoice_mail_status' => 'queued',
                         'invoice_delivered_at' => null,
                         'invoice_mail_last_error' => null,
@@ -652,24 +653,34 @@ class InvoicesController extends Controller
 
         $invoice = Invoice::findOrFail($id);
 
-        $invoice->load('invoice_items');
+        // Once sending has been initiated, keep the action hidden even while
+        // ZeptoMail delivery tracking continues in the background.
+        if ($invoice->resent || !empty($invoice->invoice_mail_status)) {
+            if (!$invoice->resent) {
+                $invoice->forceFill(['resent' => true])->save();
+            }
 
-
-        if (!empty($invoice->email)) {
-            $invoice->forceFill([
-                'invoice_mail_status' => 'queued',
-                'invoice_delivered_at' => null,
-                'invoice_mail_last_error' => null,
-            ])->save();
-
-            \App\Jobs\SendInvoiceJob::dispatch($invoice);
+            return back()->with('success', 'Invoice has already been sent.');
         }
 
+        $invoice->load('invoice_items');
 
-        $invoice->update(['resent' => true]);
+        if (empty($invoice->email)) {
+            return back()->with('error', 'This invoice does not have a recipient email address.');
+        }
 
+        // Persist the clicked/sent state before dispatching the queued email so
+        // the Send Invoice action is gone as soon as the page redirects back.
+        $invoice->forceFill([
+            'resent' => true,
+            'invoice_mail_status' => 'queued',
+            'invoice_delivered_at' => null,
+            'invoice_mail_last_error' => null,
+        ])->save();
 
-        return back()->with('success', 'Invoice queued for sending. ZeptoMail delivery confirmation will update automatically.');
+        \App\Jobs\SendInvoiceJob::dispatch($invoice);
+
+        return back()->with('success', 'Invoice queued for sending.');
     }
 
 
