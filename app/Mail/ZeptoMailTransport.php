@@ -116,6 +116,16 @@ class ZeptoMailTransport implements Swift_Transport
             'htmlbody' => $email->getBody(),
         ];
 
+        // Optional transaction reference used by AVM invoice delivery tracking.
+        // ZeptoMail exposes this value in its email logs as client_reference.
+        $clientReferenceHeader = $email->getHeaders()->get('X-TM-CLIENT-REF');
+        if ($clientReferenceHeader) {
+            $clientReference = trim((string) $clientReferenceHeader->getFieldBody());
+            if ($clientReference !== '') {
+                $payload['client_reference'] = $clientReference;
+            }
+        }
+
         // ✅ Attachments (for SwiftMailer)
         $attachmentJSONArr = [];
         foreach ($email->getChildren() as $child) {

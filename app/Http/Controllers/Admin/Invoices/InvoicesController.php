@@ -614,7 +614,18 @@ class InvoicesController extends Controller
                     $invoice->discount = $invoice->discount_type === 'fixed'
                         ? '-' . $invoice->currency . number_format($invoice->discount)
                         : '-' . number_format($invoice->discount) . '%';
+
+                    $invoice->forceFill([
+                        'invoice_mail_status' => 'queued',
+                        'invoice_delivered_at' => null,
+                        'invoice_mail_last_error' => null,
+                    ])->save();
+
                     \App\Jobs\SendInvoiceJob::dispatch($invoice);
+
+                    return redirect()
+                        ->route('admin.invoices.index')
+                        ->with('success', 'Invoice saved and queued for sending. Delivery will be confirmed by ZeptoMail.');
                 }
 
                 return redirect()
@@ -645,6 +656,12 @@ class InvoicesController extends Controller
 
 
         if (!empty($invoice->email)) {
+            $invoice->forceFill([
+                'invoice_mail_status' => 'queued',
+                'invoice_delivered_at' => null,
+                'invoice_mail_last_error' => null,
+            ])->save();
+
             \App\Jobs\SendInvoiceJob::dispatch($invoice);
         }
 
@@ -652,7 +669,7 @@ class InvoicesController extends Controller
         $invoice->update(['resent' => true]);
 
 
-        return back()->with('success', 'Invoice resent successfully!');
+        return back()->with('success', 'Invoice queued for sending. ZeptoMail delivery confirmation will update automatically.');
     }
 
 

@@ -13,6 +13,9 @@ class Invoice extends Model
     protected $casts = [
         'sent' => 'boolean',
         'resent' => 'boolean',
+        'invoice_mail_sent_at' => 'datetime',
+        'invoice_delivered_at' => 'datetime',
+        'invoice_mail_checked_at' => 'datetime',
     ];
 
     public $appends = [
@@ -36,7 +39,15 @@ class Invoice extends Model
         'description',
         'sent',
         'resent',
-        'payment_info'
+        'payment_info',
+        'invoice_mail_status',
+        'invoice_mail_client_reference',
+        'zeptomail_request_id',
+        'zeptomail_email_reference',
+        'invoice_mail_sent_at',
+        'invoice_delivered_at',
+        'invoice_mail_checked_at',
+        'invoice_mail_last_error'
     ];
 
     public function invoice_items()
