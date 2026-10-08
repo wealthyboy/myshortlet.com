@@ -17,6 +17,11 @@ Route::get('integration/channexpro/inventory', 'Integration\ChannexProInventoryC
     ->middleware('throttle:10,1')
     ->name('integration.channexpro.inventory');
 
+// Booking-aware ARI feed consumed by ChannexPro after structure import.
+Route::get('integration/channexpro/ari', 'Integration\ChannexProAriController@index')
+    ->middleware('throttle:20,1')
+    ->name('integration.channexpro.ari');
+
 // Public, read-only diagnostic used during Channex go-live verification.
 // The report is cached server-side so refreshes do not repeatedly call Channex.
 Route::get('channex/live-verification', 'Admin\Channex\LiveVerificationController@index')
