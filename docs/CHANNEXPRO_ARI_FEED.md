@@ -4,10 +4,10 @@ This endpoint supplies booking-aware availability, daily rates and restrictions 
 
 ```text
 GET /integration/channexpro/ari?property_id=1&from=2026-10-08&to=2028-02-19
-Authorization: Bearer <LIVE_EXPORT_TOKEN>
+Authorization: Bearer <CHANNEXPRO_SHARED_TOKEN>
 ```
 
-The same `LIVE_EXPORT_TOKEN` used by `/integration/channexpro/inventory` protects this endpoint.
+The same ChannexPro-generated `CHANNEXPRO_SHARED_TOKEN` used by `/integration/channexpro/inventory` protects this endpoint.
 
 ## Initial load
 

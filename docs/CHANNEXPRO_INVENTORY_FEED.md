@@ -6,12 +6,12 @@ This patch adds a new read-only JSON inventory endpoint for ChannexPro:
 
 ## Authentication
 
-The endpoint uses the existing `LIVE_EXPORT_TOKEN` setting from `config/services.php`.
+The endpoint uses the ChannexPro-generated shared token from `config/services.php`.
 
 Add or confirm this in the MyShortlet `.env`:
 
 ```env
-LIVE_EXPORT_TOKEN=use-a-long-random-secret
+CHANNEXPRO_SHARED_TOKEN=cp_live_copy_the_token_from_channexpro
 ```
 
 Then clear cached configuration:
@@ -25,7 +25,7 @@ php artisan optimize:clear
 Use:
 
 - Inventory URL: `https://myshortlet.com/integration/channexpro/inventory`
-- API token: the same value as `LIVE_EXPORT_TOKEN`
+- API token: the `cp_live_...` value generated for this source in ChannexPro
 
 ChannexPro sends the token as a Bearer token.
 
