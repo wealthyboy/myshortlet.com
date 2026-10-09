@@ -39,6 +39,12 @@ return [
         'verification_token' => env('CHANNEX_VERIFICATION_TOKEN'),
     ],
 
+    'channexpro' => [
+        // One shared ChannexPro-issued token is used in both directions.
+        // LIVE_EXPORT_TOKEN remains as a temporary fallback for existing installs.
+        'shared_token' => env('CHANNEXPRO_SHARED_TOKEN', env('LIVE_EXPORT_TOKEN')),
+    ],
+
     'live_export' => [
         'token' => env('LIVE_EXPORT_TOKEN'),
     ],
