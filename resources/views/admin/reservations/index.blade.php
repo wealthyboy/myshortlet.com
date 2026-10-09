@@ -31,18 +31,19 @@
          </div>
          <div class="card-content">
             <h4 class="card-title">Filter - <small class="category"></small></h4>
+            <p class="text-muted" style="margin-top: -5px;">From/To filters use reservation stay dates (check-in/check-out), not the date the booking was added.</p>
 
             <form action="{{request()->fullUrl()}}" method="GET">
                <div class="form-row">
                   <div class="form-group col-md-3">
                      <label for="date">From</label>
-                     <input type="date" class="form-control" id="from-date" name="from">
+                     <input type="date" class="form-control" id="from-date" name="from" value="{{ request('from') }}">
                      <input type="hidden" name="coming_from" value="{{ request('coming_from') }}">
                   </div>
 
                   <div class="form-group col-md-3">
                      <label for="date">To</label>
-                     <input type="date" class="form-control" id="to-date" name="to">
+                     <input type="date" class="form-control" id="to-date" name="to" value="{{ request('to') }}">
                   </div>
 
                   <div class="form-group col-md-3 ">
@@ -51,7 +52,7 @@
                      <select name="apartment_id" id="" class="form-control">
                         <option value="">Choose one</option>
                         @foreach($apartments as $apartment)
-                        <option value="{{$apartment->id}}">{{$apartment->name}}</option>
+                        <option value="{{$apartment->id}}" {{ (string) request('apartment_id') === (string) $apartment->id ? 'selected' : '' }}>{{$apartment->name}}</option>
                         @endforeach
 
                      </select>
@@ -60,11 +61,11 @@
 
                   <div class="form-group col-md-3">
                      <label for="email">Email</label>
-                     <input type="email" class="form-control" id="email" name="email">
+                     <input type="email" class="form-control" id="email" name="email" value="{{ request('email') }}">
                   </div>
                   <div class="form-group col-md-3">
                      <label for="phone">Phone</label>
-                     <input type="tel" class="form-control" id="phone" name="phone">
+                     <input type="tel" class="form-control" id="phone" name="phone" value="{{ request('phone') }}">
                   </div>
 
                   <div class="form-group col-md-2">
@@ -108,6 +109,7 @@
                            <th>Customer</th>
                            <th>Source</th>
                            <th>Status</th>
+                           <th>Stay</th>
                            <th>Date Added</th>
                            <th>Total</th>
                            <th class="text-right"></th>
@@ -133,6 +135,16 @@
                            <td>{{ $reservation->guest_user?->fullname() }}</td>
                            <td>{{ $reservation->coming_from === 'ota' ? strtoupper($reservation->ota_name ?: 'OTA') : ucfirst($reservation->coming_from) }}</td>
                            <td>{{ $isCancelled ? 'Cancelled' : ucfirst($reservation->status ?: 'Confirmed') }}</td>
+                           @php
+                              $stay = $reservation->reservations->first();
+                           @endphp
+                           <td>
+                              @if($stay)
+                                 {{ optional($stay->checkin)->format('d M Y') }} &rarr; {{ optional($stay->checkout)->format('d M Y') }}
+                              @else
+                                 &mdash;
+                              @endif
+                           </td>
                            <td>{{ $reservation->created_at }}</td>
                            <td class="text-left">{{ $reservation->currency  ?? '₦'}}{{ number_format($reservation->total) }}</td>
 

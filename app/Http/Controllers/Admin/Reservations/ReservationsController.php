@@ -67,11 +67,14 @@ class ReservationsController extends Controller
 		$startDate = $request->input('from') ? Carbon::parse($request->input('from')) : null;
 		$endDate = $request->input('to') ?  Carbon::parse($request->input('to')) : null;
 		$apartment_id = $request->input('apartment_id');
-		$query = UserReservation::with('guest_user');
+		$query = UserReservation::with(['guest_user', 'reservations.apartment']);
 		$apartments = Apartment::orderBy('name', 'asc')->get();
 		$request->session()->put('coming_from', $request->coming_from);
-		$query->whereHas('reservations', function ($q) use ($apartment_id) {
-			$q->where('is_blocked', false);
+		$query->whereHas('reservations', function ($q) {
+			$q->where(function ($blockedQuery) {
+				$blockedQuery->whereNull('is_blocked')
+					->orWhere('is_blocked', false);
+			});
 		});
 
 		// Check if any filters are provided
@@ -95,23 +98,42 @@ class ReservationsController extends Controller
 				});
 			}
 
-			if ($startDate && $endDate) {
+			// The From/To fields describe the guest stay, not when the
+			// reservation row was created. Match any active apartment stay
+			// that overlaps the requested date window.
+			if ($startDate || $endDate) {
+				$filterStart = $startDate ? Carbon::parse($startDate)->startOfDay() : null;
+				$filterEndExclusive = $endDate
+					? Carbon::parse($endDate)->startOfDay()->addDay()
+					: null;
 
-				if ($startDate && $endDate) {
-
-					$startDate = Carbon::parse($startDate)->startOfDay();
-					$endDate   = Carbon::parse($endDate)->endOfDay();
-
-					$query->whereHas('reservations', function ($q) use ($startDate, $endDate) {
-						$q->whereBetween('created_at', [$startDate, $endDate]);
+				$query->whereHas('reservations', function ($q) use ($filterStart, $filterEndExclusive) {
+					$q->where(function ($blockedQuery) {
+						$blockedQuery->whereNull('is_blocked')
+							->orWhere('is_blocked', false);
 					});
-				}
+
+					if ($filterStart && $filterEndExclusive) {
+						// Standard overlap rule: check-in is before the end of the
+						// filter and checkout is after the beginning of the filter.
+						$q->where('checkin', '<', $filterEndExclusive)
+							->where('checkout', '>', $filterStart);
+					} elseif ($filterStart) {
+						$q->where('checkout', '>', $filterStart);
+					} elseif ($filterEndExclusive) {
+						$q->where('checkin', '<', $filterEndExclusive);
+					}
+				});
 			}
 		} else {
 			$query->whereDate('created_at', Carbon::today());
 		}
 
-		$reservations = $query->where('coming_from', $comingFrom)->orderBy('created_at', 'desc')->paginate(50);
+		$reservations = $query
+			->where('coming_from', $comingFrom)
+			->orderBy('created_at', 'desc')
+			->paginate(50)
+			->withQueryString();
 		return view('admin.reservations.index', compact('reservations', 'apartments'));
 	}
 
