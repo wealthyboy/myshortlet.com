@@ -3,14 +3,14 @@
 namespace App\Observers;
 
 use App\Models\UserReservation;
-use App\Services\Channex\InventorySyncService;
+use App\Services\ChannexPro\ReservationEventService;
 
 class UserReservationObserver
 {
     public function updated(UserReservation $reservation): void
     {
         if ($reservation->wasChanged(['status', 'is_cancelled'])) {
-            app(InventorySyncService::class)->queueUserReservation($reservation);
+            app(ReservationEventService::class)->statusChanged($reservation);
         }
     }
 }
