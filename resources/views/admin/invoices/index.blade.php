@@ -223,14 +223,8 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if($invoice->invoice_mail_status === 'delivered')
-                                            <span style="background-color: green;" class="badge badge-success">Delivered</span>
-                                            @elseif(in_array($invoice->invoice_mail_status, ['queued', 'sending', 'processing', 'processed']))
-                                            <span class="badge badge-warning">Checking</span>
-                                            @elseif(in_array($invoice->invoice_mail_status, ['hard_bounce', 'soft_bounce', 'process_failed', 'failed', 'not_found', 'tracking_error']))
-                                            <span class="badge badge-danger">Failed</span>
-                                            @elseif($invoice->resent)
-                                            <span style="background-color: green;" class="badge badge-warning">Yes</span>
+                                            @if($invoice->resent)
+                                            <span style="background-color: green;" class="badge badge-success">Yes</span>
                                             @else
                                             <span class="badge badge-secondary">No</span>
                                             @endif
