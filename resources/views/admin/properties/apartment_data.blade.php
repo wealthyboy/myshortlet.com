@@ -1,3 +1,4 @@
+@include('admin.properties.distribution_profile')
 <h4 class="info-text ">Enter Apartment Details</h4> 
 
           
@@ -131,4 +132,4 @@
         </div>
     </div>
 </div>
-    
+

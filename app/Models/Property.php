@@ -21,6 +21,8 @@ class Property extends Model
 
     protected $dates = ['deleted_at', 'sale_price_expires'];
 
+    protected $casts = ['distribution_profile' => 'array'];
+
     public $appends = [
         'image_m',
         'image_tn',

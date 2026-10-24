@@ -221,6 +221,7 @@ class PropertiesController extends Controller
         $property->location_full_name  = $location_full_name;
         $property->slug = str_slug($title);
         $property->token =  $id ? $property->token : $token;
+        app(\App\Services\ChannexPro\PropertyDistributionProfile::class)->apply($property, $request);
         $property->save();
 
         if (!empty($request->location_id)) {

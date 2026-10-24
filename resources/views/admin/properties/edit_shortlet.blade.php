@@ -109,6 +109,7 @@
             </div>
          </div>
       </div>
+      @include('admin.properties.distribution_profile')
    </div>
    <div class="tab-pane" id="Cancelation">
       <div class="row">

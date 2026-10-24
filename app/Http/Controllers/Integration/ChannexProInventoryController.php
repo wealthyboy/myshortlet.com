@@ -49,6 +49,7 @@ class ChannexProInventoryController extends Controller
             ->get();
 
         $payload = $properties->map(function (Property $property) use ($domain) {
+            $profile = (array) ($property->distribution_profile ?? []);
             $roomTypes = $property->apartments->map(function ($apartment) use ($property) {
                 $sourceId = (string) $apartment->id;
                 $isActive = (bool) $apartment->allow;
@@ -92,17 +93,22 @@ class ChannexProInventoryController extends Controller
                 ];
             })->values()->all();
 
-            return [
+            $item = [
                 'id' => (string) $property->id,
                 'name' => (string) $property->name,
-                'domain' => $domain,
-                'timezone' => 'Africa/Lagos',
+                'domain' => array_key_exists('website', $profile) ? $profile['website'] : $domain,
                 'currency' => 'USD',
                 'type' => 'serviced_apartments',
-                'email' => data_get($property, 'email'),
-                'phone' => data_get($property, 'phone'),
-                'country_code' => $this->countryCode($property->country),
-                'city' => $property->city ?: null,
+                'email' => array_key_exists('email', $profile) ? $profile['email'] : data_get($property, 'email'),
+                'phone' => array_key_exists('phone', $profile) ? $profile['phone'] : data_get($property, 'phone'),
+                'country_code' => array_key_exists('country_code', $profile) ? $profile['country_code'] : $this->countryCode($property->country),
+                'state' => array_key_exists('state', $profile) ? $profile['state'] : ($property->state ?: null),
+                'city' => array_key_exists('city', $profile) ? $profile['city'] : ($property->city ?: null),
+                'zip_code' => $profile['zip_code'] ?? null,
+                'latitude' => $profile['latitude'] ?? null,
+                'longitude' => $profile['longitude'] ?? null,
+                'description' => mb_substr(trim(strip_tags((string) $property->description)), 0, 5000) ?: null,
+                'important_information' => $profile['important_information'] ?? null,
                 'address' => $property->address ?: $property->location_full_name ?: null,
                 'room_types' => $roomTypes,
                 'reference' => [
@@ -114,6 +120,16 @@ class ChannexProInventoryController extends Controller
                     ],
                 ],
             ];
+            // Do not infer a new timezone/country for old properties. Missing
+            // required metadata preserves the existing downstream value.
+            if (! empty($profile['timezone'])) {
+                $item['timezone'] = $profile['timezone'];
+            }
+            if (empty($item['country_code'])) {
+                unset($item['country_code']);
+            }
+
+            return $item;
         })->values();
 
         return response()->json([
@@ -135,7 +151,7 @@ class ChannexProInventoryController extends Controller
         ]);
     }
 
-    private function countryCode(?string $country): string
+    private function countryCode(?string $country): ?string
     {
         $country = strtoupper(trim((string) $country));
 
@@ -150,7 +166,7 @@ class ChannexProInventoryController extends Controller
             'UNITED STATES', 'UNITED STATES OF AMERICA', 'USA' => 'US',
             'UNITED ARAB EMIRATES', 'UAE' => 'AE',
             'FRANCE' => 'FR',
-            default => 'NG',
+            default => null,
         };
     }
 }
