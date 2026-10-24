@@ -49,6 +49,7 @@ return [
             rtrim(env('CHANNEXPRO_URL', 'https://channexpro.com'), '/').'/api/v1/source/webhook'
         ),
         'events_enabled' => env('CHANNEXPRO_EVENTS_ENABLED', true),
+        'reservations_enabled' => env('CHANNEXPRO_RESERVATIONS_ENABLED', false),
     ],
 
     'live_export' => [

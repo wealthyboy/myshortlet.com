@@ -38,6 +38,19 @@ class WebHookController extends Controller
             $input = (array) data_get($payload, 'data.metadata.custom_fields.0.booking', []);
             $tracking_id = data_get($payload, 'data.metadata.custom_fields.0.tracking_id');
             $bookingIds = array_values(array_filter((array) data_get($input, 'booking_ids', [])));
+            $recovered = app(\App\Services\ManualBookingRecovery::class)->matchingCallback($input, $bookingIds);
+            if ($recovered) {
+                // Keep the event visible for payment reconciliation, but never
+                // fulfil or email an explicitly recovered cart a second time.
+                Log::warning('Payment callback for manually recovered booking: reconcile reference', [
+                    'user_reservation_id' => $recovered->id,
+                    'reference' => data_get($payload, 'data.reference'),
+                    'amount_minor' => data_get($payload, 'data.amount'),
+                    'currency' => data_get($payload, 'data.currency'),
+                    'booking_ids' => $bookingIds,
+                ]);
+                return response()->json(['status' => 'manual_recovery_recorded'], 200);
+            }
             $bookings = BookingDetail::whereIn('id', $bookingIds)->get();
 
             if ($bookings->isEmpty()) {

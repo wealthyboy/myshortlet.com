@@ -22,6 +22,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/channexpro/reservations', 'Integration\ChannexProReservationController@store');
+
 Route::get('/channex/verify-reservation', 'Admin\Channex\LiveVerificationController@reservationOptions')
     ->middleware('throttle:10,1');
 Route::post('/channex/verify-reservation', 'Admin\Channex\LiveVerificationController@reservation')

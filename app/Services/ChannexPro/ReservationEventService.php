@@ -169,7 +169,8 @@ class ReservationEventService
                 'children' => max(0, (int) ($reservation->children ?? 0)),
                 'currency' => $currencyCode,
                 'total' => (float) ($header?->total ?? 0),
-                'payment_status' => (bool) ($header?->checked ?? false) ? 'paid' : 'unpaid',
+                'payment_status' => ((bool) ($header?->checked ?? false)
+                    || data_get($header?->pricing_snapshot, 'manual_recovery.payment_confirmation') === 'operator_confirmed_paid') ? 'paid' : 'unpaid',
                 'guest' => $guest ? [
                     'first_name' => (string) ($guest->name ?? ''),
                     'last_name' => (string) ($guest->last_name ?? ''),
