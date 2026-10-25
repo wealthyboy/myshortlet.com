@@ -6,6 +6,7 @@
     <div class="col-md-12">
         @include('admin.errors.errors')
         <div class="text-right">
+            <a href="{{ route('admin.photo-finder.index') }}" class="btn btn-primary btn-simple btn-xs"><i class="material-icons">image_search</i> Find apartment by photo</a>
             <a href="{{ route('admin.apartments.index') }}" rel="tooltip" title="Refresh" class="btn btn-primary btn-simple btn-xs">
                 <i class="material-icons">refresh</i>
                 Refresh

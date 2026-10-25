@@ -15,6 +15,11 @@ class Image extends Model
 
     protected $fillable = ['parent_id', 'image', 'imageable_type', 'imageable_id', 'property_id', 'caption'];
 
+    protected $casts = ['photo_signature' => 'array', 'photo_indexed_at' => 'datetime'];
+
+    // Search metadata is admin-only, not part of public inventory responses.
+    protected $hidden = ['photo_signature', 'photo_signature_source', 'photo_indexed_at'];
+
     // use Img;//,SoftDeletes,CascadeSoftDeletes;
 
     public $folder = 'apartments';

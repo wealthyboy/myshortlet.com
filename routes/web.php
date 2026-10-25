@@ -40,6 +40,11 @@ Route::get('reservations/{reservation}/calendar', 'Reservation\ReservationCalend
 
 
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
+    Route::get('photo-finder', 'Admin\Image\PhotoFinderController@index')->name('admin.photo-finder.index');
+    Route::get('photo-finder/photos', 'Admin\Image\PhotoFinderController@photos')->middleware('throttle:60,1,photo-gallery:')->name('admin.photo-finder.photos');
+    Route::post('photo-finder/prepare', 'Admin\Image\PhotoFinderController@prepare')->middleware('throttle:60,1,photo-prepare:')->name('admin.photo-finder.prepare');
+    Route::post('photo-finder/search', 'Admin\Image\PhotoFinderController@search')->middleware('throttle:15,1,photo-search:')->name('admin.photo-finder.search');
+    Route::patch('photo-finder/photos/{photo}/tag', 'Admin\Image\PhotoFinderController@tag')->middleware('throttle:60,1,photo-tag:')->name('admin.photo-finder.tag');
     Route::get('/', 'Admin\HomeCtrl@index')->name('admin_home');
 
     Route::get('/maintainance/mode', 'Live\LiveController@index')->name('maintainance');

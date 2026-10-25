@@ -112,6 +112,7 @@
                         <div class="collapse 
                        {{ $helper->active_link([
                         'properties',
+                        'photo-finder',
                         'category',
                         'fine_art',
                         'discounts',
@@ -132,6 +133,8 @@
                                         <span class="sidebar-normal"> Apartments </span>
                                     </a>
                                 </li>
+
+                                <li class="{{ request()->routeIs('admin.photo-finder.*') ? 'active' : '' }}"><a href="{{ route('admin.photo-finder.index') }}"><span class="sidebar-mini"> P </span><span class="sidebar-normal"> Photo finder </span></a></li>
 
                                 <li class="{{ $helper->active_link(['agents']) }} ">
                                     <a href="{{ route('admin.sublets.index') }}">

@@ -5,6 +5,7 @@
 <div class="row">
    <div class="col-sm-12">
       <div class="text-right mb-3">
+         <a href="{{ route('admin.photo-finder.index', ['apartment_id' => $apartment->id]) }}" class="btn btn-primary btn-simple btn-xs"><i class="material-icons">photo_library</i> Browse and tag photos</a>
          <a href="{{ route('admin.apartments.sync', ['id' => $apartment->id]) }}" rel="tooltip" title="Sync Apartment" class="btn btn-primary btn-simple btn-xs" onclick="return confirm('Sync this apartment with Channex?')">
             <i class="material-icons">refresh</i>
             Sync Apartment
