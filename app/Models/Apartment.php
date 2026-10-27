@@ -17,6 +17,8 @@ class Apartment extends Model
 
     protected $dates = ['available_from', 'sale_price_expires'];
 
+    protected $casts = ['elevator_access' => 'boolean'];
+
 
     public $folder = 'apartments';
 
@@ -63,6 +65,7 @@ class Apartment extends Model
         'image_link',
         'video_link',
         'allow',
+        'elevator_access',
         'december_prices',
         'channex_room_type_id',
         'channex_synced',

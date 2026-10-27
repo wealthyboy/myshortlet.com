@@ -26,4 +26,5 @@
         <span class="svg-icon-text">{{ $obj->max_adults + $obj->max_children }} Guests</span>
     </div>
 
+    @include('_partials.elevator_access', ['obj' => $obj])
 </div>

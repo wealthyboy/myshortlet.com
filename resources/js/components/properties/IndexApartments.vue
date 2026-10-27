@@ -433,6 +433,7 @@
                     </span>
                     <span class="svg-icon-text">{{ room.floor }} </span>
                   </div>
+                  <elevator-access :access="room.elevator_access" />
                 </div>
 
                 <div class="uitk-spacing uitk-spacing-margin-blockend-six">
@@ -491,6 +492,7 @@
 <script>
 import Guests from "../properties/Guests.vue";
 import Apartment from "./Apartment.vue";
+import ElevatorAccess from "./ElevatorAccess.vue";
 import Date from "./Date.vue";
 import Pickr from "vue-flatpickr-component";
 import VueSlickCarousel from "vue-slick-carousel";
@@ -698,6 +700,7 @@ export default {
     console.log(this.form.checkin);
   },
   components: {
+    ElevatorAccess,
     Pickr,
     Guests,
     Apartment,

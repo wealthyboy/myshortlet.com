@@ -213,7 +213,7 @@
         <i class="fas fa-info-circle mr-2"></i
         ><span itemprop="name">Instant Confirmation</span>
       </div>
-      <div :class="{ 'h-25': room.is_gallery }" class="entire-apartments h-25">
+      <div :class="{ 'h-25': room.is_gallery, 'apartment-facts': !room.is_gallery }" class="entire-apartments">
         <div v-if="!room.is_gallery" class="bold-2 mb-2" itemprop="description">
           Entire apartment
         </div>
@@ -261,6 +261,7 @@
             </span>
             <span class="svg-icon-text">{{ room.floor }}</span>
           </div>
+          <elevator-access :access="room.elevator_access" />
         </div>
         <template v-if="!room.is_gallery && room.no_of_rooms">
           <div
@@ -364,6 +365,7 @@
 <script>
 
 import Hls from "hls.js";
+import ElevatorAccess from "./ElevatorAccess.vue";
 
 export default {
   props: {
@@ -494,7 +496,7 @@ export default {
       }
     });
   },
-  components: {},
+  components: { ElevatorAccess },
   computed: {
     // isHomePage() {
     //   return window.location.pathname === "/" || window.location.pathname === "";
@@ -597,6 +599,10 @@ export default {
 
 </script>
 <style scoped>
+.apartment-facts {
+  height: auto;
+}
+
 .video-wrapper {
   position: relative;
   overflow: hidden;

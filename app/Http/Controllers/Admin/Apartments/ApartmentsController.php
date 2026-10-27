@@ -182,6 +182,8 @@ class ApartmentsController extends Controller
     public function store(Request $request)
     {
 
+        $request->validate(['elevator_access' => 'nullable|boolean']);
+
         // $this->validate($request, [
         //     "apartment_name" => "required",
         //     'address' => "required",
@@ -208,6 +210,7 @@ class ApartmentsController extends Controller
         $apartment->bedroom_6 = $request->bedroom_6;
         $apartment->type = $request->type;
         $apartment->floor = $request->floor;
+        $apartment->elevator_access = $request->filled('elevator_access') ? $request->boolean('elevator_access') : null;
         $apartment->price_mode = $request->price_mode;
         $apartment->apartment_id = $request->apartment_id;
         $apartment->allow = $apartment_allow;
@@ -388,6 +391,8 @@ class ApartmentsController extends Controller
     public function update(Request $request, $id)
     {
 
+        $request->validate(['elevator_access' => 'nullable|boolean']);
+
         $apartment = Apartment::find($id);
 
         $room_images = !empty($request->images) ? $request->images : [];
@@ -413,6 +418,9 @@ class ApartmentsController extends Controller
         $apartment->teaser = $request->teaser;
         $apartment->type = $request->type;
         $apartment->floor = $request->floor;
+        if ($request->has('elevator_access')) {
+            $apartment->elevator_access = $request->filled('elevator_access') ? $request->boolean('elevator_access') : null;
+        }
         $apartment->price_mode = $request->price_mode;
         $apartment->apartment_id = $request->apartment_id;
         $apartment->allow = $apartment_allow;

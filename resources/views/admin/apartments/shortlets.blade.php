@@ -91,6 +91,8 @@
                   </div>
 
 
+                  @include('admin.apartments._accessibility')
+
                   <div class="col-md-2">
                      <div class="form-group">
                         <select name="room_quantity" name="quantity" id="" required="true" class="form-control">
