@@ -17,7 +17,8 @@ class Apartment extends Model
 
     protected $dates = ['available_from', 'sale_price_expires'];
 
-    protected $casts = ['elevator_access' => 'boolean'];
+    // Accessibility attributes, also used by the modal, are authoritative.
+    protected $hidden = ['elevator_access'];
 
 
     public $folder = 'apartments';
@@ -44,6 +45,7 @@ class Apartment extends Model
         'hightlights',
         'converted_peak_price',
         'converted_regular_price',
+        'accessibility_label',
     ];
 
     protected $fillable = [
@@ -65,7 +67,6 @@ class Apartment extends Model
         'image_link',
         'video_link',
         'allow',
-        'elevator_access',
         'december_prices',
         'channex_room_type_id',
         'channex_synced',
@@ -257,6 +258,26 @@ class Apartment extends Model
     public function apartment_facilities()
     {
         return $this->belongsToMany(Attribute::class)->where('type', 'apartment facilities');
+    }
+
+    public function getAccessibilityLabelAttribute()
+    {
+        // Listing/detail requests eager-load these attributes and their parents.
+        // Avoid adding a query for every model serialized elsewhere in the app.
+        if (! $this->relationLoaded('apartment_facilities')) {
+            return null;
+        }
+
+        $labels = $this->apartment_facilities->filter(function ($attribute) {
+            $parent = $attribute->relationLoaded('parent') ? $attribute->parent : null;
+
+            return strcasecmp(trim((string) optional($parent)->name), 'Accessibility') === 0
+                && preg_match('/\b(elevator|lift)\b/i', (string) $attribute->name);
+        })->pluck('name')->map(function ($name) {
+            return trim((string) $name);
+        })->unique()->implode(' · ');
+
+        return $labels !== '' ? $labels : null;
     }
 
 

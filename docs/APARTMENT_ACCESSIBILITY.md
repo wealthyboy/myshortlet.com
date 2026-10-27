@@ -1,36 +1,37 @@
-# Apartment elevator access
+# Apartment elevator/accessibility display
 
-Each apartment now has a nullable `elevator_access` boolean. Existing records remain
-unspecified; no elevator or wheelchair-accessibility claim is inferred from the floor.
+The apartment card reads the existing selected **Accessibility** attributes—the
+same `apartment_facilities` relation and parent category used by its information
+modal. There is no separate admin dropdown to maintain.
 
-In Admin → Apartments → Create/Edit, use **Accessibility — elevator access**:
+The backend appends `accessibility_label` from the selected Accessibility items
+whose names mention elevator/lift. For example, **Elevator Access** or
+**Stairs (No Elevator)** is passed unchanged to the card and displayed beside the
+elevator SVG below the floor. No matching selection means no elevator row. This
+does not infer wheelchair access or infer elevator availability from a floor.
 
-- Elevator access
-- No elevator access
-- Not specified (clears a previously saved value)
+Listing/detail requests already eager-load these attributes and parents. The
+availability response also loads them so filtered cards retain the same label.
+The accessor does not introduce per-card lazy queries when models are serialized.
 
-The apartment cards and details show a matching elevator icon and text below the
-floor when either yes or no is confirmed. Unspecified values are not shown publicly.
-Older save requests that omit the field preserve an existing setting. Invalid
-values are rejected before saving. The JSON apartment resource exposes a boolean
-or null for the frontend. This feature does not add an OTA accessibility mapping.
+The duplicate elevator dropdown and its save logic have been removed. The old
+`elevator_access` column, if already migrated, is ignored and hidden from the
+serialized apartment. Its historical migration is retained to avoid rewriting
+deployment history; no rollback, data deletion or new migration is required for
+this correction.
 
 ## Deployment
 
-Deploy the source, run `php artisan migrate --force`, compile the frontend with
-`npm run production`, then run `php artisan view:clear`. The migration must run
-before using the new admin field. The frontend must be rebuilt to show the new row.
+Deploy the source, rebuild the frontend with `npm run production`, and clear
+compiled views with `php artisan view:clear`. The verified local build uses Node
+22; the project's existing Mix/yargs toolchain is not compatible with Node 26.
 
-The existing frontend was successfully compiled using the installed Node 22 runtime.
-The local Node 26 runtime is incompatible with this project's existing yargs/Mix
-toolchain. No dependencies or runtime configuration were changed for this feature.
-
-## Verification
+## Checks
 
 `php vendor/bin/phpunit --filter ApartmentAccessibilityTest`
 
 `node --test tests/Frontend/elevator-access.test.cjs`
 
-Check a confirmed yes, a confirmed no and an unspecified apartment. Verify that the
-floor, bedroom details and price remain readable on small screens, and that the
-selected option survives an edit and a validation error.
+Verify one apartment with **Elevator Access**, one with **Stairs (No Elevator)**,
+and one with no matching attribute. The modal and card must show the same text.
+Change the existing attribute selection and confirm both update together.

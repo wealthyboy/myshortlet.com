@@ -261,7 +261,7 @@
             </span>
             <span class="svg-icon-text">{{ room.floor }}</span>
           </div>
-          <elevator-access :access="room.elevator_access" />
+          <elevator-access :label="room.accessibility_label" />
         </div>
         <template v-if="!room.is_gallery && room.no_of_rooms">
           <div

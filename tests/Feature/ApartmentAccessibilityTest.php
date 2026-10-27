@@ -2,16 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\Http\Controllers\Admin\Apartments\ApartmentsController;
 use App\Models\Apartment;
-use App\Models\User;
-use App\Services\Channex\AriOutboxService;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
 class ApartmentAccessibilityTest extends TestCase
@@ -21,120 +15,118 @@ class ApartmentAccessibilityTest extends TestCase
         parent::setUp();
         config(['database.default' => 'accessibility_test', 'database.connections.accessibility_test' => [
             'driver' => 'sqlite', 'database' => ':memory:', 'prefix' => '',
-        ], 'services.channexpro.shared_token' => null]);
+        ]]);
         DB::purge('accessibility_test');
         $this->assertSame(':memory:', DB::connection()->getDatabaseName());
-        Bus::fake();
         $this->app->instance(\App\Http\ViewComposer\NavComposer::class, new class {
             public function compose($view) {}
         });
-        view()->share('errors', new \Illuminate\Support\ViewErrorBag);
         Schema::create('system_settings', function (Blueprint $table) { $table->id(); });
         Schema::create('apartments', function (Blueprint $table) {
-            $table->id();
-            foreach (['name', 'price', 'sale_price', 'slug', 'max_adults', 'quantity', 'image_link', 'video_link',
-                'bedroom_1', 'bedroom_2', 'bedroom_3', 'bedroom_4', 'bedroom_5', 'bedroom_6', 'type', 'floor',
-                'price_mode', 'apartment_id', 'allow', 'owner_email', 'wifi_password', 'wifi_ssid', 'teaser',
-                'image', 'no_of_rooms', 'sale_price_expires', 'property_id', 'uuid', 'toilets'] as $field) {
-                $table->text($field)->nullable();
-            }
+            $table->id(); $table->string('name');
+            $table->boolean('elevator_access')->nullable(); // Historical, not authoritative.
             $table->timestamps(); $table->softDeletes();
         });
-        DB::table('apartments')->insert(['id' => 1, 'name' => 'Existing apartment']);
-        require_once database_path('migrations/2026_10_27_153000_add_elevator_access_to_apartments_table.php');
-        (new \AddElevatorAccessToApartmentsTable)->up();
-        Schema::create('apartment_facility', function (Blueprint $table) {
-            $table->integer('apartment_id'); $table->integer('facility_id');
+        Schema::create('attributes', function (Blueprint $table) {
+            $table->id(); $table->string('name'); $table->string('type');
+            $table->integer('parent_id')->nullable(); $table->softDeletes();
         });
-        Schema::create('activities', function (Blueprint $table) {
-            $table->id(); $table->integer('user_id'); $table->string('email'); $table->string('username');
-            $table->string('action'); $table->timestamps(); $table->softDeletes();
+        Schema::create('apartment_attribute', function (Blueprint $table) {
+            $table->integer('apartment_id'); $table->integer('attribute_id');
         });
-        $user = new User(['name' => 'Test admin', 'email' => 'admin@example.test']); $user->id = 1;
-        $this->actingAs($user);
-        $this->mock(AriOutboxService::class, function ($mock) {
-            $mock->shouldReceive('queueBaseAriChange')->andReturnNull();
-        });
+        DB::table('apartments')->insert([
+            ['id' => 1, 'name' => 'Apartment with stairs', 'elevator_access' => true],
+            ['id' => 2, 'name' => 'Apartment with elevator', 'elevator_access' => false],
+            ['id' => 3, 'name' => 'No selected accessibility attribute', 'elevator_access' => true],
+        ]);
+        DB::table('attributes')->insert([
+            ['id' => 10, 'name' => 'Accessibility', 'type' => 'apartment facilities', 'parent_id' => null],
+            ['id' => 11, 'name' => 'Stairs (No Elevator)', 'type' => 'apartment facilities', 'parent_id' => 10],
+            ['id' => 12, 'name' => 'Elevator Access', 'type' => 'apartment facilities', 'parent_id' => 10],
+            ['id' => 13, 'name' => 'Wheelchair accessible', 'type' => 'apartment facilities', 'parent_id' => 10],
+            ['id' => 20, 'name' => 'Other amenities', 'type' => 'apartment facilities', 'parent_id' => null],
+            ['id' => 21, 'name' => 'Elevator Access', 'type' => 'apartment facilities', 'parent_id' => 20],
+        ]);
+        DB::table('apartment_attribute')->insert([
+            ['apartment_id' => 1, 'attribute_id' => 11],
+            ['apartment_id' => 2, 'attribute_id' => 12],
+            ['apartment_id' => 3, 'attribute_id' => 13],
+            ['apartment_id' => 3, 'attribute_id' => 21],
+        ]);
     }
 
-    private function controller(): ApartmentsController
+    private function apartments()
     {
-        // Exercise the real save actions without unrelated rate-plan creation/provider calls.
-        return new class extends ApartmentsController {
-            protected function syncChannexRatePlans(Apartment $apartment, Request $request) { return collect(); }
-        };
+        return Apartment::with('apartment_facilities.parent')->orderBy('id')->get();
     }
 
-    private function input(array $extra = []): Request
+    public function test_each_card_uses_the_exact_selected_accessibility_attribute_from_its_own_modal(): void
     {
-        return Request::create('/admin/apartments', 'POST', array_replace([
-            'room_name' => 'Test apartment', 'room_price' => 100, 'room_quantity' => 1,
-            'room_max_adults' => 7, 'room_number' => 3, 'room_toilets' => 3.5,
-            'floor' => '1st floor', 'property_id' => 20, 'apartment_allow' => 1,
-            'room_sale_price_expires' => '',
-        ], $extra));
-    }
-
-    public function test_existing_apartments_remain_unspecified_and_boolean_values_serialize_correctly(): void
-    {
-        $this->assertNull(Apartment::findOrFail(1)->elevator_access);
-        foreach ([true, false, null] as $value) {
-            $apartment = Apartment::findOrFail(1);
-            $apartment->elevator_access = $value; $apartment->save();
-            $fresh = $apartment->fresh();
-            $this->assertSame($value, $fresh->elevator_access);
-            $this->assertSame($value, $fresh->setAppends([])->toArray()['elevator_access']);
+        $apartments = $this->apartments();
+        $this->assertSame('Stairs (No Elevator)', $apartments[0]->accessibility_label);
+        $this->assertSame('Elevator Access', $apartments[1]->accessibility_label);
+        $this->assertNull($apartments[2]->accessibility_label);
+        foreach ($apartments->take(2) as $apartment) {
+            $this->assertSame($apartment->apartment_facilities->first()->name, $apartment->accessibility_label);
         }
     }
 
-    public function test_create_and_edit_save_yes_no_and_explicitly_clear_the_accessibility_field(): void
+    public function test_serialization_ignores_the_old_standalone_column_and_needs_no_extra_queries(): void
     {
-        $controller = $this->controller();
-        $controller->store($this->input(['elevator_access' => '1']));
-        $id = Apartment::latest('id')->value('id');
-        $this->assertTrue(Apartment::findOrFail($id)->elevator_access);
-        $controller->update($this->input(['elevator_access' => '0']), $id);
-        $this->assertFalse(Apartment::findOrFail($id)->elevator_access);
-        $controller->update($this->input(), $id);
-        $this->assertFalse(Apartment::findOrFail($id)->elevator_access, 'Older forms must preserve the saved value.');
-        $controller->update($this->input(['elevator_access' => '']), $id);
-        $this->assertNull(Apartment::findOrFail($id)->elevator_access);
-        $controller->store($this->input());
-        $this->assertNull(Apartment::latest('id')->first()->elevator_access);
+        $apartments = $this->apartments();
+        DB::enableQueryLog(); DB::flushQueryLog();
+        $apartments->each(function ($apartment) { $apartment->accessibility_label; });
+        $this->assertSame([], DB::getQueryLog());
+        $data = $apartments->map(function ($apartment) {
+            return $apartment->setAppends(['accessibility_label'])->toArray();
+        });
+        $this->assertSame('Stairs (No Elevator)', $data[0]['accessibility_label']);
+        $this->assertSame('Elevator Access', $data[1]['accessibility_label']);
+        $this->assertNull($data[2]['accessibility_label']);
+        $this->assertArrayNotHasKey('elevator_access', $data[0]);
+        // Existing price initialization can read system_settings once; the new
+        // accessibility field must never query attributes/pivots per card.
+        $attributeQueries = collect(DB::getQueryLog())->filter(function ($query) {
+            return stripos($query['query'], 'attributes') !== false
+                || stripos($query['query'], 'apartment_attribute') !== false;
+        });
+        $this->assertCount(0, $attributeQueries);
     }
 
-    public function test_invalid_accessibility_is_rejected_before_any_apartment_is_changed(): void
+    public function test_changing_the_existing_attribute_updates_the_card_label_without_a_separate_setting(): void
     {
-        foreach (['store', 'update'] as $action) {
-            try {
-                $this->controller()->{$action}($this->input(['elevator_access' => 'sometimes']), 1);
-                $this->fail('Invalid accessibility should not be saved.');
-            } catch (ValidationException $exception) {
-                $this->assertArrayHasKey('elevator_access', $exception->errors());
+        $apartment = $this->apartments()->first();
+        $apartment->apartment_facilities()->sync([12]);
+        $apartment->load('apartment_facilities.parent');
+        $this->assertSame('Elevator Access', $apartment->accessibility_label);
+        $apartment->apartment_facilities()->sync([]);
+        $apartment->load('apartment_facilities.parent');
+        $this->assertNull($apartment->accessibility_label);
+    }
+
+    public function test_unloaded_or_deleted_attributes_do_not_invent_a_claim_or_trigger_lazy_queries(): void
+    {
+        $apartment = Apartment::findOrFail(1);
+        DB::enableQueryLog(); DB::flushQueryLog();
+        $this->assertNull($apartment->accessibility_label);
+        $this->assertSame([], DB::getQueryLog());
+        DB::table('attributes')->where('id', 11)->update(['deleted_at' => now()]);
+        $apartment->load('apartment_facilities.parent');
+        $this->assertNull($apartment->accessibility_label);
+    }
+
+    public function test_blade_card_displays_existing_text_and_admin_forms_do_not_add_duplicate_controls(): void
+    {
+        foreach ($this->apartments() as $apartment) {
+            $html = view('_partials.elevator_access', ['obj' => $apartment])->render();
+            if ($apartment->accessibility_label) {
+                $this->assertStringContainsString($apartment->accessibility_label, $html);
+            } else {
+                $this->assertStringNotContainsString('apartment-elevator-access', $html);
             }
         }
-        $this->assertSame(1, Apartment::count());
-        $this->assertSame('Existing apartment', Apartment::findOrFail(1)->name);
-        Bus::assertNothingDispatched();
-    }
-
-    public function test_admin_select_restores_all_three_values_and_public_text_does_not_guess_unknown(): void
-    {
-        foreach ([true => '1', false => '0'] as $value => $expected) {
-            $apartment = new Apartment(['elevator_access' => (bool) $value]);
-            $html = view('admin.apartments._accessibility', compact('apartment'))->render();
-            $dom = new \DOMDocument; @$dom->loadHTML($html); $xpath = new \DOMXPath($dom);
-            $this->assertSame($expected, $xpath->query('//select[@name="elevator_access"]/option[@selected]')->item(0)->getAttribute('value'));
-            $public = view('_partials.elevator_access', ['obj' => $apartment])->render();
-            $this->assertStringContainsString($value ? 'Elevator access' : 'No elevator access', $public);
+        foreach (['shortlets', 'edit_shortlet'] as $template) {
+            $this->assertStringNotContainsString('admin.apartments._accessibility', file_get_contents(resource_path('views/admin/apartments/'.$template.'.blade.php')));
         }
-        $unknown = new Apartment;
-        $this->assertStringNotContainsString('apartment-elevator-access', view('_partials.elevator_access', ['obj' => $unknown])->render());
-        $html = view('admin.apartments._accessibility', ['apartment' => $unknown])->render();
-        $this->assertStringContainsString('value="" selected', $html);
-        request()->setLaravelSession(app('session')->driver());
-        session()->flashInput(['elevator_access' => '0']);
-        $html = view('admin.apartments._accessibility', ['apartment' => new Apartment(['elevator_access' => true])])->render();
-        $this->assertStringContainsString('value="0" selected', $html);
     }
 }

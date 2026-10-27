@@ -18,7 +18,7 @@ class ApartmentResource extends JsonResource
        return [
         'id' => $this->id,
         'name' => $this->name,
-        'elevator_access' => $this->elevator_access,
+        'accessibility_label' => $this->accessibility_label,
         'converted_price' => $this->converted_price,
         'default_discounted_price' => $this->default_discounted_price,
         'price' => $this->price,

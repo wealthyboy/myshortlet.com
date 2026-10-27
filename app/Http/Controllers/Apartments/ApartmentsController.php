@@ -453,7 +453,7 @@ class ApartmentsController extends Controller
 
             if ($request->ajax()) {
                 return response()->json([
-                    "data" => $availableApartments->load('images', 'free_services', 'bedrooms', 'bedrooms.parent', 'property'),
+                    "data" => $availableApartments->load('images', 'free_services', 'bedrooms', 'bedrooms.parent', 'property', 'apartment_facilities', 'apartment_facilities.parent'),
                     "nights" => $nights,
                 ], 200);
             }

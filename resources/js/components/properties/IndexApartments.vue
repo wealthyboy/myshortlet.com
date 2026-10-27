@@ -433,7 +433,7 @@
                     </span>
                     <span class="svg-icon-text">{{ room.floor }} </span>
                   </div>
-                  <elevator-access :access="room.elevator_access" />
+                  <elevator-access :label="room.accessibility_label" />
                 </div>
 
                 <div class="uitk-spacing uitk-spacing-margin-blockend-six">

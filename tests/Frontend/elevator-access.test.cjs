@@ -15,9 +15,9 @@ vm.runInNewContext(source.script.content.replace('export default', 'module.expor
 const component = { ...context.module.exports, ...compiled };
 const text = vnode => [vnode.text || '', ...(vnode.children || []).map(text)].join('');
 
-for (const [access, expected] of [[true, 'Elevator access'], [false, 'No elevator access'], [null, ''], [undefined, '']]) {
-  test(`renders confirmed elevator access ${String(access)} without inventing unknown values`, () => {
-    const instance = new Vue({ ...component, propsData: { access } });
+for (const [label, expected] of [['Elevator Access', 'Elevator Access'], ['Stairs (No Elevator)', 'Stairs (No Elevator)'], [null, ''], [undefined, '']]) {
+  test(`renders the existing Accessibility attribute ${String(label)}`, () => {
+    const instance = new Vue({ ...component, propsData: { label } });
     assert.equal(text(instance._render()).trim(), expected);
     instance.$destroy();
   });
@@ -26,7 +26,7 @@ for (const [access, expected] of [[true, 'Elevator access'], [false, 'No elevato
 for (const file of ['Apartment.vue', 'IndexApartments.vue']) {
   test(`${file} includes the shared elevator row and compiles`, () => {
     const contents = fs.readFileSync(path.join(root, 'resources/js/components/properties', file), 'utf8');
-    assert.ok(contents.includes('<elevator-access :access="room.elevator_access" />'));
+    assert.ok(contents.includes('<elevator-access :label="room.accessibility_label" />'));
     assert.deepEqual(compiler.compile(compiler.parseComponent(contents).template.content).errors, []);
   });
 }

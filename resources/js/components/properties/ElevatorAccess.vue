@@ -13,14 +13,7 @@
 <script>
 export default {
   props: {
-    access: { type: Boolean, default: null },
-  },
-  computed: {
-    label() {
-      if (this.access === true) return "Elevator access";
-      if (this.access === false) return "No elevator access";
-      return null;
-    },
+    label: { type: String, default: null },
   },
 };
 </script>
