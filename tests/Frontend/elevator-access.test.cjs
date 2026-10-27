@@ -30,3 +30,10 @@ for (const file of ['Apartment.vue', 'IndexApartments.vue']) {
     assert.deepEqual(compiler.compile(compiler.parseComponent(contents).template.content).errors, []);
   });
 }
+
+test('the shipped card bundle uses the existing accessibility label, not the retired field', () => {
+  const bundle = fs.readFileSync(path.join(root, 'public/js/services_js.js'), 'utf8');
+  assert.ok(bundle.includes('apartment-elevator-access'));
+  assert.ok(bundle.includes('.accessibility_label'), 'Rebuild public/js/services_js.js before deploying');
+  assert.ok(!bundle.includes('.elevator_access'), 'The shipped bundle still uses the retired elevator field');
+});

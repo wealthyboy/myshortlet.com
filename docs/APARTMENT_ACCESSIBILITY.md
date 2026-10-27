@@ -26,6 +26,12 @@ Deploy the source, rebuild the frontend with `npm run production`, and clear
 compiled views with `php artisan view:clear`. The verified local build uses Node
 22; the project's existing Mix/yargs toolchain is not compatible with Node 26.
 
+The generated `public/js/services_js.js` is tracked and served directly by the
+website. Include its rebuilt version in the deployment; updating Vue source
+alone leaves the old card running. The frontend test also checks this shipped
+bundle for the corrected field. On local machines with an incompatible desktop
+notification helper, set `DISABLE_NOTIFICATIONS=1` when building.
+
 ## Checks
 
 `php vendor/bin/phpunit --filter ApartmentAccessibilityTest`
