@@ -92,6 +92,9 @@ class ChannexProAriController extends Controller
             'days' => $days,
             'availability' => $ari['availability'],
             'restrictions' => $ari['restrictions'],
+            // Separate metadata: the base ARI price above remains unadjusted.
+            // ChannexPro applies these rules only to the specified channel.
+            'channel_pricing' => app(\App\Services\ChannexPro\ChannelPricing::class)->export($property),
             'counts' => [
                 'availability_ranges' => count($ari['availability']),
                 'restriction_ranges' => count($ari['restrictions']),

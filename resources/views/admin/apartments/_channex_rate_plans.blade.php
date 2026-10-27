@@ -13,6 +13,9 @@
 
 <div class="col-md-12" style="margin-top: 25px;">
    <h4>Channex Rate Plans</h4>
+   @if(isset($apartment) && $apartment->property_id)
+      <a class="btn btn-primary" href="{{ route('admin.channel-pricing.index', $apartment->property_id) }}">Channel markup &amp; markdown</a>
+   @endif
    <p class="text-muted">Each plan is created under this room type. The selected default plan always uses the apartment's Price per/night; other plans use the rates entered below.</p>
 
    <div class="table-responsive">

@@ -503,6 +503,10 @@ class ApartmentsController extends Controller
 
         }
 
+        if (($ariChangedFields || $changedRatePlans->isNotEmpty()) && config('services.channexpro.shared_token') && config('services.channexpro.webhook_url')) {
+            app(\App\Services\ChannexPro\ChannelPricing::class)->notify($apartment->property);
+        }
+
         (new Activity)->Log("Created a new apartments {$request->apartment_name}");
         return \Redirect::to('/admin/apartments');
     }

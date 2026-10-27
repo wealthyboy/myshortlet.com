@@ -40,6 +40,8 @@ Route::get('reservations/{reservation}/calendar', 'Reservation\ReservationCalend
 
 
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
+    Route::get('properties/{property:id}/channel-pricing', 'Admin\ChannexPro\ChannelPricingController@index')->name('admin.channel-pricing.index');
+    Route::put('properties/{property:id}/channel-pricing', 'Admin\ChannexPro\ChannelPricingController@update')->middleware('throttle:10,1,source-price:')->name('admin.channel-pricing.update');
     Route::get('photo-finder', 'Admin\Image\PhotoFinderController@index')->name('admin.photo-finder.index');
     Route::get('photo-finder/photos', 'Admin\Image\PhotoFinderController@photos')->middleware('throttle:60,1,photo-gallery:')->name('admin.photo-finder.photos');
     Route::post('photo-finder/prepare', 'Admin\Image\PhotoFinderController@prepare')->middleware('throttle:60,1,photo-prepare:')->name('admin.photo-finder.prepare');
