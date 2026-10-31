@@ -1,42 +1,14 @@
 @extends('admin.layouts.app')
-
-
-
 @section('content')
-
-<div class="d-flex flex-wrap gap-3">
-    <h6>
-        <a href="/admin/abandoned-carts" class="px-4 py-2 border">Abandoned Checkout</a>
-    </h6>
-    <h6>
-        <a href="/admin/apartments" class="px-4 py-2 border">Apartments</a>
-    </h6>
-    <h6>
-        <a href="/admin/reservations?coming_from=checkin" class="px-4 py-2 border">Check-in</a>
-    </h6>
-    <h6>
-        <a href="/admin/reservations?coming_from=ota" class="px-4 py-2 border">OTA Bookings</a>
-    </h6>
-    <h6>
-        <a href="/admin/peak_periods" class="px-4 py-2 border">Peak Periods</a>
-    </h6>
-    <h6>
-        <a href="/admin/visits" class="px-4 py-2 border">Reservations</a>
-    </h6>
-    <h6>
-        <a href="/admin/invoices" class="px-4 py-2 border">Invoice</a>
-    </h6>
-    <h6>
-        <a href="/admin/reservations?coming_from=payment" class="px-4 py-2 border">Visits</a>
-    </h6>
-    <h6>
-        <a href="/admin/vouchers" class="px-4 py-2 border">Vouchers</a>
-    </h6>
-
+<style>
+.avm-dashboard{font-family:inherit;color:#263347}.avm-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:22px}.avm-title{font-size:25px;font-weight:750;margin:0}.avm-muted{color:#68768a;font-size:13px}.avm-filters a{display:inline-block;padding:8px 12px;border:1px solid #dce3ec;border-radius:8px;margin-left:5px;color:#34465c;text-decoration:none}.avm-filters a.active{background:#153e69;color:#fff}.avm-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:14px;margin-bottom:20px}.avm-card,.avm-panel{background:#fff;border:1px solid #e3e8ef;border-radius:13px;padding:19px;box-shadow:0 3px 12px rgba(26,43,65,.04)}.avm-number{font-size:28px;font-weight:750;margin:8px 0}.avm-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:20px}.avm-panel h5{font-weight:700;margin-bottom:16px}.avm-bar-row{display:flex;align-items:center;gap:12px;margin:11px 0}.avm-bar-name{width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.avm-bar-track{flex:1;background:#eef2f7;border-radius:10px;height:12px;overflow:hidden}.avm-bar-fill{background:#2c75b8;height:100%;border-radius:10px}.avm-chart{display:flex;align-items:end;gap:3px;height:170px;border-bottom:1px solid #dbe3ed;padding-top:10px}.avm-chart-col{flex:1;min-width:2px;background:#327fc3;border-radius:3px 3px 0 0}.avm-links{display:flex;flex-wrap:wrap;gap:9px}.avm-links a{padding:9px 13px;border-radius:8px;background:#f0f5fa;color:#214d76;text-decoration:none}.avm-table{width:100%;font-size:13px}.avm-table th,.avm-table td{padding:10px;border-bottom:1px solid #e9edf2;text-align:left}.avm-scroll{overflow-x:auto}@media(max-width:780px){.avm-grid{grid-template-columns:1fr}.avm-title{font-size:21px}}
+</style>
+<div class="avm-dashboard">
+<div class="avm-top"><div><h2 class="avm-title">Property performance</h2><div class="avm-muted">Bookings created during the selected period · {{ now()->format('d M Y') }}</div></div><div class="avm-filters">@foreach([7,30,90] as $option)<a class="{{ $days === $option ? 'active' : '' }}" href="{{ request()->fullUrlWithQuery(['days'=>$option]) }}">{{ $option }} days</a>@endforeach</div></div>
+@if($resultLimited)<div class="alert alert-warning">This period has at least 5,000 booking records. Figures are limited to the most recent 5,000; use a shorter period for accurate totals.</div>@endif
+<div class="avm-cards"><div class="avm-card"><div class="avm-muted">Non-cancelled bookings</div><div class="avm-number">{{ number_format($bookingCount) }}</div><div class="avm-muted">Includes unpaid and pending bookings</div></div><div class="avm-card"><div class="avm-muted">Cancelled / failed bookings</div><div class="avm-number">{{ number_format($cancelledCount) }}</div><div class="avm-muted">Excluded from booking value</div></div><div class="avm-card"><div class="avm-muted">Sales channels</div><div class="avm-number">{{ count($channelCounts) }}</div><div class="avm-muted">Based on recorded booking source</div></div><div class="avm-card"><div class="avm-muted">Booking value (not payments received)</div>@forelse($bookingValueByCurrency as $currency=>$value)<div style="font-size:18px;font-weight:700;margin-top:7px">{{ $currency }} {{ number_format($value,2) }}</div>@empty<div class="avm-number">—</div>@endforelse<div class="avm-muted">Currency totals kept separate</div></div></div>
+<div class="avm-grid"><section class="avm-panel"><h5>Daily booking volume</h5><div class="avm-chart" role="img" aria-label="Daily booking volume chart">@php($maxBookings = max(1, max(array_column($bookingTrend,'bookings'))))@foreach($bookingTrend as $point)<div class="avm-chart-col" style="height:{{ max(2,($point['bookings']/$maxBookings)*100) }}%" title="{{ $point['date'] }}: {{ $point['bookings'] }} bookings"></div>@endforeach</div><div class="avm-muted mt-2">Hover over bars for daily counts.</div></section><section class="avm-panel"><h5>Bookings by channel</h5>@forelse($channelCounts as $channel=>$count)<div class="avm-bar-row"><span class="avm-bar-name" title="{{ $channel }}">{{ $channel }}</span><div class="avm-bar-track"><div class="avm-bar-fill" style="width:{{ $bookingCount ? ($count/$bookingCount)*100 : 0 }}%"></div></div><strong>{{ $count }}</strong></div>@empty<p class="avm-muted">No bookings recorded in this period.</p>@endforelse</section></div>
+<section class="avm-panel" style="margin-bottom:20px"><h5>Recent bookings</h5><div class="avm-scroll"><table class="avm-table"><thead><tr><th>Reference</th><th>Created</th><th>Source</th><th>Status</th><th>Booking total</th></tr></thead><tbody>@forelse($recentBookings as $booking)<tr><td>#{{ $booking->id }}</td><td>{{ $booking->created_at->format('d M Y') }}</td><td>{{ $booking->ota_name ?: ($booking->coming_from ?: 'Direct / Website') }}</td><td>{{ $booking->status ?: 'Unspecified' }}</td><td>{{ $booking->currency_code ?: 'Unknown' }} {{ number_format((float) str_replace(',', '', (string) $booking->total),2) }}</td></tr>@empty<tr><td colspan="5">No recent bookings.</td></tr>@endforelse</tbody></table></div></section>
+<section class="avm-panel"><h5>Quick actions</h5><div class="avm-links"><a href="/admin/abandoned-carts">Abandoned Checkout</a><a href="/admin/apartments">Apartments</a><a href="/admin/reservations?coming_from=checkin">Check-in</a><a href="/admin/reservations?coming_from=ota">OTA Bookings</a><a href="/admin/peak_periods">Peak Periods</a><a href="/admin/visits">Reservations</a><a href="/admin/invoices">Invoice</a><a href="/admin/reservations?coming_from=payment">Visits</a><a href="/admin/vouchers">Vouchers</a></div></section>
 </div>
-
-
-
-
-
 @endsection
