@@ -12,6 +12,7 @@
 @include('_partials.header_styles')
 
 <body>
+   @include('_partials.clear_availability_state')
    <div id="app" class="app">
       <nav class="navbar  navbar-fixed-top navbar-expand-lg  navbar-transparent navbar-absolute" color-on-scroll="100" id="sectionsNav">
          @include('_partials.header', ['show_logo' => true, 'show_book' => true])

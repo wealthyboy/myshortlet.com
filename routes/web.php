@@ -176,7 +176,7 @@ Route::post('currency/location', 'CurrencyLocation\CurrencyLocationController@st
     ->name('currency.location');
 
 
-Route::group(['middleware' => ['currencyByIp', 'tracking']], function () {
+Route::group(['middleware' => ['currencyByIp', 'tracking', 'clearAvailabilityState']], function () {
     Route::get('/', 'HomeController@home');
 
     Route::get('/luxury-service-apartments-in-ikoyi', 'Apartments\ApartmentsController@apartments');

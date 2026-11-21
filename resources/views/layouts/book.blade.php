@@ -39,6 +39,7 @@
       </script>
    </head>
    <body>
+      @include('_partials.clear_availability_state')
       <nav class="navbar navbar-expand-md mb-5 navbar-dark  bg-dark">
          <a class="navbar-brand" href="/">MyShortLet</a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">

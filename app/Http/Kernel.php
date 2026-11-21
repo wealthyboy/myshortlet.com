@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\Admin::class,
         'currencyByIp' => \App\Http\Middleware\CurrencyByIp::class,
         'tracking' => \App\Http\Middleware\TrackUserActivity::class,
+        'clearAvailabilityState' => \App\Http\Middleware\ClearAvailabilityState::class,
     ];
 }

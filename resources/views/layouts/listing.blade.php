@@ -6,6 +6,7 @@
 
 
 <body>
+   @include('_partials.clear_availability_state')
    <div id="app" class="appp">
 
 

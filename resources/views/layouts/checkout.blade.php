@@ -5,6 +5,7 @@
 @include('_partials.header_styles')
 
 <body>
+   @include('_partials.clear_availability_state')
    <div id="app" class="app">
       <nav class="navbar  main-background    navbar-expand-lg " id="sectionsNav">
          @include('_partials.header2')

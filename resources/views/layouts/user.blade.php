@@ -22,6 +22,7 @@
   </head>
 
 <body class="">
+    @include('_partials.clear_availability_state')
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
       <div class="logo">
