@@ -166,6 +166,19 @@
             font-weight: 700;
         }
 
+        .paystack-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 16px;
+            border-radius: 5px;
+            background-color: #0ba360;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
         /* FOOTER */
         .footer {
             position: fixed;
@@ -301,9 +314,8 @@
                 <td width="55%" valign="top">
                     <strong>Payment Details</strong><br>
                     {!! nl2br(e($invoice->payment_info ?: \App\Models\Invoice::defaultPaymentInfo($invoice->currency))) !!}
-                    <br><br>
-                    <strong>Pay online:</strong>
-                    <a href="{{ $paystackPaymentUrl }}">Click here to pay with Paystack</a>
+                    <br>
+                    <a class="paystack-button" href="{{ $paystackPaymentUrl }}">Pay with Paystack</a>
                 </td>
                 <td width="45%" valign="top" align="right">
                     <table class="summary-table" align="right" style="width:100%;">

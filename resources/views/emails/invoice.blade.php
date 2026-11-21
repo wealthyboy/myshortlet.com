@@ -34,7 +34,7 @@
 
         <p style="margin:24px 0; text-align:center;">
             <a href="{{ $paystackPaymentUrl }}" style="display:inline-block; padding:13px 22px; border-radius:6px; color:#fff; background:#342c27; text-decoration:none; font-weight:bold;">
-                Click here to pay with Paystack
+                Pay with Paystack
             </a>
         </p>
         <p style="font-size:13px; color:#666; text-align:center;">Pay {{ $invoice->currency }}{{ number_format($invoice->total, 2) }} securely in the invoice currency.</p>
