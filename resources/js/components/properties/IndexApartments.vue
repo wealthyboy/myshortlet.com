@@ -600,38 +600,10 @@ export default {
 
     this.showApartmentCount = this.apr;
 
-    const retrievedJsonString = localStorage.getItem("searchParams");
-    console.log(retrievedJsonString);
-    // Check if the retrieved JSON string is not null
-    if (retrievedJsonString !== null) {
-      const retrievedObject = JSON.parse(retrievedJsonString);
-
-      if (retrievedObject.checkin !== null) {
-        this.form.checkin = retrievedObject.checkin;
-        this.form.checkout = retrievedObject.checkout;
-
-
-      } else {
-        const urlParams = new URLSearchParams(window.location.search);
-        console.log(urlParams);
-
-        const checkin = urlParams.get("checkin") || "";
-        const checkout = urlParams.get("checkout") || "";
-        this.form.checkin = checkin;
-        this.form.checkout = checkout;
-      }
-
-      // const urlParams = new URLSearchParams(window.location.search);
-      // const checkin = urlParams.get('checkin') || '';
-      // const checkout = urlParams.get('checkout') || '';
-      // this.form.checkin = checkin;
-      // this.form.checkout = checkout;
-
-      // const fallbackParams = JSON.stringify({ checkin, checkout });
-      // localStorage.setItem('searchParams', fallbackParams);
-      //this.checkAvailabity()
-    } else {
-    }
+    // A shared search URL must always win over a previous visitor's saved
+    // search. Otherwise the initial filtered server response is replaced by
+    // an unfiltered/stale Ajax response after the page mounts.
+    this.hydrateAvailabilityForm();
 
 
     if (video) {
@@ -709,6 +681,67 @@ export default {
   },
 
   methods: {
+    getUrlAvailabilityParams() {
+      const params = new URLSearchParams(window.location.search);
+      const checkin = params.get("checkin") || "";
+      const checkout = params.get("checkout") || "";
+      const isValidDate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value) && !isNaN(Date.parse(value));
+      const hasDates = isValidDate(checkin) && isValidDate(checkout) && checkin < checkout;
+
+      return {
+        hasDates,
+        checkin,
+        checkout,
+        check_in_checkout: params.get("check_in_checkout") || (hasDates ? `${checkin} to ${checkout}` : ""),
+        rooms: Number.parseInt(params.get("rooms"), 10),
+        persons: Number.parseInt(params.get("persons"), 10),
+      };
+    },
+    hydrateAvailabilityForm() {
+      const fromUrl = this.getUrlAvailabilityParams();
+
+      if (fromUrl.hasDates) {
+        this.form.checkin = fromUrl.checkin;
+        this.form.checkout = fromUrl.checkout;
+        this.form.check_in_checkout = fromUrl.check_in_checkout;
+        if (fromUrl.rooms > 0) this.form.rooms = fromUrl.rooms;
+        if (fromUrl.persons > 0) this.form.persons = fromUrl.persons;
+
+        // Keep every date picker and subsequent availability check in sync
+        // with the shared link, rather than a prior local search.
+        localStorage.setItem("searchParams", JSON.stringify({
+          rooms: this.form.rooms,
+          persons: this.form.persons,
+          checkin: this.form.checkin,
+          checkout: this.form.checkout,
+          check_in_checkout: this.form.check_in_checkout,
+          expiry: Date.now() + 3600000,
+        }));
+
+        return true;
+      }
+
+      const retrieved = localStorage.getItem("searchParams");
+      if (!retrieved) return false;
+
+      try {
+        const saved = JSON.parse(retrieved);
+        if (saved.expiry && Date.now() >= saved.expiry) {
+          localStorage.removeItem("searchParams");
+          return false;
+        }
+
+        if (saved.rooms) this.form.rooms = saved.rooms;
+        if (saved.persons) this.form.persons = saved.persons;
+        if (saved.checkin) this.form.checkin = saved.checkin;
+        if (saved.checkout) this.form.checkout = saved.checkout;
+        if (saved.check_in_checkout) this.form.check_in_checkout = saved.check_in_checkout;
+        return true;
+      } catch (error) {
+        localStorage.removeItem("searchParams");
+        return false;
+      }
+    },
       handleVideoStop() {
         this.isPlaying = false;
         
@@ -921,24 +954,9 @@ export default {
     getApartments() {
       this.propertyLoading = true;
 
-
-      // restore from localStorage
-      const retrieved = localStorage.getItem("searchParams");
-      if (retrieved) {
-        try {
-          const saved = JSON.parse(retrieved);
-
-          if (saved.rooms) this.form.rooms = saved.rooms;
-          if (saved.persons) this.form.persons = saved.persons;
-          if (saved.checkin) this.form.checkin = saved.checkin;
-          if (saved.checkout) this.form.checkout = saved.checkout;
-          if (saved.check_in_checkout)
-            this.form.check_in_checkout = saved.check_in_checkout;
-
-        } catch (e) {
-          console.error("Invalid stored JSON", e);
-        }
-      }
+      // Re-hydrate before the Ajax request. This keeps query-string dates as
+      // the source of truth even when this method is called after mount.
+      this.hydrateAvailabilityForm();
 
       // build query from NON-EMPTY values
       const query = this.buildQuery({

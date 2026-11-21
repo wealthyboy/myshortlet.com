@@ -84,9 +84,15 @@ export default {
     };
   },
   mounted() {
-    this.romms = this.checkForGuests() ? this.checkForGuests().rooms : 2
-    // this.children = this.checkForGuests() ? this.checkForGuests().children : 1
-    this.persons = this.checkForGuests() ? this.checkForGuests().persons : 1
+    const params = new URLSearchParams(window.location.search);
+    const roomsFromUrl = Number.parseInt(params.get("rooms"), 10);
+    const personsFromUrl = Number.parseInt(params.get("persons"), 10);
+    const savedSearch = this.checkForGuests();
+
+    // A visitor opening a shared availability link should see the same room
+    // and guest values as the search, not values saved by a prior search.
+    this.rooms = roomsFromUrl > 0 ? roomsFromUrl : (savedSearch ? savedSearch.rooms : 2);
+    this.persons = personsFromUrl > 0 ? personsFromUrl : (savedSearch ? savedSearch.persons : 1);
   },
   methods: {
 

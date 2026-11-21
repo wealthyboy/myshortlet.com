@@ -56,24 +56,26 @@ export default {
     const isValidDate = (dateStr) => !isNaN(Date.parse(dateStr));
 
     if (this.check_in_date === 1) {
-      if (
+      // A date in a shared listing URL is intentional and must not be
+      // replaced with a previous local search from this browser.
+      if (checkin && isValidDate(checkin)) {
+        this.check_in_checkout = checkin;
+      } else if (
         this.checkForDate() &&
         typeof this.checkForDate().checkin !== "undefined"
       ) {
         this.check_in_checkout = this.checkForDate().checkin;
-      } else if (checkin && isValidDate(checkin)) {
-        this.check_in_checkout = checkin;
       } else {
         this.check_in_checkout = null;
       }
     } else {
-      if (
+      if (checkout && isValidDate(checkout)) {
+        this.check_in_checkout = checkout;
+      } else if (
         this.checkForDate() &&
         typeof this.checkForDate().checkout !== "undefined"
       ) {
         this.check_in_checkout = this.checkForDate().checkout;
-      } else if (checkout && isValidDate(checkout)) {
-        this.check_in_checkout = checkout;
       } else {
         this.check_in_checkout = null;
       }
