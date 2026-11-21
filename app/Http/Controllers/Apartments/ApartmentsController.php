@@ -93,8 +93,12 @@ class ApartmentsController extends Controller
                             ->where('checkout', '>', $startDate);
                     });
                 })
-                    ->where('apartments.max_adults', '>=', $data['persons'])
-                    ->where('apartments.no_of_rooms', '>=', $data['rooms']);
+                    ->where('apartments.max_adults', '>=', $data['persons']);
+
+                // "rooms" is the number of apartments requested in the
+                // booking search, not a minimum bedroom count for each
+                // apartment. Filtering no_of_rooms here made a two-room
+                // search exclude every one-bedroom apartment.
             }
         }
 
