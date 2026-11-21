@@ -16,6 +16,7 @@ class Invoice extends Model
         'invoice_mail_sent_at' => 'datetime',
         'invoice_delivered_at' => 'datetime',
         'invoice_mail_checked_at' => 'datetime',
+        'paystack_paid_at' => 'datetime',
     ];
 
     public $appends = [
@@ -47,7 +48,9 @@ class Invoice extends Model
         'invoice_mail_sent_at',
         'invoice_delivered_at',
         'invoice_mail_checked_at',
-        'invoice_mail_last_error'
+        'invoice_mail_last_error',
+        'paystack_reference',
+        'paystack_paid_at',
     ];
 
     public function invoice_items()
@@ -70,6 +73,30 @@ class Invoice extends Model
         return $this->discount_type === 'fixed'
             ? '-' . $this->currency . number_format($this->discount)
             : '-' . number_format($this->discount) . '%';
+    }
+
+    /**
+     * Default wire instructions shown when an admin has not entered bespoke
+     * payment details. USD invoices must never inherit the NGN account text.
+     */
+    public static function defaultPaymentInfo($currency)
+    {
+        $currency = strtoupper(trim((string) $currency));
+
+        if (in_array($currency, ['$', 'USD'], true)) {
+            return "For international Wire transfers in USD\n\n"
+                . "Bank name: Providus bank plc\n\n"
+                . "Account name: Avenue montaigne Limited\n\n"
+                . "Account number: 8505006923 (USD)\n\n"
+                . "Swift code: UMPLNGLA\n\n"
+                . "Bank address: 54 Adetokunbo Ademola Street, Victoria\n"
+                . "Island, Lagos, Nigeria";
+        }
+
+        return "Please make payment using the following details:\n"
+            . "Avenue Montaigne Limited\n"
+            . "Providus Bank\n"
+            . "1305006894";
     }
 
     protected static function boot()

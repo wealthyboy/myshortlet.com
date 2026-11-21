@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Integration;
 
 use App\Http\Controllers\Controller;
 use App\Models\Property;
+use App\Services\PhotoFinder\ApartmentPhotoFinder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class ChannexProInventoryController extends Controller
      * as active distribution mappings. Those IDs are retained only under the
      * non-actionable `reference.legacy_channex` key so they can be inspected later.
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request, ApartmentPhotoFinder $photos): JsonResponse
     {
         $expectedToken = trim((string) config('services.channexpro.shared_token'));
         $providedToken = trim((string) ($request->bearerToken() ?: $request->query('token', '')));
@@ -40,7 +41,7 @@ class ChannexProInventoryController extends Controller
             ->with([
                 'locations',
                 'apartments' => function ($query) {
-                    $query->orderBy('id');
+                    $query->with('images')->orderBy('id');
                 },
             ])
             ->where('allow', true)
@@ -48,9 +49,9 @@ class ChannexProInventoryController extends Controller
             ->orderBy('id')
             ->get();
 
-        $payload = $properties->map(function (Property $property) use ($domain) {
+        $payload = $properties->map(function (Property $property) use ($domain, $photos) {
             $profile = (array) ($property->distribution_profile ?? []);
-            $roomTypes = $property->apartments->map(function ($apartment) use ($property) {
+            $roomTypes = $property->apartments->map(function ($apartment) use ($property, $photos) {
                 $sourceId = (string) $apartment->id;
                 $isActive = (bool) $apartment->allow;
                 $baseRate = is_numeric($apartment->price) ? (float) $apartment->price : null;
@@ -69,6 +70,14 @@ class ChannexProInventoryController extends Controller
                     'currency' => 'USD',
                     'inventory_count' => $inventoryCount,
                     'is_active' => $isActive,
+                    // Optional, generic inventory-contract field. Keep original
+                    // URLs for the large viewer and smaller previews for rows.
+                    'photos' => $apartment->images->filter(fn ($image) => filled($image->image))->take(100)
+                        ->map(fn ($image) => [
+                            'url' => $photos->url($image),
+                            'thumbnail' => $photos->url($image, true),
+                            'caption' => mb_substr(trim(strip_tags((string) $image->caption)), 0, 200),
+                        ])->values()->all(),
                     'rate_plans' => [
                         [
                             'id' => 'standard:' . $sourceId,

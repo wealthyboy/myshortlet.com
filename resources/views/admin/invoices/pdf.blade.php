@@ -183,6 +183,13 @@
 </head>
 
 <body>
+    @php
+        $paystackPaymentUrl = URL::temporarySignedRoute(
+            'invoices.paystack.pay',
+            now()->addDays(30),
+            ['invoice' => $invoice->id]
+        );
+    @endphp
     <div class="invoice-box">
 
         <!-- HEADER -->
@@ -293,10 +300,10 @@
             <tr>
                 <td width="55%" valign="top">
                     <strong>Payment Details</strong><br>
-                    {!! nl2br(e($invoice->payment_info ?? "Please make payment using the following details:
-                    Avenue Montaigne Limited
-                    Providus Bank
-                    1305006894")) !!}
+                    {!! nl2br(e($invoice->payment_info ?: \App\Models\Invoice::defaultPaymentInfo($invoice->currency))) !!}
+                    <br><br>
+                    <strong>Pay online:</strong>
+                    <a href="{{ $paystackPaymentUrl }}">Click here to pay with Paystack</a>
                 </td>
                 <td width="45%" valign="top" align="right">
                     <table class="summary-table" align="right" style="width:100%;">

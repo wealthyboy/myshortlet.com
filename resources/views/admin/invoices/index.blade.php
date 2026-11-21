@@ -231,7 +231,7 @@
                                         </td>
 
                                         <td>
-                                            @if($invoice->sent)
+                                            @if($invoice->sent || $invoice->paystack_paid_at)
                                             <span style="background-color: green;" class="badge badge-warning">Paid</span>
                                             @else
                                             <span class="badge badge-secondary">Not Paid</span>
@@ -242,11 +242,24 @@
                                         <td>{{ $invoice->currency ?? '₦' }}{{ number_format($invoice->total) }}</td>
 
                                         <td class="td-actions text-right">
+                                            @php
+                                                $paystackPaymentUrl = URL::temporarySignedRoute(
+                                                    'invoices.paystack.pay',
+                                                    now()->addDays(30),
+                                                    ['invoice' => $invoice->id]
+                                                );
+                                            @endphp
                                             <a href="{{ route('admin.invoices.create', ['copy_id' => $invoice->id]) }}"
                                                 class="btn btn-primary btn-simple"
                                                 title="Create Invoice">
                                                 Create Invoice
                                             </a>
+                                            @if(! $invoice->sent && ! $invoice->paystack_paid_at)
+                                            <a target="_blank" href="{{ $paystackPaymentUrl }}"
+                                                class="btn btn-primary btn-simple" title="Open Paystack payment link">
+                                                Paystack Link
+                                            </a>
+                                            @endif
                                             @if($invoice->sent)
 
                                             <a target="_blank" href="/check-in?id={{optional($invoice->user_reservation)->id}}"

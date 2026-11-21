@@ -533,7 +533,8 @@ class InvoicesController extends Controller
                 'discount_type' => $validated['discount_type'] ?? 'fixed',
                 'caution_fee' => $validated['caution_fee'] ?? 0,
                 'total' => $validated['total'],
-                'payment_info' => $validated['payment_info'] ?? null,
+                'payment_info' => trim((string) ($validated['payment_info'] ?? ''))
+                    ?: Invoice::defaultPaymentInfo($validated['currency']),
                 'description' => $validated['description'] ?? null,
                 'rate' => $rate
             ]);

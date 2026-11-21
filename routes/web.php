@@ -38,6 +38,12 @@ Route::get('reservations/{reservation}/calendar', 'Reservation\ReservationCalend
     ->middleware('signed')
     ->name('calendar.reservation');
 
+// Customers receive this signed link in their invoice email/PDF. It does not
+// require an account and always charges the saved invoice total/currency.
+Route::get('invoices/{invoice}/pay', 'InvoicePaymentController@show')
+    ->middleware('signed')
+    ->name('invoices.paystack.pay');
+
 
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('properties/{property:id}/channel-pricing', 'Admin\ChannexPro\ChannelPricingController@index')->name('admin.channel-pricing.index');

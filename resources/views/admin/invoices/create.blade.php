@@ -277,12 +277,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label>Bank Details</label>
-                        <textarea name="payment_info" class="form-control" rows="4" placeholder="Add any details such as bank account info, payment instructions, or special notes">
-Please make payment using the following details:
-Avenue Montaigne Limited
-Providus Bank
-1305006894
-                        </textarea>
+                        <textarea name="payment_info" id="paymentInfo" class="form-control" rows="8" placeholder="Add any details such as bank account info, payment instructions, or special notes">{{ old('payment_info', $invoiceData->payment_info ?? \App\Models\Invoice::defaultPaymentInfo($selectedCurrency)) }}</textarea>
                     </div>
                 </div>
             </div>
@@ -339,6 +334,25 @@ Caution deposit will be refunded within 5 working days after checkout.
                         ? `Apartment base prices are in USD. 1 USD = ₦${NGN_EXCHANGE_RATE.toLocaleString()}.`
                         : 'Apartment base prices are in USD.'
                 );
+            }
+
+            const defaultNgnPaymentInfo = @json(\App\Models\Invoice::defaultPaymentInfo('₦'));
+            const defaultUsdPaymentInfo = @json(\App\Models\Invoice::defaultPaymentInfo('$'));
+
+            function syncPaymentInfoDefault(previousCurrency) {
+                const paymentInfo = $('#paymentInfo');
+                const currentValue = paymentInfo.val().trim();
+                const previousDefault = previousCurrency === '$'
+                    ? defaultUsdPaymentInfo
+                    : defaultNgnPaymentInfo;
+
+                // Only replace generated/empty defaults. Any bank details the
+                // admin has typed themselves remain untouched.
+                if (currentValue === '' || currentValue === previousDefault) {
+                    paymentInfo.val($('#currency').val() === '$'
+                        ? defaultUsdPaymentInfo
+                        : defaultNgnPaymentInfo);
+                }
             }
 
             // 🌀 Loader HTML
@@ -427,7 +441,11 @@ Caution deposit will be refunded within 5 working days after checkout.
             });
 
             // Currency switch
+            let previousCurrency = $('#currency').val();
+
             $('#currency').on('change', function() {
+                syncPaymentInfoDefault(previousCurrency);
+                previousCurrency = $(this).val();
                 syncExchangeRateState();
                 $('.invoice-item-row').each(function() {
                     updateRow($(this));

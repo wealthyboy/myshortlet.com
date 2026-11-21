@@ -20,6 +20,14 @@ return [
         'key' => env('EXCHANGE_RATE_API_KEY'),
     ],
 
+    // Invoice payment links use the same Paystack account as the booking
+    // checkout. The public key is safe for the browser; the secret key is
+    // only used to verify Paystack webhooks on the server.
+    'paystack' => [
+        'public_key' => env('PAYSTACK_PUBLIC_KEY', 'pk_live_c5fd554e0bc5c39d5f8f14b5f2a6263a403b9e55'),
+        'secret_key' => env('PAYSTACK_SECRET_KEY'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

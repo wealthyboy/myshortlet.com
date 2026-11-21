@@ -12,6 +12,7 @@ use App\Models\Reservation;
 use App\Models\UserReservation;
 use App\Models\UserTracking;
 use App\Models\Apartment;
+use App\Models\Invoice;
 use App\Models\Voucher;
 use App\Mail\ReservationReceipt;
 use App\Models\SystemSetting;
@@ -30,6 +31,10 @@ class WebHookController extends Controller
 
     public function payment(Request $request)
     {
+        if (data_get($request->all(), 'data.metadata.invoice_payment')) {
+            return $this->recordInvoicePayment($request);
+        }
+
         $this->settings = SystemSetting::first();
         Log::info('Paystack payment webhook received', ['event' => $request->input('event')]);
 
@@ -290,6 +295,75 @@ class WebHookController extends Controller
 
             return response()->json(['status' => 'error'], 500);
         }
+    }
+
+    /**
+     * Records payment for the public, signed invoice payment page. Invoice
+     * values are never read from Paystack metadata: the signed webhook and
+     * the saved invoice total/currency must both match before it is marked.
+     */
+    private function recordInvoicePayment(Request $request)
+    {
+        $secret = (string) config('services.paystack.secret_key');
+        $signature = (string) $request->header('x-paystack-signature', '');
+        $expectedSignature = $secret === ''
+            ? ''
+            : hash_hmac('sha512', $request->getContent(), $secret);
+
+        if ($expectedSignature === '' || ! hash_equals($expectedSignature, $signature)) {
+            Log::warning('Rejected invoice Paystack webhook with invalid signature');
+
+            return response()->json(['status' => 'unauthorized'], 401);
+        }
+
+        if (data_get($request->all(), 'event') !== 'charge.success'
+            || data_get($request->all(), 'data.status') !== 'success') {
+            return response()->json(['status' => 'ignored'], 200);
+        }
+
+        $invoiceId = data_get($request->all(), 'data.metadata.invoice_id');
+        $invoice = Invoice::find($invoiceId);
+
+        if (! $invoice) {
+            Log::warning('Paystack invoice webhook could not find invoice', ['invoice_id' => $invoiceId]);
+
+            return response()->json(['status' => 'invoice_not_found'], 404);
+        }
+
+        $expectedCurrency = \App\Http\Controllers\InvoicePaymentController::currencyCode($invoice->currency);
+        $paidCurrency = strtoupper((string) data_get($request->all(), 'data.currency'));
+        $expectedAmount = (int) round(((float) $invoice->total) * 100);
+        $paidAmount = (int) data_get($request->all(), 'data.amount', 0);
+
+        if ($paidCurrency !== $expectedCurrency || $paidAmount !== $expectedAmount) {
+            Log::error('Paystack invoice payment does not match saved invoice', [
+                'invoice_id' => $invoice->id,
+                'expected_currency' => $expectedCurrency,
+                'paid_currency' => $paidCurrency,
+                'expected_amount' => $expectedAmount,
+                'paid_amount' => $paidAmount,
+            ]);
+
+            return response()->json(['status' => 'payment_mismatch'], 422);
+        }
+
+        $reference = (string) data_get($request->all(), 'data.reference');
+
+        if ($invoice->paystack_paid_at) {
+            return response()->json(['status' => 'already_recorded'], 200);
+        }
+
+        $invoice->forceFill([
+            'paystack_reference' => $reference,
+            'paystack_paid_at' => now(),
+        ])->save();
+
+        Log::info('Invoice payment confirmed by Paystack', [
+            'invoice_id' => $invoice->id,
+            'reference' => $reference,
+        ]);
+
+        return response()->json(['status' => 'ok'], 200);
     }
 
     private function convertBaseAmount($amount, $exchangeRate)

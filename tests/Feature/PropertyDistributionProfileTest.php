@@ -46,6 +46,10 @@ class PropertyDistributionProfileTest extends TestCase
         Schema::create('locations', function (Blueprint $t) {
             $t->id(); $t->string('name'); $t->string('location_type'); $t->softDeletes();
         });
+        Schema::create('images', function (Blueprint $t) {
+            $t->id(); $t->string('image'); $t->string('imageable_type'); $t->integer('imageable_id');
+            $t->string('caption')->nullable(); $t->timestamps(); $t->softDeletes();
+        });
         Schema::create('location_property', function (Blueprint $t) { $t->integer('location_id'); $t->integer('property_id'); });
         foreach (['attribute', 'category'] as $relation) {
             Schema::create($relation.'_property', function (Blueprint $t) use ($relation) {
@@ -119,6 +123,21 @@ class PropertyDistributionProfileTest extends TestCase
         $this->assertNull($data['domain']);
         $this->assertArrayNotHasKey('country_code', $data);
         $this->assertArrayNotHasKey('timezone', $data);
+    }
+
+    public function test_inventory_photo_export_uses_originals_and_only_each_apartments_own_images(): void
+    {
+        $p = $this->saveProperty(['distribution_profile' => $this->profile()]); $this->addRoom($p);
+        foreach ([['image' => 'rooms/studio.webp', 'imageable_id' => 58], ['image' => 'foreign.webp', 'imageable_id' => 999]] as $photo) {
+            DB::table('images')->insert($photo + ['imageable_type' => \App\Models\Apartment::class, 'caption' => '<b>Bedroom</b>', 'created_at' => now(), 'updated_at' => now()]);
+        }
+        $response = $this->getJson('/integration/channexpro/inventory', ['Authorization' => 'Bearer profile-test'])
+            ->assertOk()->assertJsonCount(1, 'properties.0.room_types.0.photos')
+            ->assertJsonPath('properties.0.room_types.0.photos.0.caption', 'Bedroom');
+        $this->assertStringEndsWith('/images/apartments/studio.webp', $response->json('properties.0.room_types.0.photos.0.url'));
+        $this->assertStringEndsWith('/images/apartments/m/studio.webp', $response->json('properties.0.room_types.0.photos.0.thumbnail'));
+        $response->assertDontSee('foreign.webp');
+        $this->getJson('/integration/channexpro/inventory')->assertUnauthorized();
     }
 
     public function test_invalid_profile_is_rejected_before_property_save(): void
