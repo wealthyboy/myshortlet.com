@@ -623,11 +623,26 @@ class InvoicesController extends Controller
                         'invoice_mail_last_error' => null,
                     ])->save();
 
-                    \App\Jobs\SendInvoiceJob::dispatch($invoice);
+                    // An invoice should leave immediately when an admin clicks
+                    // Send Invoice. Delivery-status polling may remain queued,
+                    // but never make the actual customer email depend on a
+                    // separate queue worker being alive.
+                    try {
+                        \App\Jobs\SendInvoiceJob::dispatchSync($invoice);
+                    } catch (\Throwable $exception) {
+                        \Log::error('Invoice email could not be sent', [
+                            'invoice_id' => $invoice->id,
+                            'message' => $exception->getMessage(),
+                        ]);
+
+                        return redirect()
+                            ->route('admin.invoices.index')
+                            ->with('error', 'Invoice was saved, but the email could not be sent. Please try again.');
+                    }
 
                     return redirect()
                         ->route('admin.invoices.index')
-                        ->with('success', 'Invoice saved and queued for sending. Delivery will be confirmed by ZeptoMail.');
+                        ->with('success', 'Invoice saved and sent. Delivery will be confirmed by ZeptoMail.');
                 }
 
                 return redirect()
@@ -656,7 +671,8 @@ class InvoicesController extends Controller
 
         // Once sending has been initiated, keep the action hidden even while
         // ZeptoMail delivery tracking continues in the background.
-        if ($invoice->resent || !empty($invoice->invoice_mail_status)) {
+        if (($invoice->resent || !empty($invoice->invoice_mail_status))
+            && $invoice->invoice_mail_status !== 'failed') {
             if (!$invoice->resent) {
                 $invoice->forceFill(['resent' => true])->save();
             }
@@ -679,9 +695,18 @@ class InvoicesController extends Controller
             'invoice_mail_last_error' => null,
         ])->save();
 
-        \App\Jobs\SendInvoiceJob::dispatch($invoice);
+        try {
+            \App\Jobs\SendInvoiceJob::dispatchSync($invoice);
+        } catch (\Throwable $exception) {
+            \Log::error('Invoice resend failed', [
+                'invoice_id' => $invoice->id,
+                'message' => $exception->getMessage(),
+            ]);
 
-        return back()->with('success', 'Invoice queued for sending.');
+            return back()->with('error', 'The invoice email could not be sent. Please try again.');
+        }
+
+        return back()->with('success', 'Invoice sent. Delivery will be confirmed by ZeptoMail.');
     }
 
 

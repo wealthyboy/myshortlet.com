@@ -281,13 +281,14 @@
                                                 // Hide Send Invoice as soon as sending has been initiated.
                                                 // `resent` is the primary flag; invoice_mail_status is a
                                                 // fallback for invoices queued before this UI change.
-                                                $invoiceSendStarted = (bool) $invoice->resent
-                                                    || !empty($invoice->invoice_mail_status);
+                                                $invoiceSendStarted = $invoice->invoice_mail_status !== 'failed'
+                                                    && ((bool) $invoice->resent
+                                                        || !empty($invoice->invoice_mail_status));
                                             @endphp
                                             @if(!$invoiceSendStarted)
                                             <a href="{{ url("/admin/invoices/{$invoice->id}/resend") }}"
                                                 class="btn btn-warning btn-simple" title="Send Invoice">
-                                                Send Invoice
+                                                {{ $invoice->invoice_mail_status === 'failed' ? 'Retry Invoice Email' : 'Send Invoice' }}
                                             </a>
                                             @endif
 
