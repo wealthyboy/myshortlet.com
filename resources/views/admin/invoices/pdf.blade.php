@@ -171,7 +171,7 @@
             margin-top: 10px;
             padding: 10px 16px;
             border-radius: 5px;
-            background-color: #0ba360;
+            background-color: #342c27;
             color: #ffffff;
             text-decoration: none;
             font-family: DejaVu Sans, sans-serif;
@@ -314,8 +314,9 @@
                 <td width="55%" valign="top">
                     <strong>Payment Details</strong><br>
                     {!! nl2br(e($invoice->payment_info ?: \App\Models\Invoice::defaultPaymentInfo($invoice->currency))) !!}
-                    <br>
-                    <a class="paystack-button" href="{{ $paystackPaymentUrl }}">Pay with Paystack</a>
+                    <br><br>
+                    <strong>Card Payment</strong><br>
+                    <a class="paystack-button" href="{{ $paystackPaymentUrl }}">Click here to pay with card</a>
                 </td>
                 <td width="45%" valign="top" align="right">
                     <table class="summary-table" align="right" style="width:100%;">

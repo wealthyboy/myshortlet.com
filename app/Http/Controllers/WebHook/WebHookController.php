@@ -349,18 +349,23 @@ class WebHookController extends Controller
 
         $reference = (string) data_get($request->all(), 'data.reference');
 
-        if ($invoice->paystack_paid_at) {
+        if ($invoice->paystack_paid_at && $invoice->user_reservation) {
             return response()->json(['status' => 'already_recorded'], 200);
         }
+
+        $userReservation = app(\App\Services\InvoicePaymentFulfillmentService::class)
+            ->fulfill($invoice, $request->ip());
 
         $invoice->forceFill([
             'paystack_reference' => $reference,
             'paystack_paid_at' => now(),
+            'sent' => true,
         ])->save();
 
         Log::info('Invoice payment confirmed by Paystack', [
             'invoice_id' => $invoice->id,
             'reference' => $reference,
+            'user_reservation_id' => $userReservation->id,
         ]);
 
         return response()->json(['status' => 'ok'], 200);

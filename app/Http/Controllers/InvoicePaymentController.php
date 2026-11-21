@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class InvoicePaymentController extends Controller
 {
@@ -25,6 +26,12 @@ class InvoicePaymentController extends Controller
             'amountInMinor' => (int) round(((float) $invoice->total) * 100),
             'paystackPublicKey' => config('services.paystack.public_key'),
             'alreadyPaid' => (bool) $invoice->paystack_paid_at || (bool) $invoice->sent,
+            'paymentSubmitted' => $request->query('payment') === 'processing',
+            'confirmationUrl' => URL::temporarySignedRoute(
+                'invoices.paystack.pay',
+                now()->addDays(30),
+                ['invoice' => $invoice->id, 'payment' => 'processing']
+            ),
         ]);
     }
 

@@ -84,11 +84,11 @@ class Invoice extends Model
         $currency = strtoupper(trim((string) $currency));
 
         if (in_array($currency, ['$', 'USD'], true)) {
-            return "For international Wire transfers in USD\n\n"
-                . "Bank name: Providus bank plc\n\n"
-                . "Account name: Avenue montaigne Limited\n\n"
-                . "Account number: 8505006923 (USD)\n\n"
-                . "Swift code: UMPLNGLA\n\n"
+            return "For international Wire transfers in USD\n"
+                . "Bank name: Providus bank plc\n"
+                . "Account name: Avenue montaigne Limited\n"
+                . "Account number: 1305006911 (USD)\n"
+                . "Swift code: UMPLNGLA\n"
                 . "Bank address: 54 Adetokunbo Ademola Street, Victoria\n"
                 . "Island, Lagos, Nigeria";
         }

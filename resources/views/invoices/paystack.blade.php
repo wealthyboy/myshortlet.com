@@ -26,10 +26,12 @@
 
         @if($alreadyPaid)
             <p class="success">This invoice has already been marked as paid. Thank you.</p>
+        @elseif($paymentSubmitted)
+            <p class="success">Your card payment was received and is being confirmed. We will email your reservation confirmation shortly.</p>
         @elseif(empty($paystackPublicKey))
             <p class="detail">Online payment is temporarily unavailable. Please contact us for payment details.</p>
         @else
-            <button id="paystack-button" type="button">Click here to pay with Paystack</button>
+            <button id="paystack-button" type="button">Click here to pay with card</button>
             <p class="note">You will be taken to Paystack's secure payment window. The amount and currency above are fixed from this invoice.</p>
         @endif
     </main>
@@ -53,7 +55,7 @@
                     },
                     callback: function () {
                         button.textContent = 'Payment received. Confirming…';
-                        button.disabled = true;
+                        window.location.href = @json($confirmationUrl);
                     },
                     onClose: function () { button.disabled = false; }
                 });

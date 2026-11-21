@@ -25,4 +25,9 @@ class InvoiceItem extends Model
     {
         return $this->belongsTo(Invoice::class);
     }
+
+    public function apartment()
+    {
+        return $this->belongsTo(Apartment::class);
+    }
 }
