@@ -85,8 +85,8 @@ export default {
   },
   mounted() {
     const params = new URLSearchParams(window.location.search);
-    const roomsFromUrl = Number.parseInt(params.get("rooms"), 10);
-    const personsFromUrl = Number.parseInt(params.get("persons"), 10);
+    const roomsFromUrl = parseInt(params.get("rooms"), 10);
+    const personsFromUrl = parseInt(params.get("persons"), 10);
     const savedSearch = this.checkForGuests();
 
     // A visitor opening a shared availability link should see the same room

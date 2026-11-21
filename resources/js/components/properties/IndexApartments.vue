@@ -685,7 +685,7 @@ export default {
       const params = new URLSearchParams(window.location.search);
       const checkin = params.get("checkin") || "";
       const checkout = params.get("checkout") || "";
-      const isValidDate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value) && !isNaN(Date.parse(value));
+      const isValidDate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value);
       const hasDates = isValidDate(checkin) && isValidDate(checkout) && checkin < checkout;
 
       return {
@@ -693,8 +693,8 @@ export default {
         checkin,
         checkout,
         check_in_checkout: params.get("check_in_checkout") || (hasDates ? `${checkin} to ${checkout}` : ""),
-        rooms: Number.parseInt(params.get("rooms"), 10),
-        persons: Number.parseInt(params.get("persons"), 10),
+        rooms: parseInt(params.get("rooms"), 10),
+        persons: parseInt(params.get("persons"), 10),
       };
     },
     hydrateAvailabilityForm() {
@@ -715,7 +715,7 @@ export default {
           checkin: this.form.checkin,
           checkout: this.form.checkout,
           check_in_checkout: this.form.check_in_checkout,
-          expiry: Date.now() + 3600000,
+          expiry: new window.Date().getTime() + 3600000,
         }));
 
         return true;
@@ -726,7 +726,7 @@ export default {
 
       try {
         const saved = JSON.parse(retrieved);
-        if (saved.expiry && Date.now() >= saved.expiry) {
+        if (saved.expiry && new window.Date().getTime() >= saved.expiry) {
           localStorage.removeItem("searchParams");
           return false;
         }
