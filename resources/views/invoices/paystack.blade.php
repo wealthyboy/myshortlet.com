@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pay invoice {{ $invoice->invoice }} | Avenue Montaigne</title>
+    <title>Pay invoice {{ $invoice->display_number }} | Avenue Montaigne</title>
     <style>
         body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px; box-sizing:border-box; background:#f8f5f4; color:#342c27; font-family:Arial,sans-serif; }
         .card { width:100%; max-width:520px; box-sizing:border-box; padding:38px; background:#fff; border-radius:14px; box-shadow:0 14px 38px rgba(52,44,39,.13); text-align:center; }
@@ -22,7 +22,7 @@
 <body>
     <main class="card">
         <div class="brand">AVENUE MONTAIGNE</div>
-        <h1>Invoice {{ $invoice->invoice }}</h1>
+        <h1>Invoice {{ $invoice->display_number }}</h1>
         <p class="detail">Hello {{ $invoice->full_name }}, review your invoice amount and pay securely with Paystack.</p>
         <div class="amount">{{ $invoice->currency }}{{ number_format($invoice->total, 2) }}</div>
 
@@ -38,7 +38,12 @@
             @if($summary['requires_installments'])
                 <p class="notice">For this amount, Paystack requires the invoice to be completed in {{ $summary['installment_count'] }} secure payments. Your reservation will be confirmed automatically after the final payment.</p>
             @endif
-            <p class="progress">Payment {{ $installment->sequence }} of {{ $summary['installment_count'] }} &middot; {{ $currency }} {{ number_format($installment->amount_minor / 100, 2) }} @if($summary['paid_minor'] > 0)&middot; {{ $currency }} {{ number_format($summary['remaining_minor'] / 100, 2) }} remaining after this payment@endif</p>
+            <p class="progress">
+                Payment {{ $installment->sequence }} of {{ $summary['installment_count'] }} &middot; {{ $currency }} {{ number_format($installment->amount_minor / 100, 2) }}
+                @if($summary['paid_minor'] > 0)
+                    &middot; {{ $currency }} {{ number_format($summary['remaining_minor'] / 100, 2) }} remaining after this payment
+                @endif
+            </p>
             <button id="paystack-button" type="button">Pay {{ $currency }} {{ number_format($installment->amount_minor / 100, 2) }} securely</button>
             <p class="note">You will be taken to Paystack's secure payment window. This payment amount and currency are fixed from your invoice.</p>
         @endif
@@ -61,7 +66,7 @@
                     metadata: {
                         invoice_payment: true,
                         invoice_id: {{ $invoice->id }},
-                        invoice_number: @json($invoice->invoice),
+                        invoice_number: @json($invoice->display_number),
                         invoice_payment_sequence: {{ $installment->sequence }}
                     },
                     callback: function () {

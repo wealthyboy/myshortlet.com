@@ -80,6 +80,11 @@ class Invoice extends Model
             : '-' . number_format($this->discount) . '%';
     }
 
+    public function getDisplayNumberAttribute()
+    {
+        return $this->invoice ?: $this->invoice_number;
+    }
+
     /**
      * Default wire instructions shown when an admin has not entered bespoke
      * payment details. USD invoices must never inherit the NGN account text.

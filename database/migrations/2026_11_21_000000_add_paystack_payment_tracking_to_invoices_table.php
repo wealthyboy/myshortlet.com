@@ -8,8 +8,13 @@ class AddPaystackPaymentTrackingToInvoicesTable extends Migration
 {
     public function up()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            $table->string('paystack_reference')->nullable()->unique()->after('payment_info');
+        $hasPaymentInfo = Schema::hasColumn('invoices', 'payment_info');
+
+        Schema::table('invoices', function (Blueprint $table) use ($hasPaymentInfo) {
+            $reference = $table->string('paystack_reference')->nullable()->unique();
+            if ($hasPaymentInfo) {
+                $reference->after('payment_info');
+            }
             $table->timestamp('paystack_paid_at')->nullable()->after('paystack_reference');
         });
     }
