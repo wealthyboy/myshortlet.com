@@ -26,6 +26,13 @@ return [
     'paystack' => [
         'public_key' => env('PAYSTACK_PUBLIC_KEY', 'pk_live_c5fd554e0bc5c39d5f8f14b5f2a6263a403b9e55'),
         'secret_key' => env('PAYSTACK_SECRET_KEY'),
+        // Values are per individual Paystack charge, in major currency units.
+        // Keep these configurable so Finance can change them after Paystack's
+        // written confirmation without a code deployment.
+        'invoice_installment_limits' => [
+            'NGN' => env('PAYSTACK_INVOICE_MAX_NGN', 4500000),
+            'USD' => env('PAYSTACK_INVOICE_MAX_USD', 3000),
+        ],
     ],
 
     'mailgun' => [

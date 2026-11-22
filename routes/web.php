@@ -32,6 +32,11 @@ Route::get('channex/live-verification', 'Admin\Channex\LiveVerificationControlle
 Route::post('webhook/channex', 'WebHook\WebHookController@handleChannex')
     ->middleware('throttle:120,1');
 
+// Paystack calls this endpoint from its servers, so it must not inherit
+// storefront session, currency, or availability-state middleware.
+Route::post('webhook/payment', 'WebHook\WebHookController@payment')
+    ->middleware('throttle:120,1');
+
 // OTA guests do not have a storefront account. A temporary signed link lets
 // them add their confirmed stay to Apple/Outlook without exposing bookings.
 Route::get('reservations/{reservation}/calendar', 'Reservation\ReservationCalendarController')
@@ -228,7 +233,6 @@ Route::group(['middleware' => ['currencyByIp', 'tracking', 'clearAvailabilitySta
     Route::post('block', 'SignUp\SignUpController@block');
 
     Route::get('listings', 'Listings\ListingsController@index');
-    Route::post('webhook/payment', 'WebHook\WebHookController@payment');
     Route::post('webhook/github', 'WebHook\WebHookController@gitHub');
     Route::get('/experience',   'Pages\PageController@index');
     Route::get('/gallery',   'Pages\PageController@index');

@@ -13,6 +13,7 @@ use App\Models\UserReservation;
 use App\Models\UserTracking;
 use App\Models\Apartment;
 use App\Models\Invoice;
+use App\Models\InvoicePayment;
 use App\Models\Voucher;
 use App\Mail\ReservationReceipt;
 use App\Models\SystemSetting;
@@ -22,6 +23,7 @@ use App\Models\ApartmentAttribute;
 use App\Models\Attribute;
 use App\Models\AttributeProperty;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use App\Jobs\ProcessChannexBookingWebhook;
 
 class WebHookController extends Controller
@@ -321,36 +323,81 @@ class WebHookController extends Controller
             return response()->json(['status' => 'ignored'], 200);
         }
 
+        $reference = (string) data_get($request->all(), 'data.reference');
+        $installment = InvoicePayment::where('reference', $reference)->first();
+
+        // Links created before installment payments were introduced did not
+        // have a ledger record. Preserve their verified, one-payment flow.
+        if (! $installment) {
+            return $this->recordLegacyInvoicePayment($request);
+        }
+
         $invoiceId = data_get($request->all(), 'data.metadata.invoice_id');
         $invoice = Invoice::find($invoiceId);
 
-        if (! $invoice) {
+        if (! $invoice || (int) $installment->invoice_id !== (int) $invoice->id) {
             Log::warning('Paystack invoice webhook could not find invoice', ['invoice_id' => $invoiceId]);
 
             return response()->json(['status' => 'invoice_not_found'], 404);
         }
 
-        $expectedCurrency = \App\Http\Controllers\InvoicePaymentController::currencyCode($invoice->currency);
         $paidCurrency = strtoupper((string) data_get($request->all(), 'data.currency'));
-        $expectedAmount = (int) round(((float) $invoice->total) * 100);
         $paidAmount = (int) data_get($request->all(), 'data.amount', 0);
 
-        if ($paidCurrency !== $expectedCurrency || $paidAmount !== $expectedAmount) {
+        if ($paidCurrency !== $installment->currency || $paidAmount !== (int) $installment->amount_minor) {
             Log::error('Paystack invoice payment does not match saved invoice', [
                 'invoice_id' => $invoice->id,
-                'expected_currency' => $expectedCurrency,
+                'expected_currency' => $installment->currency,
                 'paid_currency' => $paidCurrency,
-                'expected_amount' => $expectedAmount,
+                'expected_amount' => $installment->amount_minor,
                 'paid_amount' => $paidAmount,
             ]);
 
             return response()->json(['status' => 'payment_mismatch'], 422);
         }
 
-        $reference = (string) data_get($request->all(), 'data.reference');
+        $completed = DB::transaction(function () use ($installment, $invoice, $request, $reference) {
+            $invoice = Invoice::lockForUpdate()->findOrFail($invoice->id);
+            $installment = InvoicePayment::whereKey($installment->id)->lockForUpdate()->firstOrFail();
 
-        if ($invoice->paystack_paid_at && $invoice->user_reservation) {
-            return response()->json(['status' => 'already_recorded'], 200);
+            if ($installment->status !== 'paid') {
+                $installment->forceFill([
+                    'status' => 'paid',
+                    'paid_at' => now(),
+                    // Keep a concise reconciliation trail without retaining
+                    // unnecessary customer or card data from the webhook.
+                    'paystack_response' => [
+                        'reference' => $reference,
+                        'status' => data_get($request->all(), 'data.status'),
+                        'channel' => data_get($request->all(), 'data.channel'),
+                        'currency' => data_get($request->all(), 'data.currency'),
+                        'amount' => data_get($request->all(), 'data.amount'),
+                    ],
+                ])->save();
+            }
+
+            $paidMinor = (int) InvoicePayment::where('invoice_id', $invoice->id)
+                ->where('status', 'paid')
+                ->sum('amount_minor');
+            $totalMinor = (int) round(((float) $invoice->total) * 100);
+
+            return [
+                'invoice' => $invoice,
+                'is_fully_paid' => $paidMinor >= $totalMinor,
+                'paid_minor' => $paidMinor,
+                'total_minor' => $totalMinor,
+            ];
+        });
+
+        if (! $completed['is_fully_paid']) {
+            Log::info('Invoice installment confirmed by Paystack', [
+                'invoice_id' => $invoice->id,
+                'reference' => $reference,
+                'paid_minor' => $completed['paid_minor'],
+                'total_minor' => $completed['total_minor'],
+            ]);
+
+            return response()->json(['status' => 'installment_recorded'], 200);
         }
 
         $userReservation = app(\App\Services\InvoicePaymentFulfillmentService::class)
@@ -369,6 +416,43 @@ class WebHookController extends Controller
         ]);
 
         return response()->json(['status' => 'ok'], 200);
+    }
+
+    /**
+     * Compatibility handler for a verified payment from an old invoice link.
+     */
+    private function recordLegacyInvoicePayment(Request $request)
+    {
+        $invoiceId = data_get($request->all(), 'data.metadata.invoice_id');
+        $invoice = Invoice::find($invoiceId);
+
+        if (! $invoice) {
+            return response()->json(['status' => 'invoice_not_found'], 404);
+        }
+
+        $expectedCurrency = \App\Http\Controllers\InvoicePaymentController::currencyCode($invoice->currency);
+        $paidCurrency = strtoupper((string) data_get($request->all(), 'data.currency'));
+        $expectedAmount = (int) round(((float) $invoice->total) * 100);
+        $paidAmount = (int) data_get($request->all(), 'data.amount', 0);
+
+        if ($paidCurrency !== $expectedCurrency || $paidAmount !== $expectedAmount) {
+            return response()->json(['status' => 'payment_mismatch'], 422);
+        }
+
+        if ($invoice->paystack_paid_at && $invoice->user_reservation) {
+            return response()->json(['status' => 'already_recorded'], 200);
+        }
+
+        $userReservation = app(\App\Services\InvoicePaymentFulfillmentService::class)
+            ->fulfill($invoice, $request->ip());
+
+        $invoice->forceFill([
+            'paystack_reference' => (string) data_get($request->all(), 'data.reference'),
+            'paystack_paid_at' => now(),
+            'sent' => true,
+        ])->save();
+
+        return response()->json(['status' => 'ok', 'user_reservation_id' => $userReservation->id], 200);
     }
 
     private function convertBaseAmount($amount, $exchangeRate)

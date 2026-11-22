@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use App\Models\InvoicePayment;
+use App\Services\InvoiceInstallmentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
@@ -20,18 +22,37 @@ class InvoicePaymentController extends Controller
             abort(422, 'This invoice currency is not available for Paystack payment.');
         }
 
+        $installments = app(InvoiceInstallmentService::class);
+        $alreadyPaid = (bool) $invoice->paystack_paid_at || $invoice->user_reservation()->exists();
+        $submittedPayment = null;
+
+        if ($request->query('payment') === 'processing' && $request->query('reference')) {
+            $submittedPayment = InvoicePayment::where('invoice_id', $invoice->id)
+                ->where('reference', $request->query('reference'))
+                ->first();
+        }
+
+        $installment = $alreadyPaid ? null : $installments->nextPayment($invoice);
+        $summary = $installments->summary($invoice);
+
         return view('invoices.paystack', [
             'invoice' => $invoice,
             'currency' => $currency,
-            'amountInMinor' => (int) round(((float) $invoice->total) * 100),
+            'installment' => $installment,
+            'summary' => $summary,
+            'amountInMinor' => optional($installment)->amount_minor,
             'paystackPublicKey' => config('services.paystack.public_key'),
-            'alreadyPaid' => (bool) $invoice->paystack_paid_at || (bool) $invoice->sent,
-            'paymentSubmitted' => $request->query('payment') === 'processing',
-            'confirmationUrl' => URL::temporarySignedRoute(
+            'alreadyPaid' => $alreadyPaid,
+            'paymentSubmitted' => $submittedPayment && $submittedPayment->status !== 'paid',
+            'confirmationUrl' => $installment ? URL::temporarySignedRoute(
                 'invoices.paystack.pay',
                 now()->addDays(30),
-                ['invoice' => $invoice->id, 'payment' => 'processing']
-            ),
+                [
+                    'invoice' => $invoice->id,
+                    'payment' => 'processing',
+                    'reference' => $installment->reference,
+                ]
+            ) : null,
         ]);
     }
 
