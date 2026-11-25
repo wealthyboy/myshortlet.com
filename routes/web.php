@@ -230,8 +230,6 @@ Route::group(['middleware' => ['currencyByIp', 'tracking', 'clearAvailabilitySta
     Route::get('check-in', 'SignUp\SignUpController@index');
     Route::post('check-in', 'SignUp\SignUpController@store');
 
-    Route::post('block', 'SignUp\SignUpController@block');
-
     Route::get('listings', 'Listings\ListingsController@index');
     Route::post('webhook/github', 'WebHook\WebHookController@gitHub');
     Route::get('/experience',   'Pages\PageController@index');

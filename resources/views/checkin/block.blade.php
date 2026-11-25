@@ -14,7 +14,7 @@
                         Apartment has been blocked
                     </div>
 
-                    <form method="POST" id="submit" class=" pl-4 pr-4 border form-block bg-white " action="/block">
+                    <form method="POST" id="submit" class=" pl-4 pr-4 border form-block bg-white " action="{{ route('admin.blocks.store') }}">
 
                         <div class="text-center">
                             <a href="/" class="navbar-brand mt-5">
@@ -35,20 +35,20 @@
                         <div class="form-row">
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label for="checkin" class="bmd-label-floating">Check-in </label>
-                                <input type="text"  id="checkin" class="form-control selector"   name="checkin">
+                                <input type="text" id="checkin" class="form-control" name="checkin" value="{{ old('checkin') }}" autocomplete="off" required>
                             </div>
                             
                             <div class="form-group bmd-form-group col-md-6 col-12">
                                 <label for="checkout" class="bmd-label-floating">Check-out</label>
-                                <input type="text"  id="checkout" class="form-control selector"   name="checkout">
+                                <input type="text" id="checkout" class="form-control" name="checkout" value="{{ old('checkout') }}" autocomplete="off" required>
 
                             </div>
 
                             <div class="form-group bmd-form-group col-md-12 col-12  align-items-center">
                                 <select  name="apartment_id" id="mySelect" class="form-control ">
-                                    <option selected value="">Choose Apartment</option>
+                                    <option value="">Choose Apartment</option>
                                     @foreach($rooms as $room)
-                                    <option value="{{ $room->id }}">{{ $room->name }}</option>
+                                    <option value="{{ $room->id }}" @selected(old('apartment_id') == $room->id)>{{ $room->name }}</option>
                                     @endforeach
 
                                 </select>
@@ -88,5 +88,21 @@
 @stop
 
 @section('inline-scripts')
+document.addEventListener('DOMContentLoaded', function () {
+    var checkin = flatpickr('#checkin', {
+        dateFormat: 'Y-m-d',
+        minDate: 'today',
+        onChange: function (selectedDates) {
+            checkout.set('minDate', selectedDates[0] || 'today');
+            if (checkout.selectedDates[0] && selectedDates[0] && checkout.selectedDates[0] <= selectedDates[0]) {
+                checkout.clear();
+            }
+        }
+    });
 
+    var checkout = flatpickr('#checkout', {
+        dateFormat: 'Y-m-d',
+        minDate: checkin.selectedDates[0] || 'today'
+    });
+});
 @stop

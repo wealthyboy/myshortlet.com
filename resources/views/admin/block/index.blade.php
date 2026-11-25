@@ -10,7 +10,7 @@
                 Refresh
             </a>
 
-            <a target="_blank" href="/admin/block" rel="tooltip" title="Add New" class="btn btn-primary btn-simple btn-xs">
+            <a href="{{ url('/admin/block') }}" rel="tooltip" title="Add New" class="btn btn-primary btn-simple btn-xs">
                 <i class="material-icons">add</i>
                 Block Apartment
             </a>
@@ -31,7 +31,8 @@
 
             <div class="card-content">
 
-                <h4 class="card-title">Block Apartments</h4>
+                <h4 class="card-title">Blocked apartment dates</h4>
+                <p class="category">A block includes the check-in date and releases the apartment on the check-out date.</p>
                 <div class="toolbar">
                     <!-- Here you can write extra buttons/actions for the toolbar              -->
                 </div>
@@ -51,30 +52,35 @@
                                             </label>
                                         </div>
                                     </th>
-                                    <th>Name</th>
-                                    <th>Checkin - Checkout</th>
+                                    <th>Apartment</th>
+                                    <th>Check-in</th>
+                                    <th>Check-out</th>
+                                    <th>Nights</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                @foreach($apartments as $apartment)
+                                @forelse($blocks as $block)
                                 <tr>
                                     <td>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" value="{{ $apartment->id }}" name="selected[]">
+                                                <input type="checkbox" value="{{ $block->id }}" name="selected[]">
                                             </label>
                                         </div>
                                     </td>
 
-                                    <td><a target="_blank">{{ $apartment->name }} </a></td>
-                                    <td>
-                                        {{ $apartment->reservations[0]->checkin->format('Y-m-d')  }} - {{ $apartment->reservations[0]->checkout->format('Y-m-d') }}
-
-                                    </td>
+                                    <td>{{ optional($block->apartment)->name ?: 'Deleted apartment' }}</td>
+                                    <td>{{ optional($block->checkin)->format('Y-m-d') }}</td>
+                                    <td>{{ optional($block->checkout)->format('Y-m-d') }}</td>
+                                    <td>{{ $block->checkin && $block->checkout ? $block->checkin->diffInDays($block->checkout) : '—' }}</td>
                                    
                                 </tr>
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">No apartment dates are currently blocked.</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </form>
