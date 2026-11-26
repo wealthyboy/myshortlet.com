@@ -14,7 +14,7 @@
                         Apartment has been blocked
                     </div>
 
-                    <form method="POST" id="submit" class=" pl-4 pr-4 border form-block bg-white " action="{{ route('admin.blocks.store') }}">
+                    <form method="POST" id="admin-apartment-block" class="pl-4 pr-4 border bg-white" action="{{ route('admin.blocks.store') }}">
 
                         <div class="text-center">
                             <a href="/" class="navbar-brand mt-5">
