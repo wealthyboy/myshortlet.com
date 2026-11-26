@@ -48,7 +48,7 @@
                                 <select  name="apartment_id" id="mySelect" class="form-control ">
                                     <option value="">Choose Apartment</option>
                                     @foreach($rooms as $room)
-                                    <option value="{{ $room->id }}" @selected(old('apartment_id') == $room->id)>{{ $room->name }}</option>
+                                    <option value="{{ $room->id }}" {{ (string) old('apartment_id') === (string) $room->id ? 'selected' : '' }}>{{ $room->name }}</option>
                                     @endforeach
 
                                 </select>
